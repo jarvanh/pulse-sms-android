@@ -30,7 +30,7 @@ class NotificationConversationProvider(private val service: NotificationService,
 
     private val actionHelper = NotificationActionHelper(service)
     private val carHelper = NotificationCarHelper(service)
-    private val wearableHelper = NotificationWearableHelper(service, this)
+    private val wearableHelper = NotificationWearableHelper(service, summaryProvider)
 
     fun giveConversationNotification(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int) {
         val publicVersion = preparePublicBuilder(conversation)
@@ -74,7 +74,7 @@ class NotificationConversationProvider(private val service: NotificationService,
     }
 
     private fun prepareCommonBuilder(conversation: NotificationConversation) = NotificationCompat.Builder(service,
-            getNotificationChannel(conversation.id))
+            summaryProvider.getNotificationChannel(conversation.id))
             .setSmallIcon(if (!conversation.groupConversation) R.drawable.ic_stat_notify else R.drawable.ic_stat_notify_group)
             .setAutoCancel(true)
             .setColor(if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.color)
@@ -184,19 +184,6 @@ class NotificationConversationProvider(private val service: NotificationService,
 
         // default to true
         return true
-    }
-
-    internal fun getNotificationChannel(conversationId: Long): String {
-        if (!AndroidVersionUtil.isAndroidO) {
-            return NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID
-        }
-
-        val manager = service.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        return if (manager.getNotificationChannel(conversationId.toString() + "") != null) {
-            conversationId.toString() + ""
-        } else {
-            NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID
-        }
     }
 
 

@@ -1,7 +1,9 @@
 package xyz.klinker.messenger.shared.service.notification
 
 import android.app.Notification
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.support.v4.app.NotificationCompat
@@ -10,7 +12,9 @@ import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.service.NotificationDismissedService
+import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
 import xyz.klinker.messenger.shared.util.ActivityUtils
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.NotificationUtils
 
 /**
@@ -32,8 +36,8 @@ class NotificationSummaryProvider(private val service: NotificationService, priv
                 .setBigContentTitle(title)
                 .setSummaryText(summary)
 
-        val notification = buildNotification(title, summary)
-                .setPublicVersion(buildPublicNotification(title).build())
+        val notification = buildNotification(conversations[0].id, title, summary)
+                .setPublicVersion(buildPublicNotification(conversations[0].id, title).build())
                 .setWhen(conversations[conversations.size - 1].timestamp)
                 .setStyle(style)
 
@@ -80,19 +84,19 @@ class NotificationSummaryProvider(private val service: NotificationService, priv
         return style
     }
 
-    private fun buildNotification(title: String, summary: String) =
-            buildCommonNotification(title)
+    private fun buildNotification(firstConversationId: Long, title: String, summary: String) =
+            buildCommonNotification(firstConversationId, title)
                     .setContentText(summary)
                     .setShowWhen(true)
                     .setTicker(title)
                     .setVisibility(Notification.VISIBILITY_PRIVATE)
 
-    private fun buildPublicNotification(title: String) =
-            buildCommonNotification(title)
+    private fun buildPublicNotification(firstConversationId: Long, title: String) =
+            buildCommonNotification(firstConversationId, title)
                     .setVisibility(Notification.VISIBILITY_PUBLIC)
 
-    private fun buildCommonNotification(title: String) = NotificationCompat.Builder(service,
-            NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID)
+    private fun buildCommonNotification(firstConversationId: Long, title: String) = NotificationCompat.Builder(service,
+            getNotificationChannel(firstConversationId))
             .setSmallIcon(R.drawable.ic_stat_notify_group)
             .setContentTitle(title)
             .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
@@ -117,5 +121,18 @@ class NotificationSummaryProvider(private val service: NotificationService, priv
         builder.setContentIntent(pendingOpen)
 
         return builder
+    }
+
+    internal fun getNotificationChannel(conversationId: Long): String {
+        if (!AndroidVersionUtil.isAndroidO) {
+            return NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID
+        }
+
+        val manager = service.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        return if (manager.getNotificationChannel(conversationId.toString() + "") != null) {
+            conversationId.toString() + ""
+        } else {
+            NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID
+        }
     }
 }

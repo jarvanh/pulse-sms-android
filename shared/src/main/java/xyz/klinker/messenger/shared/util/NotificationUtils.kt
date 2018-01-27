@@ -169,7 +169,7 @@ object NotificationUtils {
         channel.lightColor = conversation.ledColor
         channel.setBypassDnd(false)
         channel.setShowBadge(true)
-        channel.vibrationPattern = settings.vibrate.pattern
+        channel.enableVibration(true)
         channel.lockscreenVisibility = if (conversation.privateNotifications)
             Notification.VISIBILITY_PRIVATE else Notification.VISIBILITY_PUBLIC
 
