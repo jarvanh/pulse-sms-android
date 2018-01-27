@@ -26,13 +26,15 @@
 
     <version
         name="2.8.1"
-        description="January 30th, 2018">
-        <text>Automatically bring up the keyboard when opening a conversation from the compose screen</text>
+        description="January 27th, 2018">
+        <text>Android 8.0: Changes around notification channels to prevent multiple sounds, when multiple new messages arrive</text>
+        <text>Android 8.0: Changes around notification channels to ensure custom ringtones get applied to new messages, when multiple new messages arrive</text>
+        <text>Automatically bring up the keyboard when creating or opening a conversation from the compose screen</text>
     </version>
 
     <version
         name="2.8.0"
-        description="January 25th, 2018">
+        description="January 22nd, 2018">
         <text>Access and create templates from the "Attach" menu, when writing messages</text>
         <text>Select from a list of all contacts on the compose screen</text>
         <text>Added the ability to mute a conversation, from it's notification</text>
