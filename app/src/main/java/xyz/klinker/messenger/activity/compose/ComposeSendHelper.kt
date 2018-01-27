@@ -83,6 +83,7 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
 
         val open = Intent(activity, MessengerActivity::class.java)
         open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversationId)
+        open.putExtra(MessengerActivityExtras.EXTRA_SHOULD_OPEN_KEYBOARD, true)
         open.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
         if (activity.contactsProvider.getRecipients().size == 1) {
@@ -97,6 +98,7 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
     internal fun showConversation(conversationId: Long) {
         val open = Intent(activity, MessengerActivity::class.java)
         open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversationId)
+        open.putExtra(MessengerActivityExtras.EXTRA_SHOULD_OPEN_KEYBOARD, true)
         open.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
         val conversation = DataSource.getConversation(activity, conversationId)

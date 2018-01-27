@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.fragment.message
 
 import android.os.Bundle
+import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.model.Conversation
 
 class MessageInstanceManager(private val fragment: MessageListFragment) {
@@ -22,6 +23,7 @@ class MessageInstanceManager(private val fragment: MessageListFragment) {
 
     val messageToOpen: Long by lazy { arguments!!.getLong(ARG_MESSAGE_TO_OPEN_ID, -1L) }
     val limitMessages: Boolean by lazy { arguments!!.getBoolean(ARG_LIMIT_MESSAGES) }
+    val shouldOpenKeyboard: Boolean by lazy { fragment.activity?.intent?.getBooleanExtra(MessengerActivityExtras.EXTRA_SHOULD_OPEN_KEYBOARD, false) ?: false }
 
     companion object {
         val ARG_TITLE = "title"

@@ -25,6 +25,12 @@
     <!--</version>-->
 
     <version
+        name="2.8.1"
+        description="January 30th, 2018">
+        <text>Automatically bring up the keyboard when opening a conversation from the compose screen</text>
+    </version>
+
+    <version
         name="2.8.0"
         description="January 25th, 2018">
         <text>Access and create templates from the "Attach" menu, when writing messages</text>

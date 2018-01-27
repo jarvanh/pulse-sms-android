@@ -56,5 +56,11 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
         toolbar.setOnClickListener {
             (activity as MessengerActivity).clickNavigationItem(R.id.drawer_view_contact)
         }
+
+        if (fragment.argManager.shouldOpenKeyboard) {
+            messageEntry.requestFocus()
+            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?)
+                    ?.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        }
     }
 }
