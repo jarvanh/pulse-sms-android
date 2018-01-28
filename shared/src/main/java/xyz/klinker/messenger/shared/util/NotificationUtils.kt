@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Color
 import android.media.AudioAttributes
 import android.os.Build
 import xyz.klinker.messenger.shared.R
@@ -90,6 +91,11 @@ object NotificationUtils {
                 context.getString(R.string.default_notifications_channel), NotificationManager.IMPORTANCE_HIGH)
         defaultChannel.description = context.getString(R.string.default_notifications_channel_description)
         defaultChannel.group = "conversations"
+        defaultChannel.lightColor = Color.WHITE
+        defaultChannel.enableLights(true)
+        defaultChannel.setBypassDnd(false)
+        defaultChannel.setShowBadge(true)
+        defaultChannel.enableVibration(true)
         manager.createNotificationChannel(defaultChannel)
     }
 
@@ -166,7 +172,7 @@ object NotificationUtils {
         val channel = NotificationChannel(conversation.id.toString() + "", conversation.title, NotificationManager.IMPORTANCE_HIGH)
         channel.group = "conversations"
         channel.enableLights(true)
-        channel.lightColor = conversation.ledColor
+        channel.lightColor = Color.WHITE
         channel.setBypassDnd(false)
         channel.setShowBadge(true)
         channel.enableVibration(true)
