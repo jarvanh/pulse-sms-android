@@ -31,6 +31,7 @@ import android.support.v7.preference.PreferenceCategory
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.amplitude.api.Amplitude
 
 import java.util.Date
 
@@ -477,10 +478,17 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                 }
 
                 if (Account.accountId == null) {
-                    // write lifetime here, just so they don't think it is a trial..
-                    if (product.productId.contains("lifetime")) {
+                    // New user
+                    val event = if (product.productId.contains("lifetime")) {
                         Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.LIFETIME, Date(1))
+                        "PURCHASE_LIFETIME"
+                    } else {
+                        "PURCHASE_SUBSCRIPTION"
                     }
+
+                    try {
+                        Amplitude.getInstance().logEvent(event)
+                    } catch (t: Throwable) { }
 
                     startLoginActivity()
                 } else {

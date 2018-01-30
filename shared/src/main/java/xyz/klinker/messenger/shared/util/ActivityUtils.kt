@@ -57,10 +57,12 @@ object ActivityUtils {
     }
 
     fun setTaskDescription(activity: Activity?, title: String, color: Int) {
-        val td = ActivityManager.TaskDescription(
-                title, null, color)
-
-        activity?.setTaskDescription(td)
+        try {
+            val td = ActivityManager.TaskDescription(title, null, color)
+            activity?.setTaskDescription(td)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun setStatusBarColor(activity: Activity?, color: Int) {

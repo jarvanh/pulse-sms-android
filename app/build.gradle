@@ -125,6 +125,8 @@ android {
 dependencies {
     api project(":shared")
 
+    implementation 'com.amplitude:android-sdk:2.16.0'
+
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
     testImplementation 'org.mockito:mockito-core:2.8.43'

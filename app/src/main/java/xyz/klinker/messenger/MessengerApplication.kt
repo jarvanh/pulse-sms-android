@@ -20,6 +20,7 @@ import android.app.Application
 import android.content.Intent
 import android.os.Build
 import android.support.v7.app.AppCompatDelegate
+import com.amplitude.api.Amplitude
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler
 import xyz.klinker.messenger.shared.data.DataSource
@@ -41,6 +42,11 @@ class MessengerApplication : FirebaseApplication() {
         super.onCreate()
 
         KotlinObjectInitializers.initializeObjects(this)
+
+        try {
+            Amplitude.getInstance().initialize(this, "c9f494701f3ed188aa8ebcdb2a7d046c")
+                    .enableForegroundTracking(this)
+        } catch (e: Throwable) { }
 
         enableSecurity()
 
