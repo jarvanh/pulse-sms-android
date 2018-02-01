@@ -25,6 +25,13 @@
     <!--</version>-->
 
     <version
+        name="2.8.2"
+        description="February 5th, 2018">
+        <text>Option within a conversation's settings menu to delete old messages out of that conversation, based on a time interval</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.8.1"
         description="January 27th, 2018">
         <text>Android 8.0: Changes around notification channels to prevent multiple sounds, when multiple new messages arrive</text>
