@@ -255,6 +255,7 @@
     <string name="account_activity_notifications">Account activity notifications</string>
     <string name="quick_text_channel">Quick text notification</string>
     <string name="media_parse_text">Parsing media from previous text message…</string>
+    <string name="auto_reply_parse_text">Looking for auto replies on previous text message…</string>
     <string name="creating_channels_text">Creating notification channels…</string>
     <string name="write_new_message">Write a new message…</string>
     <string name="receiving_a_message">Receiving a message…</string>

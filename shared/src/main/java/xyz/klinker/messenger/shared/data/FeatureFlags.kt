@@ -1,5 +1,3 @@
-@file:Suppress("MayBeConstant")
-
 package xyz.klinker.messenger.shared.data
 
 import android.content.Context
@@ -8,7 +6,7 @@ import android.preference.PreferenceManager
 
 import xyz.klinker.messenger.shared.R
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
+@Suppress("unused", "MayBeConstant", "MemberVisibilityCanBePrivate")
 /**
  * We can use these for new features or if we want to test something quick and don't know if it
  * is going to work. These are great for quick changes. Say we have something that could cause force

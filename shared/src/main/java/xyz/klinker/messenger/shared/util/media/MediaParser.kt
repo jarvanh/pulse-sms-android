@@ -17,7 +17,7 @@ abstract class MediaParser(protected var context: Context?) {
     protected abstract val mimeType: String
     protected abstract fun buildBody(matchedText: String?): String?
 
-    fun canParse(text: String): Boolean {
+    open fun canParse(text: String): Boolean {
         val matcher = patternMatcher.matcher(text)
         if (matcher.find()) {
             matchedText = matcher.group(0)

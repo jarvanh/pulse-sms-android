@@ -15,6 +15,7 @@ import xyz.klinker.messenger.shared.exception.SmsSaveException
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.SmsReceivedReceiver
+import xyz.klinker.messenger.shared.service.AutoReplyParserService
 import xyz.klinker.messenger.shared.service.MediaParserService
 import xyz.klinker.messenger.shared.service.NewMessagesCheckService
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
@@ -89,6 +90,10 @@ class SmsReceivedHandler(private val context: Context) {
 
             if (MediaParserService.createParser(context, body.trim { it <= ' ' }) != null) {
                 MediaParserService.start(context, conversationId, body)
+            }
+
+            if (AutoReplyParserService.createParser(context, address.trim { it <= ' ' }, body.trim { it <= ' ' }) != null) {
+                AutoReplyParserService.start(context, conversationId, address, body)
             }
         }
 

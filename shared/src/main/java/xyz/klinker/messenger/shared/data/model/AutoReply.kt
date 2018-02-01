@@ -65,6 +65,11 @@ class AutoReply : DatabaseTable {
                 COLUMN_PATTERN + " text not null, " +
                 COLUMN_RESPONSE + " text not null" +
                 ");"
+
+        val TYPE_VACATION = "vacation"
+        val TYPE_DRIVING = "driving"
+        val TYPE_CONTACT = "contact"
+        val TYPE_KEYWORD = "keyword"
     }
 
 }
