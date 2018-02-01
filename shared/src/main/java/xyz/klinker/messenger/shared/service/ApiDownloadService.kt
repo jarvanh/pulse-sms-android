@@ -91,6 +91,7 @@ class ApiDownloadService : Service() {
             downloadContacts()
             downloadTemplates()
             downloadFolders()
+            downloadAutoReplies()
 
             Log.v(TAG, "time to download: " + (System.currentTimeMillis() - startTime) + " ms")
 
@@ -373,6 +374,27 @@ class ApiDownloadService : Service() {
             Log.v(TAG, "folders inserted in " + (System.currentTimeMillis() - startTime) + " ms")
         } else {
             Log.v(TAG, "folders failed to insert")
+        }
+    }
+
+    private fun downloadAutoReplies() {
+        val startTime = System.currentTimeMillis()
+        val replies = try {
+            ApiUtils.api.autoReply().list(Account.accountId).execute().body()
+        } catch (e: IOException) {
+            emptyArray<AutoReplyBody>()
+        }
+
+        if (replies != null) {
+            for (body in replies) {
+                val reply = AutoReply(body)
+                reply.decrypt(encryptionUtils!!)
+                DataSource.insertAutoReply(this, reply, false)
+            }
+
+            Log.v(TAG, "auto replies inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+        } else {
+            Log.v(TAG, "auto replies failed to insert")
         }
     }
 

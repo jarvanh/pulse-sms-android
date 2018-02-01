@@ -91,6 +91,7 @@ open class ApiUploadService : Service() {
         
         Thread {
             val startTime = System.currentTimeMillis()
+            
             uploadMessages()
             uploadConversations()
             uploadContacts(this, encryptionUtils!!)
@@ -99,6 +100,8 @@ open class ApiUploadService : Service() {
             uploadDrafts()
             uploadTemplates()
             uploadFolders()
+            uploadAutoReplies()
+
             Log.v(TAG, "time to upload: " + (System.currentTimeMillis() - startTime) + " ms")
 
             uploadMedia()
@@ -379,6 +382,41 @@ open class ApiUploadService : Service() {
                         (System.currentTimeMillis() - startTime) + " ms")
             } else {
                 Log.v(TAG, "folder upload successful in " +
+                        (System.currentTimeMillis() - startTime) + " ms")
+            }
+        }
+
+        cursor.closeSilent()
+    }
+
+    private fun uploadAutoReplies() {
+        val startTime = System.currentTimeMillis()
+        val cursor = DataSource.getAutoReplies(this)
+
+        if (cursor.moveToFirst()) {
+            val replies = arrayOfNulls<AutoReplyBody>(cursor.count)
+
+            do {
+                val r = AutoReply()
+                r.fillFromCursor(cursor)
+                r.encrypt(encryptionUtils!!)
+                val reply = AutoReplyBody(r.id, r.type, r.pattern, r.response)
+
+                replies[cursor.position] = reply
+            } while (cursor.moveToNext())
+
+            val request = AddAutoReplyRequest(Account.accountId, replies)
+            val result = try {
+                ApiUtils.api.autoReply().add(request).execute().body()
+            } catch (e: IOException) {
+                null
+            }
+
+            if (result == null) {
+                Log.v(TAG, "failed to upload auto replies in " +
+                        (System.currentTimeMillis() - startTime) + " ms")
+            } else {
+                Log.v(TAG, "auto reply upload successful in " +
                         (System.currentTimeMillis() - startTime) + " ms")
             }
         }
