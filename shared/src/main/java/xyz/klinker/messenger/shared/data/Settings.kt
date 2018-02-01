@@ -75,6 +75,7 @@ object Settings {
     var signature: String? = null
     var adjustableNavBar: Boolean = false
     var drivingMode: Boolean = false
+    var vacationMode: Boolean = false
 
     // configuration
     var smallFont: Int = 0
@@ -141,6 +142,7 @@ object Settings {
         this.internalBrowser = sharedPrefs.getBoolean(context.getString(R.string.pref_internal_browser), true)
         this.adjustableNavBar = sharedPrefs.getBoolean(context.getString(R.string.pref_adjustable_nav_bar), false)
         this.drivingMode = sharedPrefs.getBoolean(context.getString(R.string.pref_driving_mode), false)
+        this.vacationMode = sharedPrefs.getBoolean(context.getString(R.string.pref_vacation_mode), false)
 
         // configuration
         if (this.ringtone == null) {

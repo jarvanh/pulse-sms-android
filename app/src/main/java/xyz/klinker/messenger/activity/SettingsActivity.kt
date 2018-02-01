@@ -24,10 +24,7 @@ import android.view.Menu
 import android.view.MenuItem
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.main.MainColorController
-import xyz.klinker.messenger.fragment.settings.FeatureSettingsFragment
-import xyz.klinker.messenger.fragment.settings.GlobalSettingsFragment
-import xyz.klinker.messenger.fragment.settings.MmsConfigurationFragment
-import xyz.klinker.messenger.fragment.settings.ThemeSettingsFragment
+import xyz.klinker.messenger.fragment.settings.*
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
@@ -40,6 +37,7 @@ class SettingsActivity : AbstractSettingsActivity() {
     private var globalFragment: GlobalSettingsFragment? = null
     private var featureFragment: FeatureSettingsFragment? = null
     private var mmsFragment: MmsConfigurationFragment? = null
+    private var autoReplyFragment: AutoReplySettingsFragment? = null
     private var themeFragment: ThemeSettingsFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +64,11 @@ class SettingsActivity : AbstractSettingsActivity() {
                 themeFragment = ThemeSettingsFragment()
                 title = getString(R.string.theme_settings_redirect)
                 startFragment(themeFragment!!)
+            }
+            TYPE_AUTO_REPLY -> {
+                autoReplyFragment = AutoReplySettingsFragment()
+                title = getString(R.string.auto_reply_configuration)
+                startFragment(autoReplyFragment!!)
             }
         }
 
@@ -114,7 +117,7 @@ class SettingsActivity : AbstractSettingsActivity() {
     override fun onBackPressed() {
         Settings.forceUpdate(this)
 
-        if (mmsFragment == null && themeFragment == null) {
+        if (mmsFragment == null && themeFragment == null && autoReplyFragment == null) {
             val intent = Intent(this, MessengerActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -137,6 +140,7 @@ class SettingsActivity : AbstractSettingsActivity() {
         private val TYPE_FEATURE = 2
         private val TYPE_MMS = 3
         private val TYPE_THEME = 4
+        private val TYPE_AUTO_REPLY = 5
 
         fun startGlobalSettings(context: Context) {
             startWithExtra(context, TYPE_GLOBAL)
@@ -152,6 +156,10 @@ class SettingsActivity : AbstractSettingsActivity() {
 
         fun startThemeSettings(context: Context) {
             startWithExtra(context, TYPE_THEME)
+        }
+
+        fun startAutoReplySettings(context: Context) {
+            startWithExtra(context, TYPE_AUTO_REPLY)
         }
 
         private fun startWithExtra(context: Context, type: Int) {

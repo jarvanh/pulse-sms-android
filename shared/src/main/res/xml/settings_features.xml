@@ -6,6 +6,10 @@
         android:title="@string/message_backup" />
 
     <Preference
+        android:key="@string/pref_auto_reply"
+        android:title="@string/auto_reply_configuration" />
+
+    <Preference
         android:key="@string/pref_signature"
         android:summary="@string/signature_summary"
         android:title="@string/signature" />

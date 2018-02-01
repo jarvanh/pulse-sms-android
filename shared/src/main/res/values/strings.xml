@@ -431,6 +431,14 @@
     <string name="settings_phone_number">Phone Number</string>
     <string name="disable_battery_optimization">Disable Battery Optimization</string>
     <string name="disable_battery_optimization_summary">If messages aren\'t making it from your phone to the web, try disabling the battery optimizations for Pulse.</string>
+    <string name="auto_reply_configuration">Auto-Reply Configuration</string>
+    <string name="auto_replies">Auto-Replies</string>
+    <string name="auto_reply_top_pref_summary">Driving mode and vacation reminders take precedence over all other replies. If either is turned on, no other auto-replies will be sent.</string>
+    <string name="driving_mode">Driving Mode</string>
+    <string name="driving_mode_summary">This will send the auto-reply to all messages you receive.</string>
+    <string name="vacation_mode">Vacation Mode</string>
+    <string name="auto_reply_text">Message Text</string>
+    <string name="create_auto_reply">Create a New Auto-Reply</string>
 
 
     <!-- MMS Configuration Settings -->
@@ -467,7 +475,7 @@
     <string name="secure_private_conversations_summary">Require a PIN to unlock private conversations.</string>
     <string name="use_internal_browser">Use Internal Web Browser</string>
     <string name="internal_browser_summary">Turning this off will also disable link previews within messages.</string>
-    <string name="message_backup">Message backup</string>
+    <string name="message_backup">Message Backup</string>
     <string name="message_backup_summary">Did you know: Pulse\'s online service is built around backing up your
         messages. When you sign up for a Pulse account, you can log in to that account on any device or tablet
         to restore all your messages, automatically!\n\nNo hassle and no messing around with manual backups.

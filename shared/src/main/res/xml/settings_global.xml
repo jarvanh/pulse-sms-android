@@ -16,7 +16,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <xyz.klinker.messenger.view.AutoSummaryEditTextPreference
+    <xyz.klinker.messenger.shared.view.AutoSummaryEditTextPreference
         android:key="@string/pref_phone_number"
         android:title="@string/settings_phone_number" />
 

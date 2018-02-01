@@ -46,7 +46,6 @@ class MmsConfigurationFragment : MaterialPreferenceFragment() {
         Settings.forceUpdate(activity)
     }
 
-
     private fun initConvertToMMS() {
         findPreference(getString(R.string.pref_convert_to_mms))
                 .setOnPreferenceChangeListener { _, o ->

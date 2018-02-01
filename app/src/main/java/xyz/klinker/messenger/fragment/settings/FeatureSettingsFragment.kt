@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.FeatureFlags
@@ -27,6 +28,7 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         initCleanupOldMessages()
         initSignature()
         initMessageBackup()
+        initAutoReplyConfiguration()
     }
 
     override fun onStop() {
@@ -129,6 +131,18 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
                     }.show()
 
             false
+        }
+    }
+
+    private fun initAutoReplyConfiguration() {
+        val preference = findPreference(getString(R.string.pref_auto_reply))
+        preference.setOnPreferenceClickListener {
+            SettingsActivity.startAutoReplySettings(activity)
+            false
+        }
+
+        if (!FeatureFlags.AUTO_REPLIES) {
+            preferenceScreen.removePreference(preference)
         }
     }
 }

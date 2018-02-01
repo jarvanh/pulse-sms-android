@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2017 Luke Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:key="@string/pref_driving_mode_group"
+        android:title="@string/driving_mode">
+
+        <SwitchPreference
+            android:key="@string/pref_driving_mode"
+            android:title="@string/driving_mode"
+            android:summary="@string/driving_mode_summary"/>
+
+        <xyz.klinker.messenger.shared.view.AutoSummaryEditTextPreference
+            android:key="@string/pref_driving_mode_editable"
+            android:title="@string/auto_reply_text" />
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
+
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:key="@string/pref_vacation_mode_group"
+        android:title="@string/vacation_mode">
+
+        <SwitchPreference
+            android:key="@string/pref_vacation_mode"
+            android:title="@string/vacation_mode"
+            android:summary="@string/driving_mode_summary"/>
+
+        <xyz.klinker.messenger.shared.view.AutoSummaryEditTextPreference
+            android:key="@string/pref_vacation_mode_editable"
+            android:title="@string/auto_reply_text" />
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
+
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:key="@string/pref_auto_replies_group"
+        android:title="@string/auto_replies">
+
+        <Preference android:summary="@string/auto_reply_top_pref_summary" />
+
+        <Preference
+            android:key="@string/pref_create_auto_reply"
+            android:title="@string/create_auto_reply" />
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
+
+</PreferenceScreen>

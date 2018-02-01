@@ -1,4 +1,4 @@
-package xyz.klinker.messenger.view
+package xyz.klinker.messenger.shared.view
 
 import android.content.Context
 import android.preference.EditTextPreference
