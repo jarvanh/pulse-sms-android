@@ -75,7 +75,7 @@ public class FixtureLoader {
             }
 
             String[] columnNames = new String[]{};
-            List<String[]> lines = new ArrayList<String[]>();
+            List<String[]> lines = new ArrayList<>();
             try (BufferedReader br = new BufferedReader(new FileReader(fixture))) {
                 String line;
                 boolean isFirst = true;

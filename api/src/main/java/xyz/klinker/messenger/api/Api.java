@@ -44,6 +44,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.klinker.messenger.api.service.AccountService;
 import xyz.klinker.messenger.api.service.ActivateService;
+import xyz.klinker.messenger.api.service.AutoReplyService;
 import xyz.klinker.messenger.api.service.BetaService;
 import xyz.klinker.messenger.api.service.BlacklistService;
 import xyz.klinker.messenger.api.service.ContactService;
@@ -242,6 +243,13 @@ public class Api {
      */
     public TemplateService template() {
         return retrofit.create(TemplateService.class);
+    }
+
+    /**
+     * Gets a service that can be used for auto reply requests.
+     */
+    public AutoReplyService autoReply() {
+        return retrofit.create(AutoReplyService.class);
     }
 
     /**

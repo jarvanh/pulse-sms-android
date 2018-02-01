@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.MessengerRealDataSuite;
+import xyz.klinker.messenger.shared.data.model.AutoReply;
 import xyz.klinker.messenger.shared.data.model.Blacklist;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -771,32 +772,32 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void getBlacklists() {
-        assertEquals(2, source.getBlacklists(context).getCount());
+        assertEquals(2, source.getBlacklistsAsList(context).size());
     }
 
     @Test
     public void insertBlacklist() {
         Blacklist blacklist = new Blacklist();
         blacklist.setPhoneNumber("5154224558");
-        int initialSize = source.getBlacklists(context).getCount();
+        int initialSize = source.getBlacklistsAsList(context).size();
         source.insertBlacklist(context, blacklist, false);
-        int finalSize = source.getBlacklists(context).getCount();
+        int finalSize = source.getBlacklistsAsList(context).size();
 
         assertEquals(1, finalSize - initialSize);
     }
 
     @Test
     public void deleteBlacklist() {
-        int initialSize = source.getBlacklists(context).getCount();
+        int initialSize = source.getBlacklistsAsList(context).size();
         source.deleteBlacklist(context, 1, false);
-        int finalSize = source.getBlacklists(context).getCount();
+        int finalSize = source.getBlacklistsAsList(context).size();
 
         assertEquals(1, initialSize - finalSize);
     }
 
     @Test
     public void getScheduledMessages() {
-        assertEquals(1, source.getScheduledMessages(context).getCount());
+        assertEquals(1, source.getScheduledMessagesAsList(context).size());
     }
 
     @Test
@@ -808,25 +809,25 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         message.setMimeType("text/plain");
         message.setTimestamp(1);
 
-        int initialSize = source.getScheduledMessages(context).getCount();
+        int initialSize = source.getScheduledMessagesAsList(context).size();
         source.insertScheduledMessage(context, message, false);
-        int finalSize = source.getScheduledMessages(context).getCount();
+        int finalSize = source.getScheduledMessagesAsList(context).size();
 
         assertEquals(1, finalSize - initialSize);
     }
 
     @Test
     public void deleteScheduledMessage() {
-        int initialSize = source.getScheduledMessages(context).getCount();
+        int initialSize = source.getScheduledMessagesAsList(context).size();
         source.deleteScheduledMessage(context, 1, false);
-        int finalSize = source.getScheduledMessages(context).getCount();
+        int finalSize = source.getScheduledMessagesAsList(context).size();
 
         assertEquals(1, initialSize - finalSize);
     }
 
     @Test
     public void getTemplates() {
-        assertEquals(1, source.getTemplates(context).getCount());
+        assertEquals(1, source.getTemplatesAsList(context).size());
     }
 
     @Test
@@ -834,9 +835,9 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         Template template = new Template();
         template.setText("test template");
 
-        int initialSize = source.getTemplates(context).getCount();
+        int initialSize = source.getTemplatesAsList(context).size();
         source.insertTemplate(context, template, false);
-        int finalSize = source.getTemplates(context).getCount();
+        int finalSize = source.getTemplatesAsList(context).size();
 
         assertEquals(1, finalSize - initialSize);
     }
@@ -854,16 +855,57 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void deleteTemplate() {
-        int initialSize = source.getTemplates(context).getCount();
+        int initialSize = source.getTemplatesAsList(context).size();
         source.deleteTemplate(context, 1, false);
-        int finalSize = source.getTemplates(context).getCount();
+        int finalSize = source.getTemplatesAsList(context).size();
+
+        assertEquals(1, initialSize - finalSize);
+    }
+
+    @Test
+    public void getAutoReplies() {
+        assertEquals(1, source.getAutoRepliesAsList(context).size());
+    }
+
+    @Test
+    public void insertAutoReply() {
+        AutoReply reply = new AutoReply();
+        reply.setResponse("test reply");
+        reply.setPattern("tt");
+        reply.setType("contact");
+
+        int initialSize = source.getAutoRepliesAsList(context).size();
+        source.insertAutoReply(context, reply, false);
+        int finalSize = source.getAutoRepliesAsList(context).size();
+
+        assertEquals(1, finalSize - initialSize);
+    }
+
+    @Test
+    public void updateAutoReply() {
+        AutoReply reply = new AutoReply();
+        reply.setId(1);
+        reply.setResponse("edited reply");
+        reply.setType("contact");
+        reply.setPattern("1234");
+
+        source.updateAutoReply(context, reply, false);
+
+        assertEquals("edited reply", source.getAutoRepliesAsList(context).get(0).getResponse());
+    }
+
+    @Test
+    public void deleteAutoReply() {
+        int initialSize = source.getAutoRepliesAsList(context).size();
+        source.deleteAutoReply(context, 1, false);
+        int finalSize = source.getAutoRepliesAsList(context).size();
 
         assertEquals(1, initialSize - finalSize);
     }
 
     @Test
     public void getFolders() {
-        assertEquals(1, source.getFolders(context).getCount());
+        assertEquals(1, source.getFoldersAsList(context).size());
     }
 
     @Test
@@ -872,9 +914,9 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         folder.setName("test folder");
         folder.setColors(ColorUtils.INSTANCE.getRandomMaterialColor(context));
 
-        int initialSize = source.getFolders(context).getCount();
+        int initialSize = source.getFoldersAsList(context).size();
         source.insertFolder(context, folder, false);
-        int finalSize = source.getFolders(context).getCount();
+        int finalSize = source.getFoldersAsList(context).size();
 
         assertEquals(1, finalSize - initialSize);
     }
@@ -893,9 +935,9 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void deleteFolder() {
-        int initialSize = source.getFolders(context).getCount();
+        int initialSize = source.getFoldersAsList(context).size();
         source.deleteFolder(context, 1, false);
-        int finalSize = source.getFolders(context).getCount();
+        int finalSize = source.getFoldersAsList(context).size();
 
         assertEquals(1, initialSize - finalSize);
 

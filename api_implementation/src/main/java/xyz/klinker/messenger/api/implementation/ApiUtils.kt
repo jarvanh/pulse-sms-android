@@ -734,6 +734,55 @@ object ApiUtils {
     }
 
     /**
+     * Adds a template.
+     */
+    fun addAutoReply(accountId: String?, deviceId: Long, type: String, pattern: String, response: String,
+                     encryptionUtils: EncryptionUtils?) {
+        if (accountId == null || encryptionUtils == null) {
+            return
+        }
+
+        val body = AutoReplyBody(deviceId, type, encryptionUtils.encrypt(pattern),
+                encryptionUtils.encrypt(response))
+        val request = AddAutoReplyRequest(accountId, body)
+        val message = "add auto reply"
+
+        val call = api.autoReply().add(request)
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
+     * Update the text for a given template.
+     */
+    fun updateAutoReply(accountId: String?, deviceId: Long, type: String, pattern: String, response: String,
+                       encryptionUtils: EncryptionUtils?) {
+        if (accountId == null || encryptionUtils == null) {
+            return
+        }
+
+        val request = UpdateAutoReplyRequest(type, encryptionUtils.encrypt(pattern),
+                encryptionUtils.encrypt(response))
+        val message = "update auto reply"
+
+        val call = api.autoReply().update(deviceId, accountId, request)
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
+     * Deletes the given auto reply.
+     */
+    fun deleteAutoReply(accountId: String?, deviceId: Long) {
+        if (accountId == null) {
+            return
+        }
+
+        val message = "delete auto reply"
+        val call = api.autoReply().remove(deviceId, accountId)
+
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
      * Adds a folder.
      */
     fun addFolder(accountId: String?, deviceId: Long, name: String, color: Int, colorDark: Int,

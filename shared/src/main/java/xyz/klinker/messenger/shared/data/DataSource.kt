@@ -2701,6 +2701,113 @@ object DataSource {
     }
 
     /**
+     * Gets all auto replies in the database.
+     */
+    fun getAutoReplies(context: Context): Cursor =
+            try {
+                database(context).query(AutoReply.TABLE, null, null, null, null, null,
+                        AutoReply.COLUMN_TYPE + " asc")
+            } catch (e: Exception) {
+                ensureActionable(context)
+                database(context).query(AutoReply.TABLE, null, null, null, null, null,
+                        AutoReply.COLUMN_TYPE + " asc")
+            }
+
+    /**
+     * Get all templates as a list.
+     */
+    fun getAutoRepliesAsList(context: Context): List<AutoReply> {
+        val cursor = getAutoReplies(context)
+        val autoReplies = ArrayList<AutoReply>()
+
+        if (cursor.moveToFirst()) {
+            do {
+                val autoReply = AutoReply()
+                autoReply.fillFromCursor(cursor)
+
+                autoReplies.add(autoReply)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.closeSilent()
+        return autoReplies
+    }
+
+    /**
+     * Inserts an auto reply into the database.
+     */
+    fun insertAutoReply(context: Context, autoReply: AutoReply, useApi: Boolean = true): Long {
+        val values = ContentValues(4)
+
+        if (autoReply.id <= 0) {
+            autoReply.id = generateId()
+        }
+
+        values.put(AutoReply.COLUMN_ID, autoReply.id)
+        values.put(AutoReply.COLUMN_TYPE, autoReply.type)
+        values.put(AutoReply.COLUMN_PATTERN, autoReply.pattern)
+        values.put(AutoReply.COLUMN_RESPONSE, autoReply.response)
+
+        if (useApi) {
+            ApiUtils.addAutoReply(accountId(context), autoReply.id, autoReply.type!!,
+                    autoReply.pattern!!, autoReply.response!!, encryptor(context))
+        }
+
+        return try {
+            database(context).insert(AutoReply.TABLE, null, values)
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).insert(AutoReply.TABLE, null, values)
+        }
+    }
+
+    /**
+     * Updates the values on the auto reply
+     *
+     * @param autoReply the auto reply to update
+     */
+    fun updateAutoReply(context: Context, autoReply: AutoReply, useApi: Boolean = true) {
+        val values = ContentValues(4)
+
+        values.put(AutoReply.COLUMN_ID, autoReply.id)
+        values.put(AutoReply.COLUMN_TYPE, autoReply.type)
+        values.put(AutoReply.COLUMN_PATTERN, autoReply.pattern)
+        values.put(AutoReply.COLUMN_RESPONSE, autoReply.response)
+
+        try {
+            database(context).update(AutoReply.TABLE, values, AutoReply.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(autoReply.id)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).update(AutoReply.TABLE, values, AutoReply.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(autoReply.id)))
+        }
+
+        if (useApi) {
+            ApiUtils.updateAutoReply(accountId(context), autoReply.id, autoReply.type!!,
+                    autoReply.pattern!!, autoReply.response!!, encryptor(context))
+        }
+    }
+
+    /**
+     * Deletes an auto reply from the database.
+     */
+    fun deleteAutoReply(context: Context, id: Long, useApi: Boolean = true) {
+        try {
+            database(context).delete(AutoReply.TABLE, AutoReply.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(id)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).delete(AutoReply.TABLE, AutoReply.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(id)))
+        }
+
+        if (useApi) {
+            ApiUtils.deleteAutoReply(accountId(context), id)
+        }
+    }
+
+    /**
      * Gets all folders in the database.
      */
     fun getFolders(context: Context): Cursor =

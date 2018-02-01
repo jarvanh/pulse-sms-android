@@ -24,6 +24,7 @@ import org.mockito.Mock;
 import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.shared.data.model.AutoReply;
 import xyz.klinker.messenger.shared.data.model.Blacklist;
 import xyz.klinker.messenger.shared.data.model.Contact;
 import xyz.klinker.messenger.shared.data.model.Conversation;
@@ -75,6 +76,7 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
         verify(database).execSQL(new Template().getCreateStatement());
         verify(database).execSQL(new Blacklist().getCreateStatement());
         verify(database).execSQL(new Folder().getCreateStatement());
+        verify(database).execSQL(new AutoReply().getCreateStatement());
         verify(database).execSQL(new Message().getIndexStatements()[0]);
         verify(database).execSQL(new Conversation().getIndexStatements()[0]);
         verify(database).execSQL(new Draft().getIndexStatements()[0]);
@@ -94,6 +96,7 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
         verify(database).execSQL("drop table if exists " + Blacklist.Companion.getTABLE());
         verify(database).execSQL("drop table if exists " + Template.Companion.getTABLE());
         verify(database).execSQL("drop table if exists " + Folder.Companion.getTABLE());
+        verify(database).execSQL("drop table if exists " + AutoReply.Companion.getTABLE());
         verifyNoMoreInteractions(database);
     }
 
