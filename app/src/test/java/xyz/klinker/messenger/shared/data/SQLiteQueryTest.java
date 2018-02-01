@@ -373,7 +373,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void getMessageCount() {
-        assertEquals(7, source.getMessageCount(context));
+        assertEquals(8, source.getMessageCount(context));
     }
 
     @Test
@@ -474,7 +474,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void searchMessagesTimestamp() {
         Cursor messages = source.searchMessages(context, 1000);
-        assertEquals(7, messages.getCount());
+        assertEquals(8, messages.getCount());
     }
 
     @Test
@@ -652,7 +652,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void deleteMessage() {
         int initialSize = source.getMessages(context, 2L).getCount();
-        source.deleteMessage(context, 3, false);
+        source.deleteMessage(context, 4, false);
         int newSize = source.getMessages(context, 2L).getCount();
 
         assertEquals(1, initialSize - newSize);
@@ -668,7 +668,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         int newMessageSize = source.getMessageCount(context);
         int newConversationSize = source.getConversationCount(context);
 
-        assertEquals(4, initialMessageSize - newMessageSize);
+        assertEquals(5, initialMessageSize - newMessageSize);
         assertEquals(2, initialConversationSize - newConversationSize);
     }
 

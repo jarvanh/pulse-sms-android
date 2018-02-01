@@ -207,17 +207,19 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         preference.setOnPreferenceChangeListener { _, o ->
             val cleanup = o as String
             val timeout = when (cleanup) {
-                "never" -> -1
+                "never" -> -1L
                 "one_week" ->TimeUtils.DAY * 7
                 "two_weeks" -> TimeUtils.DAY * 17
                 "one_month" -> TimeUtils.DAY * 30
                 "three_months" -> TimeUtils.DAY * 90
                 "six_months" -> TimeUtils.YEAR / 2
                 "one_year" -> TimeUtils.YEAR
-                else -> -1
+                else -> -1L
             }
 
-            DataSource.cleanupOldMessagesInConversation(activity, conversation.id, System.currentTimeMillis() - timeout)
+            if (timeout != -1L) {
+                DataSource.cleanupOldMessagesInConversation(activity, conversation.id, System.currentTimeMillis() - timeout)
+            }
             true
         }
     }

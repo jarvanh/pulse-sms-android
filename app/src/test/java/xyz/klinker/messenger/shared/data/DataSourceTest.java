@@ -474,7 +474,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void cleanupConversationMessages() {
         source.cleanupOldMessagesInConversation(context, 1, 1, false);
 
-        verify(database).delete("message", "timestamp<? AND conversation_id", new String[]{"1", "1"});
+        verify(database).delete("message", "timestamp<? AND conversation_id=?", new String[]{"1", "1"});
     }
 
     @Test
