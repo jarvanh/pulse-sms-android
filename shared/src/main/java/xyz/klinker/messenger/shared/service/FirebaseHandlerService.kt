@@ -129,6 +129,9 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                     "added_template" -> addTemplate(json, context, encryptionUtils)
                     "updated_template" -> updateTemplate(json, context, encryptionUtils)
                     "removed_template" -> removeTemplate(json, context)
+                    "added_auto_reply" -> addAutoReply(json, context, encryptionUtils)
+                    "updated_auto_reply" -> updateAutoReply(json, context, encryptionUtils)
+                    "removed_auto_reply" -> removeAutoReply(json, context)
                     "update_setting" -> updateSetting(json, context)
                     "dismissed_notification" -> dismissNotification(json, context)
                     "update_subscription" -> updateSubscription(json, context)
@@ -737,6 +740,37 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             val id = getLong(json, "id")
             DataSource.deleteTemplate(context, id, false)
             Log.v(TAG, "removed template")
+        }
+
+        @Throws(JSONException::class)
+        private fun addAutoReply(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+            val reply = AutoReply()
+            reply.id = getLong(json, "device_id")
+            reply.type = json.getString("type")
+            reply.pattern = encryptionUtils!!.decrypt(json.getString("pattern"))
+            reply.response = encryptionUtils.decrypt(json.getString("response"))
+
+            DataSource.insertAutoReply(context, reply, false)
+            Log.v(TAG, "added auto reply")
+        }
+
+        @Throws(JSONException::class)
+        private fun updateAutoReply(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+            val reply = AutoReply()
+            reply.id = getLong(json, "device_id")
+            reply.type = json.getString("type")
+            reply.pattern = encryptionUtils!!.decrypt(json.getString("pattern"))
+            reply.response = encryptionUtils.decrypt(json.getString("response"))
+
+            DataSource.updateAutoReply(context, reply, false)
+            Log.v(TAG, "updated auto reply")
+        }
+
+        @Throws(JSONException::class)
+        private fun removeAutoReply(json: JSONObject,context: Context) {
+            val id = getLong(json, "id")
+            DataSource.deleteAutoReply(context, id, false)
+            Log.v(TAG, "removed auto reply")
         }
 
         @Throws(JSONException::class)
