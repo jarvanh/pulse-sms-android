@@ -30,6 +30,14 @@
         android:key="@string/pref_contact_edit_recipients"
         android:title="@string/edit_recipients" />
 
+    <ListPreference
+        android:defaultValue="never"
+        android:entries="@array/cleanup"
+        android:entryValues="@array/cleanup_values"
+        android:key="@string/pref_cleanup_messages_now"
+        android:title="@string/cleanup_old_messages"
+        android:summary="@string/cleanup_old_messages_now_summary"/>
+
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_contact_customization_group"
         android:title="@string/theme_settings">

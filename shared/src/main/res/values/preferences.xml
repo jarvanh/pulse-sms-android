@@ -112,6 +112,7 @@
     <string name="pref_internal_browser" translatable="false">internal_browser</string>
     <string name="pref_delayed_sending" translatable="false">delayed_sending</string>
     <string name="pref_cleanup_messages" translatable="false">cleanup_old_messages</string>
+    <string name="pref_cleanup_messages_now" translatable="false">cleanup_old_messages_now</string>
     <string name="pref_signature" translatable="false">signature</string>
     <string name="pref_message_backup" translatable="false">message_backup</string>
 

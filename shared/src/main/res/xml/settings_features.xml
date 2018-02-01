@@ -10,19 +10,20 @@
         android:summary="@string/signature_summary"
         android:title="@string/signature" />
 
+    <ListPreference
+        android:defaultValue="never"
+        android:entries="@array/cleanup"
+        android:entryValues="@array/cleanup_values"
+        android:key="@string/pref_cleanup_messages"
+        android:title="@string/cleanup_old_messages"
+        android:summary="@string/cleanup_old_messages_summary"/>
+
     <xyz.klinker.messenger.view.AutoSummaryListPreference
         android:defaultValue="off"
         android:entries="@array/delayed_sending"
         android:entryValues="@array/delayed_sending_values"
         android:key="@string/pref_delayed_sending"
         android:title="@string/delayed_sending" />
-
-    <xyz.klinker.messenger.view.AutoSummaryListPreference
-        android:defaultValue="never"
-        android:entries="@array/cleanup"
-        android:entryValues="@array/cleanup_values"
-        android:key="@string/pref_cleanup_messages"
-        android:title="@string/cleanup_old_messages" />
 
     <SwitchPreference
         android:defaultValue="false"

@@ -27,6 +27,8 @@ import android.util.Log
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.activity.compose.ComposeConstants
+import xyz.klinker.messenger.api.implementation.Account
+import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
@@ -59,6 +61,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         setUpPrivate()
         setUpGroupName()
         setUpEditRecipients()
+        setUpCleanupOldMessages()
         setUpRingtone()
         setUpNotificationChannels()
         setUpColors()
@@ -201,6 +204,16 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         }
     }
 
+    private fun setUpCleanupOldMessages() {
+        val preference = findPreference(getString(R.string.pref_cleanup_messages_now))
+
+        preference.setOnPreferenceChangeListener { _, o ->
+            val cleanup = o as String
+
+            true
+        }
+    }
+
     private fun setUpRingtone() {
         val preference = findPreference(getString(R.string.pref_contact_ringtone)) as RingtonePreference
 
@@ -291,6 +304,9 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
             contactList[0].colors = conversation.colors
             source.updateContact(activity, contactList[0])
         }
+
+        PreferenceManager.getDefaultSharedPreferences(activity).edit()
+                .putString(getString(R.string.pref_cleanup_messages_now), "never").commit()
     }
 
     companion object {

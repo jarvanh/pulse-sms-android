@@ -453,6 +453,8 @@
     <string name="signature_summary">Signatures will not be displayed in Pulse\'s message list, they
         will only be shown to the receiver of the message.</string>
     <string name="cleanup_old_messages">Cleanup Old Messages</string>
+    <string name="cleanup_old_messages_summary">This runs once per day to delete any messages older than your selected time period.</string>
+    <string name="cleanup_old_messages_now_summary">This runs immediately to delete any messages, in this conversation, older than the selected time period. It cannot be undone.</string>
     <string name="delayed_sending">Delayed Sending</string>
     <string name="quick_compose">Quick Compose</string>
     <string name="quick_compose_notification">Show notification</string>
