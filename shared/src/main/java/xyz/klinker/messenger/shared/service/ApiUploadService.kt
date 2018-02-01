@@ -91,7 +91,7 @@ open class ApiUploadService : Service() {
         
         Thread {
             val startTime = System.currentTimeMillis()
-            
+
             uploadMessages()
             uploadConversations()
             uploadContacts(this, encryptionUtils!!)

@@ -17,6 +17,12 @@
 <changelog>
 
     <!--<version-->
+        <!--name="2.10.0"-->
+        <!--description="January 19th, 2018">-->
+        <!--<text>Auto reply support. Build auto replies for vacation responses, driving mode, specific contacts, or based on an expression (TODO: remove the feature flag)</text>-->
+    <!--</version>-->
+
+    <!--<version-->
         <!--name="2.9.0"-->
         <!--description="January 19th, 2018">-->
         <!--<text>Adjust the widget theme to match the dark or black theme in the app (TODO: remove the feature flag)</text>-->

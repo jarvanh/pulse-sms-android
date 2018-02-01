@@ -1,3 +1,5 @@
+@file:Suppress("MayBeConstant")
+
 package xyz.klinker.messenger.shared.data
 
 import android.content.Context
@@ -6,6 +8,7 @@ import android.preference.PreferenceManager
 
 import xyz.klinker.messenger.shared.R
 
+@Suppress("unused", "MemberVisibilityCanBePrivate")
 /**
  * We can use these for new features or if we want to test something quick and don't know if it
  * is going to work. These are great for quick changes. Say we have something that could cause force
@@ -66,6 +69,7 @@ object FeatureFlags {
     private val FLAG_WIDGET_THEMEING = "flag_widget_themeing"
     private val FLAG_MULTI_SELECT_MEDIA = "flag_multi_select_media"
     private val FLAG_SHARE_MULTIPLE_MESSAGES = "flag_share_multiple_messages"
+    private val FLAG_AUTO_REPLIES = "flag_auto_replies"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -88,6 +92,7 @@ object FeatureFlags {
     var WIDGET_THEMEING: Boolean = false
     var MULTI_SELECT_MEDIA: Boolean = false
     var SHARE_MULTIPLE_MESSAGES: Boolean = false
+    var AUTO_REPLIES: Boolean = false
 
     // need tested
     var RECONCILE_RECEIVED_MESSAGES: Boolean = false
@@ -103,6 +108,7 @@ object FeatureFlags {
         WIDGET_THEMEING = getValue(context, sharedPrefs, FLAG_WIDGET_THEMEING)
         MULTI_SELECT_MEDIA = getValue(context, sharedPrefs, FLAG_MULTI_SELECT_MEDIA)
         SHARE_MULTIPLE_MESSAGES = getValue(context, sharedPrefs, FLAG_SHARE_MULTIPLE_MESSAGES)
+        AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
 
         RECONCILE_RECEIVED_MESSAGES = getValue(context, sharedPrefs, FLAG_RECONCILE_RECEIVED_MESSAGES)
     }
