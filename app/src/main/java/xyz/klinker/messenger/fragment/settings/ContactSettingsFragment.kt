@@ -34,10 +34,7 @@ import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.util.ActivityUtils
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil
-import xyz.klinker.messenger.shared.util.ColorUtils
-import xyz.klinker.messenger.shared.util.NotificationUtils
+import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener
 import xyz.klinker.messenger.view.ColorPreference
 
@@ -209,7 +206,18 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
 
         preference.setOnPreferenceChangeListener { _, o ->
             val cleanup = o as String
+            val timeout = when (cleanup) {
+                "never" -> -1
+                "one_week" ->TimeUtils.DAY * 7
+                "two_weeks" -> TimeUtils.DAY * 17
+                "one_month" -> TimeUtils.DAY * 30
+                "three_months" -> TimeUtils.DAY * 90
+                "six_months" -> TimeUtils.YEAR / 2
+                "one_year" -> TimeUtils.YEAR
+                else -> -1
+            }
 
+            DataSource.cleanupOldMessagesInConversation(activity, conversation.id, System.currentTimeMillis() - timeout)
             true
         }
     }

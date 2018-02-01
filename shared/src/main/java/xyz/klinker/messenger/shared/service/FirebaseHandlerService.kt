@@ -100,6 +100,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                     "updated_message" -> updateMessage(json, context)
                     "removed_message" -> removeMessage(json, context)
                     "cleanup_messages" -> cleanupMessages(json, context)
+                    "cleanup_conversation_messages" -> cleanupConversationMessages(json, context)
                     "added_contact" -> addContact(json, context, encryptionUtils)
                     "updated_contact" -> updateContact(json, context, encryptionUtils)
                     "removed_contact" -> removeContact(json, context)
@@ -409,6 +410,15 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             val timestamp = getLong(json, "timestamp")
             DataSource.cleanupOldMessages(context, timestamp, false)
             Log.v(TAG, "cleaned up old messages")
+        }
+
+        @Throws(JSONException::class)
+        private fun cleanupConversationMessages(json: JSONObject,context: Context) {
+            val timestamp = getLong(json, "timestamp")
+            val conversationId = getLong(json, "conversation_id")
+
+            DataSource.cleanupOldMessagesInConversation(context, conversationId, timestamp, false)
+            Log.v(TAG, "cleaned up old messages in conversation")
         }
 
         @Throws(JSONException::class)

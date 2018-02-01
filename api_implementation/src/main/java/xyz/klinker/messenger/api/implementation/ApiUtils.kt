@@ -546,6 +546,20 @@ object ApiUtils {
     }
 
     /**
+     * Deletes messages older than the given timestamp.
+     */
+    fun cleanupConversationMessages(accountId: String?, conversationId: Long, timestamp: Long) {
+        if (accountId == null) {
+            return
+        }
+
+        val message = "clean up conversation messages"
+        val call = api.conversation().cleanup(accountId, conversationId, timestamp)
+
+        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+    }
+
+    /**
      * Adds a draft.
      */
     fun addDraft(accountId: String?, deviceId: Long,

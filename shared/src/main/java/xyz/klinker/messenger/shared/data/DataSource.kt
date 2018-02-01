@@ -2075,7 +2075,7 @@ object DataSource {
     /**
      * Deletes messages and conversations older than the given timestamp
      */
-    @JvmOverloads fun cleanupOldMessages(context: Context, timestamp: Long, useApi: Boolean = true): Int {
+    fun cleanupOldMessages(context: Context, timestamp: Long, useApi: Boolean = true): Int {
         val deleted = try {
             database(context).delete(Message.TABLE, Message.COLUMN_TIMESTAMP + "<?",
                     arrayOf(java.lang.Long.toString(timestamp)))
@@ -2090,6 +2090,26 @@ object DataSource {
 
         if (deleted > 0 && useApi) {
             ApiUtils.cleanupMessages(accountId(context), timestamp)
+        }
+
+        return deleted
+    }
+
+    /**
+     * Deletes messages and conversations older than the given timestamp
+     */
+    fun cleanupOldMessagesInConversation(context: Context, conversationId: Long, timestamp: Long, useApi: Boolean = true): Int {
+        val deleted = try {
+            database(context).delete(Message.TABLE, Message.COLUMN_TIMESTAMP + "<? AND " + Message.COLUMN_CONVERSATION_ID + "=?",
+                    arrayOf(java.lang.Long.toString(timestamp), java.lang.Long.toString(conversationId)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).delete(Message.TABLE, Message.COLUMN_TIMESTAMP + "<? AND " + Message.COLUMN_CONVERSATION_ID + "=?",
+                    arrayOf(java.lang.Long.toString(timestamp), java.lang.Long.toString(conversationId)))
+        }
+
+        if (deleted > 0 && useApi) {
+            ApiUtils.cleanupConversationMessages(accountId(context), conversationId, timestamp)
         }
 
         return deleted

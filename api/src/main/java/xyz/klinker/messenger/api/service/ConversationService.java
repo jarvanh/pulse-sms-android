@@ -79,4 +79,7 @@ public interface ConversationService {
     @POST("conversations/clean")
     Call<Void> clean(@Query("account_id") String accountId);
 
+    @POST("conversations/cleanup_messages")
+    Call<Void> cleanup(@Query("account_id") String accountId, @Query("conversation_id") long conversationId, @Query("timestamp") long timestamp);
+
 }
