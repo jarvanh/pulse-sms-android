@@ -19,10 +19,14 @@ package xyz.klinker.messenger.fragment.settings
 import android.app.AlertDialog
 import android.os.Bundle
 import android.preference.*
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.EditText
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.AutoReply
 
 /**
@@ -117,11 +121,27 @@ class AutoReplySettingsFragment : MaterialPreferenceFragment() {
     }
 
     private fun createNewAutoReply() {
+        AlertDialog.Builder(activity)
+                .setMessage(R.string.which_auto_reply_type)
+                .setPositiveButton(R.string.keyword) { _, _ -> showKeywordCreator() }
+                .setNegativeButton(R.string.contact) { _, _ -> showContactCreator() }
+                .show()
+    }
+
+    private fun showKeywordCreator() {
+        createAndShowReply(AutoReply.TYPE_KEYWORD, "hey", "test keyword")
+    }
+
+    private fun showContactCreator() {
+        createAndShowReply(AutoReply.TYPE_CONTACT, "(515) 991-1493", "test contact")
+    }
+
+    private fun createAndShowReply(type: String, pattern: String, response: String) {
         val reply = AutoReply()
         reply.id = DataSource.generateId()
-        reply.pattern = "(515) 991-1493"
-        reply.response = "test"
-        reply.type = AutoReply.TYPE_CONTACT
+        reply.pattern = pattern
+        reply.response = response
+        reply.type = type
 
         DataSource.insertAutoReply(activity, reply, true)
 

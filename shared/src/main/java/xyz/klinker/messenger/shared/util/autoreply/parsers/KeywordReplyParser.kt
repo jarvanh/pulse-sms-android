@@ -11,7 +11,7 @@ class KeywordReplyParser(context: Context?, reply: AutoReply) : AutoReplyParser(
             return false
         }
 
-        return text.contains(reply.pattern!!)
+        return text.toLowerCase().contains(reply.pattern!!.toLowerCase())
     }
 
 }
