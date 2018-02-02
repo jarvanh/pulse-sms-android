@@ -49,17 +49,20 @@ class AutoReplyParserService : IntentService("AutoReplyParserService") {
             return
         }
 
-        val parser = createParser(this, phoneNumber, text)
-        if (parser == null) {
+        val parsers = createParsers(this, phoneNumber, text)
+        if (parsers.isEmpty()) {
             stopForeground(true)
             return
         }
 
-        val message = parser.parse(conversationId)
-        if (message != null) {
-            DataSource.insertMessage(this, message, conversationId, true)
-            MessageListUpdatedReceiver.sendBroadcast(this, conversationId, message.data, message.type)
+        parsers.forEach {
+            val message = it.parse(conversationId)
+            if (message != null) {
+                DataSource.insertMessage(this, message, conversationId, true)
+                MessageListUpdatedReceiver.sendBroadcast(this, conversationId, message.data, message.type)
+            }
         }
+
 
         if (AndroidVersionUtil.isAndroidO) {
             stopForeground(true)
@@ -87,8 +90,8 @@ class AutoReplyParserService : IntentService("AutoReplyParserService") {
         val EXTRA_BODY_TEXT = "body_text"
         val EXTRA_PHONE_NUMBER = "phone_number"
 
-        fun createParser(context: Context, phoneNumber: String, text: String): AutoReplyParser? {
-            return AutoReplyParserFactory().getInstance(context, phoneNumber, text)
+        fun createParsers(context: Context, phoneNumber: String, text: String): List<AutoReplyParser> {
+            return AutoReplyParserFactory().getInstances(context, phoneNumber, text)
         }
     }
 }

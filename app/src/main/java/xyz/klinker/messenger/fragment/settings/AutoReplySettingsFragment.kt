@@ -32,7 +32,9 @@ import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.model.AutoReply
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener
@@ -49,9 +51,73 @@ class AutoReplySettingsFragment : MaterialPreferenceFragment() {
 
         addPreferencesFromResource(R.xml.settings_auto_reply)
 
+        fillAutoReplies()
+
+        initAddNewReply()
+        initDrivingMode()
+        initVacationMode()
+    }
+
+    private fun fillAutoReplies() {
 
     }
 
+    private fun initAddNewReply() {
+
+    }
+
+    private fun initDrivingMode() {
+        val toggle = findPreference(getString(R.string.pref_driving_mode))
+        toggle.setOnPreferenceChangeListener { _, o ->
+            val enabled = o as Boolean
+            ApiUtils.enableDrivingMode(Account.accountId, enabled)
+            true
+        }
+
+        val responseEntry = findPreference(getString(R.string.pref_driving_mode_editable))
+        responseEntry.setOnPreferenceChangeListener { _, o ->
+            val response = o as String
+
+            ApiUtils.updateDrivingModeText(Account.accountId, response)
+            updateDatabaseReply(AutoReply.TYPE_DRIVING, response)
+
+            true
+        }
+    }
+
+    private fun initVacationMode() {
+        val toggle = findPreference(getString(R.string.pref_vacation_mode))
+        toggle.setOnPreferenceChangeListener { _, o ->
+            val enabled = o as Boolean
+            ApiUtils.enableVacationMode(Account.accountId, enabled)
+            true
+        }
+
+        val responseEntry = findPreference(getString(R.string.pref_vacation_mode_editable))
+        responseEntry.setOnPreferenceChangeListener { _, o ->
+            val response = o as String
+
+            ApiUtils.updateVacationModeText(Account.accountId, response)
+            updateDatabaseReply(AutoReply.TYPE_VACATION, response)
+
+            true
+        }
+    }
+
+    private fun updateDatabaseReply(type: String, response: String) {
+        val databaseReply = DataSource.getAutoRepliesAsList(activity).firstOrNull { it.type == type }
+
+        if (databaseReply != null) {
+            databaseReply.response = response
+            DataSource.updateAutoReply(activity, databaseReply, true)
+        } else {
+            val reply = AutoReply()
+            reply.pattern = ""
+            reply.response = response
+            reply.type = type
+            DataSource.insertAutoReply(activity, reply, true)
+        }
+    }
 
     companion object {
         fun newInstance(): AutoReplySettingsFragment {

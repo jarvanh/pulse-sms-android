@@ -150,62 +150,56 @@ class MmsConfigurationFragment : MaterialPreferenceFragment() {
     }
 
     private fun initMmsc() {
-        findPreference(getString(R.string.pref_mmsc_url))
-                .setOnPreferenceChangeListener { _, o ->
-                    val mmsc = o as String
-                    ApiUtils.updateMmscUrl(Account.accountId,
-                            mmsc)
-                    true
-                }
+        findPreference(getString(R.string.pref_mmsc_url)).setOnPreferenceChangeListener { _, o ->
+            val mmsc = o as String
+            ApiUtils.updateMmscUrl(Account.accountId,
+                    mmsc)
+            true
+        }
     }
 
     private fun initProxy() {
-        findPreference(getString(R.string.pref_mms_proxy))
-                .setOnPreferenceChangeListener { _, o ->
-                    val proxy = o as String
-                    ApiUtils.updateMmsProxy(Account.accountId,
-                            proxy)
-                    true
-                }
+        findPreference(getString(R.string.pref_mms_proxy)).setOnPreferenceChangeListener { _, o ->
+            val proxy = o as String
+            ApiUtils.updateMmsProxy(Account.accountId,
+                    proxy)
+            true
+        }
     }
 
     private fun initPort() {
-        findPreference(getString(R.string.pref_mms_port))
-                .setOnPreferenceChangeListener { _, o ->
-                    val port = o as String
-                    ApiUtils.updateMmsPort(Account.accountId,
-                            port)
-                    true
-                }
+        findPreference(getString(R.string.pref_mms_port)).setOnPreferenceChangeListener { _, o ->
+            val port = o as String
+            ApiUtils.updateMmsPort(Account.accountId,
+                    port)
+            true
+        }
     }
 
     private fun initUserAgent() {
-        findPreference(getString(R.string.pref_user_agent))
-                .setOnPreferenceChangeListener { _, o ->
-                    val userAgent = o as String
-                    ApiUtils.updateUserAgent(Account.accountId,
-                            userAgent)
-                    true
-                }
+        findPreference(getString(R.string.pref_user_agent)).setOnPreferenceChangeListener { _, o ->
+            val userAgent = o as String
+            ApiUtils.updateUserAgent(Account.accountId,
+                    userAgent)
+            true
+        }
     }
 
     private fun initUserAgentProfileUrl() {
-        findPreference(getString(R.string.pref_user_agent_profile_url))
-                .setOnPreferenceChangeListener { _, o ->
-                    val uaProfileUrl = o as String
-                    ApiUtils.updateUserAgentProfileUrl(Account.accountId,
-                            uaProfileUrl)
-                    true
-                }
+        findPreference(getString(R.string.pref_user_agent_profile_url)).setOnPreferenceChangeListener { _, o ->
+            val uaProfileUrl = o as String
+            ApiUtils.updateUserAgentProfileUrl(Account.accountId,
+                    uaProfileUrl)
+            true
+        }
     }
 
     private fun initUserAgentProfileTagName() {
-        findPreference(getString(R.string.pref_user_agent_profile_tag))
-                .setOnPreferenceChangeListener { _, o ->
-                    val uaProfileTagName = o as String
-                    ApiUtils.updateUserAgentProfileTagName(Account.accountId,
-                            uaProfileTagName)
-                    true
-                }
+        findPreference(getString(R.string.pref_user_agent_profile_tag)).setOnPreferenceChangeListener { _, o ->
+            val uaProfileTagName = o as String
+            ApiUtils.updateUserAgentProfileTagName(Account.accountId,
+                    uaProfileTagName)
+            true
+        }
     }
 }

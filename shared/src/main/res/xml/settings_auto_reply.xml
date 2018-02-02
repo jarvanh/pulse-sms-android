@@ -22,7 +22,6 @@
 
         <SwitchPreference
             android:key="@string/pref_driving_mode"
-            android:title="@string/driving_mode"
             android:summary="@string/driving_mode_summary"/>
 
         <xyz.klinker.messenger.shared.view.AutoSummaryEditTextPreference
@@ -37,7 +36,6 @@
 
         <SwitchPreference
             android:key="@string/pref_vacation_mode"
-            android:title="@string/vacation_mode"
             android:summary="@string/driving_mode_summary"/>
 
         <xyz.klinker.messenger.shared.view.AutoSummaryEditTextPreference

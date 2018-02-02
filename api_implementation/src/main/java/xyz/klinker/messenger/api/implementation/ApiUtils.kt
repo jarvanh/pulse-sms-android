@@ -1339,13 +1339,48 @@ object ApiUtils {
         }
     }
 
-
     /**
      * Update the favorite users for quick compose. Numbers should be a comma separated list
      */
     fun updateFavoriteUserNumbers(accountId: String?, numbersString: String?) {
         if (accountId != null) {
             updateSetting(accountId, "quick_compose_favorites", "string", numbersString)
+        }
+    }
+
+    /**
+     * Enable or disable driving mode
+     */
+    fun enableDrivingMode(accountId: String?, enableDriving: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "driving_mode", "boolean", enableDriving)
+        }
+    }
+
+    /**
+     * Update the text of the driving mode preference
+     */
+    fun updateDrivingModeText(accountId: String?, text: String?) {
+        if (accountId != null) {
+            updateSetting(accountId, "driving_mode_edit", "string", text)
+        }
+    }
+
+    /**
+     * Enable or disable vacation mode
+     */
+    fun enableVacationMode(accountId: String?, enableVaction: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "vacation_mode", "boolean", enableVaction)
+        }
+    }
+
+    /**
+     * Update the text of the vacation mode preference
+     */
+    fun updateVacationModeText(accountId: String?, text: String?) {
+        if (accountId != null) {
+            updateSetting(accountId, "vacation_mode_edit", "string", text)
         }
     }
 

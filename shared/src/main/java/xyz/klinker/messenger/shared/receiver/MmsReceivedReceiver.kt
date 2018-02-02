@@ -98,7 +98,7 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
             }
 
             val from = SmsMmsUtils.getMmsFrom(uri, context)
-            if (AutoReplyParserService.createParser(context, from.trim { it <= ' ' }, nullableOrBlankBodyText.trim { it <= ' ' }) != null) {
+            if (AutoReplyParserService.createParsers(context, from.trim { it <= ' ' }, nullableOrBlankBodyText.trim { it <= ' ' }).isNotEmpty()) {
                 AutoReplyParserService.start(context, conversationId!!, from, nullableOrBlankBodyText)
             }
         }

@@ -92,7 +92,7 @@ class SmsReceivedHandler(private val context: Context) {
                 MediaParserService.start(context, conversationId, body)
             }
 
-            if (AutoReplyParserService.createParser(context, address.trim { it <= ' ' }, body.trim { it <= ' ' }) != null) {
+            if (AutoReplyParserService.createParsers(context, address.trim { it <= ' ' }, body.trim { it <= ' ' }).isNotEmpty()) {
                 AutoReplyParserService.start(context, conversationId, address, body)
             }
         }

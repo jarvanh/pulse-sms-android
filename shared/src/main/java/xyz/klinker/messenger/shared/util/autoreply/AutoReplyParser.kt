@@ -13,7 +13,7 @@ abstract class AutoReplyParser(protected var context: Context?, protected val re
         val message = Message()
         message.conversationId = conversationId
         message.timestamp = System.currentTimeMillis()
-        message.type = Message.TYPE_MEDIA
+        message.type = Message.TYPE_SENDING
         message.read = false
         message.seen = false
         message.mimeType = MimeType.TEXT_PLAIN
