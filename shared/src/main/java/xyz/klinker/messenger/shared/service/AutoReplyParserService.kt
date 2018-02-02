@@ -12,6 +12,7 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.NotificationUtils
+import xyz.klinker.messenger.shared.util.SendUtils
 import xyz.klinker.messenger.shared.util.autoreply.AutoReplyParser
 import xyz.klinker.messenger.shared.util.autoreply.AutoReplyParserFactory
 import xyz.klinker.messenger.shared.util.media.MediaMessageParserFactory
@@ -50,7 +51,9 @@ class AutoReplyParserService : IntentService("AutoReplyParserService") {
         }
 
         val parsers = createParsers(this, phoneNumber, text)
-        if (parsers.isEmpty()) {
+        val conversation = DataSource.getConversation(this, conversationId)
+
+        if (parsers.isEmpty() || conversation == null) {
             stopForeground(true)
             return
         }
@@ -60,6 +63,7 @@ class AutoReplyParserService : IntentService("AutoReplyParserService") {
             if (message != null) {
                 DataSource.insertMessage(this, message, conversationId, true)
                 MessageListUpdatedReceiver.sendBroadcast(this, conversationId, message.data, message.type)
+                SendUtils().send(this, message.data!!, conversation.phoneNumbers!!)
             }
         }
 

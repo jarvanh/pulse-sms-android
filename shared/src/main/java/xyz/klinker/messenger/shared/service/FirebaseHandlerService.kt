@@ -55,7 +55,7 @@ import java.util.*
  */
 class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
 
-//    override fun doWakefulWork(intent: Intent?) {
+    //    override fun doWakefulWork(intent: Intent?) {
     override fun onHandleIntent(intent: Intent?) {
         if (intent != null && intent.action != null && intent.action == MessengerFirebaseMessagingService.ACTION_FIREBASE_MESSAGE_RECEIVED) {
             val operation = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_OPERATION)
@@ -147,7 +147,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeAccount(json: JSONObject,context: Context) {
+        private fun removeAccount(json: JSONObject, context: Context) {
             val account = Account
 
             if (json.getString("id") == account.accountId) {
@@ -175,7 +175,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun cleanAccount(json: JSONObject,context: Context) {
+        private fun cleanAccount(json: JSONObject, context: Context) {
             val account = Account
 
             if (json.getString("id") == account.accountId) {
@@ -187,7 +187,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun addMessage(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun addMessage(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val id = getLong(json, "id")
             if (DataSource.getMessage(context, id) == null) {
                 var conversation = DataSource.getConversation(context, getLong(json, "conversation_id"))
@@ -374,7 +374,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun updateMessage(json: JSONObject,context: Context) {
+        private fun updateMessage(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             val type = json.getInt("type")
             DataSource.updateMessageType(context, id, type, false)
@@ -388,7 +388,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun updateMessageType(json: JSONObject,context: Context) {
+        private fun updateMessageType(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             val type = json.getInt("message_type")
             DataSource.updateMessageType(context, id, type, false)
@@ -402,21 +402,21 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeMessage(json: JSONObject,context: Context) {
+        private fun removeMessage(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             DataSource.deleteMessage(context, id, false)
             Log.v(TAG, "removed message")
         }
 
         @Throws(JSONException::class)
-        private fun cleanupMessages(json: JSONObject,context: Context) {
+        private fun cleanupMessages(json: JSONObject, context: Context) {
             val timestamp = getLong(json, "timestamp")
             DataSource.cleanupOldMessages(context, timestamp, false)
             Log.v(TAG, "cleaned up old messages")
         }
 
         @Throws(JSONException::class)
-        private fun cleanupConversationMessages(json: JSONObject,context: Context) {
+        private fun cleanupConversationMessages(json: JSONObject, context: Context) {
             val timestamp = getLong(json, "timestamp")
             val conversationId = getLong(json, "conversation_id")
 
@@ -425,7 +425,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun addConversation(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun addConversation(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val conversation = Conversation()
             conversation.id = getLong(json, "id")
             conversation.colors.color = json.getInt("color")
@@ -466,7 +466,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun updateContact(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun updateContact(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             try {
                 val contact = Contact()
                 contact.id = json.getLong("device_id")
@@ -486,7 +486,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeContact(json: JSONObject,context: Context) {
+        private fun removeContact(json: JSONObject, context: Context) {
             val phoneNumber = json.getString("phone_number")
             val deviceId = json.getLong("device_id")
             DataSource.deleteContact(context, deviceId, phoneNumber, false)
@@ -494,14 +494,14 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeContactById(json: JSONObject,context: Context) {
+        private fun removeContactById(json: JSONObject, context: Context) {
             val ids = json.getString("id").split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             DataSource.deleteContacts(context, ids, false)
             Log.v(TAG, "removed contacts by id")
         }
 
         @Throws(JSONException::class)
-        private fun addContact(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun addContact(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
 
             try {
                 val contact = Contact()
@@ -524,7 +524,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun updateConversation(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun updateConversation(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             try {
                 val conversation = Conversation()
                 conversation.id = getLong(json, "id")
@@ -556,7 +556,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun updateConversationTitle(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun updateConversationTitle(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             try {
                 DataSource.updateConversationTitle(context, getLong(json, "id"),
                         encryptionUtils!!.decrypt(json.getString("title"))!!, false
@@ -570,7 +570,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun updateConversationSnippet(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun updateConversationSnippet(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             try {
                 DataSource.updateConversation(context,
                         getLong(json, "id"),
@@ -590,14 +590,14 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeConversation(json: JSONObject,context: Context) {
+        private fun removeConversation(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             DataSource.deleteConversation(context, id, false)
             Log.v(TAG, "removed conversation")
         }
 
         @Throws(JSONException::class)
-        private fun readConversation(json: JSONObject,context: Context) {
+        private fun readConversation(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             val deviceId = json.getString("android_device")
 
@@ -614,14 +614,14 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun seenConversation(json: JSONObject,context: Context) {
+        private fun seenConversation(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             DataSource.seenConversation(context, id, false)
             Log.v(TAG, "seen conversation")
         }
 
         @Throws(JSONException::class)
-        private fun archiveConversation(json: JSONObject,context: Context) {
+        private fun archiveConversation(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             val archive = json.getBoolean("archive")
             DataSource.archiveConversation(context, id, archive, false)
@@ -635,7 +635,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun addDraft(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun addDraft(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val draft = Draft()
             draft.id = getLong(json, "id")
             draft.conversationId = getLong(json, "conversation_id")
@@ -647,7 +647,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeDrafts(json: JSONObject,context: Context) {
+        private fun removeDrafts(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             val deviceId = json.getString("android_device")
 
@@ -658,7 +658,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun addBlacklist(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun addBlacklist(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val id = getLong(json, "id")
             var phoneNumber: String? = json.getString("phone_number")
             phoneNumber = encryptionUtils!!.decrypt(phoneNumber)
@@ -671,14 +671,14 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeBlacklist(json: JSONObject,context: Context) {
+        private fun removeBlacklist(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             DataSource.deleteBlacklist(context, id, false)
             Log.v(TAG, "removed blacklist")
         }
 
         @Throws(JSONException::class)
-        private fun addScheduledMessage(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun addScheduledMessage(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val message = ScheduledMessage()
             message.id = getLong(json, "id")
             message.to = encryptionUtils!!.decrypt(json.getString("to"))
@@ -693,7 +693,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun updatedScheduledMessage(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun updatedScheduledMessage(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val message = ScheduledMessage()
             message.id = getLong(json, "id")
             message.to = encryptionUtils!!.decrypt(json.getString("to"))
@@ -708,7 +708,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeScheduledMessage(json: JSONObject,context: Context) {
+        private fun removeScheduledMessage(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             DataSource.deleteScheduledMessage(context, id, false)
             ScheduledMessageJob.scheduleNextRun(context, DataSource)
@@ -716,7 +716,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun addTemplate(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun addTemplate(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val template = Template()
             template.id = getLong(json, "device_id")
             template.text = encryptionUtils!!.decrypt(json.getString("text"))
@@ -726,7 +726,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun updateTemplate(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun updateTemplate(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val template = Template()
             template.id = getLong(json, "device_id")
             template.text = encryptionUtils!!.decrypt(json.getString("text"))
@@ -736,14 +736,14 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeTemplate(json: JSONObject,context: Context) {
+        private fun removeTemplate(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             DataSource.deleteTemplate(context, id, false)
             Log.v(TAG, "removed template")
         }
 
         @Throws(JSONException::class)
-        private fun addAutoReply(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun addAutoReply(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val reply = AutoReply()
             reply.id = getLong(json, "device_id")
             reply.type = json.getString("type")
@@ -755,7 +755,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun updateAutoReply(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun updateAutoReply(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val reply = AutoReply()
             reply.id = getLong(json, "device_id")
             reply.type = json.getString("type")
@@ -767,14 +767,31 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeAutoReply(json: JSONObject,context: Context) {
+        private fun removeAutoReply(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
+            val reply = DataSource.getAutoRepliesAsList(context).firstOrNull { it.id == id }
             DataSource.deleteAutoReply(context, id, false)
+
             Log.v(TAG, "removed auto reply")
+
+            if (reply == null) {
+                return
+            }
+
+            when (reply.type) {
+                AutoReply.TYPE_VACATION -> Settings.getSharedPrefs(context).edit()
+                        .putBoolean(context.getString(R.string.pref_vacation_mode), false)
+                        .putString(context.getString(R.string.pref_vacation_mode_editable), "")
+                        .apply()
+                AutoReply.TYPE_DRIVING -> Settings.getSharedPrefs(context).edit()
+                        .putBoolean(context.getString(R.string.pref_driving_mode), false)
+                        .putString(context.getString(R.string.pref_driving_mode_editable), "")
+                        .apply()
+            }
         }
 
         @Throws(JSONException::class)
-        private fun addConversationToFolder(json: JSONObject,context: Context) {
+        private fun addConversationToFolder(json: JSONObject, context: Context) {
             val conversationId = getLong(json, "id")
             val folderId = getLong(json, "folder_id")
 
@@ -783,7 +800,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeConversationFromFolder(json: JSONObject,context: Context) {
+        private fun removeConversationFromFolder(json: JSONObject, context: Context) {
             val conversationId = getLong(json, "id")
 
             DataSource.removeConversationFromFolder(context, conversationId, false)
@@ -791,7 +808,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun addFolder(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun addFolder(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val folder = Folder()
             folder.id = getLong(json, "device_id")
             folder.name = encryptionUtils!!.decrypt(json.getString("name"))
@@ -805,7 +822,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun updateFolder(json: JSONObject,context: Context, encryptionUtils: EncryptionUtils?) {
+        private fun updateFolder(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
             val folder = Folder()
             folder.id = getLong(json, "device_id")
             folder.name = encryptionUtils!!.decrypt(json.getString("name"))
@@ -819,14 +836,14 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun removeFolder(json: JSONObject,context: Context) {
+        private fun removeFolder(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             DataSource.deleteFolder(context, id, false)
             Log.v(TAG, "removed folder")
         }
 
         @Throws(JSONException::class)
-        private fun dismissNotification(json: JSONObject,context: Context) {
+        private fun dismissNotification(json: JSONObject, context: Context) {
             val conversationId = getLong(json, "id")
             val deviceId = json.getString("device_id")
 
@@ -867,7 +884,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                     } else {
                         QuickComposeNotificationService.stop(context)
                     }
-                } else if (type.toLowerCase() == "string" && pref ==context.getString(R.string.pref_quick_compose_favorites)) {
+                } else if (type.toLowerCase() == "string" && pref == context.getString(R.string.pref_quick_compose_favorites)) {
                     QuickComposeNotificationService.stop(context)
                     QuickComposeNotificationService.start(context)
                 }
@@ -937,7 +954,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun forwardToPhone(json: JSONObject,context: Context) {
+        private fun forwardToPhone(json: JSONObject, context: Context) {
 
             if (!Account.primary) {
                 return
