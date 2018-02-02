@@ -16,6 +16,7 @@ class AutoReplyParserFactory {
 
     private fun buildParsers(context: Context): List<AutoReplyParser> {
         val parsers = DataSource.getAutoRepliesAsList(context)
+                .filter { it.response!!.isNotBlank() }
                 .mapNotNull { mapToParser(context, it) }
 
         val driving = parsers.filter { it is DrivingReplyParser }
