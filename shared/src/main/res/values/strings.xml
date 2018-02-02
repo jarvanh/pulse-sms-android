@@ -439,6 +439,9 @@
     <string name="vacation_mode">Vacation Mode</string>
     <string name="auto_reply_text">Message Text</string>
     <string name="create_auto_reply">Create a New Auto-Reply</string>
+    <string name="delete_auto_reply">Delete auto-reply?</string>
+    <string name="keyword">Keyword</string>
+    <string name="contact">Contact</string>
 
 
     <!-- MMS Configuration Settings -->
