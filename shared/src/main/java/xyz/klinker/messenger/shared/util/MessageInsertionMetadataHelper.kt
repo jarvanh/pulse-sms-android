@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.shared.util
 
 import android.content.Context
+import android.util.Log
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.FeatureFlags
@@ -9,6 +10,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.message_parser.AutoReplyParserService
 import xyz.klinker.messenger.shared.service.message_parser.MediaParserService
+import xyz.klinker.messenger.shared.util.vcard.VcardReader
 
 class MessageInsertionMetadataHelper(private val context: Context) {
 
@@ -40,7 +42,8 @@ class MessageInsertionMetadataHelper(private val context: Context) {
         }
 
         if (FeatureFlags.VCARD_PREVIEWS && MimeType.isVcard(message.mimeType!!)) {
-
+            val vcard = VcardReader.readCotactCard(context, message.data!!)
+            val vcardLines = vcard.split("\n")
         }
     }
 
