@@ -31,7 +31,7 @@
     <string name="menu_mute_contacts">Blacklist</string>
     <string name="menu_invite">Invite friends</string>
     <string name="menu_feature_settings">Advanced features</string>
-    <string name="menu_settings">Global settings</string>
+    <string name="menu_settings">Customization settings</string>
     <string name="menu_customization_settings">Customization settings</string>
     <string name="menu_mms_configuration">MMS Configuration</string>
     <string name="menu_account">My account</string>
@@ -343,6 +343,7 @@
     <string name="keyboard_enter_key">Enter Key</string>
     <string name="sound_effects">Sound Effects</string>
     <string name="delivery_reports">Delivery Reports</string>
+    <string name="delivery_reports_summary">Most carriers do not support this feature</string>
     <string name="theme_settings">Customization</string>
     <string name="theme_settings_category">Look and Feel</string>
     <string name="conversation_list_category">Conversation List</string>
@@ -452,36 +453,36 @@
     <!-- Advanced Features Settings -->
     <string name="signature">Signature</string>
     <string name="signature_summary">Signatures will not be displayed in Pulse\'s message list, they
-        will only be shown to the receiver of the message.</string>
+        will only be shown to the receiver of the message</string>
     <string name="cleanup_old_messages">Cleanup Old Messages</string>
-    <string name="cleanup_old_messages_summary">This runs once per day to delete any messages older than your selected time period.</string>
-    <string name="cleanup_old_messages_now_summary">This runs immediately to delete any messages, in this conversation, older than the selected time period. It cannot be undone.</string>
+    <string name="cleanup_old_messages_summary">This runs once per day to delete any messages older than your selected time period</string>
+    <string name="cleanup_old_messages_now_summary">This runs immediately to delete any messages, in this conversation, older than the selected time period</string>
     <string name="delayed_sending">Delayed Sending</string>
-    <string name="delayed_sending_summary">This gives you a chance to cancel and edit messages before they are sent.</string>
+    <string name="delayed_sending_summary">This gives you a chance to cancel and edit messages before they are sent</string>
     <string name="messaging_features">Messaging Features</string>
     <string name="app_features">App Features</string>
     <string name="quick_compose">Quick Compose Notification</string>
     <string name="quick_compose_notification">Show notification</string>
-    <string name="quick_compose_notification_summary">Always-active notification to give you the fastest access to composing a new message.</string>
+    <string name="quick_compose_notification_summary">Always-active notification to give you the fastest access to composing a new message</string>
     <string name="quick_compose_favorites">Favorite contacts</string>
-    <string name="quick_compose_favorites_summary">These contacts will be made available on the notification actions.</string>
+    <string name="quick_compose_favorites_summary">These contacts will be made available on the notification actions</string>
     <string name="quick_compose_favorites_title">Select up to 3 contacts:</string>
     <string name="secure_private_conversations">Secure Private Conversations</string>
-    <string name="secure_private_conversations_summary">Require a PIN to unlock private conversations.</string>
+    <string name="secure_private_conversations_summary">Require a PIN to access private conversations</string>
     <string name="use_internal_browser">Use Internal Web Browser</string>
-    <string name="internal_browser_summary">Turning this off will also disable link previews within messages.</string>
+    <string name="internal_browser_summary">Turning this off will also disable link previews within message lists</string>
     <string name="message_backup">Message Backup</string>
-    <string name="message_backup_pref_summary">Worried about losing your messages? Pulse has you covered.</string>
+    <string name="message_backup_pref_summary">Worried about losing your messages? Pulse has you covered</string>
     <string name="message_backup_summary">Did you know: Pulse\'s online service is built around backing up your
         messages. When you sign up for a Pulse account, you can log in to that account on any device or tablet
         to restore all your messages, automatically!\n\nNo hassle and no messing around with manual backups.
         With Pulse, everything is smooth, easy, and completely automatic.</string>
     <string name="auto_reply_configuration">Auto Reply Configuration</string>
-    <string name="auto_reply_configuration_summary">Set up automatic replies based on the situation you are in.</string>
+    <string name="auto_reply_configuration_summary">Set up automatic replies based on the situation you are in</string>
     <string name="auto_replies">Auto Replies</string>
-    <string name="auto_reply_top_pref_summary">Driving mode and vacation reminders take precedence over all other replies. If either is turned on, no other auto replies will be sent.</string>
+    <string name="auto_reply_top_pref_summary">Driving mode and vacation reminders take precedence over all other replies. If either is turned on, no other auto replies will be sent</string>
     <string name="driving_mode">Driving Mode</string>
-    <string name="driving_mode_summary">This will send the auto reply to all messages you receive.</string>
+    <string name="driving_mode_summary">This will send the auto reply to all messages you receive</string>
     <string name="vacation_mode">Vacation Mode</string>
     <string name="auto_reply_text">Message Text</string>
     <string name="create_auto_reply">Create a New Auto Reply</string>

@@ -87,6 +87,7 @@
         <SwitchPreference
             android:key="@string/pref_delivery_reports"
             android:title="@string/delivery_reports"
+            android:summary="@string/delivery_reports_summary"
             android:defaultValue="false" />
 
         <SwitchPreference
