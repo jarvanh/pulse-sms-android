@@ -20,7 +20,10 @@ class MessageInsertionMetadataHelper(private val context: Context) {
             return
         }
 
-        val conversation = DataSource.getConversation(context, message.conversationId)
+        val conversation = try {
+            DataSource.getConversation(context, message.conversationId)
+        } catch (e: Exception) { null }
+
         if (conversation != null) {
             process(message, conversation)
         }

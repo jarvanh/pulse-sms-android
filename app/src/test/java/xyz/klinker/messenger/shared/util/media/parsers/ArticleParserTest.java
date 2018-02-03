@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.shared.data.MimeType;
+import xyz.klinker.messenger.shared.data.model.Message;
 
 import static org.junit.Assert.*;
 
@@ -25,26 +26,34 @@ public class ArticleParserTest extends MessengerRobolectricSuite {
 
     @Test
     public void shouldParseWebUrl() {
-        assertThat(parser.canParse("klinkerapps.com"), Matchers.is(true));
+        assertThat(parser.canParse(makeMessage("klinkerapps.com")), Matchers.is(true));
 
         setUp();
-        assertThat(parser.canParse("https://www.klinkerapps.com"), Matchers.is(true));
+        assertThat(parser.canParse(makeMessage("https://www.klinkerapps.com")), Matchers.is(true));
 
         setUp();
-        assertThat(parser.canParse("http://klinkerapps.com"), Matchers.is(true));
+        assertThat(parser.canParse(makeMessage("http://klinkerapps.com")), Matchers.is(true));
 
         setUp();
-        assertThat(parser.canParse("https://example.com/testing?testing+again"), Matchers.is(true));
+        assertThat(parser.canParse(makeMessage("https://example.com/testing?testing+again")), Matchers.is(true));
     }
 
     @Test
     public void shouldNotParseNonWebText() {
-        assertThat(parser.canParse("dont match"), Matchers.is(false));
+        assertThat(parser.canParse(makeMessage("dont match")), Matchers.is(false));
 
         setUp();
-        assertThat(parser.canParse("test/co"), Matchers.is(false));
+        assertThat(parser.canParse(makeMessage("test/co")), Matchers.is(false));
 
         setUp();
-        assertThat(parser.canParse("hey.fomda"), Matchers.is(false));
+        assertThat(parser.canParse(makeMessage("hey.fomda")), Matchers.is(false));
+    }
+
+    private Message makeMessage(String text) {
+        Message m = new Message();
+        m.setData(text);
+        m.setMimeType(MimeType.INSTANCE.getTEXT_PLAIN());
+
+        return m;
     }
 }

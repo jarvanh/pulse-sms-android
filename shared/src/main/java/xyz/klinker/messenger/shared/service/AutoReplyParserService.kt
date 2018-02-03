@@ -8,7 +8,6 @@ import android.support.v4.app.NotificationCompat
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
@@ -17,9 +16,6 @@ import xyz.klinker.messenger.shared.util.NotificationUtils
 import xyz.klinker.messenger.shared.util.SendUtils
 import xyz.klinker.messenger.shared.util.autoreply.AutoReplyParser
 import xyz.klinker.messenger.shared.util.autoreply.AutoReplyParserFactory
-import xyz.klinker.messenger.shared.util.media.MediaMessageParserFactory
-import xyz.klinker.messenger.shared.util.media.MediaParser
-import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
 
 class AutoReplyParserService : IntentService("AutoReplyParserService") {
 
