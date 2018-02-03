@@ -87,14 +87,6 @@ class SmsReceivedHandler(private val context: Context) {
             } else {
                 context.startService(foregroundNotificationService)
             }
-
-            if (MediaParserService.createParser(context, body.trim { it <= ' ' }) != null) {
-                MediaParserService.start(context, conversationId, body)
-            }
-
-            if (AutoReplyParserService.createParsers(context, address.trim { it <= ' ' }, body.trim { it <= ' ' }).isNotEmpty()) {
-                AutoReplyParserService.start(context, conversationId, address, body)
-            }
         }
 
         return false

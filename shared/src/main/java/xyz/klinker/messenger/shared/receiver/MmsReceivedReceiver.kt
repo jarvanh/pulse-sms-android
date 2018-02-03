@@ -91,17 +91,6 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
                 }
             }
         }
-
-        if (nullableOrBlankBodyText != null && !nullableOrBlankBodyText.isEmpty() && conversationId != null) {
-            if (MediaParserService.createParser(context, nullableOrBlankBodyText.trim { it <= ' ' }) != null) {
-                MediaParserService.start(context, conversationId!!, nullableOrBlankBodyText)
-            }
-
-            val from = SmsMmsUtils.getMmsFrom(uri, context)
-            if (AutoReplyParserService.createParsers(context, from.trim { it <= ' ' }, nullableOrBlankBodyText.trim { it <= ' ' }).isNotEmpty()) {
-                AutoReplyParserService.start(context, conversationId!!, from, nullableOrBlankBodyText)
-            }
-        }
     }
 
     private fun insertMms(context: Context, uri: Uri, lastMessage: Cursor): String? {

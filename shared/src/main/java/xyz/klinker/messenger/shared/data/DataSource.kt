@@ -1990,6 +1990,8 @@ object DataSource {
                     else
                         message.data,
                     message.mimeType, false, useApi)
+
+            MessageInsertionMetadataHelper(context).process(message)
         }
 
         return if (returnMessageId) id else conversationId
