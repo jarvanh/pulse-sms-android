@@ -240,6 +240,20 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysVisible" />
         <activity android:name="net.rdrei.android.dirchooser.DirectoryChooserActivity" />
 
+        <!--<service-->
+            <!--android:name=".service.DrivingModeQuickSettingTile"-->
+            <!--android:icon="@drawable/ic_drive"-->
+            <!--android:label="@string/driving_mode"-->
+            <!--android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">-->
+            <!--<intent-filter>-->
+                <!--<action-->
+                    <!--android:name="android.service.quicksettings.action.QS_TILE"/>-->
+            <!--</intent-filter>-->
+            <!--<meta-data-->
+                <!--android:name="android.service.quicksettings.ACTIVE_TILE"-->
+                <!--android:value="true" />-->
+        <!--</service>-->
+
         <!-- Widget -->
         <receiver android:name=".shared.widget.MessengerAppWidgetProvider">
             <intent-filter>

@@ -19,7 +19,7 @@
     <!--<version-->
         <!--name="2.10.0"-->
         <!--description="January 19th, 2018">-->
-        <!--<text>Auto reply support. Build auto replies for vacation responses, driving mode, specific contacts, or based on an expression (TODO: remove the feature flag)</text>-->
+        <!--<text>Auto reply support. Build auto replies for vacation responses, driving mode, specific contacts, or based on an expression (TODO: remove the feature flag and uncomment the quick settings service in the app's Android Manifest)</text>-->
     <!--</version>-->
 
     <!--<version-->

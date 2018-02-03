@@ -28,6 +28,7 @@ import com.android.ex.chips.RecipientEditTextView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
+import xyz.klinker.messenger.service.DrivingModeQuickSettingTile
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.AutoReply
@@ -84,6 +85,7 @@ class AutoReplySettingsFragment : MaterialPreferenceFragment() {
 
             ApiUtils.updateDrivingModeText(Account.accountId, response)
             updateDatabaseReply(AutoReply.TYPE_DRIVING, response)
+            DrivingModeQuickSettingTile.updateState(activity)
 
             true
         }
