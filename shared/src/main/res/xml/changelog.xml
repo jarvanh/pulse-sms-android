@@ -34,6 +34,7 @@
         name="2.8.2"
         description="February 5th, 2018">
         <text>Option within a conversation's settings menu to delete old messages out of that conversation, based on a time interval</text>
+        <text>Settings cleanup</text>
         <text>Bug fixes</text>
     </version>
 
