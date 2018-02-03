@@ -17,7 +17,8 @@ abstract class MediaParser(protected var context: Context?) {
     protected abstract val mimeType: String
     protected abstract fun buildBody(matchedText: String?): String?
 
-    open fun canParse(text: String): Boolean {
+    open fun canParse(message: Message): Boolean {
+        val text = message.data!!
         val matcher = patternMatcher.matcher(text)
         if (matcher.find()) {
             matchedText = matcher.group(0)
@@ -26,10 +27,10 @@ abstract class MediaParser(protected var context: Context?) {
         return matchedText != null && (ignoreMatcher == null || ignoreMatcher != null && !Pattern.compile(ignoreMatcher).matcher(text).find())
     }
 
-    fun parse(conversationId: Long): Message? {
+    fun parse(forMessage: Message): Message? {
         val message = Message()
-        message.conversationId = conversationId
-        message.timestamp = System.currentTimeMillis()
+        message.conversationId = forMessage.conversationId
+        message.timestamp = forMessage.timestamp + 1L
         message.type = Message.TYPE_MEDIA
         message.read = false
         message.seen = false

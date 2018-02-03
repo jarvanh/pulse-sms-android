@@ -9,6 +9,7 @@ import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.NotificationUtils
@@ -38,24 +39,24 @@ class MediaParserService : IntentService("MediaParserService") {
             return
         }
 
-        val conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1L)
-        val text = intent.getStringExtra(EXTRA_BODY_TEXT)
+        val messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1L)
+        val message = DataSource.getMessage(this, messageId)
 
-        if (conversationId == -1L || text == null) {
+        if (message == null) {
             stopForeground(true)
             return
         }
 
-        val parser = createParser(this, text)
+        val parser = createParser(this, message)
         if (parser == null || !Settings.internalBrowser && parser is ArticleParser) {
             stopForeground(true)
             return
         }
 
-        val message = parser.parse(conversationId)
-        if (message != null) {
-            DataSource.insertMessage(this, message, conversationId, true)
-            MessageListUpdatedReceiver.sendBroadcast(this, conversationId, message.data, message.type)
+        val parsedMessage = parser.parse(message)
+        if (parsedMessage != null) {
+            DataSource.insertMessage(this, parsedMessage, message.conversationId, true)
+            MessageListUpdatedReceiver.sendBroadcast(this, message.conversationId, message.data, message.type)
         }
 
         if (AndroidVersionUtil.isAndroidO) {
@@ -66,10 +67,9 @@ class MediaParserService : IntentService("MediaParserService") {
     companion object {
 
         @SuppressLint("NewApi")
-        fun start(context: Context, conversationId: Long, text: String) {
+        fun start(context: Context, message: Message) {
             val mediaParser = Intent(context, MediaParserService::class.java)
-            mediaParser.putExtra(MediaParserService.EXTRA_CONVERSATION_ID, conversationId)
-            mediaParser.putExtra(MediaParserService.EXTRA_BODY_TEXT, text.trim { it <= ' ' })
+            mediaParser.putExtra(MediaParserService.EXTRA_MESSAGE_ID, message.id)
 
             if (AndroidVersionUtil.isAndroidO) {
                 context.startForegroundService(mediaParser)
@@ -80,11 +80,10 @@ class MediaParserService : IntentService("MediaParserService") {
 
         private val MEDIA_PARSE_FOREGROUND_ID = 1334
 
-        val EXTRA_CONVERSATION_ID = "conversation_id"
-        val EXTRA_BODY_TEXT = "body_text"
+        val EXTRA_MESSAGE_ID = "message_id"
 
-        fun createParser(context: Context, text: String): MediaParser? {
-            return MediaMessageParserFactory().getInstance(context, text)
+        fun createParser(context: Context, message: Message): MediaParser? {
+            return MediaMessageParserFactory().getInstance(context, message)
         }
     }
 }

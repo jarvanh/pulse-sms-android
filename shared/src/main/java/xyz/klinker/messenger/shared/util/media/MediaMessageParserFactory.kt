@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.shared.util.media
 
 import android.content.Context
+import xyz.klinker.messenger.shared.data.model.Message
 
 import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
 import xyz.klinker.messenger.shared.util.media.parsers.YoutubeParser
@@ -10,8 +11,8 @@ import xyz.klinker.messenger.shared.util.media.parsers.YoutubeParser
  */
 class MediaMessageParserFactory {
 
-    fun getInstance(context: Context, messageText: String): MediaParser? {
-        return buildParsers(context).firstOrNull { it.canParse(messageText) }
+    fun getInstance(context: Context, message: Message): MediaParser? {
+        return buildParsers(context).firstOrNull { it.canParse(message) }
     }
 
     private fun buildParsers(context: Context): Array<MediaParser> {
