@@ -105,6 +105,8 @@
     <string name="pref_phone_number" translatable="false">phone_number</string>
     <string name="pref_keyboard_layout" translatable="false">keyboard_layout</string>
 
+    <string name="pref_messaging_category" translatable="false">messaging_features</string>
+    <string name="pref_app_features_category" translatable="false">app_features</string>
     <string name="pref_quick_compose_category" translatable="false">quick_compose_category</string>
     <string name="pref_quick_compose" translatable="false">quick_compose</string>
     <string name="pref_quick_compose_favorites">quick_compose_favorites</string>

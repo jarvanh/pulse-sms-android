@@ -2,6 +2,7 @@ package xyz.klinker.messenger.fragment.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceCategory
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +46,8 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         }
 
         if (!FeatureFlags.SECURE_PRIVATE) {
-            preferenceScreen.removePreference(preference)
+            val category = findPreference(getString(R.string.pref_app_features_category)) as PreferenceCategory
+            category.removePreference(preference)
         }
     }
 
@@ -142,7 +144,8 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         }
 
         if (!FeatureFlags.AUTO_REPLIES) {
-            preferenceScreen.removePreference(preference)
+            val category = findPreference(getString(R.string.pref_app_features_category)) as PreferenceCategory
+            category.removePreference(preference)
         }
     }
 }

@@ -1,45 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:key="@string/pref_message_backup"
-        android:title="@string/message_backup" />
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:key="@string/pref_app_features_category"
+        android:title="@string/app_features">
 
-    <Preference
-        android:key="@string/pref_auto_reply"
-        android:title="@string/auto_reply_configuration" />
+        <Preference
+            android:key="@string/pref_auto_reply"
+            android:title="@string/auto_reply_configuration"
+            android:summary="@string/auto_reply_configuration_summary" />
 
-    <Preference
-        android:key="@string/pref_signature"
-        android:summary="@string/signature_summary"
-        android:title="@string/signature" />
+        <Preference
+            android:key="@string/pref_message_backup"
+            android:title="@string/message_backup"
+            android:summary="@string/message_backup_pref_summary" />
 
-    <ListPreference
-        android:defaultValue="never"
-        android:entries="@array/cleanup"
-        android:entryValues="@array/cleanup_values"
-        android:key="@string/pref_cleanup_messages"
-        android:title="@string/cleanup_old_messages"
-        android:summary="@string/cleanup_old_messages_summary"/>
+        <ListPreference
+            android:defaultValue="never"
+            android:entries="@array/cleanup"
+            android:entryValues="@array/cleanup_values"
+            android:key="@string/pref_cleanup_messages"
+            android:title="@string/cleanup_old_messages"
+            android:summary="@string/cleanup_old_messages_summary"/>
 
-    <xyz.klinker.messenger.view.AutoSummaryListPreference
-        android:defaultValue="off"
-        android:entries="@array/delayed_sending"
-        android:entryValues="@array/delayed_sending_values"
-        android:key="@string/pref_delayed_sending"
-        android:title="@string/delayed_sending" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_secure_private_conversations"
+            android:summary="@string/secure_private_conversations_summary"
+            android:title="@string/secure_private_conversations" />
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="@string/pref_secure_private_conversations"
-        android:summary="@string/secure_private_conversations_summary"
-        android:title="@string/secure_private_conversations" />
+        <SwitchPreference
+            android:key="@string/pref_internal_browser"
+            android:title="@string/use_internal_browser"
+            android:summary="@string/internal_browser_summary"
+            android:defaultValue="true" />
 
-    <SwitchPreference
-        android:key="@string/pref_internal_browser"
-        android:title="@string/use_internal_browser"
-        android:summary="@string/internal_browser_summary"
-        android:defaultValue="true" />
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
+
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:key="@string/pref_messaging_category"
+        android:title="@string/messaging_features">
+
+        <ListPreference
+            android:defaultValue="off"
+            android:entries="@array/delayed_sending"
+            android:entryValues="@array/delayed_sending_values"
+            android:key="@string/pref_delayed_sending"
+            android:title="@string/delayed_sending"
+            android:summary="@string/delayed_sending_summary"/>
+
+        <Preference
+            android:key="@string/pref_signature"
+            android:summary="@string/signature_summary"
+            android:title="@string/signature" />
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_quick_compose_category"

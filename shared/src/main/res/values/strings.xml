@@ -431,18 +431,6 @@
     <string name="settings_phone_number">Phone Number</string>
     <string name="disable_battery_optimization">Disable Battery Optimization</string>
     <string name="disable_battery_optimization_summary">If messages aren\'t making it from your phone to the web, try disabling the battery optimizations for Pulse.</string>
-    <string name="auto_reply_configuration">Auto-Reply Configuration</string>
-    <string name="auto_replies">Auto-Replies</string>
-    <string name="auto_reply_top_pref_summary">Driving mode and vacation reminders take precedence over all other replies. If either is turned on, no other auto-replies will be sent.</string>
-    <string name="driving_mode">Driving Mode</string>
-    <string name="driving_mode_summary">This will send the auto-reply to all messages you receive.</string>
-    <string name="vacation_mode">Vacation Mode</string>
-    <string name="auto_reply_text">Message Text</string>
-    <string name="create_auto_reply">Create a New Auto-Reply</string>
-    <string name="delete_auto_reply">Delete auto-reply?</string>
-    <string name="which_auto_reply_type">Which type of auto reply would you like to create?</string>
-    <string name="keyword">Keyword</string>
-    <string name="contact">Contact</string>
 
 
     <!-- MMS Configuration Settings -->
@@ -469,7 +457,10 @@
     <string name="cleanup_old_messages_summary">This runs once per day to delete any messages older than your selected time period.</string>
     <string name="cleanup_old_messages_now_summary">This runs immediately to delete any messages, in this conversation, older than the selected time period. It cannot be undone.</string>
     <string name="delayed_sending">Delayed Sending</string>
-    <string name="quick_compose">Quick Compose</string>
+    <string name="delayed_sending_summary">This gives you a chance to cancel and edit messages before they are sent.</string>
+    <string name="messaging_features">Messaging Features</string>
+    <string name="app_features">App Features</string>
+    <string name="quick_compose">Quick Compose Notification</string>
     <string name="quick_compose_notification">Show notification</string>
     <string name="quick_compose_notification_summary">Always-active notification to give you the fastest access to composing a new message.</string>
     <string name="quick_compose_favorites">Favorite contacts</string>
@@ -480,10 +471,24 @@
     <string name="use_internal_browser">Use Internal Web Browser</string>
     <string name="internal_browser_summary">Turning this off will also disable link previews within messages.</string>
     <string name="message_backup">Message Backup</string>
+    <string name="message_backup_pref_summary">Worried about losing your messages? Pulse has you covered.</string>
     <string name="message_backup_summary">Did you know: Pulse\'s online service is built around backing up your
         messages. When you sign up for a Pulse account, you can log in to that account on any device or tablet
         to restore all your messages, automatically!\n\nNo hassle and no messing around with manual backups.
         With Pulse, everything is smooth, easy, and completely automatic.</string>
+    <string name="auto_reply_configuration">Auto Reply Configuration</string>
+    <string name="auto_reply_configuration_summary">Set up automatic replies based on the situation you are in.</string>
+    <string name="auto_replies">Auto Replies</string>
+    <string name="auto_reply_top_pref_summary">Driving mode and vacation reminders take precedence over all other replies. If either is turned on, no other auto replies will be sent.</string>
+    <string name="driving_mode">Driving Mode</string>
+    <string name="driving_mode_summary">This will send the auto reply to all messages you receive.</string>
+    <string name="vacation_mode">Vacation Mode</string>
+    <string name="auto_reply_text">Message Text</string>
+    <string name="create_auto_reply">Create a New Auto Reply</string>
+    <string name="delete_auto_reply">Delete auto reply?</string>
+    <string name="which_auto_reply_type">Which type of auto reply would you like to create?</string>
+    <string name="keyword">Keyword</string>
+    <string name="contact">Contact</string>
 
     <!-- Theming Options -->
     <string name="day_night">Default (Day/Night)</string>
