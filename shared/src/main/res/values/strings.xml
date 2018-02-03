@@ -489,6 +489,7 @@
     <string name="delete_auto_reply">Delete auto reply?</string>
     <string name="which_auto_reply_type">Which type of auto reply would you like to create?</string>
     <string name="keyword">Keyword</string>
+    <string name="response">Response</string>
     <string name="contact">Contact</string>
 
     <!-- Theming Options -->

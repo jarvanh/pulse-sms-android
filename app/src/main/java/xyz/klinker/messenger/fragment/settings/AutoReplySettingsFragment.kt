@@ -22,6 +22,9 @@ import android.preference.*
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
+import android.widget.MultiAutoCompleteTextView
+import com.android.ex.chips.BaseRecipientAdapter
+import com.android.ex.chips.RecipientEditTextView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
@@ -108,7 +111,9 @@ class AutoReplySettingsFragment : MaterialPreferenceFragment() {
     private fun updateDatabaseReply(type: String, response: String) {
         val databaseReply = DataSource.getAutoRepliesAsList(activity).firstOrNull { it.type == type }
 
-        if (databaseReply != null) {
+        if (response.isEmpty() && databaseReply != null) {
+            DataSource.deleteAutoReply(activity, databaseReply.id, true)
+        } else if (databaseReply != null) {
             databaseReply.response = response
             DataSource.updateAutoReply(activity, databaseReply, true)
         } else {
@@ -129,11 +134,57 @@ class AutoReplySettingsFragment : MaterialPreferenceFragment() {
     }
 
     private fun showKeywordCreator() {
-        createAndShowReply(AutoReply.TYPE_KEYWORD, "hey", "test keyword")
+        val layout = LayoutInflater.from(activity).inflate(R.layout.dialog_keyword_auto_reply, null, false)
+        val patternEditText = layout.findViewById<View>(R.id.keyword) as EditText
+        patternEditText.setHint(R.string.keyword)
+        val responseEditText = layout.findViewById<View>(R.id.response) as EditText
+        responseEditText.setHint(R.string.response)
+
+        AlertDialog.Builder(activity)
+                .setView(layout)
+                .setPositiveButton(R.string.save) { _, _ ->
+                    if (patternEditText.text.isEmpty() || responseEditText.text.isBlank()) {
+                        return@setPositiveButton
+                    }
+
+                    val keyword = patternEditText.text.toString()
+                    val response = responseEditText.text.toString()
+
+                    createAndShowReply(AutoReply.TYPE_KEYWORD, keyword, response)
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
     }
 
     private fun showContactCreator() {
-        createAndShowReply(AutoReply.TYPE_CONTACT, "(515) 991-1493", "test contact")
+        val layout = LayoutInflater.from(activity).inflate(R.layout.dialog_contact_auto_reply, null, false)
+        val contactEditText = layout.findViewById<View>(R.id.contact) as RecipientEditTextView
+        contactEditText.setHint(R.string.contact)
+        val responseEditText = layout.findViewById<View>(R.id.response) as EditText
+        responseEditText.setHint(R.string.response)
+
+        val adapter = BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, context)
+        adapter.isShowMobileOnly = Settings.mobileOnly
+
+        contactEditText.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
+        contactEditText.highlightColor = Settings.mainColorSet.colorAccent
+        contactEditText.setAdapter(adapter)
+        contactEditText.maxChips = 1
+
+        AlertDialog.Builder(activity)
+                .setView(layout)
+                .setPositiveButton(R.string.save) { _, _ ->
+                    if (contactEditText.recipients.isEmpty() || responseEditText.text.isBlank()) {
+                        return@setPositiveButton
+                    }
+
+                    val contact = contactEditText.recipients[0].entry.destination
+                    val response = responseEditText.text.toString()
+
+                    createAndShowReply(AutoReply.TYPE_CONTACT, contact, response)
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
     }
 
     private fun createAndShowReply(type: String, pattern: String, response: String) {
