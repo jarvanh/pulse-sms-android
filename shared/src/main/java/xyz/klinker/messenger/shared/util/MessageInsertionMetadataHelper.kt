@@ -32,7 +32,7 @@ class MessageInsertionMetadataHelper(private val context: Context) {
         }
 
         if (message.type == Message.TYPE_RECEIVED && canProcessAutoReply(message, conversation)) {
-            AutoReplyParserService.start(context, conversation.id, conversation.phoneNumbers!!, message.data!!)
+            AutoReplyParserService.start(context, message)
         }
     }
 
@@ -40,7 +40,6 @@ class MessageInsertionMetadataHelper(private val context: Context) {
         MediaParserService.createParser(context, message) != null
 
     private fun canProcessAutoReply(message: Message, conversation: Conversation) =
-            AutoReplyParserService.createParsers(context, conversation.phoneNumbers!!.trim { it <= ' ' },
-                    message.data!!.trim { it <= ' ' }).isNotEmpty()
+            AutoReplyParserService.createParsers(context, conversation, message).isNotEmpty()
 
 }

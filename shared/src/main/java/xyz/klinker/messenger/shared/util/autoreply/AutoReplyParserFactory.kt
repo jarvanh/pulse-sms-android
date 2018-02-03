@@ -4,6 +4,8 @@ import android.content.Context
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.AutoReply
+import xyz.klinker.messenger.shared.data.model.Conversation
+import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.autoreply.parsers.ContactReplyParser
 import xyz.klinker.messenger.shared.util.autoreply.parsers.DrivingReplyParser
 import xyz.klinker.messenger.shared.util.autoreply.parsers.KeywordReplyParser
@@ -11,8 +13,8 @@ import xyz.klinker.messenger.shared.util.autoreply.parsers.VacationReplyParser
 
 class AutoReplyParserFactory {
 
-    fun getInstances(context: Context, fromPhoneNumber: String, messageText: String): List<AutoReplyParser> {
-        return buildParsers(context).filter { it.canParse(fromPhoneNumber, messageText) }
+    fun getInstances(context: Context, conversation: Conversation, message: Message): List<AutoReplyParser> {
+        return buildParsers(context).filter { it.canParse(conversation, message) }
     }
 
     private fun buildParsers(context: Context): List<AutoReplyParser> {
