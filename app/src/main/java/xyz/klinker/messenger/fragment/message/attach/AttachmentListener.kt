@@ -21,7 +21,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.util.ImageUtils
-import xyz.klinker.messenger.shared.util.VCardWriter
+import xyz.klinker.messenger.shared.util.vcard.VcardWriter
 import xyz.klinker.messenger.shared.util.listener.AttachContactListener
 import xyz.klinker.messenger.shared.util.listener.AudioRecordedListener
 import xyz.klinker.messenger.shared.util.listener.ImageSelectedListener
@@ -60,7 +60,7 @@ class AttachmentListener(private val fragment: MessageListFragment)
             .setItems(R.array.attach_contact_options) { _, i ->
                 when (i) {
                     0 -> try {
-                        val contactFile = VCardWriter.writeContactCard(activity!!, firstName, lastName, phone)
+                        val contactFile = VcardWriter.writeContactCard(activity!!, firstName, lastName, phone)
                         attachManager.attachContact(contactFile)
                     } catch (e: Exception) {
                     }

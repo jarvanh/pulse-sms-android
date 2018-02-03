@@ -68,6 +68,7 @@ object FeatureFlags {
     private val FLAG_MULTI_SELECT_MEDIA = "flag_multi_select_media"
     private val FLAG_SHARE_MULTIPLE_MESSAGES = "flag_share_multiple_messages"
     private val FLAG_AUTO_REPLIES = "flag_auto_replies"
+    private val FLAG_VCARD_PREVIEWS = "flag_vcard_previews"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -91,6 +92,7 @@ object FeatureFlags {
     var MULTI_SELECT_MEDIA: Boolean = false
     var SHARE_MULTIPLE_MESSAGES: Boolean = false
     var AUTO_REPLIES: Boolean = false
+    var VCARD_PREVIEWS: Boolean = false
 
     // need tested
     var RECONCILE_RECEIVED_MESSAGES: Boolean = false
@@ -107,6 +109,7 @@ object FeatureFlags {
         MULTI_SELECT_MEDIA = getValue(context, sharedPrefs, FLAG_MULTI_SELECT_MEDIA)
         SHARE_MULTIPLE_MESSAGES = getValue(context, sharedPrefs, FLAG_SHARE_MULTIPLE_MESSAGES)
         AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
+        VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
 
         RECONCILE_RECEIVED_MESSAGES = getValue(context, sharedPrefs, FLAG_RECONCILE_RECEIVED_MESSAGES)
     }
@@ -125,6 +128,8 @@ object FeatureFlags {
             FLAG_WIDGET_THEMEING -> WIDGET_THEMEING = flag
             FLAG_MULTI_SELECT_MEDIA -> MULTI_SELECT_MEDIA = flag
             FLAG_SHARE_MULTIPLE_MESSAGES -> SHARE_MULTIPLE_MESSAGES = flag
+            FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
+            FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
 
             FLAG_RECONCILE_RECEIVED_MESSAGES -> RECONCILE_RECEIVED_MESSAGES = false
         }

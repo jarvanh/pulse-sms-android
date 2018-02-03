@@ -1,14 +1,15 @@
-package xyz.klinker.messenger.shared.util
+package xyz.klinker.messenger.shared.util.vcard
 
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import xyz.klinker.messenger.shared.util.ImageUtils
 
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-object VCardWriter {
+object VcardWriter {
 
     @Throws(IOException::class)
     fun writeContactCard(context: Context, firstName: String, lastName: String, phoneNumber: String): Uri {

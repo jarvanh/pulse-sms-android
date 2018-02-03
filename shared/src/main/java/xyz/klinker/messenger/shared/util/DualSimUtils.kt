@@ -33,6 +33,7 @@ object DualSimUtils {
             manager = SubscriptionManager.from(context)
 
             try {
+                this.availableSims.clear()
                 this.availableSims.addAll(manager!!.activeSubscriptionInfoList)
                 if (availableSims.size <= 1) {
                     // not a dual sim phone, ignore this.

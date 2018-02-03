@@ -1,6 +1,5 @@
-package xyz.klinker.messenger.shared.service
+package xyz.klinker.messenger.shared.service.message_parser
 
-import android.annotation.SuppressLint
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
@@ -8,16 +7,14 @@ import android.support.v4.app.NotificationCompat
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.NotificationUtils
-import xyz.klinker.messenger.shared.util.media.MediaMessageParserFactory
-import xyz.klinker.messenger.shared.util.media.MediaParser
-import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
+import xyz.klinker.messenger.shared.util.vcard.VcardParser
+import xyz.klinker.messenger.shared.util.vcard.VcardParserFactory
 
-class MediaParserService : IntentService("MediaParserService") {
+class VcardParserService : IntentService("VcardParserService") {
 
     override fun onHandleIntent(intent: Intent?) {
         if (AndroidVersionUtil.isAndroidO) {
@@ -31,7 +28,7 @@ class MediaParserService : IntentService("MediaParserService") {
                     .setOngoing(true)
                     .setPriority(NotificationCompat.PRIORITY_MIN)
                     .build()
-            startForeground(MEDIA_PARSE_FOREGROUND_ID, notification)
+            startForeground(VCARD_PARSE_FOREGROUND_ID, notification)
         }
 
         if (intent == null) {
@@ -41,22 +38,23 @@ class MediaParserService : IntentService("MediaParserService") {
 
         val messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1L)
         val message = DataSource.getMessage(this, messageId)
-
         if (message == null) {
             stopForeground(true)
             return
         }
 
-        val parser = createParser(this, message)
-        if (parser == null || !Settings.internalBrowser && parser is ArticleParser) {
+        val parsers = createParsers(this, message)
+        if (parsers.isEmpty()) {
             stopForeground(true)
             return
         }
 
-        val parsedMessage = parser.parse(message)
-        if (parsedMessage != null) {
-            DataSource.insertMessage(this, parsedMessage, message.conversationId, true)
-            MessageListUpdatedReceiver.sendBroadcast(this, message.conversationId, message.data, message.type)
+        parsers.forEach {
+            val parsedMessage = it.parse(message)
+            if (parsedMessage != null) {
+                DataSource.insertMessage(this, parsedMessage, message.conversationId, true)
+                MessageListUpdatedReceiver.sendBroadcast(this, message.conversationId, parsedMessage.data, parsedMessage.type)
+            }
         }
 
         if (AndroidVersionUtil.isAndroidO) {
@@ -65,25 +63,23 @@ class MediaParserService : IntentService("MediaParserService") {
     }
 
     companion object {
-
-        @SuppressLint("NewApi")
         fun start(context: Context, message: Message) {
-            val mediaParser = Intent(context, MediaParserService::class.java)
-            mediaParser.putExtra(MediaParserService.EXTRA_MESSAGE_ID, message.id)
+            val parser = Intent(context, VcardParserService::class.java)
+            parser.putExtra(EXTRA_MESSAGE_ID, message.id)
 
             if (AndroidVersionUtil.isAndroidO) {
-                context.startForegroundService(mediaParser)
+                context.startForegroundService(parser)
             } else {
-                context.startService(mediaParser)
+                context.startService(parser)
             }
         }
 
-        private val MEDIA_PARSE_FOREGROUND_ID = 1334
+        private val VCARD_PARSE_FOREGROUND_ID = 1337
 
         val EXTRA_MESSAGE_ID = "message_id"
 
-        fun createParser(context: Context, message: Message): MediaParser? {
-            return MediaMessageParserFactory().getInstance(context, message)
+        fun createParsers(context: Context, message: Message): List<VcardParser> {
+            return VcardParserFactory().getInstances(context, message)
         }
     }
 }

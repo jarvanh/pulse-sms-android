@@ -3,11 +3,12 @@ package xyz.klinker.messenger.shared.util
 import android.content.Context
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.service.AutoReplyParserService
-import xyz.klinker.messenger.shared.service.MediaParserService
+import xyz.klinker.messenger.shared.service.message_parser.AutoReplyParserService
+import xyz.klinker.messenger.shared.service.message_parser.MediaParserService
 
 class MessageInsertionMetadataHelper(private val context: Context) {
 
@@ -36,6 +37,10 @@ class MessageInsertionMetadataHelper(private val context: Context) {
 
         if (message.type == Message.TYPE_RECEIVED && canProcessAutoReply(message, conversation)) {
             AutoReplyParserService.start(context, message)
+        }
+
+        if (FeatureFlags.VCARD_PREVIEWS && MimeType.isVcard(message.mimeType!!)) {
+
         }
     }
 

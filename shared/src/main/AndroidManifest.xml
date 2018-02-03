@@ -306,8 +306,9 @@
         <service android:name=".service.ApiDownloadService" />
         <service android:name=".service.SimpleSubscriptionCheckService" />
         <service android:name=".service.SimpleLifetimeSubscriptionCheckService" />
-        <service android:name=".service.MediaParserService" />
-        <service android:name=".service.AutoReplyParserService" />
+        <service android:name=".service.message_parser.MediaParserService" />
+        <service android:name=".service.message_parser.AutoReplyParserService" />
+        <service android:name=".service.message_parser.VcardParserService" />
         <service android:name=".service.NewMessagesCheckService" />
         <service android:name=".service.FirebaseResetService" />
         <service android:name=".service.ResendFailedMessage" />
