@@ -45,6 +45,7 @@ object StringUtils {
      * Capitalize the first letter of each word.
      */
     fun titleize(input: String): String {
+        val input = input.toLowerCase()
         val output = StringBuilder(input.length)
         var lastCharacterWasWhitespace = true
 

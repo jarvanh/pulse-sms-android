@@ -10,6 +10,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.message_parser.AutoReplyParserService
 import xyz.klinker.messenger.shared.service.message_parser.MediaParserService
+import xyz.klinker.messenger.shared.service.message_parser.VcardParserService
 import xyz.klinker.messenger.shared.util.vcard.VcardReader
 
 class MessageInsertionMetadataHelper(private val context: Context) {
@@ -25,7 +26,9 @@ class MessageInsertionMetadataHelper(private val context: Context) {
 
         val conversation = try {
             DataSource.getConversation(context, message.conversationId)
-        } catch (e: Exception) { null }
+        } catch (e: Exception) {
+            null
+        }
 
         if (conversation != null) {
             process(message, conversation)
@@ -41,16 +44,18 @@ class MessageInsertionMetadataHelper(private val context: Context) {
             AutoReplyParserService.start(context, message)
         }
 
-        if (FeatureFlags.VCARD_PREVIEWS && MimeType.isVcard(message.mimeType!!)) {
-            val vcard = VcardReader.readCotactCard(context, message.data!!)
-            val vcardLines = vcard.split("\n")
+        if (FeatureFlags.VCARD_PREVIEWS && MimeType.isVcard(message.mimeType!!) && canProcessVcard(message)) {
+            VcardParserService.start(context, message)
         }
     }
 
     private fun canProcessMedia(message: Message) =
-        MediaParserService.createParser(context, message) != null
+            MediaParserService.createParser(context, message) != null
 
     private fun canProcessAutoReply(message: Message, conversation: Conversation) =
             AutoReplyParserService.createParsers(context, conversation, message).isNotEmpty()
+
+    private fun canProcessVcard(message: Message) =
+            VcardParserService.createParsers(context, message).isNotEmpty()
 
 }
