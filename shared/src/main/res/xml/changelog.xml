@@ -17,14 +17,20 @@
 <changelog>
 
     <!--<version-->
+        <!--name="2.11.0"-->
+        <!--description="May, 2018">-->
+        <!--<text>Display name, phone number, and location - on the message list - from vCards that you send and receive (TODO: remove the feature flag)</text>-->
+    <!--</version>-->
+
+    <!--<version-->
         <!--name="2.10.0"-->
-        <!--description="January 19th, 2018">-->
+        <!--description="April, 2018">-->
         <!--<text>Auto reply support. Build auto replies for vacation responses, driving mode, specific contacts, or based on an expression (TODO: remove the feature flag and uncomment the quick settings service in the app's Android Manifest)</text>-->
     <!--</version>-->
 
     <!--<version-->
         <!--name="2.9.0"-->
-        <!--description="January 19th, 2018">-->
+        <!--description="March , 2018">-->
         <!--<text>Adjust the widget theme to match the dark or black theme in the app (TODO: remove the feature flag)</text>-->
         <!--<text>Long click (and drag) to select and delete images on the "View Media" page within a conversation (TODO: remove the feature flag)</text>-->
         <!--<text>Share multiple selected messages at once, instead of forcing you to share them individually (TODO: remove the feature flag)</text>-->

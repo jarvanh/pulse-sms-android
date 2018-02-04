@@ -170,16 +170,12 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
                     .setMargins(holder.itemView)
                     .setBackground(holder.messageHolder, message.mimeType!!)
                     .applyTimestampHeight(holder.timestamp, timestampHeight)
-
-            if (holder.contact != null) {
-                stylingHelper.applyTimestampHeight(holder.contact!!, timestampHeight)
-            }
         } else {
             stylingHelper.calculateAdjacentItems(dataProvider.messages, position)
                     .applyTimestampHeight(holder.timestamp, timestampHeight)
 
-            if (holder.contact != null) {
-                stylingHelper.applyTimestampHeight(holder.contact!!, timestampHeight)
+            if (holder.contact != null && !MimeType.isExpandedMedia(message.mimeType!!)) {
+                holder.contact!!.layoutParams.height = timestampHeight
             }
 
             val label = if (holder.timestamp.layoutParams.height > 0)
