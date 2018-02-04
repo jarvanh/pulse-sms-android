@@ -24,7 +24,7 @@ object VcardWriter {
         fw.write("VERSION:3.0\r\n")
         fw.write("N:$lastName;$firstName\r\n")
         fw.write("FN:$firstName $lastName\r\n")
-        fw.write("TEL;TYPE=HOME,VOICE:" + phoneNumber + "\r\n")
+        fw.write("TEL;TYPE=CELL,VOICE:" + phoneNumber + "\r\n")
         fw.write("END:VCARD\r\n")
         fw.close()
 

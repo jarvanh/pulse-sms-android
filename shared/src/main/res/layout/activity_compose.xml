@@ -53,7 +53,8 @@
                 android:gravity="start"
                 android:hint="@string/enter_contact_name"
                 android:textColor="@android:color/white"
-                android:textColorHint="@color/toolbarEditTextHint" />
+                android:textColorHint="@color/toolbarEditTextHint"
+                android:imeOptions="flagNoExtractUi" />
 
         </xyz.klinker.messenger.shared.view.MaxHeightScrollView>
 

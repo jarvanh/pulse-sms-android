@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.activity.share
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
@@ -25,6 +26,8 @@ import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper
 import android.util.TypedValue
 import android.widget.*
 import xyz.klinker.android.floating_tutorial.util.DensityConverter
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
 
 
 class QuickShareActivity : FloatingTutorialActivity() {
@@ -45,6 +48,8 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
 
     var mediaData: String? = null
     var mimeType: String? = null
+
+    var sendClicked = false
 
     override fun initPage() {
         setContentView(R.layout.page_quick_share)
@@ -72,7 +77,14 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
 
         val sendButton = findViewById<View>(R.id.tutorial_next_button)
         sendButton.setOnClickListener {
-            if (contactEntry.recipients.isNotEmpty() && ShareSender(this).sendMessage()) {
+            if (sendClicked) {
+                return@setOnClickListener
+            } else if (contactEntry.recipients.isNotEmpty() && ShareSender(this).sendMessage()) {
+                sendClicked = true
+
+                val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(messageEntry.windowToken, 0)
+
                 activity.finishAnimated()
             }
         }
