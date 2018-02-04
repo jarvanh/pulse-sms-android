@@ -38,7 +38,7 @@
 
     <version
         name="2.8.2"
-        description="February 5th, 2018">
+        description="February 4th, 2018">
         <!-- setup for auto reply system -->
         <!-- changes to the media parsers to run on messages inserted and refactor how they are used to use entire message/conversation objects, not just metadata from them -->
         <!-- vCard parsing for the plain text attributes (name and phone numbers) -->
