@@ -94,9 +94,6 @@ object FeatureFlags {
     var AUTO_REPLIES: Boolean = false
     var VCARD_PREVIEWS: Boolean = false
 
-    // need tested
-    var RECONCILE_RECEIVED_MESSAGES: Boolean = false
-
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -110,8 +107,6 @@ object FeatureFlags {
         SHARE_MULTIPLE_MESSAGES = getValue(context, sharedPrefs, FLAG_SHARE_MULTIPLE_MESSAGES)
         AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
-
-        RECONCILE_RECEIVED_MESSAGES = getValue(context, sharedPrefs, FLAG_RECONCILE_RECEIVED_MESSAGES)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -130,8 +125,6 @@ object FeatureFlags {
             FLAG_SHARE_MULTIPLE_MESSAGES -> SHARE_MULTIPLE_MESSAGES = flag
             FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
-
-            FLAG_RECONCILE_RECEIVED_MESSAGES -> RECONCILE_RECEIVED_MESSAGES = false
         }
     }
 

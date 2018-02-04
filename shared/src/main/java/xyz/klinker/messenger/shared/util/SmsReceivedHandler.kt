@@ -32,12 +32,6 @@ class SmsReceivedHandler(private val context: Context) {
             }
 
             val latestMessageTwo = DataSource.getLatestMessage(context)
-
-            if (latestMessageOne?.timestamp == latestMessageTwo?.timestamp && !wasBlacklisted && FeatureFlags.RECONCILE_RECEIVED_MESSAGES) {
-                // something went wrong saving the message that was supposed to be handled?
-                NewMessagesCheckService.writeLastRun(context, System.currentTimeMillis() - TimeUtils.SECOND * 30)
-                NewMessagesCheckService.startService(context)
-            }
         }
     }
 

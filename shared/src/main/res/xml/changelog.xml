@@ -35,6 +35,7 @@
         description="February 5th, 2018">
         <!-- setup for auto reply system -->
         <!-- changes to the media parsers to run on messages inserted and refactor how they are used to use entire message/conversation objects, not just metadata from them -->
+        <!-- vCard parsing for the plain text attributes (name and phone numbers) -->
         <text>Option within a conversation's settings menu to delete old messages out of that conversation, based on a time interval</text>
         <text>Preview sent web articles (not just received)</text>
         <text>Settings cleanup</text>
