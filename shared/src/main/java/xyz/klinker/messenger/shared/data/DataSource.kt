@@ -1935,7 +1935,7 @@ object DataSource {
      * @param conversationId the conversation to insert the message into.
      * @return the conversation id that the message was inserted into.
      */
-    fun insertMessage(context: Context, message: Message, conversationId: Long,
+    @JvmOverloads fun insertMessage(context: Context, message: Message, conversationId: Long,
                                     returnMessageId: Boolean = false, useApi: Boolean = true): Long {
         message.conversationId = conversationId
 

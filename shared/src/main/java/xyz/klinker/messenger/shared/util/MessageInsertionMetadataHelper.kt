@@ -16,7 +16,7 @@ import xyz.klinker.messenger.shared.util.vcard.VcardReader
 class MessageInsertionMetadataHelper(private val context: Context) {
 
     private fun shouldProcessOnThisDevice(): Boolean {
-        return !Account.exists() || Account.primary
+        return (!Account.exists() || Account.primary) && !WearableCheck.isAndroidWear(context)
     }
 
     fun process(message: Message) {
