@@ -210,9 +210,16 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                     } catch (e: Exception) {
                         message.sentDeviceId = -1L
                     }
-
                 } else {
                     message.sentDeviceId = -1L
+                }
+
+                if (Account.primary && message.type == Message.TYPE_MEDIA) {
+                    return
+                }
+
+                if (message.sentDeviceId == Account.deviceId!!.toLong()) {
+                    return
                 }
 
                 try {

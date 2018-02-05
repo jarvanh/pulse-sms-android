@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.shared.util.vcard
 
 import android.content.Context
+import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.model.Message
 
 abstract class VcardParser(protected var context: Context?) {
@@ -18,7 +19,7 @@ abstract class VcardParser(protected var context: Context?) {
         message.seen = forMessage.type != Message.TYPE_RECEIVED
         message.mimeType = getMimeType(forMessage)
         message.data = getData(forMessage)
-        message.sentDeviceId = -1L
+        message.sentDeviceId =  if (Account.exists()) Account.deviceId!!.toLong() else -1L
 
         return if (message.data == null) null else message
     }

@@ -36,7 +36,7 @@ abstract class MediaParser(protected var context: Context?) {
         message.seen = false
         message.mimeType = mimeType
         message.data = buildBody(matchedText)
-        message.sentDeviceId = -1L
+        message.sentDeviceId = if (Account.exists()) Account.deviceId!!.toLong() else -1L
 
         matchedText = null
 

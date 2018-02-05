@@ -1935,7 +1935,7 @@ object DataSource {
      * @param conversationId the conversation to insert the message into.
      * @return the conversation id that the message was inserted into.
      */
-    @JvmOverloads fun insertMessage(context: Context, message: Message, conversationId: Long,
+    fun insertMessage(context: Context, message: Message, conversationId: Long,
                                     returnMessageId: Boolean = false, useApi: Boolean = true): Long {
         message.conversationId = conversationId
 
@@ -1974,7 +1974,6 @@ object DataSource {
                 ensureActionable(context)
                 database(context).insert(Message.TABLE, null, values)
             }
-
         }
 
         if (useApi) {
@@ -1987,8 +1986,7 @@ object DataSource {
             updateConversation(context, conversationId, message.read, message.timestamp,
                     if (message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING)
                         context.getString(R.string.you) + ": " + message.data
-                    else
-                        message.data,
+                    else message.data,
                     message.mimeType, false, useApi)
 
             MessageInsertionMetadataHelper(context).process(message)
@@ -2003,7 +2001,7 @@ object DataSource {
      *
      * @param messages        list of messages to batch insert
      */
-    @JvmOverloads fun insertMessages(context: Context, messages: List<Message>, useApi: Boolean = false) {
+    fun insertMessages(context: Context, messages: List<Message>, useApi: Boolean = false) {
         beginTransaction(context)
 
         for (i in messages.indices) {
@@ -2055,7 +2053,7 @@ object DataSource {
     /**
      * Deletes a message with the given id.
      */
-    @JvmOverloads fun deleteMessage(context: Context, messageId: Long, useApi: Boolean = true): Int {
+    fun deleteMessage(context: Context, messageId: Long, useApi: Boolean = true): Int {
         val deleted = try {
             database(context).delete(Message.TABLE, Message.COLUMN_ID + "=?",
                     arrayOf(java.lang.Long.toString(messageId)))
