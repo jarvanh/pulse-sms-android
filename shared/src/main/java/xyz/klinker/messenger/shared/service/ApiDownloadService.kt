@@ -154,7 +154,7 @@ class ApiDownloadService : Service() {
 
             Log.v(TAG, downloaded.toString() + " messages downloaded. " + pageNumber + " pages so far.")
             pageNumber++
-        } while (downloaded % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && !noMessages && nullCount < 5)
+        } while (downloaded < 10000 && !noMessages && nullCount < 5)
 
         if (downloaded > 0) {
             Log.v(TAG, downloaded.toString() + " messages inserted in " + (System.currentTimeMillis() - startTime) + " ms with " + pageNumber + " pages")
@@ -494,7 +494,7 @@ class ApiDownloadService : Service() {
         private val MESSAGE_DOWNLOAD_ID = 7237
         val ACTION_DOWNLOAD_FINISHED = "xyz.klinker.messenger.API_DOWNLOAD_FINISHED"
 
-        val MESSAGE_DOWNLOAD_PAGE_SIZE = 500
+        val MESSAGE_DOWNLOAD_PAGE_SIZE = 250
         val CONVERSATION_DOWNLOAD_PAGE_SIZE = 200
         val CONTACTS_DOWNLOAD_PAGE_SIZE = 500
         val MAX_MEDIA_DOWNLOADS = 400
