@@ -40,7 +40,13 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
             return true
         }
 
-        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+            val delete = menu.findItem(R.id.menu_delete_conversation)
+            val archive = menu.findItem(R.id.menu_archive_conversation)
+
+            delete.iconTintList = ColorStateList.valueOf(Color.WHITE)
+            archive.iconTintList = ColorStateList.valueOf(Color.WHITE)
+
             var checked = 0
             for (i in 0 until mSelections.size()) {
                 val key = mSelections.keyAt(i)
