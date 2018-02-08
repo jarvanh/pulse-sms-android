@@ -27,6 +27,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import com.miguelcatalan.materialsearchview.MaterialSearchView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.adapter.search.SearchAdapter
@@ -45,6 +46,8 @@ class SearchFragment : Fragment(), SearchListener {
 
     private var list: RecyclerView? = null
     private val adapter: SearchAdapter by lazy { SearchAdapter(query, null, null, this) }
+
+    private val searchView: MaterialSearchView? by lazy { activity?.findViewById<View>(R.id.search_view) as MaterialSearchView? }
 
     val isSearching: Boolean
         get() = query != null && query!!.isNotEmpty()
@@ -86,8 +89,6 @@ class SearchFragment : Fragment(), SearchListener {
     }
 
     override fun onSearchSelected(message: Message) {
-        dismissKeyboard()
-
         val activity = activity ?: return
 
         DataSource.archiveConversation(activity, message.conversationId, false)
@@ -97,11 +98,11 @@ class SearchFragment : Fragment(), SearchListener {
         intent.putExtra(MessengerActivityExtras.EXTRA_MESSAGE_ID, message.id)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         activity.startActivity(intent)
+
+        dismissKeyboard()
     }
 
     override fun onSearchSelected(conversation: Conversation) {
-        dismissKeyboard()
-
         val activity = activity ?: return
 
         if (conversation.archive) {
@@ -112,9 +113,13 @@ class SearchFragment : Fragment(), SearchListener {
         intent.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversation.id)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         activity.startActivity(intent)
+
+        dismissKeyboard()
     }
 
     private fun dismissKeyboard() {
+        searchView?.clearFocus()
+
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(list?.windowToken, 0)
     }
