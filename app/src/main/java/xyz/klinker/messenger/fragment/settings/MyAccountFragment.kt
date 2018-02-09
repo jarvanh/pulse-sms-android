@@ -285,7 +285,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
     private fun initFirebaseRefreshPreference() {
         val preference = findPreference(getString(R.string.pref_refresh_firebase))
-        if (!Account.primary) {
+        if (false) {
             (preferenceScreen
                     .findPreference(getString(R.string.pref_category_account_actions)) as PreferenceCategory)
                     .removePreference(preference)
