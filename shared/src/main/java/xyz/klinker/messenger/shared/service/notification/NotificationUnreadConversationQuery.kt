@@ -76,7 +76,7 @@ class NotificationUnreadConversationQuery(private val context: Context) {
         }
 
         unseenMessages.closeSilent()
-        Collections.sort(conversations) { result1, result2 -> Date(result2.timestamp).compareTo(Date(result1.timestamp)) }
+        conversations.sortWith(Comparator { result1, result2 -> Date(result2.timestamp).compareTo(Date(result1.timestamp)) })
         return conversations
     }
 }
