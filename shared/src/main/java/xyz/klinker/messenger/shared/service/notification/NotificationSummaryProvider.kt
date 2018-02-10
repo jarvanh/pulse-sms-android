@@ -21,7 +21,7 @@ import xyz.klinker.messenger.shared.util.NotificationUtils
  * Displays a summary notification for all conversations using the rows returned by each
  * individual notification.
  */
-class NotificationSummaryProvider(private val service: NotificationService, private val foreground: NotificationForegroundController) {
+class NotificationSummaryProvider(private val service: Context, private val foreground: NotificationForegroundController) {
 
     var skipSummary = false
 

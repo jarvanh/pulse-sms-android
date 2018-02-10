@@ -18,6 +18,7 @@ import xyz.klinker.messenger.shared.receiver.SmsReceivedReceiver
 import xyz.klinker.messenger.shared.service.NewMessagesCheckService
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
+import xyz.klinker.messenger.shared.service.notification.Notifier
 
 class SmsReceivedHandler(private val context: Context) {
 
@@ -71,14 +72,7 @@ class SmsReceivedHandler(private val context: Context) {
         }
 
         if (conversationId != -1L && conversationId != -2L) {
-            val foregroundNotificationService = Intent(context, NotificationService::class.java)
-
-            if (AndroidVersionUtil.isAndroidO) {
-                foregroundNotificationService.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
-                context.startForegroundService(foregroundNotificationService)
-            } else {
-                context.startService(foregroundNotificationService)
-            }
+            Thread { Notifier(context).notify() }.start()
         }
 
         return false

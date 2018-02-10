@@ -1,17 +1,19 @@
 package xyz.klinker.messenger.shared.service.notification.conversation
 
+import android.content.Context
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.text.Html
 import android.text.Spanned
 import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.service.notification.NotificationSummaryProvider
 
-class NotificationWearableHelper(private val service: NotificationService, private val summaryProvider: NotificationSummaryProvider) {
+class NotificationWearableHelper(private val service: Context, private val summaryProvider: NotificationSummaryProvider) {
 
     fun buildExtender(conversation: NotificationConversation): NotificationCompat.WearableExtender {
         val wear = NotificationCompat.Builder(service, summaryProvider.getNotificationChannel(conversation.id))
@@ -23,8 +25,7 @@ class NotificationWearableHelper(private val service: NotificationService, priva
     }
 
     private fun getWearableSecondPageConversation(conversation: NotificationConversation): Spanned {
-        val source = service.dataSource
-        val messages = source.getMessages(service, conversation.id, 10)
+        val messages = DataSource.getMessages(service, conversation.id, 10)
 
         val you = service.getString(R.string.you)
         val builder = StringBuilder()

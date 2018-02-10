@@ -28,6 +28,7 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
+import xyz.klinker.messenger.shared.service.notification.Notifier
 import xyz.klinker.messenger.shared.util.BlacklistUtils
 import xyz.klinker.messenger.shared.util.PermissionsUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
@@ -83,7 +84,7 @@ class SmsReceivedNonDefaultReceiver : BroadcastReceiver() {
         val conversationId = insertSms(context, handler, address, body)
 
         if (conversationId != -1L && PermissionsUtils.isDefaultSmsApp(context)) {
-            context.startService(Intent(context, NotificationService::class.java))
+            Thread { Notifier(context).notify() }.start()
         }
     }
 

@@ -45,6 +45,7 @@ import xyz.klinker.messenger.shared.service.jobs.SignoutJob
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
+import xyz.klinker.messenger.shared.service.notification.Notifier
 import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import java.io.File
@@ -218,7 +219,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                     return
                 }
 
-                if (message.sentDeviceId == Account.deviceId!!.toLong()) {
+                if (Account.deviceId != null && message.sentDeviceId == Account.deviceId!!.toLong()) {
                     return
                 }
 
@@ -290,19 +291,12 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                         if (message.mimeType == MimeType.TEXT_PLAIN) message.data else "",
                         message.type != Message.TYPE_RECEIVED)
 
-                try {
-                    if (message.type == Message.TYPE_RECEIVED) {
-                        context.startService(Intent(context, NotificationService::class.java))
-                    } else if (isSending) {
-                        DataSource.readConversation(context, message.conversationId, false)
-                        NotificationManagerCompat.from(context).cancel(message.conversationId.toInt())
-                    }
-                } catch (e: IllegalStateException) {
-                    if (message.type == Message.TYPE_RECEIVED && AndroidVersionUtil.isAndroidO) {
-                        val foregroundNotificationService = Intent(context, NotificationService::class.java)
-                        foregroundNotificationService.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
-                        context.startForegroundService(foregroundNotificationService)
-                    }
+                if (message.type == Message.TYPE_RECEIVED) {
+                    Notifier(context).notify()
+                } else if (isSending) {
+                    DataSource.readConversation(context, message.conversationId, false)
+                    NotificationManagerCompat.from(context).cancel(message.conversationId.toInt())
+                    NotificationUtils.cancelGroupedNotificationWithNoContent(context)
                 }
             } else {
                 Log.v(TAG, "message already exists, not doing anything with it")
@@ -359,20 +353,14 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
 
                 when (message.type) {
                     Message.TYPE_RECEIVED -> {
-                        if (AndroidVersionUtil.isAndroidO) {
-                            val foregroundNotificationService = Intent(context, NotificationService::class.java)
-                            foregroundNotificationService.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
-                            context.startForegroundService(foregroundNotificationService)
-                        } else {
-                            context.startService(Intent(context, NotificationService::class.java))
-                        }
+                        Notifier(context).notify()
                     }
                     Message.TYPE_SENDING -> {
                         DataSource.readConversation(context, message.conversationId, false)
                         NotificationManagerCompat.from(context).cancel(message.conversationId.toInt())
+                        NotificationUtils.cancelGroupedNotificationWithNoContent(context)
                     }
-                    else -> {
-                    }
+                    else -> { }
                 }
             }
 

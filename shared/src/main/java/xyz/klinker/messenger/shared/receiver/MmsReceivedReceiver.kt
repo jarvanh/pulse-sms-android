@@ -30,6 +30,7 @@ import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
+import xyz.klinker.messenger.shared.service.notification.Notifier
 import xyz.klinker.messenger.shared.util.*
 
 /**
@@ -79,15 +80,7 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
         val nullableOrBlankBodyText = insertMms(context, uri, lastMessage)
 
         if (!ignoreNotification) {
-            try {
-                context.startService(Intent(context, NotificationService::class.java))
-            } catch (e: Exception) {
-                if (AndroidVersionUtil.isAndroidO) {
-                    val foregroundNotificationService = Intent(context, NotificationService::class.java)
-                    foregroundNotificationService.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
-                    context.startForegroundService(foregroundNotificationService)
-                }
-            }
+            Notifier(context).notify()
         }
     }
 

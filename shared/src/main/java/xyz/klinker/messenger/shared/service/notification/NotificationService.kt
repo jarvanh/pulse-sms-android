@@ -36,17 +36,30 @@ import java.util.*
  * I used pseudocode here: http://blog.danlew.net/2017/02/07/correctly-handling-bundled-android-notifications/
  */
 class NotificationService : IntentService("NotificationService") {
-
     private val foreground = NotificationForegroundController(this)
-    private val query = NotificationUnreadConversationQuery(this)
-    private val ringtoneProvider = NotificationRingtoneProvider(this)
-    private val summaryNotifier = NotificationSummaryProvider(this, foreground)
-    private val conversationNotifier = NotificationConversationProvider(this, ringtoneProvider, summaryNotifier, foreground)
-
-    val dataSource: MockableDataSourceWrapper
-        get() = MockableDataSourceWrapper(DataSource)
 
     override fun onHandleIntent(intent: Intent?) {
+        Notifier(this, foreground).notify(intent)
+    }
+
+    companion object {
+        fun cancelRepeats(context: Context) {
+            RepeatNotificationJob.scheduleNextRun(context, 0)
+        }
+    }
+}
+
+class Notifier(private val context: Context, private val foreground: NotificationForegroundController = NotificationForegroundController(context)) {
+
+    private val query = NotificationUnreadConversationQuery(context)
+    private val ringtoneProvider = NotificationRingtoneProvider(context)
+    private val summaryNotifier = NotificationSummaryProvider(context, foreground)
+    private val conversationNotifier = NotificationConversationProvider(context, ringtoneProvider, summaryNotifier, foreground)
+
+    private val dataSource: MockableDataSourceWrapper
+        get() = MockableDataSourceWrapper(DataSource)
+
+    fun notify(intent: Intent? = null) {
         try {
             val snoozeTil = Settings.snooze
             if (snoozeTil > System.currentTimeMillis()) {
@@ -63,7 +76,7 @@ class NotificationService : IntentService("NotificationService") {
                     summaryNotifier.giveSummaryNotification(conversations, rows)
                 }
 
-                val numberToNotify = NotificationServiceHelper.calculateNumberOfNotificationsToProvide(this, conversations)
+                val numberToNotify = NotificationServiceHelper.calculateNumberOfNotificationsToProvide(context, conversations)
                 for (i in 0 until numberToNotify) {
                     val conversation = conversations[i]
                     conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
@@ -73,11 +86,11 @@ class NotificationService : IntentService("NotificationService") {
                 foreground.hide()
 
                 if (conversations.size == 1) {
-                    NotificationManagerCompat.from(this).cancel(NotificationConstants.SUMMARY_ID)
+                    NotificationManagerCompat.from(context).cancel(NotificationConstants.SUMMARY_ID)
                 }
 
                 if (Settings.repeatNotifications != -1L) {
-                    RepeatNotificationJob.scheduleNextRun(this, System.currentTimeMillis() + Settings.repeatNotifications)
+                    RepeatNotificationJob.scheduleNextRun(context, System.currentTimeMillis() + Settings.repeatNotifications)
                 }
 
                 if (Settings.wakeScreen) {
@@ -86,7 +99,7 @@ class NotificationService : IntentService("NotificationService") {
                     } catch (e: Exception) {
                     }
 
-                    val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+                    val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
                     val wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION")
                     wl.acquire(5000)
                 }
@@ -95,15 +108,9 @@ class NotificationService : IntentService("NotificationService") {
                 foreground.hide()
             }
 
-            MessengerAppWidgetProvider.refreshWidget(this)
+            MessengerAppWidgetProvider.refreshWidget(context)
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-    }
-
-    companion object {
-        fun cancelRepeats(context: Context) {
-            RepeatNotificationJob.scheduleNextRun(context, 0)
         }
     }
 }

@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.shared.service.notification.conversation
 
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.RemoteInput
@@ -11,7 +12,7 @@ import xyz.klinker.messenger.shared.service.NotificationMarkReadService
 import xyz.klinker.messenger.shared.service.ReplyService
 import xyz.klinker.messenger.shared.service.notification.NotificationService
 
-class NotificationCarHelper(private val service: NotificationService) {
+class NotificationCarHelper(private val service: Context) {
 
     fun buildExtender(conversation: NotificationConversation, remoteInput: RemoteInput): NotificationCompat.CarExtender {
         val carReply = Intent().addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)

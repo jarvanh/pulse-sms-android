@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.shared.service.notification.conversation
 
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -18,7 +19,7 @@ import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.util.ActivityUtils
 
-class NotificationActionHelper(private val service: NotificationService) {
+class NotificationActionHelper(private val service: Context) {
 
     fun addReplyAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, remoteInput: RemoteInput, conversation: NotificationConversation) {
         val actionExtender = NotificationCompat.Action.WearableExtender()

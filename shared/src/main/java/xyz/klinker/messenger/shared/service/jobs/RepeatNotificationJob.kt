@@ -7,6 +7,7 @@ import com.firebase.jobdispatcher.*
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
+import xyz.klinker.messenger.shared.service.notification.Notifier
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.TimeUtils
 import java.util.*
@@ -19,13 +20,7 @@ class RepeatNotificationJob : JobService() {
 
     @SuppressLint("NewApi")
     override fun onStartJob(job: JobParameters?): Boolean {
-        val intent = Intent(this, NotificationService::class.java)
-        if (!AndroidVersionUtil.isAndroidO) {
-            startService(intent)
-        } else {
-            intent.putExtra(NotificationConstants.EXTRA_FOREGROUND, true)
-            startForegroundService(intent)
-        }
+        Notifier(this).notify()
 
         return false
     }

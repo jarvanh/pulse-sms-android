@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.RemoteInput
 import android.text.Html
 import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
@@ -26,7 +27,7 @@ import xyz.klinker.messenger.shared.util.*
  */
 @Suppress("DEPRECATION")
 @SuppressLint("NewApi")
-class NotificationConversationProvider(private val service: NotificationService, private val ringtoneProvider: NotificationRingtoneProvider, private val summaryProvider: NotificationSummaryProvider, private val foreground: NotificationForegroundController) {
+class NotificationConversationProvider(private val service: Context, private val ringtoneProvider: NotificationRingtoneProvider, private val summaryProvider: NotificationSummaryProvider, private val foreground: NotificationForegroundController) {
 
     private val actionHelper = NotificationActionHelper(service)
     private val carHelper = NotificationCarHelper(service)
@@ -139,8 +140,7 @@ class NotificationConversationProvider(private val service: NotificationService,
             messagingStyle.conversationTitle = conversation.title
         }
 
-        val source = service.dataSource
-        val messages = source.getMessages(service, conversation.id, 10)
+        val messages = DataSource.getMessages(service, conversation.id, 10)
 
         for (i in messages.indices.reversed()) {
             val message = messages[i]

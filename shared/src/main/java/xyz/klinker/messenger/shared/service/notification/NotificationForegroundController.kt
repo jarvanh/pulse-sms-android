@@ -1,6 +1,8 @@
 package xyz.klinker.messenger.shared.service.notification
 
 import android.app.Notification
+import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
@@ -9,7 +11,7 @@ import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.NotificationUtils
 
-class NotificationForegroundController(private val service: NotificationService) {
+class NotificationForegroundController(private val service: Context) {
 
     private var gaveDismissableForegroundNotification = false
     private var gaveForegroundNotification = false
@@ -27,7 +29,9 @@ class NotificationForegroundController(private val service: NotificationService)
                     .setOngoing(false)
                     .build()
 
-            service.startForeground(NotificationConstants.FOREGROUND_NOTIFICATION_ID, notification)
+            if (service is Service) {
+                service.startForeground(NotificationConstants.FOREGROUND_NOTIFICATION_ID, notification)
+            }
         }
     }
 
@@ -47,7 +51,7 @@ class NotificationForegroundController(private val service: NotificationService)
 //        } else {
 //            service.stopForeground(false)
 //        }
-        if (gaveForegroundNotification) {
+        if (gaveForegroundNotification && service is Service) {
             service.stopForeground(true)
         }
     }
