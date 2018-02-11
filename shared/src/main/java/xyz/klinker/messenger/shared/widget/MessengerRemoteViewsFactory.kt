@@ -98,11 +98,14 @@ class MessengerRemoteViewsFactory(private val context: Context) : RemoteViewsSer
 
             if (ContactUtils.shouldDisplayContactLetter(item)) {
                 rv.setTextViewText(R.id.image_letter, item.title!!.substring(0, 1))
+                rv.setViewVisibility(R.id.default_thumbnail_image, View.GONE)
             } else {
                 rv.setTextViewText(R.id.image_letter, null)
+                rv.setViewVisibility(R.id.default_thumbnail_image, View.VISIBLE)
             }
         } else {
             rv.setTextViewText(R.id.image_letter, null)
+            rv.setViewVisibility(R.id.default_thumbnail_image, View.GONE)
         }
 
         image = ImageUtils.clipToCircle(image)

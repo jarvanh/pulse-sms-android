@@ -16,10 +16,10 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/widget_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/widget_item">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,71 +29,79 @@
         <FrameLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_gravity="top"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="top">
+            android:layout_marginTop="16dp">
 
             <ImageView
+                android:id="@+id/picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/picture"
                 android:contentDescription="@null" />
 
             <TextView
+                android:id="@+id/image_letter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:id="@+id/image_letter"
                 android:layout_gravity="center"
                 android:layout_marginTop="-1dp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/default_thumbnail_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="9dp"
+                android:src="@drawable/ic_group"
+                android:visibility="gone" />
 
         </FrameLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_marginStart="16dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:orientation="vertical"
-            android:gravity="top">
+            android:gravity="top"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 tools:ignore="UseCompoundDrawables">
 
                 <ImageView
+                    android:id="@+id/unread_indicator"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:id="@+id/unread_indicator"
-                    android:src="@drawable/unread_indicator"
-                    android:contentDescription="@string/read"
                     android:layout_marginEnd="8dp"
-                    android:visibility="gone"/>
+                    android:contentDescription="@string/read"
+                    android:src="@drawable/unread_indicator"
+                    android:visibility="gone" />
 
                 <TextView
+                    android:id="@+id/conversation_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
                     android:ellipsize="end"
-                    android:id="@+id/conversation_title"
-                    android:textSize="16sp"
-                    android:textColor="@color/primaryText" />
+                    android:maxLines="1"
+                    android:textColor="@color/primaryText"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
             <TextView
+                android:id="@+id/conversation_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/conversation_summary"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/secondaryText"
-                android:ellipsize="end"
                 android:textSize="14sp" />
 
         </LinearLayout>

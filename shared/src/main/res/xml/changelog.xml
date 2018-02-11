@@ -44,6 +44,7 @@
         <!-- vCard parsing for the plain text attributes (name and phone numbers) -->
         <text>Option within a conversation's settings menu to delete old messages out of that conversation, based on a time interval</text>
         <text>Preview sent web articles (not just received)</text>
+        <text>Widget improvements</text>
         <text>Notification improvements</text>
         <text>Settings cleanup</text>
         <text>Bug fixes</text>
