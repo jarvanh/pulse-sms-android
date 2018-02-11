@@ -853,6 +853,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 }
 
                 NotificationManagerCompat.from(context).cancel(conversationId.toInt())
+                NotificationUtils.cancelGroupedNotificationWithNoContent(context)
                 Log.v(TAG, "dismissed notification for " + conversationId)
             }
         }

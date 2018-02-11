@@ -69,6 +69,7 @@ object FeatureFlags {
     private val FLAG_SHARE_MULTIPLE_MESSAGES = "flag_share_multiple_messages"
     private val FLAG_AUTO_REPLIES = "flag_auto_replies"
     private val FLAG_VCARD_PREVIEWS = "flag_vcard_previews"
+    private val FLAG_DISMISS_NOTI_BY_UNREAD_MESSAGES = "flag_dismiss_noti_by_unread_messages"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -95,6 +96,7 @@ object FeatureFlags {
 
     // in testing
     var CHECK_NEW_MESSAGES_WITH_SIGNATURE: Boolean = false
+    var DISMISS_NOTI_BY_UNREAD_MESSAGES: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -110,6 +112,7 @@ object FeatureFlags {
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
 
         CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(context, sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE)
+        DISMISS_NOTI_BY_UNREAD_MESSAGES = getValue(context, sharedPrefs, FLAG_DISMISS_NOTI_BY_UNREAD_MESSAGES)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -129,6 +132,7 @@ object FeatureFlags {
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
 
             FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE -> CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag
+            FLAG_DISMISS_NOTI_BY_UNREAD_MESSAGES -> DISMISS_NOTI_BY_UNREAD_MESSAGES = flag
         }
     }
 

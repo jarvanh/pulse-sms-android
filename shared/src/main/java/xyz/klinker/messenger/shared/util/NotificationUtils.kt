@@ -7,23 +7,29 @@ import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
-import android.media.AudioAttributes
 import android.os.Build
+import android.util.Log
 import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.service.notification.NotificationRingtoneProvider
-import xyz.klinker.messenger.shared.service.notification.NotificationService
+import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 
 object NotificationUtils {
 
-    val DEFAULT_CONVERSATION_CHANNEL_ID = "default-conversation-channel"
-    val SILENT_CONVERSATION_CHANNEL_ID = "silent-conversation-channel"
-    val QUICK_TEXT_CHANNEL_ID = "quick-text"
-    val SILENT_BACKGROUND_CHANNEL_ID = "silent-background-services"
-    val ACCOUNT_ACTIVITY_CHANNEL_ID = "account-activity-channel"
+    const val DEFAULT_CONVERSATION_CHANNEL_ID = "default-conversation-channel"
+    const val SILENT_CONVERSATION_CHANNEL_ID = "silent-conversation-channel"
+    const val QUICK_TEXT_CHANNEL_ID = "quick-text"
+    const val SILENT_BACKGROUND_CHANNEL_ID = "silent-background-services"
+    const val ACCOUNT_ACTIVITY_CHANNEL_ID = "account-activity-channel"
 
     fun cancelGroupedNotificationWithNoContent(context: Context?) {
+        if (FeatureFlags.DISMISS_NOTI_BY_UNREAD_MESSAGES) {
+            cancelGroupedNotificationWithNoContentByUnreadMessages(context)
+            return
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context != null) {
             val map = mutableMapOf<String, Int>()
 
@@ -67,6 +73,29 @@ object NotificationUtils {
 
                 it.remove()
             }
+        }
+    }
+
+    private fun cancelGroupedNotificationWithNoContentByUnreadMessages(context: Context?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context != null) {
+            Thread {
+                try {
+                    Thread.sleep(100)
+                } catch (e: Exception) {
+                }
+
+                val cursor = DataSource.getUnseenMessages(context)
+
+                Log.v("pulse_notification", "unread: " + cursor.count)
+
+                if (cursor.count == 0) {
+                    // all messages are seen
+                    val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    manager.cancelAll()
+                }
+
+                cursor.closeSilent()
+            }.start()
         }
     }
 
