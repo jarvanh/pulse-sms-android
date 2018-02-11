@@ -76,7 +76,7 @@ class NotificationConversationProvider(private val service: Context, private val
     }
 
     private fun prepareCommonBuilder(conversation: NotificationConversation, numberOfConversations: Int) = NotificationCompat.Builder(service,
-            if (numberOfConversations == 1) summaryProvider.getNotificationChannel(conversation.id) else NotificationUtils.SILENT_BACKGROUND_CHANNEL_ID)
+            if (numberOfConversations == 1) summaryProvider.getNotificationChannel(conversation.id) else NotificationUtils.SILENT_CONVERSATION_CHANNEL_ID)
             .setSmallIcon(if (!conversation.groupConversation) R.drawable.ic_stat_notify else R.drawable.ic_stat_notify_group)
             .setAutoCancel(true)
             .setColor(if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.color)

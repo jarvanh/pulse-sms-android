@@ -38,7 +38,7 @@ class NotificationSummaryProvider(private val service: Context) {
                 .setSummaryText(summary)
 
         val notification = buildNotification(conversations[0].id, title, summary)
-                .setPublicVersion(buildPublicNotification(conversations[0].id, title, summary).build())
+                .setPublicVersion(buildPublicNotification(conversations[0].id, title).build())
                 .setWhen(conversations[conversations.size - 1].timestamp)
                 .setStyle(style)
 
@@ -86,20 +86,20 @@ class NotificationSummaryProvider(private val service: Context) {
     }
 
     private fun buildNotification(firstConversationId: Long, title: String, summary: String) =
-            buildCommonNotification(firstConversationId, title, summary)
+            buildCommonNotification(firstConversationId, title)
+                    .setContentText(summary)
                     .setShowWhen(true)
                     .setTicker(title)
                     .setVisibility(Notification.VISIBILITY_PRIVATE)
 
-    private fun buildPublicNotification(firstConversationId: Long, title: String, summary: String) =
-            buildCommonNotification(firstConversationId, title, summary)
+    private fun buildPublicNotification(firstConversationId: Long, title: String) =
+            buildCommonNotification(firstConversationId, title)
                     .setVisibility(Notification.VISIBILITY_PUBLIC)
 
-    private fun buildCommonNotification(firstConversationId: Long, title: String, summary: String) = NotificationCompat.Builder(service,
+    private fun buildCommonNotification(firstConversationId: Long, title: String) = NotificationCompat.Builder(service,
             getNotificationChannel(firstConversationId))
             .setSmallIcon(R.drawable.ic_stat_notify_group)
             .setContentTitle(title)
-            .setContentText(summary)
             .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
             .setGroupSummary(true)
             .setAutoCancel(true)

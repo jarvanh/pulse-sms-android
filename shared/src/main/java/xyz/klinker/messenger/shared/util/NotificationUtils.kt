@@ -18,6 +18,7 @@ import xyz.klinker.messenger.shared.service.notification.NotificationService
 object NotificationUtils {
 
     val DEFAULT_CONVERSATION_CHANNEL_ID = "default-conversation-channel"
+    val SILENT_CONVERSATION_CHANNEL_ID = "silent-conversation-channel"
     val QUICK_TEXT_CHANNEL_ID = "quick-text"
     val SILENT_BACKGROUND_CHANNEL_ID = "silent-background-services"
     val ACCOUNT_ACTIVITY_CHANNEL_ID = "account-activity-channel"
@@ -115,6 +116,21 @@ object NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
+    private fun createSilentConversationChannel(context: Context) {
+        if (!AndroidVersionUtil.isAndroidO) {
+            return
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val silentConversations = NotificationChannel(SILENT_CONVERSATION_CHANNEL_ID,
+                context.getString(R.string.silent_conversations_channel), NotificationManager.IMPORTANCE_LOW)
+        silentConversations.setShowBadge(false)
+        silentConversations.enableLights(false)
+        silentConversations.enableVibration(false)
+        manager.createNotificationChannel(silentConversations)
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
     private fun createSilentBackgroundChannel(context: Context) {
         if (!AndroidVersionUtil.isAndroidO) {
             return
@@ -161,6 +177,7 @@ object NotificationUtils {
         // channels to place the notifications in
         createDefaultChannel(context)
         createQuickTextChannel(context)
+        createSilentConversationChannel(context)
         createSilentBackgroundChannel(context)
         createAccountActivityChannel(context)
     }
