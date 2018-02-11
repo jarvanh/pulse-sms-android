@@ -39,7 +39,9 @@ class NotificationService : IntentService("NotificationService") {
     private val foreground = NotificationForegroundController(this)
 
     override fun onHandleIntent(intent: Intent?) {
-        Notifier(this, foreground).notify(intent)
+        foreground.show(intent)
+        Notifier(this).notify(intent)
+        foreground.hide()
     }
 
     companion object {
@@ -49,12 +51,12 @@ class NotificationService : IntentService("NotificationService") {
     }
 }
 
-class Notifier(private val context: Context, private val foreground: NotificationForegroundController = NotificationForegroundController(context)) {
+class Notifier(private val context: Context) {
 
     private val query = NotificationUnreadConversationQuery(context)
     private val ringtoneProvider = NotificationRingtoneProvider(context)
-    private val summaryNotifier = NotificationSummaryProvider(context, foreground)
-    private val conversationNotifier = NotificationConversationProvider(context, ringtoneProvider, summaryNotifier, foreground)
+    private val summaryNotifier = NotificationSummaryProvider(context)
+    private val conversationNotifier = NotificationConversationProvider(context, ringtoneProvider, summaryNotifier)
 
     private val dataSource: MockableDataSourceWrapper
         get() = MockableDataSourceWrapper(DataSource)
@@ -63,8 +65,6 @@ class Notifier(private val context: Context, private val foreground: Notificatio
         try {
             val snoozeTil = Settings.snooze
             if (snoozeTil > System.currentTimeMillis()) {
-                foreground.show(intent)
-                foreground.hide()
                 return
             }
 
@@ -81,9 +81,6 @@ class Notifier(private val context: Context, private val foreground: Notificatio
                     val conversation = conversations[i]
                     conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
                 }
-
-                foreground.show(intent)
-                foreground.hide()
 
                 if (conversations.size == 1) {
                     NotificationManagerCompat.from(context).cancel(NotificationConstants.SUMMARY_ID)
@@ -103,9 +100,6 @@ class Notifier(private val context: Context, private val foreground: Notificatio
                     val wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION")
                     wl.acquire(5000)
                 }
-            } else {
-                foreground.show(intent)
-                foreground.hide()
             }
 
             MessengerAppWidgetProvider.refreshWidget(context)

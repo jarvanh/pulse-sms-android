@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
 import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import android.text.Html
 import xyz.klinker.messenger.shared.R
@@ -27,7 +28,7 @@ import xyz.klinker.messenger.shared.util.*
  */
 @Suppress("DEPRECATION")
 @SuppressLint("NewApi")
-class NotificationConversationProvider(private val service: Context, private val ringtoneProvider: NotificationRingtoneProvider, private val summaryProvider: NotificationSummaryProvider, private val foreground: NotificationForegroundController) {
+class NotificationConversationProvider(private val service: Context, private val ringtoneProvider: NotificationRingtoneProvider, private val summaryProvider: NotificationSummaryProvider) {
 
     private val actionHelper = NotificationActionHelper(service)
     private val carHelper = NotificationCarHelper(service)
@@ -70,7 +71,7 @@ class NotificationConversationProvider(private val service: Context, private val
             // skip this notification since we are already on the conversation.
             summaryProvider.skipSummary = true
         } else {
-            foreground.provideRegularNotification(conversation.id.toInt(), builder.build())
+            NotificationManagerCompat.from(service).notify(conversation.id.toInt(), builder.build())
         }
     }
 

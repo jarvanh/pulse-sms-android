@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import android.text.Html
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
@@ -21,7 +22,7 @@ import xyz.klinker.messenger.shared.util.NotificationUtils
  * Displays a summary notification for all conversations using the rows returned by each
  * individual notification.
  */
-class NotificationSummaryProvider(private val service: Context, private val foreground: NotificationForegroundController) {
+class NotificationSummaryProvider(private val service: Context) {
 
     var skipSummary = false
 
@@ -37,11 +38,11 @@ class NotificationSummaryProvider(private val service: Context, private val fore
                 .setSummaryText(summary)
 
         val notification = buildNotification(conversations[0].id, title, summary)
-                .setPublicVersion(buildPublicNotification(conversations[0].id, title).build())
+                .setPublicVersion(buildPublicNotification(conversations[0].id, title, summary).build())
                 .setWhen(conversations[conversations.size - 1].timestamp)
                 .setStyle(style)
 
-        foreground.provideRegularNotification(NotificationConstants.SUMMARY_ID, applyPendingIntents(notification).build())
+        NotificationManagerCompat.from(service).notify(NotificationConstants.SUMMARY_ID, applyPendingIntents(notification).build())
     }
 
     private fun buildSummary(conversations: List<NotificationConversation>): String {
@@ -85,20 +86,20 @@ class NotificationSummaryProvider(private val service: Context, private val fore
     }
 
     private fun buildNotification(firstConversationId: Long, title: String, summary: String) =
-            buildCommonNotification(firstConversationId, title)
-                    .setContentText(summary)
+            buildCommonNotification(firstConversationId, title, summary)
                     .setShowWhen(true)
                     .setTicker(title)
                     .setVisibility(Notification.VISIBILITY_PRIVATE)
 
-    private fun buildPublicNotification(firstConversationId: Long, title: String) =
-            buildCommonNotification(firstConversationId, title)
+    private fun buildPublicNotification(firstConversationId: Long, title: String, summary: String) =
+            buildCommonNotification(firstConversationId, title, summary)
                     .setVisibility(Notification.VISIBILITY_PUBLIC)
 
-    private fun buildCommonNotification(firstConversationId: Long, title: String) = NotificationCompat.Builder(service,
+    private fun buildCommonNotification(firstConversationId: Long, title: String, summary: String) = NotificationCompat.Builder(service,
             getNotificationChannel(firstConversationId))
             .setSmallIcon(R.drawable.ic_stat_notify_group)
             .setContentTitle(title)
+            .setContentText(summary)
             .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
             .setGroupSummary(true)
             .setAutoCancel(true)
