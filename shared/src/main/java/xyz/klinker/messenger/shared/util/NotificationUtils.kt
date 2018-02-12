@@ -111,7 +111,7 @@ object NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    fun createDefaultChannel(context: Context) {
+    private fun createDefaultChannel(context: Context) {
         if (!AndroidVersionUtil.isAndroidO) {
             return
         }
@@ -153,8 +153,9 @@ object NotificationUtils {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val silentConversations = NotificationChannel(SILENT_CONVERSATION_CHANNEL_ID,
                 context.getString(R.string.silent_conversations_channel), NotificationManager.IMPORTANCE_LOW)
-        silentConversations.setShowBadge(false)
-        silentConversations.enableLights(false)
+        silentConversations.group = "conversations"
+        silentConversations.setShowBadge(true)
+        silentConversations.enableLights(true)
         silentConversations.enableVibration(false)
         manager.createNotificationChannel(silentConversations)
     }
