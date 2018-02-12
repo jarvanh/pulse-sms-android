@@ -42,10 +42,10 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             val info = menu.findItem(R.id.menu_message_details)
             val copy = menu.findItem(R.id.menu_copy_message)
 
-            delete.iconTintList = ColorStateList.valueOf(Color.WHITE)
-            share.iconTintList = ColorStateList.valueOf(Color.WHITE)
-            info.iconTintList = ColorStateList.valueOf(Color.WHITE)
-            copy.iconTintList = ColorStateList.valueOf(Color.WHITE)
+            ConversationsMultiSelectDelegate.changeMenuItemColor(delete)
+            ConversationsMultiSelectDelegate.changeMenuItemColor(share)
+            ConversationsMultiSelectDelegate.changeMenuItemColor(info)
+            ConversationsMultiSelectDelegate.changeMenuItemColor(copy)
 
             var checked = 0
             for (i in 0 until mSelections.size()) {

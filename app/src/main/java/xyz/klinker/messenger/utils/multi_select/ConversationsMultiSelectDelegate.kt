@@ -19,6 +19,10 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import java.util.*
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
+
+
 
 @Suppress("DEPRECATION")
 class ConversationsMultiSelectDelegate(private val fragment: ConversationListFragment) : MultiSelector() {
@@ -44,8 +48,8 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
             val delete = menu.findItem(R.id.menu_delete_conversation)
             val archive = menu.findItem(R.id.menu_archive_conversation)
 
-            delete.iconTintList = ColorStateList.valueOf(Color.WHITE)
-            archive.iconTintList = ColorStateList.valueOf(Color.WHITE)
+            changeMenuItemColor(delete)
+            changeMenuItemColor(archive)
 
             var checked = 0
             for (i in 0 until mSelections.size()) {
@@ -209,5 +213,11 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
         }
 
         return result
+    }
+
+    companion object {
+        fun changeMenuItemColor(item: MenuItem) {
+            item.icon?.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY)
+        }
     }
 }
