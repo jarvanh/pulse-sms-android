@@ -1,6 +1,7 @@
 This release includes:<br/>
-- Access and create templates from the "Attach" menu, when writing messages<br/>
-- Select from a list of all contacts on the compose screen<br/>
-- Added the ability to mute a conversation, from it's notification<br/>
-- Android 8.1: Add an option to use the white navigation bar with the light theme<br/>
-+ Bug and crash fixes
+- Option within a conversation's settings menu to delete old messages out of that conversation, based on a time interval<br/>
+- Preview sent web articles (not just received)<br/>
+- Widget improvements<br/>
+- Notification improvements<br/>
+- Settings cleanup<br/>
+- Bug fixes<br/>
