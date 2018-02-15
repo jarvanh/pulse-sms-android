@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,10 +18,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.WearableMessageViewHolder
-import xyz.klinker.messenger.shared.data.ArticlePreview
-import xyz.klinker.messenger.shared.data.MimeType
-import xyz.klinker.messenger.shared.data.Settings
-import xyz.klinker.messenger.shared.data.YouTubePreview
+import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.*
 
@@ -272,6 +270,28 @@ class WearableMessageListAdapter(context: Context, private val manager: LinearLa
                 }
             }
             message.mimeType == MimeType.MEDIA_TWITTER -> { }
+            message.mimeType == MimeType.MEDIA_MAP -> {
+                val preview = MapPreview.build(holder.data!!)
+                if (preview != null) {
+                    Glide.with(holder.itemView.context)
+                            .load(Uri.parse(preview.generateMap()))
+                            .apply(RequestOptions()
+                                    .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
+                                    .fitCenter())
+                            .into<SimpleTarget<Drawable>>(object : SimpleTarget<Drawable>() {
+                                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>) {
+                                    holder.image?.background = holder.itemView.resources
+                                            .getDrawable(R.drawable.rounded_rect)
+                                    holder.image?.setImageDrawable(resource)
+                                }
+
+                                override fun onLoadFailed(errorDrawable: Drawable?) {
+                                    holder.image?.background = holder.itemView.resources
+                                            .getDrawable(R.drawable.rounded_rect_drawer_color)
+                                }
+                            })
+                }
+            }
             message.mimeType == MimeType.MEDIA_ARTICLE -> {
                 val preview = ArticlePreview.build(message.data!!)
                 if (preview != null) {

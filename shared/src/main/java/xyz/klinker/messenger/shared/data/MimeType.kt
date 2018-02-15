@@ -49,6 +49,7 @@ object MimeType {
     val MEDIA_YOUTUBE_V2 = "media/youtube-v2"
     val MEDIA_ARTICLE = "media/web"
     val MEDIA_TWITTER = "media/twitter"
+    val MEDIA_MAP = "media/map"
 
     private val extensions: MutableMap<String, String>
 

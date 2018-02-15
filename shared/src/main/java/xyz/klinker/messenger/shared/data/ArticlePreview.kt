@@ -33,11 +33,11 @@ class ArticlePreview {
 
     companion object {
 
-        private val JSON_TITLE = "title"
-        private val JSON_DESCRIPTION = "description"
-        private val JSON_IMAGE_URL = "image_url"
-        private val JSON_DOMAIN = "domain"
-        private val JSON_WEB_URL = "web_url"
+        private const val JSON_TITLE = "title"
+        private const val JSON_DESCRIPTION = "description"
+        private const val JSON_IMAGE_URL = "image_url"
+        private const val JSON_DOMAIN = "domain"
+        private const val JSON_WEB_URL = "web_url"
 
         fun build(article: Article?): ArticlePreview? {
             val preview = ArticlePreview()

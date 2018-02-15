@@ -15,6 +15,7 @@ import com.bumptech.glide.request.transition.Transition
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
 import xyz.klinker.messenger.shared.data.ArticlePreview
+import xyz.klinker.messenger.shared.data.MapPreview
 import xyz.klinker.messenger.shared.data.YouTubePreview
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.ImageUtils
@@ -141,6 +142,29 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
 
     fun twitter(holder: MessageViewHolder) {
 
+    }
+
+    fun map(holder: MessageViewHolder) {
+        val preview = MapPreview.build(holder.data!!)
+        if (preview != null) {
+            Glide.with(holder.itemView.context)
+                    .load(Uri.parse(preview.generateMap()))
+                    .apply(RequestOptions()
+                            .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
+                            .fitCenter())
+                    .into<SimpleTarget<Drawable>>(object : SimpleTarget<Drawable>() {
+                        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>) {
+                            holder.image?.background = holder.itemView.resources
+                                    .getDrawable(R.drawable.rounded_rect)
+                            holder.image?.setImageDrawable(resource)
+                        }
+
+                        override fun onLoadFailed(errorDrawable: Drawable?) {
+                            holder.image?.background = holder.itemView.resources
+                                    .getDrawable(R.drawable.rounded_rect_drawer_color)
+                        }
+                    })
+        }
     }
 
     fun article(holder: MessageViewHolder) {

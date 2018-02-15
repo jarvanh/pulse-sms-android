@@ -1478,8 +1478,9 @@ object DataSource {
                 Message.COLUMN_MIME_TYPE + "!=? AND " +
                 Message.COLUMN_MIME_TYPE + "!=? AND " +
                 Message.COLUMN_MIME_TYPE + "!=? AND " +
+                Message.COLUMN_MIME_TYPE + "!=? AND " +
                 Message.COLUMN_MIME_TYPE + "!=?"
-        val selectionArgs = arrayOf(MimeType.TEXT_PLAIN, MimeType.MEDIA_ARTICLE, MimeType.MEDIA_YOUTUBE_V2, MimeType.MEDIA_TWITTER)
+        val selectionArgs = arrayOf(MimeType.TEXT_PLAIN, MimeType.MEDIA_ARTICLE, MimeType.MEDIA_YOUTUBE_V2, MimeType.MEDIA_TWITTER, MimeType.MEDIA_MAP)
         return try {
             database(context).query(Message.TABLE, null, selection, selectionArgs, null, null, Message.COLUMN_TIMESTAMP + " desc LIMIT " + limit)
         } catch (e: Exception) {

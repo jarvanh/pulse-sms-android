@@ -389,7 +389,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getAllMediaMessages() {
-        when(database.query("message", null, "mime_type!=? AND mime_type!=? AND mime_type!=? AND mime_type!=?", new String[] { "text/plain", "media/web", "media/youtube-v2", "media/twitter" }, null, null,
+        when(database.query("message", null, "mime_type!=? AND mime_type!=? AND mime_type!=? AND mime_type!=? AND mime_type!=?", new String[] { "text/plain", "media/web", "media/youtube-v2", "media/twitter", "media/map" }, null, null,
                 "timestamp desc LIMIT 20")).thenReturn(cursor);
         assertEquals(cursor, source.getAllMediaMessages(context,20));
     }

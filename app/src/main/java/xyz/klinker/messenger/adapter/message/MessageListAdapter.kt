@@ -150,6 +150,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
                 message.mimeType == MimeType.IMAGE_GIF -> itemBinder.animatedGif(holder)
                 message.mimeType == MimeType.MEDIA_YOUTUBE_V2 -> itemBinder.youTube(holder)
                 message.mimeType == MimeType.MEDIA_TWITTER -> itemBinder.twitter(holder)
+                message.mimeType == MimeType.MEDIA_MAP -> itemBinder.map(holder)
                 message.mimeType == MimeType.MEDIA_ARTICLE -> itemBinder.article(holder)
                 else -> Log.v("MessageListAdapter", "unused mime type: " + message.mimeType!!)
             }
@@ -197,9 +198,9 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
             val mimeType = dataProvider.messages.getString(dataProvider.messages.getColumnIndex(Message.COLUMN_MIME_TYPE))
 
             if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
-                type = if (mimeType != null && (mimeType.contains("image") || mimeType.contains("video")))
+                type = if (mimeType != null && (mimeType.contains("image") || mimeType.contains("video") || mimeType == MimeType.MEDIA_MAP))
                     Message.TYPE_IMAGE_SENT else Message.TYPE_SENT
-            } else if (mimeType != null && (mimeType.contains("image") || mimeType.contains("video"))) {
+            } else if (mimeType != null && (mimeType.contains("image") || mimeType.contains("video") || mimeType == MimeType.MEDIA_MAP)) {
                 type = when (type) {
                     Message.TYPE_RECEIVED -> Message.TYPE_IMAGE_RECEIVED
                     Message.TYPE_SENDING -> Message.TYPE_IMAGE_SENDING
