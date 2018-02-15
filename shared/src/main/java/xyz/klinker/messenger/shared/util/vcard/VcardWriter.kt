@@ -28,6 +28,8 @@ object VcardWriter {
         fw.write("END:VCARD\r\n")
         fw.close()
 
+        // example location vcards
+
 //        fw.write("BEGIN:VCARD\r\n")
 //        fw.write("VERSION:3.0\r\n")
 //        fw.write("PRODID:-//Apple Inc.//iOS 8.1//EN\r\n")

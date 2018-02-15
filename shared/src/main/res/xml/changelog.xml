@@ -20,6 +20,7 @@
         <!--name="2.11.0"-->
         <!--description="May, 2018">-->
         <!--<text>Display name, phone number, and location - on the message list - from vCards that you send and receive (TODO: remove the feature flag)</text>-->
+        <!--<text>Handle iOS location sharing messages with location preview (TODO: remove the feature flag)</text>-->
     <!--</version>-->
 
     <!--<version-->
@@ -35,6 +36,13 @@
         <!--<text>Long click (and drag) to select and delete images on the "View Media" page within a conversation (TODO: remove the feature flag)</text>-->
         <!--<text>Share multiple selected messages at once, instead of forcing you to share them individually (TODO: remove the feature flag)</text>-->
     <!--</version>-->
+
+    <version
+        name="2.8.3"
+        description="February 18th, 2018">
+        <!-- implement map parsing for the vcards -->
+        <text>Bug fixes</text>
+    </version>
 
     <version
         name="2.8.2"
