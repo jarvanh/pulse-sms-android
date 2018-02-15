@@ -61,12 +61,6 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
         val appSignature: String
         if (!Settings.signature!!.isEmpty()) {
             appSignature = "\n" + Settings.signature!!
-
-            if (!FeatureFlags.CHECK_NEW_MESSAGES_WITH_SIGNATURE) {
-                // issues with this duplicating sent messages that I hadn't worked out. Disable for now
-                // TODO: fix this integration.
-                return
-            }
         } else {
             appSignature = ""
         }

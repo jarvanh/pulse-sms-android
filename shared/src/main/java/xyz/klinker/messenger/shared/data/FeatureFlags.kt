@@ -95,7 +95,6 @@ object FeatureFlags {
     var VCARD_PREVIEWS: Boolean = false
 
     // in testing
-    var CHECK_NEW_MESSAGES_WITH_SIGNATURE: Boolean = false
     var DISMISS_NOTI_BY_UNREAD_MESSAGES: Boolean = false
 
     fun init(context: Context) {
@@ -111,7 +110,6 @@ object FeatureFlags {
         AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
 
-        CHECK_NEW_MESSAGES_WITH_SIGNATURE = getValue(context, sharedPrefs, FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE)
         DISMISS_NOTI_BY_UNREAD_MESSAGES = getValue(context, sharedPrefs, FLAG_DISMISS_NOTI_BY_UNREAD_MESSAGES)
     }
 
@@ -131,7 +129,6 @@ object FeatureFlags {
             FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
 
-            FLAG_CHECK_NEW_MESSAGES_WITH_SIGNATURE -> CHECK_NEW_MESSAGES_WITH_SIGNATURE = flag
             FLAG_DISMISS_NOTI_BY_UNREAD_MESSAGES -> DISMISS_NOTI_BY_UNREAD_MESSAGES = flag
         }
     }
