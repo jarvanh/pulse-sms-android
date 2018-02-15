@@ -139,6 +139,11 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
                 }
             } else if (mimeType == MimeType.MEDIA_ARTICLE) {
                 startArticle()
+            } else if (mimeType == MimeType.MEDIA_MAP) {
+                val preview = MapPreview.build(data!!) ?: return@setOnClickListener
+                val uri = Uri.parse("https://maps.google.com/maps/@${preview.latitude},${preview.longitude},16z")
+
+                itemView.context.startActivity(Intent(Intent.ACTION_VIEW, uri))
             } else {
                 val intent = Intent(itemView.context, ImageViewerActivity::class.java)
                 intent.putExtra(ImageViewerActivity.EXTRA_CONVERSATION_ID, fragment?.conversationId)

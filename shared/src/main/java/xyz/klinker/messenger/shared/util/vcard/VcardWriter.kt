@@ -28,6 +28,23 @@ object VcardWriter {
         fw.write("END:VCARD\r\n")
         fw.close()
 
+//        fw.write("BEGIN:VCARD\r\n")
+//        fw.write("VERSION:3.0\r\n")
+//        fw.write("PRODID:-//Apple Inc.//iOS 8.1//EN\r\n")
+//        fw.write("N:;Current geo;;;\r\n")
+//        fw.write("FN:Current geo\r\n")
+//        fw.write("item1.URL;type=pref:http://maps.apple.com/?ll=55.369117\\,39.079991\r\n")
+//        fw.write("item1.X-ABLabel:map url\r\n")
+//        fw.write("END:VCARD\r\n")
+//        fw.close()
+
+//        fw.write("BEGIN:VCARD\r\n")
+//        fw.write("VERSION:3.0\r\n")
+//        fw.write("TITLE:My Geo Point\r\n")
+//        fw.write("GEO:37.386013;-122.082932\r\n")
+//        fw.write("END:VCARD\r\n")
+//        fw.close()
+
         return ImageUtils.createContentUri(context, contactCard)
     }
 }

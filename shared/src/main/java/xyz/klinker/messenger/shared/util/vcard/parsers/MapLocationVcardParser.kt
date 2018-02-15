@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.shared.util.vcard.parsers
 
 import android.content.Context
+import android.util.Log
 import xyz.klinker.messenger.shared.data.MapPreview
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
@@ -11,7 +12,7 @@ class MapLocationVcardParser(context: Context) : VcardParser(context) {
     private var data: String? = null
 
     override fun canParse(message: Message) = getData(message).isNotEmpty()
-    override fun getMimeType(message: Message) = MimeType.TEXT_PLAIN
+    override fun getMimeType(message: Message) = MimeType.MEDIA_MAP
 
     override fun getData(message: Message): String {
         if (data != null) {
@@ -29,13 +30,14 @@ class MapLocationVcardParser(context: Context) : VcardParser(context) {
 
             return data!!
         } catch (e: Exception) {
+            e.printStackTrace()
             return ""
         }
     }
 
     private fun getReadableLines(card: List<String>): List<String> {
         return card.filter { line -> PARSABLE_LINES.firstOrNull { line.contains(it) } != null }
-                .map { readLine(it) }
+                .map { readLine(it.replace("\r","")) }
                 .filter { it.isNotEmpty() }
     }
 
@@ -49,7 +51,7 @@ class MapLocationVcardParser(context: Context) : VcardParser(context) {
 
     // GEO:37.386013;-122.082932
     private fun readGeo(line: String): String {
-        return line.replace(GEO, "")
+        return line.replace(GEO, "").replace(";", ",")
     }
 
     // item1.URL;type=pref:http://maps.apple.com/?ll=55.369117\,39.079991
@@ -58,8 +60,8 @@ class MapLocationVcardParser(context: Context) : VcardParser(context) {
             return ""
         }
 
-        return line.replace("http://maps.apple.com/?ll=", "")
-                .replace("\\", "")
+        return line.replace("item1.URL;type=pref:http://maps.apple.com/?ll=", "")
+                .replace("\\,", ",")
     }
 
     companion object {

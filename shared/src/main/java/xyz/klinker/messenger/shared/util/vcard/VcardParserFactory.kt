@@ -2,6 +2,7 @@ package xyz.klinker.messenger.shared.util.vcard
 
 import android.content.Context
 import xyz.klinker.messenger.shared.data.model.Message
+import xyz.klinker.messenger.shared.util.vcard.parsers.MapLocationVcardParser
 import xyz.klinker.messenger.shared.util.vcard.parsers.TextAttributeVcardParser
 
 class VcardParserFactory {
@@ -12,7 +13,7 @@ class VcardParserFactory {
     }
 
     private fun buildParsers(context: Context): List<VcardParser> {
-        return listOf(TextAttributeVcardParser(context))
+        return listOf(MapLocationVcardParser(context), TextAttributeVcardParser(context))
     }
 
 }

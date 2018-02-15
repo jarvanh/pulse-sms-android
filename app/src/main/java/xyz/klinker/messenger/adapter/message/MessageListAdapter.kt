@@ -135,7 +135,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
             itemBinder.setGone(holder.image)
             itemBinder.setVisible(holder.message)
         } else {
-            if (!MimeType.isExpandedMedia(message.mimeType)) {
+            if (!MimeType.isExpandedMedia(message.mimeType) || message.mimeType == MimeType.MEDIA_MAP) {
                 holder.image?.setImageDrawable(null)
                 holder.image?.minimumWidth = imageWidth
                 holder.image?.minimumHeight = imageHeight
