@@ -28,7 +28,7 @@
     <string name="api_phone_number">Telefoonnummer</string>
     <string name="api_connecting">Verbinding maken met de server...</string>
     <string name="api_device_error">Er ging iets mis tijdens het proces. Probeer opnieuw!</string>
-    <string name="api_add_second_primary_device">Het lijkt er op dat je al een hoofdtoestel (%1$s) hebt voor jouw account en er is slechts 1 toegestaan. Wil je jouw huidige hoofdtoestel verwijderen en deze als het nieuwe hoofdtoestel instellen?</string>
+    <string name="api_add_second_primary_device">Het lijkt er op dat je al een hoofdtoestel (%1$s) hebt voor jouw account en er is slechts 1 toegestaan. Wil je jouw huidige hoofdtoestel verwijderen en dit als het nieuwe hoofdtoestel instellen?</string>
     <string name="api_yes">Ja</string>
     <string name="api_no">Neen</string>
     <string name="api_no_email">Geen e-mailadres ingevuld</string>

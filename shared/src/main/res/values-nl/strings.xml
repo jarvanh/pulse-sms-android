@@ -151,7 +151,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="forward_message">Bericht doorsturen</string>
     <string name="share_message">Bericht delen</string>
     <string name="copy_message_text">Kopieer berichtinhoud</string>
-    <string name="select_text_to_copy">Selecteer de tekst die je wenst te kopiëren</string>
+    <string name="select_text_to_copy">Selecteer de tekst die je wenst te kopiëren:</string>
     <string name="copy_all_text">Alles kopiëren</string>
     <string name="open_link_to_browser">Open link in browser</string>
     <string name="open_link_internal">Open link intern</string>
@@ -223,7 +223,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="default_notifications_channel_description">Deze instellingen worden toegepast op alle conversaties waar je geen individueel notificatiekanaal hebt voor aangemaakt.</string>
     <string name="test_notifications_channel">Test notificaties</string>
     <string name="status_notifications_channel">Status notificaties</string>
-    <string name="background_service_channel">Achtergrond service notificaties</string>
+    <string name="background_service_channel">Achtergrondservice notificaties</string>
     <string name="general_notifications_channel">Algemene notificaties</string>
     <string name="media_parse_channel">Media parser</string>
     <string name="group_summary_notifications">Overzicht van de berichtengroep</string>
@@ -235,7 +235,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="auto_reply_parse_text">Zoeken naar automatische antwoorden in voorgaande berichten...</string>
     <string name="creating_channels_text">Bezig met het aanmaken van notificatiekanalen...</string>
     <string name="write_new_message">Stel een nieuw bericht op...</string>
-    <string name="receiving_a_message">Een bericht ontvangen</string>
+    <string name="receiving_a_message">Een bericht ontvangen...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -257,7 +257,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="faqs">Veelgestelde vragen</string>
     <string name="get_help">Help krijgen</string>
     <string name="get_help_summary">Heb je een vraag? Ik kan als alleenstaande developer niet alle aanvragen verwerken. Gelieve jouw vraag hieronder op te zoeken. Niets gevonden? E-mail me gaan gerust.</string>
-    <string name="get_help_summary_2">De velp-sectie is reeds zeer uitgebreid. Toch niet gevonden wat je zocht? Neem gerust contact met mij op!</string>
+    <string name="get_help_summary_2">De help-sectie is reeds zeer uitgebreid. Toch niet gevonden wat je zocht? Neem gerust contact met mij op!</string>
     <string name="features">Functies</string>
     <string name="issues">Issue Tracker</string>
     <string name="issues_summary">Toont ook een feature roadmap</string>
@@ -320,7 +320,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="delivery_reports">Afleverrapporten</string>
     <string name="delivery_reports_summary">De meeste providers ondersteunen deze optie niet</string>
     <string name="theme_settings">Aanpassingen</string>
-    <string name="theme_settings_category">Look and feel</string>
+    <string name="theme_settings_category">Look en feel</string>
     <string name="conversation_list_category">Conversatielijst</string>
     <string name="general_category">Algemeen</string>
     <string name="theme_settings_redirect">Thema</string>
@@ -396,10 +396,10 @@ Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</s
     <string name="emoji_style_android_o">Google\'s Android O</string>
     <string name="settings_phone_number">Telefoonnummer</string>
     <string name="disable_battery_optimization">Batterijoptimalisatie uitschakelen</string>
-    <string name="disable_battery_optimization_summary">Als berichten niet getoond worden op het web, deactiveren batterijoptimalisatie voor Pulse.</string>
+    <string name="disable_battery_optimization_summary">Als berichten niet getoond worden op het web, deactiveer batterijoptimalisatie voor Pulse.</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Max afbeelding grootte</string>
-    <string name="max_mms_size_summary">Zet dit niet hoger dan dat jouw provider toelaat</string>
+    <string name="max_mms_size_summary">Zet dit niet hoger dan dat jouw provider toestaat</string>
     <string name="use_group_mms">Gebruik groep MMS</string>
     <string name="auto_save_media">Auto-save media</string>
     <string name="auto_save_media_summary">Automatisch inkomende MMS-media opslaan in de Downloads-map</string>
@@ -433,12 +433,10 @@ Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</s
     <string name="internal_browser_summary">Als je dit uitschakelen zullen er ook geen web-previews worden weergegeven</string>
     <string name="message_backup">Berichtenbackup</string>
     <string name="message_backup_pref_summary">Schrik voor het verliezen van berichten? Pulse helpt je</string>
-    <string name="message_backup_summary">Did you know: Pulse\'s online service is built around backing up your
-messages. When you sign up for a Pulse account, you can log in to that account on any device or tablet
-to restore all your messages, automatically!
+    <string name="message_backup_summary">Wist je dat: Pulse\'s online service is gebouwd rond het maken van een back-up van jouw sms\'en. Met een Pulse-account, kan je inloggen op elk toestel en heb je meteen toegang tot al jouw sms\'en.
 
-No hassle and no messing around with manual backups.
-With Pulse, everything is smooth, easy, and completely automatic.</string>
+Geen gezeur en gedoe met het maken van manuele back-ups.
+Met Pulse wordt alles automatisch voor jou gedaan!</string>
     <string name="auto_reply_configuration">Automatisch antwoorden instellen</string>
     <string name="auto_reply_configuration_summary">Stel automatisch antwoorden zo in dat antwoorden worden gebaseerd op de huidige situatie</string>
     <string name="auto_replies">Automatisch antwoorden</string>

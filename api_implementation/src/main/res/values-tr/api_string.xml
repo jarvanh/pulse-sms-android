@@ -17,21 +17,21 @@
 <resources>
     <string name="api_login">Oturum aç</string>
     <string name="api_signup">Kaydol</string>
-    <string name="api_signup_failed">Bu cihaza kaydolamazsınız, birincil kayıt yaptırmanız gerekir
-Önce bir telefon numarası olan cihaz!</string>
+    <string name="api_signup_failed">Bu cihaza kaydolamazsınız, kayıt yaptırmanız için önce bir telefon numarası olan birincil bir cihaz gerekir!</string>
     <string name="api_skip_signup">Veya yalnızca bu cihazda ve ağda uygulamayı kullanmak istemiyorsanız
 Bir tabletten veya bilgisayardan mesaj gönderme gibi özellikler, bu adımı atlayabilirsiniz:</string>
-    <string name="api_skip">atlamak</string>
-    <string name="api_email">Emailin Address</string>
+    <string name="api_skip">Atla</string>
+    <string name="api_email">Eposta Adresi</string>
     <string name="api_password">Parola</string>
-    <string name="api_forgot_password">Şifremi unuttum SSS</string>
+    <string name="api_forgot_password">Parolamı unuttum SSS</string>
     <string name="api_password_confirmation">Şifre onayı</string>
-    <string name="api_name">isim</string>
-    <string name="api_phone_number">Telefon numarası</string>
+    <string name="api_name">Ad</string>
+    <string name="api_phone_number">Telefon No</string>
+    <string name="api_connecting">Sunucuya bağlanıyor...</string>
     <string name="api_device_error">Bu cihaz eklenirken bir hata oluştu. Tekrar deneyelim!</string>
     <string name="api_add_second_primary_device">Zaten birincil cihazınız varmış gibi görünüyor
-(%1$s) ve yalnızca birine izin verilir! Şu anki kaldırmak istiyor musunuz
-Birincil cihaza bağlayın ve bunu yeni birincil olarak ayarlayın?</string>
+(%1$s) ve yalnızca birine izin verilir! 
+Geçerli olan birincil cihazı kaldırmak ve bu cihazı yeni birincil cihaz olarak belirlemek istiyor musunuz?</string>
     <string name="api_yes">Evet</string>
     <string name="api_no">Hayır</string>
     <string name="api_no_email">Hiçbir e-posta adresi girilmedi</string>
@@ -46,6 +46,8 @@ Birincil cihaza bağlayın ve bunu yeni birincil olarak ayarlayın?</string>
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Başkan</string>
+    <string name="api_activate_wear">wear.klinkerapps.com</string>
+    <string name="api_activate_tv">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">Bir mobil cihazda veya bilgisayarda</string>
     <string name="api_activate_2_1">İnternet sitesinde</string>
     <string name="api_activate_2_2">Kodu sağa yaz</string>
@@ -53,6 +55,6 @@ Birincil cihaza bağlayın ve bunu yeni birincil olarak ayarlayın?</string>
     <string name="api_confirm_password">Lütfen şifrenizi onaylayın:</string>
     <string name="api_wrong_password">Onay başarısız oldu. Şifreniz doğru mu?</string>
     <string name="api_email_taken">Oturum açarken bir hata oluştu; bu e-postayla zaten bir hesabınız var mı?</string>
-    <string name="api_confirm">Onaylamak</string>
+    <string name="api_confirm">Onayla</string>
     <string name="api_continue">Devam et</string>
 </resources>
