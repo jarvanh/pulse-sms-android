@@ -3,7 +3,7 @@ package xyz.klinker.messenger.shared.data
 import org.json.JSONException
 import org.json.JSONObject
 
-import xyz.klinker.android.article.data.Article
+import xyz.klinker.messenger.shared.BuildConfig
 
 class MapPreview {
 
@@ -22,7 +22,7 @@ class MapPreview {
 //                "&zoom=16" +
 //                "&maptype=roadmap" +
                 "&markers=color:red%7C$latitude,$longitude" +
-                "&key=AIzaSyAHq1IIIdGz01rEbEtUtDwEFJWwvAI_lww"
+                "&key=${BuildConfig.YOUTUBE_API_KEY}"
     }
 
     private fun serialize() = try {

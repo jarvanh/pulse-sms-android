@@ -458,7 +458,7 @@ object ApiUtils {
             return
         }
 
-        if (mimeType == "text/plain" || messageType == 6) {
+        if (mimeType == "text/plain" || messageType == 6 || mimeType == "media/map") {
             val body = MessageBody(deviceId,
                     deviceConversationId, messageType, encryptionUtils.encrypt(data),
                     timestamp, encryptionUtils.encrypt(mimeType), read, seen,
