@@ -25,58 +25,6 @@ object NotificationUtils {
     const val ACCOUNT_ACTIVITY_CHANNEL_ID = "account-activity-channel"
 
     fun cancelGroupedNotificationWithNoContent(context: Context?) {
-        if (FeatureFlags.DISMISS_NOTI_BY_UNREAD_MESSAGES) {
-            cancelGroupedNotificationWithNoContentByUnreadMessages(context)
-            return
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context != null) {
-            val map = mutableMapOf<String, Int>()
-
-            val manager = context.getSystemService(
-                    Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            val notifications = manager.activeNotifications
-
-            for (notification in notifications) {
-                var keyString = notification.groupKey
-                if (keyString.contains("|g:")) { // this is a grouped notification
-                    keyString = keyString.substring(keyString.indexOf("|g:") + 3, keyString.length)
-
-                    if (map.containsKey(keyString)) {
-                        map.put(keyString, map[keyString]!! + 1)
-                    } else {
-                        map.put(keyString, 1)
-                    }
-                }
-            }
-
-            val it = map.entries.iterator()
-            while (it.hasNext()) {
-                val pair = it.next() as Map.Entry<String, Int>
-                val key = pair.key
-                val value = pair.value
-
-                if (value == 1) {
-                    for (notification in notifications) {
-                        var keyString = notification.groupKey
-                        if (keyString.contains("|g:")) { // this is a grouped notification
-                            keyString = keyString.substring(keyString.indexOf("|g:") + 3, keyString.length)
-
-                            if (key == keyString) {
-                                manager.cancel(notification.id)
-                                break
-                            }
-                        }
-                    }
-                }
-
-                it.remove()
-            }
-        }
-    }
-
-    private fun cancelGroupedNotificationWithNoContentByUnreadMessages(context: Context?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context != null) {
             Thread {
                 try {
@@ -85,9 +33,6 @@ object NotificationUtils {
                 }
 
                 val cursor = DataSource.getUnseenMessages(context)
-
-                Log.v("pulse_notification", "unread: " + cursor.count)
-
                 if (cursor.count == 0) {
                     // all messages are seen
                     val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

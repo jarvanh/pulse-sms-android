@@ -95,7 +95,6 @@ object FeatureFlags {
     var VCARD_PREVIEWS: Boolean = false
 
     // in testing
-    var DISMISS_NOTI_BY_UNREAD_MESSAGES: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -109,8 +108,6 @@ object FeatureFlags {
         SHARE_MULTIPLE_MESSAGES = getValue(context, sharedPrefs, FLAG_SHARE_MULTIPLE_MESSAGES)
         AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
-
-        DISMISS_NOTI_BY_UNREAD_MESSAGES = getValue(context, sharedPrefs, FLAG_DISMISS_NOTI_BY_UNREAD_MESSAGES)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -128,8 +125,6 @@ object FeatureFlags {
             FLAG_SHARE_MULTIPLE_MESSAGES -> SHARE_MULTIPLE_MESSAGES = flag
             FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
-
-            FLAG_DISMISS_NOTI_BY_UNREAD_MESSAGES -> DISMISS_NOTI_BY_UNREAD_MESSAGES = flag
         }
     }
 
