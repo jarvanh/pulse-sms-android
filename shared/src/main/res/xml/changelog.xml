@@ -42,6 +42,7 @@
         description="February 18th, 2018">
         <!-- implement map parsing for the vcards -->
         <text>Bug fixes</text>
+        <text>Translation updates</text>
     </version>
 
     <version
