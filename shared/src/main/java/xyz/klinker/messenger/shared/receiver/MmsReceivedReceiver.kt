@@ -51,29 +51,35 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
 
     override fun onMessageReceived(messageUri: Uri) {
         Log.v("MmsReceivedReceiver", "message received: $messageUri")
-        val lastMessage = SmsMmsUtils.getMmsMessage(context, messageUri, null)
-        if (lastMessage != null && lastMessage.moveToFirst()) {
-            handleMms(context!!, messageUri, lastMessage)
-        } else {
-            try {
-                CursorUtil.closeSilent(lastMessage)
-            } catch (e: Exception) {
+
+        Thread {
+            val lastMessage = SmsMmsUtils.getMmsMessage(context, messageUri, null)
+            if (lastMessage != null && lastMessage.moveToFirst()) {
+                handleMms(context!!, messageUri, lastMessage)
+            } else {
+                try {
+                    CursorUtil.closeSilent(lastMessage)
+                } catch (e: Exception) {
+                }
             }
-        }
+        }.start()
     }
 
     override fun onError(error: String) {
         Log.v("MmsReceivedReceiver", "message save error: $error")
-        val lastMessage = SmsMmsUtils.getLastMmsMessage(context)
-        if (lastMessage != null && lastMessage.moveToFirst()) {
-            val uri = Uri.parse("content://mms/" + lastMessage.getLong(0))
-            handleMms(context!!, uri, lastMessage)
-        } else {
-            try {
-                CursorUtil.closeSilent(lastMessage)
-            } catch (e: Exception) {
+
+        Thread {
+            val lastMessage = SmsMmsUtils.getLastMmsMessage(context)
+            if (lastMessage != null && lastMessage.moveToFirst()) {
+                val uri = Uri.parse("content://mms/" + lastMessage.getLong(0))
+                handleMms(context!!, uri, lastMessage)
+            } else {
+                try {
+                    CursorUtil.closeSilent(lastMessage)
+                } catch (e: Exception) {
+                }
             }
-        }
+        }.start()
     }
 
     private fun handleMms(context: Context, uri: Uri, lastMessage: Cursor) {

@@ -1,28 +1,17 @@
 package xyz.klinker.messenger.shared.service.jobs
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import com.firebase.jobdispatcher.*
 import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.service.notification.Notifier
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.TimeUtils
 import java.util.*
 
-class RepeatNotificationJob : JobService() {
+class RepeatNotificationJob : SimpleJobService() {
 
-    override fun onStopJob(job: JobParameters?): Boolean {
-        return false
-    }
-
-    @SuppressLint("NewApi")
-    override fun onStartJob(job: JobParameters?): Boolean {
+    override fun onRunJob(job: JobParameters?): Int {
         Notifier(this).notify()
-
-        return false
+        return 0
     }
 
     companion object {

@@ -32,9 +32,10 @@ class SmsReceivedReceiver : BroadcastReceiver() {
             return
         }
 
-        SmsReceivedReceiver.lastReceived = System.currentTimeMillis()
-//        SmsReceivedService.start(context, intent)
-        SmsReceivedHandler(context).newSmsRecieved(intent)
+        Thread {
+            SmsReceivedReceiver.lastReceived = System.currentTimeMillis()
+            SmsReceivedHandler(context).newSmsRecieved(intent)
+        }.start()
     }
 
     companion object {

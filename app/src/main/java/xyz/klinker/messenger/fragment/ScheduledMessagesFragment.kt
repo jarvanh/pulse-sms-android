@@ -295,8 +295,10 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     }
 
     private fun saveMessage(message: ScheduledMessage) {
-        DataSource.insertScheduledMessage(fragmentActivity!!, message)
-        loadMessages()
+        Thread {
+            DataSource.insertScheduledMessage(fragmentActivity!!, message)
+            loadMessages()
+        }.start()
     }
 
     private fun dismissKeyboard(editText: EditText?) {
