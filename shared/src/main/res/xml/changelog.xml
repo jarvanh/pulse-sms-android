@@ -38,6 +38,12 @@
     <!--</version>-->
 
     <version
+        name="2.8.4"
+        description="February 18th, 2018">
+        <text>Crash/ANR fixes</text>
+    </version>
+
+    <version
         name="2.8.3"
         description="February 18th, 2018">
         <!-- implement map parsing for the vcards -->
