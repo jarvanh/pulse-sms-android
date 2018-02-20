@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.activity
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -34,6 +35,9 @@ import xyz.klinker.messenger.shared.util.UnreadBadger
 import xyz.klinker.messenger.shared.view.WhitableToolbar
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import xyz.klinker.messenger.utils.UpdateUtils
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
+
 
 /**
  * Main entry point to the app. This will serve for setting up the drawer view, finding
@@ -51,8 +55,9 @@ class MessengerActivity : AppCompatActivity() {
     private val permissionHelper = MainPermissionHelper(this)
     private val resultHandler = MainResultHandler(this)
 
-    val toolbar: WhitableToolbar by lazy { findViewById<View>(R.id.toolbar) as WhitableToolbar}
+    val toolbar: WhitableToolbar by lazy { findViewById<View>(R.id.toolbar) as WhitableToolbar }
     val fab: FloatingActionButton by lazy { findViewById<View>(R.id.fab) as FloatingActionButton }
+    private val content: View by lazy { findViewById<View>(android.R.id.content) }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,6 +115,9 @@ class MessengerActivity : AppCompatActivity() {
         super.onStop()
         MessengerAppWidgetProvider.refreshWidget(this)
         accountController.stopListeningForRefreshes()
+
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(content.windowToken, 0)
     }
 
     public override fun onSaveInstanceState(outState: Bundle?) {
