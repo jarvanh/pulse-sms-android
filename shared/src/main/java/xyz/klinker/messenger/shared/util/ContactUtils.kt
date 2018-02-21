@@ -162,7 +162,7 @@ object ContactUtils {
         val phoneNumber = context.contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER),
                 ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
-                arrayOf(rawContactId), null)
+                arrayOf(rawContactId), ContactsContract.CommonDataKinds.Phone.TYPE + " desc")
 
         var number: String? = null
         if (phoneNumber != null && phoneNumber.moveToFirst()) {
