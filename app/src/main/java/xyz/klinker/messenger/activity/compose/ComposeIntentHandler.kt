@@ -70,26 +70,32 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
         if (intent.extras != null && intent.extras.containsKey("sms_body")) {
             activity.sender.resetViews(intent.extras.getString("sms_body"), MimeType.TEXT_PLAIN, false)
         } else if (intent.dataString != null) {
-            if (intent.dataString.contains("smsto:")) {
-                initiatedFromWebLink("smsto:", intent)
-            } else if (intent.dataString.contains("sms:")) {
-                initiatedFromWebLink("sms:", intent)
-            }
+            initiatedFromWebLink(intent)
         }
     }
 
-    private fun initiatedFromWebLink(linkType: String, intent: Intent) {
-        var to = intent.dataString.replace(linkType, "")
-        if (to.contains("?")) {
-            to = to.substring(0, to.indexOf("?"))
+    private fun initiatedFromWebLink(intent: Intent) {
+        val phoneNumbers = if (intent.dataString.contains("?")) {
+            PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString.substring(0, intent.dataString.indexOf("?"))))
+        } else {
+            PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString))
         }
-        to = URLDecoder.decode(to)
+
+        val builder = StringBuilder()
+        for (i in phoneNumbers.indices) {
+            builder.append(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(phoneNumbers[i]))
+            if (i != phoneNumbers.size - 1) {
+                builder.append(", ")
+            }
+        }
+
+        val numbers = builder.toString()
 
         val body = NonStandardUriUtils.getQueryParams(intent.dataString)["body"]
         if (body != null) {
-            activity.shareHandler.apply(MimeType.TEXT_PLAIN, body, to)
+            activity.shareHandler.apply(MimeType.TEXT_PLAIN, body, numbers)
         } else {
-            activity.sender.showConversation(to)
+            activity.sender.showConversation(numbers)
         }
     }
 
