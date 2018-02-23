@@ -39,7 +39,7 @@
 
     <version
         name="2.8.4"
-        description="February 22nd, 2018">
+        description="February 23rd, 2018">
         <text>Crash/ANR fixes</text>
         <text>Improvements to sms: and smsto: web link handling</text>
     </version>
