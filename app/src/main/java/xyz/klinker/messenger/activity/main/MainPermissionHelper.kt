@@ -12,7 +12,9 @@ class MainPermissionHelper(private val activity: MessengerActivity) {
         if (PermissionsUtils.checkRequestMainPermissions(activity)) {
             PermissionsUtils.startMainPermissionRequest(activity)
         }
+    }
 
+    fun requestDefaultSmsApp() {
         if (Account.primary && !PermissionsUtils.isDefaultSmsApp(activity)) {
             PermissionsUtils.setDefaultSmsApp(activity)
         }

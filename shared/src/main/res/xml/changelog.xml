@@ -38,6 +38,12 @@
     <!--</version>-->
 
     <version
+        name="2.8.5"
+        description="February 23rd, 2018">
+        <text>Improvements around scheduled messages and repeat notifications</text>
+    </version>
+
+    <version
         name="2.8.4"
         description="February 23rd, 2018">
         <text>Crash/ANR fixes</text>

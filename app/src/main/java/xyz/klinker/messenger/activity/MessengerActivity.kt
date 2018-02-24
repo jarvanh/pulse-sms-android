@@ -74,6 +74,7 @@ class MessengerActivity : AppCompatActivity() {
         intentHandler.dismissIfFromNotification()
         navController.conversationActionDelegate.displayConversations(savedInstanceState)
         accountController.startIntroOrLogin(savedInstanceState)
+        permissionHelper.requestDefaultSmsApp()
 
         val content = findViewById<View>(R.id.content)
         content.post {
@@ -94,7 +95,6 @@ class MessengerActivity : AppCompatActivity() {
         intentHandler.handleShortcutIntent(intent)
         accountController.listenForFullRefreshes()
         accountController.refreshAccountToken()
-        permissionHelper.requestPermissions()
 
         startDelegate.run()
     }

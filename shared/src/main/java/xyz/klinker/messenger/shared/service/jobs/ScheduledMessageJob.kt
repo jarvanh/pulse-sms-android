@@ -134,7 +134,7 @@ class ScheduledMessageJob : BroadcastReceiver() {
 
             if (messages.isNotEmpty()) {
                 val intent = Intent(context, ScheduledMessageJob::class.java)
-                val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+                val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
                 setAlarm(context, messages[0].timestamp, pendingIntent)
 
                 Log.v("scheduled message", "new message scheduled")

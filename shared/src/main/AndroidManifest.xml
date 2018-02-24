@@ -202,6 +202,10 @@
             android:exported="false" />
 
         <receiver
+            android:name=".service.jobs.RepeatNotificationJob"
+            android:exported="false" />
+
+        <receiver
             android:name=".receiver.NotificationDismissedReceiver"
             android:exported="false" />
 
@@ -257,14 +261,6 @@
         <service
             android:exported="false"
             android:name=".service.jobs.CleanupOldMessagesJob">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
-
-        <service
-            android:exported="false"
-            android:name=".service.jobs.RepeatNotificationJob">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
