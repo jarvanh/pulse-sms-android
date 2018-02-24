@@ -226,7 +226,9 @@ public class LoginActivity extends AppCompatActivity {
 
             if (response == null) {
                 runOnUiThread(() -> {
-                    dialog.dismiss();
+                    try {
+                        dialog.dismiss();
+                    } catch (Exception e) { }
                     setResult(RESULT_CANCELED);
                     Toast.makeText(getApplicationContext(), R.string.api_login_error,
                             Toast.LENGTH_SHORT).show();
@@ -255,7 +257,9 @@ public class LoginActivity extends AppCompatActivity {
 
             if (response == null) {
                 runOnUiThread(() -> {
-                    dialog.dismiss();
+                    try {
+                        dialog.dismiss();
+                    } catch (Exception e) { }
                     setResult(RESULT_CANCELED);
                     Toast.makeText(getApplicationContext(), R.string.api_email_taken,
                             Toast.LENGTH_SHORT).show();
@@ -285,7 +289,9 @@ public class LoginActivity extends AppCompatActivity {
             account.setPrimary(this, primary);
 
             runOnUiThread(() -> {
-                dialog.dismiss();
+                try {
+                    dialog.dismiss();
+                } catch (Exception e) { }
                 setResult(deviceSync ? RESULT_START_DEVICE_SYNC : RESULT_START_NETWORK_SYNC);
                 close();
             });

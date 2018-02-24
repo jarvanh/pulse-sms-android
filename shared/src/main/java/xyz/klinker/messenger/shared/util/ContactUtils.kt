@@ -340,16 +340,17 @@ object ContactUtils {
         }
     }
 
-    fun shouldDisplayContactLetter(conversation: Conversation?) =
-            if (conversation == null || conversation.title!!.isEmpty() || conversation.title!!.contains(", ") ||
-                    conversation.phoneNumbers!!.contains(", ")) {
-                false
-            } else {
-                val firstLetter = conversation.title!!.substring(0, 1)
+    fun shouldDisplayContactLetter(conversation: Conversation?) = try {
+                if (conversation == null || conversation.title!!.isEmpty() || conversation.title!!.contains(", ") ||
+                        conversation.phoneNumbers!!.contains(", ")) {
+                    false
+                } else {
+                    val firstLetter = conversation.title!!.substring(0, 1)
 
-                // if the first letter is a character and not a number or + or something weird, show it.
-                Pattern.compile("[\\p{L}]").matcher(firstLetter).find()
-            }
+                    // if the first letter is a character and not a number or + or something weird, show it.
+                    Pattern.compile("[\\p{L}]").matcher(firstLetter).find()
+                }
+            } catch (e: Exception) { false }
 
     /**
      * Get a list of contact objects from Android's database.

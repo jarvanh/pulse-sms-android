@@ -138,9 +138,15 @@ object ColorUtils {
         try {
             adjustDrawerColor(color, false, activity)
         } catch (e: IllegalStateException) {
-
         }
 
+    }
+
+    fun adjustDrawerColor(color: Int, isGroup: Boolean, activity: Activity?) {
+        try {
+            adjustDrawerColorUnsafely(color, isGroup, activity)
+        } catch (e: IllegalStateException) {
+        }
     }
 
     /**
@@ -151,7 +157,7 @@ object ColorUtils {
      * some of the text will be changed and the call option will be hidden.
      * @param activity the activity to find the views in.
      */
-    fun adjustDrawerColor(color: Int, isGroup: Boolean, activity: Activity?) {
+    private fun adjustDrawerColorUnsafely(color: Int, isGroup: Boolean, activity: Activity?) {
         if (activity == null) {
             return
         }
