@@ -14,7 +14,7 @@ public abstract class RetryableCallback<T> implements Callback<T> {
     public abstract void onFinalResponse(Call<T> call, Response<T> response);
     public abstract void onFinalFailure(Call<T> call, Throwable t);
 
-    private int totalRetries = ApiUtils.INSTANCE.getRETRY_COUNT();
+    private int totalRetries = ApiUtils.RETRY_COUNT;
     private static final String TAG = RetryableCallback.class.getSimpleName();
     private final Call<T> call;
     private int retryCount = 0;

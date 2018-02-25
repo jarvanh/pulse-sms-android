@@ -70,6 +70,7 @@ object FeatureFlags {
     private val FLAG_AUTO_REPLIES = "flag_auto_replies"
     private val FLAG_VCARD_PREVIEWS = "flag_vcard_previews"
     private val FLAG_DISMISS_NOTI_BY_UNREAD_MESSAGES = "flag_dismiss_noti_by_unread_messages"
+    private val FLAG_RETRY_FAILED_REQUESTS = "flag_retry_failed_requests"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -95,6 +96,7 @@ object FeatureFlags {
     var VCARD_PREVIEWS: Boolean = false
 
     // in testing
+    var RETRY_FAILED_REQUESTS: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -108,6 +110,8 @@ object FeatureFlags {
         SHARE_MULTIPLE_MESSAGES = getValue(context, sharedPrefs, FLAG_SHARE_MULTIPLE_MESSAGES)
         AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
+
+        RETRY_FAILED_REQUESTS = getValue(context, sharedPrefs, FLAG_RETRY_FAILED_REQUESTS)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -125,6 +129,8 @@ object FeatureFlags {
             FLAG_SHARE_MULTIPLE_MESSAGES -> SHARE_MULTIPLE_MESSAGES = flag
             FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
+
+            FLAG_RETRY_FAILED_REQUESTS -> RETRY_FAILED_REQUESTS = false
         }
     }
 

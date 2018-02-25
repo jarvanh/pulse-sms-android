@@ -29,4 +29,5 @@ public class LoggingRetryableCallback<T> extends RetryableCallback<T> {
             Log.e(TAG, logMessage + ": FAILED");
         } catch (Exception e) { }
     }
+
 }

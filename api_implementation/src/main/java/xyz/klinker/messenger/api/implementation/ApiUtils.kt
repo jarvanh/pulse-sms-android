@@ -34,6 +34,8 @@ import xyz.klinker.messenger.api.Api
 import xyz.klinker.messenger.api.entity.*
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseUploadCallback
+import xyz.klinker.messenger.api.implementation.retrofit.AddConversationRetryableCallback
+import xyz.klinker.messenger.api.implementation.retrofit.AddMessageRetryableCallback
 import xyz.klinker.messenger.api.implementation.retrofit.LoggingRetryableCallback
 import xyz.klinker.messenger.encryption.EncryptionUtils
 
@@ -41,7 +43,7 @@ import xyz.klinker.messenger.encryption.EncryptionUtils
  * Utility for easing access to APIs.
  */
 object ApiUtils {
-    val RETRY_COUNT = 3
+    const val RETRY_COUNT = 4
 
     private val TAG = "ApiUtils"
     private val MAX_SIZE = (1024 * 1024 * 5).toLong()
@@ -255,7 +257,7 @@ object ApiUtils {
                         title: String?, phoneNumbers: String?, snippet: String?,
                         ringtone: String?, idMatcher: String?, mute: Boolean,
                         archive: Boolean, privateNotifications: Boolean, folderId: Long?,
-                        encryptionUtils: EncryptionUtils?) {
+                        encryptionUtils: EncryptionUtils?, retryable: Boolean = true) {
         if (accountId == null || encryptionUtils == null) {
             return
         }
@@ -267,11 +269,16 @@ object ApiUtils {
                 encryptionUtils.encrypt(ringtone), null,
                 encryptionUtils.encrypt(idMatcher), mute, archive, privateNotifications, folderId)
         val request = AddConversationRequest(accountId, body)
-
-        val message = "add conversation"
         val call = api.conversation().add(request)
 
-        call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+        if (retryable) {
+            // if the request errors out (no internet), we want to persist that issue and retry
+            // it when connectivity is regained.
+            call.enqueue(AddConversationRetryableCallback(call, RETRY_COUNT, deviceId))
+        } else {
+            val message = "add conversation"
+            call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+        }
     }
 
     /**
@@ -453,7 +460,7 @@ object ApiUtils {
                    data: String?, timestamp: Long, mimeType: String?,
                    read: Boolean, seen: Boolean, messageFrom: String?,
                    color: Int?, androidDeviceId: String?, simStamp: String?,
-                   encryptionUtils: EncryptionUtils?) {
+                   encryptionUtils: EncryptionUtils?, retryable: Boolean = true) {
         if (accountId == null || encryptionUtils == null) {
             return
         }
@@ -465,10 +472,16 @@ object ApiUtils {
                     encryptionUtils.encrypt(messageFrom), color, androidDeviceId,
                     encryptionUtils.encrypt(simStamp))
             val request = AddMessagesRequest(accountId, body)
-            val message = "add message"
             val call = api.message().add(request)
 
-            call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+            if (retryable) {
+                // if the request errors out (no internet), we want to persist that issue and retry
+                // it when connectivity is regained.
+                call.enqueue(AddMessageRetryableCallback(call, RETRY_COUNT, deviceId))
+            } else {
+                val message = "added_message"
+                call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
+            }
         } else {
             saveFirebaseFolderRef(accountId)
             val bytes = BinaryUtils.getMediaBytes(context, data, mimeType, true)
