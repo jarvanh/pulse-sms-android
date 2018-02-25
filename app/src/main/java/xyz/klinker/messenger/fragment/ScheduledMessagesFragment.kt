@@ -143,12 +143,11 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     }
 
     fun loadMessages() {
-        val handler = Handler()
         Thread {
             try {
                 if (fragmentActivity != null) {
                     val messages = DataSource.getScheduledMessagesAsList(fragmentActivity!!)
-                    handler.post { setMessages(messages) }
+                    fragmentActivity!!.runOnUiThread { setMessages(messages) }
                 }
             } catch (e: Exception) {
             }
