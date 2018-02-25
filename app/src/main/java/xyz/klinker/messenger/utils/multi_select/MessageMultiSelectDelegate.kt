@@ -17,6 +17,7 @@ import xyz.klinker.messenger.fragment.bottom_sheet.MessageShareFragment
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.Message
+import xyz.klinker.messenger.shared.util.ColorUtils
 import java.util.*
 
 @Suppress("DEPRECATION")
@@ -183,7 +184,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             }
             message.color != Integer.MIN_VALUE -> {
                 states = ColorStateList.valueOf(message.color)
-                textColor = message.textColor
+                textColor = if (ColorUtils.isColorDark(message.color)) Color.WHITE else activity!!.resources.getColor(R.color.primaryText)
             }
             else -> {
                 states = ColorStateList.valueOf(activity!!.resources.getColor(R.color.drawerBackground))
