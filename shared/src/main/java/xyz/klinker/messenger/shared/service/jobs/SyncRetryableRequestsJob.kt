@@ -66,8 +66,8 @@ class SyncRetryableRequestsJob : SimpleJobService() {
     companion object {
 
         private const val JOB_ID = "retryable-request-sender"
-        private val TWENTY_MINS = (TimeUtils.MINUTE.toInt() / 1000) * 20
-        private val THIRTY_MINS = (TimeUtils.MINUTE.toInt() / 1000) * 30
+        private const val TWENTY_MINS = 60 * 20 // seconds
+        private const val THIRTY_MINS = 60 * 30 // seconds
 
         fun scheduleNextRun(context: Context?) {
             if (context == null || !Account.exists() || !Account.primary || !FeatureFlags.RETRY_FAILED_REQUESTS) {
