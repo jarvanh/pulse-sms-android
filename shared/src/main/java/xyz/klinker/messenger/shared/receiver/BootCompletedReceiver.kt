@@ -23,11 +23,7 @@ import android.content.Intent
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
-import xyz.klinker.messenger.shared.service.jobs.CleanupOldMessagesJob
-import xyz.klinker.messenger.shared.service.jobs.ContactSyncJob
-import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
-import xyz.klinker.messenger.shared.service.jobs.SignoutJob
-import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
+import xyz.klinker.messenger.shared.service.jobs.*
 
 /**
  * Receiver for when boot has completed. This will be responsible for starting up the content
@@ -44,6 +40,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
                 SubscriptionExpirationCheckJob.scheduleNextRun(context)
                 SignoutJob.scheduleNextRun(context)
                 ScheduledTokenRefreshService.scheduleNextRun(context)
+                SyncRetryableRequestsJob.scheduleNextRun(context)
 
                 if (Settings.quickCompose) QuickComposeNotificationService.start(context)
             }

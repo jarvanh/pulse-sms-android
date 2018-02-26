@@ -2946,7 +2946,7 @@ object DataSource {
             }
 
     /**
-     * Get all folders as a list.
+     * Get all requests as a list.
      */
     fun getRetryableRequestsAsList(context: Context): List<RetryableRequest> {
         val cursor = getRetryableRequests(context)
@@ -2966,7 +2966,7 @@ object DataSource {
     }
 
     /**
-     * Inserts a folder into the database.
+     * Inserts a request into the database.
      */
     fun insertRetryableRequest(context: Context, request: RetryableRequest): Long {
         val values = ContentValues(3)
@@ -2988,7 +2988,7 @@ object DataSource {
     }
 
     /**
-     * Deletes a folder from the database.
+     * Deletes a request from the database.
      */
     fun deleteRetryableRequest(context: Context, id: Long) {
         try {
@@ -2998,6 +2998,18 @@ object DataSource {
             ensureActionable(context)
             database(context).delete(RetryableRequest.TABLE, RetryableRequest.COLUMN_ID + "=?",
                     arrayOf(java.lang.Long.toString(id)))
+        }
+    }
+
+    /**
+     * Deletes a folder from the database.
+     */
+    fun deleteAllRetryableRequest(context: Context) {
+        try {
+            database(context).delete(RetryableRequest.TABLE, null, null)
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).delete(RetryableRequest.TABLE, null, null)
         }
     }
 

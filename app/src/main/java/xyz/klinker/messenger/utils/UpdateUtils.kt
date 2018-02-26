@@ -49,6 +49,7 @@ class UpdateUtils(private val context: Activity) {
         SubscriptionExpirationCheckJob.scheduleNextRun(context)
         SignoutJob.scheduleNextRun(context)
         ScheduledTokenRefreshService.scheduleNextRun(context)
+        SyncRetryableRequestsJob.scheduleNextRun(context)
     }
 
     companion object {

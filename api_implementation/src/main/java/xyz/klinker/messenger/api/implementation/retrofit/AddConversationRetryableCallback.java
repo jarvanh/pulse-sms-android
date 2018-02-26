@@ -3,7 +3,6 @@ package xyz.klinker.messenger.api.implementation.retrofit;
 import android.content.Context;
 
 import retrofit2.Call;
-import xyz.klinker.messenger.api.implementation.Account;
 
 public class AddConversationRetryableCallback<T> extends LoggingRetryableCallback<T> {
 
