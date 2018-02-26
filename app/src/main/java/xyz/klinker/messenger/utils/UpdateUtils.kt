@@ -54,6 +54,6 @@ class UpdateUtils(private val context: Activity) {
 
     companion object {
 
-        private val TAG = "UpdateUtil"
+        private const val TAG = "UpdateUtil"
     }
 }

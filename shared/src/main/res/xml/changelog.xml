@@ -38,8 +38,15 @@
     <!--</version>-->
 
     <version
+        name="2.8.6"
+        description="February 25rd, 2018">
+        <!-- create table and service to manage persisting failed backend requests and retrying them when the user regains a data connection -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.8.5"
-        description="February 23rd, 2018">
+        description="February 25rd, 2018">
         <text>Improvements around scheduled messages and repeat notifications</text>
     </version>
 
