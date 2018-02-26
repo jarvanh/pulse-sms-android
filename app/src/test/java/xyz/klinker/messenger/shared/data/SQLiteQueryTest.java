@@ -953,7 +953,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void insertRetryableRequest() {
-        RetryableRequest request = new RetryableRequest(RetryableRequest.TYPE_ADD_CONVERSATION, 101L);
+        RetryableRequest request = new RetryableRequest(RetryableRequest.TYPE_ADD_CONVERSATION, 101L, 2L);
 
         int initialSize = source.getRetryableRequestsAsList(context).size();
         source.insertRetryableRequest(context, request);

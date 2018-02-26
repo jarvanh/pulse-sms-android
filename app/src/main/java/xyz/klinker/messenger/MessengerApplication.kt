@@ -113,7 +113,8 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister {
         }
 
         Thread {
-            DataSource.insertRetryableRequest(this, RetryableRequest(RetryableRequest.TYPE_ADD_CONVERSATION, conversationId))
+            DataSource.insertRetryableRequest(this,
+                    RetryableRequest(RetryableRequest.TYPE_ADD_CONVERSATION, conversationId, System.currentTimeMillis()))
         }.start()
     }
 
@@ -123,7 +124,8 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister {
         }
 
         Thread {
-            DataSource.insertRetryableRequest(this, RetryableRequest(RetryableRequest.TYPE_ADD_MESSAGE, messageId))
+            DataSource.insertRetryableRequest(this,
+                    RetryableRequest(RetryableRequest.TYPE_ADD_MESSAGE, messageId, System.currentTimeMillis()))
         }.start()
     }
 

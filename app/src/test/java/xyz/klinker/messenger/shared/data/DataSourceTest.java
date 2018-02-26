@@ -707,7 +707,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getRetryableRequests() {
-        when(database.query("retryable_request", null, null, null, null, null, null))
+        when(database.query("retryable_request", null, null, null, null, null, "error_timestamp asc"))
                 .thenReturn(cursor);
         assertEquals(cursor, source.getRetryableRequests(context));
     }

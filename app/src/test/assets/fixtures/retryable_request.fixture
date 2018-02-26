@@ -1,2 +1,2 @@
-| _id   | type     | data_id    |
-| 1     | 0        | 0          |
+| _id   | type     | data_id    | error_timestamp   |
+| 1     | 0        | 0          | 1                 |

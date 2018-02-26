@@ -140,6 +140,13 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
             } catch (e: Exception) {
             }
         }
+
+        if (oldVersion < 15) {
+            try {
+                db.execSQL("ALTER TABLE ${RetryableRequest.TABLE} ADD COLUMN ${RetryableRequest.COLUMN_ERROR_TIMESTAMP} integer not null DEFAULT -1")
+            } catch (e: Exception) {
+            }
+        }
     }
 
     fun onDrop(db: SQLiteDatabase) {
@@ -151,7 +158,7 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
     companion object {
 
         private const val DATABASE_NAME = "messenger.db"
-        private const val DATABASE_VERSION = 14
+        private const val DATABASE_VERSION = 15
 
     }
 

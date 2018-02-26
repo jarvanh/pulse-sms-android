@@ -2939,10 +2939,10 @@ object DataSource {
      */
     fun getRetryableRequests(context: Context): Cursor =
             try {
-                database(context).query(RetryableRequest.TABLE, null, null, null, null, null, null)
+                database(context).query(RetryableRequest.TABLE, null, null, null, null, null, "${RetryableRequest.COLUMN_ERROR_TIMESTAMP} asc")
             } catch (e: Exception) {
                 ensureActionable(context)
-                database(context).query(RetryableRequest.TABLE, null, null, null, null, null, null)
+                database(context).query(RetryableRequest.TABLE, null, null, null, null, null, "${RetryableRequest.COLUMN_ERROR_TIMESTAMP} asc")
             }
 
     /**
@@ -2969,7 +2969,7 @@ object DataSource {
      * Inserts a request into the database.
      */
     fun insertRetryableRequest(context: Context, request: RetryableRequest): Long {
-        val values = ContentValues(3)
+        val values = ContentValues(4)
 
         if (request.id <= 0) {
             request.id = generateId()
@@ -2978,6 +2978,7 @@ object DataSource {
         values.put(RetryableRequest.COLUMN_ID, request.id)
         values.put(RetryableRequest.COLUMN_TYPE, request.type)
         values.put(RetryableRequest.COLUMN_DATA_ID, request.dataId)
+        values.put(RetryableRequest.COLUMN_ERROR_TIMESTAMP, request.errorTimestamp)
 
         return try {
             database(context).insert(RetryableRequest.TABLE, null, values)

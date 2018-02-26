@@ -30,11 +30,13 @@ class RetryableRequest : DatabaseTable {
     var id: Long = 0
     var type: Int = 0
     var dataId: Long = 0
+    var errorTimestamp: Long = 0
 
     constructor()
-    constructor(type: Int, dataId: Long) {
+    constructor(type: Int, dataId: Long, errorTimestamp: Long) {
         this.type = type
         this.dataId = dataId
+        this.errorTimestamp = errorTimestamp
     }
 
     override fun getCreateStatement() = DATABASE_CREATE
@@ -47,16 +49,17 @@ class RetryableRequest : DatabaseTable {
                 COLUMN_ID -> this.id = cursor.getLong(i)
                 COLUMN_TYPE -> this.type = cursor.getInt(i)
                 COLUMN_DATA_ID -> this.dataId = cursor.getLong(i)
+                COLUMN_ERROR_TIMESTAMP -> this.errorTimestamp = cursor.getLong(i)
             }
         }
     }
 
     override fun encrypt(utils: EncryptionUtils) {
-
+        // we aren't uploading this table at all.
     }
 
     override fun decrypt(utils: EncryptionUtils) {
-
+        // we aren't uploading this table at all.
     }
 
     companion object {
@@ -65,13 +68,13 @@ class RetryableRequest : DatabaseTable {
         const val COLUMN_ID = "_id"
         const val COLUMN_TYPE = "type"
         const val COLUMN_DATA_ID = "data_id"
+        const val COLUMN_ERROR_TIMESTAMP = "error_timestamp"
 
         private const val DATABASE_CREATE = "create table if not exists " +
-                TABLE + " (" +
-                COLUMN_ID + " integer primary key, " +
-                COLUMN_TYPE + " integer not null, " +
-                COLUMN_DATA_ID + " integer not null" +
-                ");"
+                "$TABLE ($COLUMN_ID integer primary key, " +
+                "$COLUMN_TYPE integer not null, " +
+                "$COLUMN_DATA_ID integer not null, " +
+                "$COLUMN_ERROR_TIMESTAMP integer not null);"
 
         const val TYPE_ADD_MESSAGE = 0
         const val TYPE_ADD_CONVERSATION = 1
