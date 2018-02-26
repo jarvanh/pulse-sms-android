@@ -248,7 +248,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 val messageId = DataSource.insertMessage(context, message, message.conversationId, true, false)
                 Log.v(TAG, "added message")
 
-                if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
+                if (!Utils.isDefaultSmsApp(context) && Account.primary && message.type == Message.TYPE_SENDING) {
                     Thread {
                         try {
                             Thread.sleep(500)
@@ -342,7 +342,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                     Log.v(TAG, "sent message")
                 }
 
-                if (!Utils.isDefaultSmsApp(context) && message.type == Message.TYPE_SENDING) {
+                if (!Utils.isDefaultSmsApp(context) && Account.primary && message.type == Message.TYPE_SENDING) {
                     DataSource.updateMessageType(context, message.id, Message.TYPE_SENT, false)
                 }
 

@@ -24,6 +24,7 @@ import android.net.Uri
 import android.provider.Telephony
 
 import com.klinker.android.send_message.DeliveredReceiver
+import xyz.klinker.messenger.api.implementation.Account
 
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
@@ -41,6 +42,11 @@ class SmsDeliveredReceiver : DeliveredReceiver() {
         Thread {
             try {
                 super.onReceive(context, intent)
+
+                if (Account.exists() && !Account.primary) {
+                    return@Thread
+                }
+
                 handleReceiver(context, intent)
             } catch (e: Exception) {
                 e.printStackTrace()
