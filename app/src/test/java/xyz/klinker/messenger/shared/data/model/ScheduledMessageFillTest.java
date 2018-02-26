@@ -44,12 +44,12 @@ public class ScheduledMessageFillTest extends MessengerRobolectricSuite {
 
     private Cursor createCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                ScheduledMessage.Companion.getCOLUMN_ID(),
-                ScheduledMessage.Companion.getCOLUMN_TITLE(),
-                ScheduledMessage.Companion.getCOLUMN_TO(),
-                ScheduledMessage.Companion.getCOLUMN_DATA(),
-                ScheduledMessage.Companion.getCOLUMN_MIME_TYPE(),
-                ScheduledMessage.Companion.getCOLUMN_TIMESTAMP()
+                ScheduledMessage.COLUMN_ID,
+                ScheduledMessage.COLUMN_TITLE,
+                ScheduledMessage.COLUMN_TO,
+                ScheduledMessage.COLUMN_DATA,
+                ScheduledMessage.COLUMN_MIME_TYPE,
+                ScheduledMessage.COLUMN_TIMESTAMP
         });
 
         cursor.addRow(new Object[]{

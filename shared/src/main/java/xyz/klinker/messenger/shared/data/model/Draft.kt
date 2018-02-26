@@ -70,13 +70,14 @@ class Draft : DatabaseTable {
 
     companion object {
 
-        val TABLE = "draft"
-        val COLUMN_ID = "_id"
-        val COLUMN_CONVERSATION_ID = "conversation_id"
-        val COLUMN_DATA = "data"
-        val COLUMN_MIME_TYPE = "mime_type"
+        const val TABLE = "draft"
 
-        private val DATABASE_CREATE = "create table if not exists " +
+        const val COLUMN_ID = "_id"
+        const val COLUMN_CONVERSATION_ID = "conversation_id"
+        const val COLUMN_DATA = "data"
+        const val COLUMN_MIME_TYPE = "mime_type"
+
+        private const val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
                 COLUMN_CONVERSATION_ID + " integer not null, " +

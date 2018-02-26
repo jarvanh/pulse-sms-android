@@ -36,7 +36,7 @@ public class MessageFilledTest extends MessengerRobolectricSuite {
 
         assertEquals(1, message.getId());
         assertEquals(1, message.getConversationId());
-        assertEquals(Message.Companion.getTYPE_RECEIVED(), message.getType());
+        assertEquals(Message.TYPE_RECEIVED, message.getType());
         assertEquals("Do you want to go to summerfest this weekend?", message.getData());
         assertEquals(1001L, message.getTimestamp());
         assertEquals("text/plain", message.getMimeType());
@@ -48,22 +48,22 @@ public class MessageFilledTest extends MessengerRobolectricSuite {
 
     private Cursor createCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Message.Companion.getCOLUMN_ID(),
-                Message.Companion.getCOLUMN_CONVERSATION_ID(),
-                Message.Companion.getCOLUMN_TYPE(),
-                Message.Companion.getCOLUMN_DATA(),
-                Message.Companion.getCOLUMN_TIMESTAMP(),
-                Message.Companion.getCOLUMN_MIME_TYPE(),
-                Message.Companion.getCOLUMN_READ(),
-                Message.Companion.getCOLUMN_SEEN(),
-                Message.Companion.getCOLUMN_FROM(),
-                Message.Companion.getCOLUMN_COLOR()
+                Message.COLUMN_ID,
+                Message.COLUMN_CONVERSATION_ID,
+                Message.COLUMN_TYPE,
+                Message.COLUMN_DATA,
+                Message.COLUMN_TIMESTAMP,
+                Message.COLUMN_MIME_TYPE,
+                Message.COLUMN_READ,
+                Message.COLUMN_SEEN,
+                Message.COLUMN_FROM,
+                Message.COLUMN_COLOR
         });
 
         cursor.addRow(new Object[]{
                 1,
                 1,
-                Message.Companion.getTYPE_RECEIVED(),
+                Message.TYPE_RECEIVED,
                 "Do you want to go to summerfest this weekend?",
                 1001L,
                 "text/plain",

@@ -40,8 +40,8 @@ public class BlacklistFillTest extends MessengerRobolectricSuite {
 
     private Cursor createCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Blacklist.Companion.getCOLUMN_ID(),
-                Blacklist.Companion.getCOLUMN_PHONE_NUMBER(),
+                Blacklist.COLUMN_ID,
+                Blacklist.COLUMN_PHONE_NUMBER,
         });
 
         cursor.addRow(new Object[]{

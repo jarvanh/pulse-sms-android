@@ -52,13 +52,13 @@ class AutoReply : DatabaseTable {
 
     companion object {
 
-        val TABLE = "auto_reply"
-        val COLUMN_ID = "_id"
-        val COLUMN_TYPE = "type"
-        val COLUMN_PATTERN = "pattern"
-        val COLUMN_RESPONSE = "response"
+        const val TABLE = "auto_reply"
+        const val COLUMN_ID = "_id"
+        const val COLUMN_TYPE = "type"
+        const val COLUMN_PATTERN = "pattern"
+        const val COLUMN_RESPONSE = "response"
 
-        private val DATABASE_CREATE = "create table if not exists " +
+        private const val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
                 COLUMN_TYPE + " text not null, " +
@@ -66,10 +66,10 @@ class AutoReply : DatabaseTable {
                 COLUMN_RESPONSE + " text not null" +
                 ");"
 
-        val TYPE_VACATION = "vacation"
-        val TYPE_DRIVING = "driving"
-        val TYPE_CONTACT = "contact"
-        val TYPE_KEYWORD = "keyword"
+        const val TYPE_VACATION = "vacation"
+        const val TYPE_DRIVING = "driving"
+        const val TYPE_CONTACT = "contact"
+        const val TYPE_KEYWORD = "keyword"
     }
 
 }

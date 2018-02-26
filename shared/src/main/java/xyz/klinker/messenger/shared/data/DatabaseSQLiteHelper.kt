@@ -28,7 +28,8 @@ import xyz.klinker.messenger.shared.data.model.*
  */
 class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
-    private val tables = arrayOf(Contact(), Conversation(), Message(), Draft(), ScheduledMessage(), Blacklist(), Template(), Folder(), AutoReply())
+    private val tables = arrayOf(Contact(), Conversation(), Message(), Draft(), ScheduledMessage(),
+            Blacklist(), Template(), Folder(), AutoReply(), RetryableRequest())
 
     override fun onCreate(db: SQLiteDatabase) {
         for (table in tables) {
@@ -132,6 +133,13 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
             } catch (e: Exception) {
             }
         }
+
+        if (oldVersion < 14) {
+            try {
+                db.execSQL(RetryableRequest().getCreateStatement())
+            } catch (e: Exception) {
+            }
+        }
     }
 
     fun onDrop(db: SQLiteDatabase) {
@@ -142,8 +150,9 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
 
     companion object {
 
-        private val DATABASE_NAME = "messenger.db"
-        private val DATABASE_VERSION = 13
+        private const val DATABASE_NAME = "messenger.db"
+        private const val DATABASE_VERSION = 14
+
     }
 
 }

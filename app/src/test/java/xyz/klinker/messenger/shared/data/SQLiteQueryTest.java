@@ -35,6 +35,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Draft;
 import xyz.klinker.messenger.shared.data.model.Folder;
 import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.data.model.RetryableRequest;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.shared.data.model.Template;
 import xyz.klinker.messenger.shared.util.ColorUtils;
@@ -111,7 +112,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
         if (cursor.moveToFirst()) {
             do {
-                names.add(cursor.getString(cursor.getColumnIndex(Contact.Companion.getCOLUMN_NAME())));
+                names.add(cursor.getString(cursor.getColumnIndex(Contact.COLUMN_NAME)));
             } while (cursor.moveToNext());
 
             cursor.close();
@@ -276,7 +277,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
         if (cursor.moveToFirst()) {
             do {
-                titles.add(cursor.getString(cursor.getColumnIndex(Conversation.Companion.getCOLUMN_TITLE())));
+                titles.add(cursor.getString(cursor.getColumnIndex(Conversation.COLUMN_TITLE)));
             } while (cursor.moveToNext());
 
             cursor.close();
@@ -294,7 +295,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
         if (cursor.moveToFirst()) {
             do {
-                titles.add(cursor.getString(cursor.getColumnIndex(Conversation.Companion.getCOLUMN_TITLE())));
+                titles.add(cursor.getString(cursor.getColumnIndex(Conversation.COLUMN_TITLE)));
             } while (cursor.moveToNext());
 
             cursor.close();
@@ -480,10 +481,10 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void updateMessageType() {
-        source.updateMessageType(context, 1, Message.Companion.getTYPE_SENT(), false);
+        source.updateMessageType(context, 1, Message.TYPE_SENT, false);
         Cursor messages = source.getMessages(context, 1L);
         messages.moveToLast();
-        assertEquals(Message.Companion.getTYPE_SENT(), messages.getInt(messages.getColumnIndex(Message.Companion.getCOLUMN_TYPE())));
+        assertEquals(Message.TYPE_SENT, messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE)));
     }
 
     @Test
@@ -647,7 +648,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         Cursor conversation = source.getUnarchivedConversations(context);
         conversation.moveToFirst();
         assertEquals("You: test message", conversation
-                .getString(conversation.getColumnIndex(Conversation.Companion.getCOLUMN_SNIPPET())));
+                .getString(conversation.getColumnIndex(Conversation.COLUMN_SNIPPET)));
     }
 
     @Test
@@ -687,7 +688,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     private Message getFakeMessage() {
         Message m = new Message();
         m.setConversationId(2);
-        m.setType(Message.Companion.getTYPE_SENT());
+        m.setType(Message.TYPE_SENT);
         m.setData("test message");
         m.setTimestamp(System.currentTimeMillis());
         m.setMimeType("text/plain");
@@ -943,6 +944,31 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
         Conversation one = source.getConversation(context, 1);
         assertEquals(-1, one.getFolderId().longValue());
+    }
+
+    @Test
+    public void getRetryableRequests() {
+        assertEquals(1, source.getFoldersAsList(context).size());
+    }
+
+    @Test
+    public void insertRetryableRequest() {
+        RetryableRequest request = new RetryableRequest(RetryableRequest.TYPE_ADD_CONVERSATION, 101L);
+
+        int initialSize = source.getRetryableRequestsAsList(context).size();
+        source.insertRetryableRequest(context, request);
+        int finalSize = source.getRetryableRequestsAsList(context).size();
+
+        assertEquals(1, finalSize - initialSize);
+    }
+
+    @Test
+    public void deleteRetryableRequest() {
+        int initialSize = source.getRetryableRequestsAsList(context).size();
+        source.deleteRetryableRequest(context, 1);
+        int finalSize = source.getRetryableRequestsAsList(context).size();
+
+        assertEquals(1, initialSize - finalSize);
     }
 
 }

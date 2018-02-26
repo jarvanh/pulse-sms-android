@@ -18,23 +18,23 @@ package xyz.klinker.messenger.shared.data.model
 
 import android.database.Cursor
 
-import xyz.klinker.messenger.api.entity.DraftBody
-import xyz.klinker.messenger.api.entity.TemplateBody
+import xyz.klinker.messenger.api.entity.MessageBody
 import xyz.klinker.messenger.shared.data.DatabaseSQLiteHelper
 import xyz.klinker.messenger.encryption.EncryptionUtils
 
 /**
- * Table for holding drafts for a conversation.
+ * Holds information regarding messages (eg what type they are, what they contain and a timestamp).
  */
-class Template : DatabaseTable {
+class RetryableRequest : DatabaseTable {
 
     var id: Long = 0
-    var text: String? = null
+    var type: Int = 0
+    var dataId: Long = 0
 
     constructor()
-    constructor(body: TemplateBody) {
-        this.id = body.deviceId
-        this.text = body.text
+    constructor(type: Int, dataId: Long) {
+        this.type = type
+        this.dataId = dataId
     }
 
     override fun getCreateStatement() = DATABASE_CREATE
@@ -45,34 +45,36 @@ class Template : DatabaseTable {
         for (i in 0 until cursor.columnCount) {
             when (cursor.getColumnName(i)) {
                 COLUMN_ID -> this.id = cursor.getLong(i)
-                COLUMN_TEXT -> this.text = cursor.getString(i)
+                COLUMN_TYPE -> this.type = cursor.getInt(i)
+                COLUMN_DATA_ID -> this.dataId = cursor.getLong(i)
             }
         }
     }
 
     override fun encrypt(utils: EncryptionUtils) {
-        this.text = utils.encrypt(this.text)
+
     }
 
     override fun decrypt(utils: EncryptionUtils) {
-        try {
-            this.text = utils.decrypt(this.text)
-        } catch (e: Exception) {
-        }
+
     }
 
     companion object {
 
-        const val TABLE = "template"
-
+        const val TABLE = "retryable_request"
         const val COLUMN_ID = "_id"
-        const val COLUMN_TEXT = "text"
+        const val COLUMN_TYPE = "type"
+        const val COLUMN_DATA_ID = "data_id"
 
         private const val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
-                COLUMN_TEXT + " text not null" +
+                COLUMN_TYPE + " integer not null, " +
+                COLUMN_DATA_ID + " integer not null" +
                 ");"
+
+        const val TYPE_ADD_MESSAGE = 0
+        const val TYPE_ADD_CONVERSATION = 1
     }
 
 }

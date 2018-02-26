@@ -108,24 +108,25 @@ class Message : DatabaseTable {
 
     companion object {
 
-        val TABLE = "message"
-        val COLUMN_ID = "_id"
-        val COLUMN_CONVERSATION_ID = "conversation_id"
-        val COLUMN_TYPE = "type"
-        val COLUMN_DATA = "data"
-        val COLUMN_TIMESTAMP = "timestamp"
-        val COLUMN_MIME_TYPE = "mime_type"
-        val COLUMN_READ = "read"
-        val COLUMN_SEEN = "seen"
-        val COLUMN_FROM = "message_from"
-        val COLUMN_COLOR = "color"
-        val COLUMN_SIM_NUMBER = "sim_phone_number" // added with v7 of database
-        val COLUMN_SENT_DEVICE = "sent_device" // added with v10 of database
+        const val TABLE = "message"
+
+        const val COLUMN_ID = "_id"
+        const val COLUMN_CONVERSATION_ID = "conversation_id"
+        const val COLUMN_TYPE = "type"
+        const val COLUMN_DATA = "data"
+        const val COLUMN_TIMESTAMP = "timestamp"
+        const val COLUMN_MIME_TYPE = "mime_type"
+        const val COLUMN_READ = "read"
+        const val COLUMN_SEEN = "seen"
+        const val COLUMN_FROM = "message_from"
+        const val COLUMN_COLOR = "color"
+        const val COLUMN_SIM_NUMBER = "sim_phone_number" // added with v7 of database
+        const val COLUMN_SENT_DEVICE = "sent_device" // added with v10 of database
 
         // not in this table, but used in a join statement for searches
-        private val JOIN_COLUMN_CONVO_TITLE = "convo_title"
+        private const val JOIN_COLUMN_CONVO_TITLE = "convo_title"
 
-        private val DATABASE_CREATE = "create table if not exists " +
+        private const val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
                 COLUMN_CONVERSATION_ID + " integer not null, " +
@@ -143,18 +144,18 @@ class Message : DatabaseTable {
 
         private val INDEXES = arrayOf("create index if not exists conversation_id_message_index on $TABLE ($COLUMN_CONVERSATION_ID);")
 
-        val TYPE_RECEIVED = 0
-        val TYPE_SENT = 1
-        val TYPE_SENDING = 2
-        val TYPE_ERROR = 3
-        val TYPE_DELIVERED = 4
-        val TYPE_INFO = 5
-        val TYPE_MEDIA = 6
+        const val TYPE_RECEIVED = 0
+        const val TYPE_SENT = 1
+        const val TYPE_SENDING = 2
+        const val TYPE_ERROR = 3
+        const val TYPE_DELIVERED = 4
+        const val TYPE_INFO = 5
+        const val TYPE_MEDIA = 6
 
         // only used in the adapter, this TYPE_IMAGE should NEVER be written to the database.
-        val TYPE_IMAGE_SENDING = 7
-        val TYPE_IMAGE_SENT = 8
-        val TYPE_IMAGE_RECEIVED = 9
+        const val TYPE_IMAGE_SENDING = 7
+        const val TYPE_IMAGE_SENT = 8
+        const val TYPE_IMAGE_RECEIVED = 9
     }
 
 }

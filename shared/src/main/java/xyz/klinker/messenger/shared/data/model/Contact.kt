@@ -66,17 +66,17 @@ open class Contact : DatabaseTable {
 
     companion object {
 
-        val TABLE = "contact"
-        val COLUMN_ID = "_id"
-        val COLUMN_PHONE_NUMBER = "phone_number"
-        val COLUMN_NAME = "name"
-        val COLUMN_COLOR = "color"
-        val COLUMN_COLOR_DARK = "color_dark"
-        val COLUMN_COLOR_LIGHT = "color_light"
-        val COLUMN_COLOR_ACCENT = "color_accent"
-        val COLUMN_ID_MATCHER = "id_matcher" // created in database v9
+        const val TABLE = "contact"
+        const val COLUMN_ID = "_id"
+        const val COLUMN_PHONE_NUMBER = "phone_number"
+        const val COLUMN_NAME = "name"
+        const val COLUMN_COLOR = "color"
+        const val COLUMN_COLOR_DARK = "color_dark"
+        const val COLUMN_COLOR_LIGHT = "color_light"
+        const val COLUMN_COLOR_ACCENT = "color_accent"
+        const val COLUMN_ID_MATCHER = "id_matcher" // created in database v9
 
-        private val DATABASE_CREATE = "create table if not exists " +
+        private const val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
                 COLUMN_PHONE_NUMBER + " varchar(255) not null, " +

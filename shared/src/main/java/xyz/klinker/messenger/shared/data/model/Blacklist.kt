@@ -59,11 +59,11 @@ class Blacklist : DatabaseTable {
 
     companion object {
 
-        val TABLE = "blacklist"
-        val COLUMN_ID = "_id"
-        val COLUMN_PHONE_NUMBER = "phone_number"
+        const val TABLE = "blacklist"
+        const val COLUMN_ID = "_id"
+        const val COLUMN_PHONE_NUMBER = "phone_number"
 
-        private val DATABASE_CREATE = "create table if not exists " +
+        private const val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
                 COLUMN_PHONE_NUMBER + " text not null" +

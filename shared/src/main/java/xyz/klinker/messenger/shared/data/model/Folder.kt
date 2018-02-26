@@ -71,15 +71,16 @@ class Folder : DatabaseTable {
 
     companion object {
 
-        val TABLE = "folder"
-        val COLUMN_ID = "_id"
-        val COLUMN_NAME = "name"
-        val COLUMN_COLOR = "color"
-        val COLUMN_COLOR_DARK = "color_dark"
-        val COLUMN_COLOR_LIGHT = "color_light"
-        val COLUMN_COLOR_ACCENT = "color_accent"
+        const val TABLE = "folder"
 
-        private val DATABASE_CREATE = "create table if not exists " +
+        const val COLUMN_ID = "_id"
+        const val COLUMN_NAME = "name"
+        const val COLUMN_COLOR = "color"
+        const val COLUMN_COLOR_DARK = "color_dark"
+        const val COLUMN_COLOR_LIGHT = "color_light"
+        const val COLUMN_COLOR_ACCENT = "color_accent"
+
+        private const val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
                 COLUMN_NAME + " text not null, " +

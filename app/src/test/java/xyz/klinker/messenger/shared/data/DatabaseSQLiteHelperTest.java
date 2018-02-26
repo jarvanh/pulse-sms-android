@@ -31,6 +31,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Draft;
 import xyz.klinker.messenger.shared.data.model.Folder;
 import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.data.model.RetryableRequest;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.shared.data.model.Template;
 
@@ -77,6 +78,7 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
         verify(database).execSQL(new Blacklist().getCreateStatement());
         verify(database).execSQL(new Folder().getCreateStatement());
         verify(database).execSQL(new AutoReply().getCreateStatement());
+        verify(database).execSQL(new RetryableRequest().getCreateStatement());
         verify(database).execSQL(new Message().getIndexStatements()[0]);
         verify(database).execSQL(new Conversation().getIndexStatements()[0]);
         verify(database).execSQL(new Draft().getIndexStatements()[0]);
@@ -88,15 +90,16 @@ public class DatabaseSQLiteHelperTest extends MessengerRobolectricSuite {
     }
 
     private void verifyDropStatement() {
-        verify(database).execSQL("drop table if exists " + Contact.Companion.getTABLE());
-        verify(database).execSQL("drop table if exists " + Conversation.Companion.getTABLE());
-        verify(database).execSQL("drop table if exists " + Draft.Companion.getTABLE());
-        verify(database).execSQL("drop table if exists " + Message.Companion.getTABLE());
-        verify(database).execSQL("drop table if exists " + ScheduledMessage.Companion.getTABLE());
-        verify(database).execSQL("drop table if exists " + Blacklist.Companion.getTABLE());
-        verify(database).execSQL("drop table if exists " + Template.Companion.getTABLE());
-        verify(database).execSQL("drop table if exists " + Folder.Companion.getTABLE());
-        verify(database).execSQL("drop table if exists " + AutoReply.Companion.getTABLE());
+        verify(database).execSQL("drop table if exists " + Contact.TABLE);
+        verify(database).execSQL("drop table if exists " + Conversation.TABLE);
+        verify(database).execSQL("drop table if exists " + Draft.TABLE);
+        verify(database).execSQL("drop table if exists " + Message.TABLE);
+        verify(database).execSQL("drop table if exists " + ScheduledMessage.TABLE);
+        verify(database).execSQL("drop table if exists " + Blacklist.TABLE);
+        verify(database).execSQL("drop table if exists " + Template.TABLE);
+        verify(database).execSQL("drop table if exists " + Folder.TABLE);
+        verify(database).execSQL("drop table if exists " + AutoReply.TABLE);
+        verify(database).execSQL("drop table if exists " + RetryableRequest.TABLE);
         verifyNoMoreInteractions(database);
     }
 

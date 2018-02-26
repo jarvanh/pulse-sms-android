@@ -2935,6 +2935,73 @@ object DataSource {
     }
 
     /**
+     * Gets all retryable requests in the database.
+     */
+    fun getRetryableRequests(context: Context): Cursor =
+            try {
+                database(context).query(RetryableRequest.TABLE, null, null, null, null, null, null)
+            } catch (e: Exception) {
+                ensureActionable(context)
+                database(context).query(RetryableRequest.TABLE, null, null, null, null, null, null)
+            }
+
+    /**
+     * Get all folders as a list.
+     */
+    fun getRetryableRequestsAsList(context: Context): List<RetryableRequest> {
+        val cursor = getRetryableRequests(context)
+        val requests = ArrayList<RetryableRequest>()
+
+        if (cursor.moveToFirst()) {
+            do {
+                val request = RetryableRequest()
+                request.fillFromCursor(cursor)
+
+                requests.add(request)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.closeSilent()
+        return requests
+    }
+
+    /**
+     * Inserts a folder into the database.
+     */
+    fun insertRetryableRequest(context: Context, request: RetryableRequest): Long {
+        val values = ContentValues(3)
+
+        if (request.id <= 0) {
+            request.id = generateId()
+        }
+
+        values.put(RetryableRequest.COLUMN_ID, request.id)
+        values.put(RetryableRequest.COLUMN_TYPE, request.type)
+        values.put(RetryableRequest.COLUMN_DATA_ID, request.dataId)
+
+        return try {
+            database(context).insert(RetryableRequest.TABLE, null, values)
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).insert(RetryableRequest.TABLE, null, values)
+        }
+    }
+
+    /**
+     * Deletes a folder from the database.
+     */
+    fun deleteRetryableRequest(context: Context, id: Long) {
+        try {
+            database(context).delete(RetryableRequest.TABLE, RetryableRequest.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(id)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).delete(RetryableRequest.TABLE, RetryableRequest.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(id)))
+        }
+    }
+
+    /**
      * Available to close the database after tests have finished running. Don't call
      * in the production application outside of test code.
      */

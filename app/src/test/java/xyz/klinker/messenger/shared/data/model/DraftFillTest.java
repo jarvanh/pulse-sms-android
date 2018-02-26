@@ -42,10 +42,10 @@ public class DraftFillTest extends MessengerRobolectricSuite {
 
     private Cursor createCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Draft.Companion.getCOLUMN_ID(),
-                Draft.Companion.getCOLUMN_CONVERSATION_ID(),
-                Draft.Companion.getCOLUMN_DATA(),
-                Draft.Companion.getCOLUMN_MIME_TYPE()
+                Draft.COLUMN_ID,
+                Draft.COLUMN_CONVERSATION_ID,
+                Draft.COLUMN_DATA,
+                Draft.COLUMN_MIME_TYPE
         });
 
         cursor.addRow(new Object[]{

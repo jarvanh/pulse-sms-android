@@ -80,15 +80,16 @@ class ScheduledMessage : DatabaseTable {
 
     companion object {
 
-        val TABLE = "scheduled_message"
-        val COLUMN_ID = "_id"
-        val COLUMN_TITLE = "title"
-        val COLUMN_TO = "phone_number"
-        val COLUMN_DATA = "data"
-        val COLUMN_MIME_TYPE = "mime_type"
-        val COLUMN_TIMESTAMP = "timestamp"
+        const val TABLE = "scheduled_message"
 
-        private val DATABASE_CREATE = "create table if not exists " +
+        const val COLUMN_ID = "_id"
+        const val COLUMN_TITLE = "title"
+        const val COLUMN_TO = "phone_number"
+        const val COLUMN_DATA = "data"
+        const val COLUMN_MIME_TYPE = "mime_type"
+        const val COLUMN_TIMESTAMP = "timestamp"
+
+        private const val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
                 COLUMN_TITLE + " text not null, " +

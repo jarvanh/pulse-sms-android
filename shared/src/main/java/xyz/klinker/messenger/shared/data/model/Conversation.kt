@@ -144,31 +144,31 @@ class Conversation : DatabaseTable {
 
     companion object {
 
-        val TABLE = "conversation"
+        const val TABLE = "conversation"
 
-        val COLUMN_ID = "_id"
-        val COLUMN_COLOR = "color"
-        val COLUMN_COLOR_DARK = "color_dark"
-        val COLUMN_COLOR_LIGHT = "color_light"
-        val COLUMN_COLOR_ACCENT = "color_accent"
-        val COLUMN_PINNED = "pinned"
-        val COLUMN_READ = "read"
-        val COLUMN_TIMESTAMP = "timestamp"
-        val COLUMN_TITLE = "title"
-        val COLUMN_PHONE_NUMBERS = "phone_numbers"
-        val COLUMN_SNIPPET = "snippet"
-        val COLUMN_RINGTONE = "ringtone"
-        val COLUMN_IMAGE_URI = "image_uri"
-        val COLUMN_ID_MATCHER = "id_matcher"
-        val COLUMN_MUTE = "mute"
-        val COLUMN_ARCHIVED = "archive" // created in database v2
-        val COLUMN_PRIVATE_NOTIFICATIONS = "private_notifications" // created in database v4
-        val COLUMN_LED_COLOR = "led_color" // created in database v5
-        val COLUMN_SIM_SUBSCRIPTION_ID = "sim_subscription_id" // created in database v6
-        val COLUMN_FOLDER_ID = "folder_id" // created in database v12
+        const val COLUMN_ID = "_id"
+        const val COLUMN_COLOR = "color"
+        const val COLUMN_COLOR_DARK = "color_dark"
+        const val COLUMN_COLOR_LIGHT = "color_light"
+        const val COLUMN_COLOR_ACCENT = "color_accent"
+        const val COLUMN_PINNED = "pinned"
+        const val COLUMN_READ = "read"
+        const val COLUMN_TIMESTAMP = "timestamp"
+        const val COLUMN_TITLE = "title"
+        const val COLUMN_PHONE_NUMBERS = "phone_numbers"
+        const val COLUMN_SNIPPET = "snippet"
+        const val COLUMN_RINGTONE = "ringtone"
+        const val COLUMN_IMAGE_URI = "image_uri"
+        const val COLUMN_ID_MATCHER = "id_matcher"
+        const val COLUMN_MUTE = "mute"
+        const val COLUMN_ARCHIVED = "archive" // created in database v2
+        const val COLUMN_PRIVATE_NOTIFICATIONS = "private_notifications" // created in database v4
+        const val COLUMN_LED_COLOR = "led_color" // created in database v5
+        const val COLUMN_SIM_SUBSCRIPTION_ID = "sim_subscription_id" // created in database v6
+        const val COLUMN_FOLDER_ID = "folder_id" // created in database v12
 
         val INDEXES = arrayOf("create index if not exists folder_id_conversation_index on $TABLE ($COLUMN_FOLDER_ID);")
-        private val DATABASE_CREATE = "create table if not exists " +
+        private const val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
                 COLUMN_COLOR + " integer not null, " +

@@ -132,12 +132,12 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
 
     private Cursor getUnseenCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Message.Companion.getCOLUMN_ID(),
-                Message.Companion.getCOLUMN_CONVERSATION_ID(),
-                Message.Companion.getCOLUMN_DATA(),
-                Message.Companion.getCOLUMN_MIME_TYPE(),
-                Message.Companion.getCOLUMN_TIMESTAMP(),
-                Message.Companion.getCOLUMN_FROM()
+                Message.COLUMN_ID,
+                Message.COLUMN_CONVERSATION_ID,
+                Message.COLUMN_DATA,
+                Message.COLUMN_MIME_TYPE,
+                Message.COLUMN_TIMESTAMP,
+                Message.COLUMN_FROM
         });
 
         cursor.addRow(new Object[]{

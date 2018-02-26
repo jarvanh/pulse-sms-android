@@ -44,6 +44,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Draft;
 import xyz.klinker.messenger.shared.data.model.Folder;
 import xyz.klinker.messenger.shared.data.model.Message;
+import xyz.klinker.messenger.shared.data.model.RetryableRequest;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.shared.data.model.Template;
 
@@ -167,7 +168,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         assertEquals(10, source.deleteAllContacts(context));
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     // TODO: this fails after some changes to the import process because it isn't returning any messages from the conversation
     public void insertConversations() {
         source.insertConversations(getFakeConversations(context.getResources()), context, null);
@@ -232,7 +234,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void updateContact() {
-        source.updateContact(context, 1, "515","Test", 1, 2, 3, 4, false);
+        source.updateContact(context, 1, "515", "Test", 1, 2, 3, 4, false);
         verify(database).update(eq("contact"), any(ContentValues.class), eq("phone_number=?"),
                 eq(new String[]{"515"}));
     }
@@ -245,13 +247,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void deleteMultipleContactsById() {
-        source.deleteContacts(context, new String[] { "1", "2" }, false);
-        verify(database).delete("contact", "_id=? OR _id=?", new String[]{ "1", "2" });
+        source.deleteContacts(context, new String[]{"1", "2"}, false);
+        verify(database).delete("contact", "_id=? OR _id=?", new String[]{"1", "2"});
     }
 
     @Test
     public void deleteSingleContactById() {
-        source.deleteContacts(context, new String[] { "1" });
+        source.deleteContacts(context, new String[]{"1"});
         verify(database).delete("contact", "_id=?", new String[]{"1"});
     }
 
@@ -273,7 +275,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void searchConversations() {
         when(database.query("conversation", null, "title LIKE '%swimmer''s%'", null, null, null,
                 "timestamp desc")).thenReturn(cursor);
-        assertEquals(cursor, source.searchConversations(context,"swimmer's"));
+        assertEquals(cursor, source.searchConversations(context, "swimmer's"));
     }
 
     @Test
@@ -384,14 +386,14 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void getMediaMessages() {
         when(database.query("message", null, "conversation_id=? AND (mime_type LIKE 'image/%' OR mime_type LIKE 'video/%' OR mime_type LIKE 'audio/%') AND data NOT LIKE 'firebase %'",
                 new String[]{"1"}, null, null, "timestamp asc")).thenReturn(cursor);
-        assertNotNull(source.getMediaMessages(context,1));
+        assertNotNull(source.getMediaMessages(context, 1));
     }
 
     @Test
     public void getAllMediaMessages() {
-        when(database.query("message", null, "mime_type!=? AND mime_type!=? AND mime_type!=? AND mime_type!=? AND mime_type!=?", new String[] { "text/plain", "media/web", "media/youtube-v2", "media/twitter", "media/map" }, null, null,
+        when(database.query("message", null, "mime_type!=? AND mime_type!=? AND mime_type!=? AND mime_type!=? AND mime_type!=?", new String[]{"text/plain", "media/web", "media/youtube-v2", "media/twitter", "media/map"}, null, null,
                 "timestamp desc LIMIT 20")).thenReturn(cursor);
-        assertEquals(cursor, source.getAllMediaMessages(context,20));
+        assertEquals(cursor, source.getAllMediaMessages(context, 20));
     }
 
     @Test
@@ -412,7 +414,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void searchMessages() {
         when(database.query("message m left outer join conversation c on m.conversation_id = c._id",
-                new String[] { "m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title" },
+                new String[]{"m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title"},
                 "data LIKE '%test%' AND mime_type='text/plain'",
                 null, null, null, "timestamp desc")).thenReturn(cursor);
 
@@ -439,7 +441,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void updateMessageType() {
-        source.updateMessageType(context, 1, Message.Companion.getTYPE_SENT(), false);
+        source.updateMessageType(context, 1, Message.TYPE_SENT, false);
         verify(database).update(eq("message"), any(ContentValues.class), eq("_id=? AND type<>? AND type<>?"),
                 eq(new String[]{"1", "0", "4"}));
     }
@@ -701,6 +703,26 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         source.updateFolder(context, folder, false);
         verify(database).update(eq("folder"), any(ContentValues.class), eq("_id=?"),
                 eq(new String[]{"1"}));
+    }
+
+    @Test
+    public void getRetryableRequests() {
+        when(database.query("retryable_request", null, null, null, null, null, null))
+                .thenReturn(cursor);
+        assertEquals(cursor, source.getRetryableRequests(context));
+    }
+
+    @Test
+    public void insertRetryableRequest() {
+        source.insertRetryableRequest(context, new RetryableRequest());
+        verify(database).insert(eq("retryable_request"), eq((String) null),
+                any(ContentValues.class));
+    }
+
+    @Test
+    public void deleteRetryableRequest() {
+        source.deleteRetryableRequest(context, 1);
+        verify(database).delete("retryable_request", "_id=?", new String[]{"1"});
     }
 
     public static List<Conversation> getFakeConversations(Resources resources) {

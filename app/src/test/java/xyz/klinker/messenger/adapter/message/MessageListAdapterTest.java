@@ -98,12 +98,12 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getItemViewTypeReceived() {
-        assertEquals(Message.Companion.getTYPE_RECEIVED(), adapter.getItemViewType(0));
+        assertEquals(Message.TYPE_RECEIVED, adapter.getItemViewType(0));
     }
 
     @Test
     public void getItemViewTypeSent() {
-        assertEquals(Message.Companion.getTYPE_SENT(), adapter.getItemViewType(1));
+        assertEquals(Message.TYPE_SENT, adapter.getItemViewType(1));
     }
 
     @Test
@@ -160,22 +160,22 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
 
     private Cursor getFakeMessages() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
-                Message.Companion.getCOLUMN_ID(),
-                Message.Companion.getCOLUMN_CONVERSATION_ID(),
-                Message.Companion.getCOLUMN_TYPE(),
-                Message.Companion.getCOLUMN_DATA(),
-                Message.Companion.getCOLUMN_TIMESTAMP(),
-                Message.Companion.getCOLUMN_MIME_TYPE(),
-                Message.Companion.getCOLUMN_READ(),
-                Message.Companion.getCOLUMN_SEEN(),
-                Message.Companion.getCOLUMN_FROM(),
-                Message.Companion.getCOLUMN_COLOR()
+                Message.COLUMN_ID,
+                Message.COLUMN_CONVERSATION_ID,
+                Message.COLUMN_TYPE,
+                Message.COLUMN_DATA,
+                Message.COLUMN_TIMESTAMP,
+                Message.COLUMN_MIME_TYPE,
+                Message.COLUMN_READ,
+                Message.COLUMN_SEEN,
+                Message.COLUMN_FROM,
+                Message.COLUMN_COLOR
         });
 
         cursor.addRow(new Object[]{
                 1,
                 1,
-                Message.Companion.getTYPE_RECEIVED(),
+                Message.TYPE_RECEIVED,
                 "Do you want to go to summerfest this weekend?",
                 System.currentTimeMillis() - (1000 * 60 * 60 * 12) - (1000 * 60 * 30),
                 "text/plain",
@@ -188,7 +188,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 2,
                 1,
-                Message.Companion.getTYPE_SENT(),
+                Message.TYPE_SENT,
                 "Yeah, I'll probably go on Friday.",
                 System.currentTimeMillis() - (1000 * 60 * 60 * 12),
                 "text/plain",
@@ -201,7 +201,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 3,
                 1,
-                Message.Companion.getTYPE_SENT(),
+                Message.TYPE_SENT,
                 "I started working on the designs for a new messaging app today... I'm thinking " +
                         "that it could be somewhere along the lines of a compliment to Evolve. " +
                         "The main app will be focused on tablet design and so Evolve could " +
@@ -219,7 +219,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 4,
                 1,
-                Message.Companion.getTYPE_RECEIVED(),
+                Message.TYPE_RECEIVED,
                 "Are you going to make this into an actual app?",
                 System.currentTimeMillis() - (1000 * 60 * 60 * 8),
                 "text/plain",
@@ -232,7 +232,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 5,
                 1,
-                Message.Companion.getTYPE_SENT(),
+                Message.TYPE_SENT,
                 "dunno",
                 System.currentTimeMillis() - (1000 * 60 * 60 * 7) - (1000 * 60 * 55),
                 "text/plain",
@@ -245,7 +245,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 6,
                 1,
-                Message.Companion.getTYPE_SENT(),
+                Message.TYPE_SENT,
                 "I got to build some Legos, plus get 5 extra character packs and 3 level packs " +
                         "with the deluxe edition lol",
                 System.currentTimeMillis() - (1000 * 60 * 38),
@@ -259,7 +259,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 7,
                 1,
-                Message.Companion.getTYPE_RECEIVED(),
+                Message.TYPE_RECEIVED,
                 "woah nice one haha",
                 System.currentTimeMillis() - (1000 * 60 * 37),
                 "text/plain",
@@ -272,7 +272,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 8,
                 1,
-                Message.Companion.getTYPE_SENT(),
+                Message.TYPE_SENT,
                 "Already shaping up to be a better deal than battlefront!",
                 System.currentTimeMillis() - (1000 * 60 * 23),
                 "text/plain",
@@ -285,7 +285,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 9,
                 1,
-                Message.Companion.getTYPE_RECEIVED(),
+                Message.TYPE_RECEIVED,
                 "is it fun?",
                 System.currentTimeMillis() - (1000 * 60 * 22),
                 "text/plain",
@@ -298,7 +298,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 10,
                 1,
-                Message.Companion.getTYPE_SENT(),
+                Message.TYPE_SENT,
                 "So far! Looks like a lot of content in the game too. Based on the trophies " +
                         "required at least",
                 System.currentTimeMillis() - (1000 * 60 * 20),
@@ -312,7 +312,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 11,
                 1,
-                Message.Companion.getTYPE_RECEIVED(),
+                Message.TYPE_RECEIVED,
                 "so maybe not going to be able to get platinum huh? haha",
                 System.currentTimeMillis() - (1000 * 60 * 18),
                 "text/plain",
@@ -325,7 +325,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
         cursor.addRow(new Object[]{
                 12,
                 1,
-                Message.Companion.getTYPE_SENT(),
+                Message.TYPE_SENT,
                 "Oh, I will definitely get it! Just might take 24+ hours to do it... and when " +
                         "those 24 hours are in a single week, things get to be a little tedious. " +
                         "Hopefully I don't absolutely hate the game once I finish!",
