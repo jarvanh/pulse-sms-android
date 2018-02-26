@@ -251,7 +251,7 @@ object ApiUtils {
     /**
      * Adds a new conversation.
      */
-    fun addConversation(accountId: String?, deviceId: Long, color: Int,
+    fun addConversation(context: Context, accountId: String?, deviceId: Long, color: Int,
                         colorDark: Int, colorLight: Int, colorAccent: Int,
                         ledColor: Int, pinned: Boolean, read: Boolean, timestamp: Long,
                         title: String?, phoneNumbers: String?, snippet: String?,
@@ -274,7 +274,7 @@ object ApiUtils {
         if (retryable) {
             // if the request errors out (no internet), we want to persist that issue and retry
             // it when connectivity is regained.
-            call.enqueue(AddConversationRetryableCallback(call, RETRY_COUNT, deviceId))
+            call.enqueue(AddConversationRetryableCallback(context, call, RETRY_COUNT, deviceId))
         } else {
             val message = "add conversation"
             call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
@@ -477,7 +477,7 @@ object ApiUtils {
             if (retryable) {
                 // if the request errors out (no internet), we want to persist that issue and retry
                 // it when connectivity is regained.
-                call.enqueue(AddMessageRetryableCallback(call, RETRY_COUNT, deviceId))
+                call.enqueue(AddMessageRetryableCallback(context, call, RETRY_COUNT, deviceId))
             } else {
                 val message = "added_message"
                 call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))

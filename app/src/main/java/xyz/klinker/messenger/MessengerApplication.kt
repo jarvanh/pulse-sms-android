@@ -21,10 +21,14 @@ import android.content.Intent
 import android.os.Build
 import android.support.v7.app.AppCompatDelegate
 import com.amplitude.api.Amplitude
+import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler
+import xyz.klinker.messenger.api.implementation.retrofit.ApiErrorPersister
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.model.RetryableRequest
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.service.CreateNotificationChannelService
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
@@ -36,7 +40,7 @@ import xyz.klinker.messenger.shared.util.*
  * Base application that will serve as any intro for any context in the rest of the app. Main
  * function is to enable night mode so that colors change depending on time of day.
  */
-class MessengerApplication : FirebaseApplication() {
+class MessengerApplication : FirebaseApplication(), ApiErrorPersister {
 
     override fun onCreate() {
         super.onCreate()
@@ -101,6 +105,26 @@ class MessengerApplication : FirebaseApplication() {
                 }
             }
         }
+    }
+
+    override fun onAddConversationError(conversationId: Long) {
+        if (!FeatureFlags.RETRY_FAILED_REQUESTS || !Account.exists() || !Account.primary) {
+            return
+        }
+
+        Thread {
+            DataSource.insertRetryableRequest(this, RetryableRequest(RetryableRequest.TYPE_ADD_CONVERSATION, conversationId))
+        }.start()
+    }
+
+    override fun onAddMessageError(messageId: Long) {
+        if (!FeatureFlags.RETRY_FAILED_REQUESTS || !Account.exists() || !Account.primary) {
+            return
+        }
+
+        Thread {
+            DataSource.insertRetryableRequest(this, RetryableRequest(RetryableRequest.TYPE_ADD_MESSAGE, messageId))
+        }.start()
     }
 
     companion object {

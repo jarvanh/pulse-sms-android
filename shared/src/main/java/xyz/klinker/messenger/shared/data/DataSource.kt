@@ -729,7 +729,7 @@ object DataSource {
         values.put(Conversation.COLUMN_PRIVATE_NOTIFICATIONS, conversation.privateNotifications)
 
         if (useApi) {
-            ApiUtils.addConversation(accountId(context), conversation.id, conversation.colors.color,
+            ApiUtils.addConversation(context, accountId(context), conversation.id, conversation.colors.color,
                     conversation.colors.colorDark, conversation.colors.colorLight, conversation.colors.colorAccent,
                     conversation.ledColor, conversation.pinned, conversation.read,
                     conversation.timestamp, conversation.title, conversation.phoneNumbers,
