@@ -22,7 +22,6 @@ package xyz.klinker.messenger.shared.receiver
  */
 class SmsSentReceiverNoRetry : SmsSentReceiver() {
 
-    override fun retryFailedMessages(): Boolean {
-        return false
-    }
+    override fun retryFailedMessages() = false
+
 }

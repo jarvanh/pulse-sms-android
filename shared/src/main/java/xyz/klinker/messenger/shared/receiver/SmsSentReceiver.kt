@@ -26,6 +26,7 @@ import android.support.v4.app.NotificationManagerCompat
 import android.telephony.SmsManager
 import com.klinker.android.send_message.SentReceiver
 import com.klinker.android.send_message.StripAccents
+import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
@@ -54,6 +55,10 @@ open class SmsSentReceiver : SentReceiver() {
                 e.printStackTrace()
             }
         }.start()
+
+        if (Account.exists() && !Account.primary) {
+            return
+        }
 
         Thread {
             try {

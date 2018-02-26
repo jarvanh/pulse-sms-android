@@ -40,6 +40,7 @@
     <version
         name="2.8.6"
         description="February 25rd, 2018">
+        <!-- Only allow the primary device to ever write the sent status from the SmsSentReceiver or MarkAsSentService -->
         <!-- create table and service to manage persisting failed backend requests and retrying them when the user regains a data connection -->
         <text>Bug fixes</text>
     </version>

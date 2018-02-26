@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
+import xyz.klinker.messenger.api.implementation.Account
 
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Message
@@ -36,6 +37,11 @@ class MmsSentReceiver : com.klinker.android.send_message.MmsSentReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
+
+        if (Account.exists() && !Account.primary) {
+            return
+        }
+
         Thread { handle(context, intent) }.start()
     }
 

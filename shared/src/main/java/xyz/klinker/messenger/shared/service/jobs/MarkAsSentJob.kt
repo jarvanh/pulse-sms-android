@@ -17,6 +17,10 @@ import xyz.klinker.messenger.shared.util.TimeUtils
 class MarkAsSentJob : SimpleJobService() {
 
     override fun onRunJob(job: JobParameters?): Int {
+        if (Account.exists() && !Account.primary) {
+            return 0
+        }
+
         val messages = DataSource.getNewerSendingMessagesAsList(
                 this,
                 System.currentTimeMillis() - TimeUtils.MINUTE * 5)
