@@ -1,7 +1,6 @@
-This release includes:<br/>
-- Option within a conversation's settings menu to delete old messages out of that conversation, based on a time interval<br/>
-- Preview sent web articles (not just received)<br/>
-- Widget improvements<br/>
-- Notification improvements<br/>
-- Settings cleanup<br/>
-- Bug fixes<br/>
+With this release:<br/>
+- The widget automatically adjusts to the base theme you have set for the app<br/>
+- You can long click (and drag) to select and delete multiple images on the "View Media" page within a conversation<br/>
+- You can share multiple selected messages at once<br/><br/>
+
+And, of course, it has bug fixes as well as some translation updates.

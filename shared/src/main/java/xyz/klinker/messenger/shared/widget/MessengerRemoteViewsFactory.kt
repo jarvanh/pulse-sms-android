@@ -114,20 +114,18 @@ class MessengerRemoteViewsFactory(private val context: Context) : RemoteViewsSer
         rv.setTextViewText(R.id.conversation_summary, Html.fromHtml(item.snippet))
         rv.setImageViewBitmap(R.id.picture, image)
 
-        if (FeatureFlags.WIDGET_THEMEING) {
-            when (Settings.baseTheme) {
-                BaseTheme.ALWAYS_DARK -> {
-                    rv.setTextColor(R.id.conversation_title, Color.WHITE)
-                    rv.setTextColor(R.id.conversation_summary, Color.parseColor("#B2FFFFFF"))
-                }
-                BaseTheme.BLACK -> {
-                    rv.setTextColor(R.id.conversation_title, Color.WHITE)
-                    rv.setTextColor(R.id.conversation_summary, Color.parseColor("#B2FFFFFF"))
-                }
-                else -> {
-                    rv.setTextColor(R.id.conversation_title, context.resources.getColor(R.color.primaryText))
-                    rv.setTextColor(R.id.conversation_summary, context.resources.getColor(R.color.secondaryText))
-                }
+        when (Settings.baseTheme) {
+            BaseTheme.ALWAYS_DARK -> {
+                rv.setTextColor(R.id.conversation_title, Color.WHITE)
+                rv.setTextColor(R.id.conversation_summary, Color.parseColor("#B2FFFFFF"))
+            }
+            BaseTheme.BLACK -> {
+                rv.setTextColor(R.id.conversation_title, Color.WHITE)
+                rv.setTextColor(R.id.conversation_summary, Color.parseColor("#B2FFFFFF"))
+            }
+            else -> {
+                rv.setTextColor(R.id.conversation_title, context.resources.getColor(R.color.primaryText))
+                rv.setTextColor(R.id.conversation_summary, context.resources.getColor(R.color.secondaryText))
             }
         }
 

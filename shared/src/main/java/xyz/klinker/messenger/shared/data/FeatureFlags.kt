@@ -89,9 +89,6 @@ object FeatureFlags {
     // disabled for future features
     var SECURE_PRIVATE: Boolean = false
     var FOLDER_SUPPORT: Boolean = false
-    var WIDGET_THEMEING: Boolean = false
-    var MULTI_SELECT_MEDIA: Boolean = false
-    var SHARE_MULTIPLE_MESSAGES: Boolean = false
     var AUTO_REPLIES: Boolean = false
     var VCARD_PREVIEWS: Boolean = false
 
@@ -105,9 +102,6 @@ object FeatureFlags {
 
         SECURE_PRIVATE = getValue(context, sharedPrefs, FLAG_SECURE_PRIVATE)
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
-        WIDGET_THEMEING = getValue(context, sharedPrefs, FLAG_WIDGET_THEMEING)
-        MULTI_SELECT_MEDIA = getValue(context, sharedPrefs, FLAG_MULTI_SELECT_MEDIA)
-        SHARE_MULTIPLE_MESSAGES = getValue(context, sharedPrefs, FLAG_SHARE_MULTIPLE_MESSAGES)
         AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
 
@@ -124,9 +118,6 @@ object FeatureFlags {
 
             FLAG_SECURE_PRIVATE -> SECURE_PRIVATE = flag
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
-            FLAG_WIDGET_THEMEING -> WIDGET_THEMEING = flag
-            FLAG_MULTI_SELECT_MEDIA -> MULTI_SELECT_MEDIA = flag
-            FLAG_SHARE_MULTIPLE_MESSAGES -> SHARE_MULTIPLE_MESSAGES = flag
             FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
 

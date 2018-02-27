@@ -80,10 +80,8 @@ class MediaGridFragment : Fragment(), MediaSelectedListener {
     }
 
     override fun onStartDrag(index: Int) {
-        if (FeatureFlags.MULTI_SELECT_MEDIA) {
-            activateSelectMode(true)
-            recyclerView?.setDragSelectActive(true, index)
-        }
+        activateSelectMode(true)
+        recyclerView?.setDragSelectActive(true, index)
     }
 
     fun destroyActionMode() {

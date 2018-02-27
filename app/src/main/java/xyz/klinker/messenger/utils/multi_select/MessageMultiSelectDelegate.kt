@@ -61,7 +61,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                 checked == 0 -> clearActionMode()
                 checked > 1 -> {
                     delete.isVisible = true
-                    share.isVisible = if (FeatureFlags.SHARE_MULTIPLE_MESSAGES) true else false
+                    share.isVisible = true
                     info.isVisible = false
                     copy.isVisible = false
                 }

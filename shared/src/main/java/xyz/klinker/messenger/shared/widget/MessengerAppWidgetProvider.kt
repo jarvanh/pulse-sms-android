@@ -92,12 +92,10 @@ class MessengerAppWidgetProvider : AppWidgetProvider() {
 
             rv.setEmptyView(R.id.widget_list, R.id.widget_empty)
 
-            if (FeatureFlags.WIDGET_THEMEING) {
-                when(Settings.baseTheme) {
-                    BaseTheme.ALWAYS_DARK -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.parseColor("#202B30"))
-                    BaseTheme.BLACK -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.BLACK)
-                    else -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.WHITE)
-                }
+            when(Settings.baseTheme) {
+                BaseTheme.ALWAYS_DARK -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.parseColor("#202B30"))
+                BaseTheme.BLACK -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.BLACK)
+                else -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.WHITE)
             }
 
             val color = ImageUtils.createColoredBitmap(Settings.mainColorSet.color)

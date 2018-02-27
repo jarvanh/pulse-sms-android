@@ -29,20 +29,16 @@
         <!--<text>Auto reply support. Build auto replies for vacation responses, driving mode, specific contacts, or based on an expression (TODO: remove the feature flag and uncomment the quick settings service in the app's Android Manifest)</text>-->
     <!--</version>-->
 
-    <!--<version-->
-        <!--name="2.9.0"-->
-        <!--description="March , 2018">-->
-        <!--<text>Adjust the widget theme to match the dark or black theme in the app (TODO: remove the feature flag)</text>-->
-        <!--<text>Long click (and drag) to select and delete images on the "View Media" page within a conversation (TODO: remove the feature flag)</text>-->
-        <!--<text>Share multiple selected messages at once, instead of forcing you to share them individually (TODO: remove the feature flag)</text>-->
-    <!--</version>-->
-
     <version
-        name="2.8.6"
-        description="February 25rd, 2018">
+        name="2.9.0"
+        description="March 1st, 2018">
         <!-- Only allow the primary device to ever write the sent status from the SmsSentReceiver, SmsDeliveredReceiver, MarkAsSentService, and FirebaseHandlerService -->
         <!-- create table and service to manage persisting failed backend requests and retrying them when the user regains a data connection -->
+        <text>Adjust the widget theme to match the dark or black theme in the app</text>
+        <text>Long click (and drag) to select and delete images on the "View Media" page within a conversation</text>
+        <text>Share multiple selected messages at once, instead of forcing you to share them individually</text>
         <text>Bug fixes</text>
+        <text>Translation updates</text>
     </version>
 
     <version
