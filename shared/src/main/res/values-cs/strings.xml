@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -155,6 +155,7 @@ je čas začít!</string>
     <string name="open_link_to_browser">Otevřít odkaz v prohlížeči</string>
     <string name="open_link_internal">Otevřít odkaz uvnitř aplikace</string>
     <string name="copy_link">Kopírovat odkaz</string>
+    <!-- Templates -->
     <!-- Compose Screen -->
     <string name="compose_message">Napsat novou zprávu</string>
     <string name="send_message">Odeslat zprávu</string>
@@ -198,7 +199,7 @@ Pulse staví vaše konverzace na první místo.</string>
         <item quantity="few">%1$d nové zprávy</item>
         <item quantity="many">%1$d nových zpráv</item>
     </plurals>
-    <string name="read">Přečíst</string>
+    <string name="read">Přečteno</string>
     <string name="reply">Odpovědět</string>
     <string name="reply_to">Odpovědět %1$s</string>
     <string name="call">Zavolat</string>
@@ -365,7 +366,6 @@ založit kontakt:</string>
     <string name="cleanup_old_messages">Vyčistit staré zprávy</string>
     <string name="delayed_sending">Odložené odesílání</string>
     <string name="quick_compose">Rychlé psaní</string>
-    <string name="quick_compose_summary">Vždy aktivní oznámení, které vám dá nejrychlejší přístup k psaní nové zprávy.</string>
     <string name="secure_private_conversations">Bezpečné soukromé konverzace</string>
     <string name="secure_private_conversations_summary">Vyžadovat PIN k odemčení soukromých konverzací</string>
     <!-- Theming Options -->
@@ -415,12 +415,13 @@ Vyzkoušejte to dnes!</string>
     <string name="test">Otestovat</string>
     <string name="off">Vypnuto</string>
     <string name="on">Zapnuto</string>
+    <string name="share_promo">Ahoj, miluji Pulse pro psaní zpráv! Zkus to:
+https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <!-- Rate it -->
     <string name="rate_it">Ohodnoťe ho!</string>
     <string name="love_pulse_question">Milujete Pulse?</string>
     <string name="give_a_rating">Zvažte ohodnocení nebo sdílení s přáteli!\n\n
 Pětihvězdičková ohodnocení mě zahřejí z srdce :)</string>
-    <string name="share_promo">Ahoj, miluji Pulse pro psaní zpráv! Zkus to:
-https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <!-- Times -->
     <string name="one_second">Jedna sekunda</string>
     <string name="three_seconds">Tři sekundy</string>
@@ -456,4 +457,5 @@ Pokud nevytvoříte nové tak vás aplikace automaticky odhlásí z vašeho úč
     <string name="monthly_purchase">$0.99 každý měsíc</string>
     <string name="monthly_purchase_summary">Nechcete platit? Žádný problém. Vyzkoušejte si aplikaci zdarma.</string>
     <string name="change_subscription_message">Chcete upgrade? Skvěle! Až uděláte výběr na následující obrazovce, otevřete obchod Play Store a zrušte staré předplatné ručně.</string>
+    <string name="quick_compose_summary">Vždy aktivní oznámení, které vám dá nejrychlejší přístup k psaní nové zprávy.</string>
 </resources>

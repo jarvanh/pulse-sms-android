@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -28,7 +28,8 @@
     <string name="menu_mute_contacts">Blockiert</string>
     <string name="menu_invite">Freunde einladen</string>
     <string name="menu_feature_settings">Erweiterte Funktionen</string>
-    <string name="menu_settings">Globale Einstellungen</string>
+    <string name="menu_settings">Personalisierung</string>
+    <string name="menu_customization_settings">Personalisierungseinstellungen</string>
     <string name="menu_mms_configuration">MMS Konfiguration</string>
     <string name="menu_account">Mein Account</string>
     <string name="menu_device_texting">Schreiben Sie SMS von jedem Gerät</string>
@@ -46,6 +47,7 @@
     <string name="menu_move_to_inbox">In den Posteingang verschieben</string>
     <string name="menu_conversation_information">Information über die Unterhaltung</string>
     <string name="menu_copy_phone_number">Nummer kopieren</string>
+    <string name="menu_view_full_conversation">Historie ansehen</string>
     <string name="menu_conversation_blacklist">Kontakt blockieren</string>
     <string name="menu_conversation_schedule">Nachricht planen</string>
     <string name="menu_contact_settings">Unterhaltungs-Einstellungen</string>
@@ -116,6 +118,7 @@ Sie können mit Pulse SMS von <b>jedem</b> Gerät senden!</string>
     <string name="attach_location">Standort anhängen</string>
     <string name="attach_contact">Kontakt anhängen</string>
     <string name="attach_contact_summary">Kontakt auswählen, um ihn an die Nachricht anzuhängen!</string>
+    <string name="apply_template">Vorlage anwenden</string>
     <string name="no_location_found">Konnte Ihren Standort nicht feststellen.</string>
     <string name="camera_permission_needed">Die Berechtigung für die Kamera muss gewährt werden, um Fotos aufnehmen zu können!</string>
     <string name="take_picture">Foto schießen</string>
@@ -124,6 +127,7 @@ Sie können mit Pulse SMS von <b>jedem</b> Gerät senden!</string>
     <string name="attached_image">Angehängtes Bild</string>
     <string name="remove_image">Angehängtes Bild entfernen</string>
     <string name="edit_image">Angehängtes Bild bearbeiten</string>
+    <string name="edit_recipients">Empfänger bearbeiten</string>
     <string name="permission_needed_for_action">Berechtigungen werden für diese Aktion benötigt.</string>
     <string name="request_permission">Berechtigung verlangen</string>
     <string name="no_messages_with_contact">In dieser Unterhaltung gibt es noch keine Nachrichten. Los geht\'s!</string>
@@ -147,14 +151,25 @@ Sie können mit Pulse SMS von <b>jedem</b> Gerät senden!</string>
     <string name="forward_message">Nachricht weiterleiten?</string>
     <string name="share_message">Nachricht teilen</string>
     <string name="copy_message_text">Nachrichtentext kopieren</string>
+    <string name="select_text_to_copy">Wählen Sie den Text aus, den Sie kopieren möchten:</string>
+    <string name="copy_all_text">Alles kopieren</string>
     <string name="open_link_to_browser">Link im Browser öffnen</string>
     <string name="open_link_internal">Link intern öffnen</string>
     <string name="copy_link">Link kopieren</string>
+    <string name="attach_vcard">Kontakt als vCard anhängen</string>
+    <string name="attach_plain_text">Kontakt als Text anhängen</string>
+    <!-- Templates -->
+    <string name="type_template_text">Vorlagentext eingeben...</string>
+    <string name="delete_template">Sind Sie sicher, dass Sie diese Vorlage löschen möchten?</string>
+    <string name="no_templates">Tippen Sie auf <b>+</b> um eine Vorlage hinzuzufügen</string>
     <!-- Compose Screen -->
     <string name="compose_message">Neue Nachricht erstellen</string>
     <string name="send_message">Nachricht senden</string>
     <string name="enter_contact_name">Name des Kontaktes eingeben</string>
     <string name="error_processing_vcard">Fehler bei der Verarbeitung der vCard</string>
+    <string name="compose_recents">Letzte Kontakte</string>
+    <string name="compose_groups">Gruppen</string>
+    <string name="compose_all_contacts">Alle Kontakte</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">Die App funktioniert ohne diese Berechtigungen nicht! Bitte Zugriff gewähren, um den Vorgang fortzusetzen.</string>
     <string name="loading_messages">Optimiere...</string>
@@ -189,6 +204,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
         <item quantity="other">%1$d neue Nachrichten</item>
     </plurals>
     <string name="read">Gelesen</string>
+    <string name="mute">Stummschalten</string>
     <string name="reply">Antworten</string>
     <string name="reply_to">Antwort an %1$s</string>
     <string name="call">Anrufen</string>
@@ -208,15 +224,22 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="default_notifications_channel_description">Diese Einstellungen werden für alle Unterhaltungen angewandt, für die Sie keinen individuellen Benachrichtigungskanal erstellt haben.</string>
     <string name="test_notifications_channel">Testbenachrichtigungen</string>
     <string name="status_notifications_channel">Statusbenachrichtigungen</string>
+    <string name="background_service_channel">Benachrichtigungsdienste im Hintergrund</string>
     <string name="general_notifications_channel">Allgemeine Benachrichtigungen</string>
     <string name="media_parse_channel">Medien-Parser</string>
     <string name="group_summary_notifications">Nachrichtengruppen Zusammenfassungen</string>
     <string name="failed_messages_channel">Fehlgeschlagene Nachrichten</string>
+    <string name="silent_background_services">Stumme Hintergrunddienste</string>
+    <string name="account_activity_notifications">Benachrichtigungen über Accountaktivität</string>
+    <string name="quick_text_channel">Schnelle Textbenachrichtigungen</string>
     <string name="media_parse_text">Medien aus vorherigen Nachrichten werden gesucht...</string>
+    <string name="auto_reply_parse_text">Suche nach automatischen Antworten in vorangegangenen Nachrichten...</string>
     <string name="creating_channels_text">Benachrichtigungskanäle werden erstellt...</string>
+    <string name="write_new_message">Neue Nachricht schreiben...</string>
+    <string name="receiving_a_message">Empfange eine Nachricht...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Letzte Änderungen</string>
-    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright">© 2017 Luke &amp; Jake Klinker</string>
     <string name="copyright_summary">Open-Source-Lizenzinformation ansehen</string>
     <string name="app_version">App Version</string>
     <string name="account_information">Accountinformationen</string>
@@ -233,7 +256,10 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="troubleshooting">Fehlerbehebung</string>
     <string name="get_in_touch">Treten Sie in Kontakt</string>
     <string name="faqs">FAQ</string>
-    <string name="features">Features</string>
+    <string name="get_help">Hilfe erhalten</string>
+    <string name="get_help_summary">Sie haben eine Frage? Als Ein-Mann-Team beantworte ich täglich eine unglaubliche Menge an E-Mails, was mich viel Zeit kostet, die ich lieber in die Entwicklung neuer Features stecken würde. Es würde mir sehr helfen, wenn Sie einfach hier kurz suchen würden, ob Ihre Frage möglicherweise bereits beantwortet wurde.</string>
+    <string name="get_help_summary_2">Der Hilfe-Bereich ist sehr ausführlich. Sollten Sie trotzdem keine Antwort auf Ihre spezifische Frage finden, dann schreiben Sie mir gerne. Ich werde mich dann mit Ihnen in Verbindung setzen.</string>
+    <string name="features">Die Features von Pulse</string>
     <string name="issues">Issue Tracker</string>
     <string name="issues_summary">Dient auch für die Planung neuer Funktionen</string>
     <string name="google_plus">Google+</string>
@@ -268,6 +294,7 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="heads_up">Heads Up</string>
     <string name="repeat_never">Nie</string>
     <string name="repeat_one_min">Jede Minute</string>
+    <string name="repeat_two_mins">Alle zwei Minuten</string>
     <string name="repeat_five_mins">Alle fünf Minuten</string>
     <string name="repeat_ten_mins">Alle zehn Minuten</string>
     <string name="repeat_half_hour">Jede halbe Stunde</string>
@@ -284,13 +311,17 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="vibrate_one_short">Eine kurze Vibration</string>
     <string name="vibrate_one_long">Eine lange Vibration</string>
     <string name="vibrate_one_extra_long">Eine extralange Vibration</string>
+    <string name="vibrate_two_short_one_long">Zwei kurze, eine lange Vibration</string>
+    <string name="vibrate_one_long_one_short_one_long">Eine lange, eine kurze, eine lange Vibration</string>
     <string name="keyboard_layout">Tastaturlayout</string>
     <string name="keyboard_default">Standard-Tastatur</string>
     <string name="keyboard_send_key">Senden-Taste</string>
     <string name="keyboard_enter_key">Eingabetaste</string>
     <string name="sound_effects">Soundeffekte</string>
     <string name="delivery_reports">Übertragungsberichte</string>
+    <string name="delivery_reports_summary">Die meisten Mobilfunkanbieter unterstützen diese Option nicht</string>
     <string name="theme_settings">Personalisierung</string>
+    <string name="theme_settings_category">Design</string>
     <string name="conversation_list_category">Unterhaltungsliste</string>
     <string name="general_category">Allgemein</string>
     <string name="theme_settings_redirect">Design</string>
@@ -298,8 +329,10 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="global_theme_color">Schema-Farbe</string>
     <string name="font_size">Schriftgröße</string>
     <string name="rounder_bubbles">Runde Nachrichten-Blasen</string>
+    <string name="adjustable_nav_bar">Gleiche die Navigationsleiste an das grundlegende Design an</string>
+    <string name="adjustable_nav_bar_summary">Beim hellen Design wird die weiße Navigationsleiste verwendet, bei dunkleren Themen eine schwarze.</string>
     <string name="apply_theme_globally">Auf alle Unterhaltungen anwenden</string>
-    <string name="apply_theme_globally_summary">Entferne die individuellen Designs von allen Unterhaltungen und ersetze sie durch dieses allgemeine Design.</string>
+    <string name="apply_theme_globally_summary">Entferne die individuellen Designs von allen Unterhaltungen und ersetze sie durch dieses globale Farbschema</string>
     <string name="swipe_delete">Wischen, um zu löschen</string>
     <string name="blacklist_hint">Nummer zum Blockieren eintippen...</string>
     <string name="add_blacklist">%1$s\n\nSind Sie sicher, dass diese Nummer blockiert werden soll? Nachrichten werden nicht länger gespeichert, wenn sie von dieser Nummer kommen, und sie werden nicht benachrichtigt!</string>
@@ -326,6 +359,8 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="resync_account_summary">Nachrichten fehlen? Bringen Sie hiermit ihr Gerät wieder auf den Stand des primären Gerätes.</string>
     <string name="resync_account_summary_phone">Entfernt die Inhalte Ihres Accounts und ersetzt sie mit dem derzeitigen Inhalt der internen SMS-Datenbank.</string>
     <string name="resync_account_confirmation">Dies löscht alle Nachrichten von diesem Gerät und lädt eine frische Kopie von ihrem primären Gerät herüber. Fortfahren?</string>
+    <string name="resync_contacts">Kontakte neu synchronisieren</string>
+    <string name="resync_contacts_summary">Alle Kontaktänderungen sofort ins Web hochladen.</string>
     <string name="normalize_color_scheme">Sie können auch eine Farbe wählen, auf der das Design basieren soll:</string>
     <string name="no_apps_found">Keine Apps für diese Aktion verfügbar</string>
     <string name="you_denied_permission">Sie haben diese Berechtigung nicht gewährt</string>
@@ -343,9 +378,8 @@ Pulse stellt Ihre Unterhaltungen in den Mittelpunkt.</string>
     <string name="after_four_messages">Nach vier Nachrichten</string>
     <string name="send_as_mms_summary">Lange Nachrichten werden als MMS statt mehrerer SMS verschickt</string>
     <string name="alert_types">Benachrichtigungstypen</string>
-    <string name="alert_types_summary">Benachrichtigungen personalisieren</string>
+    <string name="alert_types_summary">Passen Sie Klingeltöne, Vibrationsmuster und mehr an</string>
     <string name="strip_unicode">Unicode-Zeichen entfernen</string>
-    <string name="use_internal_browser">Nutze den internen Browser</string>
     <string name="strip_unicode_summary">Diese Zeichen werden aus gesendeten Nachrichten entfernt</string>
     <string name="giffgaff_delivery">Giffgaff-Zustellberichte</string>
     <string name="notification_actions">Benachrichtigungsaktionen</string>
@@ -360,7 +394,9 @@ Nach dem Beenden müssen Sie sich in allen anderen Geräten neu einloggen. Fortf
     <string name="show_conversation_history_summary">Inhalt der letzten Nachrichten einer Unterhaltung wird in der Benachrichtigung angezeigt</string>
     <string name="emoji_style">Emoji-Stil</string>
     <string name="emoji_style_default">Systemstandard</string>
-    <string name="emoji_style_android_o">Google Android O-Stil</string>
+    <string name="emoji_style_android_o">Google Android Oreo-Stil</string>
+    <string name="settings_phone_number">Telefonnummer</string>
+    <string name="disable_battery_optimization">Akkuoptimierung deaktivieren</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maximale Bildgröße</string>
     <string name="use_group_mms">Nutze Gruppen-MMS</string>
@@ -380,9 +416,9 @@ Nach dem Beenden müssen Sie sich in allen anderen Geräten neu einloggen. Fortf
     <string name="cleanup_old_messages">Alte Nachrichten löschen</string>
     <string name="delayed_sending">Verzögertes Senden</string>
     <string name="quick_compose">Schnell Verfassen</string>
-    <string name="quick_compose_summary">Ständige Benachrichtigung, um sofort zum Verfassen-Fenster zu springen</string>
     <string name="secure_private_conversations">Schütze private Unterhaltungen</string>
     <string name="secure_private_conversations_summary">PIN benötigt, um private Unterhaltungen zu entsperren.</string>
+    <string name="use_internal_browser">Nutze den internen Webbrowser</string>
     <!-- Theming Options -->
     <string name="day_night">Standard (Tag/Nacht)</string>
     <string name="always_light">Immer Hell</string>
@@ -436,12 +472,13 @@ jetzt ausprobieren!</string>
     <string name="channels_global_warning_2">Die Android <i>Benachrichtigungskanäle</i> sind nun für die meisten Einstellungen notwendig.\n\nSie können jede Unterhaltung einzeln konfigurieren, indem Sie einen <i>Benachrichtigungskanal</i> im Einstellungsmenü der jeweiligen Unterhaltung erstellen. Nutzen Sie den Standard-Kanal für die Konfiguration aller Unterhaltungen, für die sie keinen individuellen Kanal erstellt haben.</string>
     <string name="off">Aus</string>
     <string name="on">Ein</string>
+    <string name="share_promo">Hey, ich liebe diese tolle neue SMS-App: Pulse! Probier sie jetzt aus: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="verifying_password">Prüfe Passwort...</string>
+    <!-- Rate it -->
     <string name="rate_it">Jetzt bewerten!</string>
     <string name="love_pulse_question">Gefällt Ihnen Pulse?</string>
     <string name="give_a_rating">Erzählen Sie Ihren Freunden von Pulse, oder hinterlassen Sie eine Bewertung!\n\n
 Ich würde mich sehr über eine 5-Sterne-Bewertung freuen! :)</string>
-    <string name="share_promo">Hey, ich liebe diese tolle neue SMS-App: Pulse! Probier sie jetzt aus: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
-    <string name="verifying_password">Prüfe Passwort...</string>
     <!-- Times -->
     <string name="one_second">Eine Sekunde</string>
     <string name="three_seconds">Drei Sekunden</string>
@@ -491,4 +528,5 @@ Senden Sie Textnachrichten aus dem Web, von Ihrem PC, Ihrem Tablet, Ihrer Uhr un
     <string name="yearly_purchase_improved">$5.99 /\nJahr</string>
     <string name="subscription_toast">Ihnen entstehen <b>keine Kosten</b> vor Ende des siebentägigen Testzeitraums.
 Kündigen Sie jederzeit.</string>
+    <string name="quick_compose_summary">Ständige Benachrichtigung, um sofort zum Verfassen-Fenster zu springen</string>
 </resources>
