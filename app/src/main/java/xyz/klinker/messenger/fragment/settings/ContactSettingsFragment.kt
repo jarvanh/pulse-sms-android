@@ -228,8 +228,9 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         val preference = findPreference(getString(R.string.pref_contact_ringtone)) as RingtonePreference
 
         preference.setOnPreferenceChangeListener { _, o ->
-            conversation.ringtoneUri = o as String
-            Log.v("conversation_ringtone", "new ringtone: " + o)
+            val newTone = o as String
+            conversation.ringtoneUri = if (newTone.isBlank()) "silent" else newTone
+            Log.v("conversation_ringtone", "new ringtone: $o")
 
             true
         }

@@ -33,7 +33,8 @@
         name="2.9.0"
         description="March 1st, 2018">
         <!-- Only allow the primary device to ever write the sent status from the SmsSentReceiver, SmsDeliveredReceiver, MarkAsSentService, and FirebaseHandlerService -->
-        <!-- create table and service to manage persisting failed backend requests and retrying them when the user regains a data connection -->
+        <!-- create table and service to manage persisting failed backend requests and retrying them when the user regains a data connection (feature flagged off for testing) -->
+        <!-- when selecting "none" for a notification, it returned a blank string. Now I write "silent" in to the conversation ringtone field instead -->
         <text>Adjust the widget theme to match the dark or black theme in the app</text>
         <text>Long click (and drag) to select and delete images on the "View Media" page within a conversation</text>
         <text>Share multiple selected messages at once, instead of forcing you to share them individually</text>

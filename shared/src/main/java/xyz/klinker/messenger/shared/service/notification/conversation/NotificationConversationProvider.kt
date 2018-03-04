@@ -297,7 +297,7 @@ class NotificationConversationProvider(private val service: Context, private val
             this.addPerson("tel:" + conversation.phoneNumbers!!)
         } else {
             for (number in conversation.phoneNumbers!!.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
-                this.addPerson("tel:" + number)
+                this.addPerson("tel:$number")
             }
         }
 
