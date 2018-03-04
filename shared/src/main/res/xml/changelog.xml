@@ -40,6 +40,7 @@
         <text>Share multiple selected messages at once, instead of forcing you to share them individually</text>
         <text>Bug fixes</text>
         <text>Translation updates</text>
+        <text>Changes around silent notifications on a per-conversation level</text>
     </version>
 
     <version
