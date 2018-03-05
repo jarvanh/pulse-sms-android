@@ -170,7 +170,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             if (imageUri != null) {
                 Glide.with(fragment)
                         .load(Uri.parse(imageUri))
-                        .into(image)
+                        .into(image!!)
             }
 
             ColorUtils.adjustDrawerColor(colorDarker, isGroup, activity)

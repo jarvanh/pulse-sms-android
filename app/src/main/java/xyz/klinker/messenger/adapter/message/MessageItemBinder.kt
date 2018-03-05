@@ -30,7 +30,7 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .fitCenter())
                 .into<SimpleTarget<Drawable>>(object : SimpleTarget<Drawable>() {
-                    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>) {
+                    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
                         holder.image?.background = holder.itemView.resources
                                 .getDrawable(R.drawable.rounded_rect)
                         holder.image?.setImageDrawable(resource)
@@ -51,7 +51,7 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
                         .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .fitCenter())
-                .into(holder.image)
+                .into(holder.image!!)
     }
 
     fun video(holder: MessageViewHolder, position: Int) {
@@ -69,7 +69,7 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .fitCenter())
                 .into<SimpleTarget<Bitmap>>(object : SimpleTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>) {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                         ImageUtils.overlayBitmap(holder.itemView.context,
                                 resource, R.drawable.ic_play)
                         holder.image?.setImageBitmap(resource)
@@ -87,7 +87,7 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
                 .apply(RequestOptions()
                         .error(placeholder)
                         .placeholder(placeholder))
-                .into(holder.image)
+                .into(holder.image!!)
     }
 
     fun vCard(holder: MessageViewHolder, position: Int) {
@@ -102,7 +102,7 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
                 .apply(RequestOptions()
                         .error(placeholder)
                         .placeholder(placeholder))
-                .into(holder.image)
+                .into(holder.image!!)
     }
 
     @SuppressLint("SetTextI18n")
@@ -116,7 +116,7 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
                             .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
                             .fitCenter())
                     .into<SimpleTarget<Bitmap>>(object : SimpleTarget<Bitmap>() {
-                        override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>) {
+                        override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>?) {
                             ImageUtils.overlayBitmap(holder.image!!.context,
                                     bitmap, R.drawable.ic_play)
                             holder.clippedImage!!.setImageBitmap(bitmap)
@@ -153,7 +153,7 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
                             .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
                             .fitCenter())
                     .into<SimpleTarget<Drawable>>(object : SimpleTarget<Drawable>() {
-                        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>) {
+                        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
                             holder.image?.background = holder.itemView.resources
                                     .getDrawable(R.drawable.rounded_rect)
                             holder.image?.setImageDrawable(resource)
@@ -176,7 +176,7 @@ class MessageItemBinder(private val adapter: MessageListAdapter) {
                     .apply(RequestOptions()
                             .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
                             .fitCenter())
-                    .into(holder.clippedImage)
+                    .into(holder.clippedImage!!)
 
             holder.contact?.text = preview.title
             holder.message?.text = preview.description

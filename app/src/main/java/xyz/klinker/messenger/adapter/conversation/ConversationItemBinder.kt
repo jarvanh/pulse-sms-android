@@ -51,7 +51,7 @@ class ConversationItemBinder(private val activity: Activity) {
             holder.groupIcon?.visibility = View.GONE
         }
 
-        Glide.with(holder.itemView.context).load(Uri.parse(conversation.imageUri)).into(holder.image)
+        Glide.with(holder.itemView.context).load(Uri.parse(conversation.imageUri)).into(holder.image!!)
     }
 
     fun showImageColor(holder: ConversationViewHolder, conversation: Conversation) {

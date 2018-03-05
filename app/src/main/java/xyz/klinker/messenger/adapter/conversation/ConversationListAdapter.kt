@@ -76,10 +76,10 @@ class ConversationListAdapter(context: MessengerActivity, initialConversations: 
         return ConversationViewHolder(view, conversationExpandedListener, this)
     }
 
-    override fun onViewRecycled(holder: ConversationViewHolder?) {
+    override fun onViewRecycled(holder: ConversationViewHolder) {
         super.onViewRecycled(holder)
         try {
-            Glide.with(holder!!.itemView.context).clear(holder.image)
+            Glide.with(holder.itemView.context).clear(holder.image!!)
         } catch (t: Throwable) { }
     }
 
