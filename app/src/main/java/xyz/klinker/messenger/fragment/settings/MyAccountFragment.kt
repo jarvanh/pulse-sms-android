@@ -196,7 +196,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             return
         }
 
-        if (Account.subscriptionType === Account.SubscriptionType.SUBSCRIBER || Account.subscriptionType === Account.SubscriptionType.TRIAL) {
+//        if (Account.subscriptionType === Account.SubscriptionType.SUBSCRIBER || Account.subscriptionType === Account.SubscriptionType.TRIAL) {
 //            val signoutTime = SignoutJob.isScheduled(fragmentActivity!!)
 //            if (signoutTime != 0L) {
 //                preference.title = getString(R.string.account_expiring)
@@ -211,7 +211,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                         .setMessage(R.string.change_subscription_message)
                         .setPositiveButton(R.string.ok) { _, _ -> pickSubscription(true) }.show()
                 false
-            }
+//            }
        }
     }
 
