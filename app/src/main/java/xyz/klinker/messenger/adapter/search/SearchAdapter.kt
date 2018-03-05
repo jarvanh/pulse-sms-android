@@ -22,7 +22,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter
 import com.klinker.android.link_builder.Link
-import com.klinker.android.link_builder.LinkBuilder
+import com.klinker.android.link_builder.applyLinks
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
@@ -74,22 +74,15 @@ class SearchAdapter(search: String?, private var conversations: MutableList<Conv
             holder.name!!.text = conversation.title
             holder.summary!!.text = conversation.snippet
 
-            LinkBuilder.on(holder.name!!)
-                    .addLink(highlight)
-                    .build()
-
+            holder.name?.applyLinks(highlight)
             itemBinder.bindConversation(holder, conversation)
-
         } else if (holder is MessageViewHolder) {
             val message = messages!![relativePosition]
 
             holder.messageId = message.id
             holder.message!!.text = message.data
 
-            LinkBuilder.on(holder.message!!)
-                    .addLink(highlight)
-                    .build()
-
+            holder.message?.applyLinks(highlight)
             itemBinder.bindMessage(holder, message)
         }
     }
@@ -154,6 +147,6 @@ class SearchAdapter(search: String?, private var conversations: MutableList<Conv
     }
 
     companion object {
-        private val VIEW_TYPE_CONVERSATION = -3
+        private const val VIEW_TYPE_CONVERSATION = -3
     }
 }

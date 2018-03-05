@@ -8,6 +8,7 @@ import android.util.Patterns
 import com.klinker.android.link_builder.Link
 import com.klinker.android.link_builder.LinkBuilder
 import com.klinker.android.link_builder.TouchableMovementMethod
+import com.klinker.android.link_builder.applyLinks
 import xyz.klinker.android.article.ArticleIntent
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
@@ -23,23 +24,20 @@ import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
 
 @Suppress("DEPRECATION")
 class MessageLinkApplier(private val fragment: MessageListFragment, private val accentColor: Int, private val receivedColor: Int) {
-    
+
     private val activity: FragmentActivity? by lazy { fragment.activity }
 
     fun apply(holder: MessageViewHolder, message: Message, backgroundColor: Int) {
         val linkColor = if (message.type == Message.TYPE_RECEIVED) {
-//            if (ColorUtils.isColorDark(if (backgroundColor != Integer.MIN_VALUE) backgroundColor else receivedColor)) {
-//                holder.itemView.context.resources.getColor(R.color.lightText)
-//            } else holder.itemView.context.resources.getColor(R.color.darkText)
             holder.message!!.currentTextColor
         } else accentColor
 
         holder.message?.movementMethod = TouchableMovementMethod()
-        LinkBuilder.on(holder.message!!)
-                .addLink(buildEmailsLink(holder, linkColor))
-                .addLink(buildWebUrlsLink(holder, linkColor))
-                .addLink(buildPhoneNumbersLink(holder, linkColor))
-                .build()
+        holder.message?.applyLinks(
+                buildEmailsLink(holder, linkColor),
+                buildWebUrlsLink(holder, linkColor),
+                buildPhoneNumbersLink(holder, linkColor)
+        )
     }
 
     private fun buildEmailsLink(holder: MessageViewHolder, linkColor: Int): Link {
@@ -48,7 +46,7 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
         emails.highlightAlpha = .4f
         emails.setOnClickListener { clickedText ->
             val email = arrayOf(clickedText)
-            val uri = Uri.parse("mailto:" + clickedText)
+            val uri = Uri.parse("mailto:$clickedText")
 
             val emailIntent = Intent(Intent.ACTION_SENDTO, uri)
             emailIntent.putExtra(Intent.EXTRA_EMAIL, email)
@@ -65,7 +63,7 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
 
         urls.setOnLongClickListener { clickedText ->
             val link = if (!clickedText.startsWith("http")) {
-                "http://" + clickedText
+                "http://$clickedText"
             } else clickedText
 
             val bottomSheet = LinkLongClickFragment()
@@ -81,7 +79,7 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
             }
 
             val link = if (!clickedText.startsWith("http")) {
-                "http://" + clickedText
+                "http://$clickedText"
             } else clickedText
 
             if (link.contains("youtube") || !Settings.internalBrowser) {
@@ -108,18 +106,17 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
     }
 
     private fun buildPhoneNumbersLink(holder: MessageViewHolder, linkColor: Int): Link {
-        val phoneNumbers = Link(Regex.PHONE)
-        phoneNumbers.textColor = linkColor
-        phoneNumbers.highlightAlpha = .4f
-        phoneNumbers.setOnClickListener { clickedText ->
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:" + PhoneNumberUtils.clearFormatting(clickedText))
-            try {
-                holder.message!!.context.startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
-            }
-        }
+        return Link(Regex.PHONE)
+                .setTextColor(linkColor)
+                .setHighlightAlpha(.4f)
+                .setOnClickListener {
+                    val intent = Intent(Intent.ACTION_DIAL)
+                    intent.data = Uri.parse("tel:" + PhoneNumberUtils.clearFormatting(it))
 
-        return phoneNumbers
+                    try {
+                        holder.message!!.context.startActivity(intent)
+                    } catch (e: ActivityNotFoundException) {
+                    }
+                }
     }
 }
