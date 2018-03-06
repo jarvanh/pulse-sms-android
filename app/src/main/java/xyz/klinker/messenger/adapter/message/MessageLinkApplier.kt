@@ -32,6 +32,10 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
             holder.message!!.currentTextColor
         } else accentColor
 
+        if (holder.message!!.context == null) {
+            return
+        }
+
         holder.message?.movementMethod = TouchableMovementMethod()
         holder.message?.applyLinks(
                 buildEmailsLink(holder, linkColor),

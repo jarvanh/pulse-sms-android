@@ -76,8 +76,8 @@ class QuickComposeNotificationService : IntentService("QuickComposeNotificationS
     }
 
     companion object {
-        private val FOREGROUND_ID = 1225
-        private val QUICK_TEXT_ID = 1226
+        private const val FOREGROUND_ID = 1225
+        private const val QUICK_TEXT_ID = 1226
 
         fun start(context: Context) {
             val intent = Intent(context, QuickComposeNotificationService::class.java)
