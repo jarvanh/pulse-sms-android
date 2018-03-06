@@ -86,12 +86,12 @@ class WearableConversationListAdapter(conversations: List<Conversation>) : Secti
         holder.header.text = text
     }
 
-    override fun onViewRecycled(holder: WearableConversationViewHolder?) {
+    override fun onViewRecycled(holder: WearableConversationViewHolder) {
         super.onViewRecycled(holder)
 
-        if (holder?.image != null) {
+        if (holder.image != null) {
             try {
-                Glide.with(holder.image).clear(holder.image)
+                Glide.with(holder.image!!).clear(holder.image!!)
             } catch (e: IllegalArgumentException) {
                 e.printStackTrace()
             }
@@ -138,7 +138,7 @@ class WearableConversationListAdapter(conversations: List<Conversation>) : Secti
 
             Glide.with(holder.itemView.context)
                     .load(Uri.parse(conversation.imageUri))
-                    .into(holder.image)
+                    .into(holder.image!!)
         }
 
         holder.name.text = conversation.title

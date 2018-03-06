@@ -223,7 +223,7 @@ class WearableMessageListAdapter(context: Context, private val manager: LinearLa
                                 .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
                                 .fitCenter())
                         .into<SimpleTarget<Bitmap>>(object : SimpleTarget<Bitmap>() {
-                            override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>) {
+                            override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>?) {
                                 ImageUtils.overlayBitmap(holder.itemView.context, bitmap, R.drawable.ic_play)
                                 holder.image?.setImageBitmap(bitmap)
                             }
@@ -247,7 +247,7 @@ class WearableMessageListAdapter(context: Context, private val manager: LinearLa
                                     .override(holder.clippedImage!!.maxHeight, holder.clippedImage!!.maxHeight)
                                     .fitCenter())
                             .into<SimpleTarget<Bitmap>>(object : SimpleTarget<Bitmap>() {
-                                override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>) {
+                                override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>?) {
                                     ImageUtils.overlayBitmap(holder.itemView.context, bitmap, R.drawable.ic_play)
                                     holder.clippedImage?.setImageBitmap(bitmap)
                                 }
@@ -279,7 +279,7 @@ class WearableMessageListAdapter(context: Context, private val manager: LinearLa
                                     .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
                                     .fitCenter())
                             .into<SimpleTarget<Drawable>>(object : SimpleTarget<Drawable>() {
-                                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>) {
+                                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
                                     holder.image?.background = holder.itemView.resources
                                             .getDrawable(R.drawable.rounded_rect)
                                     holder.image?.setImageDrawable(resource)
@@ -300,7 +300,7 @@ class WearableMessageListAdapter(context: Context, private val manager: LinearLa
                             .apply(RequestOptions()
                                     .override(holder.image!!.maxHeight, holder.image!!.maxHeight)
                                     .fitCenter())
-                            .into(holder.clippedImage)
+                            .into(holder.clippedImage!!)
 
                     holder.contact?.text = preview.title
                     holder.message?.text = preview.description
