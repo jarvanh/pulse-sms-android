@@ -30,6 +30,13 @@
     <!--</version>-->
 
     <version
+        name="2.9.1"
+        description="March 11th, 2018">
+        <text>Dependency updates</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.9.0"
         description="March 1st, 2018">
         <!-- Only allow the primary device to ever write the sent status from the SmsSentReceiver, SmsDeliveredReceiver, MarkAsSentService, and FirebaseHandlerService -->
