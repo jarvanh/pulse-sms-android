@@ -108,7 +108,7 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister {
     }
 
     override fun onAddConversationError(conversationId: Long) {
-        if (!FeatureFlags.RETRY_FAILED_REQUESTS || !Account.exists() || !Account.primary) {
+        if (!Account.exists() || !Account.primary) {
             return
         }
 
@@ -119,7 +119,7 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister {
     }
 
     override fun onAddMessageError(messageId: Long) {
-        if (!FeatureFlags.RETRY_FAILED_REQUESTS || !Account.exists() || !Account.primary) {
+        if (!Account.exists() || !Account.primary) {
             return
         }
 

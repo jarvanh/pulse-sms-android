@@ -70,7 +70,7 @@ class SyncRetryableRequestsJob : SimpleJobService() {
         private const val THIRTY_MINS = 60 * 30 // seconds
 
         fun scheduleNextRun(context: Context?) {
-            if (context == null || !Account.exists() || !Account.primary || !FeatureFlags.RETRY_FAILED_REQUESTS) {
+            if (context == null || !Account.exists() || !Account.primary) {
                 return
             }
 

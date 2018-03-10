@@ -93,7 +93,6 @@ object FeatureFlags {
     var VCARD_PREVIEWS: Boolean = false
 
     // in testing
-    var RETRY_FAILED_REQUESTS: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -104,8 +103,6 @@ object FeatureFlags {
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
         AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
-
-        RETRY_FAILED_REQUESTS = getValue(context, sharedPrefs, FLAG_RETRY_FAILED_REQUESTS)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -120,8 +117,6 @@ object FeatureFlags {
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
             FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
-
-            FLAG_RETRY_FAILED_REQUESTS -> RETRY_FAILED_REQUESTS = false
         }
     }
 
