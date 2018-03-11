@@ -290,6 +290,14 @@
         </service>
 
         <service
+            android:exported="false"
+            android:name=".service.jobs.RepostQuickComposeNotification">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
+        <service
             android:name=".service.jobs.SubscriptionExpirationCheckJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service

@@ -50,6 +50,7 @@ class UpdateUtils(private val context: Activity) {
         SignoutJob.scheduleNextRun(context)
         ScheduledTokenRefreshService.scheduleNextRun(context)
         SyncRetryableRequestsJob.scheduleNextRun(context)
+        RepostQuickComposeNotification.scheduleNextRun(context)
     }
 
     companion object {

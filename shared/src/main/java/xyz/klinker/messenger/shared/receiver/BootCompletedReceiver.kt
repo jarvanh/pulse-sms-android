@@ -41,6 +41,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
                 SignoutJob.scheduleNextRun(context)
                 ScheduledTokenRefreshService.scheduleNextRun(context)
                 SyncRetryableRequestsJob.scheduleNextRun(context)
+                RepostQuickComposeNotification.scheduleNextRun(context)
 
                 if (Settings.quickCompose) QuickComposeNotificationService.start(context)
             }

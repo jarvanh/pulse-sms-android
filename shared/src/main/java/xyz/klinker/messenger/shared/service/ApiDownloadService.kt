@@ -83,7 +83,7 @@ class ApiDownloadService : Service() {
 
             val startTime = System.currentTimeMillis()
             wipeDatabase()
-            
+
             downloadMessages()
             downloadConversations()
             downloadBlacklists()
