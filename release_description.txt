@@ -3,4 +3,4 @@ With this release:<br/>
 - You can long click (and drag) to select and delete multiple images on the "View Media" page within a conversation<br/>
 - You can share multiple selected messages at once<br/><br/>
 
-And, of course, it has bug fixes as well as some translation updates.
+And, of course, it has bug fixes, performance improvements, as well as some translation updates.

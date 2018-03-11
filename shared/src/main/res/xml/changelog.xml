@@ -30,7 +30,16 @@
     <!--</version>-->
 
     <version
-        name="2.9.1"
+        name="2.9.2"
+        description="March 11th, 2018">
+        <!-- repost the quick compose notification -->
+        <!-- if no messages exist after an API download, then attempt to re-download them -->
+        <!-- invalidate the DataSource account information whenever the account object is updated (fixes refreshing the account) -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
+        name="2.9.1 BETA"
         description="March 10th, 2018">
         <text>Dependency updates</text>
         <text>Bug fixes</text>
