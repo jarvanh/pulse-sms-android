@@ -83,6 +83,7 @@ class ApiDownloadService : Service() {
 
             val startTime = System.currentTimeMillis()
             wipeDatabase()
+            
             downloadMessages()
             downloadConversations()
             downloadBlacklists()
@@ -92,6 +93,8 @@ class ApiDownloadService : Service() {
             downloadTemplates()
             downloadFolders()
             downloadAutoReplies()
+
+            ensureMessages()
 
             Log.v(TAG, "time to download: " + (System.currentTimeMillis() - startTime) + " ms")
 
@@ -479,6 +482,14 @@ class ApiDownloadService : Service() {
     private fun finishMediaDownload(manager: NotificationManagerCompat) {
         stopForeground(true)
         stopSelf()
+    }
+
+    private fun ensureMessages() {
+        // some people say that after a download, they have their full conversation list, but all the conversations are empty.
+        // so, if they have conversations in the database and no messages, we should re-download the messages.
+        if (DataSource.getConversationCount(this) > 0 && DataSource.getMessageCount(this) == 0) {
+            downloadMessages()
+        }
     }
 
     companion object {
