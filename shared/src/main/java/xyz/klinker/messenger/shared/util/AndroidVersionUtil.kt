@@ -3,6 +3,9 @@ package xyz.klinker.messenger.shared.util
 import android.os.Build
 
 object AndroidVersionUtil {
+    val isAndroidP: Boolean
+        get() = Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1 || Build.VERSION.CODENAME == "P"
+
     val isAndroidO_MR1: Boolean
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
 

@@ -149,6 +149,12 @@ object DataSource {
         _database = null
     }
 
+    fun invalidateAccountDetails() {
+        _accountId = null
+        _encryptor = null
+        _androidDeviceId = null
+    }
+
     private fun writeUnreadCount(context: Context) =
             try {
                 UnreadBadger(context).writeCount(getUnreadConversationCount(context))

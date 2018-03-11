@@ -80,6 +80,11 @@ object Account {
             val secretKey = SecretKeySpec(Base64.decode(key, Base64.DEFAULT), "AES")
             encryptor = EncryptionUtils(secretKey)
         }
+
+        val application = context.applicationContext
+        if (application is AccountInvalidator) {
+            application.onAccountInvalidated(this)
+        }
     }
 
     fun getSharedPrefs(context: Context): SharedPreferences {

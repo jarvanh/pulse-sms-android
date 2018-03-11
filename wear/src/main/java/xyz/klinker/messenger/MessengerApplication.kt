@@ -19,11 +19,14 @@ package xyz.klinker.messenger
 import android.app.Application
 import android.content.Intent
 import android.support.v7.app.AppCompatDelegate
+import xyz.klinker.messenger.api.implementation.Account
+import xyz.klinker.messenger.api.implementation.AccountInvalidator
 
 import java.lang.reflect.Field
 
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
@@ -37,7 +40,7 @@ import xyz.klinker.messenger.shared.util.TimeUtils
  * Base application that will serve as any intro for any context in the rest of the app. Main
  * function is to enable night mode so that colors change depending on time of day.
  */
-class MessengerApplication : FirebaseApplication() {
+class MessengerApplication : FirebaseApplication(), AccountInvalidator {
 
     override fun onCreate() {
         super.onCreate()
@@ -71,6 +74,10 @@ class MessengerApplication : FirebaseApplication() {
                 }
             }
         }
+    }
+
+    override fun onAccountInvalidated(account: Account) {
+        DataSource.invalidateAccountDetails()
     }
 
     companion object {

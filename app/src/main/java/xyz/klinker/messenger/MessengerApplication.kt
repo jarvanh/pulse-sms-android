@@ -22,6 +22,7 @@ import android.os.Build
 import android.support.v7.app.AppCompatDelegate
 import com.amplitude.api.Amplitude
 import xyz.klinker.messenger.api.implementation.Account
+import xyz.klinker.messenger.api.implementation.AccountInvalidator
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler
 import xyz.klinker.messenger.api.implementation.retrofit.ApiErrorPersister
@@ -40,7 +41,7 @@ import xyz.klinker.messenger.shared.util.*
  * Base application that will serve as any intro for any context in the rest of the app. Main
  * function is to enable night mode so that colors change depending on time of day.
  */
-class MessengerApplication : FirebaseApplication(), ApiErrorPersister {
+class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountInvalidator {
 
     override fun onCreate() {
         super.onCreate()
@@ -127,6 +128,10 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister {
             DataSource.insertRetryableRequest(this,
                     RetryableRequest(RetryableRequest.TYPE_ADD_MESSAGE, messageId, System.currentTimeMillis()))
         }.start()
+    }
+
+    override fun onAccountInvalidated(account: Account) {
+        DataSource.invalidateAccountDetails()
     }
 
     companion object {
