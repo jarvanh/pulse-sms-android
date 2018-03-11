@@ -269,6 +269,10 @@ object ColorUtils {
      * The color to set for the text handles
      */
     fun colorTextSelectionHandles(view: TextView, color: Int) {
+        if (AndroidVersionUtil.isAndroidP) {
+            return
+        }
+
         var color = color
         if (Settings.useGlobalThemeColor) {
             color = Settings.mainColorSet.colorAccent
