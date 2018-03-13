@@ -17,6 +17,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'io.fabric'
 
 def propsFile = rootProject.file('keystore.properties')
 def props = new Properties()
