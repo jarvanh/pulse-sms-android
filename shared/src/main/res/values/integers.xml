@@ -17,6 +17,6 @@
 <resources>
 
     <integer name="images_column_count">4</integer>
-    <integer name="message_list_fragment_line_entry_count">5</integer>
+    <integer name="message_list_fragment_line_entry_count">8</integer>
 
 </resources>
