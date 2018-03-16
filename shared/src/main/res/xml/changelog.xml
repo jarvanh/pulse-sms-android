@@ -30,6 +30,13 @@
     <!--</version>-->
 
     <version
+        name="2.9.3"
+        description="March 19th, 2018">
+        <!-- muted notifications were still coming through on secondary Android devices (tablets/phones) -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.9.2"
         description="March 11th, 2018">
         <!-- repost the quick compose notification -->

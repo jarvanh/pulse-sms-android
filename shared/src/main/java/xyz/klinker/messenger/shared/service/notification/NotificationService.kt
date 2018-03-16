@@ -68,7 +68,7 @@ class Notifier(private val context: Context) {
                 return
             }
 
-            val conversations = query.getUnseenConversations(dataSource)
+            val conversations = query.getUnseenConversations(dataSource).filter { !it.mute }
 
             if (conversations.isNotEmpty()) {
                 if (conversations.size > 1) {
