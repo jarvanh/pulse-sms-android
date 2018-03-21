@@ -267,11 +267,15 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 if (Account.primary && isSending) {
                     conversation = DataSource.getConversation(context, message.conversationId)
 
-                    if (message.timestamp > TimeUtils.now && FeatureFlags.UPDATE_WEB_MESSAGE_TIMESTAMPS) {
-                        // if the phone receives a message and the timestamp doesn't seem in-line with the phones, we should update it the timestamp?
-                        // some computers timestamps seem to be well ahead of the phone (or behind)
+                    if ((message.timestamp > TimeUtils.now || message.timestamp < (TimeUtils.now - TimeUtils.MINUTE * 5))
+                            && FeatureFlags.UPDATE_WEB_MESSAGE_TIMESTAMPS) {
+
+                        // if the phone receives a message and the timestamp doesn't seem in-line with the phones, we should update the timestamp:
+                        // if the timestamp of the message going in to the database is in the future, then update it.
+                        // if the timestamp is in the past (5 mins or more), then update it, since this is when it is actually getting sent.
                         message.timestamp = TimeUtils.now
                         DataSource.updateMessageTimestamp(context, id, message.timestamp, true)
+
                     }
 
                     if (conversation != null) {
