@@ -448,6 +448,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void updateMessageTimestamp() {
+        source.updateMessageTimestamp(context, 1, 202L, false);
+        verify(database).update(eq("message"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[] { "1" }));
+    }
+
+    @Test
     public void insertMessage() {
         Message message = new Message();
         message.setData("test");

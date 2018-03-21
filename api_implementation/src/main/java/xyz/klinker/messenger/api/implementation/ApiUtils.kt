@@ -504,12 +504,12 @@ object ApiUtils {
      * Updates a message with the given parameters.
      */
     fun updateMessage(accountId: String?, deviceId: Long, type: Int?,
-                      read: Boolean?, seen: Boolean?) {
+                      read: Boolean?, seen: Boolean?, timestamp: Long?) {
         if (accountId == null) {
             return
         }
 
-        val request = UpdateMessageRequest(type, read, seen)
+        val request = UpdateMessageRequest(type, read, seen, timestamp)
         val message = "update message"
         val call = api.message().update(deviceId, accountId, request)
 

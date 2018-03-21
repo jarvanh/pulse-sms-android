@@ -40,7 +40,7 @@ public class MessageTest extends ApiTest {
         Object response = api.message().add(request).execute().body();
         assertNotNull(response);
 
-        UpdateMessageRequest update = new UpdateMessageRequest(2, null, null);
+        UpdateMessageRequest update = new UpdateMessageRequest(2, null, null, null);
         api.message().update(1, accountId, update).execute();
 
         MessageBody[] messages = api.message().list(accountId, null, null, null).execute().body();

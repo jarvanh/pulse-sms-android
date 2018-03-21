@@ -21,11 +21,13 @@ public class UpdateMessageRequest {
     public Integer type;
     public Boolean read;
     public Boolean seen;
+    public Long timestamp;
 
-    public UpdateMessageRequest(Integer type, Boolean read, Boolean seen) {
+    public UpdateMessageRequest(Integer type, Boolean read, Boolean seen, Long timestamp) {
         this.type = type;
         this.read = read;
         this.seen = seen;
+        this.timestamp = timestamp;
     }
 
 }

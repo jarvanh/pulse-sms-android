@@ -267,6 +267,13 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 if (Account.primary && isSending) {
                     conversation = DataSource.getConversation(context, message.conversationId)
 
+                    if (message.timestamp > TimeUtils.now && FeatureFlags.UPDATE_WEB_MESSAGE_TIMESTAMPS) {
+                        // if the phone receives a message and the timestamp doesn't seem in-line with the phones, we should update it the timestamp?
+                        // some computers timestamps seem to be well ahead of the phone (or behind)
+                        message.timestamp = TimeUtils.now
+                        DataSource.updateMessageTimestamp(context, id, message.timestamp, true)
+                    }
+
                     if (conversation != null) {
                         if (message.mimeType == MimeType.TEXT_PLAIN) {
                             SendUtils(conversation.simSubscriptionId)
@@ -372,6 +379,11 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             val id = getLong(json, "id")
             val type = json.getInt("type")
             DataSource.updateMessageType(context, id, type, false)
+
+            val timestamp = json.getString("timestamp")
+            if (timestamp != null) {
+                DataSource.updateMessageTimestamp(context, id, timestamp.toLong(), false)
+            }
 
             val message = DataSource.getMessage(context, id)
             if (message != null) {

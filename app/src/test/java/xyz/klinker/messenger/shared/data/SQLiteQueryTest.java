@@ -253,7 +253,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         Conversation conversation = new Conversation();
         conversation.setPinned(false);
         conversation.setRead(true);
-        conversation.setTimestamp(TimeUtils.now);
+        conversation.setTimestamp(TimeUtils.INSTANCE.getNow());
         conversation.setSnippet("test conversation");
         conversation.setRingtoneUri(null);
         conversation.setPhoneNumbers("5154224558");
@@ -486,6 +486,14 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         Cursor messages = source.getMessages(context, 1L);
         messages.moveToLast();
         assertEquals(Message.TYPE_SENT, messages.getInt(messages.getColumnIndex(Message.COLUMN_TYPE)));
+    }
+
+    @Test
+    public void updateMessageTimestamp() {
+        source.updateMessageTimestamp(context, 1, 200012L, false);
+        Cursor messages = source.getMessages(context, 1L);
+        messages.moveToLast();
+        assertEquals(200012L, messages.getInt(messages.getColumnIndex(Message.COLUMN_TIMESTAMP)));
     }
 
     @Test

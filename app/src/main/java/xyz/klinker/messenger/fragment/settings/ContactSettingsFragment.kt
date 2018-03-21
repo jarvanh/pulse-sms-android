@@ -218,7 +218,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
             }
 
             if (timeout != -1L) {
-                DataSource.cleanupOldMessagesInConversation(activity, conversation.id, TimeUtils. - timeout)
+                DataSource.cleanupOldMessagesInConversation(activity, conversation.id, TimeUtils.now - timeout)
             }
             true
         }

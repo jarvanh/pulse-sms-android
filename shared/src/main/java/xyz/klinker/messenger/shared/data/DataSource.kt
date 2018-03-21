@@ -1744,6 +1744,30 @@ object DataSource {
     }
 
     /**
+     * Updates the message with the given id to the given type.
+     *
+     * @param messageId the message to update.
+     * @param type      the type to change it to.
+     */
+    @JvmOverloads fun updateMessageTimestamp(context: Context, messageId: Long, timestamp: Long, useApi: Boolean = true) {
+        val values = ContentValues(1)
+        values.put(Message.COLUMN_TIMESTAMP, timestamp)
+
+        try {
+            database(context).update(Message.TABLE, values, Message.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(messageId)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).update(Message.TABLE, values, Message.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(messageId)))
+        }
+
+        if (useApi) {
+            ApiUtils.updateMessage(accountId(context), messageId, null, null, null, timestamp)
+        }
+    }
+
+    /**
      * Updates the data field for a message.
      *
      * @param messageId the id of the message to update.

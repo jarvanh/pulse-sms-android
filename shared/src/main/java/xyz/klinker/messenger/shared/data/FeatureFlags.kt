@@ -71,6 +71,7 @@ object FeatureFlags {
     private val FLAG_VCARD_PREVIEWS = "flag_vcard_previews"
     private val FLAG_DISMISS_NOTI_BY_UNREAD_MESSAGES = "flag_dismiss_noti_by_unread_messages"
     private val FLAG_RETRY_FAILED_REQUESTS = "flag_retry_failed_requests"
+    private val FLAG_UPDATE_WEB_MESSAGE_TIMESTAMPS = "flag_update_web_message_timestamps"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -93,6 +94,7 @@ object FeatureFlags {
     var VCARD_PREVIEWS: Boolean = false
 
     // in testing
+    var UPDATE_WEB_MESSAGE_TIMESTAMPS: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -103,6 +105,8 @@ object FeatureFlags {
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
         AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
+
+        UPDATE_WEB_MESSAGE_TIMESTAMPS = getValue(context, sharedPrefs, FLAG_UPDATE_WEB_MESSAGE_TIMESTAMPS)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -117,6 +121,8 @@ object FeatureFlags {
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
             FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
+
+            FLAG_UPDATE_WEB_MESSAGE_TIMESTAMPS -> UPDATE_WEB_MESSAGE_TIMESTAMPS = flag
         }
     }
 
