@@ -148,7 +148,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
         m.conversationId = conversationId
         m.type = Message.TYPE_SENDING
         m.data = text
-        m.timestamp = System.currentTimeMillis()
+        m.timestamp = TimeUtils.now
         m.mimeType = MimeType.TEXT_PLAIN
         m.read = true
         m.seen = true

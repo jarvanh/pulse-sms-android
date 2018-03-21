@@ -52,6 +52,7 @@ import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.util.listener.ScheduledMessageClickListener
 import java.util.*
 
@@ -261,7 +262,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
             message.timestamp = message.timestamp + 1000 * 60 * 60 * hourOfDay
             message.timestamp = message.timestamp + 1000 * 60 * minute
 
-            if (message.timestamp > System.currentTimeMillis()) {
+            if (message.timestamp > TimeUtils.now) {
                 displayMessageDialog(message)
             } else {
                 Toast.makeText(fragmentActivity, R.string.scheduled_message_in_future,

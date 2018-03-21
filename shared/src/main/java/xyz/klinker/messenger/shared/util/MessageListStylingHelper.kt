@@ -59,7 +59,7 @@ class MessageListStylingHelper(context: Context?) {
         } else {
             isJustSentMessage = currentType != Message.TYPE_RECEIVED
             nextType = -1
-            nextTimestamp = System.currentTimeMillis()
+            nextTimestamp = TimeUtils.now
         }
 
         return this

@@ -202,8 +202,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 message.seen = json.getBoolean("seen")
                 message.simPhoneNumber = if (conversation == null || conversation.simSubscriptionId == null)
                     null
-                else
-                    DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
+                else DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
 
                 if (json.has("sent_device")) {
                     try {
@@ -972,7 +971,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             val message = Message()
             message.type = Message.TYPE_SENDING
             message.data = text
-            message.timestamp = System.currentTimeMillis()
+            message.timestamp = TimeUtils.now
             message.mimeType = MimeType.TEXT_PLAIN
             message.read = true
             message.seen = true

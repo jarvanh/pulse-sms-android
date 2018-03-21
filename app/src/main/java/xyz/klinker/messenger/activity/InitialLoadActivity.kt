@@ -167,7 +167,7 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
     private fun startDatabaseSync() {
         Thread {
             val context = applicationContext
-            val startTime = System.currentTimeMillis()
+            val startTime = TimeUtils.now
 
             val myName = name
             val myPhoneNumber = PhoneNumberUtils.format(phoneNumber)
@@ -191,7 +191,7 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
             val contacts = ContactUtils.queryContacts(context, source)
             source.insertContacts(this, contacts, null)
 
-            val importTime = System.currentTimeMillis() - startTime
+            val importTime = TimeUtils.now - startTime
             AnalyticsHelper.importFinished(this, importTime)
             Log.v("initial_load", "load took $importTime ms")
 

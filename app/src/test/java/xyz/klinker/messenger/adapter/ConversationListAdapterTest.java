@@ -42,6 +42,7 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder;
 import xyz.klinker.messenger.shared.data.ColorSet;
 import xyz.klinker.messenger.shared.data.SectionType;
 import xyz.klinker.messenger.shared.data.model.Conversation;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.utils.listener.ConversationExpandedListener;
 import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeToDeleteListener;
 
@@ -351,7 +352,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 ColorSet.Companion.INDIGO(context).getColorAccent(),
                 1,
                 1,
-                System.currentTimeMillis() - (1000 * 60 * 60),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60),
                 "Luke Klinker",
                 "(515) 991-1493",
                 "So maybe not going to be able to get platinum huh?",
@@ -367,7 +368,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 ColorSet.Companion.RED(context).getColorAccent(),
                 1,
                 1,
-                System.currentTimeMillis() - (1000 * 60 * 60 * 12),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 12),
                 "Matt Swiontek",
                 "(708) 928-0846",
                 "Whoops ya idk what happened but anysho drive safe",
@@ -383,7 +384,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 ColorSet.Companion.PINK(context).getColorAccent(),
                 0,
                 0,
-                System.currentTimeMillis() - (1000 * 60),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60),
                 "Kris Klinker",
                 "(515) 419-6726",
                 "Will probably be there from 6:30-9, just stop by when you can!",
@@ -399,7 +400,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 ColorSet.Companion.BLUE(context).getColorAccent(),
                 0,
                 1,
-                System.currentTimeMillis() - (1000 * 60 * 60 * 24),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 24),
                 "Andrew Klinker",
                 "(515) 991-8235",
                 "Just finished, it was a lot of fun",
@@ -415,7 +416,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 ColorSet.Companion.GREEN(context).getColorAccent(),
                 0,
                 1,
-                System.currentTimeMillis() - (1000 * 60 * 60 * 24),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 24),
                 "Aaron Klinker",
                 "(515) 556-7749",
                 "Yeah I'll do it when I get home",
@@ -431,7 +432,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 ColorSet.Companion.BROWN(context).getColorAccent(),
                 0,
                 1,
-                System.currentTimeMillis() - (1000 * 60 * 60 * 55),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 55),
                 "Mike Klinker",
                 "(515) 480-8532",
                 "Yeah so hiking around in some place called beaver meadows now.",
@@ -447,7 +448,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 ColorSet.Companion.PURPLE(context).getColorAccent(),
                 0,
                 1,
-                System.currentTimeMillis() - (1000 * 60 * 60 * 78),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 78),
                 "Ben Madden",
                 "(847) 609-0939",
                 "Maybe they'll run into each other on the way back... idk",
@@ -463,7 +464,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
                 ColorSet.Companion.PURPLE(context).getColorAccent(),
                 0,
                 1,
-                System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 8),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 24 * 8),
                 "test 1",
                 "(847) 609-0939",
                 "Maybe they'll run into each other on the way back... idk",

@@ -114,7 +114,7 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
             val message = Message()
             message.type = value.getAsInteger(Message.COLUMN_TYPE)
             message.data = value.getAsString(Message.COLUMN_DATA).trim { it <= ' ' }
-            message.timestamp = System.currentTimeMillis()
+            message.timestamp = TimeUtils.now
             message.mimeType = value.getAsString(Message.COLUMN_MIME_TYPE)
             message.read = false
             message.seen = false

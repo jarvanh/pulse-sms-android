@@ -14,6 +14,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.util.ColorUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.utils.FixedScrollLinearLayoutManager
 import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeItemDecoration
 
@@ -40,7 +41,7 @@ class ConversationRecyclerViewManager(private val fragment: ConversationListFrag
 
         val handler = Handler()
         Thread {
-            val startTime = System.currentTimeMillis()
+            val startTime = TimeUtils.now
 
             if (activity == null) {
                 return@Thread
@@ -48,7 +49,7 @@ class ConversationRecyclerViewManager(private val fragment: ConversationListFrag
 
             val conversations = getCursorSafely()
 
-            Log.v("conversation_load", "load took ${System.currentTimeMillis() - startTime} ms")
+            Log.v("conversation_load", "load took ${TimeUtils.now - startTime} ms")
 
             if (activity == null) {
                 return@Thread
@@ -56,7 +57,7 @@ class ConversationRecyclerViewManager(private val fragment: ConversationListFrag
 
             handler.post {
                 setConversations(conversations.toMutableList())
-                fragment.lastRefreshTime = System.currentTimeMillis()
+                fragment.lastRefreshTime = TimeUtils.now
 
                 try {
                     (activity!!.application as MessengerApplication).refreshDynamicShortcuts()

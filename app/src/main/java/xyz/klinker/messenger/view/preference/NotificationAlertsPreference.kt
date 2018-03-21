@@ -24,6 +24,7 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.NotificationUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 
 @Suppress("DEPRECATION")
 class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickListener {
@@ -211,7 +212,7 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
                 .setColor(Settings.mainColorSet.color)
                 .setPriority(if (Settings.headsUp) Notification.PRIORITY_MAX else Notification.PRIORITY_DEFAULT)
                 .setShowWhen(true)
-                .setWhen(System.currentTimeMillis())
+                .setWhen(TimeUtils.now)
 
         val sound = ringtone
         if (sound != null) {

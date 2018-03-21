@@ -234,7 +234,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
             m.conversationId = argManager.conversationId
             m.type = Message.TYPE_SENDING
             m.data = message
-            m.timestamp = System.currentTimeMillis()
+            m.timestamp = TimeUtils.now
             m.mimeType = MimeType.TEXT_PLAIN
             m.read = true
             m.seen = true
@@ -306,7 +306,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                     imageMessage.conversationId = argManager.conversationId
                     imageMessage.type = Message.TYPE_SENDING
                     imageMessage.data = sendUri.toString()
-                    imageMessage.timestamp = System.currentTimeMillis()
+                    imageMessage.timestamp = TimeUtils.now
                     imageMessage.mimeType = mimeType
                     imageMessage.read = true
                     imageMessage.seen = true

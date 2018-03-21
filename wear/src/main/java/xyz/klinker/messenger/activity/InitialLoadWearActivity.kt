@@ -24,11 +24,7 @@ import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.service.ApiDownloadService
 import xyz.klinker.messenger.shared.service.ApiUploadService
-import xyz.klinker.messenger.shared.util.ContactUtils
-import xyz.klinker.messenger.shared.util.CursorUtil
-import xyz.klinker.messenger.shared.util.PermissionsUtils
-import xyz.klinker.messenger.shared.util.PhoneNumberUtils
-import xyz.klinker.messenger.shared.util.SmsMmsUtils
+import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.listener.ProgressUpdateListener
 
 class InitialLoadWearActivity : Activity(), ProgressUpdateListener {
@@ -149,7 +145,7 @@ class InitialLoadWearActivity : Activity(), ProgressUpdateListener {
     private fun startDatabaseSync() {
         Thread {
             val context = applicationContext
-            val startTime = System.currentTimeMillis()
+            val startTime = TimeUtils.now
 
             val myName = name
             val myPhoneNumber = PhoneNumberUtils.format(phoneNumber)
@@ -170,7 +166,7 @@ class InitialLoadWearActivity : Activity(), ProgressUpdateListener {
             handler!!.postDelayed({ close() }, 5000)
 
             Log.v("initial_load", "load took " +
-                    (System.currentTimeMillis() - startTime) + " ms")
+                    (TimeUtils.now - startTime) + " ms")
         }.start()
     }
 

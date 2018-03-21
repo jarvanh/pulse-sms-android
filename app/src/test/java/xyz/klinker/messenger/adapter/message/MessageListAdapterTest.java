@@ -37,6 +37,7 @@ import xyz.klinker.messenger.R;
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.fragment.message.MessageListFragment;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate;
 
 import static org.junit.Assert.assertEquals;
@@ -177,7 +178,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 1,
                 Message.TYPE_RECEIVED,
                 "Do you want to go to summerfest this weekend?",
-                System.currentTimeMillis() - (1000 * 60 * 60 * 12) - (1000 * 60 * 30),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 12) - (1000 * 60 * 30),
                 "text/plain",
                 1,
                 1,
@@ -190,7 +191,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 1,
                 Message.TYPE_SENT,
                 "Yeah, I'll probably go on Friday.",
-                System.currentTimeMillis() - (1000 * 60 * 60 * 12),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 12),
                 "text/plain",
                 1,
                 1,
@@ -208,7 +209,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                         "support hooking up to the same backend and the two could be used " +
                         "together. Or, users could just use this app on their phone as well... " +
                         "up to them which they prefer.",
-                System.currentTimeMillis() - (1000 * 60 * 60 * 8) - (1000 * 60 * 6),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 8) - (1000 * 60 * 6),
                 "text/plain",
                 1,
                 1,
@@ -221,7 +222,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 1,
                 Message.TYPE_RECEIVED,
                 "Are you going to make this into an actual app?",
-                System.currentTimeMillis() - (1000 * 60 * 60 * 8),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 8),
                 "text/plain",
                 1,
                 1,
@@ -234,7 +235,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 1,
                 Message.TYPE_SENT,
                 "dunno",
-                System.currentTimeMillis() - (1000 * 60 * 60 * 7) - (1000 * 60 * 55),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 7) - (1000 * 60 * 55),
                 "text/plain",
                 1,
                 1,
@@ -248,7 +249,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 Message.TYPE_SENT,
                 "I got to build some Legos, plus get 5 extra character packs and 3 level packs " +
                         "with the deluxe edition lol",
-                System.currentTimeMillis() - (1000 * 60 * 38),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 38),
                 "text/plain",
                 1,
                 1,
@@ -261,7 +262,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 1,
                 Message.TYPE_RECEIVED,
                 "woah nice one haha",
-                System.currentTimeMillis() - (1000 * 60 * 37),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 37),
                 "text/plain",
                 1,
                 1,
@@ -274,7 +275,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 1,
                 Message.TYPE_SENT,
                 "Already shaping up to be a better deal than battlefront!",
-                System.currentTimeMillis() - (1000 * 60 * 23),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 23),
                 "text/plain",
                 1,
                 1,
@@ -287,7 +288,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 1,
                 Message.TYPE_RECEIVED,
                 "is it fun?",
-                System.currentTimeMillis() - (1000 * 60 * 22),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 22),
                 "text/plain",
                 1,
                 1,
@@ -301,7 +302,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 Message.TYPE_SENT,
                 "So far! Looks like a lot of content in the game too. Based on the trophies " +
                         "required at least",
-                System.currentTimeMillis() - (1000 * 60 * 20),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 20),
                 "text/plain",
                 1,
                 1,
@@ -314,7 +315,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 1,
                 Message.TYPE_RECEIVED,
                 "so maybe not going to be able to get platinum huh? haha",
-                System.currentTimeMillis() - (1000 * 60 * 18),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60 * 18),
                 "text/plain",
                 1,
                 1,
@@ -329,7 +330,7 @@ public class MessageListAdapterTest extends MessengerRobolectricSuite {
                 "Oh, I will definitely get it! Just might take 24+ hours to do it... and when " +
                         "those 24 hours are in a single week, things get to be a little tedious. " +
                         "Hopefully I don't absolutely hate the game once I finish!",
-                System.currentTimeMillis() - (1000 * 60),
+                TimeUtils.INSTANCE.getNow() - (1000 * 60),
                 "text/plain",
                 1,
                 1,

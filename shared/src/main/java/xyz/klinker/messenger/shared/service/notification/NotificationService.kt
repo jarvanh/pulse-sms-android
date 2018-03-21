@@ -26,6 +26,7 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
 import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper
+import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import java.util.*
 
@@ -64,7 +65,7 @@ class Notifier(private val context: Context) {
     fun notify(intent: Intent? = null) {
         try {
             val snoozeTil = Settings.snooze
-            if (snoozeTil > System.currentTimeMillis()) {
+            if (snoozeTil > TimeUtils.now) {
                 return
             }
 
@@ -87,7 +88,7 @@ class Notifier(private val context: Context) {
                 }
 
                 if (Settings.repeatNotifications != -1L) {
-                    RepeatNotificationJob.scheduleNextRun(context, System.currentTimeMillis() + Settings.repeatNotifications)
+                    RepeatNotificationJob.scheduleNextRun(context, TimeUtils.now + Settings.repeatNotifications)
                 }
 
                 if (Settings.wakeScreen) {

@@ -24,6 +24,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
+import xyz.klinker.messenger.shared.util.TimeUtils
 
 @Suppress("DEPRECATION")
 class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() {
@@ -144,7 +145,7 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
             scheduledMessage!!.timestamp += (1000 * 60 * 60 * hourOfDay).toLong()
             scheduledMessage!!.timestamp += (1000 * 60 * minute).toLong()
 
-            if (scheduledMessage!!.timestamp < System.currentTimeMillis()) {
+            if (scheduledMessage!!.timestamp < TimeUtils.now) {
                 Toast.makeText(activity, R.string.scheduled_message_in_future,
                         Toast.LENGTH_SHORT).show()
                 displayDateDialog()

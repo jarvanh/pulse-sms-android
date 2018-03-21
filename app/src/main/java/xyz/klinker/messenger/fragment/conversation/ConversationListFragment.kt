@@ -80,7 +80,7 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
     override fun onStart() {
         super.onStart()
 
-        if (System.currentTimeMillis() - lastRefreshTime > 1000 * 60 * 60 && !isExpanded) {
+        if (TimeUtils.now - lastRefreshTime > 1000 * 60 * 60 && !isExpanded) {
             recyclerManager.loadConversations()
         }
 

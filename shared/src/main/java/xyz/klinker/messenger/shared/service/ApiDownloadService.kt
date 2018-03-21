@@ -81,7 +81,7 @@ class ApiDownloadService : Service() {
             encryptionUtils = Account.encryptor
             DataSource.beginTransaction(this)
 
-            val startTime = System.currentTimeMillis()
+            val startTime = TimeUtils.now
             wipeDatabase()
 
             downloadMessages()
@@ -96,7 +96,7 @@ class ApiDownloadService : Service() {
 
             ensureMessages()
 
-            Log.v(TAG, "time to download: " + (System.currentTimeMillis() - startTime) + " ms")
+            Log.v(TAG, "time to download: " + (TimeUtils.now - startTime) + " ms")
 
             sendBroadcast(Intent(ACTION_DOWNLOAD_FINISHED))
             NotificationManagerCompat.from(applicationContext).cancel(MESSAGE_DOWNLOAD_ID)
@@ -113,7 +113,7 @@ class ApiDownloadService : Service() {
     }
 
     private fun downloadMessages() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val messageList = mutableListOf<Message>()
 
         var pageNumber = 1
@@ -160,14 +160,14 @@ class ApiDownloadService : Service() {
         } while (downloaded % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && !noMessages && nullCount < 5)
 
         if (downloaded > 0) {
-            Log.v(TAG, downloaded.toString() + " messages inserted in " + (System.currentTimeMillis() - startTime) + " ms with " + pageNumber + " pages")
+            Log.v(TAG, downloaded.toString() + " messages inserted in " + (TimeUtils.now - startTime) + " ms with " + pageNumber + " pages")
         } else {
             Log.v(TAG, "messages failed to insert")
         }
     }
 
     private fun downloadConversations() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val conversationList = mutableListOf<Conversation>()
 
         var pageNumber = 1
@@ -215,14 +215,14 @@ class ApiDownloadService : Service() {
         } while (downloaded % CONVERSATION_DOWNLOAD_PAGE_SIZE == 0 && !noConversations && nullCount < 5)
 
         if (downloaded > 0) {
-            Log.v(TAG, downloaded.toString() + " conversations inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+            Log.v(TAG, downloaded.toString() + " conversations inserted in " + (TimeUtils.now - startTime) + " ms")
         } else {
             Log.v(TAG, "contacts failed to insert")
         }
     }
 
     private fun downloadBlacklists() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val blacklists = try {
             ApiUtils.api.blacklist().list(Account.accountId).execute().body()
         } catch (e: Exception) {
@@ -236,14 +236,14 @@ class ApiDownloadService : Service() {
                 DataSource.insertBlacklist(this, blacklist, false)
             }
 
-            Log.v(TAG, "blacklists inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+            Log.v(TAG, "blacklists inserted in " + (TimeUtils.now - startTime) + " ms")
         } else {
             Log.v(TAG, "blacklists failed to insert")
         }
     }
 
     private fun downloadScheduledMessages() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val messages = try {
             ApiUtils.api.scheduled().list(Account.accountId).execute().body()
         } catch (e: IOException) {
@@ -257,14 +257,14 @@ class ApiDownloadService : Service() {
                 DataSource.insertScheduledMessage(this, message, false)
             }
 
-            Log.v(TAG, "scheduled messages inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+            Log.v(TAG, "scheduled messages inserted in " + (TimeUtils.now - startTime) + " ms")
         } else {
             Log.v(TAG, "scheduled messages failed to insert")
         }
     }
 
     private fun downloadDrafts() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val drafts = try {
             ApiUtils.api.draft().list(Account.accountId).execute().body()
         } catch (e: IOException) {
@@ -278,14 +278,14 @@ class ApiDownloadService : Service() {
                 DataSource.insertDraft(this, draft, false)
             }
 
-            Log.v(TAG, "drafts inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+            Log.v(TAG, "drafts inserted in " + (TimeUtils.now - startTime) + " ms")
         } else {
             Log.v(TAG, "drafts failed to insert")
         }
     }
 
     private fun downloadContacts() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val contactList = mutableListOf<Contact>()
 
         var pageNumber = 1
@@ -332,14 +332,14 @@ class ApiDownloadService : Service() {
         } while (downloaded % CONTACTS_DOWNLOAD_PAGE_SIZE == 0 && !noContacts && nullCount < 5)
 
         if (downloaded > 0) {
-            Log.v(TAG, downloaded.toString() + " contacts inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+            Log.v(TAG, downloaded.toString() + " contacts inserted in " + (TimeUtils.now - startTime) + " ms")
         } else {
             Log.v(TAG, "contacts failed to insert")
         }
     }
 
     private fun downloadTemplates() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val templates = try {
             ApiUtils.api.template().list(Account.accountId).execute().body()
         } catch (e: IOException) {
@@ -353,14 +353,14 @@ class ApiDownloadService : Service() {
                 DataSource.insertTemplate(this, template, false)
             }
 
-            Log.v(TAG, "templates inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+            Log.v(TAG, "templates inserted in " + (TimeUtils.now - startTime) + " ms")
         } else {
             Log.v(TAG, "templates failed to insert")
         }
     }
 
     private fun downloadFolders() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val folders = try {
             ApiUtils.api.folder().list(Account.accountId).execute().body()
         } catch (e: IOException) {
@@ -374,14 +374,14 @@ class ApiDownloadService : Service() {
                 DataSource.insertFolder(this, folder, false)
             }
 
-            Log.v(TAG, "folders inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+            Log.v(TAG, "folders inserted in " + (TimeUtils.now - startTime) + " ms")
         } else {
             Log.v(TAG, "folders failed to insert")
         }
     }
 
     private fun downloadAutoReplies() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val replies = try {
             ApiUtils.api.autoReply().list(Account.accountId).execute().body()
         } catch (e: IOException) {
@@ -395,7 +395,7 @@ class ApiDownloadService : Service() {
                 DataSource.insertAutoReply(this, reply, false)
             }
 
-            Log.v(TAG, "auto replies inserted in " + (System.currentTimeMillis() - startTime) + " ms")
+            Log.v(TAG, "auto replies inserted in " + (TimeUtils.now - startTime) + " ms")
         } else {
             Log.v(TAG, "auto replies failed to insert")
         }

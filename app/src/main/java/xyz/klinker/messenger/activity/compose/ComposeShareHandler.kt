@@ -5,6 +5,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.MessengerChooserTargetService
+import xyz.klinker.messenger.shared.util.TimeUtils
 
 class ComposeShareHandler(private val activity: ComposeActivity) {
 
@@ -20,7 +21,7 @@ class ComposeShareHandler(private val activity: ComposeActivity) {
             val message = Message()
             message.type = Message.TYPE_INFO
             message.data = activity.getString(R.string.no_messages_with_contact)
-            message.timestamp = System.currentTimeMillis()
+            message.timestamp = TimeUtils.now
             message.mimeType = MimeType.TEXT_PLAIN
             message.read = true
             message.seen = true

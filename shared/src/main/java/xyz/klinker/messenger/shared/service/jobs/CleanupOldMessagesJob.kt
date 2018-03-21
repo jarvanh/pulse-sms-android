@@ -15,7 +15,7 @@ class CleanupOldMessagesJob : SimpleJobService() {
     override fun onRunJob(job: JobParameters?): Int {
         val timeout = Settings.cleanupMessagesTimeout
         if (timeout > 0) {
-            DataSource.cleanupOldMessages(this, System.currentTimeMillis() - timeout)
+            DataSource.cleanupOldMessages(this, TimeUtils.now - timeout)
         }
 
         scheduleNextRun(this)

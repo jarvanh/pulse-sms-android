@@ -45,7 +45,7 @@ class SmsReceivedNonDefaultReceiver : BroadcastReceiver() {
         Thread {
             try {
                 Thread.sleep(TimeUtils.SECOND * 4)
-                if (System.currentTimeMillis() - SmsReceivedReceiver.lastReceived < TimeUtils.SECOND * 15) {
+                if (TimeUtils.now - SmsReceivedReceiver.lastReceived < TimeUtils.SECOND * 15) {
                     // the main receiver should have handled this just fine.
                     return@Thread
                 }
@@ -92,7 +92,7 @@ class SmsReceivedNonDefaultReceiver : BroadcastReceiver() {
         val message = Message()
         message.type = Message.TYPE_RECEIVED
         message.data = body.trim { it <= ' ' }
-        message.timestamp = System.currentTimeMillis()
+        message.timestamp = TimeUtils.now
         message.mimeType = MimeType.TEXT_PLAIN
         message.read = false
         message.seen = false

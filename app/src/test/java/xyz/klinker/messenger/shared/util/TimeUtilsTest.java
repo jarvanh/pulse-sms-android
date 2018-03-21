@@ -43,7 +43,7 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
     private static final long HOUR = MINUTE * 60;
     private static final long DAY = HOUR * 24;
 
-    private long current = System.currentTimeMillis();
+    private long current = TimeUtils.INSTANCE.getNow();
 
     private Context context;
 

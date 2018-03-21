@@ -56,7 +56,7 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
 
         val sharedPreferences = Settings.getSharedPrefs(this)
         val lastRun = sharedPreferences.getLong("new_message_check_last_run", 0L)
-        val fiveSecondsBefore = System.currentTimeMillis() - TimeUtils.SECOND * 5
+        val fiveSecondsBefore = TimeUtils.now - TimeUtils.SECOND * 5
 
         val appSignature: String
         if (!Settings.signature!!.isEmpty()) {
@@ -188,7 +188,7 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
             }
         }
 
-        fun writeLastRun(context: Context, time: Long = System.currentTimeMillis()) {
+        fun writeLastRun(context: Context, time: Long = TimeUtils.now) {
             try {
                 Settings.getSharedPrefs(context).edit()
                         .putLong("new_message_check_last_run", time)

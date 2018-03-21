@@ -28,6 +28,7 @@ import android.view.MotionEvent
 import android.view.View
 
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.shared.util.TimeUtils
 
 /**
  * A button that can be used for previewing theme color changes. When pressed, the accent color
@@ -160,13 +161,13 @@ class ColorPreviewButton : View {
 
             while (running) {
                 try {
-                    beginTime = System.currentTimeMillis()
+                    beginTime = TimeUtils.now
                     framesSkipped = 0
 
                     updateView()
                     view.postInvalidate()
 
-                    timeDiff = System.currentTimeMillis() - beginTime
+                    timeDiff = TimeUtils.now - beginTime
                     sleepTime = (FRAME_PERIOD - timeDiff).toInt()
 
                     if (sleepTime > 0) {

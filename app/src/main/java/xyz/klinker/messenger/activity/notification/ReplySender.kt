@@ -21,6 +21,7 @@ import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.util.DualSimUtils
 import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper
 import xyz.klinker.messenger.shared.util.SendUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 
 class ReplySender(private val activity: MarshmallowReplyActivity, private val dataProvider: ReplyDataProvider, private val animator: ReplyAnimators) {
@@ -114,7 +115,7 @@ class ReplySender(private val activity: MarshmallowReplyActivity, private val da
         m.conversationId = dataProvider.conversationId
         m.type = Message.TYPE_SENDING
         m.data = message
-        m.timestamp = System.currentTimeMillis()
+        m.timestamp = TimeUtils.now
         m.mimeType = MimeType.TEXT_PLAIN
         m.read = true
         m.seen = true

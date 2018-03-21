@@ -39,6 +39,7 @@ import xyz.klinker.messenger.shared.data.model.RetryableRequest;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.shared.data.model.Template;
 import xyz.klinker.messenger.shared.util.ColorUtils;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -252,7 +253,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         Conversation conversation = new Conversation();
         conversation.setPinned(false);
         conversation.setRead(true);
-        conversation.setTimestamp(System.currentTimeMillis());
+        conversation.setTimestamp(TimeUtils.now);
         conversation.setSnippet("test conversation");
         conversation.setRingtoneUri(null);
         conversation.setPhoneNumbers("5154224558");
@@ -402,7 +403,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void updateConversation() {
-        source.updateConversation(context, 1, false, System.currentTimeMillis(), "test updated message",
+        source.updateConversation(context, 1, false, TimeUtils.INSTANCE.getNow(), "test updated message",
                 MimeType.INSTANCE.getTEXT_PLAIN(), false, false);
         Conversation conversation = source.getConversation(context, 1);
         assertEquals("test updated message", conversation.getSnippet());
@@ -417,7 +418,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void updateConversationImage() {
-        source.updateConversation(context, 1, false, System.currentTimeMillis(), "test updated message",
+        source.updateConversation(context, 1, false, TimeUtils.INSTANCE.getNow(), "test updated message",
                 MimeType.INSTANCE.getIMAGE_PNG(), false, false);
         Conversation conversation = source.getConversation(context, 1);
         assertEquals("", conversation.getSnippet());
@@ -690,7 +691,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         m.setConversationId(2);
         m.setType(Message.TYPE_SENT);
         m.setData("test message");
-        m.setTimestamp(System.currentTimeMillis());
+        m.setTimestamp(TimeUtils.INSTANCE.getNow());
         m.setMimeType("text/plain");
         m.setRead(true);
         m.setSeen(true);

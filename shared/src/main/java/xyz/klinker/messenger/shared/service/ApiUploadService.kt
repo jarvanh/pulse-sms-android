@@ -50,10 +50,7 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.encryption.EncryptionUtils
 import xyz.klinker.messenger.api.implementation.BinaryUtils
 import xyz.klinker.messenger.shared.data.model.*
-import xyz.klinker.messenger.shared.util.CursorUtil
-import xyz.klinker.messenger.shared.util.NotificationUtils
-import xyz.klinker.messenger.shared.util.PaginationUtils
-import xyz.klinker.messenger.shared.util.closeSilent
+import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.listener.DirectExecutor
 
 open class ApiUploadService : Service() {
@@ -90,7 +87,7 @@ open class ApiUploadService : Service() {
         }
         
         Thread {
-            val startTime = System.currentTimeMillis()
+            val startTime = TimeUtils.now
 
             uploadMessages()
             uploadConversations()
@@ -102,14 +99,14 @@ open class ApiUploadService : Service() {
             uploadFolders()
             uploadAutoReplies()
 
-            Log.v(TAG, "time to upload: " + (System.currentTimeMillis() - startTime) + " ms")
+            Log.v(TAG, "time to upload: " + (TimeUtils.now - startTime) + " ms")
 
             uploadMedia()
         }.start()
     }
 
     private fun uploadMessages() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val cursor = DataSource.getMessages(this)
 
         if (cursor.moveToFirst()) {
@@ -154,10 +151,10 @@ open class ApiUploadService : Service() {
 
             if (successPages != expectedPages) {
                 Log.v(TAG, "failed to upload messages in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             } else {
                 Log.v(TAG, "messages upload successful in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             }
         }
 
@@ -165,7 +162,7 @@ open class ApiUploadService : Service() {
     }
 
     private fun uploadConversations() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val cursor = DataSource.getAllConversations(this)
 
         if (cursor.moveToFirst()) {
@@ -202,11 +199,11 @@ open class ApiUploadService : Service() {
 
             if (result == null || !ApiUtils.isCallSuccessful(result)) {
                 Log.v(TAG, "failed to upload conversations in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             } else {
                 Log.v(TAG, result.toString())
                 Log.v(TAG, "conversations upload successful in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             }
         }
 
@@ -214,7 +211,7 @@ open class ApiUploadService : Service() {
     }
 
     private fun uploadBlacklists() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val cursor = DataSource.getBlacklists(this)
 
         if (cursor.moveToFirst()) {
@@ -238,10 +235,10 @@ open class ApiUploadService : Service() {
 
             if (result == null || !ApiUtils.isCallSuccessful(result)) {
                 Log.v(TAG, "failed to upload blacklists in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             } else {
                 Log.v(TAG, "blacklists upload successful in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             }
         }
 
@@ -249,7 +246,7 @@ open class ApiUploadService : Service() {
     }
 
     private fun uploadScheduledMessages() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val cursor = DataSource.getScheduledMessages(this)
 
         if (cursor.moveToFirst()) {
@@ -274,10 +271,10 @@ open class ApiUploadService : Service() {
 
             if (result == null || !ApiUtils.isCallSuccessful(result)) {
                 Log.v(TAG, "failed to upload scheduled messages in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             } else {
                 Log.v(TAG, "scheduled messages upload successful in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             }
         }
 
@@ -285,7 +282,7 @@ open class ApiUploadService : Service() {
     }
 
     private fun uploadDrafts() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val cursor = DataSource.getDrafts(this)
 
         if (cursor.moveToFirst()) {
@@ -309,10 +306,10 @@ open class ApiUploadService : Service() {
 
             if (result == null) {
                 Log.v(TAG, "failed to upload drafts in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             } else {
                 Log.v(TAG, "drafts upload successful in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             }
         }
 
@@ -320,7 +317,7 @@ open class ApiUploadService : Service() {
     }
 
     private fun uploadTemplates() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val cursor = DataSource.getTemplates(this)
 
         if (cursor.moveToFirst()) {
@@ -344,10 +341,10 @@ open class ApiUploadService : Service() {
 
             if (result == null) {
                 Log.v(TAG, "failed to upload templates in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             } else {
                 Log.v(TAG, "template upload successful in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             }
         }
 
@@ -355,7 +352,7 @@ open class ApiUploadService : Service() {
     }
 
     private fun uploadFolders() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val cursor = DataSource.getFolders(this)
 
         if (cursor.moveToFirst()) {
@@ -379,10 +376,10 @@ open class ApiUploadService : Service() {
 
             if (result == null) {
                 Log.v(TAG, "failed to upload folders in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             } else {
                 Log.v(TAG, "folder upload successful in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             }
         }
 
@@ -390,7 +387,7 @@ open class ApiUploadService : Service() {
     }
 
     private fun uploadAutoReplies() {
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
         val cursor = DataSource.getAutoReplies(this)
 
         if (cursor.moveToFirst()) {
@@ -414,10 +411,10 @@ open class ApiUploadService : Service() {
 
             if (result == null) {
                 Log.v(TAG, "failed to upload auto replies in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             } else {
                 Log.v(TAG, "auto reply upload successful in " +
-                        (System.currentTimeMillis() - startTime) + " ms")
+                        (TimeUtils.now - startTime) + " ms")
             }
         }
 
@@ -513,7 +510,7 @@ open class ApiUploadService : Service() {
         val MESSAGE_UPLOAD_PAGE_SIZE = 300
 
         public fun uploadContacts(context: Context, encryptionUtils: EncryptionUtils) {
-            val startTime = System.currentTimeMillis()
+            val startTime = TimeUtils.now
             val cursor = DataSource.getContacts(context)
 
             if (cursor.moveToFirst()) {
@@ -549,10 +546,10 @@ open class ApiUploadService : Service() {
 
                 if (successPages != expectedPages) {
                     Log.v(TAG, "failed to upload contacts in " +
-                            (System.currentTimeMillis() - startTime) + " ms")
+                            (TimeUtils.now - startTime) + " ms")
                 } else {
                     Log.v(TAG, "contacts upload successful in " +
-                            (System.currentTimeMillis() - startTime) + " ms")
+                            (TimeUtils.now - startTime) + " ms")
                 }
             }
 

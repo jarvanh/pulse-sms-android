@@ -9,6 +9,7 @@ import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.util.ContactUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 
 class ContactResyncService : IntentService("ContactResyncService") {
     companion object {
@@ -31,7 +32,7 @@ class ContactResyncService : IntentService("ContactResyncService") {
     override fun onHandleIntent(intent: Intent?) {
         val forceAllContacts = intent?.getBooleanExtra(EXTRA_FORCE_SYNC_ALL_CONTACTS, false) ?: false
         val encryptionUtils = Account.encryptor
-        val startTime = System.currentTimeMillis()
+        val startTime = TimeUtils.now
 
         val contacts = ContactUtils.queryContacts(this, DataSource, forceAllContacts)
         if (contacts.isEmpty()) {
@@ -40,19 +41,19 @@ class ContactResyncService : IntentService("ContactResyncService") {
 
         val removed = DataSource.deleteAllContacts(this)
 
-        Log.v(TAG, "deleted all contacts: ${System.currentTimeMillis() - startTime} ms")
+        Log.v(TAG, "deleted all contacts: ${TimeUtils.now - startTime} ms")
 
         if (removed > 0 && Account.exists() && Account.primary) {
             ApiUtils.clearContacts(Account.accountId)
-            Log.v(TAG, "deleting all contacts on web: ${System.currentTimeMillis() - startTime} ms")
+            Log.v(TAG, "deleting all contacts on web: ${TimeUtils.now - startTime} ms")
         }
 
         DataSource.insertContacts(this, contacts, null)
-        Log.v(TAG, "queried and inserted new contacts: ${System.currentTimeMillis() - startTime} ms")
+        Log.v(TAG, "queried and inserted new contacts: ${TimeUtils.now - startTime} ms")
 
         if (Account.exists() && Account.primary) {
             ApiUploadService.uploadContacts(this, encryptionUtils!!)
-            Log.v(TAG, "uploaded contact changes: ${System.currentTimeMillis() - startTime} ms")
+            Log.v(TAG, "uploaded contact changes: ${TimeUtils.now - startTime} ms")
         }
     }
 }

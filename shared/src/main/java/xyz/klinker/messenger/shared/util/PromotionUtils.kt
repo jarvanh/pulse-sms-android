@@ -18,7 +18,7 @@ class PromotionUtils(private val context: Context) {
 
     private fun shouldAskForRating(): Boolean {
         val pref = "install_time"
-        val currentTime = System.currentTimeMillis()
+        val currentTime = TimeUtils.now
         val installTime = sharedPreferences.getLong(pref, -1L)
 
         if (installTime == -1L) {

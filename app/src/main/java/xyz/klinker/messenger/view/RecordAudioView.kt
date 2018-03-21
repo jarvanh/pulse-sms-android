@@ -34,6 +34,7 @@ import java.io.File
 import java.io.IOException
 
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.util.listener.AudioRecordedListener
 
 /**
@@ -50,7 +51,7 @@ class RecordAudioView(context: Context, private val listener: AudioRecordedListe
     private var seconds: Int = 0
     private var minutes: Int = 0
 
-    private val fileName: String by lazy { context.filesDir.toString() + "/Audio_" + System.currentTimeMillis() + ".mp4" }
+    private val fileName: String by lazy { context.filesDir.toString() + "/Audio_" + TimeUtils.now + ".mp4" }
     private var recorder: MediaRecorder? = null
 
     init {

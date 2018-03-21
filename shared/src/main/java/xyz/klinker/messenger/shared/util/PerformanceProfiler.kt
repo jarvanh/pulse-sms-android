@@ -9,7 +9,7 @@ object PerformanceProfiler {
 
     private var lastLogTime = 0L
     private val time: Long
-        get() = System.currentTimeMillis()
+        get() = TimeUtils.now
 
     fun logEvent(event: String) {
         if (!SHOULD_PROFILE) {

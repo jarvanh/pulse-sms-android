@@ -1779,7 +1779,7 @@ object DataSource {
         val m = Message()
         m.type = Message.TYPE_SENDING
         m.data = data
-        m.timestamp = System.currentTimeMillis()
+        m.timestamp = TimeUtils.now
         m.mimeType = mimeType
         m.read = true
         m.seen = true

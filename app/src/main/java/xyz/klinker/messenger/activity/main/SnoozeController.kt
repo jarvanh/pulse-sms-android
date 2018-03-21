@@ -11,6 +11,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.fragment.bottom_sheet.CustomSnoozeFragment
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ColorUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 
 @Suppress("DEPRECATION")
 class SnoozeController(private val activity: MessengerActivity) {
@@ -24,25 +25,25 @@ class SnoozeController(private val activity: MessengerActivity) {
 
         snooze.setOnClickListener { view ->
             val menu = PopupMenu(activity, view)
-            val currentlySnoozed = Settings.snooze > System.currentTimeMillis()
+            val currentlySnoozed = Settings.snooze > TimeUtils.now
             menu.inflate(if (currentlySnoozed) R.menu.snooze_off else R.menu.snooze)
             menu.setOnMenuItemClickListener { item ->
                 val snoozeTil: Long
                 when (item.itemId) {
-                    R.id.menu_snooze_off -> snoozeTil = System.currentTimeMillis()
-                    R.id.menu_snooze_1 -> snoozeTil = System.currentTimeMillis() + 1000 * 60 * 60
-                    R.id.menu_snooze_2 -> snoozeTil = System.currentTimeMillis() + 1000 * 60 * 60 * 2
-                    R.id.menu_snooze_4 -> snoozeTil = System.currentTimeMillis() + 1000 * 60 * 60 * 4
-                    R.id.menu_snooze_8 -> snoozeTil = System.currentTimeMillis() + 1000 * 60 * 60 * 8
-                    R.id.menu_snooze_24 -> snoozeTil = System.currentTimeMillis() + 1000 * 60 * 60 * 24
-                    R.id.menu_snooze_72 -> snoozeTil = System.currentTimeMillis() + 1000 * 60 * 60 * 72
+                    R.id.menu_snooze_off -> snoozeTil = TimeUtils.now
+                    R.id.menu_snooze_1 -> snoozeTil = TimeUtils.now + 1000 * 60 * 60
+                    R.id.menu_snooze_2 -> snoozeTil = TimeUtils.now + 1000 * 60 * 60 * 2
+                    R.id.menu_snooze_4 -> snoozeTil = TimeUtils.now + 1000 * 60 * 60 * 4
+                    R.id.menu_snooze_8 -> snoozeTil = TimeUtils.now + 1000 * 60 * 60 * 8
+                    R.id.menu_snooze_24 -> snoozeTil = TimeUtils.now + 1000 * 60 * 60 * 24
+                    R.id.menu_snooze_72 -> snoozeTil = TimeUtils.now + 1000 * 60 * 60 * 72
                     R.id.menu_snooze_custom -> {
                         val fragment = CustomSnoozeFragment()
                         fragment.show(activity.supportFragmentManager, "")
-                        snoozeTil = System.currentTimeMillis()
+                        snoozeTil = TimeUtils.now
                     }
                 // fall through to the default
-                    else -> snoozeTil = System.currentTimeMillis()
+                    else -> snoozeTil = TimeUtils.now
                 }
 
                 Settings.setValue(activity.applicationContext,
@@ -58,7 +59,7 @@ class SnoozeController(private val activity: MessengerActivity) {
     }
 
     fun updateSnoozeIcon() {
-        val currentlySnoozed = Settings.snooze > System.currentTimeMillis()
+        val currentlySnoozed = Settings.snooze > TimeUtils.now
         val snooze = activity.findViewById<View>(R.id.snooze) as ImageButton?
 
         if (currentlySnoozed) snooze?.setImageResource(R.drawable.ic_snoozed)

@@ -90,7 +90,7 @@ class NotificationConversationProvider(private val service: Context, private val
             .setShowWhen(true)
             .setTicker(service.getString(R.string.notification_ticker, conversation.title))
             .setVisibility(Notification.VISIBILITY_PRIVATE)
-            .setWhen(if (AndroidVersionUtil.isAndroidO) System.currentTimeMillis() else  conversation.timestamp)
+            .setWhen(if (AndroidVersionUtil.isAndroidO) TimeUtils.now else  conversation.timestamp)
 
     private fun preparePublicBuilder(conversation: NotificationConversation, numberOfConversations: Int) =
             prepareCommonBuilder(conversation, numberOfConversations)

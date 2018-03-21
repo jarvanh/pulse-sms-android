@@ -42,7 +42,7 @@ class SmsReceivedHandler(private val context: Context) {
         val simSlot = extras.getInt("slot", -1)
         var body = ""
         var address = ""
-        var date = System.currentTimeMillis()
+        var date = TimeUtils.now
         val smsExtra = extras.get("pdus") as Array<*>? ?: return false
 
         for (message in smsExtra) {
@@ -85,7 +85,7 @@ class SmsReceivedHandler(private val context: Context) {
             val values = ContentValues(5)
             values.put(Telephony.Sms.ADDRESS, address)
             values.put(Telephony.Sms.BODY, body)
-            values.put(Telephony.Sms.DATE, System.currentTimeMillis())
+            values.put(Telephony.Sms.DATE, TimeUtils.now)
             values.put(Telephony.Sms.READ, "1")
             values.put(Telephony.Sms.DATE_SENT, dateSent)
 
@@ -112,7 +112,7 @@ class SmsReceivedHandler(private val context: Context) {
         val message = Message()
         message.type = Message.TYPE_RECEIVED
         message.data = body.trim { it <= ' ' }
-        message.timestamp = System.currentTimeMillis()
+        message.timestamp = TimeUtils.now
         message.mimeType = MimeType.TEXT_PLAIN
         message.read = false
         message.seen = false

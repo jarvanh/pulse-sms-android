@@ -22,8 +22,7 @@ class MarkAsSentJob : SimpleJobService() {
         }
 
         val messages = DataSource.getNewerSendingMessagesAsList(
-                this,
-                System.currentTimeMillis() - TimeUtils.MINUTE * 5)
+                this, TimeUtils.now - TimeUtils.MINUTE * 5)
 
         for (message in messages) {
             Log.v("MarkAsSentJob", "marking as read: " + message.id)

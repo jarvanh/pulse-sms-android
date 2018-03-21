@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.util.FileUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.util.listener.ImageSelectedListener
 import xyz.klinker.messenger.shared.util.listener.TextSelectedListener
 import java.io.File
@@ -60,7 +61,7 @@ class AttachLocationView(context: Context, private val imageListener: ImageSelec
     private var longitude: Double = 0.toDouble()
 
     private val fileName: String
-        get() = context.filesDir.toString() + "/location_" + System.currentTimeMillis() + ".png"
+        get() = context.filesDir.toString() + "/location_" + TimeUtils.now + ".png"
 
     private val bestLocationFromEnabledProviders: Location?
         @Throws(SecurityException::class)

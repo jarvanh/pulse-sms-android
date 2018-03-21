@@ -11,6 +11,7 @@ import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.util.DualSimUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 import xyz.klinker.messenger.shared.util.SendUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 
 class ShareSender(private val page: QuickSharePage) {
@@ -61,7 +62,7 @@ class ShareSender(private val page: QuickSharePage) {
         val message = Message()
         message.type = Message.TYPE_SENDING
         message.data = text
-        message.timestamp = System.currentTimeMillis()
+        message.timestamp = TimeUtils.now
         message.mimeType = mimeType
         message.read = true
         message.seen = true

@@ -47,6 +47,7 @@ import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.model.RetryableRequest;
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage;
 import xyz.klinker.messenger.shared.data.model.Template;
+import xyz.klinker.messenger.shared.util.TimeUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -321,7 +322,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void updateConversation() {
-        source.updateConversation(context, 1, true, System.currentTimeMillis(), "test", "text/plain", false, false);
+        source.updateConversation(context, 1, true, TimeUtils.INSTANCE.getNow(), "test", "text/plain", false, false);
         verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
                 eq(new String[]{"1"}));
     }
@@ -736,7 +737,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialGreenAccent);
         conversation.setPinned(true);
         conversation.setRead(true);
-        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60));
+        conversation.setTimestamp(TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60));
         conversation.setSnippet("So maybe not going to be able to get platinum huh?");
         conversation.setIdMatcher("11493");
         conversation.setMute(false);
@@ -752,7 +753,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialBlueAccent);
         conversation.setPinned(true);
         conversation.setRead(true);
-        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60 * 12));
+        conversation.setTimestamp(TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 12));
         conversation.setSnippet("Whoops ya idk what happened but anysho drive safe");
         conversation.setIdMatcher("80846");
         conversation.setMute(false);
@@ -768,7 +769,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialOrangeAccent);
         conversation.setPinned(false);
         conversation.setRead(false);
-        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 20));
+        conversation.setTimestamp(TimeUtils.INSTANCE.getNow() - (1000 * 60 * 20));
         conversation.setSnippet("Will probably be there from 6:30-9, just stop by when you can!");
         conversation.setIdMatcher("96726");
         conversation.setMute(false);
@@ -784,7 +785,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialRedAccent);
         conversation.setPinned(false);
         conversation.setRead(true);
-        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60 * 26));
+        conversation.setTimestamp(TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 26));
         conversation.setSnippet("Just finished, it was a lot of fun");
         conversation.setIdMatcher("18235");
         conversation.setMute(false);
@@ -800,7 +801,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialIndigoAccent);
         conversation.setPinned(false);
         conversation.setRead(true);
-        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60 * 32));
+        conversation.setTimestamp(TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 32));
         conversation.setSnippet("Yeah I'll do it when I get home");
         conversation.setIdMatcher("67749");
         conversation.setMute(false);
@@ -816,7 +817,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialDeepOrangeAccent);
         conversation.setPinned(false);
         conversation.setRead(true);
-        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60 * 55));
+        conversation.setTimestamp(TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 55));
         conversation.setSnippet("Yeah so hiking around in some place called beaver meadows now.");
         conversation.setIdMatcher("08532");
         conversation.setMute(false);
@@ -832,7 +833,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 //        conversation.colors.colorAccent = resources.getColor(R.color.materialTealAccent);
         conversation.setPinned(false);
         conversation.setRead(true);
-        conversation.setTimestamp(System.currentTimeMillis() - (1000 * 60 * 60 * 78));
+        conversation.setTimestamp(TimeUtils.INSTANCE.getNow() - (1000 * 60 * 60 * 78));
         conversation.setSnippet("Maybe they'll run into each other on the way back... idk");
         conversation.setIdMatcher("90939");
         conversation.setMute(false);

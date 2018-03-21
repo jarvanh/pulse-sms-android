@@ -31,6 +31,9 @@ import java.util.*
  */
 object TimeUtils {
 
+    val now: Long
+        get() = Date().time
+
     val SECOND: Long = 1000
     val MINUTE = SECOND * 60
     val HOUR = MINUTE * 60
@@ -64,7 +67,7 @@ object TimeUtils {
      * @return true if same calendar day, false otherwise.
      */
     fun isToday(timestamp: Long): Boolean {
-        return isToday(timestamp, System.currentTimeMillis())
+        return isToday(timestamp, now)
     }
 
     fun isToday(timestamp: Long, currentTime: Long): Boolean {
@@ -86,7 +89,7 @@ object TimeUtils {
      * @return if if yesterday, false otherwise.
      */
     fun isYesterday(timestamp: Long): Boolean {
-        return isYesterday(timestamp, System.currentTimeMillis())
+        return isYesterday(timestamp, now)
     }
 
     fun isYesterday(timestamp: Long, currentTime: Long): Boolean {
@@ -106,7 +109,7 @@ object TimeUtils {
      * Checks whether the timestamp is within the last week.
      */
     fun isLastWeek(timestamp: Long): Boolean {
-        return isLastWeek(timestamp, System.currentTimeMillis())
+        return isLastWeek(timestamp, now)
     }
 
     fun isLastWeek(timestamp: Long, currentTime: Long): Boolean {
@@ -122,7 +125,7 @@ object TimeUtils {
      * Checks whether the timestamp is within the last month.
      */
     fun isLastMonth(timestamp: Long): Boolean {
-        return isLastMonth(timestamp, System.currentTimeMillis())
+        return isLastMonth(timestamp, now)
     }
 
     fun isLastMonth(timestamp: Long, currentTime: Long): Boolean {
@@ -158,7 +161,7 @@ object TimeUtils {
      * @return the formatted string.
      */
     fun formatTimestamp(context: Context, timestamp: Long): String {
-        return formatTimestamp(context, timestamp, System.currentTimeMillis())
+        return formatTimestamp(context, timestamp, now)
     }
 
     fun formatTimestamp(context: Context, timestamp: Long, currentTime: Long): String {

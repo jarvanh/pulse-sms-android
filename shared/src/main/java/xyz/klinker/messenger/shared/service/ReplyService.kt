@@ -32,6 +32,7 @@ import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.util.DualSimUtils
 import xyz.klinker.messenger.shared.util.SendUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.util.closeSilent
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 
@@ -65,7 +66,7 @@ class ReplyService : IntentService("Reply Service") {
         m.conversationId = conversationId
         m.type = Message.TYPE_SENDING
         m.data = reply
-        m.timestamp = System.currentTimeMillis()
+        m.timestamp = TimeUtils.now
         m.mimeType = MimeType.TEXT_PLAIN
         m.read = true
         m.seen = true

@@ -39,7 +39,7 @@ class RepeatNotificationJob : BroadcastReceiver() {
 
             if (!Account.exists() || (Account.exists() && Account.primary)) {
                 try {
-                    if (System.currentTimeMillis() < nextRun) {
+                    if (TimeUtils.now < nextRun) {
                         setAlarm(context, nextRun, pendingIntent)
                     } else {
                         alarmManager.cancel(pendingIntent)
