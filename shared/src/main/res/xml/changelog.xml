@@ -31,9 +31,12 @@
 
     <version
         name="2.9.3"
-        description="March 19th, 2018">
+        description="March 22nd, 2018">
         <!-- muted notifications were still coming through on secondary Android devices (tablets/phones) -->
-        <text>Bug fixes</text>
+        <!-- update the timestamp on the phone device, if the messages sent from the web/other device seem to be way off (FirebaseHandlerService) -->
+        <!-- convert from using System.currentTimeMillis() to TimeUtils.now -->
+        <text>Bug/crash fixes</text>
+        <text>Dependency updates</text>
     </version>
 
     <version
