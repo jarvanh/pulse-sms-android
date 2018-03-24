@@ -18,6 +18,7 @@ package xyz.klinker.messenger.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
@@ -48,6 +49,7 @@ class ElasticDragDismissFrameLayout : FrameLayout {
     private var totalDrag: Float = 0.toFloat()
     private var draggingDown = false
     private var draggingUp = false
+    private var lastEvent: Int? = null
 
     private var enabled = true
     private var callbacks = mutableListOf<ElasticDragDismissCallback>()
@@ -110,6 +112,11 @@ class ElasticDragDismissFrameLayout : FrameLayout {
         }
     }
 
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        lastEvent = ev?.action
+        return super.onInterceptTouchEvent(ev)
+    }
+
     override fun onStopNestedScroll(child: View) {
         if (enabled) {
             if (Math.abs(totalDrag) >= dragDismissDistance) {
@@ -119,14 +126,25 @@ class ElasticDragDismissFrameLayout : FrameLayout {
                     fastOutSlowInInterpolator = AnimationUtils.loadInterpolator(context,
                             android.R.interpolator.fast_out_slow_in)
                 }
-                animate()
-                        .translationY(0f)
-                        .scaleX(1f)
-                        .scaleY(1f)
-                        .setDuration(200L)
-                        .setInterpolator(fastOutSlowInInterpolator)
-                        .setListener(null)
-                        .start()
+
+                if (lastEvent == MotionEvent.ACTION_DOWN) {
+                    // this is a 'defensive cleanup for new gestures',
+                    // don't animate here
+                    // see also https://github.com/nickbutcher/plaid/issues/185
+                    translationY = 0f
+                    scaleX = 1f
+                    scaleY = 1f
+                } else {
+                    animate()
+                            .translationY(0f)
+                            .scaleX(1f)
+                            .scaleY(1f)
+                            .setDuration(200L)
+                            .setInterpolator(fastOutSlowInInterpolator)
+                            .setListener(null)
+                            .start()
+                }
+
                 totalDrag = 0f
                 draggingUp = false
                 draggingDown = draggingUp
