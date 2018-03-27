@@ -33,7 +33,7 @@ import org.robolectric.annotation.Config;
 import xyz.klinker.messenger.shared.data.DataSource;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 23, constants = BuildConfig.class)
+@Config(sdk = 23)
 public abstract class MessengerRobolectricSuite {
 
     @Before
