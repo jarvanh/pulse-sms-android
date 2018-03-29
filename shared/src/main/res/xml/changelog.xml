@@ -30,6 +30,12 @@
     <!--</version>-->
 
     <version
+        name="2.9.4"
+        description="April 2nd, 2018">
+        <text>Improvements to blacklisting a contact from within their conversation</text>
+    </version>
+
+    <version
         name="2.9.3"
         description="March 22nd, 2018">
         <!-- muted notifications were still coming through on secondary Android devices (tablets/phones) -->
