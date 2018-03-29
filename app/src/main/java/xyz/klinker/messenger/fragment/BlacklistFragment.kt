@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment
 
+import android.app.Activity
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
@@ -39,6 +40,7 @@ import xyz.klinker.messenger.shared.data.model.Blacklist
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 import xyz.klinker.messenger.shared.util.listener.BlacklistClickedListener
+import kotlin.math.acos
 
 /**
  * Fragment for displaying/managing blacklisted contacts.
@@ -69,7 +71,7 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
         loadBlacklists()
 
         if (arguments != null && arguments!!.containsKey(ARG_PHONE_NUMBER)) {
-            addBlacklist(arguments!!.getString(ARG_PHONE_NUMBER))
+            addBlacklist(fragmentActivity!!, arguments!!.getString(ARG_PHONE_NUMBER), { loadBlacklists() })
         }
     }
 
@@ -104,38 +106,9 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
 
         AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
-                .setPositiveButton(R.string.add) { _, _ -> addBlacklist(editText.text.toString()) }
+                .setPositiveButton(R.string.add) { _, _ -> addBlacklist(fragmentActivity!!, editText.text.toString(), { loadBlacklists() }) }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
-    }
-
-    private fun addBlacklist(phoneNumber: String?) {
-        val cleared = PhoneNumberUtils.clearFormatting(phoneNumber)
-        val formatted = PhoneNumberUtils.format(cleared)
-
-        if (cleared.isEmpty()) {
-            AlertDialog.Builder(fragmentActivity!!)
-                    .setMessage(R.string.blacklist_need_number)
-                    .setPositiveButton(android.R.string.ok) { _, _ -> addBlacklist() }
-                    .show()
-        } else {
-            val message = getString(R.string.add_blacklist, formatted)
-
-            AlertDialog.Builder(fragmentActivity!!)
-                    .setMessage(message)
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                        val blacklist = Blacklist()
-                        blacklist.phoneNumber = cleared
-
-                        if (fragmentActivity != null) {
-                            DataSource.insertBlacklist(fragmentActivity!!, blacklist)
-                        }
-
-                        loadBlacklists()
-                    }
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .show()
-        }
     }
 
     private fun removeBlacklist(id: Long, number: String?) {
@@ -174,6 +147,31 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
 
             fragment.arguments = args
             return fragment
+        }
+
+        fun addBlacklist(fragmentActivity: Activity, phoneNumber: String?, actionFinished: () -> Unit = { }) {
+            val cleared = PhoneNumberUtils.clearFormatting(phoneNumber)
+            val formatted = PhoneNumberUtils.format(cleared)
+
+            if (cleared.isEmpty()) {
+                AlertDialog.Builder(fragmentActivity)
+                        .setMessage(R.string.blacklist_need_number)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->  }
+                        .show()
+            } else {
+                val message = fragmentActivity.getString(R.string.add_blacklist, formatted)
+                AlertDialog.Builder(fragmentActivity)
+                        .setMessage(message)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            val blacklist = Blacklist()
+                            blacklist.phoneNumber = cleared
+                            DataSource.insertBlacklist(fragmentActivity, blacklist)
+
+                            actionFinished()
+                        }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show()
+            }
         }
     }
 

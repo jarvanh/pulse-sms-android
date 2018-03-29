@@ -16,6 +16,7 @@ import xyz.klinker.messenger.activity.NoLimitMessageListActivity
 import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.activity.compose.ComposeConstants
 import xyz.klinker.messenger.adapter.ContactAdapter
+import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
 import xyz.klinker.messenger.fragment.BlacklistFragment
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
@@ -271,11 +272,21 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
         return if (navController.isConversationListExpanded() || navController.isArchiveConvoShowing()) {
             val fragment = navController.getShownConversationList()
             val conversation = fragment!!.expandedItem!!.conversation
-            fragment.expandedItem!!.itemView.performClick()
-            fragment.onSwipeToArchive(conversation!!)
-            activity.clickNavigationItem(R.id.drawer_mute_contacts)
-            conversationActionDelegate.displayFragmentWithBackStack(
-                    BlacklistFragment.newInstance(conversation.phoneNumbers))
+
+            BlacklistFragment.addBlacklist(activity, conversation!!.phoneNumbers, {
+                val position = fragment.expandedItem!!.adapterPosition
+                fragment.expandedItem!!.itemView.performClick()
+
+                try {
+                    val adapter = fragment.recyclerView.adapter as ConversationListAdapter
+                    adapter.archiveItem(position)
+                    adapter.notifyItemRemoved(position)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            })
+
+            true
         } else {
             false
         }
