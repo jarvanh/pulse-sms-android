@@ -24,6 +24,8 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
+import xyz.klinker.messenger.shared.data.FeatureFlags
+import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
 import xyz.klinker.messenger.shared.util.TimeUtils
 
 @Suppress("DEPRECATION")
@@ -78,6 +80,7 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
         val name = contentView.findViewById<View>(R.id.contact_name) as TextView
         val delete = contentView.findViewById<View>(R.id.delete) as Button
         val save = contentView.findViewById<View>(R.id.save) as Button
+        val send = contentView.findViewById<View>(R.id.send) as Button
 
         if (scheduledMessage != null) {
             messageText?.setText(scheduledMessage!!.data)
@@ -88,7 +91,12 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
 
         save.setOnClickListener { save() }
         delete.setOnClickListener { delete() }
+        send.setOnClickListener { send() }
         sendDate?.setOnClickListener { displayDateDialog() }
+
+        if (!FeatureFlags.SEND_SCHEDULED_MESSAGE_IMMEDIATELY) {
+            send.visibility = View.GONE
+        }
 
         return contentView
     }
@@ -122,6 +130,13 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
 
         dismiss()
         fragment?.loadMessages()
+    }
+
+    private fun send() {
+        scheduledMessage!!.timestamp = TimeUtils.now
+        save()
+
+        ScheduledMessageJob.scheduleNextRun(fragment!!.activity!!)
     }
 
     private fun displayDateDialog() {

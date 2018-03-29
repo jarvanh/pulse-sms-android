@@ -27,6 +27,7 @@
         <!--name="2.10.0"-->
         <!--description="April, 2018">-->
         <!--<text>Auto reply support. Build auto replies for vacation responses, driving mode, specific contacts, or based on an expression (TODO: remove the feature flag and uncomment the quick settings service in the app's Android Manifest)</text>-->
+        <!--<text>Button to send scheduled messages immediately (TODO: remove the feature flag)</text>-->
     <!--</version>-->
 
     <version

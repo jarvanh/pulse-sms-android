@@ -41,12 +41,24 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:text="@string/send"
+            tools:ignore="ButtonStyle"  />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
             android:text="@string/delete"
-            android:layout_marginEnd="12dp"
             tools:ignore="ButtonStyle" />
 
         <Button

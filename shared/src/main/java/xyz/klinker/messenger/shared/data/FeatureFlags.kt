@@ -72,6 +72,7 @@ object FeatureFlags {
     private val FLAG_DISMISS_NOTI_BY_UNREAD_MESSAGES = "flag_dismiss_noti_by_unread_messages"
     private val FLAG_RETRY_FAILED_REQUESTS = "flag_retry_failed_requests"
     private val FLAG_UPDATE_WEB_MESSAGE_TIMESTAMPS = "flag_update_web_message_timestamps"
+    private val FLAG_SEND_SCHEDULED_MESSAGE_IMMEDIATELY = "flag_send_scheduled_immediately"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -92,6 +93,7 @@ object FeatureFlags {
     var FOLDER_SUPPORT: Boolean = false
     var AUTO_REPLIES: Boolean = false
     var VCARD_PREVIEWS: Boolean = false
+    var SEND_SCHEDULED_MESSAGE_IMMEDIATELY: Boolean = false
 
     // in testing
     var UPDATE_WEB_MESSAGE_TIMESTAMPS: Boolean = false
@@ -105,6 +107,7 @@ object FeatureFlags {
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
         AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
+        SEND_SCHEDULED_MESSAGE_IMMEDIATELY = getValue(context, sharedPrefs, FLAG_SEND_SCHEDULED_MESSAGE_IMMEDIATELY)
 
         UPDATE_WEB_MESSAGE_TIMESTAMPS = getValue(context, sharedPrefs, FLAG_UPDATE_WEB_MESSAGE_TIMESTAMPS)
     }
@@ -121,6 +124,7 @@ object FeatureFlags {
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
             FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
+            FLAG_SEND_SCHEDULED_MESSAGE_IMMEDIATELY -> SEND_SCHEDULED_MESSAGE_IMMEDIATELY = flag
 
             FLAG_UPDATE_WEB_MESSAGE_TIMESTAMPS -> UPDATE_WEB_MESSAGE_TIMESTAMPS = flag
         }
