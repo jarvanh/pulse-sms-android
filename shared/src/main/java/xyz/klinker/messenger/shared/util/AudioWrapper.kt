@@ -3,6 +3,7 @@ package xyz.klinker.messenger.shared.util
 import android.app.NotificationManager
 import android.app.UiModeManager
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.res.Configuration
 import android.media.AudioAttributes
 import android.media.AudioManager
@@ -16,6 +17,7 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.notification.NotificationService
 
 import android.content.Context.UI_MODE_SERVICE
+import android.support.v4.app.NotificationManagerCompat
 import xyz.klinker.messenger.shared.service.notification.NotificationRingtoneProvider
 
 class AudioWrapper {
@@ -91,11 +93,21 @@ class AudioWrapper {
     companion object {
         private val TAG = "AudioWrapper"
         fun shouldPlaySound(context: Context): Boolean {
-            // we don't really want to play sounds on the TV or on a watch
+            // we don't want to play a sound in do not disturb mode
+            val isDoNotDisturb = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val manager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                val dndMode = manager.currentInterruptionFilter
+                return dndMode == NotificationManager.INTERRUPTION_FILTER_ALARMS || dndMode == NotificationManager.INTERRUPTION_FILTER_ALL
+            } else {
+                false
+            }
 
+            // we don't really want to play sounds on the TV or on a watch
             val uiModeManager = context.getSystemService(UI_MODE_SERVICE) as UiModeManager
-            return !(uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION ||
-                    uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_WATCH)
+            val isWatch = uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_WATCH
+            val isTv = uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
+
+            return !isWatch && !isTv && !isDoNotDisturb
         }
     }
 
