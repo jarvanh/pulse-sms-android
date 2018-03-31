@@ -11,15 +11,16 @@ import org.mockito.Mock;
 import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
+import xyz.klinker.messenger.MessengerSuite;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
 
-public class AudioWrapperTest extends MessengerRobolectricSuite {
+public class AudioWrapperTest extends MessengerSuite {
 
-    private Context context = spy(RuntimeEnvironment.application);
-
+    @Mock
+    private Context context;
     @Mock
     private UiModeManager uiModeManager;
     @Mock
@@ -35,18 +36,18 @@ public class AudioWrapperTest extends MessengerRobolectricSuite {
     public void shouldWorkOnAndroidDevice() {
         when(notificationManager.getCurrentInterruptionFilter()).thenReturn(NotificationManager.INTERRUPTION_FILTER_NONE);
         when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_NORMAL);
-        assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(true));
+        assertThat(AudioWrapper.Companion.shouldPlaySound(context, 27), is(true));
     }
 
     @Test
     public void shouldNotSoundWhenDoNoDisturbIsOn() {
         when(notificationManager.getCurrentInterruptionFilter()).thenReturn(NotificationManager.INTERRUPTION_FILTER_ALARMS);
         when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_NORMAL);
-        assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(false));
+        assertThat(AudioWrapper.Companion.shouldPlaySound(context, 27), is(false));
 
         when(notificationManager.getCurrentInterruptionFilter()).thenReturn(NotificationManager.INTERRUPTION_FILTER_ALL);
         when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_NORMAL);
-        assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(false));
+        assertThat(AudioWrapper.Companion.shouldPlaySound(context, 27), is(false));
     }
 
     @Test
@@ -54,9 +55,9 @@ public class AudioWrapperTest extends MessengerRobolectricSuite {
         when(notificationManager.getCurrentInterruptionFilter()).thenReturn(NotificationManager.INTERRUPTION_FILTER_NONE);
 
         when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_WATCH);
-        assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(false));
+        assertThat(AudioWrapper.Companion.shouldPlaySound(context, 27), is(false));
 
         when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_TELEVISION);
-        assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(false));
+        assertThat(AudioWrapper.Companion.shouldPlaySound(context, 27), is(false));
     }
 }

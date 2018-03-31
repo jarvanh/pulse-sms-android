@@ -17,6 +17,7 @@
 package xyz.klinker.messenger;
 
 import android.app.Activity;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -33,7 +34,7 @@ import org.robolectric.annotation.Config;
 import xyz.klinker.messenger.shared.data.DataSource;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 23)
+@Config(sdk = Build.VERSION_CODES.M)
 public abstract class MessengerRobolectricSuite {
 
     @Before

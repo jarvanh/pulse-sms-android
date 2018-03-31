@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.shared.util
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.app.UiModeManager
 import android.content.Context
@@ -92,12 +93,14 @@ class AudioWrapper {
 
     companion object {
         private val TAG = "AudioWrapper"
-        fun shouldPlaySound(context: Context): Boolean {
+
+        @SuppressLint("NewApi")
+        fun shouldPlaySound(context: Context, androidVersion: Int = Build.VERSION.SDK_INT): Boolean {
             // we don't want to play a sound in do not disturb mode
-            val isDoNotDisturb = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val isDoNotDisturb = if (androidVersion >= Build.VERSION_CODES.M) {
                 val manager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
                 val dndMode = manager.currentInterruptionFilter
-                return dndMode == NotificationManager.INTERRUPTION_FILTER_ALARMS || dndMode == NotificationManager.INTERRUPTION_FILTER_ALL
+                dndMode == NotificationManager.INTERRUPTION_FILTER_ALARMS || dndMode == NotificationManager.INTERRUPTION_FILTER_ALL
             } else {
                 false
             }
