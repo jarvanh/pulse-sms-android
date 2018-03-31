@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.shared.util;
 
+import android.app.NotificationManager;
 import android.app.UiModeManager;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -10,7 +11,6 @@ import org.mockito.Mock;
 import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.MessengerSuite;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -21,25 +21,42 @@ public class AudioWrapperTest extends MessengerRobolectricSuite {
     private Context context = spy(RuntimeEnvironment.application);
 
     @Mock
-    private UiModeManager manager;
+    private UiModeManager uiModeManager;
+    @Mock
+    private NotificationManager notificationManager;
 
     @Before
     public void setUp() {
-        when(context.getSystemService(Context.UI_MODE_SERVICE)).thenReturn(manager);
+        when(context.getSystemService(Context.UI_MODE_SERVICE)).thenReturn(uiModeManager);
+        when(context.getSystemService(Context.NOTIFICATION_SERVICE)).thenReturn(notificationManager);
     }
 
     @Test
     public void shouldWorkOnAndroidDevice() {
-        when(manager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_NORMAL);
+        when(notificationManager.getCurrentInterruptionFilter()).thenReturn(NotificationManager.INTERRUPTION_FILTER_NONE);
+        when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_NORMAL);
         assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(true));
     }
 
     @Test
-    public void shouldNotWorkOnNonTouchscreenDevices() {
-        when(manager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_WATCH);
+    public void shouldNotSoundWhenDoNoDisturbIsOn() {
+        when(notificationManager.getCurrentInterruptionFilter()).thenReturn(NotificationManager.INTERRUPTION_FILTER_ALARMS);
+        when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_NORMAL);
         assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(false));
 
-        when(manager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_TELEVISION);
+        when(notificationManager.getCurrentInterruptionFilter()).thenReturn(NotificationManager.INTERRUPTION_FILTER_ALL);
+        when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_NORMAL);
+        assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(false));
+    }
+
+    @Test
+    public void shouldNotWorkOnNonTouchscreenDevices() {
+        when(notificationManager.getCurrentInterruptionFilter()).thenReturn(NotificationManager.INTERRUPTION_FILTER_NONE);
+
+        when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_WATCH);
+        assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(false));
+
+        when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_TELEVISION);
         assertThat(AudioWrapper.Companion.shouldPlaySound(context), is(false));
     }
 }
