@@ -108,14 +108,14 @@
             android:layout_margin="8dp"
             android:id="@+id/login_dialog">
 
-            <EditText
+            <xyz.klinker.messenger.api.implementation.FixAutofillEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/login_email"
                 android:inputType="textEmailAddress"
                 android:hint="@string/api_email" />
 
-            <EditText
+            <xyz.klinker.messenger.api.implementation.FixAutofillEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/login_password"
@@ -170,28 +170,28 @@
             android:layout_margin="8dp"
             android:id="@+id/signup_dialog">
 
-            <EditText
+            <xyz.klinker.messenger.api.implementation.FixAutofillEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/signup_email"
                 android:inputType="textEmailAddress"
                 android:hint="@string/api_email" />
 
-            <EditText
+            <xyz.klinker.messenger.api.implementation.FixAutofillEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/signup_password"
                 android:inputType="textPassword"
                 android:hint="@string/api_password" />
 
-            <EditText
+            <xyz.klinker.messenger.api.implementation.FixAutofillEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/signup_password_confirmation"
                 android:inputType="textPassword"
                 android:hint="@string/api_password_confirmation" />
 
-            <EditText
+            <xyz.klinker.messenger.api.implementation.FixAutofillEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/signup_name"
@@ -199,7 +199,7 @@
                 android:inputType="textPersonName"
                 android:hint="@string/api_name" />
 
-            <EditText
+            <xyz.klinker.messenger.api.implementation.FixAutofillEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/signup_phone_number"

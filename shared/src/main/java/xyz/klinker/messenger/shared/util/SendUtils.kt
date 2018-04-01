@@ -18,6 +18,7 @@ package xyz.klinker.messenger.shared.util
 
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteException
 import android.net.Uri
 import android.telephony.TelephonyManager
 import android.util.Log
@@ -34,6 +35,7 @@ import xyz.klinker.messenger.shared.receiver.SmsSentReceiver
 import xyz.klinker.messenger.shared.receiver.SmsSentReceiverNoRetry
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.sql.SQLException
 import java.util.*
 
 /**
@@ -123,11 +125,11 @@ class SendUtils constructor(private val subscriptionId: Int? = null) {
                 Log.v("Sending MMS", "size: " + bytes.size + " bytes, mime type: " + mimeType)
                 message.addMedia(bytes, mimeType)
             } catch (e: NullPointerException) {
-                Log.e("Sending Exception", "Could not attach media: " + data, e)
+                Log.e("Sending Exception", "Could not attach media: $data", e)
             } catch (e: IOException) {
-                Log.e("Sending Exception", "Could not attach media: " + data, e)
+                Log.e("Sending Exception", "Could not attach media: $data", e)
             } catch (e: SecurityException) {
-                Log.e("Sending Exception", "Could not attach media: " + data, e)
+                Log.e("Sending Exception", "Could not attach media: $data", e)
             }
 
         }
@@ -139,6 +141,14 @@ class SendUtils constructor(private val subscriptionId: Int? = null) {
                 e.printStackTrace()
             } catch (e: UnsupportedOperationException) {
                 // Sent from a Chromebook? How did they get to this point?
+                e.printStackTrace()
+            } catch (e: SQLiteException) {
+                e.printStackTrace()
+            } catch (e: SecurityException) {
+                e.printStackTrace()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } catch (e: OutOfMemoryError) {
                 e.printStackTrace()
             }
 

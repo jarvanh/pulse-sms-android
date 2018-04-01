@@ -48,14 +48,15 @@ class MessageListManager(private val fragment: ConversationListFragment) {
             messageListFragment = MessageInstanceManager.newInstance(viewHolder.conversation!!)
         }
 
-        try {
-            activity.supportFragmentManager.beginTransaction()
-                    .replace(R.id.message_list_container, messageListFragment)
-                    .commit()
-        } catch (e: Exception) {
-            e.printStackTrace()
+        if (messageListFragment != null) {
+            try {
+                activity.supportFragmentManager.beginTransaction()
+                        .replace(R.id.message_list_container, messageListFragment)
+                        .commit()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
-
 
         if (!Settings.useGlobalThemeColor) {
             ActivityUtils.setTaskDescription(activity,
@@ -83,12 +84,14 @@ class MessageListManager(private val fragment: ConversationListFragment) {
 
         try {
             Handler().postDelayed({
-                try {
-                    activity?.supportFragmentManager?.beginTransaction()
-                            ?.remove(messageListFragment)
-                            ?.commit()
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                if (messageListFragment != null) {
+                    try {
+                        activity?.supportFragmentManager?.beginTransaction()
+                                ?.remove(messageListFragment)
+                                ?.commit()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
 
                 messageListFragment = null

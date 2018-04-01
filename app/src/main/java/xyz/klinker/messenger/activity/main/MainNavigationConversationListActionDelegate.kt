@@ -57,8 +57,12 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
         }
 
         navController.otherFragment = null
+
         val transaction = activity.supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.conversation_list_container, navController.conversationListFragment)
+
+        if (navController.conversationListFragment != null) {
+            transaction.replace(R.id.conversation_list_container, navController.conversationListFragment)
+        }
 
         val messageList = activity.supportFragmentManager
                 .findFragmentById(R.id.message_list_container)

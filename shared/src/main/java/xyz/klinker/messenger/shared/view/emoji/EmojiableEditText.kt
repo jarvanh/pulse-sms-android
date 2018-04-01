@@ -15,30 +15,27 @@ open class EmojiableEditText : AppCompatEditText {
         get() = Settings.emojiStyle != EmojiStyle.DEFAULT
 
     private var mEmojiEditTextHelper: EmojiEditTextHelper? = null
-    private val emojiEditTextHelper: EmojiEditTextHelper
+    private val emojiEditTextHelper: EmojiEditTextHelper?
         get() {
             if (mEmojiEditTextHelper == null) {
-                mEmojiEditTextHelper = EmojiEditTextHelper(this)
+                try {
+                    mEmojiEditTextHelper = EmojiEditTextHelper(this)
+                } catch (e: Exception) {
+                    return null
+                }
             }
+
             return mEmojiEditTextHelper as EmojiEditTextHelper
         }
 
-    constructor(context: Context) : super(context) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init()
-    }
+    constructor(context: Context) : super(context) { init() }
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { init() }
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { init() }
 
     private fun init() {
-        if (useEmojiCompat) {
+        if (useEmojiCompat && emojiEditTextHelper != null) {
             try {
-                super.setKeyListener(emojiEditTextHelper.getKeyListener(keyListener))
+                super.setKeyListener(emojiEditTextHelper!!.getKeyListener(keyListener))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -46,9 +43,9 @@ open class EmojiableEditText : AppCompatEditText {
     }
 
     override fun setKeyListener(keyListener: android.text.method.KeyListener) {
-        if (useEmojiCompat) {
+        if (useEmojiCompat && emojiEditTextHelper != null) {
             try {
-                super.setKeyListener(emojiEditTextHelper.getKeyListener(keyListener))
+                super.setKeyListener(emojiEditTextHelper!!.getKeyListener(keyListener))
             } catch (e: Exception) {
                 super.setKeyListener(keyListener)
             }
@@ -58,10 +55,10 @@ open class EmojiableEditText : AppCompatEditText {
     }
 
     override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection {
-        return if (useEmojiCompat) {
+        return if (useEmojiCompat && emojiEditTextHelper != null) {
             val inputConnection = super.onCreateInputConnection(outAttrs)
             try {
-                emojiEditTextHelper.onCreateInputConnection(inputConnection, outAttrs)!!
+                emojiEditTextHelper!!.onCreateInputConnection(inputConnection, outAttrs)!!
             } catch (e: Exception) {
                 e.printStackTrace()
                 inputConnection

@@ -29,10 +29,10 @@ class SmsReceivedHandler(private val context: Context) {
             val wasBlacklisted = try {
                 handle(intent)
             } catch (e: Exception) {
-                throw SmsSaveException(e)
+//                throw SmsSaveException(e)
             }
 
-            val latestMessageTwo = DataSource.getLatestMessage(context)
+//            val latestMessageTwo = DataSource.getLatestMessage(context)
         }
     }
 

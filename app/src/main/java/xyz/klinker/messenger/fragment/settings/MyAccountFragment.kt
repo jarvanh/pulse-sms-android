@@ -148,7 +148,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
             try {
                 dialog.dismiss()
-            } catch (e: IllegalStateException) {
+            } catch (e: Exception) {
             }
 
             if (fragmentActivity == null) {
@@ -380,7 +380,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             fragmentActivity?.runOnUiThread {
                 try {
                     dialog.dismiss()
-                } catch (e: IllegalStateException) {
+                } catch (e: Exception) {
                 }
 
                 returnToConversationsAfterLogin()
@@ -411,7 +411,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             fragmentActivity?.runOnUiThread {
                 try {
                     dialog.dismiss()
-                } catch (e: IllegalStateException) {
+                } catch (e: Exception) {
                 }
 
                 val login = Intent(fragmentActivity!!, InitialLoadActivity::class.java)

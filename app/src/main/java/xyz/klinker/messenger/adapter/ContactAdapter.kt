@@ -142,8 +142,11 @@ open class ContactAdapter(val conversations: List<Conversation>, private val lis
             holder.groupIcon?.visibility = View.GONE
         }
 
-        Glide.with(holder.itemView.context)
-                .load(Uri.parse(conversation.imageUri))
-                .into(holder.image!!)
+        try {
+            Glide.with(holder.itemView.context)
+                    .load(Uri.parse(conversation.imageUri))
+                    .into(holder.image!!)
+        } catch (e: Exception) {
+        }
     }
 }

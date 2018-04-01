@@ -85,8 +85,8 @@ class MainAccountController(private val activity: MessengerActivity) {
 
     fun refreshAccountToken() {
         if (!startImportOrLoad) {
+            activity.startService(Intent(activity, FirebaseTokenUpdateCheckService::class.java))
             Handler().postDelayed({
-                activity.startService(Intent(activity, FirebaseTokenUpdateCheckService::class.java))
                 NewMessagesCheckService.startService(activity)
             }, 3000)
         } else {

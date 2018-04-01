@@ -282,6 +282,8 @@ object ContactUtils {
             }
         } catch (e: IllegalArgumentException) {
             e.printStackTrace()
+        } catch (e: SecurityException) {
+            return -1
         }
 
         throw NoSuchElementException("Contact not found")

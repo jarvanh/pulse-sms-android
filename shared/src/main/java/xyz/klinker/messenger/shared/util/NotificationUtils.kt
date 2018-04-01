@@ -36,7 +36,12 @@ object NotificationUtils {
                 if (cursor.count == 0) {
                     // all messages are seen
                     val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    manager.cancelAll()
+
+                    try {
+                        manager.cancelAll()
+                    } catch (e: SecurityException) {
+                        // not the right permissions. Changed user account maybe
+                    }
                 }
 
                 cursor.closeSilent()

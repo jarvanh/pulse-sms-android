@@ -133,25 +133,29 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
 
         val handler = Handler()
         Thread {
-            for (conversation in allConversations) {
-                var shouldRead = false
-                when (sectionType) {
-                    SectionType.PINNED -> shouldRead = conversation.pinned
-                    SectionType.TODAY -> shouldRead = TimeUtils.isToday(conversation.timestamp)
-                    SectionType.YESTERDAY -> shouldRead = TimeUtils.isYesterday(conversation.timestamp)
-                    SectionType.LAST_WEEK -> shouldRead = TimeUtils.isLastWeek(conversation.timestamp)
-                    SectionType.LAST_MONTH -> shouldRead = TimeUtils.isLastMonth(conversation.timestamp)
+            try {
+                for (conversation in allConversations) {
+                    var shouldRead = false
+                    when (sectionType) {
+                        SectionType.PINNED -> shouldRead = conversation.pinned
+                        SectionType.TODAY -> shouldRead = TimeUtils.isToday(conversation.timestamp)
+                        SectionType.YESTERDAY -> shouldRead = TimeUtils.isYesterday(conversation.timestamp)
+                        SectionType.LAST_WEEK -> shouldRead = TimeUtils.isLastWeek(conversation.timestamp)
+                        SectionType.LAST_MONTH -> shouldRead = TimeUtils.isLastMonth(conversation.timestamp)
+                    }
+
+                    if (shouldRead) {
+                        markAsRead.add(conversation)
+                    }
                 }
 
-                if (shouldRead) {
-                    markAsRead.add(conversation)
+                if (fragmentActivity != null) {
+                    DataSource.readConversations(fragmentActivity!!, markAsRead)
                 }
-            }
 
-            if (fragmentActivity != null) {
-                DataSource.readConversations(fragmentActivity!!, markAsRead)
+                handler.post { recyclerManager.loadConversations() }
+            } catch (e: ConcurrentModificationException) {
             }
-            handler.post { recyclerManager.loadConversations() }
         }.start()
     }
 

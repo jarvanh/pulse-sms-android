@@ -222,7 +222,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
 
         try {
             dataProvider.messages.moveToPosition(position)
-        } catch (e: StaleDataException) {
+        } catch (e: Exception) {
             fragment.onBackPressed()
             return Date()
         }

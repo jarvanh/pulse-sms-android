@@ -33,7 +33,10 @@
     <version
         name="2.9.4"
         description="April 2nd, 2018">
+        <!-- fix letter-based phone numbers not getting blacklisted correctly (HP-BHKPOS) -->
         <text>Improvements to blacklisting a contact from within their conversation</text>
+        <text>Crash fixes</text>
+        <text>Bug fixes</text>
     </version>
 
     <version

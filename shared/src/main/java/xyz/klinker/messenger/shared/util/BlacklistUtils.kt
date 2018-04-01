@@ -49,6 +49,13 @@ object BlacklistUtils {
     }
 
     fun numbersMatch(number: String, blacklisted: String): Boolean {
+        if (number == blacklisted) {
+            // some countries get spam from lettered number (HP-BHKPOS)
+            // those would not get matched when it goes into the id matchers,
+            // since the letters all get stripped out.
+            return true
+        }
+
         val number = PhoneNumberUtils.clearFormattingAndStripStandardReplacements(number)
         val blacklisted = PhoneNumberUtils.clearFormattingAndStripStandardReplacements(blacklisted)
 

@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.fragment.bottom_sheet
 
 import android.app.PendingIntent
+import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
@@ -43,7 +44,11 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
                     getString(R.string.share), getShareIntent(link), true)
             val customTabsIntent = builder.build()
 
-            customTabsIntent.launchUrl(activity, Uri.parse(link))
+            try {
+                customTabsIntent.launchUrl(activity, Uri.parse(link))
+            } catch (e: ActivityNotFoundException) {
+            }
+
             dismiss()
         }
 
@@ -58,7 +63,11 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
                     .setTextSize(Settings.mediumFont + 1)
                     .build()
 
-            intent.launchUrl(contentView.context, Uri.parse(link))
+            try {
+                intent.launchUrl(contentView.context, Uri.parse(link))
+            } catch (e: ActivityNotFoundException) {
+            }
+
             dismiss()
         }
 

@@ -18,10 +18,14 @@ class EmojiableTextView : AppCompatTextView {
         get() = Settings.emojiStyle != EmojiStyle.DEFAULT
 
     private var helper: EmojiTextViewHelper? = null
-    private val emojiHelper: EmojiTextViewHelper
+    private val emojiHelper: EmojiTextViewHelper?
         get() {
             if (helper == null) {
-                helper = EmojiTextViewHelper(this)
+                try {
+                    helper = EmojiTextViewHelper(this)
+                } catch (e: Exception) {
+                    return null
+                }
             }
             return helper as EmojiTextViewHelper
         }
@@ -29,7 +33,7 @@ class EmojiableTextView : AppCompatTextView {
     init {
         if (useEmojiCompat) {
             try {
-                emojiHelper.updateTransformationMethod()
+                emojiHelper?.updateTransformationMethod()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -37,9 +41,9 @@ class EmojiableTextView : AppCompatTextView {
     }
 
     override fun setFilters(filters: Array<InputFilter>) {
-        if (useEmojiCompat) {
+        if (useEmojiCompat && emojiHelper != null) {
             try {
-                super.setFilters(emojiHelper.getFilters(filters))
+                super.setFilters(emojiHelper!!.getFilters(filters))
             } catch (e: Exception) {
                 e.printStackTrace()
                 super.setFilters(filters)
@@ -52,7 +56,7 @@ class EmojiableTextView : AppCompatTextView {
     override fun setAllCaps(allCaps: Boolean) {
         super.setAllCaps(allCaps)
         try {
-            emojiHelper.setAllCaps(allCaps)
+            emojiHelper?.setAllCaps(allCaps)
         } catch (e: Exception) {
             e.printStackTrace()
         }

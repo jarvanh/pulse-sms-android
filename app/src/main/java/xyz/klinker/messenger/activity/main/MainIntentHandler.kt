@@ -108,7 +108,10 @@ class MainIntentHandler(private val activity: MessengerActivity) {
         navController.otherFragment = null
 
         val transaction = activity.supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.conversation_list_container, navController.conversationListFragment)
+
+        if (navController.conversationListFragment != null) {
+            transaction.replace(R.id.conversation_list_container, navController.conversationListFragment)
+        }
 
         val messageList = activity.supportFragmentManager.findFragmentById(R.id.message_list_container)
         if (messageList != null) {

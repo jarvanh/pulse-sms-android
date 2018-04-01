@@ -101,9 +101,11 @@ class MainNavigationController(private val activity: MessengerActivity)
             conversationListFragment == null -> {
                 val messageListFragment = activity.supportFragmentManager.findFragmentById(R.id.message_list_container)
 
-                try {
-                    activity.supportFragmentManager.beginTransaction().remove(messageListFragment).commit()
-                } catch (e: Exception) {
+                if (messageListFragment != null) {
+                    try {
+                        activity.supportFragmentManager.beginTransaction().remove(messageListFragment).commit()
+                    } catch (e: Exception) {
+                    }
                 }
 
                 conversationActionDelegate.displayConversations()
