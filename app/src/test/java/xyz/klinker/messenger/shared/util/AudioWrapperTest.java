@@ -62,5 +62,5 @@ public class AudioWrapperTest extends MessengerSuite {
 //        when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_TELEVISION);
 //        assertThat(AudioWrapper.Companion.shouldPlaySound(context, 27), is(false));
 //    }
-    
+
 }
