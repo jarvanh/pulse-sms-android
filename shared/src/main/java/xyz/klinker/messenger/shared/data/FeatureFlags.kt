@@ -96,7 +96,6 @@ object FeatureFlags {
     var SEND_SCHEDULED_MESSAGE_IMMEDIATELY: Boolean = false
 
     // in testing
-    var UPDATE_WEB_MESSAGE_TIMESTAMPS: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -108,8 +107,6 @@ object FeatureFlags {
         AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
         SEND_SCHEDULED_MESSAGE_IMMEDIATELY = getValue(context, sharedPrefs, FLAG_SEND_SCHEDULED_MESSAGE_IMMEDIATELY)
-
-        UPDATE_WEB_MESSAGE_TIMESTAMPS = getValue(context, sharedPrefs, FLAG_UPDATE_WEB_MESSAGE_TIMESTAMPS)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -125,8 +122,6 @@ object FeatureFlags {
             FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
             FLAG_SEND_SCHEDULED_MESSAGE_IMMEDIATELY -> SEND_SCHEDULED_MESSAGE_IMMEDIATELY = flag
-
-            FLAG_UPDATE_WEB_MESSAGE_TIMESTAMPS -> UPDATE_WEB_MESSAGE_TIMESTAMPS = flag
         }
     }
 
