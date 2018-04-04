@@ -97,7 +97,7 @@ class AudioWrapper {
         @SuppressLint("NewApi")
         fun shouldPlaySound(context: Context, androidVersion: Int = Build.VERSION.SDK_INT): Boolean {
             // we don't want to play a sound in do not disturb mode
-            val isDoNotDisturb = if (androidVersion >= Build.VERSION_CODES.M) {
+            val isDoNotDisturb = if (false) { //androidVersion >= Build.VERSION_CODES.M) {
                 val manager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
                 val dndMode = manager.currentInterruptionFilter
                 dndMode == NotificationManager.INTERRUPTION_FILTER_ALARMS || dndMode == NotificationManager.INTERRUPTION_FILTER_ALL
