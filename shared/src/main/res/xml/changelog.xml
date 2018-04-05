@@ -31,6 +31,12 @@
     <!--</version>-->
 
     <version
+        name="2.9.5"
+        description="April 4th, 2018">
+        <text>Fix the sending sound not playing</text>
+    </version>
+
+    <version
         name="2.9.4"
         description="April 2nd, 2018">
         <!-- fix letter-based phone numbers not getting blacklisted correctly (HP-BHKPOS) -->
