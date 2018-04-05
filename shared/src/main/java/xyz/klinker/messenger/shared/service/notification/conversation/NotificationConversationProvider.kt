@@ -163,16 +163,16 @@ class NotificationConversationProvider(private val service: Context, private val
             }
 
             val messageText = when {
-                MimeType.isAudio(message.mimeType!!) -> "<i>" + service.getString(R.string.audio_message) + "</i>"
-                MimeType.isVideo(message.mimeType!!) -> "<i>" + service.getString(R.string.video_message) + "</i>"
-                MimeType.isVcard(message.mimeType!!) -> "<i>" + service.getString(R.string.contact_card) + "</i>"
-                MimeType.isStaticImage(message.mimeType) -> "<i>" + service.getString(R.string.picture_message) + "</i>"
-                message.mimeType == MimeType.IMAGE_GIF -> "<i>" + service.getString(R.string.gif_message) + "</i>"
-                MimeType.isExpandedMedia(message.mimeType) -> "<i>" + service.getString(R.string.media) + "</i>"
+                MimeType.isAudio(message.mimeType!!) -> Html.fromHtml("<i>" + service.getString(R.string.audio_message) + "</i>")
+                MimeType.isVideo(message.mimeType!!) -> Html.fromHtml("<i>" + service.getString(R.string.video_message) + "</i>")
+                MimeType.isVcard(message.mimeType!!) -> Html.fromHtml("<i>" + service.getString(R.string.contact_card) + "</i>")
+                MimeType.isStaticImage(message.mimeType) -> Html.fromHtml("<i>" + service.getString(R.string.picture_message) + "</i>")
+                message.mimeType == MimeType.IMAGE_GIF -> Html.fromHtml("<i>" + service.getString(R.string.gif_message) + "</i>")
+                MimeType.isExpandedMedia(message.mimeType) -> Html.fromHtml("<i>" + service.getString(R.string.media) + "</i>")
                 else -> message.data
             }
 
-            messagingStyle.addMessage(Html.fromHtml(messageText), message.timestamp, from)
+            messagingStyle.addMessage(messageText, message.timestamp, from)
         }
 
         return messagingStyle
