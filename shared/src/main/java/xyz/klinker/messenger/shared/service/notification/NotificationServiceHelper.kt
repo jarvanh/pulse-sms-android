@@ -21,6 +21,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 
 /**
  * When creating notifications, a single new conversation will never get the group message key on it.
@@ -46,6 +47,8 @@ object NotificationServiceHelper {
     fun calculateNumberOfNotificationsToProvide(context: Context, conversations: List<NotificationConversation>): Int {
         return when {
             Build.VERSION.SDK_INT < Build.VERSION_CODES.N -> conversations.size
+            AndroidVersionUtil.isAndroidO_MR1 -> // we do it differently on 8.1 because it has some alerting things built in (such as not providing more than one ringtone every second). So on this version, we just dismiss and re-notify/rebuild all the conversations.
+                conversations.size
             conversations.size == 2 -> // add one to the number of active notifications, for the new one that has yet to be notified
                 calculateBasedOnActiveNotifications(context) + 1
             else -> 1

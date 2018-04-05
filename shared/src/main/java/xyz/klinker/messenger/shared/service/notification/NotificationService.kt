@@ -25,6 +25,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
 import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper
 import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
@@ -72,6 +73,12 @@ class Notifier(private val context: Context) {
             val conversations = query.getUnseenConversations(dataSource).filter { !it.mute }
 
             if (conversations.isNotEmpty()) {
+                if (AndroidVersionUtil.isAndroidO_MR1) {
+                    // we do it differently on 8.1 because it has some alerting things built in (such as not providing more than one ringtone every second).
+                    // So on this version, we just dismiss and re-notify/rebuild all the conversations.
+                    NotificationManagerCompat.from(context).cancelAll()
+                }
+
                 if (conversations.size > 1) {
                     val rows = conversations.mapTo(ArrayList()) { "<b>" + it.title + "</b>  " + it.snippet }
                     summaryNotifier.giveSummaryNotification(conversations, rows)
@@ -81,6 +88,14 @@ class Notifier(private val context: Context) {
                 for (i in 0 until numberToNotify) {
                     val conversation = conversations[i]
                     conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
+
+                    if (numberToNotify > 1) {
+                        // sleep so that the system has time to post the notification and start the heads up notification.
+                        try {
+                            Thread.sleep(100)
+                        } catch (e: Exception) {
+                        }
+                    }
                 }
 
                 if (conversations.size == 1) {

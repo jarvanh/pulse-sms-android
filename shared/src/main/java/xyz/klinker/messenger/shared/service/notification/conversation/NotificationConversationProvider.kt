@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import android.text.Html
+import android.util.Log
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
@@ -35,6 +36,8 @@ class NotificationConversationProvider(private val service: Context, private val
     private val wearableHelper = NotificationWearableHelper(service, summaryProvider)
 
     fun giveConversationNotification(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int) {
+        Log.v("pulse_conversation", "conversation: ${conversation.title}")
+
         val publicVersion = preparePublicBuilder(conversation, numConversations)
                 .setDefaults(buildNotificationDefaults(conversation, conversationIndex))
                 .setGroupSummary(numConversations == 1 && Build.MANUFACTURER.toLowerCase().contains("moto"))
