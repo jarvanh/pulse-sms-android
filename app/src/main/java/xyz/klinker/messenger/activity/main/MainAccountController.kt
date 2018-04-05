@@ -85,7 +85,12 @@ class MainAccountController(private val activity: MessengerActivity) {
 
     fun refreshAccountToken() {
         if (!startImportOrLoad) {
-            activity.startService(Intent(activity, FirebaseTokenUpdateCheckService::class.java))
+            try {
+                activity.startService(Intent(activity, FirebaseTokenUpdateCheckService::class.java))
+            } catch (e: IllegalStateException) {
+                // started from background. Not sure how that would be, but it will retry the next time the app is opened
+            }
+
             Handler().postDelayed({
                 NewMessagesCheckService.startService(activity)
             }, 3000)
