@@ -97,7 +97,7 @@ class NotificationSummaryProvider(private val service: Context) {
                     .setVisibility(Notification.VISIBILITY_PUBLIC)
 
     private fun buildCommonNotification(firstConversationId: Long, title: String) = NotificationCompat.Builder(service,
-            getNotificationChannel(firstConversationId))
+                NotificationUtils.SILENT_CONVERSATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_stat_notify_group)
             .setContentTitle(title)
             .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
@@ -122,18 +122,5 @@ class NotificationSummaryProvider(private val service: Context) {
         builder.setContentIntent(pendingOpen)
 
         return builder
-    }
-
-    internal fun getNotificationChannel(conversationId: Long): String {
-        if (!AndroidVersionUtil.isAndroidO) {
-            return NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID
-        }
-
-        val manager = service.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        return if (manager.getNotificationChannel(conversationId.toString() + "") != null) {
-            conversationId.toString() + ""
-        } else {
-            NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID
-        }
     }
 }

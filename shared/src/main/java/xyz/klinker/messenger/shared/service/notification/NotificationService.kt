@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.shared.service.notification
 
 import android.app.IntentService
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
@@ -73,12 +74,6 @@ class Notifier(private val context: Context) {
             val conversations = query.getUnseenConversations(dataSource).filter { !it.mute }
 
             if (conversations.isNotEmpty()) {
-                if (AndroidVersionUtil.isAndroidO_MR1) {
-                    // we do it differently on 8.1 because it has some alerting things built in (such as not providing more than one ringtone every second).
-                    // So on this version, we just dismiss and re-notify/rebuild all the conversations.
-                    NotificationManagerCompat.from(context).cancelAll()
-                }
-
                 if (conversations.size > 1) {
                     val rows = conversations.mapTo(ArrayList()) { "<b>" + it.title + "</b>  " + it.snippet }
                     summaryNotifier.giveSummaryNotification(conversations, rows)
@@ -88,14 +83,6 @@ class Notifier(private val context: Context) {
                 for (i in 0 until numberToNotify) {
                     val conversation = conversations[i]
                     conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
-
-                    if (numberToNotify > 1) {
-                        // sleep so that the system has time to post the notification and start the heads up notification.
-                        try {
-                            Thread.sleep(100)
-                        } catch (e: Exception) {
-                        }
-                    }
                 }
 
                 if (conversations.size == 1) {
