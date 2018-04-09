@@ -21,9 +21,11 @@ package xyz.klinker.messenger.fragment.settings
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AlertDialog
@@ -424,11 +426,21 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     }
 
     private fun redirectToPlayStoreToCancel() {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse("https://play.google.com/store/apps/details?id=xyz.klinker.messenger")
-        startActivity(intent)
+        if (fragmentActivity != null) {
+            AlertDialog.Builder(fragmentActivity!!)
+                    .setMessage(R.string.redirect_to_play_store)
+                    .setPositiveButton(R.string.play_store) { _: DialogInterface, _: Int ->
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse("https://play.google.com/store/apps/details?id=xyz.klinker.messenger")
+                        fragmentActivity?.startActivity(intent)
+                    }.show()
+        } else {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://play.google.com/store/apps/details?id=xyz.klinker.messenger")
+            fragmentActivity?.startActivity(intent)
 
-        Toast.makeText(fragmentActivity, R.string.redirect_to_play_store, Toast.LENGTH_LONG).show()
+            Toast.makeText(fragmentActivity, R.string.redirect_to_play_store, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun returnToConversationsAfterLogin() {
