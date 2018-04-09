@@ -385,7 +385,7 @@
     <string name="delete_account_confirmation">Are you sure you want to delete your account and
         everything else with it? You can always sign up again later!</string>
     <string name="change_subscription">Change Subscription</string>
-    <string name="cancel_on_the_play_store">Cancel and view your subscription on the Play Store</string>
+    <string name="cancel_on_the_play_store">Tap here to upgrade! You can cancel your subscription on the Play Store.</string>
     <string name="resync_account">Resync Messages</string>
     <string name="resync_account_summary">Missing messages? Use this to bring this device up to date
         with what is on your primary device.</string>
