@@ -23,6 +23,7 @@ import android.content.IntentFilter
 import android.util.Log
 
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.SectionType
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo
 import xyz.klinker.messenger.shared.data.pojo.ReorderType
@@ -74,16 +75,19 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
         if (adapterPosition == -1) {
             val conversation = DataSource.getConversation(context, conversationId)
 
+            if (FeatureFlags.SECURE_PRIVATE && conversation?.privateNotifications == true) {
+                // we don't want to add a conversation that is private...
+                // if the fragment instance is a PrivateConversationListFragment, then we will always have the private conversations shown, and it wouldn't reach this
+                // for any other type of fragment, we don't want to add the conversation there, since it is supposed to be password protected
+                return
+            }
+
             // need to insert after the pinned conversations
             if (conversation != null) {
                 adapter.conversations.add(pinnedCount, conversation)
             } else return
         } else {
-            val position = (0 until adapter.conversations.size).firstOrNull { adapter.conversations[it].id == conversationId }
-                    ?: -1
-            if (position == -1) {
-                return
-            }
+            val position = (0 until adapter.conversations.size).firstOrNull { adapter.conversations[it].id == conversationId } ?: return
 
             if (position <= pinnedCount) {
                 // if it is already pinned or the top item that isn't pinned, just mark the read
