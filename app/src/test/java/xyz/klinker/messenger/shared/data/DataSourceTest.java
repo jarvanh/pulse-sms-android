@@ -186,7 +186,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getConversations() {
-        when(database.query("conversation", null, "archive=?", new String[]{"0"}, null, null,
+        when(database.query("conversation", null, "archive=? AND private_notifications=?", new String[]{"0", "0"}, null, null,
                 "pinned desc, timestamp desc")).thenReturn(cursor);
 
         assertEquals(cursor, source.getUnarchivedConversations(context));

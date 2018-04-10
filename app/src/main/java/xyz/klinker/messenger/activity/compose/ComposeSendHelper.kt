@@ -7,10 +7,12 @@ import android.os.Handler
 import android.support.design.widget.FloatingActionButton
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
@@ -82,9 +84,18 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
             DataSource.insertDraft(activity, conversationId, data, MimeType.TEXT_PLAIN)
         }
 
+        val conversation = DataSource.getConversation(activity, conversationId)
+
         val open = Intent(activity, MessengerActivity::class.java)
-        open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversationId)
-        open.putExtra(MessengerActivityExtras.EXTRA_SHOULD_OPEN_KEYBOARD, true)
+
+//        if (conversation?.privateNotifications == true) {
+        if (FeatureFlags.SECURE_PRIVATE && conversation?.privateNotifications == true) {
+            Toast.makeText(activity, R.string.private_conversation_disclaimer, Toast.LENGTH_LONG).show()
+        } else {
+            open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversationId)
+            open.putExtra(MessengerActivityExtras.EXTRA_SHOULD_OPEN_KEYBOARD, true)
+        }
+
         open.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
         if (activity.contactsProvider.getRecipients().size == 1) {

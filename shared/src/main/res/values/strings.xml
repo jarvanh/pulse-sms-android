@@ -190,6 +190,7 @@
     <string name="compose_recents">Recents</string>
     <string name="compose_groups">Groups</string>
     <string name="compose_all_contacts">All Contacts</string>
+    <string name="private_conversation_disclaimer">This is a <b>private conversation</b> and cannot be opened from the compose screen.</string>
 
     <!-- Onboarding Screen -->
     <string name="permissions_needed">The app can\'t work without those permissions! You need to

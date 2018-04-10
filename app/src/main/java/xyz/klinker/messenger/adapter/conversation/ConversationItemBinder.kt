@@ -22,6 +22,7 @@ class ConversationItemBinder(private val activity: Activity) {
     fun showText(holder: ConversationViewHolder, conversation: Conversation) {
         holder.name?.text = conversation.title
 
+//        if (conversation.snippet == null || conversation.snippet!!.contains("file://") || conversation.snippet!!.contains("content://")) {
         if ((!FeatureFlags.SECURE_PRIVATE && conversation.privateNotifications) || conversation.snippet == null ||
                 conversation.snippet!!.contains("file://") || conversation.snippet!!.contains("content://")) {
             holder.summary!!.text = ""
