@@ -868,6 +868,26 @@ object DataSource {
             convertConversationCursorToList(getArchivedConversations(context))
 
     /**
+     * Gets all archived conversations in the database.
+     *
+     * @return a list of pinned conversations.
+     */
+    fun getPrivateConversations(context: Context): Cursor =
+            try {
+                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=1", null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
+            } catch (e: Exception) {
+                ensureActionable(context)
+                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=1", null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
+            }
+
+    /**
+     * Get a list of all the archived conversations.
+     * @return a list of the conversations in the cursor
+     */
+    fun getPrivateConversationsAsList(context: Context): List<Conversation> =
+            convertConversationCursorToList(getPrivateConversations(context))
+
+    /**
      * Gets all unread conversations in the database. Only those that are not archived
      *
      * @return a list of unread conversations that aren't archived

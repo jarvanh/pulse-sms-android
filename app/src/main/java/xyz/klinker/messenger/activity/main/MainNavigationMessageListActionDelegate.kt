@@ -17,9 +17,9 @@ import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.activity.compose.ComposeConstants
 import xyz.klinker.messenger.adapter.ContactAdapter
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
-import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
 import xyz.klinker.messenger.fragment.BlacklistFragment
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
+import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.fragment.message.load.MessageListLoader
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Conversation
@@ -52,8 +52,8 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             }
 
             return true
-        } else if (navController.otherFragment is ArchivedConversationListFragment) {
-            val frag = navController.otherFragment as ArchivedConversationListFragment
+        } else if (navController.otherFragment is ConversationListFragment) {
+            val frag = navController.otherFragment as ConversationListFragment
             if (frag.isExpanded) {
                 val uri = "tel:" + frag.expandedItem!!.conversation!!.phoneNumbers!!
                 val intent = Intent(Intent.ACTION_CALL)
@@ -79,8 +79,8 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
 
         if (navController.isConversationListExpanded()) {
             conversation = navController.conversationListFragment!!.expandedItem!!.conversation
-        } else if (navController.otherFragment is ArchivedConversationListFragment) {
-            val frag = navController.otherFragment as ArchivedConversationListFragment
+        } else if (navController.otherFragment is ConversationListFragment) {
+            val frag = navController.otherFragment as ConversationListFragment
             if (frag.isExpanded) {
                 conversation = frag.expandedItem!!.conversation
             }
@@ -184,7 +184,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
     }
 
     internal fun viewMedia(): Boolean {
-        return if (navController.isConversationListExpanded() || navController.isArchiveConvoShowing()) {
+        return if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
             val fragment = navController.getShownConversationList()
             val conversationId = fragment!!.expandedId
 
@@ -198,7 +198,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
     }
 
     internal fun deleteConversation(): Boolean {
-        if (navController.isConversationListExpanded() || navController.isArchiveConvoShowing()) {
+        if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
             val fragment = navController.getShownConversationList()
             val conversationId = fragment!!.expandedId
             fragment.onBackPressed()
@@ -218,7 +218,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
     }
 
     internal fun archiveConversation(): Boolean {
-        if (navController.isConversationListExpanded() || navController.isArchiveConvoShowing()) {
+        if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
             val fragment = navController.getShownConversationList()
             val conversationId = fragment!!.expandedId
             fragment.onBackPressed()
@@ -238,7 +238,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
     }
 
     internal fun conversationInformation(): Boolean {
-        if (navController.isConversationListExpanded() || navController.isArchiveConvoShowing()) {
+        if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
             val fragment = navController.getShownConversationList()
             val conversation = fragment!!.expandedItem!!.conversation
             val source = DataSource
@@ -269,7 +269,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
     }
 
     internal fun conversationBlacklist(): Boolean {
-        return if (navController.isConversationListExpanded() || navController.isArchiveConvoShowing()) {
+        return if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
             val fragment = navController.getShownConversationList()
             val conversation = fragment!!.expandedItem!!.conversation
 
@@ -293,7 +293,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
     }
 
     internal fun conversationSchedule(): Boolean {
-        return if (navController.isConversationListExpanded() || navController.isArchiveConvoShowing()) {
+        return if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
             val fragment = navController.getShownConversationList()
             val conversation = fragment!!.expandedItem!!.conversation
             fragment.expandedItem!!.itemView.performClick()
@@ -306,7 +306,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
     }
 
     internal fun contactSettings(): Boolean {
-        return if (navController.isConversationListExpanded() || navController.isArchiveConvoShowing()) {
+        return if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
             val fragment = navController.getShownConversationList()
             val conversationId = fragment!!.expandedId
             val intent = Intent(activity, ContactSettingsActivity::class.java)

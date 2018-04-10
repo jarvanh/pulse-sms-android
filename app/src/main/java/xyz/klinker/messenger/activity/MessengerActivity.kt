@@ -35,8 +35,9 @@ import xyz.klinker.messenger.shared.util.UnreadBadger
 import xyz.klinker.messenger.shared.view.WhitableToolbar
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import xyz.klinker.messenger.utils.UpdateUtils
-import android.content.Context.INPUT_METHOD_SERVICE
+import android.support.design.widget.NavigationView
 import android.view.inputmethod.InputMethodManager
+import xyz.klinker.messenger.shared.data.FeatureFlags
 
 
 /**
@@ -80,6 +81,11 @@ class MessengerActivity : AppCompatActivity() {
         content.post {
             AnimationUtils.conversationListSize = content.height
             AnimationUtils.toolbarSize = toolbar.height
+        }
+
+        if (!FeatureFlags.SECURE_PRIVATE) {
+            val drawer = findViewById<NavigationView>(R.id.navigation_view)
+            drawer.menu.findItem(R.id.drawer_private).isVisible = false
         }
     }
 

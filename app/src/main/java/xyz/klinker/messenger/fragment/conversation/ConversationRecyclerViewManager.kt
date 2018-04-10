@@ -10,6 +10,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
+import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
@@ -73,6 +74,7 @@ class ConversationRecyclerViewManager(private val fragment: ConversationListFrag
 
     private fun getCursorSafely() = when {
         fragment is ArchivedConversationListFragment && activity != null -> DataSource.getArchivedConversationsAsList(activity!!)
+        fragment is PrivateConversationListFragment && activity != null -> DataSource.getPrivateConversationsAsList(activity!!)
         activity != null -> DataSource.getUnarchivedConversationsAsList(activity!!)
         else -> emptyList()
     }

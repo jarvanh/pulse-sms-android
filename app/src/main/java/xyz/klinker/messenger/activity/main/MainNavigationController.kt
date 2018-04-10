@@ -15,6 +15,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
+import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.Settings
@@ -38,9 +39,12 @@ class MainNavigationController(private val activity: MessengerActivity)
     var otherFragment: Fragment? = null
     var inSettings = false
 
-    fun isArchiveConvoShowing() = otherFragment != null && otherFragment is ArchivedConversationListFragment && (otherFragment as ArchivedConversationListFragment).isExpanded
-    fun getShownConversationList() = if (isArchiveConvoShowing()) otherFragment as ArchivedConversationListFragment else conversationListFragment
     fun isConversationListExpanded() = conversationListFragment != null && conversationListFragment!!.isExpanded
+    fun isOtherFragmentConvoAndShowing() = otherFragment != null && otherFragment is ConversationListFragment && (otherFragment as ConversationListFragment).isExpanded
+    fun getShownConversationList() = when {
+        isOtherFragmentConvoAndShowing() -> otherFragment as ConversationListFragment
+        else -> conversationListFragment
+    }
 
     fun initDrawer() {
         navigationView.setNavigationItemSelectedListener(this)
@@ -127,6 +131,7 @@ class MainNavigationController(private val activity: MessengerActivity)
         when (id) {
             R.id.drawer_conversation -> return conversationActionDelegate.displayConversations()
             R.id.drawer_archived -> return conversationActionDelegate.displayArchived()
+            R.id.drawer_private -> return conversationActionDelegate.displayPrivate()
             R.id.drawer_schedule -> return conversationActionDelegate.displayScheduledMessages()
             R.id.drawer_mute_contacts -> return conversationActionDelegate.displayBlacklist()
             R.id.drawer_invite -> return conversationActionDelegate.displayInviteFriends()

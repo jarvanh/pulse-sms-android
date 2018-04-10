@@ -64,7 +64,7 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
     var lastRefreshTime: Long = 0
 
     override fun onCreateView(inflater: LayoutInflater, viewGroup: ViewGroup?, bundle: Bundle?): View? {
-        rootView = inflater!!.inflate(R.layout.fragment_conversation_list, viewGroup, false)
+        rootView = inflater.inflate(R.layout.fragment_conversation_list, viewGroup, false)
 
         recyclerManager.setupViews()
         recyclerManager.loadConversations()

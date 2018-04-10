@@ -273,6 +273,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void getPrivateConversations() {
+        when(database.query("conversation", null, "private_notifications=1", null, null, null, "timestamp desc"))
+                .thenReturn(cursor);
+        assertEquals(cursor, source.getPrivateConversations(context));
+    }
+
+    @Test
     public void searchConversations() {
         when(database.query("conversation", null, "title LIKE '%swimmer''s%'", null, null, null,
                 "timestamp desc")).thenReturn(cursor);

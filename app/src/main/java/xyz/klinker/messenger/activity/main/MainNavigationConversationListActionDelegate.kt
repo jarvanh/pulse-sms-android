@@ -9,10 +9,7 @@ import android.view.View
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.activity.SettingsActivity
-import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
-import xyz.klinker.messenger.fragment.BlacklistFragment
-import xyz.klinker.messenger.fragment.InviteFriendsFragment
-import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
+import xyz.klinker.messenger.fragment.*
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.fragment.settings.AboutFragment
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment
@@ -81,6 +78,10 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
 
     internal fun displayArchived(): Boolean {
         return displayFragmentWithBackStack(ArchivedConversationListFragment())
+    }
+
+    internal fun displayPrivate(): Boolean {
+        return displayFragmentWithBackStack(PrivateConversationListFragment())
     }
 
     internal fun displayScheduledMessages(): Boolean {
