@@ -9,6 +9,7 @@ import android.view.View
 import com.bumptech.glide.Glide
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.util.ColorUtils
@@ -21,7 +22,7 @@ class ConversationItemBinder(private val activity: Activity) {
     fun showText(holder: ConversationViewHolder, conversation: Conversation) {
         holder.name?.text = conversation.title
 
-        if (conversation.privateNotifications || conversation.snippet == null ||
+        if ((!FeatureFlags.SECURE_PRIVATE && conversation.privateNotifications) || conversation.snippet == null ||
                 conversation.snippet!!.contains("file://") || conversation.snippet!!.contains("content://")) {
             holder.summary!!.text = ""
         } else {
