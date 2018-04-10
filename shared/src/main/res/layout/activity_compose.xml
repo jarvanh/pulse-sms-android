@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:gravity="start"
-                android:hint="@string/enter_contact_name"
+                android:hint="@string/enter_contact_name_or_number"
                 android:textColor="@android:color/white"
                 android:textColorHint="@color/toolbarEditTextHint"
                 android:imeOptions="flagNoExtractUi" />
