@@ -37,6 +37,7 @@ import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import xyz.klinker.messenger.utils.UpdateUtils
 import android.support.design.widget.NavigationView
 import android.view.inputmethod.InputMethodManager
+import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.shared.data.FeatureFlags
 
 
@@ -111,7 +112,12 @@ class MessengerActivity : AppCompatActivity() {
     }
 
     public override fun onPause() {
+        if (navController.otherFragment is PrivateConversationListFragment) {
+            onBackPressed()
+        }
+
         super.onPause()
+
         if (navController.conversationListFragment != null) {
             navController.conversationListFragment!!.swipeHelper.dismissSnackbars()
         }
@@ -119,6 +125,7 @@ class MessengerActivity : AppCompatActivity() {
 
     public override fun onStop() {
         super.onStop()
+
         MessengerAppWidgetProvider.refreshWidget(this)
         accountController.stopListeningForRefreshes()
 
