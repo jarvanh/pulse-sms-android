@@ -887,7 +887,9 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                     "set" -> settings.setValue(context, pref, SetUtils.createSet(json.getString("value")))
                 }
 
-                if (type.toLowerCase() == "boolean" && pref == context.getString(R.string.pref_quick_compose)) {
+                if (type.toLowerCase() == "string" && pref == context.getString(R.string.pref_secure_private_conversations)) {
+                    settings.setValue(context, pref, Account.encryptor?.decrypt(json.getString("value")) ?: "")
+                } else if (type.toLowerCase() == "boolean" && pref == context.getString(R.string.pref_quick_compose)) {
                     val turnOn = json.getBoolean("value")
                     if (turnOn) {
                         QuickComposeNotificationService.start(context)

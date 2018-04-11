@@ -47,7 +47,7 @@ object Settings {
     var showTextOnlineOnConversationList: Boolean = false
     var phoneNumber: String? = null
 
-    // settings_global
+    // Global Settings
     var vibrate: VibratePattern = VibratePattern.DEFAULT
     var notificationActions: MutableSet<NotificationAction> = mutableSetOf()
     var useGlobalThemeColor: Boolean = false
@@ -55,7 +55,7 @@ object Settings {
     var giffgaffDeliveryReports: Boolean = false
     var mobileOnly: Boolean = false
     var soundEffects: Boolean = false
-    var securePrivateConversations: Boolean = false
+    var privateConversationsPasscode: String? = null
     var quickCompose: Boolean = false
     var wakeScreen: Boolean = false
     var headsUp: Boolean = false
@@ -125,7 +125,7 @@ object Settings {
         this.giffgaffDeliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_giffgaff), false)
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false)
         this.soundEffects = sharedPrefs.getBoolean(context.getString(R.string.pref_sound_effects), true)
-        this.securePrivateConversations = sharedPrefs.getBoolean(context.getString(R.string.pref_secure_private_conversations), false)
+        this.privateConversationsPasscode = sharedPrefs.getString(context.getString(R.string.pref_secure_private_conversations), null)
         this.quickCompose = sharedPrefs.getBoolean(context.getString(R.string.pref_quick_compose), false)
         this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0)
         this.ringtone = sharedPrefs.getString(context.getString(R.string.pref_ringtone), null)
@@ -151,22 +151,24 @@ object Settings {
             this.ringtone = uri
         }
 
-        if (fontSize == "small") {
-            this.smallFont = 10
-            this.mediumFont = 12
-            this.largeFont = 14
-        } else if (fontSize == "normal") {
-            this.smallFont = 12
-            this.mediumFont = 14
-            this.largeFont = 16
-        } else if (fontSize == "large") {
-            this.smallFont = 14
-            this.mediumFont = 16
-            this.largeFont = 18
-        } else if (fontSize == "extra_large") {
-            this.smallFont = 16
-            this.mediumFont = 18
-            this.largeFont = 20
+        when (fontSize) {
+            "small" -> {
+                this.smallFont = 10
+                this.mediumFont = 12
+                this.largeFont = 14
+            } "normal" -> {
+                this.smallFont = 12
+                this.mediumFont = 14
+                this.largeFont = 16
+            } "large" -> {
+                this.smallFont = 14
+                this.mediumFont = 16
+                this.largeFont = 18
+            } "extra_large" -> {
+                this.smallFont = 16
+                this.mediumFont = 18
+                this.largeFont = 20
+            }
         }
 
         if (EmojiInitializer.isAlreadyUsingGoogleAndroidO()) {

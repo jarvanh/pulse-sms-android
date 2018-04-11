@@ -110,7 +110,7 @@
     <string name="pref_quick_compose_category" translatable="false">quick_compose_category</string>
     <string name="pref_quick_compose" translatable="false">quick_compose</string>
     <string name="pref_quick_compose_favorites">quick_compose_favorites</string>
-    <string name="pref_secure_private_conversations" translatable="false">secure_private_conversations</string>
+    <string name="pref_secure_private_conversations" translatable="false">private_conversations_passcode</string>
     <string name="pref_internal_browser" translatable="false">internal_browser</string>
     <string name="pref_delayed_sending" translatable="false">delayed_sending</string>
     <string name="pref_cleanup_messages" translatable="false">cleanup_old_messages</string>

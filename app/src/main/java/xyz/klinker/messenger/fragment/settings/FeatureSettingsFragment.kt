@@ -40,8 +40,8 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
     private fun initSecurePrivateConversations() {
         val preference = findPreference(getString(R.string.pref_secure_private_conversations))
         preference.setOnPreferenceChangeListener { _, o ->
-            val secure = o as Boolean
-            ApiUtils.updateSecurePrivateConversations(Account.accountId, secure)
+            val code = o as String
+            ApiUtils.updatePrivateConversationsPasscode(Account.accountId, code)
             true
         }
 

@@ -1209,9 +1209,9 @@ object ApiUtils {
     /**
      * Update the secure private conversations setting.
      */
-    fun updateSecurePrivateConversations(accountId: String?, secure: Boolean) {
+    fun updatePrivateConversationsPasscode(accountId: String?, passcode: String) {
         if (accountId != null) {
-            updateSetting(accountId, "secure_private_conversations", "boolean", secure)
+            updateSetting(accountId, "private_conversations_passcode", "string", Account.encryptor?.encrypt(passcode))
         }
     }
 
