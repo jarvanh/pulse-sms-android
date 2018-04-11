@@ -32,6 +32,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.util.*
@@ -162,6 +163,10 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         preference.setOnPreferenceChangeListener { _, o ->
             conversation.privateNotifications = o as Boolean
             true
+        }
+
+        if (FeatureFlags.SECURE_PRIVATE) {
+            preference.summary = getString(R.string.private_conversation_summary_2)
         }
     }
 
