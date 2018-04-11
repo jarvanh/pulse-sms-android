@@ -1,8 +1,12 @@
 package xyz.klinker.messenger.fragment
 
+import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
@@ -15,6 +19,8 @@ import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeTouchHelper
 import xyz.klinker.messenger.utils.swipe_to_dismiss.UnarchiveSwipeSimpleCallback
 
 class PrivateConversationListFragment : ConversationListFragment() {
+
+    override fun noConversationsText() = getString(R.string.no_private_messages_description)
 
     // always consume the back event and send us to the conversation list
     override fun onBackPressed(): Boolean {

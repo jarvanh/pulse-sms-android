@@ -26,6 +26,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
@@ -63,11 +64,18 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
     var rootView: View? = null
     var lastRefreshTime: Long = 0
 
+    protected open fun noConversationsText(): String? = null
+
     override fun onCreateView(inflater: LayoutInflater, viewGroup: ViewGroup?, bundle: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_conversation_list, viewGroup, false)
 
         recyclerManager.setupViews()
         recyclerManager.loadConversations()
+
+        if (noConversationsText() != null) {
+            val description = rootView?.findViewById<TextView>(R.id.no_messages_description)
+            description?.text = noConversationsText()
+        }
 
         return rootView
     }
