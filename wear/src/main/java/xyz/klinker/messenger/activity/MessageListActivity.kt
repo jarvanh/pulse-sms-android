@@ -170,7 +170,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
 
     companion object {
 
-        private val CONVERSATION_ID = "conversation_id"
+        private const val CONVERSATION_ID = "conversation_id"
 
         fun startActivity(context: Context, conversationId: Long) {
             val intent = Intent(context, MessageListActivity::class.java)

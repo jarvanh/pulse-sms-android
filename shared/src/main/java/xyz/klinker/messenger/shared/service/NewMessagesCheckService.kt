@@ -169,22 +169,28 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
 
     companion object {
 
-        private val FOREGROUND_NOTIFICATION_ID = 44562
-        private val EXTRA_FOREGROUND_NOTIFICATION = "extra_foreground_notification"
-        val REFRESH_WHOLE_CONVERSATION_LIST = "xyz.klinker.messenger.REFRESH_WHOLE_CONVERSATION_LIST"
+        private const val FOREGROUND_NOTIFICATION_ID = 44562
+        private const val EXTRA_FOREGROUND_NOTIFICATION = "extra_foreground_notification"
+        const val REFRESH_WHOLE_CONVERSATION_LIST = "xyz.klinker.messenger.REFRESH_WHOLE_CONVERSATION_LIST"
 
         fun startService(activity: Activity) {
-            activity.startService(Intent(activity, NewMessagesCheckService::class.java))
+            try {
+                activity.startService(Intent(activity, NewMessagesCheckService::class.java))
+            } catch (e: IllegalStateException) {
+            }
         }
 
         fun startService(context: Context) {
             val intent = Intent(context, NewMessagesCheckService::class.java)
 
-            if (AndroidVersionUtil.isAndroidO) {
-                intent.putExtra(EXTRA_FOREGROUND_NOTIFICATION, true)
-                context.startForegroundService(intent)
-            } else {
-                context.startService(intent)
+            try {
+                if (AndroidVersionUtil.isAndroidO) {
+                    intent.putExtra(EXTRA_FOREGROUND_NOTIFICATION, true)
+                    context.startForegroundService(intent)
+                } else {
+                    context.startService(intent)
+                }
+            } catch (e: IllegalStateException) {
             }
         }
 

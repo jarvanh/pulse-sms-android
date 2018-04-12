@@ -61,10 +61,14 @@ class InviteFriendsFragment : Fragment(), ContactClickedListener {
     private fun loadContacts() {
         val handler = Handler()
         Thread {
-            val cursor = activity?.contentResolver
-                    ?.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            arrayOf(ContactsContract.CommonDataKinds.Phone._ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER), null, null,
-                            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC")
+            val cursor = try {
+                activity?.contentResolver
+                        ?.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                arrayOf(ContactsContract.CommonDataKinds.Phone._ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER), null, null,
+                                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC")
+            } catch (e: SecurityException) {
+                null
+            }
 
             val contacts = ArrayList<Conversation>()
             if (cursor != null && cursor.moveToFirst()) {

@@ -54,7 +54,10 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
 
             val emailIntent = Intent(Intent.ACTION_SENDTO, uri)
             emailIntent.putExtra(Intent.EXTRA_EMAIL, email)
-            holder.message!!.context.startActivity(emailIntent)
+            try {
+                holder.message!!.context.startActivity(emailIntent)
+            } catch (e: ActivityNotFoundException) {
+            }
         }
 
         return emails
