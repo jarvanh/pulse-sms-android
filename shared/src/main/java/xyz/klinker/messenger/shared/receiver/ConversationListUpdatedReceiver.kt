@@ -82,6 +82,9 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
                 return
             }
 
+            // todo: if it isn't the main conversation list fragment, then we should not ever add the conversation to the view...
+            // This applies to private conversations, archives, and folders, in the future
+
             // need to insert after the pinned conversations
             if (conversation != null) {
                 adapter.conversations.add(pinnedCount, conversation)
