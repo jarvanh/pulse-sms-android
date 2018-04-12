@@ -1,6 +1,5 @@
-With this release:<br/>
-- The widget automatically adjusts to the base theme you have set for the app<br/>
-- You can long click (and drag) to select and delete multiple images on the "View Media" page within a conversation<br/>
-- You can share multiple selected messages at once<br/><br/>
+With this release, Pulse adds support for auto replies!<br/><br/>
 
-And, of course, it has bug fixes, performance improvements, as well as some translation updates.
+Set up automated replies for when you are driving, on vacation, when a specific contact sends you a message, and when messages contain certain keywords/expressions.<br/><br/>
+
+Try it out from the <i>Advanced Features</i> section of the app!

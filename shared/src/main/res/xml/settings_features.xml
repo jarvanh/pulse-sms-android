@@ -6,20 +6,15 @@
         android:title="@string/app_features">
 
         <Preference
-            android:key="@string/pref_auto_reply"
-            android:title="@string/auto_reply_configuration"
-            android:summary="@string/auto_reply_configuration_summary" />
+            android:key="@string/pref_message_backup"
+            android:title="@string/message_backup"
+            android:summary="@string/message_backup_pref_summary" />
 
         <Preference
             android:defaultValue="false"
             android:key="@string/pref_secure_private_conversations"
             android:summary="@string/secure_private_conversations_summary"
             android:title="@string/secure_private_conversations" />
-
-        <Preference
-            android:key="@string/pref_message_backup"
-            android:title="@string/message_backup"
-            android:summary="@string/message_backup_pref_summary" />
 
         <ListPreference
             android:defaultValue="never"
@@ -40,6 +35,11 @@
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_messaging_category"
         android:title="@string/messaging_features">
+
+        <Preference
+            android:key="@string/pref_auto_reply"
+            android:title="@string/auto_reply_configuration"
+            android:summary="@string/auto_reply_configuration_summary" />
 
         <ListPreference
             android:defaultValue="off"

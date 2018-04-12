@@ -93,7 +93,6 @@ object FeatureFlags {
     var FOLDER_SUPPORT: Boolean = false
     var AUTO_REPLIES: Boolean = false
     var VCARD_PREVIEWS: Boolean = false
-    var SEND_SCHEDULED_MESSAGE_IMMEDIATELY: Boolean = false
 
     // in testing
 
@@ -104,9 +103,7 @@ object FeatureFlags {
 
         SECURE_PRIVATE = getValue(context, sharedPrefs, FLAG_SECURE_PRIVATE)
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
-        AUTO_REPLIES = getValue(context, sharedPrefs, FLAG_AUTO_REPLIES)
         VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
-        SEND_SCHEDULED_MESSAGE_IMMEDIATELY = getValue(context, sharedPrefs, FLAG_SEND_SCHEDULED_MESSAGE_IMMEDIATELY)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -119,9 +116,7 @@ object FeatureFlags {
 
             FLAG_SECURE_PRIVATE -> SECURE_PRIVATE = flag
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
-            FLAG_AUTO_REPLIES -> AUTO_REPLIES = flag
             FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
-            FLAG_SEND_SCHEDULED_MESSAGE_IMMEDIATELY -> SEND_SCHEDULED_MESSAGE_IMMEDIATELY = flag
         }
     }
 

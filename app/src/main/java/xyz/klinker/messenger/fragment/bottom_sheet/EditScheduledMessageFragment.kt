@@ -94,10 +94,6 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
         send.setOnClickListener { send() }
         sendDate?.setOnClickListener { displayDateDialog() }
 
-        if (!FeatureFlags.SEND_SCHEDULED_MESSAGE_IMMEDIATELY) {
-            send.visibility = View.GONE
-        }
-
         return contentView
     }
 

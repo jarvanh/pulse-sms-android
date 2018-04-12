@@ -23,20 +23,21 @@
         <!--<text>Handle iOS location sharing messages with location preview (TODO: remove the feature flag)</text>-->
     <!--</version>-->
 
-    <!--<version-->
-        <!--name="2.10.0"-->
-        <!--description="April, 2018">-->
-        <!--<text>Auto reply support. Build auto replies for vacation responses, driving mode, specific contacts, or based on an expression (TODO: remove the feature flag and uncomment the quick settings service in the app's Android Manifest)</text>-->
-        <!--<text>Button to send scheduled messages immediately (TODO: remove the feature flag)</text>-->
-    <!--</version>-->
-  
+    <version
+        name="2.10.0"
+        description="April 12, 2018">
+        <!-- Added initial support around the private messages feature (drawer item, settings item, working fragment, etc.). Did not build the activity to enter the passcode, yet -->
+        <text>Auto reply support under the advanced features section. Build automated replies for vacation responses, driving mode, specific contacts, or based on an expression/keyword that you define</text>
+        <text>Added a button to send a scheduled message immediately</text>
+    </version>
+
     <version
         name="2.9.6"
         description="April 8th, 2018">
         <!-- Fixes around notifications: HTML entities getting hidden and heads up notifications displaying old content -->
         <text>Bug fixes</text>
     </version>
-  
+
     <version
         name="2.9.5"
         description="April 4th, 2018">

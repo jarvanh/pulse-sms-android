@@ -142,10 +142,5 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
             SettingsActivity.startAutoReplySettings(activity)
             false
         }
-
-        if (!FeatureFlags.AUTO_REPLIES) {
-            val category = findPreference(getString(R.string.pref_app_features_category)) as PreferenceCategory
-            category.removePreference(preference)
-        }
     }
 }

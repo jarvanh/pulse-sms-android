@@ -485,7 +485,7 @@
         to restore all your messages, automatically!\n\nNo hassle and no messing around with manual backups.
         With Pulse, everything is smooth, easy, and completely automatic.</string>
     <string name="auto_reply_configuration">Auto Reply Configuration</string>
-    <string name="auto_reply_configuration_summary">Set up automatic replies based on the situation you are in</string>
+    <string name="auto_reply_configuration_summary">Set up automated replies based on your situation</string>
     <string name="auto_replies">Auto Replies</string>
     <string name="auto_reply_top_pref_summary">Driving mode and vacation reminders take precedence over all other replies. If either is turned on, no other auto replies will be sent</string>
     <string name="driving_mode">Driving Mode</string>
