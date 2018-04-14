@@ -1,4 +1,4 @@
-With this release, Pulse adds support for auto replies!<br/><br/>
+With this release, Pulse SMS adds support for auto replies!<br/><br/>
 
 Set up automated replies for when you are driving, on vacation, when a specific contact sends you a message, and when messages contain certain keywords/expressions.<br/><br/>
 
