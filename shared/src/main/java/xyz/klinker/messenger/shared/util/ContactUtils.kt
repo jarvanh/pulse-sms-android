@@ -129,7 +129,7 @@ object ContactUtils {
                         do {
                             val num = ContactUtils.findPhoneNumberByContactId(context,
                                     cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.GroupMembership.CONTACT_ID)))
-                            if (num != null) phoneNumbers += num + ", "
+                            if (num != null) phoneNumbers += "$num, "
                         } while (cursor.moveToNext())
 
                         if (phoneNumbers.isNotEmpty()) {
@@ -158,7 +158,7 @@ object ContactUtils {
         return ArrayList()
     }
 
-    private fun findPhoneNumberByContactId(context: Context, rawContactId: String): String? {
+    fun findPhoneNumberByContactId(context: Context, rawContactId: String): String? {
         val phoneNumber = context.contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER),
                 ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
@@ -251,7 +251,6 @@ object ContactUtils {
      */
     @Throws(NoSuchElementException::class)
     fun findContactId(number: String, context: Context): Int {
-
         try {
             var phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                     Uri.encode(number))

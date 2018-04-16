@@ -38,40 +38,34 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
         get() = navController.conversationActionDelegate
 
     fun callContact(): Boolean {
-        if (navController.isConversationListExpanded()) {
-            val uri = "tel:" + navController.conversationListFragment!!.expandedItem!!.conversation!!.phoneNumbers!!
-            val intent = Intent(Intent.ACTION_CALL)
-            intent.data = Uri.parse(uri)
-
-            try {
-                activity.startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
-                Toast.makeText(activity, R.string.no_apps_found, Toast.LENGTH_SHORT).show()
-            } catch (e: SecurityException) {
-                Toast.makeText(activity, R.string.you_denied_permission, Toast.LENGTH_SHORT).show()
-            }
-
-            return true
-        } else if (navController.otherFragment is ConversationListFragment) {
-            val frag = navController.otherFragment as ConversationListFragment
-            if (frag.isExpanded) {
-                val uri = "tel:" + frag.expandedItem!!.conversation!!.phoneNumbers!!
-                val intent = Intent(Intent.ACTION_CALL)
-                intent.data = Uri.parse(uri)
-
-                try {
-                    activity.startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
-                    Toast.makeText(activity, R.string.no_apps_found, Toast.LENGTH_SHORT).show()
-                } catch (e: SecurityException) {
-                    Toast.makeText(activity, R.string.you_denied_permission, Toast.LENGTH_SHORT).show()
-                }
-
-                return true
-            }
+        val otherFrag = navController.otherFragment
+        val conversation = if (navController.isConversationListExpanded()) {
+            navController.conversationListFragment!!.expandedItem!!.conversation!!
+        } else if (otherFrag is ConversationListFragment && otherFrag.isExpanded) {
+            otherFrag.expandedItem!!.conversation!!
+        } else {
+            return false
         }
 
-        return false
+        val id = ContactUtils.findContactId(conversation.phoneNumbers!!, activity)
+        val uri = if (id != -1) {
+            "tel:" + ContactUtils.findPhoneNumberByContactId(activity, id.toString())
+        } else {
+            "tel:${conversation.phoneNumbers!!}"
+        }
+
+        val intent = Intent(Intent.ACTION_CALL)
+        intent.data = Uri.parse(uri)
+
+        try {
+            activity.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(activity, R.string.no_apps_found, Toast.LENGTH_SHORT).show()
+        } catch (e: SecurityException) {
+            Toast.makeText(activity, R.string.you_denied_permission, Toast.LENGTH_SHORT).show()
+        }
+
+        return true
     }
 
     internal fun viewContact(): Boolean {

@@ -24,6 +24,9 @@ import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 import xyz.klinker.messenger.shared.util.StringUtils
 import xyz.klinker.messenger.shared.util.listener.BackPressedListener
+import android.widget.Toast
+
+
 
 @Suppress("DEPRECATION")
 class MainNavigationController(private val activity: MessengerActivity)
@@ -74,6 +77,19 @@ class MainNavigationController(private val activity: MessengerActivity)
 
             activity.snoozeController.initSnooze()
         }, 300)
+    }
+
+    fun initToolbarTitleClick() {
+        activity.toolbar.setOnClickListener {
+            val otherFrag = otherFragment
+            val fragment = when {
+                conversationListFragment != null -> conversationListFragment
+                otherFrag is ConversationListFragment -> otherFrag
+                else -> return@setOnClickListener
+            }
+
+            fragment?.recyclerView?.smoothScrollToPosition(0)
+        }
     }
 
     fun openDrawer(): Boolean {
