@@ -27,6 +27,7 @@
         name="2.10.0"
         description="April 16, 2018">
         <!-- Added initial support around the private messages feature (drawer item, settings item, working fragment, etc.). Did not build the activity to enter the passcode, yet -->
+        <!-- fix html encoding on notifications for Android 6.0 and below -->
         <text>Auto reply support under the advanced features section. Build automated replies for vacation responses, driving mode, specific contacts, or based on an expression/keyword that you define</text>
         <text>Added a button to send a scheduled message immediately</text>
         <text>Jump to the top of the conversation list by tapping the title</text>

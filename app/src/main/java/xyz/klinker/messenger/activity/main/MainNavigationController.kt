@@ -14,8 +14,6 @@ import android.widget.TextView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
-import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.Settings
@@ -24,9 +22,6 @@ import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 import xyz.klinker.messenger.shared.util.StringUtils
 import xyz.klinker.messenger.shared.util.listener.BackPressedListener
-import android.widget.Toast
-
-
 
 @Suppress("DEPRECATION")
 class MainNavigationController(private val activity: MessengerActivity)

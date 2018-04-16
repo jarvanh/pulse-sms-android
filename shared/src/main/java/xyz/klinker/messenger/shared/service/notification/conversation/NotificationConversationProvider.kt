@@ -277,11 +277,13 @@ class NotificationConversationProvider(private val service: Context, private val
         }
 
         if (!conversation.privateNotification) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                this.setContentText(Html.fromHtml(content, 0))
-            } else {
-                this.setContentText(Html.fromHtml(content))
+            val formattedText = when {
+                !content.contains("<b>") && !content.contains("<br/>") -> content
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(content, 0)
+                else -> Html.fromHtml(content)
             }
+
+            this.setContentText(formattedText)
 
             when {
                 pictureStyle != null -> {
@@ -290,7 +292,7 @@ class NotificationConversationProvider(private val service: Context, private val
                 }
                 messagingStyle != null -> this.setStyle(messagingStyle)
                 inboxStyle != null -> this.setStyle(inboxStyle)
-                else -> this.setStyle(NotificationCompat.BigTextStyle().bigText(Html.fromHtml(content)))
+                else -> this.setStyle(NotificationCompat.BigTextStyle().bigText(formattedText))
             }
         }
 
