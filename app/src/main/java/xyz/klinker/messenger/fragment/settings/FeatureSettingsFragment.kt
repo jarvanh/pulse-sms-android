@@ -11,6 +11,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
+import xyz.klinker.messenger.shared.activity.PasswordVerificationActivity
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
@@ -39,9 +40,14 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
 
     private fun initSecurePrivateConversations() {
         val preference = findPreference(getString(R.string.pref_secure_private_conversations))
-        preference.setOnPreferenceChangeListener { _, o ->
-            val code = o as String
-            ApiUtils.updatePrivateConversationsPasscode(Account.accountId, code)
+//        preference.setOnPreferenceChangeListener { _, o ->
+//            val code = o as String
+//            ApiUtils.updatePrivateConversationsPasscode(Account.accountId, code)
+//            true
+//        }
+
+        preference.setOnPreferenceClickListener {
+            startActivity(Intent(activity, PasswordVerificationActivity::class.java))
             true
         }
 

@@ -147,6 +147,9 @@ dependencies {
     api 'com.afollestad.material-dialogs:core:0.9.4.5'
     api 'com.roughike:bottom-bar:2.3.1'
 
+    implementation 'com.github.glomadrian:CodeInput:1.1@aar'
+    implementation 'com.github.ajalt.reprint:core:3.2.1@aar'
+
     api project(":api_implementation")
     api project(":encryption")
 

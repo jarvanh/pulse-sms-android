@@ -14,6 +14,8 @@ import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.fragment.settings.AboutFragment
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
+import xyz.klinker.messenger.shared.activity.PasswordVerificationActivity
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.AnimationUtils
 
 class MainNavigationConversationListActionDelegate(private val activity: MessengerActivity) {
@@ -81,7 +83,12 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
     }
 
     internal fun displayPrivate(): Boolean {
-        return displayFragmentWithBackStack(PrivateConversationListFragment())
+        return if (Settings.privateConversationsPasscode.isNullOrEmpty()) {
+            displayFragmentWithBackStack(PrivateConversationListFragment())
+        } else {
+            activity.startActivityForResult(Intent(activity, PasswordVerificationActivity::class.java), PasswordVerificationActivity.REQUEST_CODE)
+            return false
+        }
     }
 
     internal fun displayScheduledMessages(): Boolean {

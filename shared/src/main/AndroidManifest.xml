@@ -44,6 +44,10 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
+    <!-- TODO: delete this when rolling out the password protection feature. I am just disabling it to hide the permission right now. -->
+    <!--<uses-permission android:name="android.permission.USE_FINGERPRINT"-->
+        <!--tools:node="remove" >-->
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -81,6 +85,10 @@
     <application android:appCategory="social">
 
         <activity android:name=".activity.RateItDialog"
+            android:theme="@style/tutorial_FloatingTutorialTheme"
+            android:launchMode="singleInstance" />
+
+        <activity android:name=".activity.PasswordVerificationActivity"
             android:theme="@style/tutorial_FloatingTutorialTheme"
             android:launchMode="singleInstance" />
 

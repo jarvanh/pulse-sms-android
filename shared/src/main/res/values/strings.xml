@@ -534,6 +534,11 @@
     <string name="send">Send</string>
     <string name="quick_share">Quick Share</string>
 
+    <!-- Passcode Entry -->
+    <string name="passcode">Passcode</string>
+    <string name="verify">Verify</string>
+    <string name="confirm_fingerprint">Confirm fingerprint to continue. Touch sensor now.</string>
+
     <!-- Other -->
     <string name="updating_database">Finding latest messages…</string>
     <string name="dashclock_description">Unread SMS/MMS information</string>
