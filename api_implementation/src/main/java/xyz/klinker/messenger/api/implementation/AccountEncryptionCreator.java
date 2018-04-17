@@ -29,7 +29,6 @@ public class AccountEncryptionCreator {
         sharedPrefs = getSharedPrefs(context);
     }
 
-    @VisibleForTesting
     protected SharedPreferences getSharedPrefs(Context context) {
         return PreferenceManager
                 .getDefaultSharedPreferences(context.getApplicationContext());
@@ -47,7 +46,6 @@ public class AccountEncryptionCreator {
         editor.putBoolean("apply_theme_globally", loginResponse.useGlobalTheme)
                 .putBoolean("rounder_bubbles", loginResponse.rounderBubbles)
                 .putString("base_theme", loginResponse.baseTheme)
-                .putString("private_conversations_passcode", loginResponse.passcode)
                 .apply();
 
         return createEncryptorParams(loginResponse.name, loginResponse.phoneNumber,

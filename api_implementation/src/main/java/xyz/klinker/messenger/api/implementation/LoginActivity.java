@@ -18,11 +18,13 @@ package xyz.klinker.messenger.api.implementation;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -59,6 +61,7 @@ import xyz.klinker.messenger.api.entity.DeviceBody;
 import xyz.klinker.messenger.api.entity.LoginResponse;
 import xyz.klinker.messenger.api.entity.SignupResponse;
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper;
+import xyz.klinker.messenger.encryption.EncryptionUtils;
 
 /**
  * Activity for logging a user in using the API
@@ -214,6 +217,7 @@ public class LoginActivity extends AppCompatActivity {
         phoneNumber.setEnabled(true);
     }
 
+    @SuppressLint("ApplySharedPref")
     private void performLogin() {
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.api_connecting));
@@ -236,7 +240,12 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 AccountEncryptionCreator encryptionCreator =
                         new AccountEncryptionCreator(LoginActivity.this, password.getText().toString());
-                encryptionCreator.createAccountEncryptionFromLogin(response);
+                EncryptionUtils encryptionUtils = encryptionCreator.createAccountEncryptionFromLogin(response);
+
+                if (response.passcode != null && !response.passcode.isEmpty() && !response.passcode.equals("null")) {
+                    SharedPreferences sharedPrefs = encryptionCreator.getSharedPrefs(LoginActivity.this);
+                    sharedPrefs.edit().putString("private_conversations_passcode", encryptionUtils.decrypt(response.passcode)).commit();
+                }
 
                 addDevice(utils, response.accountId, hasTelephony(LoginActivity.this), false);
                 AnalyticsHelper.accountLoggedIn(LoginActivity.this);
@@ -270,6 +279,12 @@ public class LoginActivity extends AppCompatActivity {
                 encryptionCreator.createAccountEncryptionFromSignup(
                         name.getText().toString(), phoneNumber.getText().toString(),
                         response);
+
+                SharedPreferences sharedPrefs = encryptionCreator.getSharedPrefs(LoginActivity.this);
+                String passcode = sharedPrefs.getString("private_conversations_passcode", null);
+                if (passcode != null && !passcode.isEmpty()) {
+                    ApiUtils.INSTANCE.updatePrivateConversationsPasscode(Account.INSTANCE.getAccountId(), passcode);
+                }
 
                 addDevice(utils, response.accountId, true, true);
                 AnalyticsHelper.accountSignedUp(LoginActivity.this);
