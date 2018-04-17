@@ -56,6 +56,12 @@
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
+    <style name="PulsePasscode" parent="@style/tutorial_FloatingTutorialTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="PulseTheme.NoColors" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/materialGrey</item>
         <item name="colorPrimaryDark">@color/materialGreyDark</item>

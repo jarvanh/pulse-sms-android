@@ -57,6 +57,13 @@ class PasscodeSetupPage(context: FloatingTutorialActivity) : TutorialPage(contex
         passcode.setShowKeyboard(true)
         passcode.inPasswordMode = false
 
+        passcode.addOnCompleteListener { _ ->
+            passcode.setEditable(true)
+            passcode.clearError()
+            passcode.setShowKeyboard(true)
+            passcode.requestFocus()
+        }
+
         nextButton.setOnClickListener {
             val code = passcode.code
             if (code.length == 4) {

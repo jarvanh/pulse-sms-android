@@ -540,8 +540,10 @@
     <string name="set_passcode">Save Passcode</string>
     <string name="confirm_fingerprint">Confirm fingerprint to continue. Touch sensor now.</string>
     <string name="confirm_passcode">Confirm passcode to continue.</string>
+    <string name="confirm_pulse_password">Confirm Pulse account credentials to continue.</string>
     <string name="type_passcode">Create a passcode.</string>
-    <string name="incorrect_passcode">Incorrect password.</string>
+    <string name="incorrect_passcode">Incorrect passcode.</string>
+    <string name="verify">Verify</string>
 
     <!-- Other -->
     <string name="updating_database">Finding latest messages…</string>

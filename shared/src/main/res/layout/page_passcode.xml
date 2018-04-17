@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="56dp"
+        app:animate_on_complete="false"
         app:input_type="numeric"
         app:length_of_code="4" />
 
