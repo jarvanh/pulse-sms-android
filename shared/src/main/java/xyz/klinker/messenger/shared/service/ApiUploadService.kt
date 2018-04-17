@@ -482,6 +482,12 @@ open class ApiUploadService : Service() {
                     }
                 }, 0)
             } while (media.moveToNext())
+
+            if (mediaCount == 0) {
+                finishMediaUpload(manager)
+            }
+        } else {
+            finishMediaUpload(manager)
         }
 
         media.closeSilent()

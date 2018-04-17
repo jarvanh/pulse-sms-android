@@ -474,6 +474,12 @@ class ApiDownloadService : Service() {
                     }
                 }, 0)
             } while (media.moveToNext() && processing < MAX_MEDIA_DOWNLOADS)
+
+            if (mediaCount == 0) {
+                finishMediaDownload(manager)
+            }
+        } else {
+            finishMediaDownload(manager)
         }
 
         media.closeSilent()
