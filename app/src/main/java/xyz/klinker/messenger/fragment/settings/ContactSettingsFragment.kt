@@ -136,20 +136,13 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
     }
 
     private fun enableNotificationBasedOnMute(mute: Boolean) {
-        val privateNotifications = findPreference(getString(R.string.pref_contact_private_conversation)) as SwitchPreference
         val ringtone = findPreference(getString(R.string.pref_contact_ringtone))
 
         if (mute) {
-            privateNotifications.isChecked = false
-            privateNotifications.isEnabled = false
-
             if (ringtone != null) {
                 ringtone.isEnabled = false
             }
-
-            conversation.privateNotifications = false
         } else {
-            privateNotifications.isEnabled = true
             if (ringtone != null) {
                 ringtone.isEnabled = true
             }

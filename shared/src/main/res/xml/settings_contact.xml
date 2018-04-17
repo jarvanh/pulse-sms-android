@@ -64,14 +64,14 @@
         android:title="@string/notification_settings">
 
         <SwitchPreference
-            android:key="@string/pref_contact_mute_conversation"
-            android:title="@string/mute_conversation"
-            android:summary="@string/mute_conversation_summary" />
-
-        <SwitchPreference
             android:key="@string/pref_contact_private_conversation"
             android:title="@string/private_conversation"
             android:summary="@string/private_conversation_summary" />
+
+        <SwitchPreference
+            android:key="@string/pref_contact_mute_conversation"
+            android:title="@string/mute_conversation"
+            android:summary="@string/mute_conversation_summary" />
 
         <android.preference.RingtonePreference
             android:key="@string/pref_contact_ringtone"
