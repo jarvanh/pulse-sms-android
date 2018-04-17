@@ -24,6 +24,7 @@ public class LoginResponse {
     public String phoneNumber;
     public String name;
     public String baseTheme;
+    public String passcode;
     public boolean rounderBubbles;
     public boolean useGlobalTheme;
     public int color;

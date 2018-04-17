@@ -535,7 +535,7 @@
     <string name="quick_share">Quick Share</string>
 
     <!-- Passcode Entry -->
-    <string name="passcode">Passcode</string>
+    <string name="passcode">Use Passcode</string>
     <string name="forgot_passcode">Forgot Passcode?</string>
     <string name="set_passcode">Save Passcode</string>
     <string name="confirm_fingerprint">Confirm fingerprint to continue. Touch sensor now.</string>
