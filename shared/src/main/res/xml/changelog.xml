@@ -19,13 +19,22 @@
     <!--<version-->
         <!--name="2.11.0"-->
         <!--description="May, 2018">-->
+        <!--<text>Support private conversations that require a passcode or fingerprint to read (TODO: remove the feature flag and remove the fingerprint permission blocker from the shared/AndroidManifest.xml)</text>-->
         <!--<text>Display name, phone number, and location - on the message list - from vCards that you send and receive (TODO: remove the feature flag)</text>-->
         <!--<text>Handle iOS location sharing messages with location preview (TODO: remove the feature flag)</text>-->
     <!--</version>-->
 
     <version
+        name="2.10.1"
+        description="April 17, 2018">
+        <!-- Implemented everything for the private conversations -->
+        <!-- A "downloading media" and "uploading media" notification was always shown - indefinitely - if the user had no media to upload/download -->
+        <text>Bug/crash fixes</text>
+    </version>
+
+    <version
         name="2.10.0"
-        description="April 16, 2018">
+        description="April 15, 2018">
         <!-- Added initial support around the private messages feature (drawer item, settings item, working fragment, etc.). Did not build the activity to enter the passcode, yet -->
         <!-- fix html encoding on notifications for Android 6.0 and below -->
         <text>Auto reply support under the advanced features section. Build automated replies for vacation responses, driving mode, specific contacts, or based on an expression/keyword that you define</text>

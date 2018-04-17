@@ -170,7 +170,7 @@ class AutoReplySettingsFragment : MaterialPreferenceFragment() {
         val responseEditText = layout.findViewById<View>(R.id.response) as EditText
         responseEditText.setHint(R.string.response)
 
-        val adapter = BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, context)
+        val adapter = BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, activity)
         adapter.isShowMobileOnly = Settings.mobileOnly
 
         contactEditText.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
