@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.fragment.settings
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.preference.*
 import android.view.LayoutInflater
@@ -32,6 +33,7 @@ import xyz.klinker.messenger.service.DrivingModeQuickSettingTile
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.AutoReply
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 
 /**
  * Fragment for modifying contact preferences. This includes pinning, changing colors, changing
@@ -85,7 +87,10 @@ class AutoReplySettingsFragment : MaterialPreferenceFragment() {
 
             ApiUtils.updateDrivingModeText(Account.accountId, response)
             updateDatabaseReply(AutoReply.TYPE_DRIVING, response)
-            DrivingModeQuickSettingTile.updateState(activity)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                DrivingModeQuickSettingTile.updateState(activity)
+            }
 
             true
         }
