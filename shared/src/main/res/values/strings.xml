@@ -474,7 +474,7 @@
     <string name="quick_compose_favorites">Favorite contacts</string>
     <string name="quick_compose_favorites_summary">These contacts will be made available on the notification actions</string>
     <string name="quick_compose_favorites_title">Select up to 3 contacts:</string>
-    <string name="secure_private_conversations">Private Conversations Password</string>
+    <string name="secure_private_conversations">Private Conversations Passcode</string>
     <string name="secure_private_conversations_summary">Setting a password will require you to enter it, before viewing private conversations</string>
     <string name="use_internal_browser">Use Internal Web Browser</string>
     <string name="internal_browser_summary">Turning this off will also disable link previews within message lists</string>
@@ -536,8 +536,10 @@
 
     <!-- Passcode Entry -->
     <string name="passcode">Passcode</string>
-    <string name="verify">Verify</string>
+    <string name="forgot_passcode">Forgot Passcode?</string>
     <string name="confirm_fingerprint">Confirm fingerprint to continue. Touch sensor now.</string>
+    <string name="confirm_passcode">Confirm passcode to continue.</string>
+    <string name="incorrect_passcode">Incorrect password.</string>
 
     <!-- Other -->
     <string name="updating_database">Finding latest messages…</string>

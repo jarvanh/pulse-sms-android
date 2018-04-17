@@ -123,6 +123,7 @@
     <color name="deleteIcon">@android:color/white</color>
 
     <color name="darkText">#E2000000</color>
+    <color name="darkSecondaryText">#8C000000</color>
     <color name="lightText">#FFFFFFFF</color>
     <color name="lightSecondaryText">#B2FFFFFF</color>
 
