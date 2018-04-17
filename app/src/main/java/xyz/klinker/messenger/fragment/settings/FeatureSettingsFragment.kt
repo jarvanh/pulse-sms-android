@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.fragment.settings
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceCategory
@@ -11,7 +12,9 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
-import xyz.klinker.messenger.shared.activity.PasswordVerificationActivity
+import xyz.klinker.messenger.shared.activity.PasscodeSetupActivity
+import xyz.klinker.messenger.shared.activity.PasscodeSetupPage
+import xyz.klinker.messenger.shared.activity.PasscodeVerificationActivity
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
@@ -40,14 +43,13 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
 
     private fun initSecurePrivateConversations() {
         val preference = findPreference(getString(R.string.pref_secure_private_conversations))
-//        preference.setOnPreferenceChangeListener { _, o ->
-//            val code = o as String
-//            ApiUtils.updatePrivateConversationsPasscode(Account.accountId, code)
-//            true
-//        }
 
         preference.setOnPreferenceClickListener {
-            startActivity(Intent(activity, PasswordVerificationActivity::class.java))
+            if (Settings.privateConversationsPasscode.isNullOrBlank()) {
+                startActivity(Intent(activity, PasscodeSetupActivity::class.java))
+            } else {
+                startActivityForResult(Intent(activity, PasscodeVerificationActivity::class.java), PasscodeVerificationActivity.REQUEST_CODE)
+            }
             true
         }
 
@@ -147,6 +149,13 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         preference.setOnPreferenceClickListener {
             SettingsActivity.startAutoReplySettings(activity)
             false
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PasscodeVerificationActivity.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            startActivity(Intent(activity, PasscodeSetupActivity::class.java))
         }
     }
 }

@@ -16,15 +16,10 @@ import com.github.ajalt.reprint.core.AuthenticationListener
 import com.raycoarana.codeinputview.CodeInputView
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
-import android.support.v4.content.ContextCompat.startActivity
 import android.content.Intent
 import android.net.Uri
-import java.lang.reflect.AccessibleObject.setAccessible
 
-
-
-
-class PasswordVerificationActivity : FloatingTutorialActivity(), AuthenticationListener {
+class PasscodeVerificationActivity : FloatingTutorialActivity(), AuthenticationListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +75,7 @@ class PasscodePage(context: FloatingTutorialActivity) : TutorialPage(context) {
         setContentView(R.layout.page_passcode)
         setNextButtonText(R.string.forgot_passcode)
 
-        val userPasscode = "1234" //Settings.privateConversationsPasscode
+        val userPasscode = Settings.privateConversationsPasscode
 
         passcode.setShowKeyboard(true)
         passcode.inPasswordMode = true

@@ -15,6 +15,7 @@
         app:length_of_code="4" />
 
     <TextView
+        android:id="@+id/passcode_summary"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

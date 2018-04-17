@@ -130,7 +130,8 @@ class SettingsActivity : AbstractSettingsActivity() {
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        globalFragment!!.onActivityResult(requestCode, resultCode, data)
+        featureFragment?.onActivityResult(requestCode, resultCode, data)
+        globalFragment?.onActivityResult(requestCode, resultCode, data)
     }
 
     companion object {

@@ -88,7 +88,11 @@
             android:theme="@style/tutorial_FloatingTutorialTheme"
             android:launchMode="singleInstance" />
 
-        <activity android:name=".activity.PasswordVerificationActivity"
+        <activity android:name=".activity.PasscodeVerificationActivity"
+            android:theme="@style/tutorial_FloatingTutorialTheme"
+            android:launchMode="singleInstance" />
+
+        <activity android:name=".activity.PasscodeSetupActivity"
             android:theme="@style/tutorial_FloatingTutorialTheme"
             android:launchMode="singleInstance" />
 

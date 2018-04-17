@@ -537,8 +537,10 @@
     <!-- Passcode Entry -->
     <string name="passcode">Passcode</string>
     <string name="forgot_passcode">Forgot Passcode?</string>
+    <string name="set_passcode">Save Passcode</string>
     <string name="confirm_fingerprint">Confirm fingerprint to continue. Touch sensor now.</string>
     <string name="confirm_passcode">Confirm passcode to continue.</string>
+    <string name="type_passcode">Create a passcode.</string>
     <string name="incorrect_passcode">Incorrect password.</string>
 
     <!-- Other -->

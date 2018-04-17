@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.View
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
@@ -14,7 +13,7 @@ import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.fragment.settings.AboutFragment
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
-import xyz.klinker.messenger.shared.activity.PasswordVerificationActivity
+import xyz.klinker.messenger.shared.activity.PasscodeVerificationActivity
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.AnimationUtils
 
@@ -86,7 +85,7 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
         return if (Settings.privateConversationsPasscode.isNullOrEmpty()) {
             displayFragmentWithBackStack(PrivateConversationListFragment())
         } else {
-            activity.startActivityForResult(Intent(activity, PasswordVerificationActivity::class.java), PasswordVerificationActivity.REQUEST_CODE)
+            activity.startActivityForResult(Intent(activity, PasscodeVerificationActivity::class.java), PasscodeVerificationActivity.REQUEST_CODE)
             return false
         }
     }
