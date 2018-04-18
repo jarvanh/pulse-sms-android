@@ -47,10 +47,15 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             return false
         }
 
-        val id = ContactUtils.findContactId(conversation.phoneNumbers!!, activity)
-        val uri = if (id != -1) {
-            "tel:" + ContactUtils.findPhoneNumberByContactId(activity, id.toString())
-        } else {
+
+        val uri = try {
+            val id = ContactUtils.findContactId(conversation.phoneNumbers!!, activity)
+            if (id != -1) {
+                "tel:" + ContactUtils.findPhoneNumberByContactId(activity, id.toString())
+            } else {
+                throw IllegalArgumentException("No contact found")
+            }
+        } catch (e: Exception) {
             "tel:${conversation.phoneNumbers!!}"
         }
 
