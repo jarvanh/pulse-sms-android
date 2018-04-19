@@ -25,6 +25,13 @@
     <!--</version>-->
 
     <version
+        name="2.10.2"
+        description="April 20, 2018">
+        <!-- Improve feature toggle to hide the private messages item -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="2.10.1"
         description="April 17, 2018">
         <!-- Implemented everything for the private conversations -->
