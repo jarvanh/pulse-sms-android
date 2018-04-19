@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@
     <string name="menu_invite">Zaproś znajomych</string>
     <string name="menu_feature_settings">Ustawienia zaawansowane</string>
     <string name="menu_settings">Ustawienia aplikacji</string>
+    <string name="menu_customization_settings">Ustawienia motywu</string>
     <string name="menu_mms_configuration">Konfiguracja MMS</string>
     <string name="menu_account">Moje konto</string>
     <string name="menu_device_texting">Pisz z dowolnego urządzenia</string>
@@ -46,6 +47,7 @@
     <string name="menu_move_to_inbox">Przenieś do skrzynki odbiorczej</string>
     <string name="menu_conversation_information">Szczegóły konwersacji</string>
     <string name="menu_copy_phone_number">Skopiuj numer</string>
+    <string name="menu_view_full_conversation">Historia konwersacji</string>
     <string name="menu_conversation_blacklist">Dodaj do czarnej listy</string>
     <string name="menu_conversation_schedule">Zaplanuj wiadomość</string>
     <string name="menu_contact_settings">Ustawienia kontaktu</string>
@@ -122,6 +124,7 @@ Możesz używać Pulse do wysyłania wiadomości z <b>dowolnego</b> urządzenia!
     <string name="attach_location">Załącz lokalizację</string>
     <string name="attach_contact">Załącz kontakt</string>
     <string name="attach_contact_summary">Wybierz lub wpisz kontakt aby załączyć go do wiadomości!</string>
+    <string name="apply_template">Zastosuj szablon</string>
     <string name="no_location_found">Nie znaleźliśmy Twojej lokalizacji.</string>
     <string name="camera_permission_needed">Musisz zezwolić aplikacji na dostęp do aparatu aby móc robić zdjęcia!</string>
     <string name="take_picture">Pstryknij zdjęcie</string>
@@ -130,6 +133,7 @@ Możesz używać Pulse do wysyłania wiadomości z <b>dowolnego</b> urządzenia!
     <string name="attached_image">Załączony obraz</string>
     <string name="remove_image">Usuń załączony obraz</string>
     <string name="edit_image">Edytuj załączony obraz</string>
+    <string name="edit_recipients">Edytuj adresatów</string>
     <string name="permission_needed_for_action">Wymagane są dodatkowe uprawnienia aby wykonać tę czynność.</string>
     <string name="request_permission">Wymagane uprawnienie</string>
     <string name="no_messages_with_contact">Nie masz żadnych wiadomości w tej konwersacji,
@@ -154,14 +158,25 @@ czas ją rozpocząć!</string>
     <string name="forward_message">Przekaż wiadomość</string>
     <string name="share_message">Udostępnij wiadomość</string>
     <string name="copy_message_text">Skopiuj treść wiadomości</string>
+    <string name="select_text_to_copy">Zaznacz tekst, który chcesz skopiować:</string>
+    <string name="copy_all_text">Kopiuj wszystko</string>
     <string name="open_link_to_browser">Otwórz link w przeglądarce</string>
     <string name="open_link_internal">Otwórz link</string>
     <string name="copy_link">Skopiuj link</string>
+    <string name="attach_vcard">Dodaj kontakt jako wizytówkę vCard</string>
+    <string name="attach_plain_text">Dodaj kontakt jako zwykły tekst</string>
+    <!-- Templates -->
+    <string name="type_template_text">Wprowadź tekst szablonu...</string>
+    <string name="delete_template">Czy chcesz usunąć szablon?</string>
+    <string name="no_templates">Użyj klawiszy <b>+</b> aby stworzyć szablon</string>
     <!-- Compose Screen -->
     <string name="compose_message">Stwórz nową wiadomość</string>
     <string name="send_message">Wyślij wiadomość</string>
     <string name="enter_contact_name">Wpisz nazwę kontaktu</string>
     <string name="error_processing_vcard">Błąd przetwarzania wizytówki kontaktu</string>
+    <string name="compose_recents">Ostatni</string>
+    <string name="compose_groups">Grupy</string>
+    <string name="compose_all_contacts">Wszystkie kontakty</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">Aplikacja nie może poprawnie funkcjonować bez przyznania jej wymienionych uprawnień. Zatwierdź wymagane uprawnienia aby móc kontynuować.</string>
     <string name="loading_messages">Optymalizuję...</string>
@@ -200,6 +215,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
         <item quantity="many">Otrzymane wiadomości: %1$d</item>
     </plurals>
     <string name="read">Przeczytane</string>
+    <string name="mute">Wycisz</string>
     <string name="reply">Odpowiedz</string>
     <string name="reply_to">Wyślij odpowiedź do %1$s</string>
     <string name="call">Zadzwoń</string>
@@ -225,6 +241,8 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="failed_messages_channel">Nie wysłane wiadomości</string>
     <string name="media_parse_text">Kompresuję multimedia z poprzedniej wiadomości...</string>
     <string name="creating_channels_text">Tworzenie kanałów powiadomień...</string>
+    <string name="write_new_message">Napisz nową wiadomość...</string>
+    <string name="receiving_a_message">Odbieranie wiadomości...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Lista zmian</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -244,6 +262,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="troubleshooting">Rozwiązywanie problemów</string>
     <string name="get_in_touch">Bądź w kontakcie</string>
     <string name="faqs">FAQ - często zadawane pytania</string>
+    <string name="get_help">Uzyskaj pomoc</string>
     <string name="features">Możliwości aplikacji</string>
     <string name="issues">Śledzenie błędów</string>
     <string name="issues_summary">Służy również jako przewodnik po możliwościach</string>
@@ -283,6 +302,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="heads_up">Wyskakujące powiadomienia</string>
     <string name="repeat_never">Nigdy</string>
     <string name="repeat_one_min">Co minutę</string>
+    <string name="repeat_two_mins">Co 2 minuty</string>
     <string name="repeat_five_mins">Co pięć minut</string>
     <string name="repeat_ten_mins">Co dziesięć minut</string>
     <string name="repeat_half_hour">Co pół godziny</string>
@@ -299,12 +319,15 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="vibrate_one_short">Jedna krótka wibracja</string>
     <string name="vibrate_one_long">Jedna długa wibracja</string>
     <string name="vibrate_one_extra_long">Jedna bardzo długa wibracja</string>
+    <string name="vibrate_two_short_one_long">Dwie krótkie, jedna długa wibracja</string>
+    <string name="vibrate_one_long_one_short_one_long">Długa, krótka, długa wibracja</string>
     <string name="keyboard_layout">Układ klawiatury</string>
     <string name="keyboard_default">Standardowa klawiatura</string>
     <string name="keyboard_send_key">Przycisk \"Wyślij\"</string>
     <string name="keyboard_enter_key">Przycisk Enter</string>
     <string name="sound_effects">Dźwięki aplikacji</string>
     <string name="delivery_reports">Potwierdzenie dostarczenia</string>
+    <string name="delivery_reports_summary">Większość operatorów nie wspiera tej opcji</string>
     <string name="theme_settings">Personalizacja</string>
     <string name="conversation_list_category">Lista konwersacji</string>
     <string name="general_category">Ogólne</string>
@@ -360,7 +383,6 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="alert_types">Typy ostrzeżeń</string>
     <string name="alert_types_summary">Personalizacja powiadomień</string>
     <string name="strip_unicode">Wyklucz znaki unicode</string>
-    <string name="use_internal_browser">Używaj przeglądarki internetowej</string>
     <string name="strip_unicode_summary">Znaki te zostaną usunięte z wysyłanych wiadomości</string>
     <string name="giffgaff_delivery">Raporty doręczeń w Giffgaff</string>
     <string name="notification_actions">Akcje na powiadomieniach</string>
@@ -394,9 +416,9 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="cleanup_old_messages">Usuń stare wiadomości</string>
     <string name="delayed_sending">Wysyłanie opóźnione</string>
     <string name="quick_compose">Szybkie tworzenie wiadomości</string>
-    <string name="quick_compose_summary">Zawszeb widoczne powiadomienia aby umożliwić szybki dostęp do utworzenia nowej wiadomości</string>
     <string name="secure_private_conversations">Zabezpiecz prywatne konwersacje</string>
     <string name="secure_private_conversations_summary">Wymagaj kodu PIN aby odblokować prywatne konwersacje.</string>
+    <string name="use_internal_browser">Używaj przeglądarki internetowej</string>
     <!-- Theming Options -->
     <string name="day_night">Domyślny (dzień/noc)</string>
     <string name="always_light">Jasny</string>
@@ -451,12 +473,13 @@ Możesz spersonalizować notyfikacje dowolnej konwersacji tworząc dla niej <i>k
 Użyj ustawień domyślnych kanału notyfikacji, aby spersonalizować wszystkie konwersacji, dla których nie został utworzony indywidualny kanał.</string>
     <string name="off">Wyłącz</string>
     <string name="on">Włączony</string>
+    <string name="share_promo">Cześć, używam aplikacji Pulse do wysyłania SMSów i jest świetna! Daj jej szansę i wypróbuj ją:</string>
+    <string name="verifying_password">Weryfikacja hasła...</string>
+    <!-- Rate it -->
     <string name="rate_it">Oceń aplikacje!</string>
     <string name="love_pulse_question">Lubisz Pulse?</string>
     <string name="give_a_rating">Rozważ ocenienie aplikacji lub podziel się nią ze znajomymi!/n/n
 Twoja 5-cio gwiazdkowa ocena rozgrzeje moje serce :)</string>
-    <string name="share_promo">Cześć, używam aplikacji Pulse do wysyłania SMSów i jest świetna! Daj jej szansę i wypróbuj ją:</string>
-    <string name="verifying_password">Weryfikacja hasła...</string>
     <!-- Times -->
     <string name="one_second">1 sekunda</string>
     <string name="three_seconds">Trzy sekundy</string>
@@ -505,4 +528,5 @@ Wysyłaj wiadomości z przeglądarki internetowej, komputera, tabletu, smart zeg
     <string name="three_month_purchase_improved">$1.99 /\n3 miesiące</string>
     <string name="yearly_purchase_improved">$5.99 /\nrok</string>
     <string name="subscription_toast"><b>Nie poniesiesz żadnych kosztów</b> przed zakończeniem 7-dniowego okresu próbnego. Możesz zrezygnować w każdej chwili.</string>
+    <string name="quick_compose_summary">Zawszeb widoczne powiadomienia aby umożliwić szybki dostęp do utworzenia nowej wiadomości</string>
 </resources>

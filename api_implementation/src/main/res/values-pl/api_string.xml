@@ -15,8 +15,8 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="api_login">Login</string>
-    <string name="api_signup">Zaloguj się</string>
+    <string name="api_login">zaloguj się</string>
+    <string name="api_signup">Zapisz się</string>
     <string name="api_signup_failed">Nie można się zalogować na tym urządzeniu. Najpierw musisz zarejestrować się na urządzeniu, które posiada numer telefonu!</string>
     <string name="api_skip_signup">Jeżeli chcesz używać aplikacji tylko na tym urządzeniu, bez korzystania z możliwości sieciowych takich jak pisanie wiadomości z tabletu lub komputera, możesz pominąć ten krok:</string>
     <string name="api_skip">Pomiń</string>

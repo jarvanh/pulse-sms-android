@@ -29,6 +29,7 @@
     <string name="menu_invite">Pozvat přátele</string>
     <string name="menu_feature_settings">Pokročilé funkce</string>
     <string name="menu_settings">Globální nastavení</string>
+    <string name="menu_customization_settings">Přizpůsobení</string>
     <string name="menu_mms_configuration">Nastavení zpráv MMS</string>
     <string name="menu_account">Můj účet</string>
     <string name="menu_device_texting">Zprávy z libovolného zařízení</string>
@@ -45,6 +46,7 @@
     <string name="menu_archive_conversation">Archivovat konverzaci</string>
     <string name="menu_move_to_inbox">Přesunout do doručených zpráv</string>
     <string name="menu_conversation_information">Informace o konverzaci</string>
+    <string name="menu_view_full_conversation">Zobrazit historii</string>
     <string name="menu_conversation_blacklist">Blokovat tento kontakt</string>
     <string name="menu_conversation_schedule">Naplánovat zprávu</string>
     <string name="menu_contact_settings">Nastavení kontaktu</string>
@@ -120,6 +122,7 @@ http://messenger.klinkerapps.com</string>
     <string name="record_video">Nahrát video</string>
     <string name="record_audio">Nahrát zvuk</string>
     <string name="attach_location">Připojit polohu</string>
+    <string name="apply_template">Použít šablonu</string>
     <string name="no_location_found">Nelze zjistit vaši polohu</string>
     <string name="camera_permission_needed">Pro pořizování fotografií je nejprve nutné povolit přístupu k funkci fotoaparátu.</string>
     <string name="take_picture">Vyfotit obrázek</string>
@@ -128,6 +131,7 @@ http://messenger.klinkerapps.com</string>
     <string name="attached_image">Připojený obrázek</string>
     <string name="remove_image">Odstranit připojený obrázek</string>
     <string name="edit_image">Upravit připojený obrázek</string>
+    <string name="edit_recipients">Upravit příjemce</string>
     <string name="permission_needed_for_action">Je potřeba povolení pro tuto akci</string>
     <string name="request_permission">Vyžádat povolení</string>
     <string name="no_messages_with_contact">Zatím v této konverzaci nemáte žádné zprávy,
@@ -152,15 +156,25 @@ je čas začít!</string>
     <string name="forward_message">Přeposlat zprávu</string>
     <string name="share_message">Sdílet zprávu</string>
     <string name="copy_message_text">Kopírovat text zprávy</string>
+    <string name="select_text_to_copy">Vyberte text, který chcete zkopírovat</string>
+    <string name="copy_all_text">Zkopírovat vše</string>
     <string name="open_link_to_browser">Otevřít odkaz v prohlížeči</string>
     <string name="open_link_internal">Otevřít odkaz uvnitř aplikace</string>
     <string name="copy_link">Kopírovat odkaz</string>
+    <string name="attach_vcard">Připojit kontakt jako vCard</string>
+    <string name="attach_plain_text">Připojit kontakt jako prostý text</string>
     <!-- Templates -->
+    <string name="type_template_text">Napište text šablony...</string>
+    <string name="delete_template">Opravdu chcete smazat tuto šablonu?</string>
+    <string name="no_templates">Tlačítkem <b>+</b> vytvoříte šablonu</string>
     <!-- Compose Screen -->
     <string name="compose_message">Napsat novou zprávu</string>
     <string name="send_message">Odeslat zprávu</string>
     <string name="enter_contact_name">Vložte kontaktní jméno</string>
     <string name="error_processing_vcard">Chyba při zpracovávání vcard-u</string>
+    <string name="compose_recents">Nedávné kontakty</string>
+    <string name="compose_groups">Skupiny</string>
+    <string name="compose_all_contacts">Všechny kontakty</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">Tato aplikace nemůže pracovat bez těchto povolení! Musíte je
 přijmout, než můžeme pokračovat.</string>
@@ -200,6 +214,7 @@ Pulse staví vaše konverzace na první místo.</string>
         <item quantity="many">%1$d nových zpráv</item>
     </plurals>
     <string name="read">Přečteno</string>
+    <string name="mute">Ztišit</string>
     <string name="reply">Odpovědět</string>
     <string name="reply_to">Odpovědět %1$s</string>
     <string name="call">Zavolat</string>
@@ -215,6 +230,12 @@ Pulse staví vaše konverzace na první místo.</string>
     <string name="new_message">Nová zpráva</string>
     <string name="received_new_message">Obdrželi jste novou zprávu</string>
     <string name="media">Média</string>
+    <string name="background_service_channel">Oznámení služby na pozadí</string>
+    <string name="silent_background_services">Tiché služby na pozadí</string>
+    <string name="account_activity_notifications">Oznámení o aktivitě na účtu</string>
+    <string name="quick_text_channel">Rychlá textová oznámení</string>
+    <string name="auto_reply_parse_text">Hledám automatické odpovědi na předchozí zprávu...</string>
+    <string name="write_new_message">Napsat novou zprávu...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Historie změn</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
