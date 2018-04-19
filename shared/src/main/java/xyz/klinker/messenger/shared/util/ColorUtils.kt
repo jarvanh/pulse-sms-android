@@ -50,6 +50,7 @@ import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.ColorSet
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 
@@ -195,6 +196,10 @@ object ColorUtils {
             navView.menu.clear()
             navView.inflateMenu(R.menu.navigation_drawer_conversations)
             navView.menu.getItem(1).isChecked = true
+
+            if (!FeatureFlags.SECURE_PRIVATE) {
+                navView.menu.findItem(R.id.drawer_private).isVisible = false
+            }
 
             // change the text to
             if (Account.accountId == null && navView.menu.findItem(R.id.drawer_account) != null) {
