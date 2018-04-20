@@ -160,13 +160,21 @@ object ContactUtils {
 
     fun findPhoneNumberByContactId(context: Context, rawContactId: String): String? {
         val phoneNumber = context.contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER),
+                arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE),
                 ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
                 arrayOf(rawContactId), ContactsContract.CommonDataKinds.Phone.TYPE + " desc")
 
         var number: String? = null
         if (phoneNumber != null && phoneNumber.moveToFirst()) {
-            number = phoneNumber.getString(0)
+            do {
+                if (phoneNumber.getInt(1) == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE) {
+                    number = phoneNumber.getString(0)
+                }
+            } while (phoneNumber.moveToNext() && number == null)
+
+            if (number == null && phoneNumber.moveToFirst()) {
+                number = phoneNumber.getString(0)
+            }
         }
 
         CursorUtil.closeSilent(phoneNumber)
