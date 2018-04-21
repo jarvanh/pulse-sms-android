@@ -48,16 +48,17 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
         }
 
 
-        val uri = try {
-            val id = ContactUtils.findContactId(conversation.phoneNumbers!!, activity)
-            if (id != -1) {
-                "tel:" + ContactUtils.findPhoneNumberByContactId(activity, id.toString())
-            } else {
-                throw IllegalArgumentException("No contact found")
-            }
-        } catch (e: Exception) {
-            "tel:${conversation.phoneNumbers!!}"
-        }
+//        val uri = try {
+//            val id = ContactUtils.findContactId(conversation.phoneNumbers!!, activity)
+//            if (id != -1) {
+//                "tel:" + ContactUtils.findPhoneNumberByContactId(activity, id.toString())
+//            } else {
+//                throw IllegalArgumentException("No contact found")
+//            }
+//        } catch (e: Exception) {
+//            "tel:${conversation.phoneNumbers!!}"
+//        }
+        val uri = "tel:${conversation.phoneNumbers!!}"
 
         val intent = Intent(Intent.ACTION_CALL)
         intent.data = Uri.parse(uri)
