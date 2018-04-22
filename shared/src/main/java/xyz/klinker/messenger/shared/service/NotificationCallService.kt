@@ -11,11 +11,10 @@ class NotificationCallService : NotificationMarkReadService() {
         super.onHandleIntent(intent)
 
         val phoneNumber = intent!!.getStringExtra(EXTRA_PHONE_NUMBER)
-
         if (phoneNumber != null) {
             val call = Intent(Intent.ACTION_DIAL)
             call.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            call.data = Uri.parse("tel:" + phoneNumber)
+            call.data = Uri.parse("tel:$phoneNumber")
 
             try {
                 startActivity(call)
@@ -27,6 +26,6 @@ class NotificationCallService : NotificationMarkReadService() {
     }
 
     companion object {
-        val EXTRA_PHONE_NUMBER = "extra_phone_number"
+        const val EXTRA_PHONE_NUMBER = "extra_phone_number"
     }
 }

@@ -20,7 +20,7 @@ open class NotificationMarkReadService : IntentService("NotificationMarkReadServ
 
     companion object {
 
-        val EXTRA_CONVERSATION_ID = "conversation_id"
+        const val EXTRA_CONVERSATION_ID = "conversation_id"
 
         fun handle(intent: Intent?, context: Context) {
             val conversationId = intent?.getLongExtra(EXTRA_CONVERSATION_ID, -1) ?: return
@@ -46,6 +46,7 @@ open class NotificationMarkReadService : IntentService("NotificationMarkReadServ
 
             UnreadBadger(context).clearCount()
             MessengerAppWidgetProvider.refreshWidget(context)
+            NotificationManagerCompat.from(context).cancel(conversationId.toInt())
         }
     }
 }

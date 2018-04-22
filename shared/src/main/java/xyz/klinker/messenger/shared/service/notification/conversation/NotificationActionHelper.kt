@@ -31,7 +31,7 @@ class NotificationActionHelper(private val service: Context) {
             // with Android N, we only need to show the the reply service intent through the wearable extender
             val reply = Intent(service, ReplyService::class.java)
             reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id)
-            pendingReply = PendingIntent.getService(service, conversation.id.toInt(), reply, PendingIntent.FLAG_UPDATE_CURRENT)
+            pendingReply = PendingIntent.getService(service, conversation.id.toInt() - 1, reply, PendingIntent.FLAG_UPDATE_CURRENT)
 
             val action = NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                     service.getString(R.string.reply), pendingReply)
@@ -53,7 +53,7 @@ class NotificationActionHelper(private val service: Context) {
             reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id)
             reply.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             pendingReply = PendingIntent.getActivity(service,
-                    conversation.id.toInt(), reply, PendingIntent.FLAG_UPDATE_CURRENT)
+                    conversation.id.toInt() - 1, reply, PendingIntent.FLAG_UPDATE_CURRENT)
 
             if (NotificationConstants.DEBUG_QUICK_REPLY) {
                 // if we are debugging, the assumption is that we are on android N, we have to be stop showing
@@ -84,7 +84,7 @@ class NotificationActionHelper(private val service: Context) {
                 extras.putLong(ReplyService.EXTRA_CONVERSATION_ID, conversation.id)
                 wearReply.putExtras(extras)
                 val wearPendingReply = PendingIntent.getService(service,
-                        conversation.id.toInt() + 1, wearReply, PendingIntent.FLAG_UPDATE_CURRENT)
+                        conversation.id.toInt() - 2, wearReply, PendingIntent.FLAG_UPDATE_CURRENT)
 
                 val wearAction = NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                         service.getString(R.string.reply), wearPendingReply)
@@ -103,7 +103,7 @@ class NotificationActionHelper(private val service: Context) {
             val call = Intent(service, NotificationCallService::class.java)
             call.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id)
             call.putExtra(NotificationCallService.EXTRA_PHONE_NUMBER, conversation.phoneNumbers)
-            val callPending = PendingIntent.getService(service, conversation.id.toInt(),
+            val callPending = PendingIntent.getService(service, conversation.id.toInt() + 1,
                     call, PendingIntent.FLAG_UPDATE_CURRENT)
 
             builder.addAction(NotificationCompat.Action(R.drawable.ic_call_dark, service.getString(R.string.call), callPending))
@@ -112,7 +112,7 @@ class NotificationActionHelper(private val service: Context) {
         val deleteMessage = Intent(service, NotificationDeleteService::class.java)
         deleteMessage.putExtra(NotificationDeleteService.EXTRA_CONVERSATION_ID, conversation.id)
         deleteMessage.putExtra(NotificationDeleteService.EXTRA_MESSAGE_ID, conversation.unseenMessageId)
-        val pendingDeleteMessage = PendingIntent.getService(service, conversation.id.toInt(),
+        val pendingDeleteMessage = PendingIntent.getService(service, conversation.id.toInt() + 2,
                 deleteMessage, PendingIntent.FLAG_UPDATE_CURRENT)
 
         if (Settings.notificationActions.contains(NotificationAction.DELETE)) {
@@ -122,7 +122,7 @@ class NotificationActionHelper(private val service: Context) {
 
         val read = Intent(service, NotificationMarkReadService::class.java)
         read.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id)
-        val pendingRead = PendingIntent.getService(service, conversation.id.toInt(),
+        val pendingRead = PendingIntent.getService(service, conversation.id.toInt() + 3,
                 read, PendingIntent.FLAG_UPDATE_CURRENT)
 
         if (Settings.notificationActions.contains(NotificationAction.READ)) {
@@ -132,7 +132,7 @@ class NotificationActionHelper(private val service: Context) {
 
         val mute = Intent(service, NotificationMuteService::class.java)
         mute.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id)
-        val pendingMute = PendingIntent.getService(service, conversation.id.toInt(),
+        val pendingMute = PendingIntent.getService(service, conversation.id.toInt() + 4,
                 mute, PendingIntent.FLAG_UPDATE_CURRENT)
 
         if (Settings.notificationActions.contains(NotificationAction.MUTE)) {
