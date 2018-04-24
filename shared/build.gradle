@@ -97,7 +97,7 @@ android {
 
 dependencies {
 
-    api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$KOTLIN_VERSION"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$KOTLIN_VERSION"
 
     //noinspection GradleCompatible
     api "com.android.support:appcompat-v7:$ANDROID_SUPPORT_VERSION"

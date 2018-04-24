@@ -37,7 +37,8 @@
 
     <Preference
         android:key="@string/pref_mms_save_location"
-        android:title="@string/mms_download_directory" />
+        android:title="@string/mms_download_directory"
+        android:summary="@string/mms_download_directory_summary" />
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:title="@string/apn_configuration" >
