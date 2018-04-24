@@ -44,6 +44,7 @@ import java.io.InputStreamReader
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.IdMatcher
 import xyz.klinker.messenger.shared.data.MimeType
+import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import java.text.DecimalFormat
@@ -664,7 +665,7 @@ object SmsMmsUtils {
     }
 
     private fun sendReadReport(context: Context?, threadId: Long, status: Int) {
-        if (context == null) {
+        if (context == null || !MmsSettings.mmsReadReceipts) {
             return
         }
 

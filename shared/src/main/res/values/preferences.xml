@@ -123,6 +123,7 @@
     <string name="pref_mms_size" translatable="false">mms_size_limit</string>
     <string name="pref_convert_to_mms" translatable="false">sms_to_mms_message_conversion_count</string>
     <string name="pref_group_mms" translatable="false">group_mms</string>
+    <string name="pref_mms_read_receipts" translatable="false">mms_read_receipts</string>
     <string name="pref_auto_save_media" translatable="false">auto_save_media</string>
     <string name="pref_mms_save_location" translatable="false">mms_save_location</string>
     <string name="pref_override_system_apn" translatable="false">mms_override</string>

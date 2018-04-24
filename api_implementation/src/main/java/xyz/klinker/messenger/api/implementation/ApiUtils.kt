@@ -1135,6 +1135,15 @@ object ApiUtils {
     }
 
     /**
+     * Update the read receipts setting.
+     */
+    fun updateMmsReadReceipts(accountId: String?, receipts: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "mms_read_receipts", "boolean", receipts)
+        }
+    }
+
+    /**
      * Update the auto save media setting.
      */
     fun updateAutoSaveMedia(accountId: String?, save: Boolean) {
