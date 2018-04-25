@@ -1871,6 +1871,12 @@ object DataSource {
      * conversation id will be returned. If not, null will be returned.
      */
     fun findConversationId(context: Context, phoneNumbers: String): Long? {
+        val phoneNumbers = SmsMmsUtils.stripDuplicatePhoneNumbers(when {
+            phoneNumbers.endsWith(", ") -> phoneNumbers.substring(0, phoneNumbers.length - 2)
+            phoneNumbers.endsWith(",") -> phoneNumbers.substring(0, phoneNumbers.length - 1)
+            else -> phoneNumbers
+        })
+
         val matcher = SmsMmsUtils.createIdMatcher(phoneNumbers)
         val cursor = try {
             database(context).query(Conversation.TABLE,
