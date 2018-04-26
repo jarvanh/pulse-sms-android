@@ -75,7 +75,7 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
         if (adapterPosition == -1) {
             val conversation = DataSource.getConversation(context, conversationId)
 
-            if (FeatureFlags.SECURE_PRIVATE && conversation?.privateNotifications == true) {
+            if (conversation?.privateNotifications == true) {
                 // we don't want to add a conversation that is private...
                 // if the fragment instance is a PrivateConversationListFragment, then we will always have the private conversations shown, and it wouldn't reach this
                 // for any other type of fragment, we don't want to add the conversation there, since it is supposed to be password protected

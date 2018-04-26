@@ -84,11 +84,6 @@ class MessengerActivity : AppCompatActivity() {
             AnimationUtils.conversationListSize = content.height
             AnimationUtils.toolbarSize = toolbar.height
         }
-
-        if (!FeatureFlags.SECURE_PRIVATE) {
-            val drawer = findViewById<NavigationView>(R.id.navigation_view)
-            drawer.menu.findItem(R.id.drawer_private).isVisible = false
-        }
     }
 
     public override fun onStart() {

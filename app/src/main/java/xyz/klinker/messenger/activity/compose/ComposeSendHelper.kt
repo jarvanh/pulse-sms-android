@@ -88,8 +88,7 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
 
         val open = Intent(activity, MessengerActivity::class.java)
 
-//        if (conversation?.privateNotifications == true) {
-        if (FeatureFlags.SECURE_PRIVATE && conversation?.privateNotifications == true) {
+        if (conversation?.privateNotifications == true) {
             Toast.makeText(activity, R.string.private_conversation_disclaimer, Toast.LENGTH_LONG).show()
         } else {
             open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversationId)

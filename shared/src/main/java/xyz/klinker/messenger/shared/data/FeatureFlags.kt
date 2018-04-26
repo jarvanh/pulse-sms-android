@@ -89,10 +89,7 @@ object FeatureFlags {
     var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false
 
     // disabled for future features
-    var SECURE_PRIVATE: Boolean = false
     var FOLDER_SUPPORT: Boolean = false
-    var AUTO_REPLIES: Boolean = false
-    var VCARD_PREVIEWS: Boolean = false
 
     // in testing
 
@@ -100,10 +97,7 @@ object FeatureFlags {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
-
-        SECURE_PRIVATE = getValue(context, sharedPrefs, FLAG_SECURE_PRIVATE)
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
-        VCARD_PREVIEWS = getValue(context, sharedPrefs, FLAG_VCARD_PREVIEWS)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -113,10 +107,7 @@ object FeatureFlags {
 
         when (identifier) {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
-
-            FLAG_SECURE_PRIVATE -> SECURE_PRIVATE = flag
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
-            FLAG_VCARD_PREVIEWS -> VCARD_PREVIEWS = flag
         }
     }
 

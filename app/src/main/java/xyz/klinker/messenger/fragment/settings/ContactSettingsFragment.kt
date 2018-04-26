@@ -157,10 +157,6 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
             conversation.privateNotifications = o as Boolean
             true
         }
-
-        if (FeatureFlags.SECURE_PRIVATE) {
-            preference.summary = getString(R.string.private_conversation_summary_2)
-        }
     }
 
     private fun setUpGroupName() {

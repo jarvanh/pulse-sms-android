@@ -197,10 +197,6 @@ object ColorUtils {
             navView.inflateMenu(R.menu.navigation_drawer_conversations)
             navView.menu.getItem(1).isChecked = true
 
-            if (!FeatureFlags.SECURE_PRIVATE) {
-                navView.menu.findItem(R.id.drawer_private).isVisible = false
-            }
-
             // change the text to
             if (Account.accountId == null && navView.menu.findItem(R.id.drawer_account) != null) {
                 navView.menu.findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting)

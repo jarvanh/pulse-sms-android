@@ -784,28 +784,15 @@ object DataSource {
      * @return a list of conversations.
      */
     fun getUnarchivedConversations(context: Context): Cursor {
-        return if (FeatureFlags.SECURE_PRIVATE) {
-            try {
-                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=? AND " + Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=?", arrayOf("0", "0"), null, null,
-                        Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
-                )
-            } catch (e: Exception) {
-                ensureActionable(context)
-                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=? AND " + Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=?", arrayOf("0", "0"), null, null,
-                        Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
-                )
-            }
-        } else {
-            try {
-                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=?", arrayOf("0"), null, null,
-                        Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
-                )
-            } catch (e: Exception) {
-                ensureActionable(context)
-                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=?", arrayOf("0"), null, null,
-                        Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
-                )
-            }
+        return try {
+            database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=? AND " + Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=?", arrayOf("0", "0"), null, null,
+                    Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
+            )
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=? AND " + Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=?", arrayOf("0", "0"), null, null,
+                    Conversation.COLUMN_PINNED + " desc, " + Conversation.COLUMN_TIMESTAMP + " desc"
+            )
         }
     }
 

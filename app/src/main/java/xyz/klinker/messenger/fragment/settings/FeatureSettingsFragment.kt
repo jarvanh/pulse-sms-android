@@ -52,11 +52,6 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
             }
             true
         }
-
-        if (!FeatureFlags.SECURE_PRIVATE) {
-            val category = findPreference(getString(R.string.pref_app_features_category)) as PreferenceCategory
-            category.removePreference(preference)
-        }
     }
 
     private fun initInternalBrowser() {

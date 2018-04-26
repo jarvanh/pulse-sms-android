@@ -44,7 +44,7 @@ class MessageInsertionMetadataHelper(private val context: Context) {
             AutoReplyParserService.start(context, message)
         }
 
-        if (FeatureFlags.VCARD_PREVIEWS && MimeType.isVcard(message.mimeType!!) && canProcessVcard(message)) {
+        if (MimeType.isVcard(message.mimeType!!) && canProcessVcard(message)) {
             VcardParserService.start(context, message)
         }
     }
