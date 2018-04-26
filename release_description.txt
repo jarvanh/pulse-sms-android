@@ -1,5 +1,4 @@
-With this release, Pulse SMS adds support for auto replies!<br/><br/>
-
-Set up automated replies for when you are driving, on vacation, when a specific contact sends you a message, and when messages contain certain keywords/expressions.<br/><br/>
-
-Try it out from the <i>Advanced Features</i> section of the app!
+With this release:<br/>
+- Pulse adds a private conversations inbox, with a password protection option, to hide your secret conversations!<br/>
+- Pulse will display previews of the content within sent and received contact vCards<br/>
+- Pulse will display a location preview when an iOS user shares their location with you
