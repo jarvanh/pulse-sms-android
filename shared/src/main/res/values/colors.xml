@@ -107,6 +107,7 @@
 
     <!-- Theme Specific Colors -->
     <color name="background">#EEEEEE</color>
+    <color name="dark_background">#374248</color>
     <color name="quickReplyBackground">#FFFFFF</color>
     <color name="swipeBackground">#D5D5D5</color>
     <color name="drawerBackground">@android:color/white</color>

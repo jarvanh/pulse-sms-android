@@ -22,6 +22,7 @@ import android.net.Uri
 import android.widget.EditText
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
+import xyz.klinker.messenger.shared.util.ColorUtils
 
 class PasscodeVerificationActivity : FloatingTutorialActivity(), AuthenticationListener {
 
@@ -67,9 +68,24 @@ class FingerprintPage(context: FloatingTutorialActivity) : TutorialPage(context)
         setContentView(R.layout.page_fingerprint)
 
         setNextButtonText(R.string.passcode)
-        setBackgroundColor(Settings.mainColorSet.color)
-        setNextButtonTextColor(Color.WHITE)
-        setProgressIndicatorColor(Color.WHITE)
+
+        when {
+            ColorUtils.isColorDark(Settings.mainColorSet.color) -> {
+                setBackgroundColor(Settings.mainColorSet.color)
+                setNextButtonTextColor(Color.WHITE)
+                setProgressIndicatorColor(Color.WHITE)
+            }
+            ColorUtils.isColorDark(Settings.mainColorSet.colorAccent) -> {
+                setBackgroundColor(Settings.mainColorSet.colorAccent)
+                setNextButtonTextColor(Color.WHITE)
+                setProgressIndicatorColor(Color.WHITE)
+            }
+            else -> {
+                setBackgroundColor(resources.getColor(R.color.dark_background))
+                setNextButtonTextColor(Color.WHITE)
+                setProgressIndicatorColor(Color.WHITE)
+            }
+        }
     }
 }
 
