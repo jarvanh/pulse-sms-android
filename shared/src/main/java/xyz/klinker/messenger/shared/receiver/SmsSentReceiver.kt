@@ -24,6 +24,7 @@ import android.provider.Telephony
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.telephony.SmsManager
+import android.util.Log
 import com.klinker.android.send_message.SentReceiver
 import com.klinker.android.send_message.StripAccents
 import xyz.klinker.messenger.api.implementation.Account
@@ -43,30 +44,18 @@ import java.util.*
  */
 open class SmsSentReceiver : SentReceiver() {
 
-    protected open fun retryFailedMessages(): Boolean {
-        return true
-    }
+    protected open fun retryFailedMessages() = true
 
-    override fun onReceive(context: Context, intent: Intent) {
-        Thread {
-            try {
-                super.onReceive(context, intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }.start()
-
+    override fun onMessageStatusUpdated(context: Context, intent: Intent) {
         if (Account.exists() && !Account.primary) {
             return
         }
 
-        Thread {
-            try {
-                handleReceiver(context, intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }.start()
+        try {
+            handleReceiver(context, intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun handleReceiver(context: Context, intent: Intent) {

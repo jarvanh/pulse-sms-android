@@ -38,20 +38,12 @@ import xyz.klinker.messenger.shared.util.SmsMmsUtils
  */
 class SmsDeliveredReceiver : DeliveredReceiver() {
 
-    override fun onReceive(context: Context, intent: Intent) {
-        Thread {
-            try {
-                super.onReceive(context, intent)
+    override fun onMessageStatusUpdated(context: Context, intent: Intent) {
+        if (Account.exists() && !Account.primary) {
+            return
+        }
 
-                if (Account.exists() && !Account.primary) {
-                    return@Thread
-                }
-
-                handleReceiver(context, intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }.start()
+        handleReceiver(context, intent)
     }
 
     @Throws(Exception::class)

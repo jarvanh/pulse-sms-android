@@ -20,6 +20,7 @@
         name="2.11.0"
         description="April 26th, 2018">
         <!-- Unique IDs on notification actions -->
+        <!-- Brought in v5.0.0 of the sms/mms lib with changes to backgrounding all the receivers -->
         <text>Support for a private conversation inbox, with optional password protection, to hide your secret conversations</text>
         <text>Preview information on sent and received contact vCards</text>
         <text>Handle iOS location sharing messages with location preview</text>

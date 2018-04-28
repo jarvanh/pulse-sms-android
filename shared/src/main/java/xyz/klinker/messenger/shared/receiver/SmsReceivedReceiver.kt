@@ -32,9 +32,11 @@ class SmsReceivedReceiver : BroadcastReceiver() {
             return
         }
 
+        val result = goAsync()
         Thread {
             SmsReceivedReceiver.lastReceived = TimeUtils.now
             SmsReceivedHandler(context).newSmsRecieved(intent)
+            result.finish()
         }.start()
     }
 

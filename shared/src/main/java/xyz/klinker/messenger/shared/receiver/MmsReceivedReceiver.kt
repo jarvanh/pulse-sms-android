@@ -40,46 +40,36 @@ import xyz.klinker.messenger.shared.util.*
  */
 class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver() {
 
-    private var context: Context? = null
     private var conversationId: Long? = null
     private var ignoreNotification = false
 
-    override fun onReceive(context: Context, intent: Intent) {
-        this.context = context
-        super.onReceive(context, intent)
-    }
-
-    override fun onMessageReceived(messageUri: Uri) {
+    override fun onMessageReceived(context: Context, messageUri: Uri) {
         Log.v("MmsReceivedReceiver", "message received: $messageUri")
 
-        Thread {
-            val lastMessage = SmsMmsUtils.getMmsMessage(context, messageUri, null)
-            if (lastMessage != null && lastMessage.moveToFirst()) {
-                handleMms(context!!, messageUri, lastMessage)
-            } else {
-                try {
-                    CursorUtil.closeSilent(lastMessage)
-                } catch (e: Exception) {
-                }
+        val lastMessage = SmsMmsUtils.getMmsMessage(context, messageUri, null)
+        if (lastMessage != null && lastMessage.moveToFirst()) {
+            handleMms(context, messageUri, lastMessage)
+        } else {
+            try {
+                CursorUtil.closeSilent(lastMessage)
+            } catch (e: Exception) {
             }
-        }.start()
+        }
     }
 
-    override fun onError(error: String) {
+    override fun onError(context: Context, error: String) {
         Log.v("MmsReceivedReceiver", "message save error: $error")
 
-        Thread {
-            val lastMessage = SmsMmsUtils.getLastMmsMessage(context)
-            if (lastMessage != null && lastMessage.moveToFirst()) {
-                val uri = Uri.parse("content://mms/" + lastMessage.getLong(0))
-                handleMms(context!!, uri, lastMessage)
-            } else {
-                try {
-                    CursorUtil.closeSilent(lastMessage)
-                } catch (e: Exception) {
-                }
+        val lastMessage = SmsMmsUtils.getLastMmsMessage(context)
+        if (lastMessage != null && lastMessage.moveToFirst()) {
+            val uri = Uri.parse("content://mms/" + lastMessage.getLong(0))
+            handleMms(context, uri, lastMessage)
+        } else {
+            try {
+                CursorUtil.closeSilent(lastMessage)
+            } catch (e: Exception) {
             }
-        }.start()
+        }
     }
 
     private fun handleMms(context: Context, uri: Uri, lastMessage: Cursor) {
