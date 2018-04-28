@@ -96,6 +96,12 @@
             android:defaultValue="false" />
 
         <SwitchPreference
+            android:key="@string/pref_mms_read_receipts"
+            android:title="@string/use_mms_read_receipts"
+            android:summary="@string/delivery_reports_summary"
+            android:defaultValue="false" />
+
+        <SwitchPreference
             android:key="@string/pref_strip_unicode"
             android:title="@string/strip_unicode"
             android:summary="@string/strip_unicode_summary"

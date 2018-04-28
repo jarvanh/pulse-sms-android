@@ -28,7 +28,6 @@ class MmsConfigurationFragment : MaterialPreferenceFragment() {
         initConvertToMMS()
         initMaxImageSize()
         initGroupMMS()
-        initReadReceipts()
         initAutoSaveMedia()
         initDownloadLocation()
 
@@ -73,16 +72,6 @@ class MmsConfigurationFragment : MaterialPreferenceFragment() {
                     val group = o as Boolean
                     ApiUtils.updateGroupMMS(Account.accountId,
                             group)
-                    true
-                }
-    }
-
-    private fun initReadReceipts() {
-        findPreference(getString(R.string.pref_mms_read_receipts))
-                .setOnPreferenceChangeListener { _, o ->
-                    val receipts = o as Boolean
-                    ApiUtils.updateGroupMMS(Account.accountId,
-                            receipts)
                     true
                 }
     }

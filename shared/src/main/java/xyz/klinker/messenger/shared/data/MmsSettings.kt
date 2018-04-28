@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Environment
 import android.preference.PreferenceManager
-import android.support.annotation.VisibleForTesting
 
 import com.codekidlabs.storagechooser.utils.DiskUtil
 
@@ -16,7 +15,7 @@ object MmsSettings {
 
     var convertLongMessagesToMMS: Boolean = false
     var groupMMS: Boolean = false
-    var mmsReadReceipts: Boolean = false
+    var readReceipts: Boolean = false
     var autoSaveMedia: Boolean = false
     var overrideSystemAPN: Boolean = false
     var saveDirectory: String? = null
@@ -35,7 +34,7 @@ object MmsSettings {
         val sharedPrefs = getSharedPrefs(context)
 
         this.groupMMS = sharedPrefs.getBoolean(context.getString(R.string.pref_group_mms), true)
-        this.mmsReadReceipts = sharedPrefs.getBoolean(context.getString(R.string.pref_mms_read_receipts), true)
+        this.readReceipts = sharedPrefs.getBoolean(context.getString(R.string.pref_mms_read_receipts), false)
         this.autoSaveMedia = sharedPrefs.getBoolean(context.getString(R.string.pref_auto_save_media), false)
         this.overrideSystemAPN = sharedPrefs.getBoolean(context.getString(R.string.pref_override_system_apn), false)
         this.saveDirectory = sharedPrefs.getString(DiskUtil.SC_PREFERENCE_KEY,

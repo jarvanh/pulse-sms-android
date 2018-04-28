@@ -51,6 +51,7 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
         initSwipeDelete()
         initNotificationActions()
         initDeliveryReports()
+        initReadReceipts()
         initSoundEffects()
         initStripUnicode()
         initNotificationHistory()
@@ -142,6 +143,16 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
         } else {
             (findPreference(getString(R.string.pref_advanced_category)) as PreferenceGroup).removePreference(normal)
         }
+    }
+
+    private fun initReadReceipts() {
+        findPreference(getString(R.string.pref_mms_read_receipts))
+                .setOnPreferenceChangeListener { _, o ->
+                    val receipts = o as Boolean
+                    ApiUtils.updateGroupMMS(Account.accountId,
+                            receipts)
+                    true
+                }
     }
 
     private fun initStripUnicode() {

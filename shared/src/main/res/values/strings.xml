@@ -447,8 +447,7 @@
     <string name="max_mms_size_summary">Do not set this higher than what your carrier allows</string>
     <string name="use_group_mms">Use Group MMS</string>
     <string name="use_group_mms_summary">When disabled, group messages will be sent out as individual SMS, to each of the recipients</string>
-    <string name="use_mms_read_receipts">MMS Read Receipts</string>
-    <string name="use_mms_read_receipts_summary">These will do nothing on the vast majority of carriers - they will be ignored</string>
+    <string name="use_mms_read_receipts">Read Receipts</string>
     <string name="auto_save_media">Auto-save Media</string>
     <string name="auto_save_media_summary">Automatically save any MMS media in the /Downloads folder when
         it is received</string>

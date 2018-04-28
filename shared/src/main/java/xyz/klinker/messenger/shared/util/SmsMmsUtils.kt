@@ -665,7 +665,7 @@ object SmsMmsUtils {
     }
 
     private fun sendReadReport(context: Context?, threadId: Long, status: Int) {
-        if (context == null || !MmsSettings.mmsReadReceipts) {
+        if (context == null || !MmsSettings.readReceipts) {
             return
         }
 
