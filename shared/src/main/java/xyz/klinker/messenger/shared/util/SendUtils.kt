@@ -99,7 +99,7 @@ class SendUtils constructor(private val subscriptionId: Int? = null) {
             settings.uaProfTagName = MmsSettings.userAgentProfileTagName
         }
 
-        if (subscriptionId != null && subscriptionId != 0 && subscriptionId != -1) {
+        if (subscriptionId != null && subscriptionId != 0 && subscriptionId != -1 && DualSimUtils.availableSims.size > 1) {
             settings.subscriptionId = subscriptionId
         }
 
