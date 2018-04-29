@@ -38,23 +38,18 @@ import xyz.klinker.messenger.shared.util.SmsMmsUtils
  */
 class SmsDeliveredReceiver : DeliveredReceiver() {
 
-    override fun onMessageStatusUpdated(context: Context, intent: Intent) {
+    override fun onMessageStatusUpdated(context: Context, intent: Intent, receiverResultCode: Int) {
         if (Account.exists() && !Account.primary) {
             return
         }
 
-        handleReceiver(context, intent)
-    }
-
-    @Throws(Exception::class)
-    private fun handleReceiver(context: Context, intent: Intent) {
         val uri = Uri.parse(intent.getStringExtra("message_uri"))
-
-        when (resultCode) {
+        when (receiverResultCode) {
             Activity.RESULT_OK -> markMessageDelivered(context, uri)
             Activity.RESULT_CANCELED -> markMessageError(context, uri)
         }
     }
+
 
     private fun markMessageDelivered(context: Context, uri: Uri) {
         markMessage(context, uri, false)

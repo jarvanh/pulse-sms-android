@@ -35,7 +35,7 @@ import xyz.klinker.messenger.shared.util.closeSilent
  */
 class MmsSentReceiver : com.klinker.android.send_message.MmsSentReceiver() {
 
-    override fun onMessageStatusUpdated(context: Context, intent: Intent) {
+    override fun onMessageStatusUpdated(context: Context, intent: Intent, receiverResultCode: Int) {
         if (Account.exists() && !Account.primary) {
             return
         }

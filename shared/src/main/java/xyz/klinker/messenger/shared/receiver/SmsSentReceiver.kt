@@ -46,29 +46,23 @@ open class SmsSentReceiver : SentReceiver() {
 
     protected open fun retryFailedMessages() = true
 
-    override fun onMessageStatusUpdated(context: Context, intent: Intent) {
+    override fun onMessageStatusUpdated(context: Context, intent: Intent, receiverResultCode: Int) {
         if (Account.exists() && !Account.primary) {
             return
         }
 
         try {
-            handleReceiver(context, intent)
+            val uri = Uri.parse(intent.getStringExtra("message_uri"))
+            when (receiverResultCode) {
+                SmsManager.RESULT_ERROR_GENERIC_FAILURE, SmsManager.RESULT_ERROR_NO_SERVICE, SmsManager.RESULT_ERROR_NULL_PDU, SmsManager.RESULT_ERROR_RADIO_OFF -> markMessageError(context, uri)
+                else -> try {
+                    markMessageSent(context, uri)
+                } catch (e: Exception) {
+                    fallbackToLatestMessages(context)
+                }
+            }
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-    }
-
-    private fun handleReceiver(context: Context, intent: Intent) {
-        val uri = Uri.parse(intent.getStringExtra("message_uri"))
-
-        when (resultCode) {
-            SmsManager.RESULT_ERROR_GENERIC_FAILURE, SmsManager.RESULT_ERROR_NO_SERVICE, SmsManager.RESULT_ERROR_NULL_PDU, SmsManager.RESULT_ERROR_RADIO_OFF -> markMessageError(context, uri)
-            else -> try {
-                markMessageSent(context, uri)
-            } catch (e: Exception) {
-                fallbackToLatestMessages(context)
-            }
-
         }
     }
 
