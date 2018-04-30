@@ -9,6 +9,7 @@ import xyz.klinker.messenger.api.entity.ContactBody
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
 import java.util.*
@@ -90,7 +91,9 @@ class ContactSyncJob : SimpleJobService() {
                     .setReplaceCurrent(true)
                     .build()
 
-            //dispatcher.mustSchedule(myJob)
+            if (FeatureFlags.QUERY_DAILY_CONTACT_CHANGES) {
+                dispatcher.mustSchedule(myJob)
+            }
         }
     }
 }

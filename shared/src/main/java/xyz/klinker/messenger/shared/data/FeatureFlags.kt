@@ -73,6 +73,7 @@ object FeatureFlags {
     private val FLAG_RETRY_FAILED_REQUESTS = "flag_retry_failed_requests"
     private val FLAG_UPDATE_WEB_MESSAGE_TIMESTAMPS = "flag_update_web_message_timestamps"
     private val FLAG_SEND_SCHEDULED_MESSAGE_IMMEDIATELY = "flag_send_scheduled_immediately"
+    private val FLAG_QUERY_DAILY_CONTACT_CHANGES = "flag_query_daily_contact_changes"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -92,12 +93,14 @@ object FeatureFlags {
     var FOLDER_SUPPORT: Boolean = false
 
     // in testing
+    var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
+        QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -108,6 +111,7 @@ object FeatureFlags {
         when (identifier) {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
+            FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
         }
     }
 
