@@ -12,6 +12,10 @@ class DrawerItemVisibilityHelper(private val navigationView: NavigationView) {
     }
 
     private fun addFolders() {
+        if (!FeatureFlags.FOLDER_SUPPORT) {
+            return
+        }
+
         // TODO: Async query what folders should be shown (or can I just hold a reference list here?)
     }
 
