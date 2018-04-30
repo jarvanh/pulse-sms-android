@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
-                app:msb_hideDelayInMilliseconds="700"
+                app:msb_hideDelayInMilliseconds="500"
                 app:msb_lightOnTouch="true"
                 app:msb_recyclerView="@id/message_list" />
 

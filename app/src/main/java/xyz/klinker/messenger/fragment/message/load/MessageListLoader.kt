@@ -16,10 +16,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.util.ColorUtils
-import xyz.klinker.messenger.shared.util.ContactUtils
-import xyz.klinker.messenger.shared.util.MessageListRefreshMonitor
-import xyz.klinker.messenger.shared.util.PerformanceProfiler
+import xyz.klinker.messenger.shared.util.*
 import java.util.*
 
 class MessageListLoader(private val fragment: MessageListFragment) {
@@ -51,13 +48,10 @@ class MessageListLoader(private val fragment: MessageListFragment) {
         manager.stackFromEnd = true
         messageList.layoutManager = manager
 
-        dragScrollBar.setIndicator(DateAndTimeIndicator(activity, true, true, true, false),
-                true)
-                .setHandleColour(if (Settings.useGlobalThemeColor)
-                    Settings.mainColorSet.color
-                else
-                    argManager.color)
-                .setFastScrollSnapPercent(.05f)
+        dragScrollBar.setIndicator(DateAndTimeIndicator(activity, true, true, true, false), true)
+                .setHandleColor(if (Settings.useGlobalThemeColor)
+                    Settings.mainColorSet.color else argManager.color)
+//                .setFastScrollSnapPercent(.05f)
 
         messageList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
@@ -204,6 +198,6 @@ class MessageListLoader(private val fragment: MessageListFragment) {
     }
     
     companion object {
-        val MESSAGE_LIMIT = 8000
+        const val MESSAGE_LIMIT = 8000
     }
 }

@@ -130,6 +130,8 @@ class SendUtils constructor(private val subscriptionId: Int? = null) {
                 Log.e("Sending Exception", "Could not attach media: $data", e)
             } catch (e: SecurityException) {
                 Log.e("Sending Exception", "Could not attach media: $data", e)
+            } catch (e: OutOfMemoryError) {
+                Log.e("Sending Exception", "Could not attach media: $data", e)
             }
 
         }
@@ -174,7 +176,7 @@ class SendUtils constructor(private val subscriptionId: Int? = null) {
     }
 
     companion object {
-        @Throws(IOException::class, NullPointerException::class, SecurityException::class)
+        @Throws(IOException::class, NullPointerException::class, SecurityException::class, OutOfMemoryError::class)
         fun getBytes(context: Context, data: Uri): ByteArray {
             val stream = context.contentResolver.openInputStream(data)
             val byteBuffer = ByteArrayOutputStream()

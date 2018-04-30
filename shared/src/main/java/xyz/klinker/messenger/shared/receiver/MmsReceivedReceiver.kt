@@ -201,7 +201,11 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
         return if (MmsSettings.mmscUrl != null && !MmsSettings.mmscUrl!!.isEmpty() &&
                 MmsSettings.mmsProxy != null && !MmsSettings.mmsProxy!!.isEmpty() &&
                 MmsSettings.mmsPort != null && !MmsSettings.mmsPort!!.isEmpty()) {
-            com.klinker.android.send_message.MmsReceivedReceiver.MmscInformation(MmsSettings.mmscUrl, MmsSettings.mmsProxy, Integer.parseInt(MmsSettings.mmsPort))
+            try {
+                com.klinker.android.send_message.MmsReceivedReceiver.MmscInformation(MmsSettings.mmscUrl, MmsSettings.mmsProxy, Integer.parseInt(MmsSettings.mmsPort))
+            } catch (e: NumberFormatException) {
+                null
+            }
         } else {
             null
         }

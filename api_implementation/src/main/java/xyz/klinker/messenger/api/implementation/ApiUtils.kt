@@ -869,14 +869,14 @@ object ApiUtils {
             val fileRef = folderRef!!.child(messageId.toString() + "")
             fileRef.putBytes(encryptionUtils.encrypt(bytes).toByteArray())
                     .addOnSuccessListener {
-                        Log.v(TAG, "finished uploading and exiting for " + messageId)
+                        Log.v(TAG, "finished uploading and exiting for $messageId")
                         callback.onUploadFinished()
                     }
                     .addOnFailureListener { e ->
                         Log.e(TAG, "failed to upload file", e)
                         uploadBytesToFirebase(accountId, bytes, messageId, encryptionUtils, callback, retryCount + 1)
                     }
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             callback.onUploadFinished()
         }
 
