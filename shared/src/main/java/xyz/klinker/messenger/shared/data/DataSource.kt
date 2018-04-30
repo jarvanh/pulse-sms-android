@@ -896,18 +896,38 @@ object DataSource {
             }
 
     /**
-     * Get a list of all the archived conversations.
+     * Gets all conversations in the folder, in the database.
+     *
+     * @return a list of pinned conversations.
+     */
+    fun getFolderConversations(context: Context, folderId: Long): Cursor =
+            try {
+                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=0 AND " + Conversation.COLUMN_FOLDER_ID + "=" + folderId, null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
+            } catch (e: Exception) {
+                ensureActionable(context)
+                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=0 AND " + Conversation.COLUMN_FOLDER_ID + "=" + folderId, null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
+            }
+
+    /**
+     * Get a list of all the private conversations.
      * @return a list of the conversations in the cursor
      */
     fun getPrivateConversationsAsList(context: Context): List<Conversation> =
             convertConversationCursorToList(getPrivateConversations(context))
 
     /**
-     * Get a list of all the archived conversations.
+     * Get a list of all the unread conversations.
      * @return a list of the conversations in the cursor
      */
     fun getUnreadNonPrivateConversationsAsList(context: Context): List<Conversation> =
             convertConversationCursorToList(getUnreadNonPrivateConversations(context))
+
+    /**
+     * Get a list of all the conversations, in the a folder
+     * @return a list of the conversations in the cursor
+     */
+    fun getFolderConversationsAsList(context: Context, folderId: Long): List<Conversation> =
+            convertConversationCursorToList(getFolderConversations(context, folderId))
 
     /**
      * Gets all unread conversations in the database. Only those that are not archived

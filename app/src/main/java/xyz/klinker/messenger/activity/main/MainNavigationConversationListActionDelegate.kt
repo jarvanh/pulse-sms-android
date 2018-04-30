@@ -94,6 +94,10 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
         return displayFragmentWithBackStack(UnreadConversationListFragment())
     }
 
+    internal fun displayFolder(folderId: Long, drawerIndex: Int): Boolean {
+        return displayFragmentWithBackStack(FolderConversationListFragment.getInstance(folderId, drawerIndex))
+    }
+
     internal fun displayScheduledMessages(): Boolean {
         return displayFragmentWithBackStack(ScheduledMessagesFragment())
     }

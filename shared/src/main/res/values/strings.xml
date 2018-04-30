@@ -99,6 +99,7 @@
     <string name="convo_list_try_it">Try it!</string>
     <string name="convo_list_not_now">Not now</string>
     <string name="no_private_messages_description">Set up private conversations from their settings menu!</string>
+    <string name="no_folder_messages_description">Add a conversation to this folder for it to show up, here!</string>
     <string name="no_archived_messages_description">Archive a conversation for it to show up, here!</string>
 
     <!-- Search Screen -->

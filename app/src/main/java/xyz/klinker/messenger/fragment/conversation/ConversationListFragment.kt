@@ -53,7 +53,7 @@ import java.util.*
  */
 open class ConversationListFragment : Fragment(), SwipeToDeleteListener, ConversationExpandedListener, BackPressedListener, IConversationListFragment {
 
-    private val fragmentActivity: FragmentActivity? by lazy { activity }
+    internal val fragmentActivity: FragmentActivity? by lazy { activity }
 
     val messageListManager: MessageListManager by lazy { MessageListManager(this) }
     val swipeHelper: ConversationSwipeHelper by lazy { ConversationSwipeHelper(this) }

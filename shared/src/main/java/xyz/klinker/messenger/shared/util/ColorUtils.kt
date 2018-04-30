@@ -20,11 +20,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.app.Activity
-import android.app.ActivityManager
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
@@ -35,22 +32,18 @@ import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.widget.EdgeEffect
 import android.widget.EditText
 import android.widget.TextView
 
-import java.lang.reflect.Field
-import java.lang.reflect.Method
 import java.util.ArrayList
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.ColorSet
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 
@@ -202,7 +195,7 @@ object ColorUtils {
                 navView.menu.findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting)
             }
 
-            DrawerItemVisibilityHelper(navView).prepareDrawer()
+            DrawerItemHelper(navView).prepareDrawer()
         } else {
             revealView.setBackgroundColor(color)
             val anim = ViewAnimationUtils.createCircularReveal(revealView, cx, cy, 0f, radius.toFloat())

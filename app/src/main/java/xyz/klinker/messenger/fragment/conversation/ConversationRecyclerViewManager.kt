@@ -10,6 +10,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
+import xyz.klinker.messenger.fragment.FolderConversationListFragment
 import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.fragment.UnreadConversationListFragment
 import xyz.klinker.messenger.shared.data.DataSource
@@ -77,6 +78,7 @@ class ConversationRecyclerViewManager(private val fragment: ConversationListFrag
         fragment is ArchivedConversationListFragment && activity != null -> DataSource.getArchivedConversationsAsList(activity!!)
         fragment is PrivateConversationListFragment && activity != null -> DataSource.getPrivateConversationsAsList(activity!!)
         fragment is UnreadConversationListFragment && activity != null -> DataSource.getUnreadNonPrivateConversationsAsList(activity!!)
+        fragment is FolderConversationListFragment && activity != null -> fragment.queryConversations(activity!!)
         activity != null -> DataSource.getUnarchivedConversationsAsList(activity!!)
         else -> emptyList()
     }

@@ -170,7 +170,14 @@ class MainNavigationController(private val activity: MessengerActivity)
                     messageActionDelegate.callContact()
                 }
             }
-            else -> return true
+            else -> {
+                val folderInfo = activity.drawerItemHelper.tryFolderClick(id)
+                return if (folderInfo != null) {
+                    conversationActionDelegate.displayFolder(folderInfo.second, folderInfo.first)
+                } else {
+                    true
+                }
+            }
         }
     }
 
