@@ -90,6 +90,10 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
         }
     }
 
+    internal fun displayUnread(): Boolean {
+        return displayFragmentWithBackStack(UnreadConversationListFragment())
+    }
+
     internal fun displayScheduledMessages(): Boolean {
         return displayFragmentWithBackStack(ScheduledMessagesFragment())
     }

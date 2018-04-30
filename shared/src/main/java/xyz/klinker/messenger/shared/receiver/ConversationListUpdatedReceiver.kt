@@ -75,18 +75,8 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
         if (adapterPosition == -1) {
             val conversation = DataSource.getConversation(context, conversationId)
 
-            if (conversation?.privateNotifications == true) {
-                // we don't want to add a conversation that is private...
-                // if the fragment instance is a PrivateConversationListFragment, then we will always have the private conversations shown, and it wouldn't reach this
-                // for any other type of fragment, we don't want to add the conversation there, since it is supposed to be password protected
-                return
-            }
-
-            // todo: if it isn't the main conversation list fragment, then we should not ever add the conversation to the view...
-            // This applies to private conversations, archives, and folders, in the future
-
             // need to insert after the pinned conversations
-            if (conversation != null) {
+            if (conversation != null && (fragment.javaClass.simpleName == "ConversationListFragment" || fragment.javaClass.simpleName == "UnreadConversationListFragment")) {
                 adapter.conversations.add(pinnedCount, conversation)
             } else return
         } else {

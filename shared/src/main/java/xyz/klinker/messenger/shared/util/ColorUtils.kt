@@ -201,6 +201,8 @@ object ColorUtils {
             if (Account.accountId == null && navView.menu.findItem(R.id.drawer_account) != null) {
                 navView.menu.findItem(R.id.drawer_account).setTitle(R.string.menu_device_texting)
             }
+
+            DrawerItemVisibilityHelper(navView).prepareDrawer()
         } else {
             revealView.setBackgroundColor(color)
             val anim = ViewAnimationUtils.createCircularReveal(revealView, cx, cy, 0f, radius.toFloat())

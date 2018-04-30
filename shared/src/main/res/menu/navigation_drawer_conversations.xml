@@ -48,6 +48,11 @@
                 android:title="@string/menu_private_conversations" />
 
             <item
+                android:id="@+id/drawer_unread"
+                android:icon="@drawable/ic_unread"
+                android:title="@string/menu_unread_conversations" />
+
+            <item
                 android:id="@+id/drawer_schedule"
                 android:icon="@drawable/ic_schedule"
                 android:title="@string/menu_schedule" />
@@ -67,7 +72,7 @@
         <group
             android:id="@+id/other_section"
             android:checkableBehavior="single">
-            
+
             <item
                 android:id="@+id/drawer_feature_settings"
                 android:icon="@drawable/ic_feature_settings"
@@ -93,3 +98,92 @@
     </group>
 
 </menu>
+
+<!--<menu xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+    <!--<group android:checkableBehavior="single">-->
+
+        <!--<item-->
+            <!--android:id="@+id/drawer_account"-->
+            <!--android:icon="@drawable/ic_devices"-->
+            <!--android:title="@string/menu_account" />-->
+
+    <!--</group>-->
+
+    <!--<group android:checkableBehavior="single">-->
+
+        <!--<group-->
+            <!--android:id="@+id/primary_section"-->
+            <!--android:checkableBehavior="single">-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_conversation"-->
+                <!--android:icon="@drawable/ic_inbox_small"-->
+                <!--android:title="@string/menu_conversations"-->
+                <!--android:checked="true" />-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_archived"-->
+                <!--android:icon="@drawable/ic_archive"-->
+                <!--android:title="@string/menu_archived_conversations" />-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_private"-->
+                <!--android:icon="@drawable/ic_lock"-->
+                <!--android:title="@string/menu_private_conversations" />-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_unread"-->
+                <!--android:icon="@drawable/ic_unread"-->
+                <!--android:title="@string/menu_unread_conversations" />-->
+
+        <!--</group>-->
+
+        <!--<group android:checkableBehavior="single">-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_schedule"-->
+                <!--android:icon="@drawable/ic_schedule"-->
+                <!--android:title="@string/menu_schedule" />-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_mute_contacts"-->
+                <!--android:icon="@drawable/ic_block"-->
+                <!--android:title="@string/menu_mute_contacts" />-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_invite"-->
+                <!--android:icon="@drawable/ic_invite"-->
+                <!--android:title="@string/menu_invite" />-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_feature_settings"-->
+                <!--android:icon="@drawable/ic_feature_settings"-->
+                <!--android:title="@string/menu_feature_settings" />-->
+
+        <!--</group>-->
+
+        <!--<group-->
+            <!--android:id="@+id/other_section"-->
+            <!--android:checkableBehavior="single">-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_settings"-->
+                <!--android:icon="@drawable/ic_settings"-->
+                <!--android:title="@string/menu_settings" />-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_help"-->
+                <!--android:icon="@drawable/ic_help"-->
+                <!--android:title="@string/menu_help" />-->
+
+            <!--<item-->
+                <!--android:id="@+id/drawer_about"-->
+                <!--android:icon="@drawable/ic_about"-->
+                <!--android:title="@string/menu_about" />-->
+
+        <!--</group>-->
+
+    <!--</group>-->
+
+<!--</menu>-->

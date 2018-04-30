@@ -35,10 +35,9 @@ import xyz.klinker.messenger.shared.util.UnreadBadger
 import xyz.klinker.messenger.shared.view.WhitableToolbar
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import xyz.klinker.messenger.utils.UpdateUtils
-import android.support.design.widget.NavigationView
 import android.view.inputmethod.InputMethodManager
 import xyz.klinker.messenger.fragment.PrivateConversationListFragment
-import xyz.klinker.messenger.shared.data.FeatureFlags
+import xyz.klinker.messenger.shared.util.DrawerItemVisibilityHelper
 
 
 /**
@@ -56,6 +55,8 @@ class MessengerActivity : AppCompatActivity() {
     private val startDelegate = MainOnStartDelegate(this)
     private val permissionHelper = MainPermissionHelper(this)
     private val resultHandler = MainResultHandler(this)
+
+    val drawerItemVisibilityHelper: DrawerItemVisibilityHelper by lazy { DrawerItemVisibilityHelper(findViewById(R.id.navigation_view)) }
 
     val toolbar: WhitableToolbar by lazy { findViewById<View>(R.id.toolbar) as WhitableToolbar }
     val fab: FloatingActionButton by lazy { findViewById<View>(R.id.fab) as FloatingActionButton }
@@ -84,6 +85,8 @@ class MessengerActivity : AppCompatActivity() {
             AnimationUtils.conversationListSize = content.height
             AnimationUtils.toolbarSize = toolbar.height
         }
+
+        drawerItemVisibilityHelper.prepareDrawer()
     }
 
     public override fun onStart() {
