@@ -68,7 +68,6 @@
     <string name="pref_contact_notification_group" translatable="false">notification_group</string>
 
     <string name="pref_general_category" translatable="false">general_settings_category</string>
-    <string name="pref_folders_category" translatable="false">folders_category</string>
     <string name="pref_conversation_list" translatable="false">conversation_list_category</string>
     <string name="pref_theme_settings" translatable="false">theme_settings</string>
     <string name="pref_global_primary_color" translatable="false">global_primary_color</string>
@@ -143,5 +142,8 @@
     <string name="pref_vacation_mode_editable" translatable="false">vacation_mode_edit</string>
     <string name="pref_auto_replies_group" translatable="false">auto_replies_group</string>
     <string name="pref_create_auto_reply" translatable="false">create_auto_reply</string>
+
+    <string name="pref_folders_category" translatable="false">folders_category</string>
+    <string name="pref_create_folder" translatable="false">create_folder_pref</string>
 
 </resources>

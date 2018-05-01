@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="@string/pref_create_folder"
+        android:summary="@string/create_folder_summary"
+        android:title="@string/create_folder" />
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_folders_category"
-        android:title="@string/folders_title">
-
-
-    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
-
+        android:title="@string/folders_title" />
 
 </PreferenceScreen>

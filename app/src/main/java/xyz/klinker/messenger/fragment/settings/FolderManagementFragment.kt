@@ -2,7 +2,6 @@ package xyz.klinker.messenger.fragment.settings
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.os.Handler
 import android.preference.Preference
 import android.preference.PreferenceGroup
 import android.view.LayoutInflater
@@ -24,25 +23,31 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
         addPreferencesFromResource(R.xml.settings_folder)
 
         fillFolderList()
-    }
 
-    private fun fillFolderList() {
-        val createNewFolder = Preference(activity)
-        createNewFolder.setTitle(R.string.create_folder)
-        createNewFolder.setSummary(R.string.create_folder_summary)
-        createNewFolder.setOnPreferenceClickListener {
+        findPreference(getString(R.string.pref_create_folder)).setOnPreferenceClickListener {
             promptCreateNewFolder()
             true
         }
+    }
 
+    private fun fillFolderList() {
         foldersPrefGroup.removeAll()
-        foldersPrefGroup.addPreference(createNewFolder)
+        val folders = DataSource.getFoldersAsList(activity)
+        folders.forEach {
+            val pref = createPreference(it)
+            foldersPrefGroup.addPreference(pref)
+        }
 
-        DataSource.getFoldersAsList(activity)
-                .forEach {
-                    val pref = createPreference(it)
-                    foldersPrefGroup.addPreference(pref)
-                }
+        if (folders.isEmpty()) {
+            val createNewFolder = Preference(activity)
+            createNewFolder.setSummary(R.string.no_folders)
+            createNewFolder.setOnPreferenceClickListener {
+                promptCreateNewFolder()
+                true
+            }
+
+            foldersPrefGroup.addPreference(createNewFolder)
+        }
     }
 
     private fun promptCreateNewFolder() {
@@ -60,8 +65,20 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
                 .show()
     }
 
-    private fun promptEditFolder() {
-        // TODO: make sure to invalidate the folder list on delete
+    private fun promptEditFolder(folder: Folder) {
+        AlertDialog.Builder(activity)
+                .setPositiveButton(R.string.save) { _, _ ->
+                    fillFolderList()
+                    DrawerItemHelper.folders = null
+                }
+                .setNegativeButton(R.string.delete) { _, _ ->
+                    DataSource.deleteFolder(activity, folder.id, true)
+
+                    fillFolderList()
+                    DrawerItemHelper.folders = null
+                }
+                .setNeutralButton(R.string.cancel, null)
+                .show()
     }
 
     private fun createAndShowFolder(title: String) {
@@ -81,6 +98,7 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
         pref.title = folder.name
 
         pref.setOnPreferenceClickListener {
+            promptEditFolder(folder)
             true
         }
 
