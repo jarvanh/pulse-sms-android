@@ -2,6 +2,7 @@ package xyz.klinker.messenger.fragment.settings
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
 import android.preference.Preference
 import android.preference.PreferenceGroup
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Folder
+import xyz.klinker.messenger.shared.util.DrawerItemHelper
 
 class FolderManagementFragment : MaterialPreferenceFragment() {
 
@@ -59,7 +61,7 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
     }
 
     private fun promptEditFolder() {
-
+        // TODO: make sure to invalidate the folder list on delete
     }
 
     private fun createAndShowFolder(title: String) {
@@ -69,9 +71,9 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
         folder.colors = ColorSet.DEFAULT(activity)
 
         DataSource.insertFolder(activity, folder, true)
+        fillFolderList()
 
-        val pref = createPreference(folder)
-        foldersPrefGroup.addPreference(pref)
+        DrawerItemHelper.folders = null
     }
 
     private fun createPreference(folder: Folder): Preference {

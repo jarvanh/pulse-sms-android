@@ -826,6 +826,8 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             folder.colors.colorLight = json.getInt("color_light")
             folder.colors.colorAccent = json.getInt("color_accent")
 
+            DrawerItemHelper.folders = null
+
             DataSource.insertFolder(context, folder, false)
             Log.v(TAG, "added folder")
         }
@@ -840,6 +842,8 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             folder.colors.colorLight = json.getInt("color_light")
             folder.colors.colorAccent = json.getInt("color_accent")
 
+            DrawerItemHelper.folders = null
+
             DataSource.updateFolder(context, folder, false)
             Log.v(TAG, "updated folder")
         }
@@ -848,6 +852,9 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         private fun removeFolder(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
             DataSource.deleteFolder(context, id, false)
+
+            DrawerItemHelper.folders = null
+
             Log.v(TAG, "removed folder")
         }
 

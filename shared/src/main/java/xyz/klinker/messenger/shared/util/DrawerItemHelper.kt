@@ -13,18 +13,7 @@ class DrawerItemHelper(private val navigationView: NavigationView) {
         removeItemsBasedOnFeatureToggles()
     }
 
-    /**
-     * Return the index of the clicked folder and the folder id, otherwise null, if not a folder
-     */
-    fun tryFolderClick(itemId: Int): Folder? {
-        for (i in 0 until(folders?.size ?: 0)) {
-            if (folders!![i].id.toInt() == itemId) {
-                return folders!![i]
-            }
-        }
-
-        return null
-    }
+    fun findFolder(itemId: Int) = folders?.firstOrNull { it.id.toInt() == itemId }
 
     private fun queryAndAddFolders() {
         if (!FeatureFlags.FOLDER_SUPPORT) {

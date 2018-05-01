@@ -3031,8 +3031,6 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(id)))
         }
 
-        DrawerItemHelper.folders = null
-
         if (useApi) {
             ApiUtils.deleteFolder(accountId(context), id)
         }
