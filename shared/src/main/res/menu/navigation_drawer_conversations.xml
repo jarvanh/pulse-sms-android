@@ -20,6 +20,7 @@
 
         <item
             android:id="@+id/drawer_account"
+            android:orderInCategory="0"
             android:icon="@drawable/ic_devices"
             android:title="@string/menu_account" />
 
@@ -33,37 +34,44 @@
 
             <item
                 android:id="@+id/drawer_conversation"
+                android:orderInCategory="1"
                 android:icon="@drawable/ic_inbox_small"
                 android:title="@string/menu_conversations"
                 android:checked="true" />
 
             <item
                 android:id="@+id/drawer_archived"
+                android:orderInCategory="1"
                 android:icon="@drawable/ic_archive"
                 android:title="@string/menu_archived_conversations" />
 
             <item
                 android:id="@+id/drawer_private"
+                android:orderInCategory="1"
                 android:icon="@drawable/ic_lock"
                 android:title="@string/menu_private_conversations" />
 
             <item
                 android:id="@+id/drawer_unread"
+                android:orderInCategory="1"
                 android:icon="@drawable/ic_unread"
                 android:title="@string/menu_unread_conversations" />
 
             <item
                 android:id="@+id/drawer_schedule"
+                android:orderInCategory="1"
                 android:icon="@drawable/ic_schedule"
                 android:title="@string/menu_schedule" />
 
             <item
                 android:id="@+id/drawer_mute_contacts"
+                android:orderInCategory="1"
                 android:icon="@drawable/ic_block"
                 android:title="@string/menu_mute_contacts" />
 
             <item
                 android:id="@+id/drawer_invite"
+                android:orderInCategory="1"
                 android:icon="@drawable/ic_invite"
                 android:title="@string/menu_invite" />
 
@@ -75,21 +83,25 @@
 
             <item
                 android:id="@+id/drawer_feature_settings"
+                android:orderInCategory="2"
                 android:icon="@drawable/ic_feature_settings"
                 android:title="@string/menu_feature_settings" />
 
             <item
                 android:id="@+id/drawer_settings"
+                android:orderInCategory="2"
                 android:icon="@drawable/ic_settings"
                 android:title="@string/menu_settings" />
 
             <item
                 android:id="@+id/drawer_help"
+                android:orderInCategory="2"
                 android:icon="@drawable/ic_help"
                 android:title="@string/menu_help" />
 
             <item
                 android:id="@+id/drawer_about"
+                android:orderInCategory="2"
                 android:icon="@drawable/ic_about"
                 android:title="@string/menu_about" />
 
@@ -105,6 +117,7 @@
 
         <!--<item-->
             <!--android:id="@+id/drawer_account"-->
+            <!--android:orderInCategory="0"-->
             <!--android:icon="@drawable/ic_devices"-->
             <!--android:title="@string/menu_account" />-->
 
@@ -118,46 +131,56 @@
 
             <!--<item-->
                 <!--android:id="@+id/drawer_conversation"-->
+                <!--android:orderInCategory="1"-->
                 <!--android:icon="@drawable/ic_inbox_small"-->
                 <!--android:title="@string/menu_conversations"-->
                 <!--android:checked="true" />-->
 
             <!--<item-->
                 <!--android:id="@+id/drawer_archived"-->
+                <!--android:orderInCategory="1"-->
                 <!--android:icon="@drawable/ic_archive"-->
                 <!--android:title="@string/menu_archived_conversations" />-->
 
             <!--<item-->
                 <!--android:id="@+id/drawer_private"-->
+                <!--android:orderInCategory="1"-->
                 <!--android:icon="@drawable/ic_lock"-->
                 <!--android:title="@string/menu_private_conversations" />-->
 
             <!--<item-->
                 <!--android:id="@+id/drawer_unread"-->
+                <!--android:orderInCategory="1"-->
                 <!--android:icon="@drawable/ic_unread"-->
                 <!--android:title="@string/menu_unread_conversations" />-->
 
         <!--</group>-->
 
-        <!--<group android:checkableBehavior="single">-->
+        <!--<group-->
+            <!--android:id="@+id/features_section"-->
+            <!--android:checkableBehavior="single" >-->
 
             <!--<item-->
                 <!--android:id="@+id/drawer_schedule"-->
+                <!--android:orderInCategory="2"-->
                 <!--android:icon="@drawable/ic_schedule"-->
                 <!--android:title="@string/menu_schedule" />-->
 
             <!--<item-->
                 <!--android:id="@+id/drawer_mute_contacts"-->
+                <!--android:orderInCategory="2"-->
                 <!--android:icon="@drawable/ic_block"-->
                 <!--android:title="@string/menu_mute_contacts" />-->
 
             <!--<item-->
                 <!--android:id="@+id/drawer_invite"-->
+                <!--android:orderInCategory="2"-->
                 <!--android:icon="@drawable/ic_invite"-->
                 <!--android:title="@string/menu_invite" />-->
 
             <!--<item-->
                 <!--android:id="@+id/drawer_feature_settings"-->
+                <!--android:orderInCategory="2"-->
                 <!--android:icon="@drawable/ic_feature_settings"-->
                 <!--android:title="@string/menu_feature_settings" />-->
 
@@ -169,16 +192,19 @@
 
             <!--<item-->
                 <!--android:id="@+id/drawer_settings"-->
+                <!--android:orderInCategory="3"-->
                 <!--android:icon="@drawable/ic_settings"-->
                 <!--android:title="@string/menu_settings" />-->
 
             <!--<item-->
                 <!--android:id="@+id/drawer_help"-->
+                <!--android:orderInCategory="3"-->
                 <!--android:icon="@drawable/ic_help"-->
                 <!--android:title="@string/menu_help" />-->
 
             <!--<item-->
                 <!--android:id="@+id/drawer_about"-->
+                <!--android:orderInCategory="3"-->
                 <!--android:icon="@drawable/ic_about"-->
                 <!--android:title="@string/menu_about" />-->
 

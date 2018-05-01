@@ -152,6 +152,7 @@ class MainNavigationController(private val activity: MessengerActivity)
             R.id.drawer_account -> return conversationActionDelegate.displayMyAccount()
             R.id.drawer_help -> return conversationActionDelegate.displayHelpAndFeedback()
             R.id.drawer_about -> return conversationActionDelegate.displayAbout()
+            R.id.drawer_edit_folders -> return conversationActionDelegate.displayEditFolders()
             R.id.menu_view_contact, R.id.drawer_view_contact -> return messageActionDelegate.viewContact()
             R.id.menu_view_media, R.id.drawer_view_media -> return messageActionDelegate.viewMedia()
             R.id.menu_delete_conversation, R.id.drawer_delete_conversation -> return messageActionDelegate.deleteConversation()
@@ -171,9 +172,9 @@ class MainNavigationController(private val activity: MessengerActivity)
                 }
             }
             else -> {
-                val folderInfo = activity.drawerItemHelper.tryFolderClick(id)
-                return if (folderInfo != null) {
-                    conversationActionDelegate.displayFolder(folderInfo.second, folderInfo.first)
+                val folder = activity.drawerItemHelper.tryFolderClick(id)
+                return if (folder != null) {
+                    conversationActionDelegate.displayFolder(folder)
                 } else {
                     true
                 }

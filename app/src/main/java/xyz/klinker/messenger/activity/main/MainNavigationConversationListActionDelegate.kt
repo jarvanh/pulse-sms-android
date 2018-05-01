@@ -15,6 +15,7 @@ import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
 import xyz.klinker.messenger.shared.activity.PasscodeVerificationActivity
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.model.Folder
 import xyz.klinker.messenger.shared.util.AnimationUtils
 
 class MainNavigationConversationListActionDelegate(private val activity: MessengerActivity) {
@@ -94,8 +95,8 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
         return displayFragmentWithBackStack(UnreadConversationListFragment())
     }
 
-    internal fun displayFolder(folderId: Long, drawerIndex: Int): Boolean {
-        return displayFragmentWithBackStack(FolderConversationListFragment.getInstance(folderId, drawerIndex))
+    internal fun displayFolder(folder: Folder): Boolean {
+        return displayFragmentWithBackStack(FolderConversationListFragment.getInstance(folder))
     }
 
     internal fun displayScheduledMessages(): Boolean {
@@ -132,6 +133,11 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
         return displayFragmentWithBackStack(AboutFragment())
     }
 
+    internal fun displayEditFolders(): Boolean {
+        // TODO: Start the edit activity
+        return true
+    }
+
     internal fun displayFragmentWithBackStack(fragment: Fragment): Boolean {
         activity.searchHelper.closeSearch()
         activity.fab.hide()
@@ -151,7 +157,6 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
                 activity.overridePendingTransition(0, 0)
             }
         }, 200)
-
 
         return true
     }

@@ -26,7 +26,7 @@ class ArchivedConversationListFragment : ConversationListFragment() {
     override fun onBackPressed(): Boolean {
         if (!super.onBackPressed()) {
             val navView = activity?.findViewById<View>(R.id.navigation_view) as NavigationView?
-            navView?.menu?.getItem(1)?.isChecked = true
+            navView?.menu?.findItem(R.id.drawer_conversation)?.isChecked = true
 
             activity?.title = getString(R.string.app_title)
             (activity as MessengerActivity).displayConversations()
@@ -39,6 +39,6 @@ class ArchivedConversationListFragment : ConversationListFragment() {
         super.onConversationContracted(viewHolder)
 
         val navView = activity?.findViewById<View>(R.id.navigation_view) as NavigationView?
-        navView?.menu?.getItem(2)?.isChecked = true
+        navView?.menu?.findItem(R.id.drawer_archived)?.isChecked = true
     }
 }

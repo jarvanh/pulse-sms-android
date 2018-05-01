@@ -2,36 +2,62 @@ package xyz.klinker.messenger.shared.util
 
 import android.support.design.widget.NavigationView
 import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.FeatureFlags
+import xyz.klinker.messenger.shared.data.model.Folder
 
 class DrawerItemHelper(private val navigationView: NavigationView) {
 
     fun prepareDrawer() {
-        addFolders()
+        queryAndAddFolders()
         removeItemsBasedOnFeatureToggles()
     }
 
     /**
-     * Return the index of the clicked folder, otherwise null, if not a folder
+     * Return the index of the clicked folder and the folder id, otherwise null, if not a folder
      */
-    fun tryFolderClick(itemId: Int): Pair<Int, Long>? {
-        // TODO: iterate through the folders and see if their item id matches the provided one.
-        // if it does, return a pair with the index of the item, and a the folder id
+    fun tryFolderClick(itemId: Int): Folder? {
+        for (i in 0 until(folders?.size ?: 0)) {
+            if (folders!![i].id.toInt() == itemId) {
+                return folders!![i]
+            }
+        }
 
         return null
     }
 
-    private fun addFolders() {
+    private fun queryAndAddFolders() {
         if (!FeatureFlags.FOLDER_SUPPORT) {
             return
         }
 
-        // TODO: Async query what folders should be shown (or can I just hold a reference list here?)
+        if (folders == null) {
+            Thread {
+                folders = DataSource.getFoldersAsList(navigationView.context)
+                navigationView.post { addFoldersToDrawer(folders!!) }
+            }.start()
+        } else {
+            navigationView.post { addFoldersToDrawer(folders!!) }
+        }
+    }
+
+    private fun addFoldersToDrawer(folders: List<Folder>) {
+        folders.forEach {
+            navigationView.menu.add(R.id.primary_section, it.id.toInt(), 1, it.name).setIcon(R.drawable.ic_folder).isCheckable = true
+        }
+
+        val editItem = navigationView.menu.add(R.id.primary_section, R.id.drawer_edit_folders, 1, R.string.menu_edit_folders)
+        editItem.isCheckable = true
+        editItem.setIcon(R.drawable.ic_add)
     }
 
     private fun removeItemsBasedOnFeatureToggles() {
         if (!FeatureFlags.FOLDER_SUPPORT) {
             navigationView.menu.findItem(R.id.drawer_unread).isVisible = false
         }
+    }
+
+    companion object {
+        private var folders: List<Folder>? = null
     }
 }
