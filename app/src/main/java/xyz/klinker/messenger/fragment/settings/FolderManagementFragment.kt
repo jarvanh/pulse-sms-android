@@ -95,7 +95,7 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
                             DataSource.addConversationToFolder(activity, conversation.id, folder.id, true)
                         }
                     }
-                }, selectedConversations)
+                }, selectedConversations, folder.id)
             }
         }.start()
 
