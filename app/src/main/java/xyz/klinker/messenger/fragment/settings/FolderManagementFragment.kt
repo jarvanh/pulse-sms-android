@@ -23,7 +23,6 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
         addPreferencesFromResource(R.xml.settings_folder)
 
         fillFolderList()
-
         findPreference(getString(R.string.pref_create_folder)).setOnPreferenceClickListener {
             promptCreateNewFolder()
             true
@@ -58,16 +57,27 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
         AlertDialog.Builder(activity)
                 .setView(layout)
                 .setPositiveButton(R.string.create) { _, _ ->
-                    val signature = editText.text.toString()
-                    createAndShowFolder(signature)
+                    val title = editText.text.toString()
+                    createAndShowFolder(title)
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
     }
 
     private fun promptEditFolder(folder: Folder) {
+        val layout = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_text, null, false)
+        val editText = layout.findViewById<View>(R.id.edit_text) as EditText
+        editText.setHint(R.string.folder_name)
+        editText.setText(folder.name)
+        editText.setSelection(editText.text.length)
+
         AlertDialog.Builder(activity)
+                .setView(layout)
                 .setPositiveButton(R.string.save) { _, _ ->
+                    val title = editText.text.toString()
+                    folder.name = title
+                    DataSource.updateFolder(activity, folder, true)
+
                     fillFolderList()
                     DrawerItemHelper.folders = null
                 }

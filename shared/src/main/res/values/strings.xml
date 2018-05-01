@@ -508,7 +508,7 @@
     <string name="create">Create</string>
     <string name="create_folder">Create a New Folder</string>
     <string name="create_folder_summary">After a folder is created, you can use it to help organize your conversations</string>
-    <string name="no_folders">No folders created. Tap the top preference to create your first folder!</string>
+    <string name="no_folders">No folders created - tap the top preference to create your first folder</string>
     <string name="folder_name">Folder name…</string>
 
     <!-- Theming Options -->
