@@ -219,7 +219,11 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
     // 1.) Single recipient (with single number)
     // 2.) Group convo with custom title (1 name, multiple numbers)
     // 3.) Group convo with non custom title (x names, x numbers)
-    override fun onClicked(title: String, phoneNumber: String, imageUri: String?) {
+    override fun onClicked(conversation: Conversation) {
+        onClicked(conversation.title!!, conversation.phoneNumbers!!, conversation.imageUri)
+    }
+
+    fun onClicked(title: String, phoneNumber: String, imageUri: String?) {
         val names = title.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val numbers = phoneNumber.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 

@@ -97,7 +97,7 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
                     changeExpandedState()
                 }
 
-                contactClickedListener?.onClicked(conversation!!.title!!, conversation!!.phoneNumbers!!, conversation!!.imageUri)
+                contactClickedListener?.onClicked(conversation!!)
                 checkBox?.isChecked = checkBox?.isChecked != true
             }
         }

@@ -109,7 +109,9 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             }
 
             val adapter = ContactAdapter(conversations, object : ContactClickedListener {
-                override fun onClicked(title: String, phoneNumber: String, imageUri: String?) {
+                override fun onClicked(conversation: Conversation) {
+                    val phoneNumber = conversation.phoneNumbers!!
+
                     var intent: Intent?
 
                     try {
@@ -121,7 +123,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
                         e.printStackTrace()
                         try {
                             intent = Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT)
-                            intent!!.data = Uri.parse("tel:" + phoneNumber)
+                            intent!!.data = Uri.parse("tel:$phoneNumber")
                         } catch (ex: ActivityNotFoundException) {
                             intent = null
                         }

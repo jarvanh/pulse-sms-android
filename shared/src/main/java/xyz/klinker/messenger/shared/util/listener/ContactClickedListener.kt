@@ -16,9 +16,11 @@
 
 package xyz.klinker.messenger.shared.util.listener
 
+import xyz.klinker.messenger.shared.data.model.Conversation
+
 /**
  * Callback for when a contact is clicked on a screen such as the compose screen.
  */
 interface ContactClickedListener {
-    fun onClicked(title: String, phoneNumber: String, imageUri: String?)
+    fun onClicked(conversation: Conversation)
 }
