@@ -29,7 +29,8 @@
     <string name="menu_archived_conversations">Archived conversations</string>
     <string name="menu_private_conversations">Private conversations</string>
     <string name="menu_unread_conversations">Unread conversations</string>
-    <string name="menu_edit_folders">Create folder…</string>
+    <string name="menu_edit_folders">Manage folders…</string>
+    <string name="menu_edit_folders_no_ellipse">Manage Folders</string>
     <string name="menu_schedule">Scheduled messages</string>
     <string name="menu_mute_contacts">Blacklist</string>
     <string name="menu_invite">Invite friends</string>

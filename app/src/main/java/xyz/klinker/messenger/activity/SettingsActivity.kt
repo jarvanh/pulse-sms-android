@@ -74,7 +74,7 @@ class SettingsActivity : AbstractSettingsActivity() {
             }
             TYPE_FOLDER -> {
                 folderFragment = FolderManagementFragment()
-                title = getString(R.string.folders_title)
+                title = StringUtils.titleize(getString(R.string.menu_edit_folders_no_ellipse))
                 startFragment(folderFragment!!)
             }
         }
