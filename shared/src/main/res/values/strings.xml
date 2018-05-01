@@ -506,6 +506,10 @@
     <string name="contact">Contact</string>
     <string name="folder_settings_summary">Create and manage your folders. Each conversation can be organized into a folder.</string>
     <string name="folders_title">Folders</string>
+    <string name="create">Create</string>
+    <string name="create_folder">Create a New Folder</string>
+    <string name="create_folder_summary">After a folder is created, you can use it to help organize your conversations</string>
+    <string name="folder_name">Folder name…</string>
 
     <!-- Theming Options -->
     <string name="day_night">Default (Day/Night)</string>
