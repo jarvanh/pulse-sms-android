@@ -11,9 +11,7 @@ import android.widget.EditText
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Folder
-import xyz.klinker.messenger.shared.util.DrawerItemHelper
 
 class FolderManagementFragment : MaterialPreferenceFragment() {
 
@@ -25,12 +23,6 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
 
         fillFolderList()
     }
-
-    override fun onStop() {
-        super.onStop()
-        DrawerItemHelper.folders = null
-    }
-
 
     private fun fillFolderList() {
         val createNewFolder = Preference(activity)
@@ -80,8 +72,6 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
 
         val pref = createPreference(folder)
         foldersPrefGroup.addPreference(pref)
-
-        DrawerItemHelper.folders = null
     }
 
     private fun createPreference(folder: Folder): Preference {

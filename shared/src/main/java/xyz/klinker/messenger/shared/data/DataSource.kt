@@ -2962,6 +2962,8 @@ object DataSource {
                     encryptor(context))
         }
 
+        DrawerItemHelper.folders = null
+
         return try {
             database(context).insert(Folder.TABLE, null, values)
         } catch (e: Exception) {
@@ -2995,6 +2997,8 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(folder.id)))
         }
 
+        DrawerItemHelper.folders = null
+
         if (useApi) {
             ApiUtils.updateFolder(accountId(context), folder.id, folder.name!!, folder.colors.color,
                     folder.colors.colorDark, folder.colors.colorLight, folder.colors.colorAccent,
@@ -3026,6 +3030,8 @@ object DataSource {
             database(context).update(Conversation.TABLE, values, Conversation.COLUMN_FOLDER_ID + "=?",
                     arrayOf(java.lang.Long.toString(id)))
         }
+
+        DrawerItemHelper.folders = null
 
         if (useApi) {
             ApiUtils.deleteFolder(accountId(context), id)
