@@ -89,7 +89,7 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
                 "http://$clickedText"
             } else clickedText
 
-            if (link.contains("youtube") || !Settings.internalBrowser) {
+            if (skipInternalBrowser(link) || !Settings.internalBrowser) {
                 val url = Intent(Intent.ACTION_VIEW)
                 url.data = Uri.parse(clickedText)
                 try {
@@ -125,5 +125,16 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
                     } catch (e: ActivityNotFoundException) {
                     }
                 }
+    }
+
+    private fun skipInternalBrowser(link: String): Boolean {
+        val list = listOf("youtube", "maps.google", "photos.app.goo")
+        for (item in list) {
+            if (link.contains(item)) {
+                return true
+            }
+        }
+
+        return false
     }
 }

@@ -2,9 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <Preference
-        android:summary="@string/folder_settings_summary" />
-
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_folders_category"
         android:title="@string/folders_title">
