@@ -40,10 +40,10 @@
                 android:checked="true" />
 
             <item
-                android:id="@+id/drawer_archived"
+                android:id="@+id/drawer_unread"
                 android:orderInCategory="1"
-                android:icon="@drawable/ic_archive"
-                android:title="@string/menu_archived_conversations" />
+                android:icon="@drawable/ic_unread"
+                android:title="@string/menu_unread_conversations" />
 
             <item
                 android:id="@+id/drawer_private"
@@ -52,10 +52,10 @@
                 android:title="@string/menu_private_conversations" />
 
             <item
-                android:id="@+id/drawer_unread"
+                android:id="@+id/drawer_archived"
                 android:orderInCategory="1"
-                android:icon="@drawable/ic_unread"
-                android:title="@string/menu_unread_conversations" />
+                android:icon="@drawable/ic_archive"
+                android:title="@string/menu_archived_conversations" />
 
             <item
                 android:id="@+id/drawer_schedule"
@@ -111,6 +111,7 @@
 
 </menu>
 
+<!-- TODO: Replace what is above, with this, when folder support is rolled out -->
 <!--<menu xmlns:android="http://schemas.android.com/apk/res/android">-->
 
     <!--<group android:checkableBehavior="single">-->
@@ -137,10 +138,10 @@
                 <!--android:checked="true" />-->
 
             <!--<item-->
-                <!--android:id="@+id/drawer_archived"-->
+                <!--android:id="@+id/drawer_unread"-->
                 <!--android:orderInCategory="1"-->
-                <!--android:icon="@drawable/ic_archive"-->
-                <!--android:title="@string/menu_archived_conversations" />-->
+                <!--android:icon="@drawable/ic_unread"-->
+                <!--android:title="@string/menu_unread_conversations" />-->
 
             <!--<item-->
                 <!--android:id="@+id/drawer_private"-->
@@ -149,10 +150,10 @@
                 <!--android:title="@string/menu_private_conversations" />-->
 
             <!--<item-->
-                <!--android:id="@+id/drawer_unread"-->
+                <!--android:id="@+id/drawer_archived"-->
                 <!--android:orderInCategory="1"-->
-                <!--android:icon="@drawable/ic_unread"-->
-                <!--android:title="@string/menu_unread_conversations" />-->
+                <!--android:icon="@drawable/ic_archive"-->
+                <!--android:title="@string/menu_archived_conversations" />-->
 
         <!--</group>-->
 

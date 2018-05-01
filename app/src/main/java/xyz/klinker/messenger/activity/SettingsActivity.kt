@@ -30,6 +30,7 @@ import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.ColorUtils
+import xyz.klinker.messenger.shared.util.DrawerItemHelper
 import xyz.klinker.messenger.shared.util.StringUtils
 
 class SettingsActivity : AbstractSettingsActivity() {
@@ -39,6 +40,7 @@ class SettingsActivity : AbstractSettingsActivity() {
     private var mmsFragment: MmsConfigurationFragment? = null
     private var autoReplyFragment: AutoReplySettingsFragment? = null
     private var themeFragment: ThemeSettingsFragment? = null
+    private var folderFragment: FolderManagementFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +71,11 @@ class SettingsActivity : AbstractSettingsActivity() {
                 autoReplyFragment = AutoReplySettingsFragment()
                 title = getString(R.string.auto_reply_configuration)
                 startFragment(autoReplyFragment!!)
+            }
+            TYPE_FOLDER -> {
+                folderFragment = FolderManagementFragment()
+                title = getString(R.string.folders_title)
+                startFragment(folderFragment!!)
             }
         }
 
@@ -136,12 +143,13 @@ class SettingsActivity : AbstractSettingsActivity() {
 
     companion object {
 
-        private val ARG_SETTINGS_TYPE = "arg_settings_type"
-        private val TYPE_GLOBAL = 1
-        private val TYPE_FEATURE = 2
-        private val TYPE_MMS = 3
-        private val TYPE_THEME = 4
-        private val TYPE_AUTO_REPLY = 5
+        private const val ARG_SETTINGS_TYPE = "arg_settings_type"
+        private const val TYPE_GLOBAL = 1
+        private const val TYPE_FEATURE = 2
+        private const val TYPE_MMS = 3
+        private const val TYPE_THEME = 4
+        private const val TYPE_AUTO_REPLY = 5
+        private const val TYPE_FOLDER = 6
 
         fun startGlobalSettings(context: Context) {
             startWithExtra(context, TYPE_GLOBAL)
@@ -161,6 +169,10 @@ class SettingsActivity : AbstractSettingsActivity() {
 
         fun startAutoReplySettings(context: Context) {
             startWithExtra(context, TYPE_AUTO_REPLY)
+        }
+
+        fun startFolderSettings(context: Context) {
+            startWithExtra(context, TYPE_FOLDER)
         }
 
         private fun startWithExtra(context: Context, type: Int) {

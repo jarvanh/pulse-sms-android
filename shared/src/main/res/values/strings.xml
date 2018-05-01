@@ -504,6 +504,8 @@
     <string name="keyword">Keyword</string>
     <string name="response">Response</string>
     <string name="contact">Contact</string>
+    <string name="folder_settings_summary">Create and manage your folders. Each conversation can be organized into a folder.</string>
+    <string name="folders_title">Folders</string>
 
     <!-- Theming Options -->
     <string name="day_night">Default (Day/Night)</string>

@@ -134,7 +134,7 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
     }
 
     internal fun displayEditFolders(): Boolean {
-        // TODO: Start the edit activity
+        SettingsActivity.startFolderSettings(activity)
         return true
     }
 

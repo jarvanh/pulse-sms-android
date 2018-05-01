@@ -58,6 +58,6 @@ class DrawerItemHelper(private val navigationView: NavigationView) {
     }
 
     companion object {
-        private var folders: List<Folder>? = null
+        var folders: List<Folder>? = null
     }
 }
