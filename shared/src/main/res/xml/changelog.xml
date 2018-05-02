@@ -20,8 +20,15 @@
         <!--name="3.0.0"-->
         <!--description="May, 2018">-->
         <!--<text>Support for creating and accessing folders to organize conversations (TODO: Remove folder feature flag and uncomment the new menu style in the navigation_drawer_conversations.xml file)</text>-->
-        <!--<text>Filter only unread conversations, from the navigation drawer</text>-->
+        <!--<text>Filter only unread conversations, from the navigation drawer (TODO: remove the feature flag)</text>-->
     <!--</version>-->
+
+    <version
+        name="2.11.1"
+        description="May 2nd, 2018">
+        <!-- Implemented the folder support, behind a feature toggle -->
+        <text>Bug fixes and performance improvements</text>
+    </version>
 
     <version
         name="2.11.0"
