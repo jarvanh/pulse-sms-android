@@ -46,7 +46,7 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
 
             try {
                 customTabsIntent.launchUrl(activity, Uri.parse(link))
-            } catch (e: ActivityNotFoundException) {
+            } catch (e: Exception) {
             }
 
             dismiss()
@@ -65,7 +65,7 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
 
             try {
                 intent.launchUrl(contentView.context, Uri.parse(link))
-            } catch (e: ActivityNotFoundException) {
+            } catch (e: Exception) {
             }
 
             dismiss()

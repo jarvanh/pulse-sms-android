@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment.settings
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -108,7 +109,11 @@ class HelpAndFeedbackFragment : MaterialPreferenceFragmentCompat() {
     private fun openWeb(url: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
-        startActivity(intent)
+
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+        }
     }
 
 }

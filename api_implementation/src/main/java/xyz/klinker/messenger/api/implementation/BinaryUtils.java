@@ -44,7 +44,7 @@ public class BinaryUtils {
                 bytes = baos.toByteArray();
 
                 bitmap.recycle();
-            } catch (Exception e) {
+            } catch (Exception | OutOfMemoryError e) {
                 e.printStackTrace();
                 bytes = new byte[0];
             }
@@ -54,7 +54,7 @@ public class BinaryUtils {
                         .openInputStream(Uri.parse(uri));
                 bytes = readBytes(stream);
                 stream.close();
-            } catch (Exception e) {
+            } catch (Exception | OutOfMemoryError e) {
                 e.printStackTrace();
                 bytes = new byte[0];
             }

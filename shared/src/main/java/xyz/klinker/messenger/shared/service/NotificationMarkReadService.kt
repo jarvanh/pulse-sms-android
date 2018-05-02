@@ -30,10 +30,14 @@ open class NotificationMarkReadService : IntentService("NotificationMarkReadServ
             // cancel the notification we just replied to or
             // if there are no more notifications, cancel the summary as well
             val unseenMessages = DataSource.getUnseenMessages(context)
-            if (unseenMessages.count <= 0) {
-                NotificationManagerCompat.from(context).cancelAll()
-            } else {
-                NotificationManagerCompat.from(context).cancel(conversationId.toInt())
+            try {
+                if (unseenMessages.count <= 0) {
+                    NotificationManagerCompat.from(context).cancelAll()
+                } else {
+                    NotificationManagerCompat.from(context).cancel(conversationId.toInt())
+                }
+            } catch (e: SecurityException) {
+                // not posted by this user
             }
 
             unseenMessages.closeSilent()

@@ -54,7 +54,9 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
         }
 
         toolbar.setOnClickListener {
-            (activity as MessengerActivity).clickNavigationItem(R.id.drawer_view_contact)
+            if (activity is MessengerActivity) {
+                (activity as MessengerActivity).clickNavigationItem(R.id.drawer_view_contact)
+            }
         }
 
         if (fragment.argManager.shouldOpenKeyboard) {

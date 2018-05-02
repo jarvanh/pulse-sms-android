@@ -26,7 +26,7 @@ import xyz.klinker.wear.reply.WearableReplyActivity
 
 class MessageListActivity : AppCompatActivity(), IMessageListFragment {
 
-    private val conversation: Conversation by lazy { DataSource.getConversation(this, intent.getLongExtra(CONVERSATION_ID, -1L))!! }
+    private val conversation: Conversation? by lazy { DataSource.getConversation(this, intent.getLongExtra(CONVERSATION_ID, -1L)) }
 
     private val actionDrawer: WearableActionDrawer by lazy { findViewById<View>(R.id.action_drawer) as WearableActionDrawer }
     private val recyclerView: WearableRecyclerView by lazy { findViewById<View>(R.id.recycler_view) as WearableRecyclerView }
@@ -34,9 +34,9 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
     private val manager: LinearLayoutManager by lazy { LinearLayoutManager(this) }
     private val adapter: WearableMessageListAdapter by lazy {
         if (Settings.useGlobalThemeColor) {
-            WearableMessageListAdapter(this, manager, null, Settings.mainColorSet.color, Settings.mainColorSet.colorAccent, conversation.isGroup)
+            WearableMessageListAdapter(this, manager, null, Settings.mainColorSet.color, Settings.mainColorSet.colorAccent, conversation!!.isGroup)
         } else {
-            WearableMessageListAdapter(this, manager, null, conversation.colors.color, conversation.colors.colorAccent, conversation.isGroup)
+            WearableMessageListAdapter(this, manager, null, conversation!!.colors.color, conversation!!.colors.colorAccent, conversation!!.isGroup)
         }
     }
 
@@ -55,7 +55,12 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
         registerReceiver(updatedReceiver,
                 MessageListUpdatedReceiver.intentFilter)
 
-        actionDrawer.setBackgroundColor(conversation.colors.color)
+        if (conversation == null) {
+            finish()
+            return
+        }
+
+        actionDrawer.setBackgroundColor(conversation!!.colors.color)
         actionDrawer.setOnMenuItemClickListener { menuItem ->
             actionDrawer.closeDrawer()
 
@@ -99,7 +104,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
 
     override fun loadMessages(addedNewMessage: Boolean) {
         Thread {
-            val cursor = DataSource.getMessages(this, conversation.id)
+            val cursor = DataSource.getMessages(this, conversation!!.id)
             runOnUiThread {
                 if (adapter.messages == null) {
                     adapter.setCursor(cursor)
@@ -111,7 +116,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
     }
 
     override val conversationId: Long
-        get() = conversation.id
+        get() = conversation!!.id
 
     override fun setShouldPullDrafts(pull: Boolean) {
 
@@ -126,10 +131,10 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
     }
 
     private fun dismissNotification() {
-        NotificationManagerCompat.from(this).cancel(conversation.id.toInt())
+        NotificationManagerCompat.from(this).cancel(conversation!!.id.toInt())
 
         ApiUtils.dismissNotification(Account.accountId,
-                Account.deviceId, conversation.id)
+                Account.deviceId, conversation!!.id)
 
         NotificationUtils.cancelGroupedNotificationWithNoContent(this)
     }
@@ -155,8 +160,8 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
         m.from = null
         m.color = null
         m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
-        m.simPhoneNumber = if (conversation.simSubscriptionId != null)
-            DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
+        m.simPhoneNumber = if (conversation!!.simSubscriptionId != null)
+            DualSimUtils.getPhoneNumberFromSimSubscription(conversation!!.simSubscriptionId!!)
         else
             null
 
@@ -164,7 +169,7 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
             DataSource.insertMessage(this, m, m.conversationId)
             loadMessages()
 
-            SendUtils(conversation.simSubscriptionId).send(this, m.data!!, conversation.phoneNumbers!!, null, MimeType.TEXT_PLAIN)
+            SendUtils(conversation!!.simSubscriptionId).send(this, m.data!!, conversation!!.phoneNumbers!!, null, MimeType.TEXT_PLAIN)
         }
     }
 

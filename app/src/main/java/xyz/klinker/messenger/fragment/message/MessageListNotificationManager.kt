@@ -54,12 +54,16 @@ class MessageListNotificationManager(private val fragment: MessageListFragment) 
     }
 
     private fun notificationActive() =
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) true
-        else {
-            val manager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-            val notifications = manager?.activeNotifications
+        try {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) true
+            else {
+                val manager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+                val notifications = manager?.activeNotifications
 
-            val notificationId = argManager.conversationId.toInt()
-            notifications?.any { it.id == notificationId } == true
+                val notificationId = argManager.conversationId.toInt()
+                notifications?.any { it.id == notificationId } == true
+            }
+        } catch (e: Exception) {
+            true
         }
 }

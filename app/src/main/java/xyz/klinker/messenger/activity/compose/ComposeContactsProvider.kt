@@ -21,10 +21,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.ImageContact
-import xyz.klinker.messenger.shared.util.ColorUtils
-import xyz.klinker.messenger.shared.util.ContactUtils
-import xyz.klinker.messenger.shared.util.CursorUtil
-import xyz.klinker.messenger.shared.util.PhoneNumberUtils
+import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.listener.ContactClickedListener
 import java.util.ArrayList
 
@@ -227,41 +224,46 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
         val names = title.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val numbers = phoneNumber.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
-        if (names.size == 1 && numbers.size == 1) {
-            // Case 1
-            if (imageUri == null) {
-                contactEntry.submitItem(title, phoneNumber)
-            } else {
-                contactEntry.submitItem(title, phoneNumber, Uri.parse(imageUri))
-            }
-        } else {
-            if (names.size == numbers.size) {
-                // case 3
-                for (i in names.indices) {
-                    val name = names[i]
-                    val number = numbers[i]
-                    val image = ContactUtils.findImageUri(number, activity)
-
-                    if (image != null) {
-                        contactEntry.submitItem(name, number, Uri.parse(image + "/photo"))
-                    } else {
-                        contactEntry.submitItem(name, number)
-                    }
+        try {
+            if (names.size == 1 && numbers.size == 1) {
+                // Case 1
+                if (imageUri == null) {
+                    contactEntry.submitItem(title, phoneNumber)
+                } else {
+                    contactEntry.submitItem(title, phoneNumber, Uri.parse(imageUri))
                 }
             } else {
-                // case 2
-                for (i in numbers.indices) {
-                    val number = numbers[i]
-                    val name = ContactUtils.findContactNames(number, activity)
-                    val image = ContactUtils.findImageUri(number, activity)
+                if (names.size == numbers.size) {
+                    // case 3
+                    for (i in names.indices) {
+                        val name = names[i]
+                        val number = numbers[i]
+                        val image = ContactUtils.findImageUri(number, activity)
 
-                    if (image != null) {
-                        contactEntry.submitItem(name, number, Uri.parse(image + "/photo"))
-                    } else {
-                        contactEntry.submitItem(name, number)
+                        if (image != null) {
+                            contactEntry.submitItem(name, number, Uri.parse(image + "/photo"))
+                        } else {
+                            contactEntry.submitItem(name, number)
+                        }
+                    }
+                } else {
+                    // case 2
+                    for (i in numbers.indices) {
+                        val number = numbers[i]
+                        val name = ContactUtils.findContactNames(number, activity)
+                        val image = ContactUtils.findImageUri(number, activity)
+
+                        if (image != null) {
+                            contactEntry.submitItem(name, number, Uri.parse(image + "/photo"))
+                        } else {
+                            contactEntry.submitItem(name, number)
+                        }
                     }
                 }
             }
+        } catch (e: SecurityException) {
+            // no permission for contacts
+            PermissionsUtils.startMainPermissionRequest(activity)
         }
     }
 

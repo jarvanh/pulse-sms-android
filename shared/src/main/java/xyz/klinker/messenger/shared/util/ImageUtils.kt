@@ -263,6 +263,8 @@ object ImageUtils {
         } catch (e: Exception) {
             e.printStackTrace()
             return null
+        } catch (e: OutOfMemoryError) {
+            return null
         }
 
     }
