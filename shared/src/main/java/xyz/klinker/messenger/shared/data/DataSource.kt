@@ -992,12 +992,12 @@ object DataSource {
         } else {
             try {
                 database(context).query(Conversation.TABLE, null, Conversation.COLUMN_TITLE + " LIKE '%" +
-                        query.replace("'", "''") + "%'", null, null, null,
+                        query.replace("'", "''") + "%' AND " + Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=0", null, null, null,
                         Conversation.COLUMN_TIMESTAMP + " desc")
             } catch (e: Exception) {
                 ensureActionable(context)
                 database(context).query(Conversation.TABLE, null, Conversation.COLUMN_TITLE + " LIKE '%" +
-                        query.replace("'", "''") + "%'", null, null, null,
+                        query.replace("'", "''") + "%' AND " + Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=0", null, null, null,
                         Conversation.COLUMN_TIMESTAMP + " desc")
             }
         }
@@ -1728,16 +1728,16 @@ object DataSource {
             } else {
                 try {
                     database(context).query(Message.TABLE + " m left outer join " + Conversation.TABLE + " c on m.conversation_id = c._id",
-                            arrayOf("m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title"),
+                            arrayOf("m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title", "c.private_notifications as private_notifications"),
                             Message.COLUMN_DATA + " LIKE '%" + query.replace("'", "''") + "%' AND " +
-                                    Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "'", null, null, null, Message.COLUMN_TIMESTAMP + " desc")
+                                    Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "' AND " + Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=0", null, null, null, Message.COLUMN_TIMESTAMP + " desc")
                 } catch (e: Exception) {
                     ensureActionable(context)
                     try {
                         database(context).query(Message.TABLE + " m left outer join " + Conversation.TABLE + " c on m.conversation_id = c._id",
-                                arrayOf("m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title"),
+                                arrayOf("m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title", "c.private_notifications as private_notifications"),
                                 Message.COLUMN_DATA + " LIKE '%" + query.replace("'", "''") + "%' AND " +
-                                        Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "'", null, null, null, Message.COLUMN_TIMESTAMP + " desc")
+                                        Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "' AND " + Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=0", null, null, null, Message.COLUMN_TIMESTAMP + " desc")
                     } catch (x: Exception) {
                         null
                     }
