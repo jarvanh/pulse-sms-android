@@ -60,8 +60,11 @@ class NotificationConversationProvider(private val service: Context, private val
 
         val wearableExtender = wearableHelper.buildExtender(conversation)
 
-        actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)
-        actionHelper.addNonReplyActions(builder, wearableExtender, conversation)
+        if (!conversation.privateNotification) {
+            actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)
+            actionHelper.addNonReplyActions(builder, wearableExtender, conversation)
+        }
+
         actionHelper.addContentIntents(builder, conversation)
 
         // apply the extenders to the notification
