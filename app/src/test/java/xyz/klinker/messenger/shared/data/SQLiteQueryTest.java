@@ -472,7 +472,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void searchMessages() {
         Cursor messages = source.searchMessages(context, "How is");
-        assertEquals(2, messages.getCount());
+        assertEquals(1, messages.getCount());
     }
 
     @Test

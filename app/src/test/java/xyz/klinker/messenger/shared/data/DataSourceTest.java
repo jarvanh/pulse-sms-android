@@ -281,7 +281,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void searchConversations() {
-        when(database.query("conversation", null, "title LIKE '%swimmer''s%'", null, null, null,
+        when(database.query("conversation", null, "title LIKE '%swimmer''s%' AND private_notifications=0", null, null, null,
                 "timestamp desc")).thenReturn(cursor);
         assertEquals(cursor, source.searchConversations(context, "swimmer's"));
     }
@@ -422,8 +422,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     @Test
     public void searchMessages() {
         when(database.query("message m left outer join conversation c on m.conversation_id = c._id",
-                new String[]{"m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title"},
-                "data LIKE '%test%' AND mime_type='text/plain'",
+                new String[]{"m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title", "c.private_notifications as private_notifications"},
+                "data LIKE '%test%' AND mime_type='text/plain' AND private_notifications=0",
                 null, null, null, "timestamp desc")).thenReturn(cursor);
 
         assertEquals(cursor, source.searchMessages(context, "test"));
