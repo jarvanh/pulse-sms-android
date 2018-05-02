@@ -35,6 +35,10 @@
         android:title="@string/private_conversation"
         android:summary="@string/private_conversation_summary_2" />
 
+    <Preference
+        android:key="@string/pref_contact_select_folder"
+        android:title="@string/select_folder" />
+
     <ListPreference
         android:defaultValue="never"
         android:entries="@array/cleanup"

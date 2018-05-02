@@ -19,6 +19,7 @@ package xyz.klinker.messenger.fragment.settings
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.preference.*
 import android.support.annotation.RequiresApi
 import android.support.v4.app.FragmentActivity
@@ -59,6 +60,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         setUpPrivate()
         setUpGroupName()
         setUpEditRecipients()
+        setUpFolder()
         setUpCleanupOldMessages()
         setUpRingtone()
         setUpNotificationChannels()
@@ -192,6 +194,25 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
 
             startActivity(editRecipients)
             true
+        }
+    }
+
+    private fun setUpFolder() {
+        val preference = findPreference(getString(R.string.pref_contact_select_folder))
+
+        if (FeatureFlags.FOLDER_SUPPORT) {
+            preference.setOnPreferenceClickListener {
+                // TODO: edit what folder this is in
+                true
+            }
+
+            val handler = Handler()
+            Thread {
+                val folder = DataSource.getFoldersAsList(activity).firstOrNull { it.id == conversation.folderId }
+                handler.post { preference.summary = folder?.name }
+            }.start()
+        } else {
+            preferenceScreen.removePreference(preference)
         }
     }
 
