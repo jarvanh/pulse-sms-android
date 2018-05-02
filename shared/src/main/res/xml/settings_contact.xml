@@ -30,11 +30,6 @@
         android:title="@string/pin_conversation"
         android:summary="@string/pin_conversation_summary" />
 
-    <SwitchPreference
-        android:key="@string/pref_contact_private_conversation"
-        android:title="@string/private_conversation"
-        android:summary="@string/private_conversation_summary_2" />
-
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_contact_customization_group"
         android:title="@string/theme_settings">
@@ -91,6 +86,11 @@
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_contact_advanced_group"
         android:title="@string/advanced">
+
+        <SwitchPreference
+            android:key="@string/pref_contact_private_conversation"
+            android:title="@string/private_conversation"
+            android:summary="@string/private_conversation_summary_2" />
 
         <Preference
             android:key="@string/pref_contact_select_folder"

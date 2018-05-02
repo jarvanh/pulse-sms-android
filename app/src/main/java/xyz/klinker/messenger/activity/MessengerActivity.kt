@@ -37,6 +37,7 @@ import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import xyz.klinker.messenger.utils.UpdateUtils
 import android.view.inputmethod.InputMethodManager
 import xyz.klinker.messenger.fragment.PrivateConversationListFragment
+import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.shared.util.DrawerItemHelper
 
 
@@ -112,6 +113,10 @@ class MessengerActivity : AppCompatActivity() {
 
     public override fun onPause() {
         if (navController.otherFragment is PrivateConversationListFragment) {
+            if ((navController.otherFragment as ConversationListFragment).isExpanded) {
+                onBackPressed()
+            }
+
             onBackPressed()
         }
 
