@@ -35,18 +35,6 @@
         android:title="@string/private_conversation"
         android:summary="@string/private_conversation_summary_2" />
 
-    <Preference
-        android:key="@string/pref_contact_select_folder"
-        android:title="@string/select_folder" />
-
-    <ListPreference
-        android:defaultValue="never"
-        android:entries="@array/cleanup"
-        android:entryValues="@array/cleanup_values"
-        android:key="@string/pref_cleanup_messages_now"
-        android:title="@string/cleanup_old_messages"
-        android:summary="@string/cleanup_old_messages_now_summary"/>
-
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_contact_customization_group"
         android:title="@string/theme_settings">
@@ -97,6 +85,24 @@
         <Preference
             android:key="@string/pref_contact_notification_channel_restore_default"
             android:title="@string/restore_default_channel_settings" />
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
+
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:key="@string/pref_contact_notification_group"
+        android:title="@string/notification_settings">
+
+        <Preference
+            android:key="@string/pref_contact_select_folder"
+            android:title="@string/select_folder" />
+
+        <ListPreference
+            android:defaultValue="never"
+            android:entries="@array/cleanup"
+            android:entryValues="@array/cleanup_values"
+            android:key="@string/pref_cleanup_messages_now"
+            android:title="@string/cleanup_old_messages"
+            android:summary="@string/cleanup_old_messages_now_summary"/>
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 

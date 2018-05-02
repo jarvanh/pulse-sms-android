@@ -514,6 +514,7 @@
     <string name="folder_name">Folder name…</string>
     <string name="private_conversations_cannot_be_added_to_folders">Private conversations cannot be added.</string>
     <string name="conversation_already_in_a_folder">Already in a different folder.</string>
+    <string name="no_folder">No Folder</string>
 
     <!-- Theming Options -->
     <string name="day_night">Default (Day/Night)</string>

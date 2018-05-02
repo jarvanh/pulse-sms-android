@@ -67,6 +67,7 @@
     <string name="pref_contact_notification_channel_restore_default" translatable="false">notification_channel_restore_defaultsettings</string>
     <string name="pref_contact_customization_group" translatable="false">customization_group</string>
     <string name="pref_contact_notification_group" translatable="false">notification_group</string>
+    <string name="pref_contact_advanced_group" translatable="false">contact_advanced_group</string>
 
     <string name="pref_general_category" translatable="false">general_settings_category</string>
     <string name="pref_conversation_list" translatable="false">conversation_list_category</string>
