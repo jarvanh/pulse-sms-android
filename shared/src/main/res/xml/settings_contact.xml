@@ -89,8 +89,8 @@
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
-        android:key="@string/pref_contact_notification_group"
-        android:title="@string/notification_settings">
+        android:key="@string/pref_contact_advanced_group"
+        android:title="@string/advanced">
 
         <Preference
             android:key="@string/pref_contact_select_folder"
