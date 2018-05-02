@@ -114,7 +114,7 @@ dependencies {
     api "com.android.support:customtabs:$ANDROID_SUPPORT_VERSION"
     api "com.android.support:exifinterface:$ANDROID_SUPPORT_VERSION"
 
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') { transitive = true }
+    api('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') { transitive = true }
     api "com.google.firebase:firebase-core:$FIREBASE_VERSION"
     api "com.google.firebase:firebase-perf:$FIREBASE_VERSION"
     api "com.google.firebase:firebase-crash:$FIREBASE_VERSION"

@@ -193,24 +193,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
         }.start()
     }
 
-    private fun queryConversations(): List<Conversation> {
-        val cursor = DataSource.getAllConversations(activity)
-
-        if (cursor.moveToFirst()) {
-            val conversations = ArrayList<Conversation>()
-
-            do {
-                val conversation = Conversation()
-                conversation.fillFromCursor(cursor)
-                conversations.add(conversation)
-            } while (cursor.moveToNext())
-
-            CursorUtil.closeSilent(cursor)
-            return conversations
-        }
-
-        return ArrayList()
-    }
+    private fun queryConversations() = DataSource.getAllNonPrivateConversationsAsList(activity)
 
     // we have a few different cases:
     // 1.) Single recipient (with single number)

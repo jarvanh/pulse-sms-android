@@ -895,6 +895,20 @@ object DataSource {
                 database(context).query(Conversation.TABLE, null, Conversation.COLUMN_READ + "=0 AND " + Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=0", null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
             }
 
+
+    /**
+     * Gets all non-private conversations in the database.
+     *
+     * @return a list of non-private conversations.
+     */
+    fun getAllNonPrivateConversations(context: Context): Cursor =
+            try {
+                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=0", null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
+            } catch (e: Exception) {
+                ensureActionable(context)
+                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_PRIVATE_NOTIFICATIONS + "=0", null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
+            }
+
     /**
      * Gets all conversations in the folder, in the database.
      *
@@ -921,6 +935,13 @@ object DataSource {
      */
     fun getUnreadNonPrivateConversationsAsList(context: Context): List<Conversation> =
             convertConversationCursorToList(getUnreadNonPrivateConversations(context))
+
+    /**
+     * Get a list of all the unread conversations.
+     * @return a list of the conversations in the cursor
+     */
+    fun getAllNonPrivateConversationsAsList(context: Context): List<Conversation> =
+            convertConversationCursorToList(getAllNonPrivateConversations(context))
 
     /**
      * Get a list of all the conversations, in the a folder
