@@ -27,6 +27,7 @@
         name="2.11.1"
         description="May 2nd, 2018">
         <!-- Implemented the folder support, behind a feature toggle -->
+        <!-- Disable hardware acceleration on MessageListFragment EditText, on Android 8.1.0 only. There was a crash happening there -->
         <text>Bug fixes and performance improvements</text>
     </version>
 

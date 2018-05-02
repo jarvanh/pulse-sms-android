@@ -74,7 +74,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             fragment.messageLoader.initRecycler()
         }
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1) {
             messageEntry.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         }
     }
