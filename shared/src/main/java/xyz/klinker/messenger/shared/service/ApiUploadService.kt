@@ -16,26 +16,19 @@
 
 package xyz.klinker.messenger.shared.service
 
-import android.app.Notification
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.os.Build
-import android.os.Handler
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
 
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 
 import java.io.IOException
 import java.util.ArrayList
-import java.util.concurrent.Executor
 
 import retrofit2.Response
 import xyz.klinker.messenger.api.entity.*
@@ -51,7 +44,6 @@ import xyz.klinker.messenger.encryption.EncryptionUtils
 import xyz.klinker.messenger.api.implementation.BinaryUtils
 import xyz.klinker.messenger.shared.data.model.*
 import xyz.klinker.messenger.shared.util.*
-import xyz.klinker.messenger.shared.util.listener.DirectExecutor
 
 open class ApiUploadService : Service() {
 
@@ -175,7 +167,7 @@ open class ApiUploadService : Service() {
                 val conversation = ConversationBody(c.id, c.colors.color,
                         c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent, c.ledColor, c.pinned,
                         c.read, c.timestamp, c.title, c.phoneNumbers, c.snippet, c.ringtoneUri, null,
-                        c.idMatcher, c.mute, c.archive, c.privateNotifications, c.folderId)/*c.imageUri*/
+                        c.idMatcher, c.mute, c.archive, c.private, c.folderId)/*c.imageUri*/
 
                 conversations[cursor.position] = conversation
             } while (cursor.moveToNext())

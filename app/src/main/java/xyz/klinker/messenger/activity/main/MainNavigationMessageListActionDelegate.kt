@@ -69,6 +69,8 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             Toast.makeText(activity, R.string.no_apps_found, Toast.LENGTH_SHORT).show()
         } catch (e: SecurityException) {
             Toast.makeText(activity, R.string.you_denied_permission, Toast.LENGTH_SHORT).show()
+        } catch (e: NullPointerException) {
+            Toast.makeText(activity, R.string.no_apps_found, Toast.LENGTH_SHORT).show()
         }
 
         return true

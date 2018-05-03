@@ -12,7 +12,6 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
@@ -88,7 +87,7 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
 
         val open = Intent(activity, MessengerActivity::class.java)
 
-        if (conversation?.privateNotifications == true) {
+        if (conversation?.private == true) {
             Toast.makeText(activity, R.string.private_conversation_disclaimer, Toast.LENGTH_LONG).show()
         } else {
             open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversationId)

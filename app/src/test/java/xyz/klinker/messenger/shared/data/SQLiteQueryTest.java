@@ -22,7 +22,6 @@ import android.graphics.Color;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.robolectric.RuntimeEnvironment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -261,7 +260,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         conversation.setImageUri(null);
         conversation.setIdMatcher("24558");
         conversation.setMute(false);
-        conversation.setPrivateNotifications(false);
+        conversation.setPrivate(false);
         conversation.setLedColor(Color.WHITE);
 
         int initialSize = source.getUnarchivedConversations(context).getCount();

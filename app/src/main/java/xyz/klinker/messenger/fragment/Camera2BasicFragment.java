@@ -787,7 +787,7 @@ public class Camera2BasicFragment extends Fragment
                         }
                     }, null
             );
-        } catch (CameraAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -978,7 +978,13 @@ public class Camera2BasicFragment extends Fragment
             case R.id.fullscreen: {
                 Intent startCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startCamera.putExtra(MediaStore.EXTRA_OUTPUT, ImageUtils.INSTANCE.getUriForPhotoCaptureIntent(getActivity()));
-                getActivity().startActivityForResult(startCamera, AttachmentListener.Companion.getRESULT_CAPTURE_IMAGE_REQUEST());
+
+                try {
+                    getActivity().startActivityForResult(startCamera, AttachmentListener.Companion.getRESULT_CAPTURE_IMAGE_REQUEST());
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "Please grant permission to start the camera.", Toast.LENGTH_LONG).show();
+                }
+
 
                 break;
             }

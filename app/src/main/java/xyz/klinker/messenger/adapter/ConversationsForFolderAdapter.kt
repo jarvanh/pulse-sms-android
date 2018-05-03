@@ -36,7 +36,7 @@ class ConversationsForFolderAdapter(conversations: List<Conversation>, listener:
         val conversation = conversations[position]
         holder.checkBox?.isChecked = selectedIds.contains(conversation.id)
 
-        if (conversation.privateNotifications) {
+        if (conversation.private) {
             holder.summary?.text = holder.itemView.context.getString(R.string.private_conversations_cannot_be_added_to_folders)
             holder.itemView.isEnabled = false
             holder.itemView.isFocusable = false

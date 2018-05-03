@@ -8,13 +8,10 @@ import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 
 object NotificationUtils {
 
@@ -173,7 +170,7 @@ object NotificationUtils {
         channel.setBypassDnd(false)
         channel.setShowBadge(true)
         channel.enableVibration(true)
-        channel.lockscreenVisibility = if (conversation.privateNotifications)
+        channel.lockscreenVisibility = if (conversation.private)
             Notification.VISIBILITY_PRIVATE else Notification.VISIBILITY_PUBLIC
 
         return channel

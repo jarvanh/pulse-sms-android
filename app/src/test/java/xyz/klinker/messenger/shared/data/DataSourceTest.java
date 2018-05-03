@@ -34,8 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
-import xyz.klinker.messenger.R;
-import xyz.klinker.messenger.api.implementation.ApiUtils;
 import xyz.klinker.messenger.encryption.EncryptionUtils;
 import xyz.klinker.messenger.shared.data.model.AutoReply;
 import xyz.klinker.messenger.shared.data.model.Blacklist;
@@ -755,7 +753,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.setSnippet("So maybe not going to be able to get platinum huh?");
         conversation.setIdMatcher("11493");
         conversation.setMute(false);
-        conversation.setPrivateNotifications(false);
+        conversation.setPrivate(false);
         conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
@@ -771,7 +769,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.setSnippet("Whoops ya idk what happened but anysho drive safe");
         conversation.setIdMatcher("80846");
         conversation.setMute(false);
-        conversation.setPrivateNotifications(false);
+        conversation.setPrivate(false);
         conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
@@ -787,7 +785,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.setSnippet("Will probably be there from 6:30-9, just stop by when you can!");
         conversation.setIdMatcher("96726");
         conversation.setMute(false);
-        conversation.setPrivateNotifications(false);
+        conversation.setPrivate(false);
         conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
@@ -803,7 +801,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.setSnippet("Just finished, it was a lot of fun");
         conversation.setIdMatcher("18235");
         conversation.setMute(false);
-        conversation.setPrivateNotifications(false);
+        conversation.setPrivate(false);
         conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
@@ -819,7 +817,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.setSnippet("Yeah I'll do it when I get home");
         conversation.setIdMatcher("67749");
         conversation.setMute(false);
-        conversation.setPrivateNotifications(false);
+        conversation.setPrivate(false);
         conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
@@ -835,7 +833,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.setSnippet("Yeah so hiking around in some place called beaver meadows now.");
         conversation.setIdMatcher("08532");
         conversation.setMute(false);
-        conversation.setPrivateNotifications(false);
+        conversation.setPrivate(false);
         conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 
@@ -851,7 +849,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
         conversation.setSnippet("Maybe they'll run into each other on the way back... idk");
         conversation.setIdMatcher("90939");
         conversation.setMute(false);
-        conversation.setPrivateNotifications(false);
+        conversation.setPrivate(false);
         conversation.setLedColor(Color.WHITE);
         conversations.add(conversation);
 

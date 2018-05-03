@@ -23,7 +23,6 @@ import android.provider.ContactsContract
 
 import xyz.klinker.messenger.api.entity.ConversationBody
 import xyz.klinker.messenger.shared.data.ColorSet
-import xyz.klinker.messenger.shared.data.DatabaseSQLiteHelper
 import xyz.klinker.messenger.encryption.EncryptionUtils
 import xyz.klinker.messenger.shared.util.ColorUtils
 
@@ -46,7 +45,7 @@ class Conversation : DatabaseTable {
     var idMatcher: String? = null
     var mute: Boolean = false
     var archive: Boolean = false
-    var privateNotifications: Boolean = false
+    var private: Boolean = false
     var simSubscriptionId: Int? = null
     var folderId: Long? = null
 
@@ -72,7 +71,7 @@ class Conversation : DatabaseTable {
         this.idMatcher = body.idMatcher
         this.mute = body.mute
         this.archive = body.archive
-        this.privateNotifications = body.privateNotifications
+        this.private = body.privateNotifications
         this.folderId = body.folderId
     }
 
@@ -100,7 +99,7 @@ class Conversation : DatabaseTable {
                 COLUMN_ID_MATCHER -> this.idMatcher = cursor.getString(i)
                 COLUMN_MUTE -> this.mute = cursor.getInt(i) == 1
                 COLUMN_ARCHIVED -> this.archive = cursor.getInt(i) == 1
-                COLUMN_PRIVATE_NOTIFICATIONS -> this.privateNotifications = cursor.getInt(i) == 1
+                COLUMN_PRIVATE -> this.private = cursor.getInt(i) == 1
                 COLUMN_SIM_SUBSCRIPTION_ID -> this.simSubscriptionId = if (cursor.getInt(i) == -1) null else cursor.getInt(i)
                 COLUMN_FOLDER_ID -> this.folderId = cursor.getLong(i)
             }
@@ -162,7 +161,7 @@ class Conversation : DatabaseTable {
         const val COLUMN_ID_MATCHER = "id_matcher"
         const val COLUMN_MUTE = "mute"
         const val COLUMN_ARCHIVED = "archive" // created in database v2
-        const val COLUMN_PRIVATE_NOTIFICATIONS = "private_notifications" // created in database v4
+        const val COLUMN_PRIVATE = "private_notifications" // created in database v4
         const val COLUMN_LED_COLOR = "led_color" // created in database v5
         const val COLUMN_SIM_SUBSCRIPTION_ID = "sim_subscription_id" // created in database v6
         const val COLUMN_FOLDER_ID = "folder_id" // created in database v12
@@ -186,7 +185,7 @@ class Conversation : DatabaseTable {
                 COLUMN_ID_MATCHER + " text not null unique, " +
                 COLUMN_MUTE + " integer not null, " +
                 COLUMN_ARCHIVED + " integer not null default 0, " +
-                COLUMN_PRIVATE_NOTIFICATIONS + " integer not null default 0, " +
+                COLUMN_PRIVATE + " integer not null default 0, " +
                 COLUMN_LED_COLOR + " integer not null default " + Color.WHITE + ", " +
                 COLUMN_SIM_SUBSCRIPTION_ID + " integer default -1, " +
                 COLUMN_FOLDER_ID + " integer default -1" +

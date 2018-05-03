@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationManagerCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
@@ -198,7 +199,11 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, title)
 
-        (context as Activity).startActivityForResult(intent, RINGTONE_REQUEST)
+        try {
+            (context as Activity).startActivityForResult(intent, RINGTONE_REQUEST)
+        } catch (e: Exception) {
+            Toast.makeText(context, "Your phone has refused to allow for a custom ringtone...", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun makeTestNotification() {

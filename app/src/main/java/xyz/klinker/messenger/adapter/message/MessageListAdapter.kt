@@ -220,15 +220,14 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
             return Date()
         }
 
-        try {
+        return try {
             dataProvider.messages.moveToPosition(position)
+            val millis = dataProvider.messages.getLong(dataProvider.messages.getColumnIndex(Message.COLUMN_TIMESTAMP))
+            Date(millis)
         } catch (e: Exception) {
             fragment.onBackPressed()
-            return Date()
+            Date()
         }
-        
-        val millis = dataProvider.messages.getLong(dataProvider.messages.getColumnIndex(Message.COLUMN_TIMESTAMP))
-        return Date(millis)
     }
 
     override fun getItemId(position: Int) = try {

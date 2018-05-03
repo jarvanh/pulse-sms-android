@@ -56,13 +56,13 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
     fun onSwipeToDelete(conversation: Conversation) {
         pendingDelete.add(conversation)
 
-        val plural = fragment.resources.getQuantityString(R.plurals.conversations_deleted,
+        val plural = activity?.resources?.getQuantityString(R.plurals.conversations_deleted,
                 pendingDelete.size, pendingDelete.size)
 
         archiveSnackbar?.dismiss()
         deleteSnackbar?.removeCallback(deleteSnackbarCallback)
 
-        deleteSnackbar = Snackbar.make(fragment.recyclerView, plural, UNDO_DURATION)
+        deleteSnackbar = Snackbar.make(fragment.recyclerView, plural ?: "", UNDO_DURATION)
                 .setAction(R.string.undo) { fragment.recyclerManager.loadConversations() }
                 .addCallback(deleteSnackbarCallback)
         SnackbarAnimationFix.apply(deleteSnackbar!!)
@@ -78,14 +78,14 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
     fun onSwipeToArchive(conversation: Conversation) {
         pendingArchive.add(conversation)
 
-        val plural = fragment.resources.getQuantityString(
+        val plural = activity?.resources?.getQuantityString(
                 if (fragment is ArchivedConversationListFragment) R.plurals.conversations_unarchived else R.plurals.conversations_archived,
                 pendingArchive.size, pendingArchive.size)
 
         deleteSnackbar?.dismiss()
         archiveSnackbar?.removeCallback(archiveSnackbarCallback)
 
-        archiveSnackbar = Snackbar.make(fragment.recyclerView, plural, UNDO_DURATION)
+        archiveSnackbar = Snackbar.make(fragment.recyclerView, plural ?: "", UNDO_DURATION)
                 .setAction(R.string.undo) { fragment.recyclerManager.loadConversations() }
                 .addCallback(archiveSnackbarCallback)
         SnackbarAnimationFix.apply(archiveSnackbar!!)

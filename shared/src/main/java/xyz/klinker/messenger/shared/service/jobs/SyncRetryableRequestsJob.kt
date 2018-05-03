@@ -1,18 +1,14 @@
 package xyz.klinker.messenger.shared.service.jobs
 
 import android.content.Context
-import android.util.Log
 import com.firebase.jobdispatcher.*
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.model.RetryableRequest
-import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
-import xyz.klinker.messenger.shared.util.TimeUtils
 
 /**
  * If some requests fail, they get written in to the retryable_requests table to get retried when the
@@ -59,7 +55,7 @@ class SyncRetryableRequestsJob : SimpleJobService() {
                 conversation.ledColor, conversation.pinned, conversation.read,
                 conversation.timestamp, conversation.title, conversation.phoneNumbers,
                 conversation.snippet, conversation.ringtoneUri, conversation.idMatcher,
-                conversation.mute, conversation.archive, conversation.privateNotifications,
+                conversation.mute, conversation.archive, conversation.private,
                 conversation.folderId, Account.encryptor, false)
     }
 

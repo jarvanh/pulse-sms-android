@@ -50,7 +50,7 @@ class NotificationUnreadConversationQuery(private val context: Context) {
                             conversation.phoneNumbers = c.phoneNumbers
                             conversation.groupConversation = c.phoneNumbers!!.contains(",")
 
-                            if (c.privateNotifications) {
+                            if (c.private) {
                                 conversation.title = context.getString(R.string.new_message)
                                 conversation.imageUri = null
                                 conversation.ringtoneUri = null

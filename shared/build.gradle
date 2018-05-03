@@ -130,7 +130,7 @@ dependencies {
     api 'com.klinkerapps:android-transcoder:1.0.1'
     api 'com.klinkerapps:article_viewer:0.24.9'
     api 'com.klinkerapps:giphy:1.1.1'
-    api 'com.klinkerapps:floating-tutorial:1.0.3'
+    api 'com.klinkerapps:floating-tutorial:1.0.4'
 
     api 'com.firebase:firebase-jobdispatcher:0.8.5'
     api 'com.github.apl-devs:appintro:v4.2.0'

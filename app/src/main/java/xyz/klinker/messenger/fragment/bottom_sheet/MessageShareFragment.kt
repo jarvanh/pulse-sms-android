@@ -74,7 +74,7 @@ class MessageShareFragment : TabletOptimizedBottomSheetDialogFragment() {
     }
 
     private fun getTextToSend(): String {
-        if (messages!!.isEmpty()) {
+        if (messages == null || messages!!.isEmpty()) {
             return ""
         } else if (messages!!.size == 1) {
             return MessageMultiSelectDelegate.getMessageContent(messages!![0])!!

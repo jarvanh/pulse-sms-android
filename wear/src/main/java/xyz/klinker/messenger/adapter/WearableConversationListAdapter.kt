@@ -142,7 +142,7 @@ class WearableConversationListAdapter(conversations: List<Conversation>) : Secti
         }
 
         holder.name.text = conversation.title
-        if (conversation.privateNotifications || conversation.snippet == null ||
+        if (conversation.private || conversation.snippet == null ||
                 conversation.snippet!!.contains("file://") || conversation.snippet!!.contains("content://")) {
             holder.summary.text = ""
         } else {

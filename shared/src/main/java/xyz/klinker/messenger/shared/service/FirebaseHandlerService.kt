@@ -43,8 +43,6 @@ import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
-import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.service.notification.Notifier
 import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
@@ -550,7 +548,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 conversation.read = json.getBoolean("read")
                 conversation.read = json.getBoolean("read")
                 conversation.archive = json.getBoolean("archive")
-                conversation.privateNotifications = json.getBoolean("private_notifications")
+                conversation.private = json.getBoolean("private_notifications")
 
                 DataSource.updateConversationSettings(context, conversation, false)
 

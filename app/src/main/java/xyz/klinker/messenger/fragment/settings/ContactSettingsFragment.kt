@@ -17,21 +17,17 @@
 package xyz.klinker.messenger.fragment.settings
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.preference.*
 import android.support.annotation.RequiresApi
-import android.support.v4.app.FragmentActivity
 import android.text.InputType
 import android.util.Log
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.activity.compose.ComposeConstants
-import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
@@ -87,7 +83,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
     private fun setUpDefaults() {
         PreferenceManager.getDefaultSharedPreferences(activity).edit()
                 .putBoolean(getString(R.string.pref_contact_pin_conversation), conversation.pinned)
-                .putBoolean(getString(R.string.pref_contact_private_conversation), conversation.privateNotifications)
+                .putBoolean(getString(R.string.pref_contact_private_conversation), conversation.private)
                 .putString(getString(R.string.pref_contact_group_name), conversation.title)
                 .putString(getString(R.string.pref_contact_ringtone),
                         if (conversation.ringtoneUri == null)
@@ -192,12 +188,12 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
 
     private fun setUpPrivate() {
         val preference = findPreference(getString(R.string.pref_contact_private_conversation)) as SwitchPreference
-        val folderPreference = findPreference(getString(R.string.pref_contact_select_folder))
-        preference.isChecked = conversation.privateNotifications
+        val folderPreference = findPreference(getString(R.string.pref_contact_select_folder)) as SwitchPreference?
+        preference.isChecked = conversation.private
 
         preference.setOnPreferenceChangeListener { _, o ->
-            conversation.privateNotifications = o as Boolean
-            folderPreference.isEnabled = !conversation.privateNotifications
+            conversation.private = o as Boolean
+            folderPreference?.isEnabled = !conversation.private
 
             true
         }
@@ -207,7 +203,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         val preference = findPreference(getString(R.string.pref_contact_select_folder))
         val noFolderText = resources.getString(R.string.no_folder)
 
-        if (conversation.privateNotifications) {
+        if (conversation.private) {
             preference.isEnabled = false
         }
 

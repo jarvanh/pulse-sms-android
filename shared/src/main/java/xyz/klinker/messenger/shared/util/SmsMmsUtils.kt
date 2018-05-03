@@ -100,7 +100,7 @@ object SmsMmsUtils {
                 conversation.imageUri = ContactUtils.findImageUri(conversation.phoneNumbers, context)
                 conversation.idMatcher = createIdMatcher(conversation.phoneNumbers!!).default
                 conversation.mute = false
-                conversation.privateNotifications = false
+                conversation.private = false
                 conversation.ledColor = Color.WHITE
                 ImageUtils.fillConversationColors(conversation, context)
                 conversation.simSubscriptionId = -1

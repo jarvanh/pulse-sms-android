@@ -52,7 +52,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
         assertEquals("image_uri", conversation.getImageUri());
         assertEquals("11493", conversation.getIdMatcher());
         assertFalse(conversation.getMute());
-        assertFalse(conversation.getPrivateNotifications());
+        assertFalse(conversation.getPrivate());
     }
 
     private Cursor createCursor() {
@@ -73,7 +73,7 @@ public class ConversationFillTest extends MessengerRobolectricSuite {
                 Conversation.COLUMN_IMAGE_URI,
                 Conversation.COLUMN_ID_MATCHER,
                 Conversation.COLUMN_MUTE,
-                Conversation.COLUMN_PRIVATE_NOTIFICATIONS
+                Conversation.COLUMN_PRIVATE
         });
 
         cursor.addRow(new Object[]{
