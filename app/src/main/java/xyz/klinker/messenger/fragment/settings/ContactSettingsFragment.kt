@@ -153,16 +153,6 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         }
     }
 
-    private fun setUpPrivate() {
-        val preference = findPreference(getString(R.string.pref_contact_private_conversation)) as SwitchPreference
-        preference.isChecked = conversation.privateNotifications
-
-        preference.setOnPreferenceChangeListener { _, o ->
-            conversation.privateNotifications = o as Boolean
-            true
-        }
-    }
-
     private fun setUpGroupName() {
         val preference = findPreference(getString(R.string.pref_contact_group_name)) as EditTextPreference
 
@@ -199,9 +189,27 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         }
     }
 
+
+    private fun setUpPrivate() {
+        val preference = findPreference(getString(R.string.pref_contact_private_conversation)) as SwitchPreference
+        val folderPreference = findPreference(getString(R.string.pref_contact_select_folder))
+        preference.isChecked = conversation.privateNotifications
+
+        preference.setOnPreferenceChangeListener { _, o ->
+            conversation.privateNotifications = o as Boolean
+            folderPreference.isEnabled = !conversation.privateNotifications
+
+            true
+        }
+    }
+
     private fun setUpFolder() {
         val preference = findPreference(getString(R.string.pref_contact_select_folder))
         val noFolderText = resources.getString(R.string.no_folder)
+
+        if (conversation.privateNotifications) {
+            preference.isEnabled = false
+        }
 
         if (FeatureFlags.FOLDER_SUPPORT) {
             val handler = Handler()
