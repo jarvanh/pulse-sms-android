@@ -188,7 +188,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
 
     private fun setUpPrivate() {
         val preference = findPreference(getString(R.string.pref_contact_private_conversation)) as SwitchPreference
-        val folderPreference = findPreference(getString(R.string.pref_contact_select_folder)) as SwitchPreference?
+        val folderPreference = findPreference(getString(R.string.pref_contact_select_folder)) as Preference?
         preference.isChecked = conversation.private
 
         preference.setOnPreferenceChangeListener { _, o ->
