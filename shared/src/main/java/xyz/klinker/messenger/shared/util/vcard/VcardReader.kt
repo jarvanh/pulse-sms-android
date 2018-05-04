@@ -19,7 +19,7 @@ object VcardReader {
         return try {
             val inputStream = context.contentResolver.openInputStream(uri)
             inputStream.bufferedReader().use { it.readText() }
-        } catch (e: FileNotFoundException) {
+        } catch (e: Throwable) {
             ""
         }
     }

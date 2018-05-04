@@ -133,7 +133,11 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
                     }
 
                     if (intent != null) {
-                        activity.startActivity(intent)
+                        try {
+                            activity.startActivity(intent)
+                        } catch (e: Exception) {
+                            Toast.makeText(activity, R.string.no_apps_found, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
 
@@ -165,7 +169,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
                 try {
                     activity.startActivity(intent)
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    Toast.makeText(activity, R.string.no_apps_found, Toast.LENGTH_SHORT).show()
                 }
 
             } else {
