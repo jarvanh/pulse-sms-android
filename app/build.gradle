@@ -136,7 +136,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
-    testImplementation 'org.mockito:mockito-core:2.8.43'
+    testImplementation 'org.mockito:mockito-core:2.18.3'
     testImplementation 'org.apache.maven:maven-ant-tasks:2.1.3'
     testImplementation project(path: ':encryption')
 }
