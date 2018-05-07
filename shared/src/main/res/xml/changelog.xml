@@ -25,6 +25,14 @@
     <!--</version>-->
 
     <version
+        name="2.11.2"
+        description="May 8th, 2018">
+        <!-- Implemented the mark as unread (behind a feature flag) -->
+        <!-- Implemented the media mime type previews on the conversation list (behind a feature flag) -->
+        <text>Bug fixes and performance improvements</text>
+    </version>
+
+    <version
         name="2.11.1"
         description="May 2nd, 2018">
         <!-- Implemented the folder support, behind a feature toggle -->
