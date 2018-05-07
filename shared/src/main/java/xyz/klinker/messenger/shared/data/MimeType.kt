@@ -16,6 +16,8 @@
 
 package xyz.klinker.messenger.shared.data
 
+import android.content.Context
+import xyz.klinker.messenger.shared.R
 import java.util.HashMap
 
 /**
@@ -164,6 +166,20 @@ object MimeType {
      */
     fun getExtension(mimeType: String): String {
         return "." + extensions[mimeType]
+    }
+
+    fun getTextDescription(context: Context, mimeType: String?): String {
+        return when {
+            !FeatureFlags.CONVO_SNIPPETS_REVAMP -> ""
+            mimeType == null -> ""
+            MimeType.isAudio(mimeType) -> context.getString(R.string.audio_message)
+            MimeType.isVideo(mimeType) -> context.getString(R.string.video_message)
+            MimeType.isVcard(mimeType) -> context.getString(R.string.contact_card)
+            MimeType.isStaticImage(mimeType) -> context.getString(R.string.picture_message)
+            mimeType == MimeType.IMAGE_GIF -> context.getString(R.string.gif_message)
+            MimeType.isExpandedMedia(mimeType) -> context.getString(R.string.media)
+            else -> ""
+        }
     }
 
 }

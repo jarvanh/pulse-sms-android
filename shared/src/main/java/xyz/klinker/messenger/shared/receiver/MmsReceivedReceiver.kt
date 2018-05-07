@@ -112,8 +112,10 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
             message.simPhoneNumber = if (DualSimUtils.availableSims.isEmpty()) null else to
             message.sentDeviceId = -1L
 
-            if (message.mimeType == MimeType.TEXT_PLAIN) {
-                snippet = message.data
+            snippet = if (message.mimeType == MimeType.TEXT_PLAIN) {
+                message.data
+            } else {
+                MimeType.getTextDescription(context, message.mimeType!!)
             }
 
             if (!phoneNumbers.contains(",")) {
@@ -141,8 +143,7 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
         }
 
         if (conversationId != null) {
-            ConversationListUpdatedReceiver.sendBroadcast(context, conversationId!!,
-                    snippet, false)
+            ConversationListUpdatedReceiver.sendBroadcast(context, conversationId!!, snippet, false)
             MessageListUpdatedReceiver.sendBroadcast(context, conversationId!!)
         }
 

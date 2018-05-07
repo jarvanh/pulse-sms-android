@@ -260,7 +260,12 @@ class SendMessageManager(private val fragment: MessageListFragment) {
             val fragment = activity.supportFragmentManager.findFragmentById(R.id.conversation_list_container)
 
             if (fragment != null && fragment is ConversationListFragment) {
-                fragment.notifyOfSentMessage(m)
+                val message = m
+                if (uris.isNotEmpty()) {
+                    message.mimeType = mimeType
+                }
+
+                fragment.notifyOfSentMessage(message)
             }
 
             var loadMessages = false

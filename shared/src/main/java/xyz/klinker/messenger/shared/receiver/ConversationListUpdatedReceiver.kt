@@ -202,7 +202,7 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
             intent.putExtra(EXTRA_CONVERSATION_ID, conversationId)
             intent.putExtra(EXTRA_TITLE, title)
             context?.sendBroadcast(intent)
-            Log.v("conversation_broadcast", "broadcasting new title: " + title)
+            Log.v("conversation_broadcast", "broadcasting new title: $title")
         }
 
         /**

@@ -295,7 +295,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
 
                 MessageListUpdatedReceiver.sendBroadcast(context, message)
                 ConversationListUpdatedReceiver.sendBroadcast(context, message.conversationId,
-                        if (message.mimeType == MimeType.TEXT_PLAIN) message.data else "",
+                        if (message.mimeType == MimeType.TEXT_PLAIN) message.data else MimeType.getTextDescription(context, message.mimeType!!),
                         message.type != Message.TYPE_RECEIVED)
 
                 if (message.type == Message.TYPE_RECEIVED) {
@@ -355,7 +355,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
 
                 MessageListUpdatedReceiver.sendBroadcast(context, message)
                 ConversationListUpdatedReceiver.sendBroadcast(context, message.conversationId,
-                        if (message.mimeType == MimeType.TEXT_PLAIN) message.data else "",
+                        if (message.mimeType == MimeType.TEXT_PLAIN) message.data else MimeType.getTextDescription(context, message.mimeType),
                         message.type != Message.TYPE_RECEIVED)
 
                 when (message.type) {

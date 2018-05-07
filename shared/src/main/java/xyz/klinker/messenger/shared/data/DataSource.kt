@@ -1217,8 +1217,14 @@ object DataSource {
         if (snippetMime != null && snippetMime == MimeType.TEXT_PLAIN) {
             values.put(Conversation.COLUMN_SNIPPET, snippet)
         } else {
-            snippet = ""
-            values.put(Conversation.COLUMN_SNIPPET, "")
+            val isSent = snippet?.contains(context.getString(R.string.you) + ": ") == true
+            snippet = MimeType.getTextDescription(context, snippetMime)
+
+            if (isSent) {
+                snippet = context.getString(R.string.you) + ": " + snippet
+            }
+
+            values.put(Conversation.COLUMN_SNIPPET, snippet)
         }
 
         values.put(Conversation.COLUMN_TIMESTAMP, timestamp)

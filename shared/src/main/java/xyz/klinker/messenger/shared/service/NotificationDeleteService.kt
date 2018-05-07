@@ -50,7 +50,7 @@ class NotificationDeleteService : IntentService("NotificationDeleteService") {
                 conversationId)
 
         ConversationListUpdatedReceiver.sendBroadcast(this, conversationId,
-                if (latest != null && latest.mimeType == MimeType.TEXT_PLAIN) latest.data else "",
+                if (latest != null && latest.mimeType == MimeType.TEXT_PLAIN) latest.data else MimeType.getTextDescription(this, latest?.mimeType),
                 true)
 
         UnreadBadger(this).clearCount()
