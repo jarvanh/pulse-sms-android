@@ -251,6 +251,7 @@
     </string-array>
     <string name="new_mms_message">New MMS message</string>
     <string name="you">You</string>
+    <string name="draft">Draft</string>
     <string name="new_message">New Message</string>
     <string name="received_new_message">You received a new text!</string>
     <string name="media">Media</string>

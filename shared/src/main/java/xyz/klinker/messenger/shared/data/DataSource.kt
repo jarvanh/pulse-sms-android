@@ -40,6 +40,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.api.implementation.BinaryUtils
 import xyz.klinker.messenger.encryption.EncryptionUtils
 import xyz.klinker.messenger.shared.data.model.*
+import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.service.NewMessagesCheckService
 import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.listener.ProgressUpdateListener
@@ -1247,6 +1248,43 @@ object DataSource {
                 clearUnreadCount(context)
             } else {
                 writeUnreadCount(context)
+            }
+        }
+    }
+
+    /**
+     * Updates the conversation with given values.
+     *
+     * @param conversationId the conversation to update.
+     * @param read           whether the conversation is read or not.
+     * @param timestamp      the new timestamp for the conversation
+     * @param snippet        the snippet to display for appropriate mime types.
+     * @param snippetMime    the snippet's mime type.
+     */
+    @JvmOverloads fun updateConversationSnippet(context: Context, conversationId: Long, timestamp: Long,
+                                         snippet: String, useApi: Boolean = true) {
+        val values = ContentValues(2)
+
+        values.put(Conversation.COLUMN_SNIPPET, snippet)
+        values.put(Conversation.COLUMN_TIMESTAMP, timestamp)
+
+        val updated = try {
+            database(context).update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(conversationId)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(conversationId)))
+        }
+
+        if (updated > 0) {
+            ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, snippet, true)
+
+            if (useApi) {
+                ApiUtils.updateConversation(accountId(context), conversationId, color = null,
+                        colorDark = null, colorLight = null, colorAccent = null, ledColor = null, pinned = null,
+                        read = false, timestamp = null, title = null, snippet = snippet, ringtone = null, mute = null,
+                        archive = null, privateNotifications = null, encryptionUtils = encryptor(context))
             }
         }
     }
@@ -2474,12 +2512,22 @@ object DataSource {
             ApiUtils.addDraft(accountId(context), id, conversationId, data, mimeType, encryptor(context))
         }
 
-        return try {
+        val insertedId = try {
             database(context).insert(Draft.TABLE, null, values)
         } catch (e: Exception) {
             ensureActionable(context)
             database(context).insert(Draft.TABLE, null, values)
         }
+
+        if (insertedId > 0) {
+            if (mimeType == MimeType.TEXT_PLAIN) {
+                updateConversationSnippet(context, conversationId, TimeUtils.now, context.getString(R.string.draft) + ": $data", useApi)
+            } else {
+                updateConversationSnippet(context, conversationId, TimeUtils.now, context.getString(R.string.draft) + ": ${MimeType.getTextDescription(context, mimeType)}", useApi)
+            }
+        }
+
+        return insertedId
     }
 
     /**
@@ -2555,7 +2603,7 @@ object DataSource {
      * sent to the conversation.
      */
     @JvmOverloads fun deleteDrafts(context: Context, conversationId: Long, useApi: Boolean = true) {
-        try {
+        val deleted = try {
             database(context).delete(Draft.TABLE, Draft.COLUMN_CONVERSATION_ID + "=?",
                     arrayOf(java.lang.Long.toString(conversationId)))
         } catch (e: Exception) {
@@ -2564,8 +2612,19 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(conversationId)))
         }
 
-        if (useApi) {
-            ApiUtils.deleteDrafts(accountId(context), androidDeviceId(context), conversationId)
+        if (deleted > 0) {
+            val message = getMessages(context, conversationId, 1)
+            if (message.isNotEmpty()) {
+                if (message[0].mimeType == MimeType.TEXT_PLAIN) {
+                    updateConversationSnippet(context, conversationId, message[0].timestamp, message[0].data!!)
+                } else {
+                    updateConversationSnippet(context, conversationId, message[0].timestamp, MimeType.getTextDescription(context, message[0].mimeType!!))
+                }
+            }
+
+            if (useApi) {
+                ApiUtils.deleteDrafts(accountId(context), androidDeviceId(context), conversationId)
+            }
         }
     }
 
