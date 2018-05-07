@@ -725,6 +725,13 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     }
 
     @Test
+    public void unreadConversation() {
+        int unread = source.getUnreadConversationCount(context);
+        source.readConversation(context, 1, false);
+        assertEquals(unread + 1, source.getUnreadConversationCount(context));
+    }
+
+    @Test
     public void seenConversation() {
         assertEquals(1, source.getUnseenMessages(context).getCount());
         assertEquals(2, source.getUnreadMessages(context).getCount());

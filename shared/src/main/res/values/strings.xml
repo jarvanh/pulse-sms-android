@@ -67,6 +67,9 @@
     <string name="menu_snooze_24">24 hours</string>
     <string name="menu_snooze_72">72 hours</string>
     <string name="menu_snooze_custom">Pick a time</string>
+    <string name="menu_mark_as_unread">Mark as Unread</string>
+    <string name="menu_pin_conversation">Pin/Unpin Conversation</string>
+    <string name="menu_mute_conversation">Mute/Unmute Conversation</string>
 
     <!-- Empty Screen -->
     <string name="no_messages">No messages</string>

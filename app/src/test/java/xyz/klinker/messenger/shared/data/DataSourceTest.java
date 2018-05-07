@@ -504,6 +504,13 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     }
 
     @Test
+    public void unreadConversation() {
+        source.markConversationAsUnread(context, 3, false);
+        verify(database).update(eq("conversation"), any(ContentValues.class), eq("_id=?"),
+                eq(new String[]{"3"}));
+    }
+
+    @Test
     public void seenConversation() {
         source.seenConversation(context, 1, false);
 

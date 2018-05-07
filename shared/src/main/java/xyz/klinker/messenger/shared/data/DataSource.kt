@@ -2282,6 +2282,32 @@ object DataSource {
     }
 
     /**
+     * Marks a conversation as unread.
+     *
+     * @param conversationId the conversation id to mark.
+     */
+    @JvmOverloads fun markConversationAsUnread(context: Context, conversationId: Long, useApi: Boolean = true) {
+        val values = ContentValues(1)
+        values.put(Conversation.COLUMN_READ, false)
+
+        val updated = try {
+            database(context).update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(conversationId)))
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).update(Conversation.TABLE, values, Conversation.COLUMN_ID + "=?",
+                    arrayOf(java.lang.Long.toString(conversationId)))
+        }
+
+        if (updated > 0 && useApi) {
+            ApiUtils.updateConversation(accountId(context), conversationId, color = null,
+                    colorDark = null, colorLight = null, colorAccent = null, ledColor = null, pinned = null,
+                    read = false, timestamp = null, title = null, snippet = null, ringtone = null, mute = null,
+                    archive = null, privateNotifications = null, encryptionUtils = encryptor(context))
+        }
+    }
+
+    /**
      * Marks a conversation and all messages inside of it as read and seen.
      *
      * @param conversations the conversation ids to mark.

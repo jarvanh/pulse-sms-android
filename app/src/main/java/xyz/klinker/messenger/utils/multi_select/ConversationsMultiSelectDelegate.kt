@@ -21,7 +21,7 @@ import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import java.util.*
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-
+import xyz.klinker.messenger.shared.data.FeatureFlags
 
 
 @Suppress("DEPRECATION")
@@ -47,6 +47,11 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
             val delete = menu.findItem(R.id.menu_delete_conversation)
             val archive = menu.findItem(R.id.menu_archive_conversation)
+            val unread = menu.findItem(R.id.menu_mark_as_unread)
+
+            if (!FeatureFlags.MARK_AS_UNREAD) {
+                unread?.isVisible = false
+            }
 
             changeMenuItemColor(delete)
             changeMenuItemColor(archive)
@@ -159,6 +164,16 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
                     for (conversation in selectedConversations) {
                         conversation.pinned = !conversation.pinned
                         source.updateConversationSettings(activity!!, conversation)
+                    }
+
+                    fragment.recyclerManager.loadConversations()
+                }
+                R.id.menu_mark_as_unread -> {
+                    handled = true
+
+                    for (conversation in selectedConversations) {
+                        conversation.read = false
+                        source.markConversationAsUnread(activity!!, conversation.id, true)
                     }
 
                     fragment.recyclerManager.loadConversations()

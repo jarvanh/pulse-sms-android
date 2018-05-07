@@ -74,6 +74,7 @@ object FeatureFlags {
     private val FLAG_UPDATE_WEB_MESSAGE_TIMESTAMPS = "flag_update_web_message_timestamps"
     private val FLAG_SEND_SCHEDULED_MESSAGE_IMMEDIATELY = "flag_send_scheduled_immediately"
     private val FLAG_QUERY_DAILY_CONTACT_CHANGES = "flag_query_daily_contact_changes"
+    private val FLAG_MARK_AS_UNREAD = "flag_mark_as_unread"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -91,6 +92,7 @@ object FeatureFlags {
 
     // disabled for future features
     var FOLDER_SUPPORT: Boolean = false
+    var MARK_AS_UNREAD: Boolean = false
 
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
@@ -100,6 +102,7 @@ object FeatureFlags {
 
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
+        MARK_AS_UNREAD = getValue(context, sharedPrefs, FLAG_MARK_AS_UNREAD)
         QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
     }
 
@@ -111,6 +114,7 @@ object FeatureFlags {
         when (identifier) {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
+            FLAG_MARK_AS_UNREAD -> MARK_AS_UNREAD = flag
             FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
         }
     }
