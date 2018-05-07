@@ -23,10 +23,10 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$ANDROID_GRADLE_VERSION"
-        classpath 'com.google.gms:google-services:3.2.0'
+        classpath 'com.google.gms:google-services:3.2.1'
         classpath 'com.google.firebase:firebase-plugins:1.1.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
-        classpath 'io.fabric.tools:gradle:1.25.1'
+        classpath 'io.fabric.tools:gradle:1.25.3'
     }
 }
 
@@ -48,10 +48,6 @@ allprojects {
             def requested = details.requested
             if (requested.group == 'com.android.support') {
                 details.useVersion ANDROID_SUPPORT_VERSION
-            } else if (requested.group == 'com.google.firebase') {
-                details.useVersion FIREBASE_VERSION
-            } else if (requested.group == 'com.github.bumptech.glide') {
-                details.useVersion GLIDE_VERSION
             }
         }
     }
