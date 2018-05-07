@@ -2519,7 +2519,7 @@ object DataSource {
             database(context).insert(Draft.TABLE, null, values)
         }
 
-        if (insertedId > 0) {
+        if (insertedId > 0 && FeatureFlags.CONVO_SNIPPETS_REVAMP) {
             if (mimeType == MimeType.TEXT_PLAIN) {
                 updateConversationSnippet(context, conversationId, TimeUtils.now, context.getString(R.string.draft) + ": $data", useApi)
             } else {
@@ -2613,12 +2613,14 @@ object DataSource {
         }
 
         if (deleted > 0) {
-            val message = getMessages(context, conversationId, 1)
-            if (message.isNotEmpty()) {
-                if (message[0].mimeType == MimeType.TEXT_PLAIN) {
-                    updateConversationSnippet(context, conversationId, message[0].timestamp, message[0].data!!)
-                } else {
-                    updateConversationSnippet(context, conversationId, message[0].timestamp, MimeType.getTextDescription(context, message[0].mimeType!!))
+            if (FeatureFlags.CONVO_SNIPPETS_REVAMP) {
+                val message = getMessages(context, conversationId, 1)
+                if (message.isNotEmpty()) {
+                    if (message[0].mimeType == MimeType.TEXT_PLAIN) {
+                        updateConversationSnippet(context, conversationId, message[0].timestamp, message[0].data!!)
+                    } else {
+                        updateConversationSnippet(context, conversationId, message[0].timestamp, MimeType.getTextDescription(context, message[0].mimeType!!))
+                    }
                 }
             }
 
