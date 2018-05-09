@@ -33,12 +33,8 @@ class ConversationUpdateHelper(private val fragment: ConversationListFragment) {
             fragment.messageListManager.expandedConversation?.conversation?.snippet = text
             fragment.messageListManager.expandedConversation?.summary?.text = text
 
-            Log.v("pulse_snippet", "snippet: $text")
-
             text
         } else {
-
-            Log.v("pulse_snippet", "snippet: none")
             ""
         }
 
