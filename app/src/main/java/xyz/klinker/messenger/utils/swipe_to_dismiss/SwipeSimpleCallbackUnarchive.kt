@@ -8,11 +8,11 @@ import xyz.klinker.messenger.utils.swipe_to_dismiss.actions.SwipeUnarchiveAction
 @Suppress("DEPRECATION")
 class SwipeSimpleCallbackUnarchive(adapter: ConversationListAdapter) : SwipeSimpleCallbackBase(adapter) {
 
-    override fun getStartSwipeAction(): BaseSwipeAction {
+    override fun getLeftToRightAction(): BaseSwipeAction {
         return SwipeUnarchiveAction()
     }
 
-    override fun getEndSwipeAction(): BaseSwipeAction {
+    override fun getRightToLeftAction(): BaseSwipeAction {
         return SwipeDeleteAction()
     }
 

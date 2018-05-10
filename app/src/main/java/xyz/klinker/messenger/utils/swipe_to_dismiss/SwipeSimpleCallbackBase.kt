@@ -27,11 +27,9 @@ import android.widget.FrameLayout
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
-import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.utils.swipe_to_dismiss.actions.BaseSwipeAction
-import xyz.klinker.messenger.utils.swipe_to_dismiss.actions.SwipeArchiveAction
-import xyz.klinker.messenger.utils.swipe_to_dismiss.actions.SwipeDeleteAction
+import xyz.klinker.messenger.utils.swipe_to_dismiss.actions.SwipeNoAction
 
 /**
  * A simple callback for a recyclerview that can act on swipe motions.
@@ -43,52 +41,57 @@ import xyz.klinker.messenger.utils.swipe_to_dismiss.actions.SwipeDeleteAction
 @Suppress("DEPRECATION")
 abstract class SwipeSimpleCallbackBase(private val adapter: ConversationListAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.END) {
 
-    private var endSwipeBackground: Drawable? = null
-    private var endMark: Drawable? = null
+    private companion object {
+        private const val LEFT_TO_RIGHT = ItemTouchHelper.END
+        private const val RIGHT_TO_LEFT = ItemTouchHelper.START
+    }
 
-    private var startSwipeBackground: Drawable? = null
-    private var startMark: Drawable? = null
+    private var leftToRightBackground: Drawable? = null
+    private var leftToRightIcon: Drawable? = null
 
-    private var markMargin: Int = 0
+    private var rightToLeftBackground: Drawable? = null
+    private var rightToLeftIcon: Drawable? = null
+
+    private var iconMargin: Int = 0
     private var initiated: Boolean = false
 
     // starting from the left side of the screen
-    abstract fun getStartSwipeAction(): BaseSwipeAction
+    abstract fun getLeftToRightAction(): BaseSwipeAction
 
     // starting from the right side of the screen
-    abstract fun getEndSwipeAction(): BaseSwipeAction
+    abstract fun getRightToLeftAction(): BaseSwipeAction
 
-    private fun setupEndSwipe(context: Context) {
-        val action = getEndSwipeAction()
-        endMark = context.getDrawable(action.getIcon())
-        endSwipeBackground = ColorDrawable(action.getBackgroundColor())
+    private fun setupLeftToRightSwipe(context: Context) {
+        val action = getLeftToRightAction()
+        leftToRightIcon = context.getDrawable(action.getIcon())
+        leftToRightBackground = ColorDrawable(action.getBackgroundColor())
 
         if (ColorUtils.isColorDark(action.getBackgroundColor())) {
-            endMark!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.deleteIcon)))
+            leftToRightIcon!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.deleteIcon)))
         } else {
-            endMark!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.lightToolbarTextColor)))
+            leftToRightIcon!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.lightToolbarTextColor)))
         }
     }
 
-    private fun setupStartSwipe(context: Context) {
-        val action = getStartSwipeAction()
-        startMark = context.getDrawable(action.getIcon())
-        startSwipeBackground = ColorDrawable(action.getBackgroundColor())
+    private fun setupRightToLeftSwipe(context: Context) {
+        val action = getRightToLeftAction()
+        rightToLeftIcon = context.getDrawable(action.getIcon())
+        rightToLeftBackground = ColorDrawable(action.getBackgroundColor())
 
         if (ColorUtils.isColorDark(action.getBackgroundColor())) {
-            startMark!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.deleteIcon)))
+            rightToLeftIcon!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.deleteIcon)))
         } else {
-            startMark!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.lightToolbarTextColor)))
+            rightToLeftIcon!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.lightToolbarTextColor)))
         }
     }
 
     private fun init(context: Context) {
         // end swipe will be delete when on the archive list, but both will be archive on the normal
         // conversation list.
-        setupEndSwipe(context)
-        setupStartSwipe(context)
+        setupRightToLeftSwipe(context)
+        setupLeftToRightSwipe(context)
 
-        markMargin = context.resources.getDimension(R.dimen.delete_margin).toInt()
+        iconMargin = context.resources.getDimension(R.dimen.delete_margin).toInt()
         initiated = true
     }
 
@@ -97,14 +100,18 @@ abstract class SwipeSimpleCallbackBase(private val adapter: ConversationListAdap
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val action = if (direction == ItemTouchHelper.START)
-            getEndSwipeAction() else getStartSwipeAction()
+            getRightToLeftAction() else getLeftToRightAction()
         action.onPerform(adapter, viewHolder.adapterPosition)
     }
 
     override fun getSwipeDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
-        // if it is a header, don't allow swiping. if it is an item, swipe to right.
-        return if (viewHolder!!.itemView is FrameLayout) 0
-        else ItemTouchHelper.START or ItemTouchHelper.END // swipe TOWARDS the start or TOWARDS the end
+        return when {
+            viewHolder!!.itemView is FrameLayout -> 0 // header view
+            getRightToLeftAction() !is SwipeNoAction && getLeftToRightAction() !is SwipeNoAction -> RIGHT_TO_LEFT or LEFT_TO_RIGHT
+            getRightToLeftAction() !is SwipeNoAction -> RIGHT_TO_LEFT
+            getLeftToRightAction() !is SwipeNoAction -> LEFT_TO_RIGHT
+            else -> 0
+        }
     }
 
     override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
@@ -120,47 +127,44 @@ abstract class SwipeSimpleCallbackBase(private val adapter: ConversationListAdap
             init(recyclerView.context)
         }
 
-        if (dX < 0) { // we are swiping towards the play (delete)
+        if (dX < 0) {
             val left = Math.min(itemView.right + dX.toInt(), itemView.right + itemView.width)
 
-            // draw endSwipeBackground
-            endSwipeBackground?.setBounds(left, itemView.top, itemView.right, itemView.bottom)
-            endSwipeBackground?.draw(c)
+            rightToLeftBackground?.setBounds(left, itemView.top, itemView.right, itemView.bottom)
+            rightToLeftBackground?.draw(c)
 
-            // draw trash can mark
             val itemHeight = itemView.bottom - itemView.top
-            val intrinsicWidth = endMark!!.intrinsicWidth
-            val intrinsicHeight = endMark!!.intrinsicWidth
+            val intrinsicWidth = rightToLeftIcon!!.intrinsicWidth
+            val intrinsicHeight = rightToLeftIcon!!.intrinsicWidth
 
-            val xMarkLeft = itemView.right - markMargin - intrinsicWidth
-            val xMarkRight = itemView.right - markMargin
+            val xMarkLeft = itemView.right - iconMargin - intrinsicWidth
+            val xMarkRight = itemView.right - iconMargin
             val xMarkTop = itemView.top + (itemHeight - intrinsicHeight) / 2
             val xMarkBottom = xMarkTop + intrinsicHeight
-            endMark!!.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom)
 
-            endMark!!.draw(c)
-        } else { // we are swiping towards the end (archive)
+            rightToLeftIcon?.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom)
+            rightToLeftIcon?.draw(c)
+        } else {
             val right = Math.min(itemView.left + dX.toInt(), itemView.left + itemView.width)
 
-            // draw background
-            startSwipeBackground!!.setBounds(itemView.left, itemView.top, right, itemView.bottom)
-            startSwipeBackground!!.draw(c)
+            leftToRightBackground!!.setBounds(itemView.left, itemView.top, right, itemView.bottom)
+            leftToRightBackground!!.draw(c)
 
-            // draw trash can mark
             val itemHeight = itemView.bottom - itemView.top
-            val intrinsicWidth = startMark!!.intrinsicWidth
-            val intrinsicHeight = startMark!!.intrinsicWidth
+            val intrinsicWidth = leftToRightIcon!!.intrinsicWidth
+            val intrinsicHeight = leftToRightIcon!!.intrinsicWidth
 
-            val xMarkLeft = itemView.left + markMargin
-            val xMarkRight = itemView.left + markMargin + intrinsicWidth
+            val xMarkLeft = itemView.left + iconMargin
+            val xMarkRight = itemView.left + iconMargin + intrinsicWidth
             val xMarkTop = itemView.top + (itemHeight - intrinsicHeight) / 2
             val xMarkBottom = xMarkTop + intrinsicHeight
-            startMark!!.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom)
 
-            startMark!!.draw(c)
+            leftToRightIcon?.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom)
+            leftToRightIcon?.draw(c)
         }
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
-
 }
+
+
