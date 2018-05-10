@@ -3,7 +3,6 @@ package xyz.klinker.messenger.utils.swipe_to_dismiss.actions
 import android.graphics.Color
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
-import xyz.klinker.messenger.shared.data.Settings
 
 class SwipeNoAction : BaseSwipeAction() {
 

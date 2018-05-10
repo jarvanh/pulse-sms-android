@@ -19,17 +19,12 @@ package xyz.klinker.messenger.shared.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import android.support.annotation.VisibleForTesting
 
 import java.util.Date
 import java.util.HashSet
 
 import xyz.klinker.messenger.shared.R
-import xyz.klinker.messenger.shared.data.pojo.BaseTheme
-import xyz.klinker.messenger.shared.data.pojo.EmojiStyle
-import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout
-import xyz.klinker.messenger.shared.data.pojo.NotificationAction
-import xyz.klinker.messenger.shared.data.pojo.VibratePattern
+import xyz.klinker.messenger.shared.data.pojo.*
 import xyz.klinker.messenger.shared.util.EmojiInitializer
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -60,7 +55,9 @@ object Settings {
     var wakeScreen: Boolean = false
     var headsUp: Boolean = false
     var rounderBubbles: Boolean = false
-    var swipeDelete: Boolean = false
+    var legacySwipeDelete: Boolean = false
+    var leftToRightSwipe: SwipeOption = SwipeOption.ARCHIVE
+    var rightToLeftSwipe: SwipeOption = SwipeOption.ARCHIVE
     var stripUnicode: Boolean = false
     var historyInNotifications: Boolean = false
     var internalBrowser: Boolean = false
@@ -120,7 +117,7 @@ object Settings {
             sharedPrefs.edit().putLong(context.getString(R.string.pref_install_time), installTime).apply()
         }
 
-        // settings_global
+        // global settings
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false)
         this.giffgaffDeliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_giffgaff), false)
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false)
@@ -136,13 +133,18 @@ object Settings {
         this.wakeScreen = sharedPrefs.getString(context.getString(R.string.pref_wake_screen), "off") == "on"
         this.headsUp = sharedPrefs.getString(context.getString(R.string.pref_heads_up), "on") == "on"
         this.rounderBubbles = sharedPrefs.getBoolean(context.getString(R.string.pref_rounder_bubbles), false)
-        this.swipeDelete = sharedPrefs.getBoolean(context.getString(R.string.pref_swipe_delete), false)
+        this.legacySwipeDelete = sharedPrefs.getBoolean(context.getString(R.string.pref_swipe_delete), false)
         this.stripUnicode = sharedPrefs.getBoolean(context.getString(R.string.pref_strip_unicode), false)
         this.historyInNotifications = sharedPrefs.getBoolean(context.getString(R.string.pref_history_in_notifications), true)
         this.internalBrowser = sharedPrefs.getBoolean(context.getString(R.string.pref_internal_browser), true)
         this.adjustableNavBar = sharedPrefs.getBoolean(context.getString(R.string.pref_adjustable_nav_bar), false)
         this.drivingMode = sharedPrefs.getBoolean(context.getString(R.string.pref_driving_mode), false)
         this.vacationMode = sharedPrefs.getBoolean(context.getString(R.string.pref_vacation_mode), false)
+
+        val leftToRightSwipeRep = sharedPrefs.getString(context.getString(R.string.pref_left_to_right_swipe), SwipeOption.ARCHIVE.rep)
+        val rightToLeftSwipeRep = sharedPrefs.getString(context.getString(R.string.pref_right_to_left_swipe), SwipeOption.ARCHIVE.rep)
+        leftToRightSwipe = SwipeOption.values().firstOrNull { it.rep == leftToRightSwipeRep } ?: SwipeOption.ARCHIVE
+        rightToLeftSwipe = SwipeOption.values().firstOrNull { it.rep == rightToLeftSwipeRep } ?: SwipeOption.ARCHIVE
 
         // configuration
         if (this.ringtone == null) {
