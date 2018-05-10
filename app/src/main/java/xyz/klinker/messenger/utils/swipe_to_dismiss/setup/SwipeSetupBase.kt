@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package xyz.klinker.messenger.utils.swipe_to_dismiss
+package xyz.klinker.messenger.utils.swipe_to_dismiss.setup
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -39,7 +39,7 @@ import xyz.klinker.messenger.utils.swipe_to_dismiss.actions.SwipeNoAction
  * https://github.com/nemanja-kovacevic/recycler-view-swipe-to-delete/blob/master/app/src/main/java/net/nemanjakovacevic/recyclerviewswipetodelete/MainActivity.java
  */
 @Suppress("DEPRECATION")
-abstract class SwipeSimpleCallbackBase(private val adapter: ConversationListAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.END) {
+abstract class SwipeSetupBase(private val adapter: ConversationListAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.END) {
 
     private companion object {
         private const val LEFT_TO_RIGHT = ItemTouchHelper.END
