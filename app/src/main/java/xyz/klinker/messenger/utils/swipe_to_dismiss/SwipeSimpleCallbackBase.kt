@@ -19,7 +19,6 @@ package xyz.klinker.messenger.utils.swipe_to_dismiss
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
@@ -30,6 +29,9 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ColorUtils
+import xyz.klinker.messenger.utils.swipe_to_dismiss.actions.BaseSwipeAction
+import xyz.klinker.messenger.utils.swipe_to_dismiss.actions.SwipeArchiveAction
+import xyz.klinker.messenger.utils.swipe_to_dismiss.actions.SwipeDeleteAction
 
 /**
  * A simple callback for a recyclerview that can act on swipe motions.
@@ -39,31 +41,29 @@ import xyz.klinker.messenger.shared.util.ColorUtils
  * https://github.com/nemanja-kovacevic/recycler-view-swipe-to-delete/blob/master/app/src/main/java/net/nemanjakovacevic/recyclerviewswipetodelete/MainActivity.java
  */
 @Suppress("DEPRECATION")
-open class SwipeSimpleCallback(private val adapter: ConversationListAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.END) {
+abstract class SwipeSimpleCallbackBase(private val adapter: ConversationListAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.END) {
 
-    protected var endSwipeBackground: Drawable? = null
-    protected var endMark: Drawable? = null // delete icon on archive list, archive on the conversation list
+    private var endSwipeBackground: Drawable? = null
+    private var endMark: Drawable? = null
 
     private var startSwipeBackground: Drawable? = null
-    private var startMark: Drawable? = null // archive icon
+    private var startMark: Drawable? = null
 
     private var markMargin: Int = 0
     private var initiated: Boolean = false
 
-    protected open fun getArchiveItem(context: Context): Drawable? =
-            context.getDrawable(R.drawable.ic_archive)
+    // starting from the left side of the screen
+    abstract fun getStartSwipeAction(): BaseSwipeAction
 
-    protected open fun setupEndSwipe(context: Context) {
-        val set = Settings.mainColorSet
-        endMark = context.getDrawable(R.drawable.ic_archive)
+    // starting from the right side of the screen
+    abstract fun getEndSwipeAction(): BaseSwipeAction
 
-        endSwipeBackground = if (set.colorLight == Color.WHITE) {
-            ColorDrawable(set.colorDark)
-        } else {
-            ColorDrawable(set.colorLight)
-        }
+    private fun setupEndSwipe(context: Context) {
+        val action = getEndSwipeAction()
+        endMark = context.getDrawable(action.getIcon())
+        endSwipeBackground = ColorDrawable(action.getBackgroundColor())
 
-        if (ColorUtils.isColorDark(set.colorLight)) {
+        if (ColorUtils.isColorDark(action.getBackgroundColor())) {
             endMark!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.deleteIcon)))
         } else {
             endMark!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.lightToolbarTextColor)))
@@ -71,16 +71,11 @@ open class SwipeSimpleCallback(private val adapter: ConversationListAdapter) : I
     }
 
     private fun setupStartSwipe(context: Context) {
-        val set = Settings.mainColorSet
-        startMark = getArchiveItem(context)
+        val action = getStartSwipeAction()
+        startMark = context.getDrawable(action.getIcon())
+        startSwipeBackground = ColorDrawable(action.getBackgroundColor())
 
-        startSwipeBackground = if (set.colorLight == Color.WHITE) {
-            ColorDrawable(set.colorDark)
-        } else {
-            ColorDrawable(set.colorLight)
-        }
-
-        if (ColorUtils.isColorDark(Settings.mainColorSet.colorLight)) {
+        if (ColorUtils.isColorDark(action.getBackgroundColor())) {
             startMark!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.deleteIcon)))
         } else {
             startMark!!.setTintList(ColorStateList.valueOf(context.resources.getColor(R.color.lightToolbarTextColor)))
@@ -101,15 +96,10 @@ open class SwipeSimpleCallback(private val adapter: ConversationListAdapter) : I
                         target: RecyclerView.ViewHolder) = false
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        if (direction == ItemTouchHelper.START && canDelete()) {
-            adapter.deleteItem(viewHolder.adapterPosition)
-        } else {
-            adapter.archiveItem(viewHolder.adapterPosition)
-        }
+        val action = if (direction == ItemTouchHelper.START)
+            getEndSwipeAction() else getStartSwipeAction()
+        action.onPerform(adapter, viewHolder.adapterPosition)
     }
-
-    private fun canDelete() =
-            this is UnarchiveSwipeSimpleCallback || this is SwipeDeleteSimpleCallback
 
     override fun getSwipeDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
         // if it is a header, don't allow swiping. if it is an item, swipe to right.

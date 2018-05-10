@@ -11,10 +11,9 @@ import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Conversation
-import xyz.klinker.messenger.shared.util.SmsMmsUtils
 import xyz.klinker.messenger.shared.util.SnackbarAnimationFix
 import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeTouchHelper
-import xyz.klinker.messenger.utils.swipe_to_dismiss.UnarchiveSwipeSimpleCallback
+import xyz.klinker.messenger.utils.swipe_to_dismiss.SwipeSimpleCallbackUnarchive
 
 class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
 
@@ -44,7 +43,7 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
 
     fun getSwipeTouchHelper(adapter: ConversationListAdapter): ItemTouchHelper {
         return if (fragment is ArchivedConversationListFragment)
-            SwipeTouchHelper(UnarchiveSwipeSimpleCallback(adapter))
+            SwipeTouchHelper(SwipeSimpleCallbackUnarchive(adapter))
         else SwipeTouchHelper(adapter)
     }
 
