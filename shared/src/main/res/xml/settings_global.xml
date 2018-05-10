@@ -47,6 +47,10 @@
             android:title="@string/swipe_delete"
             android:defaultValue="false" />
 
+        <Preference
+            android:key="@string/pref_swipe_choices"
+            android:title="@string/swipe_actions" />
+
         <SwitchPreference
             android:key="@string/pref_sound_effects"
             android:title="@string/sound_effects"

@@ -86,6 +86,7 @@
     <string name="pref_adjustable_nav_bar" translatable="false">adjustable_nav_bar</string>
     <string name="pref_rounder_bubbles" translatable="false">rounder_bubbles</string>
     <string name="pref_swipe_delete" translatable="false">swipe_delete</string>
+    <string name="pref_swipe_choices" translatable="false">swipe_choices</string>
     <string name="pref_left_to_right_swipe" translatable="false">left_to_right_swipe</string>
     <string name="pref_right_to_left_swipe" translatable="false">right_to_left_swipe</string>
     <string name="pref_global_color_theme" translatable="false">global_color_theme</string>

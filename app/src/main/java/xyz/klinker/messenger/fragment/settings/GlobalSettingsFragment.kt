@@ -28,6 +28,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.EmojiInitializer
 import xyz.klinker.messenger.shared.util.SetUtils
@@ -108,13 +109,25 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
     }
 
     private fun initSwipeDelete() {
-        findPreference(getString(R.string.pref_swipe_delete))
-                .setOnPreferenceChangeListener { _, o ->
-                    val delete = o as Boolean
-                    ApiUtils.updateSwipeToDelete(Account.accountId,
-                            delete)
-                    true
-                }
+        val legacySwipeDelete = findPreference(getString(R.string.pref_swipe_delete))
+        legacySwipeDelete.setOnPreferenceChangeListener { _, o ->
+            val delete = o as Boolean
+            ApiUtils.updateSwipeToDelete(Account.accountId,
+                    delete)
+            true
+        }
+
+        val swipeActions = findPreference(getString(R.string.pref_swipe_choices))
+        swipeActions.setOnPreferenceClickListener {  
+            true
+        }
+
+        val category = findPreference(getString(R.string.pref_customization_category)) as PreferenceCategory
+        if (FeatureFlags.SWIPE_OPTIONS) {
+            category.removePreference(legacySwipeDelete)
+        } else {
+            category.removePreference(swipeActions)
+        }
     }
 
     private fun initDeliveryReports() {

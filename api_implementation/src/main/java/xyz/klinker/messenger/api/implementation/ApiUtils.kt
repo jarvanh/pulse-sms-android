@@ -1108,6 +1108,24 @@ object ApiUtils {
     }
 
     /**
+     * Update the action for the left to right swipe.
+     */
+    fun updateLeftToRightSwipeAction(accountId: String?, identifier: String) {
+        if (accountId != null) {
+            updateSetting(accountId, "left_to_right_swipe", "string", identifier)
+        }
+    }
+
+    /**
+     * Update the action for the right to left swipe
+     */
+    fun updateRightToLeftSwipeAction(accountId: String?, identifier: String) {
+        if (accountId != null) {
+            updateSetting(accountId, "right_to_left_swipe", "string", identifier)
+        }
+    }
+
+    /**
      * Update the convert to MMS setting, for long messages
      */
     fun updateConvertToMMS(accountId: String?, convert: String?) {
