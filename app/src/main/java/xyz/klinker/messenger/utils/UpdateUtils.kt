@@ -5,10 +5,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.preference.PreferenceManager
 import android.util.Log
+import xyz.klinker.messenger.api.implementation.Account
+import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.SwipeOption
 import xyz.klinker.messenger.shared.service.ContactResyncService
 import xyz.klinker.messenger.shared.service.jobs.*
 
@@ -28,7 +31,15 @@ class UpdateUtils(private val context: Activity) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
         val storedAppVersion = sharedPreferences.getInt("app_version", 0)
-        ContactResyncService.runIfApplicable(context, sharedPreferences, storedAppVersion);
+        ContactResyncService.runIfApplicable(context, sharedPreferences, storedAppVersion)
+
+        if (sharedPreferences.getBoolean("swipe_revamp", true)) {
+            sharedPreferences.edit().putBoolean("swipe_revamp", false).commit()
+            if (Settings.legacySwipeDelete) {
+                Settings.setValue(context, context.getString(R.string.pref_right_to_left_swipe), SwipeOption.DELETE.rep)
+                ApiUtils.updateRightToLeftSwipeAction(Account.accountId, SwipeOption.DELETE.rep)
+            }
+        }
 
         val currentAppVersion = appVersion
 

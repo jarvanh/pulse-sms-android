@@ -118,7 +118,7 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
         }
 
         val swipeActions = findPreference(getString(R.string.pref_swipe_choices))
-        swipeActions.setOnPreferenceClickListener {  
+        swipeActions.setOnPreferenceClickListener {
             true
         }
 
