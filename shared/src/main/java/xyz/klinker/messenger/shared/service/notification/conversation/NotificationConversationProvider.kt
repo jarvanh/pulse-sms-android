@@ -52,11 +52,15 @@ class NotificationConversationProvider(private val service: Context, private val
                 .applyStyle(conversation)
                 .setPublicVersion(publicVersion.build())
 
-        val remoteInput = RemoteInput.Builder(ReplyService.EXTRA_REPLY)
+        val remoteInputBuilder = RemoteInput.Builder(ReplyService.EXTRA_REPLY)
                 .setLabel(service.getString(R.string.reply_to, conversation.title))
-                .setChoices(service.resources.getStringArray(R.array.reply_choices))
                 .setAllowFreeFormInput(true)
-                .build()
+
+        if (WearableCheck.isAndroidWear(service)) {
+            remoteInputBuilder.setChoices(service.resources.getStringArray(R.array.reply_choices))
+        }
+
+        val remoteInput = remoteInputBuilder.build()
 
         val wearableExtender = wearableHelper.buildExtender(conversation)
 
