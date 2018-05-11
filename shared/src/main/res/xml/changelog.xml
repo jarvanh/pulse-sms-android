@@ -41,6 +41,8 @@
         <!-- Draft previews on the conversation list (behind a feature flag) -->
         <!-- Support for customizing the swipe actions on the conversation list or disabling them completely. (behind a feature flag) -->
         <!-- Removed the priority upgrades on my broadcast receivers for receiving SMS (would this prevent bluetooth from picking them up?) -->
+        <!-- Private conversations could show in the normal inbox -->
+        <!-- Retry saving messages in the SMS received receiver if the latest message failed to save, for whatever reason -->
         <text>Bug fixes and performance improvements</text>
     </version>
 
