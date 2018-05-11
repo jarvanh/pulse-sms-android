@@ -23,7 +23,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceCategory
 import android.preference.PreferenceGroup
+import android.support.v7.app.AlertDialog
 import android.telephony.TelephonyManager
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.EditText
+import android.widget.Spinner
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.Account
@@ -33,6 +38,9 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.EmojiInitializer
 import xyz.klinker.messenger.shared.util.SetUtils
 import xyz.klinker.messenger.view.preference.NotificationAlertsPreference
+import android.widget.ArrayAdapter
+
+
 
 /**
  * Fragment for modifying app settings_global.
@@ -119,7 +127,36 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
 
         val swipeActions = findPreference(getString(R.string.pref_swipe_choices))
         swipeActions.setOnPreferenceClickListener {
-            true
+            val layout = LayoutInflater.from(activity).inflate(R.layout.dialog_swipe_actions, null, false)
+            val representations = resources.getStringArray(R.array.swipe_actions_values)
+
+            val leftToRight = layout.findViewById<Spinner>(R.id.left_to_right)
+            val leftToRightAdapter = ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.swipe_actions))
+            leftToRightAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            leftToRight.adapter = leftToRightAdapter
+            leftToRight.setSelection(representations.indexOf(Settings.leftToRightSwipe.rep))
+
+            val rightToLeft = layout.findViewById<Spinner>(R.id.right_to_left)
+            val rightToLeftAdapter = ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.swipe_actions))
+            rightToLeftAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            rightToLeft.adapter = rightToLeftAdapter
+            rightToLeft.setSelection(representations.indexOf(Settings.rightToLeftSwipe.rep))
+
+            AlertDialog.Builder(activity)
+                    .setView(layout)
+                    .setPositiveButton(R.string.save) { _, _ ->
+                        val leftToRightRepresentation = representations[leftToRight.selectedItemPosition]
+                        val rightToLeftRepresentation = representations[rightToLeft.selectedItemPosition]
+
+                        Settings.setValue(activity, getString(R.string.pref_left_to_right_swipe), leftToRightRepresentation)
+                        Settings.setValue(activity, getString(R.string.pref_right_to_left_swipe), rightToLeftRepresentation)
+
+                        ApiUtils.updateLeftToRightSwipeAction(Account.accountId, leftToRightRepresentation)
+                        ApiUtils.updateRightToLeftSwipeAction(Account.accountId, rightToLeftRepresentation)
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            false
         }
 
         val category = findPreference(getString(R.string.pref_customization_category)) as PreferenceCategory

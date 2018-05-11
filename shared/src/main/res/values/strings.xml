@@ -377,9 +377,10 @@
         of this global color set</string>
     <string name="swipe_delete">Swipe to Delete</string>
     <string name="swipe_actions">Swipe Actions</string>
+    <string name="swipe_actions_summary">Customize swiping a conversation</string>
     <string name="left_to_right_swipe">Left-to-Right Swipe</string>
     <string name="right_to_left_swipe">Right-to-Left Swipe</string>
-    <string name="no_swipe">No Swipe Action</string>
+    <string name="no_swipe">Disable swipe</string>
     <string name="blacklist_hint">Type number to blacklist…</string>
     <string name="add_blacklist">%1$s\n\nAre you sure you want to add this blacklist? Messages will
         no longer be saved when they come from this number and you will not be notified!</string>

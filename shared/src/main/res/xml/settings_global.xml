@@ -49,7 +49,8 @@
 
         <Preference
             android:key="@string/pref_swipe_choices"
-            android:title="@string/swipe_actions" />
+            android:title="@string/swipe_actions"
+            android:summary="@string/swipe_actions_summary"/>
 
         <SwitchPreference
             android:key="@string/pref_sound_effects"

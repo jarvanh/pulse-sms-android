@@ -220,4 +220,16 @@
         <item>@string/attach_plain_text</item>
     </string-array>
 
+    <string-array name="swipe_actions">
+        <item>@string/menu_archive_conversation</item>
+        <item>@string/menu_delete_conversation</item>
+        <item>@string/no_swipe</item>
+    </string-array>
+
+    <string-array name="swipe_actions_values">
+        <item>archive</item>
+        <item>delete</item>
+        <item>none</item>
+    </string-array>
+
 </resources>
