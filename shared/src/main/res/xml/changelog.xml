@@ -34,11 +34,13 @@
 
     <version
         name="2.11.2"
-        description="May 8th, 2018">
+        description="May 11th, 2018">
         <!-- Implemented the mark as unread (behind a feature flag) -->
         <!-- Implemented the media mime type previews on the conversation list (behind a feature flag) -->
         <!-- Media type previews on the conversation list (behind a feature flag) -->
         <!-- Draft previews on the conversation list (behind a feature flag) -->
+        <!-- Support for customizing the swipe actions on the conversation list or disabling them completely. (behind a feature flag) -->
+        <!-- Removed the priority upgrades on my broadcast receivers for receiving SMS (would this prevent bluetooth from picking them up?) -->
         <text>Bug fixes and performance improvements</text>
     </version>
 
