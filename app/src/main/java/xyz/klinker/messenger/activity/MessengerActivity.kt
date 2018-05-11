@@ -113,11 +113,11 @@ class MessengerActivity : AppCompatActivity() {
 
     public override fun onPause() {
         if (navController.otherFragment is PrivateConversationListFragment) {
-            if ((navController.otherFragment as ConversationListFragment).isExpanded) {
-                onBackPressed()
+            if (navController.isOtherFragmentConvoAndShowing()) {
+                navController.getShownConversationList()?.onBackPressed()
             }
 
-            onBackPressed()
+            clickNavigationItem(R.id.drawer_conversation)
         }
 
         super.onPause()
