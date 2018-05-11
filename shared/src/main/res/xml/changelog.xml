@@ -27,9 +27,9 @@
         <!--name="3.0.0"-->
         <!--description="May, 2018">-->
         <!--<text>Support for creating and accessing folders to organize conversations (TODO: Remove folder feature flag and uncomment the new menu style in the navigation_drawer_conversations.xml file)</text>-->
-        <!--<text>Filter only unread conversations, from the navigation drawer (TODO: remove the feature flag)</text>-->
+        <!--<text>View only unread conversations, from the navigation drawer (TODO: remove the feature flag)</text>-->
+        <!--<text>Support for customizing the swipe actions on the conversation list or disabling them completely. (TODO: remove the feature flag)</text>-->
         <!--<text>Mark conversations as unread from the long click, multi-select menu (TODO: remove the feature flag)</text>-->
-        <!--<text>Support for selecting swipe actions for left and right swipes, individually. You can also turn off the swiping completely, with this method (TODO: remove the feature flag)</text>-->
     <!--</version>-->
 
     <version
