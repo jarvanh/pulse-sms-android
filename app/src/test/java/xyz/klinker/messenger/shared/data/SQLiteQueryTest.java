@@ -427,7 +427,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
         source.updateConversation(context, 1, false, TimeUtils.INSTANCE.getNow(), "test updated message",
                 MimeType.INSTANCE.getIMAGE_PNG(), false, false);
         Conversation conversation = source.getConversation(context, 1);
-        assertEquals("", conversation.getSnippet());
+        assertEquals("Picture Message", conversation.getSnippet());
     }
 
     @Test
