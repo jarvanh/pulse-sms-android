@@ -75,6 +75,10 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
         if (adapterPosition == -1) {
             val conversation = DataSource.getConversation(context, conversationId)
 
+            if (conversation?.private == true) {
+                return
+            }
+
             // need to insert after the pinned conversations
             if (conversation != null && (fragment.javaClass.simpleName == "ConversationListFragment" || fragment.javaClass.simpleName == "UnreadConversationListFragment")) {
                 adapter.conversations.add(pinnedCount, conversation)
@@ -159,11 +163,11 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
 
     companion object {
 
-        private val ACTION_UPDATED = "xyz.klinker.messenger.CONVERSATION_UPDATED"
-        private val EXTRA_CONVERSATION_ID = "conversation_id"
-        private val EXTRA_SNIPPET = "snippet"
-        private val EXTRA_TITLE = "title"
-        private val EXTRA_READ = "read"
+        private const val ACTION_UPDATED = "xyz.klinker.messenger.CONVERSATION_UPDATED"
+        private const val EXTRA_CONVERSATION_ID = "conversation_id"
+        private const val EXTRA_SNIPPET = "snippet"
+        private const val EXTRA_TITLE = "title"
+        private const val EXTRA_READ = "read"
 
         /**
          * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
