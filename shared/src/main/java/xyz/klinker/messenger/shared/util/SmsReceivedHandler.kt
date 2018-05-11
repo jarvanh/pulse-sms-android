@@ -22,17 +22,22 @@ import xyz.klinker.messenger.shared.service.notification.Notifier
 
 class SmsReceivedHandler(private val context: Context) {
 
-    fun newSmsRecieved(intent: Intent?) {
+    fun newSmsRecieved(intent: Intent?, retry: Boolean = true) {
         if (intent != null) {
             val latestMessageOne = DataSource.getLatestMessage(context)
 
             val wasBlacklisted = try {
                 handle(intent)
             } catch (e: Exception) {
+                false
 //                throw SmsSaveException(e)
             }
 
-//            val latestMessageTwo = DataSource.getLatestMessage(context)
+            val latestMessageTwo = DataSource.getLatestMessage(context)
+
+            if (retry && !wasBlacklisted && latestMessageOne?.id == latestMessageTwo?.id) {
+                newSmsRecieved(intent, false)
+            }
         }
     }
 
