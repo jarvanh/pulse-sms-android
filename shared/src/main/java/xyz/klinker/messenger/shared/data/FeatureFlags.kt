@@ -77,6 +77,7 @@ object FeatureFlags {
     private val FLAG_MARK_AS_UNREAD = "flag_mark_as_unread"
     private val FLAG_CONVO_SNIPPETS_REVAMP = "flag_convo_snippets_revamp"
     private val FLAG_SWIPE_OPTIONS = "flag_swipe_options"
+    private val FLAG_DISABLE_HARDWARE_ACCEL = "flag_disable_hardware_accel"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -100,6 +101,7 @@ object FeatureFlags {
 
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
+    var DISABLE_HARDWARE_ACCEL: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -110,6 +112,7 @@ object FeatureFlags {
         MARK_AS_UNREAD = getValue(context, sharedPrefs, FLAG_MARK_AS_UNREAD)
         CONVO_SNIPPETS_REVAMP = getValue(context, sharedPrefs, FLAG_CONVO_SNIPPETS_REVAMP)
         QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
+        DISABLE_HARDWARE_ACCEL = getValue(context, sharedPrefs, FLAG_DISABLE_HARDWARE_ACCEL)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -124,6 +127,7 @@ object FeatureFlags {
             FLAG_MARK_AS_UNREAD -> MARK_AS_UNREAD = flag
             FLAG_CONVO_SNIPPETS_REVAMP -> CONVO_SNIPPETS_REVAMP = flag
             FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
+            FLAG_DISABLE_HARDWARE_ACCEL -> DISABLE_HARDWARE_ACCEL = flag
         }
     }
 

@@ -19,6 +19,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.activity.MessengerTvActivity
 import xyz.klinker.messenger.fragment.message.MessageListFragment
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.util.*
@@ -74,7 +75,8 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             fragment.messageLoader.initRecycler()
         }
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1 && FeatureFlags.DISABLE_HARDWARE_ACCEL) {
+            // is this causing a crash?
             messageEntry.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         }
     }
