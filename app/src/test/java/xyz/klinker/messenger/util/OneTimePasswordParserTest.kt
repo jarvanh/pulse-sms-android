@@ -7,7 +7,7 @@ import xyz.klinker.messenger.shared.util.OneTimePasswordParser
 
 class OneTimePasswordParserTest : MessengerRobolectricSuite() {
 
-    private class OtpValidator(val phrase: String, val expectation: String)
+    private class OtpValidator(val phrase: String, val expectation: String?)
 
     private val tests = listOf(
             OtpValidator("your google verification code is 123456", "123456"),
@@ -256,9 +256,23 @@ class OneTimePasswordParserTest : MessengerRobolectricSuite() {
             OtpValidator("123456 is your Dynamic Access Code for CRN xxxx189.", "123456")
     )
 
+    private val invalidTests = listOf(
+            OtpValidator("hey my number is 123456", null),
+            OtpValidator("", null),
+            OtpValidator("no number here", null),
+            OtpValidator("123456", null)
+    )
+
     @Test
-    fun matches() {
+    fun matchOtp() {
         tests.forEach {
+            assertEquals(it.phrase, it.expectation, OneTimePasswordParser.getOtp(it.phrase))
+        }
+    }
+
+    @Test
+    fun doesNotMatchInvalidOtp() {
+        invalidTests.forEach {
             assertEquals(it.phrase, it.expectation, OneTimePasswordParser.getOtp(it.phrase))
         }
     }
