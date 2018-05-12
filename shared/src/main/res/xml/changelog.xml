@@ -25,7 +25,7 @@
 
     <!--<version-->
         <!--name="3.0.0"-->
-        <!--description="May, 2018">-->
+        <!--description="May 14th, 2018">-->
         <!--<text>Support for creating and accessing folders to organize conversations (TODO: Remove folder feature flag and uncomment the new menu style in the navigation_drawer_conversations.xml file)</text>-->
         <!--<text>Copy one time password codes (two-factor authentication), from the notification (TODO: remove the feature flag)</text>-->
         <!--<text>Support for customizing the swipe actions on the conversation list or disabling them completely. (TODO: remove the feature flag)</text>-->
