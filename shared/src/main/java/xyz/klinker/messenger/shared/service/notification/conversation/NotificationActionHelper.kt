@@ -97,6 +97,16 @@ class NotificationActionHelper(private val service: Context) {
         }
     }
 
+    fun addOtpAction(builder: NotificationCompat.Builder, otp: String, conversationId: Long) {
+        val copy = Intent(service, NotificationCopyOtpService::class.java)
+        copy.putExtra(NotificationCopyOtpService.EXTRA_PASSWORD, otp)
+        copy.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversationId)
+        val pendingCopy = PendingIntent.getService(service, conversationId.toInt() + 5,
+                copy, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        builder.addAction(NotificationCompat.Action(R.drawable.ic_copy, service.getString(R.string.copy_otp) + " $otp", pendingCopy))
+    }
+
     fun addNonReplyActions(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {
         if (!conversation.groupConversation && Settings.notificationActions.contains(NotificationAction.CALL)
                 && (!Account.exists() || Account.primary)) {

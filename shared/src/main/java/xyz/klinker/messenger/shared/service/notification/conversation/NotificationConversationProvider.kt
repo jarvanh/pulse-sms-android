@@ -14,6 +14,7 @@ import android.text.Html
 import android.util.Log
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
@@ -65,7 +66,16 @@ class NotificationConversationProvider(private val service: Context, private val
         val wearableExtender = wearableHelper.buildExtender(conversation)
 
         if (!conversation.privateNotification) {
-            actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)
+            val otp = try {
+                OneTimePasswordParser.getOtp(conversation.messages[0].data)
+            } catch (e: Exception) { null }
+
+            if (otp != null && FeatureFlags.OTP_PARSE) {
+                actionHelper.addOtpAction(builder, otp, conversation.id)
+            } else {
+                actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)
+            }
+
             actionHelper.addNonReplyActions(builder, wearableExtender, conversation)
         }
 

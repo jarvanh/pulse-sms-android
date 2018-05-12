@@ -180,6 +180,7 @@
     <string name="copy_message_text">Copy Message Text</string>
     <string name="select_text_to_copy">Select the text you want to copy:</string>
     <string name="copy_all_text">Copy All</string>
+    <string name="copy_otp">Copy</string>
     <string name="open_link_to_browser">Open Link to Browser</string>
     <string name="open_link_internal">Open Link Internally</string>
     <string name="copy_link">Copy Link</string>

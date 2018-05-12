@@ -27,15 +27,17 @@
         <!--name="3.0.0"-->
         <!--description="May, 2018">-->
         <!--<text>Support for creating and accessing folders to organize conversations (TODO: Remove folder feature flag and uncomment the new menu style in the navigation_drawer_conversations.xml file)</text>-->
-        <!--<text>View only unread conversations, from the navigation drawer (TODO: remove the feature flag)</text>-->
+        <!--<text>Copy one time password codes (two-factor authentication), from the notification (TODO: remove the feature flag)</text>-->
         <!--<text>Support for customizing the swipe actions on the conversation list or disabling them completely. (TODO: remove the feature flag)</text>-->
+        <!--<text>View only unread conversations, from the navigation drawer (TODO: remove the feature flag)</text>-->
         <!--<text>Mark conversations as unread from the long click, multi-select menu (TODO: remove the feature flag)</text>-->
     <!--</version>-->
 
     <version
-        name="2.11.2"
+        name="2.11.3"
         description="May 12th, 2018">
         <!-- Disable the hardware acceleration changes that I made in 2.11.1. Crazy amount of crashes for Android 8.1, so it has to be this... -->
+        <!-- Implement otp code parsing, behind a feature flag -->
         <text>Crash fix</text>
     </version>
 

@@ -78,6 +78,7 @@ object FeatureFlags {
     private val FLAG_CONVO_SNIPPETS_REVAMP = "flag_convo_snippets_revamp"
     private val FLAG_SWIPE_OPTIONS = "flag_swipe_options"
     private val FLAG_DISABLE_HARDWARE_ACCEL = "flag_disable_hardware_accel"
+    private val FLAG_OTP_PARSE = "flag_otp_parse"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -96,6 +97,7 @@ object FeatureFlags {
     // disabled for future features
     var FOLDER_SUPPORT: Boolean = false
     var SWIPE_OPTIONS: Boolean = false
+    var OTP_PARSE: Boolean = false
     var MARK_AS_UNREAD: Boolean = false
     var CONVO_SNIPPETS_REVAMP: Boolean = false
 
@@ -109,6 +111,7 @@ object FeatureFlags {
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
         FOLDER_SUPPORT = getValue(context, sharedPrefs, FLAG_FOLDER_SUPPORT)
         SWIPE_OPTIONS = getValue(context, sharedPrefs, FLAG_SWIPE_OPTIONS)
+        OTP_PARSE = getValue(context, sharedPrefs, FLAG_SWIPE_OPTIONS)
         MARK_AS_UNREAD = getValue(context, sharedPrefs, FLAG_MARK_AS_UNREAD)
         CONVO_SNIPPETS_REVAMP = getValue(context, sharedPrefs, FLAG_CONVO_SNIPPETS_REVAMP)
         QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
@@ -124,6 +127,7 @@ object FeatureFlags {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
             FLAG_FOLDER_SUPPORT -> FOLDER_SUPPORT = flag
             FLAG_SWIPE_OPTIONS -> SWIPE_OPTIONS = flag
+            FLAG_OTP_PARSE -> OTP_PARSE = flag
             FLAG_MARK_AS_UNREAD -> MARK_AS_UNREAD = flag
             FLAG_CONVO_SNIPPETS_REVAMP -> CONVO_SNIPPETS_REVAMP = flag
             FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
