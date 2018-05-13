@@ -20,8 +20,8 @@
 
         <item
             android:id="@+id/drawer_account"
-            android:orderInCategory="0"
             android:icon="@drawable/ic_devices"
+            android:orderInCategory="0"
             android:title="@string/menu_account" />
 
     </group>
@@ -34,58 +34,52 @@
 
             <item
                 android:id="@+id/drawer_conversation"
-                android:orderInCategory="1"
+                android:checked="true"
                 android:icon="@drawable/ic_inbox_small"
-                android:title="@string/menu_conversations"
-                android:checked="true" />
+                android:orderInCategory="1"
+                android:title="@string/menu_conversations" />
 
             <item
                 android:id="@+id/drawer_unread"
-                android:orderInCategory="1"
                 android:icon="@drawable/ic_unread"
+                android:orderInCategory="1"
                 android:title="@string/menu_unread_conversations" />
 
             <item
                 android:id="@+id/drawer_private"
-                android:orderInCategory="1"
                 android:icon="@drawable/ic_lock"
+                android:orderInCategory="1"
                 android:title="@string/menu_private_conversations" />
 
             <item
                 android:id="@+id/drawer_archived"
-                android:orderInCategory="1"
                 android:icon="@drawable/ic_archive"
+                android:orderInCategory="1"
                 android:title="@string/menu_archived_conversations" />
 
         </group>
 
         <group
             android:id="@+id/features_section"
-            android:checkableBehavior="single" >
+            android:checkableBehavior="single">
 
             <item
                 android:id="@+id/drawer_schedule"
-                android:orderInCategory="2"
                 android:icon="@drawable/ic_schedule"
+                android:orderInCategory="2"
                 android:title="@string/menu_schedule" />
 
             <item
                 android:id="@+id/drawer_mute_contacts"
-                android:orderInCategory="2"
                 android:icon="@drawable/ic_block"
+                android:orderInCategory="2"
                 android:title="@string/menu_mute_contacts" />
 
             <item
                 android:id="@+id/drawer_invite"
-                android:orderInCategory="2"
                 android:icon="@drawable/ic_invite"
-                android:title="@string/menu_invite" />
-
-            <item
-                android:id="@+id/drawer_feature_settings"
                 android:orderInCategory="2"
-                android:icon="@drawable/ic_feature_settings"
-                android:title="@string/menu_feature_settings" />
+                android:title="@string/menu_invite" />
 
         </group>
 
@@ -94,21 +88,27 @@
             android:checkableBehavior="single">
 
             <item
-                android:id="@+id/drawer_settings"
+                android:id="@+id/drawer_feature_settings"
+                android:icon="@drawable/ic_feature_settings"
                 android:orderInCategory="3"
+                android:title="@string/menu_feature_settings" />
+
+            <item
+                android:id="@+id/drawer_settings"
                 android:icon="@drawable/ic_settings"
+                android:orderInCategory="3"
                 android:title="@string/menu_settings" />
 
             <item
                 android:id="@+id/drawer_help"
-                android:orderInCategory="3"
                 android:icon="@drawable/ic_help"
+                android:orderInCategory="3"
                 android:title="@string/menu_help" />
 
             <item
                 android:id="@+id/drawer_about"
-                android:orderInCategory="3"
                 android:icon="@drawable/ic_about"
+                android:orderInCategory="3"
                 android:title="@string/menu_about" />
 
         </group>
