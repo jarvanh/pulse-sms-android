@@ -42,11 +42,6 @@
             android:entryValues="@array/keyboard_layout_values"
             android:defaultValue="default" />
 
-        <SwitchPreference
-            android:key="@string/pref_swipe_delete"
-            android:title="@string/swipe_delete"
-            android:defaultValue="false" />
-
         <Preference
             android:key="@string/pref_swipe_choices"
             android:title="@string/swipe_actions"

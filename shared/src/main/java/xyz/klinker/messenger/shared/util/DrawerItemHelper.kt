@@ -16,10 +16,6 @@ class DrawerItemHelper(private val navigationView: NavigationView) {
     fun findFolder(itemId: Int) = folders?.firstOrNull { it.id.toInt() == itemId }
 
     private fun queryAndAddFolders() {
-        if (!FeatureFlags.FOLDER_SUPPORT) {
-            return
-        }
-
         if (folders == null) {
             Thread {
                 folders = DataSource.getFoldersAsList(navigationView.context)
@@ -41,9 +37,9 @@ class DrawerItemHelper(private val navigationView: NavigationView) {
     }
 
     private fun removeItemsBasedOnFeatureToggles() {
-        if (!FeatureFlags.FOLDER_SUPPORT) {
-            navigationView.menu.findItem(R.id.drawer_unread).isVisible = false
-        }
+//        if (!FeatureFlags.FOLDER_SUPPORT) {
+//            navigationView.menu.findItem(R.id.drawer_unread).isVisible = false
+//        }
     }
 
     companion object {

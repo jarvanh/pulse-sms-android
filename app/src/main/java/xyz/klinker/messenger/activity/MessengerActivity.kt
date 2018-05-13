@@ -112,12 +112,15 @@ class MessengerActivity : AppCompatActivity() {
     }
 
     public override fun onPause() {
-        if (navController.otherFragment is PrivateConversationListFragment) {
-            if (navController.isOtherFragmentConvoAndShowing()) {
-                navController.getShownConversationList()?.onBackPressed()
-            }
+        try {
+            if (navController.getShownConversationList() is PrivateConversationListFragment) {
+                if (navController.isOtherFragmentConvoAndShowing()) {
+                    navController.getShownConversationList()?.expandedItem?.itemView?.performClick()
+                }
 
-            clickNavigationItem(R.id.drawer_conversation)
+                clickNavigationItem(R.id.drawer_conversation)
+            }
+        } catch (e: Throwable) {
         }
 
         super.onPause()

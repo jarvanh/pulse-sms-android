@@ -117,14 +117,6 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
     }
 
     private fun initSwipeDelete() {
-        val legacySwipeDelete = findPreference(getString(R.string.pref_swipe_delete))
-        legacySwipeDelete.setOnPreferenceChangeListener { _, o ->
-            val delete = o as Boolean
-            ApiUtils.updateSwipeToDelete(Account.accountId,
-                    delete)
-            true
-        }
-
         val swipeActions = findPreference(getString(R.string.pref_swipe_choices))
         swipeActions.setOnPreferenceClickListener {
             val layout = LayoutInflater.from(activity).inflate(R.layout.dialog_swipe_actions, null, false)
@@ -157,13 +149,6 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
                     .setNegativeButton(android.R.string.cancel, null)
                     .show()
             false
-        }
-
-        val category = findPreference(getString(R.string.pref_customization_category)) as PreferenceCategory
-        if (FeatureFlags.SWIPE_OPTIONS) {
-            category.removePreference(legacySwipeDelete)
-        } else {
-            category.removePreference(swipeActions)
         }
     }
 

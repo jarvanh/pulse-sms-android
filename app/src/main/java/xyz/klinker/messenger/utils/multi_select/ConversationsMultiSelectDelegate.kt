@@ -49,10 +49,6 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
             val archive = menu.findItem(R.id.menu_archive_conversation)
             val unread = menu.findItem(R.id.menu_mark_as_unread)
 
-            if (!FeatureFlags.MARK_AS_UNREAD) {
-                unread?.isVisible = false
-            }
-
             changeMenuItemColor(delete)
             changeMenuItemColor(archive)
 

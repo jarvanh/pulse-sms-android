@@ -70,7 +70,7 @@ class NotificationConversationProvider(private val service: Context, private val
                 OneTimePasswordParser.getOtp(conversation.messages[0].data)
             } catch (e: Exception) { null }
 
-            if (otp != null && FeatureFlags.OTP_PARSE) {
+            if (otp != null) {
                 actionHelper.addOtpAction(builder, otp, conversation.id)
             } else {
                 actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)

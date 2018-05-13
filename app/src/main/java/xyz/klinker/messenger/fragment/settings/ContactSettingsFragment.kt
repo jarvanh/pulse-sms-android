@@ -207,51 +207,47 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
             preference.isEnabled = false
         }
 
-        if (FeatureFlags.FOLDER_SUPPORT) {
-            val handler = Handler()
-            Thread {
-                val folders =  DataSource.getFoldersAsList(activity)
-                val folder = folders.firstOrNull { it.id == conversation.folderId }
+        val handler = Handler()
+        Thread {
+            val folders =  DataSource.getFoldersAsList(activity)
+            val folder = folders.firstOrNull { it.id == conversation.folderId }
 
-                handler.post {
-                    if (folder == null) {
-                        preference.summary = noFolderText
-                    } else {
-                        preference.summary = folder.name
-                    }
-
-                    preference.setOnPreferenceClickListener {
-                        val currentIndex = folders.map { it.id }.indexOf(conversation.folderId)
-                        val names = folders.map { StringUtils.titleize(it.name!!) }.toMutableList()
-                        names.add(0, noFolderText)
-
-                        AlertDialog.Builder(activity)
-                                .setSingleChoiceItems(names.toTypedArray(), currentIndex + 1) { dialog, clickedIndex ->
-                                    if (clickedIndex == 0) {
-                                        conversation.folderId = -1
-                                        preference.summary = noFolderText
-                                    } else {
-                                        conversation.folderId = folders[clickedIndex - 1].id
-                                        preference.summary = folders[clickedIndex - 1].name
-                                    }
-
-                                    Thread {
-                                        if (clickedIndex == 0) {
-                                            DataSource.removeConversationFromFolder(activity, conversation.id, true)
-                                        } else {
-                                            DataSource.addConversationToFolder(activity, conversation.id, conversation.folderId!!, true)
-                                        }
-                                    }.start()
-
-                                    dialog.dismiss()
-                                }.show()
-                        true
-                    }
+            handler.post {
+                if (folder == null) {
+                    preference.summary = noFolderText
+                } else {
+                    preference.summary = folder.name
                 }
-            }.start()
-        } else {
-            (preferenceScreen.findPreference(getString(R.string.pref_contact_advanced_group)) as PreferenceCategory).removePreference(preference)
-        }
+
+                preference.setOnPreferenceClickListener {
+                    val currentIndex = folders.map { it.id }.indexOf(conversation.folderId)
+                    val names = folders.map { StringUtils.titleize(it.name!!) }.toMutableList()
+                    names.add(0, noFolderText)
+
+                    AlertDialog.Builder(activity)
+                            .setSingleChoiceItems(names.toTypedArray(), currentIndex + 1) { dialog, clickedIndex ->
+                                if (clickedIndex == 0) {
+                                    conversation.folderId = -1
+                                    preference.summary = noFolderText
+                                } else {
+                                    conversation.folderId = folders[clickedIndex - 1].id
+                                    preference.summary = folders[clickedIndex - 1].name
+                                }
+
+                                Thread {
+                                    if (clickedIndex == 0) {
+                                        DataSource.removeConversationFromFolder(activity, conversation.id, true)
+                                    } else {
+                                        DataSource.addConversationToFolder(activity, conversation.id, conversation.folderId!!, true)
+                                    }
+                                }.start()
+
+                                dialog.dismiss()
+                            }.show()
+                    true
+                }
+            }
+        }.start()
     }
 
     private fun setUpCleanupOldMessages() {

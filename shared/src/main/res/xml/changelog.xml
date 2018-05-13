@@ -23,15 +23,16 @@
         <!--<text>Provide media type previews as the snippet on the conversation list, instead of an empty box (TODO: Remove the feature flag)</text>-->
     <!--</version>-->
 
-    <!--<version-->
-        <!--name="3.0.0"-->
-        <!--description="May 14th, 2018">-->
-        <!--<text>Support for creating and accessing folders to organize conversations (TODO: Remove folder feature flag and uncomment the new menu style in the navigation_drawer_conversations.xml file)</text>-->
-        <!--<text>Copy one time password codes (two-factor authentication), from the notification (TODO: remove the feature flag)</text>-->
-        <!--<text>Support for customizing the swipe actions on the conversation list or disabling them completely. (TODO: remove the feature flag)</text>-->
-        <!--<text>View only unread conversations, from the navigation drawer (TODO: remove the feature flag)</text>-->
-        <!--<text>Mark conversations as unread from the long click, multi-select menu (TODO: remove the feature flag)</text>-->
-    <!--</version>-->
+    <version
+        name="3.0.0"
+        description="May 14th, 2018">
+        <text>Support for creating and accessing folders to organize conversations</text>
+        <text>Copy one time password codes (two-factor authentication), from the notification</text>
+        <text>Support for customizing the swipe actions on the conversation list or disabling them completely</text>
+        <text>View only unread conversations, from the navigation drawer</text>
+        <text>Mark conversations as unread from the long click, multi-select menu</text>
+        <text>Crash fixes and performance improvements</text>
+    </version>
 
     <version
         name="2.11.3"

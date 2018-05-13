@@ -1,4 +1,7 @@
-With this release:<br/>
-- Pulse adds a private conversations inbox, with a password protection option, to hide your secret conversations!<br/>
-- Pulse will display previews of the content within sent and received contact vCards<br/>
-- Pulse will display a location preview when an iOS user shares their location with you
+In this release:<br/>
+- Support for creating and accessing folders to help organize conversations<br/>
+- Copy one time password codes, from the notification<br/>
+- Customize the swipe actions on the conversation list or disable them completely<br/>
+- View only unread conversations, from the navigation drawer<br/>
+- Mark conversations as unread from the long click, multi-select, menu<br/>
++ Bug fixes and performance improvements
