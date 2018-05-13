@@ -52,7 +52,10 @@ object OneTimePasswordParser {
             if (matchResult != null) {
                 val groups = matchResult.groupValues
                 if (groups.size >= it.captureGroup) {
-                    return groups[it.captureGroup]
+                    val code = groups[it.captureGroup]
+                    if (it.validationRegex == null || it.validationRegex.toRegex().matches(code)) {
+                        return code
+                    }
                 }
             }
         }
