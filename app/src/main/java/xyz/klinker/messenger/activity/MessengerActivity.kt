@@ -104,16 +104,9 @@ class MessengerActivity : AppCompatActivity() {
         accountController.refreshAccountToken()
 
         startDelegate.run()
-    }
 
-    public override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        intentHandler.newIntent(intent)
-    }
-
-    public override fun onPause() {
         try {
-            if (navController.getShownConversationList() is PrivateConversationListFragment) {
+            if (navController.otherFragment is PrivateConversationListFragment) {
                 if (navController.isOtherFragmentConvoAndShowing()) {
                     navController.getShownConversationList()?.expandedItem?.itemView?.performClick()
                 }
@@ -121,8 +114,17 @@ class MessengerActivity : AppCompatActivity() {
                 clickNavigationItem(R.id.drawer_conversation)
             }
         } catch (e: Throwable) {
+            e.printStackTrace()
         }
+    }
 
+    public override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        intentHandler.newIntent(intent)
+    }
+
+
+    public override fun onPause() {
         super.onPause()
 
         if (navController.conversationListFragment != null) {
