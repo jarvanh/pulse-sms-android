@@ -519,7 +519,7 @@
     <string name="folders_title">Folders</string>
     <string name="create">Create</string>
     <string name="create_folder">Create a New Folder</string>
-    <string name="create_folder_summary">After a folder is created, you can use it to help organize your conversations</string>
+    <string name="create_folder_summary">Place conversations in to a folder to help organize and quickly navigate a busy inbox</string>
     <string name="no_folders">No folders created - tap the top preference to create your first folder</string>
     <string name="folder_name">Folder name…</string>
     <string name="private_conversations_cannot_be_added_to_folders">Private conversations cannot be added.</string>
