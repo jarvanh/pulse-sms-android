@@ -99,4 +99,11 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="StyledFastScrollerTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>

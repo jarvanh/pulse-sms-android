@@ -60,14 +60,13 @@
                 android:scrollbars="none"
                 tools:ignore="NestedWeights" />
 
-            <com.turingtechnologies.materialscrollbar.TouchScrollBar
+            <com.futuremind.recyclerviewfastscroll.FastScroller
                 android:id="@+id/drag_scrollbar"
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
-                app:msb_hideDelayInMilliseconds="500"
-                app:msb_lightOnTouch="true"
-                app:msb_recyclerView="@id/message_list" />
+                app:fastscroll__bubbleTextAppearance="@style/StyledFastScrollerTextAppearance"/>
 
         </RelativeLayout>
 

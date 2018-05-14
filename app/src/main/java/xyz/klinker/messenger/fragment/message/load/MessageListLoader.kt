@@ -6,8 +6,7 @@ import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.turingtechnologies.materialscrollbar.DateAndTimeIndicator
-import com.turingtechnologies.materialscrollbar.TouchScrollBar
+import com.futuremind.recyclerviewfastscroll.FastScroller
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.message.MessageListAdapter
 import xyz.klinker.messenger.fragment.message.MessageListFragment
@@ -30,7 +29,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
         get() = fragment.draftManager
 
     val messageList: RecyclerView by lazy { fragment.rootView!!.findViewById<View>(R.id.message_list) as RecyclerView }
-    private val dragScrollBar: TouchScrollBar by lazy { fragment.rootView!!.findViewById<View>(R.id.drag_scrollbar) as TouchScrollBar }
+    private val dragScrollBar: FastScroller by lazy { fragment.rootView!!.findViewById<View>(R.id.drag_scrollbar) as FastScroller }
     private val manager: LinearLayoutManager by lazy { LinearLayoutManager(activity) }
     
     var adapter: MessageListAdapter? = null
@@ -48,10 +47,10 @@ class MessageListLoader(private val fragment: MessageListFragment) {
         manager.stackFromEnd = true
         messageList.layoutManager = manager
 
-        dragScrollBar.setIndicator(DateAndTimeIndicator(activity, true, true, true, false), true)
-                .setHandleColor(if (Settings.useGlobalThemeColor)
-                    Settings.mainColorSet.color else argManager.color)
-//                .setFastScrollSnapPercent(.05f)
+        val color = if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else argManager.color
+        dragScrollBar.setBubbleColor(color)
+        dragScrollBar.setHandleColor(color)
+        dragScrollBar.setRecyclerView(messageList)
 
         messageList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
@@ -192,6 +191,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
             adapter?.setFromColorMapper(contactMap, contactMapByName)
 
             messageList.adapter = adapter
+            dragScrollBar.setRecyclerView(messageList)
             messageList.animate().withLayer()
                     .alpha(1f).setDuration(100).setStartDelay(0).setListener(null)
         }

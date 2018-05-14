@@ -145,6 +145,7 @@ dependencies {
     api 'com.github.codekidX:storage-chooser:2.0.3'
     api 'com.afollestad.material-dialogs:core:0.9.4.5'
     api 'com.roughike:bottom-bar:2.3.1'
+    api 'com.futuremind.recyclerfastscroll:fastscroll:0.2.5'
 
     implementation 'com.raycoarana.codeinputview:codeinputview:1.2.5'
     implementation 'com.github.ajalt.reprint:core:3.2.1@aar'
@@ -153,7 +154,7 @@ dependencies {
     api project(":encryption")
 
     api(name: 'sofa', ext: 'aar')
-    api(name: 'material-scrollbar', ext: 'aar')
+//    api(name: 'material-scrollbar', ext: 'aar')
     api(name: 'material-camera', ext: 'aar')
 
     testImplementation 'junit:junit:4.12'

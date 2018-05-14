@@ -19,7 +19,6 @@ package xyz.klinker.messenger.adapter.message
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
-import android.database.StaleDataException
 import android.os.Build
 import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentActivity
@@ -27,7 +26,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.turingtechnologies.materialscrollbar.IDateableAdapter
+import com.futuremind.recyclerviewfastscroll.SectionTitleProvider
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
 import xyz.klinker.messenger.api.implementation.Account
@@ -41,6 +40,7 @@ import xyz.klinker.messenger.shared.util.DensityUtil
 import xyz.klinker.messenger.shared.util.MessageListStylingHelper
 import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.util.listener.MessageDeletedListener
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -48,7 +48,7 @@ import java.util.*
  */
 class MessageListAdapter(messages: Cursor, private val receivedColor: Int, private val accentColor: Int, private val isGroup: Boolean,
                          private val fragment: MessageListFragment)
-    : RecyclerView.Adapter<MessageViewHolder>(), MessageDeletedListener, IDateableAdapter {
+    : RecyclerView.Adapter<MessageViewHolder>(), MessageDeletedListener, SectionTitleProvider {
 
     private val activity: FragmentActivity? by lazy { fragment.activity }
 
@@ -215,18 +215,20 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
 
     }
 
-    override fun getDateForElement(position: Int): Date {
+    override fun getSectionTitle(position: Int): String {
         if (position < 0) {
-            return Date()
+            return ""
         }
 
         return try {
             dataProvider.messages.moveToPosition(position)
             val millis = dataProvider.messages.getLong(dataProvider.messages.getColumnIndex(Message.COLUMN_TIMESTAMP))
-            Date(millis)
+            val date = Date(millis)
+
+            SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date)
         } catch (e: Exception) {
             fragment.onBackPressed()
-            Date()
+            ""
         }
     }
 
