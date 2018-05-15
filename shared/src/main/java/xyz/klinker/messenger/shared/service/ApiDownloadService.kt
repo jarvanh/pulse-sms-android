@@ -119,7 +119,6 @@ class ApiDownloadService : Service() {
         var pageNumber = 1
         var downloaded = 0
         var nullCount = 0
-        var noMessages = false
 
         do {
             val messages = try {
@@ -130,11 +129,7 @@ class ApiDownloadService : Service() {
                 emptyArray<MessageBody>()
             }
 
-            if (messages != null) {
-                if (messages.isEmpty()) {
-                    noMessages = true
-                }
-
+            if (messages != null && !messages.isEmpty()) {
                 for (body in messages) {
                     val message = Message(body)
 
@@ -153,11 +148,16 @@ class ApiDownloadService : Service() {
                 messageList.clear()
             } else {
                 nullCount++
+
+                try {
+                    Thread.sleep(2000)
+                } catch (e: InterruptedException) {
+                }
             }
 
             Log.v(TAG, downloaded.toString() + " messages downloaded. " + pageNumber + " pages so far.")
             pageNumber++
-        } while (downloaded % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && !noMessages && nullCount < 5)
+        } while (downloaded % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && nullCount < 5)
 
         if (downloaded > 0) {
             Log.v(TAG, downloaded.toString() + " messages inserted in " + (TimeUtils.now - startTime) + " ms with " + pageNumber + " pages")
@@ -173,7 +173,6 @@ class ApiDownloadService : Service() {
         var pageNumber = 1
         var downloaded = 0
         var nullCount = 0
-        var noConversations = false
 
         do {
             val conversations = try {
@@ -184,11 +183,7 @@ class ApiDownloadService : Service() {
                 emptyArray<ConversationBody>()
             }
 
-            if (conversations != null) {
-                if (conversations.isEmpty()) {
-                    noConversations = true
-                }
-
+            if (conversations != null && !conversations.isEmpty()) {
                 for (body in conversations) {
                     val conversation = Conversation(body)
 
@@ -208,11 +203,16 @@ class ApiDownloadService : Service() {
                 conversationList.clear()
             } else {
                 nullCount++
+
+                try {
+                    Thread.sleep(2000)
+                } catch (e: InterruptedException) {
+                }
             }
 
             Log.v(TAG, downloaded.toString() + " conversations downloaded. " + pageNumber + " pages so far.")
             pageNumber++
-        } while (downloaded % CONVERSATION_DOWNLOAD_PAGE_SIZE == 0 && !noConversations && nullCount < 5)
+        } while (downloaded % CONVERSATION_DOWNLOAD_PAGE_SIZE == 0 && nullCount < 5)
 
         if (downloaded > 0) {
             Log.v(TAG, downloaded.toString() + " conversations inserted in " + (TimeUtils.now - startTime) + " ms")
@@ -291,7 +291,6 @@ class ApiDownloadService : Service() {
         var pageNumber = 1
         var downloaded = 0
         var nullCount = 0
-        var noContacts = false
 
         do {
             val contacts = try {
@@ -302,11 +301,7 @@ class ApiDownloadService : Service() {
                 emptyArray<ContactBody>()
             }
 
-            if (contacts != null) {
-                if (contacts.isEmpty()) {
-                    noContacts = true
-                }
-
+            if (contacts != null && !contacts.isEmpty()) {
                 for (body in contacts) {
                     val contact = Contact(body)
 
@@ -325,11 +320,16 @@ class ApiDownloadService : Service() {
                 contactList.clear()
             } else {
                 nullCount++
+
+                try {
+                    Thread.sleep(2000)
+                } catch (e: InterruptedException) {
+                }
             }
 
             Log.v(TAG, downloaded.toString() + " contacts downloaded. " + pageNumber + " pages so far.")
             pageNumber++
-        } while (downloaded % CONTACTS_DOWNLOAD_PAGE_SIZE == 0 && !noContacts && nullCount < 5)
+        } while (downloaded % CONTACTS_DOWNLOAD_PAGE_SIZE == 0 && nullCount < 5)
 
         if (downloaded > 0) {
             Log.v(TAG, downloaded.toString() + " contacts inserted in " + (TimeUtils.now - startTime) + " ms")
@@ -507,15 +507,15 @@ class ApiDownloadService : Service() {
             }
         }
 
-        private val TAG = "ApiDownloadService"
-        private val MESSAGE_DOWNLOAD_ID = 7237
-        val ACTION_DOWNLOAD_FINISHED = "xyz.klinker.messenger.API_DOWNLOAD_FINISHED"
+        private const val TAG = "ApiDownloadService"
+        private const val MESSAGE_DOWNLOAD_ID = 7237
+        const val ACTION_DOWNLOAD_FINISHED = "xyz.klinker.messenger.API_DOWNLOAD_FINISHED"
 
-        val MESSAGE_DOWNLOAD_PAGE_SIZE = 500
-        val CONVERSATION_DOWNLOAD_PAGE_SIZE = 200
-        val CONTACTS_DOWNLOAD_PAGE_SIZE = 500
-        val MAX_MEDIA_DOWNLOADS = 400
-        val ARG_SHOW_NOTIFICATION = "show_notification"
+        const val MESSAGE_DOWNLOAD_PAGE_SIZE = 1000
+        const val CONVERSATION_DOWNLOAD_PAGE_SIZE = 500
+        const val CONTACTS_DOWNLOAD_PAGE_SIZE = 1000
+        const val MAX_MEDIA_DOWNLOADS = 400
+        const val ARG_SHOW_NOTIFICATION = "show_notification"
 
         var IS_RUNNING = false
     }

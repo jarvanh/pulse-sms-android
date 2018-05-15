@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.shared.util
 
 import android.content.Context
+import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract
 
@@ -313,14 +314,16 @@ object ContactUtils {
         if (number == null || number.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().size > 1) {
             return null
         } else {
+            var phonesCursor: Cursor? = null
+
             try {
                 var phoneUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
                         Uri.encode(number))
 
-                var phonesCursor = context.contentResolver
+                phonesCursor = context.contentResolver
                         .query(phoneUri, arrayOf(ContactsContract.Contacts.PHOTO_THUMBNAIL_URI), null, null, null)
 
-                if (phonesCursor != null && phonesCursor.moveToFirst()) {
+                if (phonesCursor?.moveToFirst() == true) {
                     uri = phonesCursor.getString(0)
                     if (uri != null) {
                         uri = uri.replace("/photo", "")
@@ -329,10 +332,11 @@ object ContactUtils {
                     phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                             Uri.encode(number))
 
+                    phonesCursor?.closeSilent()
                     phonesCursor = context.contentResolver
                             .query(phoneUri, arrayOf(ContactsContract.Contacts.PHOTO_THUMBNAIL_URI), null, null, null)
 
-                    if (phonesCursor != null && phonesCursor.moveToFirst()) {
+                    if (phonesCursor?.moveToFirst() == true) {
                         uri = phonesCursor.getString(0)
                         if (uri != null) {
                             uri = uri.replace("/photo", "")
@@ -340,11 +344,11 @@ object ContactUtils {
                     }
                 }
 
-                phonesCursor?.closeSilent()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
+            phonesCursor?.closeSilent()
             return uri
         }
     }
