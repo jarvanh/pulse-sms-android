@@ -104,7 +104,7 @@ class NotificationActionHelper(private val service: Context) {
         val pendingCopy = PendingIntent.getService(service, conversationId.toInt() + 5,
                 copy, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        builder.addAction(NotificationCompat.Action(R.drawable.ic_copy, service.getString(R.string.copy_otp) + " $otp", pendingCopy))
+        builder.addAction(NotificationCompat.Action(R.drawable.ic_copy_dark, service.getString(R.string.copy_otp) + " $otp", pendingCopy))
     }
 
     fun addNonReplyActions(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {
@@ -148,6 +148,16 @@ class NotificationActionHelper(private val service: Context) {
         if (Settings.notificationActions.contains(NotificationAction.MUTE)) {
             builder.addAction(NotificationCompat.Action(R.drawable.ic_mute_dark, service.getString(R.string.mute), pendingMute))
             wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_mute_white, service.getString(R.string.mute), pendingMute))
+        }
+
+        val archive = Intent(service, NotificationArchiveService::class.java)
+        archive.putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id)
+        val pendingArchive = PendingIntent.getService(service, conversation.id.toInt() + 6,
+                archive, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        if (Settings.notificationActions.contains(NotificationAction.ARCHIVE)) {
+            builder.addAction(NotificationCompat.Action(R.drawable.ic_archive_dark, service.getString(R.string.menu_archive_conversation), pendingArchive))
+            wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_archive_light, service.getString(R.string.menu_archive_conversation), pendingArchive))
         }
 
     }

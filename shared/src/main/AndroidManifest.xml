@@ -314,6 +314,7 @@
         <service android:name=".service.NotificationDismissedService" />
         <service android:name=".service.NotificationMarkReadService" />
         <service android:name=".service.NotificationCopyOtpService" />
+        <service android:name=".service.NotificationArchiveService" />
         <service android:name=".service.NotificationMuteService" />
         <service android:name=".service.NotificationDeleteService" />
         <service android:name=".service.NotificationCallService" />

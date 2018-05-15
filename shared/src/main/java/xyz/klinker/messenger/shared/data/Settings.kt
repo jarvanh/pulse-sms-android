@@ -277,6 +277,10 @@ object Settings {
             notificationActions.add(NotificationAction.MUTE)
         }
 
+        if (actions.contains("archive")) {
+            notificationActions.add(NotificationAction.ARCHIVE)
+        }
+
         this.mainColorSet = ColorSet.create(
                 sharedPrefs.getInt(context.getString(R.string.pref_global_primary_color), ColorSet.DEFAULT(context).color),
                 sharedPrefs.getInt(context.getString(R.string.pref_global_primary_dark_color), ColorSet.DEFAULT(context).colorDark),
