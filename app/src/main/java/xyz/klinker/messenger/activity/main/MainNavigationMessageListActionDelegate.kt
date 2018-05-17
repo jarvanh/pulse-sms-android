@@ -29,6 +29,9 @@ import xyz.klinker.messenger.shared.util.ImageUtils
 import xyz.klinker.messenger.shared.util.listener.ContactClickedListener
 import java.util.ArrayList
 import java.util.NoSuchElementException
+import android.content.Intent
+import android.util.Log
+
 
 class MainNavigationMessageListActionDelegate(private val activity: MessengerActivity) {
 
@@ -124,8 +127,9 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
                     } catch (e: NoSuchElementException) {
                         e.printStackTrace()
                         try {
-                            intent = Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT)
-                            intent!!.data = Uri.parse("tel:$phoneNumber")
+                            intent = Intent(Intent.ACTION_INSERT)
+                            intent!!.type = ContactsContract.Contacts.CONTENT_TYPE
+                            intent!!.putExtra(ContactsContract.Intents.Insert.PHONE, phoneNumber)
                         } catch (ex: ActivityNotFoundException) {
                             intent = null
                         }
@@ -152,18 +156,19 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
 
                 try {
                     intent = Intent(Intent.ACTION_VIEW)
-                    val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
-                            ContactUtils.findContactId(conversation.phoneNumbers!!, activity).toString())
+                    val contactId = ContactUtils.findContactId(conversation.phoneNumbers!!, activity)
+                    val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, contactId.toString())
                     intent!!.data = uri
                 } catch (e: NoSuchElementException) {
                     e.printStackTrace()
+
                     try {
-                        intent = Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT)
-                        intent!!.data = Uri.parse("tel:" + conversation.phoneNumbers!!)
+                        intent = Intent(Intent.ACTION_INSERT)
+                        intent!!.type = ContactsContract.Contacts.CONTENT_TYPE
+                        intent!!.putExtra(ContactsContract.Intents.Insert.PHONE, conversation.phoneNumbers!!)
                     } catch (ex: ActivityNotFoundException) {
                         intent = null
                     }
-
                 }
 
                 try {
