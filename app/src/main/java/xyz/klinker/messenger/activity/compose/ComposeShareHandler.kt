@@ -39,7 +39,10 @@ class ComposeShareHandler(private val activity: ComposeActivity) {
 
     fun directShare(data: String?, mimeType: String, isVcard: Boolean = false) {
         val conversationId = activity.intent.extras.getLong(MessengerChooserTargetService.EXTRA_CONVO_ID)
+        directShare(data, mimeType, conversationId, isVcard)
+    }
 
+    fun directShare(data: String?, mimeType: String, conversationId: Long, isVcard: Boolean = false) {
         if (isVcard) {
             activity.vCardSender.send(mimeType, data!!, conversationId)
         } else {

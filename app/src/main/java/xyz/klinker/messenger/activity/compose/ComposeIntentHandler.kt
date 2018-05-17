@@ -7,11 +7,14 @@ import android.os.Handler
 import android.os.Parcelable
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
+import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.MessengerChooserTargetService
 import xyz.klinker.messenger.shared.util.FileUtils
 import xyz.klinker.messenger.shared.util.NonStandardUriUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 import java.io.File
 import java.net.URLDecoder
 
@@ -138,6 +141,9 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
 
         if (intent.extras != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
             activity.shareHandler.directShare(data, intent.type)
+        } else if (intent.extras.containsKey(Intent.EXTRA_PHONE_NUMBER)) {
+            val number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
+            activity.shareHandler.apply(intent.type, data, number)
         } else {
             activity.sender.resetViews(if (data == null) "" else data, intent.type)
         }
