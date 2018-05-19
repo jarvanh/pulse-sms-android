@@ -866,8 +866,8 @@ object ApiUtils {
         }
 
         try {
-            val fileRef = folderRef!!.child(messageId.toString() + "")
-            fileRef.putBytes(encryptionUtils.encrypt(bytes).toByteArray())
+            Log.v(TAG, "starting upload for $messageId")
+            folderRef!!.child(messageId.toString() + "").putBytes(encryptionUtils.encrypt(bytes).toByteArray())
                     .addOnSuccessListener {
                         Log.v(TAG, "finished uploading and exiting for $messageId")
                         callback.onUploadFinished()
@@ -876,7 +876,16 @@ object ApiUtils {
                         Log.e(TAG, "failed to upload file", e)
                         uploadBytesToFirebase(accountId, bytes, messageId, encryptionUtils, callback, retryCount + 1)
                     }
+//            folderRef!!.child(messageId.toString() + "").putBytes(encryptionUtils.encrypt(bytes).toByteArray())
+//                    .addOnSuccessListener {
+//                        Log.v(TAG, "pushed through upload for $messageId")
+//                    }
+//            folderRef!!.child(messageId.toString() + "").putBytes(encryptionUtils.encrypt(bytes).toByteArray())
+//                    .addOnSuccessListener {
+//                        Log.v(TAG, "pushed through upload for $messageId")
+//                    }
         } catch (e: Throwable) {
+            e.printStackTrace()
             callback.onUploadFinished()
         }
 
@@ -908,6 +917,7 @@ object ApiUtils {
 
         try {
             val fileRef = folderRef!!.child(messageId.toString() + "")
+            Log.v(TAG, "starting download for $messageId")
             fileRef.getBytes(MAX_SIZE)
                     .addOnSuccessListener { bytes ->
                         val bytes = encryptionUtils.decryptData(String(bytes))
@@ -921,7 +931,7 @@ object ApiUtils {
                             e.printStackTrace()
                         }
 
-                        Log.v(TAG, "finished downloading " + messageId)
+                        Log.v(TAG, "finished downloading $messageId")
                         callback.onDownloadComplete()
                     }
                     .addOnFailureListener { e ->
@@ -933,7 +943,16 @@ object ApiUtils {
                             callback.onDownloadComplete()
                         }
                     }
+//            folderRef!!.child(messageId.toString() + "").getBytes(MAX_SIZE)
+//                    .addOnSuccessListener { _ ->
+//                        Log.v(TAG, "pushed through downloading $messageId")
+//                    }
+//            folderRef!!.child(messageId.toString() + "").getBytes(MAX_SIZE)
+//                    .addOnSuccessListener { _ ->
+//                        Log.v(TAG, "pushed through downloading $messageId")
+//                    }
         } catch (e: Exception) {
+            e.printStackTrace()
             callback.onDownloadComplete()
         }
     }

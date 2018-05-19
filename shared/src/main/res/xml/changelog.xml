@@ -24,6 +24,13 @@
     <!--</version>-->
 
     <version
+        name="3.0.1"
+        description="May 20th, 2018">
+        <text>Improvements to download process, after logging in to a new device</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="3.0.0"
         description="May 14th, 2018">
         <text>Support for creating and accessing folders to organize conversations</text>
