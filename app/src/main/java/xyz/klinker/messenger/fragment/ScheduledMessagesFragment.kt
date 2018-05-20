@@ -188,6 +188,11 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         adapter.isShowMobileOnly = Settings.mobileOnly
         editText.setAdapter(adapter)
 
+        editText.post {
+            editText.requestFocus()
+            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        }
+
         val dialog = AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
@@ -282,13 +287,18 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         val editText = layout.findViewById<View>(R.id.edit_text) as EditText
         editText.setHint(R.string.scheduled_message_hint)
 
+        editText.post {
+            editText.requestFocus()
+            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        }
+
         AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
                 .setPositiveButton(R.string.add) { _, _ ->
                     if (editText.text.isNotEmpty()) {
                         message.data = editText.text.toString()
                         message.mimeType = MimeType.TEXT_PLAIN
-                        saveMessage(message)
+                        saveMessage(message, editText)
                     } else {
                         displayMessageDialog(message)
                     }
@@ -297,7 +307,12 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                 .show()
     }
 
-    private fun saveMessage(message: ScheduledMessage) {
+    private fun saveMessage(message: ScheduledMessage, editText: EditText? = null) {
+        if (editText != null) {
+            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
+                    ?.hideSoftInputFromWindow(editText.windowToken, 0)
+        }
+
         Thread {
             DataSource.insertScheduledMessage(fragmentActivity!!, message)
             loadMessages()
