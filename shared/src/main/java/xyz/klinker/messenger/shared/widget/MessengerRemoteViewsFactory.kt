@@ -21,6 +21,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
+import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
@@ -111,21 +112,28 @@ class MessengerRemoteViewsFactory(private val context: Context) : RemoteViewsSer
         image = ImageUtils.clipToCircle(image)
 
         rv.setTextViewText(R.id.conversation_title, Html.fromHtml(item.title))
+        rv.setTextViewTextSize(R.id.conversation_title, TypedValue.COMPLEX_UNIT_SP, Settings.largeFont.toFloat())
+
         rv.setTextViewText(R.id.conversation_summary, Html.fromHtml(item.snippet))
+        rv.setTextViewTextSize(R.id.conversation_summary, TypedValue.COMPLEX_UNIT_SP, Settings.mediumFont.toFloat())
+
         rv.setImageViewBitmap(R.id.picture, image)
 
         when (Settings.baseTheme) {
             BaseTheme.ALWAYS_DARK -> {
                 rv.setTextColor(R.id.conversation_title, Color.WHITE)
                 rv.setTextColor(R.id.conversation_summary, Color.parseColor("#B2FFFFFF"))
+                rv.setInt(R.id.widget_item, "setBackgroundColor", Color.parseColor("#202B30"))
             }
             BaseTheme.BLACK -> {
                 rv.setTextColor(R.id.conversation_title, Color.WHITE)
                 rv.setTextColor(R.id.conversation_summary, Color.parseColor("#B2FFFFFF"))
+                rv.setInt(R.id.widget_item, "setBackgroundColor", Color.BLACK)
             }
             else -> {
                 rv.setTextColor(R.id.conversation_title, context.resources.getColor(R.color.primaryText))
                 rv.setTextColor(R.id.conversation_summary, context.resources.getColor(R.color.secondaryText))
+                rv.setInt(R.id.widget_item, "setBackgroundColor", Color.WHITE)
             }
         }
 
