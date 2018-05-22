@@ -133,4 +133,6 @@
 
     <color name="actionModeBackground">#303030</color>
 
+    <color name="navigationBarDivider">#00000000</color>
+
 </resources>

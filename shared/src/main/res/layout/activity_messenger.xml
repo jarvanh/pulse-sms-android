@@ -73,6 +73,13 @@
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/nav_bar_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/navigationBarDivider"
+            android:layout_gravity="bottom"/>
+
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

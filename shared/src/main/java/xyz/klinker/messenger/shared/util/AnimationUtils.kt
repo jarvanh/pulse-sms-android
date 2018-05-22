@@ -172,6 +172,8 @@ object AnimationUtils {
         val fragmentContainer = activity.findViewById<View>(R.id.conversation_list_container)
         val fab = activity.findViewById<View>(R.id.fab) as FloatingActionButton
 
+        activity.findViewById<View?>(R.id.nav_bar_divider)?.visibility = View.GONE
+
         val extraDistance = activity.resources
                 .getDimensionPixelSize(R.dimen.extra_expand_distance)
         val toolbarTranslate = -1 * (toolbar.height + extraDistance)
@@ -204,6 +206,8 @@ object AnimationUtils {
         val toolbar = activity.findViewById<View>(R.id.app_bar_layout)
         val fragmentContainer = activity.findViewById<View>(R.id.conversation_list_container)
         val fab = activity.findViewById<View>(R.id.fab) as FloatingActionButton
+
+        activity.findViewById<View?>(R.id.nav_bar_divider)?.visibility = View.VISIBLE
 
         animateActivityWithConversation(toolbar, fragmentContainer, fab, 0,
                 fragmentContainer.translationY.toInt(), 0, 0,

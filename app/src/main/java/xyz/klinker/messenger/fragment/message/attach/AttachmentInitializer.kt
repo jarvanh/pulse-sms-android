@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
@@ -26,6 +27,7 @@ import xyz.klinker.messenger.fragment.message.send.PermissionHelper
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.TvUtils
 import xyz.klinker.messenger.shared.util.listener.TextSelectedListener
@@ -125,7 +127,12 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
 //                colorButtonsDark = true
 //            }
 //        }
-        attachButtonHolder.setBackgroundColor(fragment.resources.getColor(R.color.drawerBackground))
+        if (Settings.baseTheme == BaseTheme.BLACK) {
+            attachButtonHolder.setBackgroundColor(Color.BLACK)
+        } else {
+            attachButtonHolder.setBackgroundColor(fragment.resources.getColor(R.color.drawerBackground))
+        }
+
         if (!Settings.isCurrentlyDarkTheme) {
             colorButtonsDark = true
         }

@@ -64,10 +64,11 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                     true
                 }
 
-        if (!AndroidVersionUtil.isAndroidO_MR1) {
+        // TODO: Remove all this at some point. We aren't going to use this preference anymore
+//        if (!AndroidVersionUtil.isAndroidO_MR1) {
             val prefCategory = findPreference(getString(R.string.pref_general_category)) as PreferenceCategory
             prefCategory.removePreference(findPreference(getString(R.string.pref_adjustable_nav_bar)))
-        }
+//        }
     }
 
     private fun initFontSize() {
@@ -87,6 +88,10 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                     ApiUtils.updateRounderBubbles(Account.accountId, rounder)
                     true
                 }
+
+        // TODO: Remove all this at some point. We aren't going to use this preference anymore
+        val prefCategory = findPreference(getString(R.string.pref_general_category)) as PreferenceCategory
+        prefCategory.removePreference(findPreference(getString(R.string.pref_rounder_bubbles)))
     }
 
     private fun initUseGlobalTheme() {

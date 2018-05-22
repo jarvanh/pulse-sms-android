@@ -35,6 +35,8 @@ import xyz.klinker.messenger.shared.util.TimeUtils
  */
 object Settings {
 
+    // TODO: remove the rounder message bubbles preference, the material theme preference, and the adjustnavbar preference
+
     // initializers
     var firstStart: Boolean = false
     var installTime: Long = 0
