@@ -91,10 +91,10 @@ class MessageListStylingHelper(context: Context?) {
         } else if (mimeType.contains("image") || mimeType.contains("video")) {
             messageHolder.background = null
         } else {
-            val background = if (Settings.rounderBubbles) {
-                roundBubbleBackground()
-            } else {
-                dialogSquareBackground()
+            val background = when {
+                FeatureFlags.MATERIAL_THEME -> materialThemeStyleBackground()
+                Settings.rounderBubbles -> roundBubbleBackground()
+                else -> dialogSquareBackground()
             }
 
             messageHolder.background = messageHolder.context.resources.getDrawable(background)
@@ -158,6 +158,41 @@ class MessageListStylingHelper(context: Context?) {
             }
         } else {
             R.drawable.message_circle_background
+        }
+    }
+
+    @DrawableRes
+    private fun materialThemeStyleBackground(): Int {
+        val displayNextTimestamp = TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp)
+        val displayLastTimestamp = TimeUtils.shouldDisplayTimestamp(lastTimestamp, currentTimestamp)
+
+        return if (currentType == lastType && currentType == nextType && !displayLastTimestamp && !displayNextTimestamp) {
+            // both corners
+            if (currentType == Message.TYPE_RECEIVED) {
+                R.drawable.message_material_theme_received_group_both_background
+            } else {
+                R.drawable.message_material_theme_sent_group_both_background
+            }
+        } else if (currentType == lastType && currentType != nextType && !displayLastTimestamp || currentType == nextType && currentType == lastType && displayNextTimestamp && !displayLastTimestamp) {
+            // top corner bubble
+            if (currentType == Message.TYPE_RECEIVED) {
+                R.drawable.message_material_theme_received_group_top_background
+            } else {
+                R.drawable.message_material_theme_sent_group_top_background
+            }
+        } else if (currentType == nextType && currentType != lastType && !displayNextTimestamp || currentType == nextType && currentType == lastType && displayLastTimestamp && !displayNextTimestamp) {
+            // bottom corner bubble
+            if (currentType == Message.TYPE_RECEIVED) {
+                R.drawable.message_material_theme_received_group_bottom_background
+            } else {
+                R.drawable.message_material_theme_sent_group_bottom_background
+            }
+        } else {
+            if (currentType == Message.TYPE_RECEIVED) {
+                R.drawable.message_material_theme_received_background
+            } else {
+                R.drawable.message_material_theme_sent_background
+            }
         }
     }
 }

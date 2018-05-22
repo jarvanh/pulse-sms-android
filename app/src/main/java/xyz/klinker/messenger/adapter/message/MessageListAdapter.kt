@@ -84,21 +84,51 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
         val color: Int
 
         val rounder = Settings.rounderBubbles
+        val material = FeatureFlags.MATERIAL_THEME
+
         if (viewType == Message.TYPE_RECEIVED) {
-            layoutId = if (rounder) R.layout.message_received_round else R.layout.message_received
+            layoutId = when {
+                material -> R.layout.message_received_material_theme
+                rounder -> R.layout.message_received_round
+                else -> R.layout.message_received
+            }
             color = receivedColor
         } else {
             color = Integer.MIN_VALUE
-            layoutId = when (viewType) {
-                Message.TYPE_SENDING -> if (rounder) R.layout.message_sending_round else R.layout.message_sending
-                Message.TYPE_ERROR -> if (rounder) R.layout.message_error_round else R.layout.message_error
-                Message.TYPE_DELIVERED -> if (rounder) R.layout.message_delivered_round else R.layout.message_delivered
-                Message.TYPE_IMAGE_SENDING -> if (rounder) R.layout.message_image_sending_round else R.layout.message_image_sending
-                Message.TYPE_IMAGE_SENT -> if (rounder) R.layout.message_image_sent_round else R.layout.message_image_sent
-                Message.TYPE_IMAGE_RECEIVED -> if (rounder) R.layout.message_image_received_round else R.layout.message_image_received
-                Message.TYPE_INFO -> R.layout.message_info
-                Message.TYPE_MEDIA -> R.layout.message_media
-                else -> if (rounder) R.layout.message_sent_round else R.layout.message_sent
+            layoutId = when {
+                material -> when (viewType) {
+                    Message.TYPE_SENDING -> R.layout.message_sending_material_theme
+                    Message.TYPE_ERROR -> R.layout.message_error_material_theme
+                    Message.TYPE_DELIVERED -> R.layout.message_delivered_material_theme
+                    Message.TYPE_IMAGE_SENDING -> R.layout.message_image_sending_material_theme
+                    Message.TYPE_IMAGE_SENT -> R.layout.message_image_sent_material_theme
+                    Message.TYPE_IMAGE_RECEIVED -> R.layout.message_image_received_material_theme
+                    Message.TYPE_INFO -> R.layout.message_info
+                    Message.TYPE_MEDIA -> R.layout.message_media
+                    else -> R.layout.message_sent_material_theme
+                }
+                rounder -> when (viewType) {
+                    Message.TYPE_SENDING -> R.layout.message_sending_round
+                    Message.TYPE_ERROR -> R.layout.message_error_round
+                    Message.TYPE_DELIVERED -> R.layout.message_delivered_round
+                    Message.TYPE_IMAGE_SENDING -> R.layout.message_image_sending_round
+                    Message.TYPE_IMAGE_SENT -> R.layout.message_image_sent_round
+                    Message.TYPE_IMAGE_RECEIVED -> R.layout.message_image_received_round
+                    Message.TYPE_INFO -> R.layout.message_info
+                    Message.TYPE_MEDIA -> R.layout.message_media
+                    else -> R.layout.message_sent_round
+                }
+                else -> when (viewType) {
+                    Message.TYPE_SENDING -> R.layout.message_sending
+                    Message.TYPE_ERROR -> R.layout.message_error
+                    Message.TYPE_DELIVERED -> R.layout.message_delivered
+                    Message.TYPE_IMAGE_SENDING -> R.layout.message_image_sending
+                    Message.TYPE_IMAGE_SENT -> R.layout.message_image_sent
+                    Message.TYPE_IMAGE_RECEIVED -> R.layout.message_image_received
+                    Message.TYPE_INFO -> R.layout.message_info
+                    Message.TYPE_MEDIA -> R.layout.message_media
+                    else -> R.layout.message_sent
+                }
             }
         }
 
