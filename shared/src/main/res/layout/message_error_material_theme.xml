@@ -33,7 +33,6 @@
         android:background="@drawable/message_material_theme_sent_background"
         android:backgroundTint="@color/materialRed"
         android:clickable="true"
-        android:elevation="2dp"
         android:maxWidth="@dimen/max_message_width"
         android:orientation="vertical"
         android:paddingEnd="20dp"
