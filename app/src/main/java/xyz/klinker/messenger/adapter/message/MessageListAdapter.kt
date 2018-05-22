@@ -84,7 +84,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
         val color: Int
 
         val rounder = Settings.rounderBubbles
-        val material = FeatureFlags.MATERIAL_THEME
+        val material = Settings.materialTheme
 
         if (viewType == Message.TYPE_RECEIVED) {
             layoutId = when {

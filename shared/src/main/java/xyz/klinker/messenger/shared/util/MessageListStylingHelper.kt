@@ -92,7 +92,7 @@ class MessageListStylingHelper(context: Context?) {
             messageHolder.background = null
         } else {
             val background = when {
-                FeatureFlags.MATERIAL_THEME -> materialThemeStyleBackground()
+                Settings.materialTheme -> materialThemeStyleBackground()
                 Settings.rounderBubbles -> roundBubbleBackground()
                 else -> dialogSquareBackground()
             }

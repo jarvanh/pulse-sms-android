@@ -55,6 +55,7 @@ object Settings {
     var wakeScreen: Boolean = false
     var headsUp: Boolean = false
     var rounderBubbles: Boolean = false
+    var materialTheme: Boolean = true
     var legacySwipeDelete: Boolean = false
     var leftToRightSwipe: SwipeOption = SwipeOption.ARCHIVE
     var rightToLeftSwipe: SwipeOption = SwipeOption.ARCHIVE

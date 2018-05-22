@@ -97,7 +97,6 @@ object FeatureFlags {
 
     // disabled for future features
     var CONVO_SNIPPETS_REVAMP: Boolean = false
-    var MATERIAL_THEME: Boolean = false
 
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
@@ -108,7 +107,6 @@ object FeatureFlags {
 
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
         CONVO_SNIPPETS_REVAMP = getValue(context, sharedPrefs, FLAG_CONVO_SNIPPETS_REVAMP)
-        MATERIAL_THEME = getValue(context, sharedPrefs, FLAG_MATERIAL_THEME)
         QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
         DISABLE_HARDWARE_ACCEL = getValue(context, sharedPrefs, FLAG_DISABLE_HARDWARE_ACCEL)
     }
@@ -121,7 +119,6 @@ object FeatureFlags {
         when (identifier) {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
             FLAG_CONVO_SNIPPETS_REVAMP -> CONVO_SNIPPETS_REVAMP = flag
-            FLAG_MATERIAL_THEME -> MATERIAL_THEME = flag
             FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
             FLAG_DISABLE_HARDWARE_ACCEL -> DISABLE_HARDWARE_ACCEL = flag
         }
