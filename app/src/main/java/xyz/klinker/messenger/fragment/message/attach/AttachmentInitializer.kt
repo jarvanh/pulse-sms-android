@@ -114,16 +114,20 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         applyTemplate.setOnClickListener { applyTemplate() }
 
         var colorButtonsDark = false
-        if (Settings.useGlobalThemeColor) {
-            attachButtonHolder.setBackgroundColor(Settings.mainColorSet.color)
-            if (!ColorUtils.isColorDark(Settings.mainColorSet.color)) {
-                colorButtonsDark = true
-            }
-        } else {
-            attachButtonHolder.setBackgroundColor(fragment.argManager.color)
-            if (!ColorUtils.isColorDark(fragment.argManager.color)) {
-                colorButtonsDark = true
-            }
+//        if (Settings.useGlobalThemeColor) {
+//            attachButtonHolder.setBackgroundColor(Settings.mainColorSet.color)
+//            if (!ColorUtils.isColorDark(Settings.mainColorSet.color)) {
+//                colorButtonsDark = true
+//            }
+//        } else {
+//            attachButtonHolder.setBackgroundColor(fragment.argManager.color)
+//            if (!ColorUtils.isColorDark(fragment.argManager.color)) {
+//                colorButtonsDark = true
+//            }
+//        }
+        attachButtonHolder.setBackgroundColor(fragment.resources.getColor(R.color.drawerBackground))
+        if (!Settings.isCurrentlyDarkTheme) {
+            colorButtonsDark = true
         }
 
         if (colorButtonsDark) {

@@ -18,14 +18,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/drawerBackground" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/background">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar_layout"
@@ -56,6 +58,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/message_list_padding"
                 android:layout_marginStart="@dimen/message_list_padding"
+                android:paddingBottom="12dp"
+                android:clipToPadding="false"
                 android:alpha="0"
                 android:scrollbars="none"
                 tools:ignore="NestedWeights" />
@@ -66,6 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
+                android:layout_marginEnd="-6dp"
                 app:fastscroll__bubbleTextAppearance="@style/StyledFastScrollerTextAppearance"/>
 
         </RelativeLayout>
@@ -165,103 +170,122 @@
 
         </FrameLayout>
 
-        <ProgressBar
-            android:id="@+id/send_progress"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:indeterminate="true"
-            android:visibility="invisible" />
-
-        <LinearLayout
-            android:id="@+id/send_bar"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/message_list_padding"
-            android:layout_marginStart="@dimen/message_list_padding"
-            android:alpha="0"
-            android:clipToPadding="false"
-            android:gravity="center_vertical|start"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:translationY="-32dp">
+            android:layout_marginBottom="-24dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="24dp"
+            app:cardBackgroundColor="@color/drawerBackground" >
 
-            <ImageButton
-                android:id="@+id/select_sim"
-                android:layout_width="32dp"
-                android:layout_height="48dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:contentDescription="@string/select_sim"
-                android:src="@drawable/ic_sim"
-                android:tint="@color/secondaryText"
-                android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="24dp">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="8dp">
+                <ProgressBar
+                    android:id="@+id/send_progress"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:indeterminate="true"
+                    android:visibility="invisible" />
 
-                <ImageButton
-                    android:id="@+id/attach"
-                    android:layout_width="32dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center_vertical|start"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:contentDescription="@string/attach"
-                    android:src="@drawable/ic_attach"
-                    android:tint="@color/secondaryText" />
-
-                <TextView
-                    android:id="@+id/text_counter"
+                <LinearLayout
+                    android:id="@+id/send_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="2dp"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/secondaryText"
-                    android:textSize="12sp" />
+                    android:layout_marginEnd="@dimen/message_list_padding"
+                    android:layout_marginStart="@dimen/message_list_padding"
+                    android:alpha="0"
+                    android:clipToPadding="false"
+                    android:gravity="center_vertical|start"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:translationY="-32dp">
 
-            </FrameLayout>
+                    <ImageButton
+                        android:id="@+id/select_sim"
+                        android:layout_width="32dp"
+                        android:layout_height="48dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:contentDescription="@string/select_sim"
+                        android:src="@drawable/ic_sim"
+                        android:tint="@color/secondaryText"
+                        android:visibility="gone" />
 
-            <xyz.klinker.messenger.view.ImageKeyboardEditText
-                android:id="@+id/message_entry"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/message_sent"
-                android:backgroundTint="@color/drawerBackground"
-                android:hint="@string/type_message_to"
-                android:imeOptions="actionSend|flagNoExtractUi"
-                android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
-                android:maxLines="@integer/message_list_fragment_line_entry_count"
-                android:minHeight="40dp"
-                android:padding="8dp"
-                android:paddingEnd="18dp"
-                android:paddingStart="8dp"
-                android:scrollHorizontally="false"
-                android:textSize="16sp" />
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp">
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/send"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:contentDescription="@string/send_message"
-                android:src="@drawable/ic_send"
-                app:elevation="0dp"
-                app:fabSize="mini"
-                app:rippleColor="@android:color/white" />
+                        <ImageButton
+                            android:id="@+id/attach"
+                            android:layout_width="32dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center_vertical|start"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:clickable="true"
+                            android:contentDescription="@string/attach"
+                            android:src="@drawable/ic_attach"
+                            android:tint="@color/secondaryText" />
 
-        </LinearLayout>
+                        <TextView
+                            android:id="@+id/text_counter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:layout_marginBottom="2dp"
+                            android:gravity="center_horizontal"
+                            android:textColor="@color/secondaryText"
+                            android:textSize="12sp" />
 
-        <ViewStub
-            android:id="@+id/attach_stub"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/attach_menu_height"
-            android:layout="@layout/view_attach_menu" />
+                    </FrameLayout>
+
+                    <xyz.klinker.messenger.view.ImageKeyboardEditText
+                        android:id="@+id/message_entry"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:backgroundTint="@color/drawerBackground"
+                        android:hint="@string/type_message_to"
+                        android:imeOptions="actionSend|flagNoExtractUi"
+                        android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+                        android:maxLines="@integer/message_list_fragment_line_entry_count"
+                        android:minHeight="40dp"
+                        android:padding="8dp"
+                        android:paddingEnd="18dp"
+                        android:paddingStart="8dp"
+                        android:scrollHorizontally="false"
+                        android:textSize="16sp" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/send"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/send_message"
+                        android:src="@drawable/ic_send"
+                        app:elevation="0dp"
+                        app:fabSize="mini"
+                        app:rippleColor="@android:color/white" />
+
+                </LinearLayout>
+
+                <ViewStub
+                    android:id="@+id/attach_stub"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/attach_menu_height"
+                    android:layout="@layout/view_attach_menu" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
+
 </xyz.klinker.messenger.view.ElasticDragDismissFrameLayout>
