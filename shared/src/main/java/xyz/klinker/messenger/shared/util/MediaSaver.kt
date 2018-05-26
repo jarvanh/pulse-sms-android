@@ -20,13 +20,13 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.text.SimpleDateFormat
-import java.util.Date
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.model.Message
+import java.util.*
 
 class MediaSaver {
 
@@ -62,7 +62,10 @@ class MediaSaver {
     private fun saveMessage(message: Message?) {
         val directory = MmsSettings.saveDirectory
         val extension = MimeType.getExtension(message!!.mimeType!!)
-        val fileName = "media-" + TimeUtils.now
+        val date = (SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(message.timestamp) + ", " +
+                TimeUtils.formatTime(context!!, Date(message.timestamp)))
+                .replace(" ", "_").replace(",", "").replace(":", "_")
+        val fileName = "media-${TimeUtils.now}-$date"
 
         val directoryFile = File(directory)
         if (!directoryFile.exists()) {
