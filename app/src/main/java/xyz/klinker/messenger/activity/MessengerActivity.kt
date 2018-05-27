@@ -207,7 +207,7 @@ class MessengerActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
 
-        if (actionBar != null) {
+        if (actionBar != null && !resources.getBoolean(R.bool.is_tablet)) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu)
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
