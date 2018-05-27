@@ -74,7 +74,7 @@ dependencies {
     implementation "com.android.support:exifinterface:$ANDROID_SUPPORT_VERSION"
 
     implementation "com.google.firebase:firebase-core:$FIREBASE_CORE"
-    implementation "com.google.firebase:firebase-storage:$FIREBASE_CORE"
+    implementation "com.google.firebase:firebase-storage:$FIREBASE_STORAGE"
     implementation "com.google.firebase:firebase-auth:$FIREBASE_AUTH"
     api "com.google.firebase:firebase-messaging:$FIREBASE_MESSAGING"
 
