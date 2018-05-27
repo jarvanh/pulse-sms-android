@@ -12,6 +12,7 @@ import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
+import xyz.klinker.messenger.shared.data.pojo.BubbleTheme
 
 class MessageListStylingHelper(context: Context?) {
 
@@ -91,10 +92,10 @@ class MessageListStylingHelper(context: Context?) {
         } else if (mimeType.contains("image") || mimeType.contains("video")) {
             messageHolder.background = null
         } else {
-            val background = when {
-                Settings.materialTheme -> materialThemeStyleBackground()
-                Settings.rounderBubbles -> roundBubbleBackground()
-                else -> dialogSquareBackground()
+            val background = when (Settings.bubbleTheme) {
+                BubbleTheme.MATERIAL -> materialThemeStyleBackground()
+                BubbleTheme.ROUND -> roundBubbleBackground()
+                BubbleTheme.CLASSIC -> dialogSquareBackground()
             }
 
             messageHolder.background = messageHolder.context.resources.getDrawable(background)

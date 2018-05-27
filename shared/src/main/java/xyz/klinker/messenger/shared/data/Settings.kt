@@ -56,8 +56,7 @@ object Settings {
     var quickCompose: Boolean = false
     var wakeScreen: Boolean = false
     var headsUp: Boolean = false
-    var rounderBubbles: Boolean = false
-    var materialTheme: Boolean = true
+    var bubbleTheme: BubbleTheme = BubbleTheme.MATERIAL
     var legacySwipeDelete: Boolean = false
     var leftToRightSwipe: SwipeOption = SwipeOption.ARCHIVE
     var rightToLeftSwipe: SwipeOption = SwipeOption.ARCHIVE
@@ -135,7 +134,6 @@ object Settings {
         this.signature = sharedPrefs.getString(context.getString(R.string.pref_signature), "")
         this.wakeScreen = sharedPrefs.getString(context.getString(R.string.pref_wake_screen), "off") == "on"
         this.headsUp = sharedPrefs.getString(context.getString(R.string.pref_heads_up), "on") == "on"
-        this.rounderBubbles = sharedPrefs.getBoolean(context.getString(R.string.pref_rounder_bubbles), false)
         this.legacySwipeDelete = sharedPrefs.getBoolean(context.getString(R.string.pref_swipe_delete), false)
         this.stripUnicode = sharedPrefs.getBoolean(context.getString(R.string.pref_strip_unicode), false)
         this.historyInNotifications = sharedPrefs.getBoolean(context.getString(R.string.pref_history_in_notifications), true)

@@ -20,6 +20,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.WearableMessageViewHolder
 import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.Message
+import xyz.klinker.messenger.shared.data.pojo.BubbleTheme
 import xyz.klinker.messenger.shared.util.*
 
 class WearableMessageListAdapter(context: Context, private val manager: LinearLayoutManager,
@@ -40,19 +41,49 @@ class WearableMessageListAdapter(context: Context, private val manager: LinearLa
         val layoutId: Int
         val color: Int
 
-        val rounder = Settings.rounderBubbles
         if (viewType == Message.TYPE_RECEIVED) {
+            layoutId = when (Settings.bubbleTheme) {
+                BubbleTheme.MATERIAL -> R.layout.message_received_material_theme
+                BubbleTheme.ROUND -> R.layout.message_received_round
+                BubbleTheme.CLASSIC -> R.layout.message_received
+            }
             color = receivedColor
-            layoutId = if (rounder) R.layout.message_received_round else R.layout.message_received
         } else {
             color = -1
-            layoutId = when(viewType) {
-                Message.TYPE_SENDING -> if (rounder) R.layout.message_sending_round else R.layout.message_sending
-                Message.TYPE_ERROR -> if (rounder) R.layout.message_error_round else R.layout.message_error
-                Message.TYPE_DELIVERED -> if (rounder) R.layout.message_delivered_round else R.layout.message_delivered
-                Message.TYPE_INFO -> R.layout.message_info
-                Message.TYPE_MEDIA -> R.layout.message_media
-                else -> if (rounder) R.layout.message_sent_round else R.layout.message_sent
+            layoutId = when (Settings.bubbleTheme) {
+                BubbleTheme.MATERIAL -> when (viewType) {
+                    Message.TYPE_SENDING -> R.layout.message_sending_material_theme
+                    Message.TYPE_ERROR -> R.layout.message_error_material_theme
+                    Message.TYPE_DELIVERED -> R.layout.message_delivered_material_theme
+                    Message.TYPE_IMAGE_SENDING -> R.layout.message_image_sending_material_theme
+                    Message.TYPE_IMAGE_SENT -> R.layout.message_image_sent_material_theme
+                    Message.TYPE_IMAGE_RECEIVED -> R.layout.message_image_received_material_theme
+                    Message.TYPE_INFO -> R.layout.message_info
+                    Message.TYPE_MEDIA -> R.layout.message_media
+                    else -> R.layout.message_sent_material_theme
+                }
+                BubbleTheme.ROUND -> when (viewType) {
+                    Message.TYPE_SENDING -> R.layout.message_sending_round
+                    Message.TYPE_ERROR -> R.layout.message_error_round
+                    Message.TYPE_DELIVERED -> R.layout.message_delivered_round
+                    Message.TYPE_IMAGE_SENDING -> R.layout.message_image_sending_round
+                    Message.TYPE_IMAGE_SENT -> R.layout.message_image_sent_round
+                    Message.TYPE_IMAGE_RECEIVED -> R.layout.message_image_received_round
+                    Message.TYPE_INFO -> R.layout.message_info
+                    Message.TYPE_MEDIA -> R.layout.message_media
+                    else -> R.layout.message_sent_round
+                }
+                BubbleTheme.CLASSIC -> when (viewType) {
+                    Message.TYPE_SENDING -> R.layout.message_sending
+                    Message.TYPE_ERROR -> R.layout.message_error
+                    Message.TYPE_DELIVERED -> R.layout.message_delivered
+                    Message.TYPE_IMAGE_SENDING -> R.layout.message_image_sending
+                    Message.TYPE_IMAGE_SENT -> R.layout.message_image_sent
+                    Message.TYPE_IMAGE_RECEIVED -> R.layout.message_image_received
+                    Message.TYPE_INFO -> R.layout.message_info
+                    Message.TYPE_MEDIA -> R.layout.message_media
+                    else -> R.layout.message_sent
+                }
             }
         }
 

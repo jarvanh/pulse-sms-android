@@ -63,10 +63,6 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             messageEntry.setHint(R.string.type_message)
         }
 
-        if (Settings.rounderBubbles) {
-            messageEntry.background = activity?.resources?.getDrawable(R.drawable.message_circle)
-        }
-
         if (Settings.baseTheme == BaseTheme.BLACK) {
             replyBarCard.setCardBackgroundColor(Color.BLACK)
             background.setBackgroundColor(Color.BLACK)
