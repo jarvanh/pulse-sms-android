@@ -55,11 +55,11 @@ class SearchListItemBinder(private val listener: SearchListener) {
             holder.timestamp.visibility = View.VISIBLE
         }
 
-
         holder.messageHolder?.setOnClickListener { listener.onSearchSelected(message) }
         holder.message?.setOnClickListener { listener.onSearchSelected(message) }
 
-        val topMargin = DensityUtil.toDp(holder.itemView.context, 3)
+        // I don't know what this was for. I removed it when I changed to the material theme bubbles...
+        val topMargin = DensityUtil.toDp(holder.itemView.context, 1)
         (holder.message!!.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = 0
         (holder.message!!.layoutParams as ViewGroup.MarginLayoutParams).topMargin = -1 * topMargin
         (holder.image!!.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = 0
