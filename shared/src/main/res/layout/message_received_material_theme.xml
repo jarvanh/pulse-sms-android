@@ -22,8 +22,8 @@
     android:background="@drawable/focusable_background"
     android:focusable="true"
     android:orientation="vertical"
-    android:paddingEnd="16dp"
-    android:paddingStart="16dp">
+    android:paddingEnd="8dp"
+    android:paddingStart="8dp">
 
     <LinearLayout
         android:id="@+id/message_holder"
