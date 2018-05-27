@@ -170,7 +170,6 @@ object MimeType {
 
     fun getTextDescription(context: Context, mimeType: String?): String {
         return when {
-            !FeatureFlags.CONVO_SNIPPETS_REVAMP -> ""
             mimeType == null -> ""
             MimeType.isAudio(mimeType) -> context.getString(R.string.audio_message)
             MimeType.isVideo(mimeType) -> context.getString(R.string.video_message)

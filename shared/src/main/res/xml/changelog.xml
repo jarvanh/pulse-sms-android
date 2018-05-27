@@ -16,12 +16,15 @@
 
 <changelog>
 
-    <!--<version-->
-        <!--name="3.1.0"-->
-        <!--description="May, 2018">-->
-        <!--<text>Display previews of in-progress drafts, as they are edited, on the conversation list (TODO: Remove the feature flag)</text>-->
-        <!--<text>Provide media type previews as the snippet on the conversation list, instead of an empty box (TODO: Remove the feature flag)</text>-->
-    <!--</version>-->
+    <version
+        name="3.1.0"
+        description="May 29th, 2018">
+        <text>UI improvements</text>
+        <text>Display previews of in-progress drafts, as they are edited, on the conversation list (TODO: Remove the feature flag)</text>
+        <text>Provide media type previews as the snippet on the conversation list, instead of an empty box (TODO: Remove the feature flag)</text>
+        <text>Removed the rounded bubbles preference, in favor of the new bubble style (which is much more rounded already)</text>
+        <text>Removed the adjustable nav bar preference that was available in Android 8.0+. I am using this by default.</text>
+    </version>
 
     <version
         name="3.0.2"
