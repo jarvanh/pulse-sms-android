@@ -35,8 +35,6 @@ import xyz.klinker.messenger.shared.util.TimeUtils
  */
 object Settings {
 
-    // TODO: remove the rounder message bubbles preference, the material theme preference, and the adjustnavbar preference
-
     // initializers
     var firstStart: Boolean = false
     var installTime: Long = 0
@@ -72,7 +70,6 @@ object Settings {
     var themeColorString: String? = null
     var baseThemeString: String? = null
     var signature: String? = null
-    var adjustableNavBar: Boolean = false
     var drivingMode: Boolean = false
     var vacationMode: Boolean = false
 
@@ -138,7 +135,6 @@ object Settings {
         this.stripUnicode = sharedPrefs.getBoolean(context.getString(R.string.pref_strip_unicode), false)
         this.historyInNotifications = sharedPrefs.getBoolean(context.getString(R.string.pref_history_in_notifications), true)
         this.internalBrowser = sharedPrefs.getBoolean(context.getString(R.string.pref_internal_browser), true)
-        this.adjustableNavBar = sharedPrefs.getBoolean(context.getString(R.string.pref_adjustable_nav_bar), false)
         this.drivingMode = sharedPrefs.getBoolean(context.getString(R.string.pref_driving_mode), false)
         this.vacationMode = sharedPrefs.getBoolean(context.getString(R.string.pref_vacation_mode), false)
 

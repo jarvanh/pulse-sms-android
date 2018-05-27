@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
+import xyz.klinker.messenger.shared.data.pojo.BubbleTheme
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.DensityUtil
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -58,8 +60,12 @@ class SearchListItemBinder(private val listener: SearchListener) {
         holder.messageHolder?.setOnClickListener { listener.onSearchSelected(message) }
         holder.message?.setOnClickListener { listener.onSearchSelected(message) }
 
-        // I don't know what this was for. I removed it when I changed to the material theme bubbles...
-        val topMargin = DensityUtil.toDp(holder.itemView.context, 1)
+        val topMargin = DensityUtil.toDp(holder.itemView.context, when (Settings.bubbleTheme) {
+            BubbleTheme.MATERIAL -> 1
+            BubbleTheme.CLASSIC -> 3
+            BubbleTheme.ROUND -> 3
+        })
+
         (holder.message!!.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = 0
         (holder.message!!.layoutParams as ViewGroup.MarginLayoutParams).topMargin = -1 * topMargin
         (holder.image!!.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = 0
