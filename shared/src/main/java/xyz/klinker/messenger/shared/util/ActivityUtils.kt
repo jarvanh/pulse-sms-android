@@ -79,20 +79,24 @@ object ActivityUtils {
     }
 
     fun setUpNavigationBarColor(activity: Activity?, color: Int) {
-        if (!AndroidVersionUtil.isAndroidO || activity == null || !Settings.adjustableNavBar) {
-            if (AndroidVersionUtil.isAndroidO_MR1) {
-                activateLightNavigationBar(activity, false)
-            }
-
+//        if (!AndroidVersionUtil.isAndroidO || activity == null || !Settings.adjustableNavBar) {
+        if (!AndroidVersionUtil.isAndroidO_MR1 || activity == null) {
             return
         }
 
-        if (color == Color.WHITE) {
-            activity.window?.navigationBarColor = Color.WHITE
-            activateLightNavigationBar(activity, true)
-        } else {
-            activity.window?.navigationBarColor = Color.BLACK
-            activateLightNavigationBar(activity, false)
+        when (color) {
+            Color.WHITE -> {
+                activity.window?.navigationBarColor = Color.WHITE
+                activateLightNavigationBar(activity, true)
+            }
+            Color.BLACK -> {
+                activity.window?.navigationBarColor = Color.BLACK
+                activateLightNavigationBar(activity, false)
+            }
+            else -> {
+                activity.window?.navigationBarColor = activity.resources.getColor(R.color.drawerBackground)
+                activateLightNavigationBar(activity, false)
+            }
         }
     }
 

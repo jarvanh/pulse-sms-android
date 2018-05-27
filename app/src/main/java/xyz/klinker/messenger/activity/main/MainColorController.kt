@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -19,6 +20,7 @@ class MainColorController(private val activity: AppCompatActivity) {
     private val toolbar: Toolbar by lazy { activity.findViewById<View>(R.id.toolbar) as Toolbar }
     private val fab: FloatingActionButton by lazy { activity.findViewById<View>(R.id.fab) as FloatingActionButton }
     private val navigationView: NavigationView by lazy { activity.findViewById<View>(R.id.navigation_view) as NavigationView }
+    private val conversationListContainer: View by lazy { activity.findViewById<View>(R.id.conversation_list_container) }
 
     fun colorActivity() {
         ColorUtils.checkBlackBackground(activity)
@@ -40,8 +42,8 @@ class MainColorController(private val activity: AppCompatActivity) {
         val states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
 
         val baseColor = if (activity.resources.getBoolean(R.bool.is_night)) "FFFFFF" else "000000"
-        val iconColors = intArrayOf(Color.parseColor("#77" + baseColor), Settings.mainColorSet.colorAccent)
-        val textColors = intArrayOf(Color.parseColor("#DD" + baseColor), Settings.mainColorSet.colorAccent)
+        val iconColors = intArrayOf(Color.parseColor("#77$baseColor"), Settings.mainColorSet.colorAccent)
+        val textColors = intArrayOf(Color.parseColor("#DD$baseColor"), Settings.mainColorSet.colorAccent)
 
         navigationView.itemIconTintList = ColorStateList(states, iconColors)
         navigationView.itemTextColor = ColorStateList(states, textColors)
@@ -51,13 +53,17 @@ class MainColorController(private val activity: AppCompatActivity) {
             val header = navigationView.findViewById<View>(R.id.header)
             header?.setBackgroundColor(Settings.mainColorSet.colorDark)
         })
+
+        if (Settings.baseTheme == BaseTheme.BLACK) {
+            conversationListContainer.setBackgroundColor(Color.BLACK)
+        }
     }
 
     fun configureNavigationBarColor() {
-        if (Settings.isCurrentlyDarkTheme) {
-            ActivityUtils.setUpNavigationBarColor(activity, Color.BLACK)
-        } else {
-            ActivityUtils.setUpNavigationBarColor(activity, Color.WHITE)
+        when {
+            Settings.baseTheme == BaseTheme.BLACK -> ActivityUtils.setUpNavigationBarColor(activity, Color.BLACK)
+            Settings.isCurrentlyDarkTheme -> ActivityUtils.setUpNavigationBarColor(activity, -1223) // random. the activity utils will handle the dark color
+            else -> ActivityUtils.setUpNavigationBarColor(activity, Color.WHITE)
         }
     }
 }

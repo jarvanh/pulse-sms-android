@@ -12,6 +12,8 @@ import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
 import android.support.v4.app.FragmentActivity
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.widget.CardView
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
@@ -37,6 +39,8 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
     private val send: FloatingActionButton by lazy { fragment.rootView!!.findViewById<View>(R.id.send) as FloatingActionButton }
     private val toolbar: Toolbar by lazy { fragment.rootView!!.findViewById<View>(R.id.toolbar) as Toolbar }
     private val appBarLayout: View by lazy { fragment.rootView!!.findViewById<View>(R.id.app_bar_layout) }
+    private val replyBarCard: CardView by lazy { fragment.rootView!!.findViewById<CardView>(R.id.reply_bar_card) }
+    private val background: View by lazy { fragment.rootView!!.findViewById<View>(R.id.background) }
 
     fun init(bundle: Bundle?) {
         initToolbar()
@@ -59,8 +63,9 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             messageEntry.setHint(R.string.type_message)
         }
 
-        if (Settings.rounderBubbles) {
-            messageEntry.background = activity?.resources?.getDrawable(R.drawable.message_circle)
+        if (Settings.baseTheme == BaseTheme.BLACK) {
+            replyBarCard.setCardBackgroundColor(Color.BLACK)
+            background.setBackgroundColor(Color.BLACK)
         }
 
         if (Settings.useGlobalThemeColor) {

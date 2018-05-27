@@ -15,61 +15,61 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="6dp"
     android:layout_marginBottom="6dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:gravity="end"
+    android:layout_marginTop="6dp"
+    android:background="@drawable/focusable_background"
     android:focusable="true"
-    android:background="@drawable/focusable_background">
+    android:gravity="end"
+    android:orientation="vertical"
+    android:paddingEnd="8dp"
+    android:paddingStart="8dp">
 
     <LinearLayout
+        android:id="@+id/message_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@drawable/message_material_theme_sent_background"
         android:backgroundTint="@color/drawerBackground"
+        android:clickable="true"
         android:maxWidth="@dimen/max_message_width"
         android:minWidth="@dimen/min_mms_picture_width"
-        android:paddingStart="8dp"
+        android:orientation="vertical"
         android:paddingEnd="20dp"
-        android:clickable="true"
-        android:id="@+id/message_holder">
+        android:paddingStart="8dp">
 
         <ImageView
+            android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxHeight="@dimen/max_message_width"
-            android:scaleType="centerInside"
-            android:id="@+id/image"
-            android:transitionName="image"
             android:layout_marginBottom="6dp"
             android:layout_marginStart="2dp"
-            android:contentDescription="@string/mms_image" />
+            android:contentDescription="@string/mms_image"
+            android:maxHeight="@dimen/max_message_width"
+            android:scaleType="centerInside"
+            android:transitionName="image" />
 
         <xyz.klinker.messenger.shared.view.emoji.EmojiableTextView
+            android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="@dimen/max_message_width"
-            android:textSize="16sp"
-            android:textColor="@color/primaryText"
-            android:padding="8dp"
             android:layout_marginTop="-2dp"
-            android:id="@+id/message" />
+            android:maxWidth="@dimen/max_message_width"
+            android:padding="8dp"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/timestamp"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/timestamp_height"
-        android:textSize="12sp"
-        android:textColor="@color/secondaryText"
-        android:id="@+id/timestamp"
+        android:layout_marginBottom="2dp"
         android:layout_marginEnd="32dp"
         android:layout_marginTop="-2dp"
-        android:layout_marginBottom="2dp" />
+        android:textColor="@color/secondaryText"
+        android:textSize="12sp" />
 
 </LinearLayout>

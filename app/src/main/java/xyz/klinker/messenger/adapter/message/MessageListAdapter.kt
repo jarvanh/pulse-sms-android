@@ -36,6 +36,7 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.data.model.Message
+import xyz.klinker.messenger.shared.data.pojo.BubbleTheme
 import xyz.klinker.messenger.shared.util.DensityUtil
 import xyz.klinker.messenger.shared.util.MessageListStylingHelper
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -83,20 +84,17 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
         val layoutId: Int
         val color: Int
 
-        val rounder = Settings.rounderBubbles
-        val material = FeatureFlags.MATERIAL_THEME
-
         if (viewType == Message.TYPE_RECEIVED) {
-            layoutId = when {
-                material -> R.layout.message_received_material_theme
-                rounder -> R.layout.message_received_round
-                else -> R.layout.message_received
+            layoutId = when (Settings.bubbleTheme) {
+                BubbleTheme.MATERIAL -> R.layout.message_received_material_theme
+                BubbleTheme.ROUND -> R.layout.message_received_round
+                BubbleTheme.CLASSIC -> R.layout.message_received
             }
             color = receivedColor
         } else {
             color = Integer.MIN_VALUE
-            layoutId = when {
-                material -> when (viewType) {
+            layoutId = when (Settings.bubbleTheme) {
+                BubbleTheme.MATERIAL -> when (viewType) {
                     Message.TYPE_SENDING -> R.layout.message_sending_material_theme
                     Message.TYPE_ERROR -> R.layout.message_error_material_theme
                     Message.TYPE_DELIVERED -> R.layout.message_delivered_material_theme
@@ -107,7 +105,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
                     Message.TYPE_MEDIA -> R.layout.message_media
                     else -> R.layout.message_sent_material_theme
                 }
-                rounder -> when (viewType) {
+                BubbleTheme.ROUND -> when (viewType) {
                     Message.TYPE_SENDING -> R.layout.message_sending_round
                     Message.TYPE_ERROR -> R.layout.message_error_round
                     Message.TYPE_DELIVERED -> R.layout.message_delivered_round
@@ -118,7 +116,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
                     Message.TYPE_MEDIA -> R.layout.message_media
                     else -> R.layout.message_sent_round
                 }
-                else -> when (viewType) {
+                BubbleTheme.CLASSIC -> when (viewType) {
                     Message.TYPE_SENDING -> R.layout.message_sending
                     Message.TYPE_ERROR -> R.layout.message_error
                     Message.TYPE_DELIVERED -> R.layout.message_delivered
