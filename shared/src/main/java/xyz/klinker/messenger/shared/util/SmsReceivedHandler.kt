@@ -8,16 +8,12 @@ import android.provider.Telephony
 import android.telephony.SmsMessage
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.exception.SmsSaveException
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.SmsReceivedReceiver
-import xyz.klinker.messenger.shared.service.NewMessagesCheckService
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.service.notification.Notifier
 
 class SmsReceivedHandler(private val context: Context) {

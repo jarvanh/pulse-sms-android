@@ -1,7 +1,5 @@
 In this release:<br/>
-- Support for creating and accessing folders to help organize conversations<br/>
-- Copy one time password codes, from the notification<br/>
-- Customize the swipe actions on the conversation list or disable them completely<br/>
-- View only unread conversations, from the navigation drawer<br/>
-- Mark conversations as unread from the long click, multi-select, menu<br/>
-+ Bug fixes and performance improvements
+- UI improvements<br/>
+- Display previews of drafts on the conversation list<br/>
+- Provide media type previews as the snippet on the conversation list, instead of an empty box<br/>
++ Bug fixes, performance improvements, and tweaks

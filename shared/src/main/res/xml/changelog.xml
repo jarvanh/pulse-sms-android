@@ -24,11 +24,6 @@
         <text>Provide media type previews as the snippet on the conversation list, instead of an empty box (TODO: Remove the feature flag)</text>
         <text>Removed the rounded bubbles preference, in favor of the new bubble style (which is much more rounded already)</text>
         <text>Removed the adjustable nav bar preference that was available in Android 8.0+. I am using this by default.</text>
-    </version>
-
-    <version
-        name="3.0.2"
-        description="May 27th, 2018">
         <text>Improvements to creating scheduled messages</text>
         <text>Bug fixes</text>
     </version>
