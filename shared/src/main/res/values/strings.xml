@@ -360,7 +360,7 @@
     <string name="keyboard_enter_key">Enter Key</string>
     <string name="sound_effects">Sound Effects</string>
     <string name="delivery_reports">Delivery Reports</string>
-    <string name="delivery_reports_summary">Most carriers do not support this option</string>
+    <string name="delivery_reports_summary">Most carriers do not support this option. It is not RCS</string>
     <string name="theme_settings">Customization</string>
     <string name="theme_settings_category">Look and Feel</string>
     <string name="conversation_list_category">Conversation List</string>
