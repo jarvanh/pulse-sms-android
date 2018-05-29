@@ -177,7 +177,7 @@
             android:layout_marginBottom="-24dp"
             app:cardElevation="5dp"
             app:cardCornerRadius="24dp"
-            app:cardBackgroundColor="@color/drawerBackground" >
+            app:cardBackgroundColor="@color/replyBarCard" >
 
             <LinearLayout
                 android:layout_width="match_parent"
