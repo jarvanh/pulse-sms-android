@@ -57,8 +57,8 @@
             android:layout_height="wrap_content"
             android:maxWidth="@dimen/max_message_width"
             android:padding="6dp"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="3dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
             android:textColor="@color/primaryText"
             android:textSize="16sp"
             android:gravity="center_vertical" />
