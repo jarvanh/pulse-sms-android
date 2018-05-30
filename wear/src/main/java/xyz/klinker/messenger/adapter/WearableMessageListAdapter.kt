@@ -43,15 +43,15 @@ class WearableMessageListAdapter(context: Context, private val manager: LinearLa
 
         if (viewType == Message.TYPE_RECEIVED) {
             layoutId = when (Settings.bubbleTheme) {
-                BubbleTheme.MATERIAL -> R.layout.message_received_material_theme
-                BubbleTheme.ROUND -> R.layout.message_received_round
-                BubbleTheme.CLASSIC -> R.layout.message_received
+                BubbleTheme.ROUNDED -> R.layout.message_received_material_theme
+                BubbleTheme.CIRCLE -> R.layout.message_received_round
+                BubbleTheme.SQUARE -> R.layout.message_received
             }
             color = receivedColor
         } else {
             color = -1
             layoutId = when (Settings.bubbleTheme) {
-                BubbleTheme.MATERIAL -> when (viewType) {
+                BubbleTheme.ROUNDED -> when (viewType) {
                     Message.TYPE_SENDING -> R.layout.message_sending_material_theme
                     Message.TYPE_ERROR -> R.layout.message_error_material_theme
                     Message.TYPE_DELIVERED -> R.layout.message_delivered_material_theme
@@ -62,7 +62,7 @@ class WearableMessageListAdapter(context: Context, private val manager: LinearLa
                     Message.TYPE_MEDIA -> R.layout.message_media
                     else -> R.layout.message_sent_material_theme
                 }
-                BubbleTheme.ROUND -> when (viewType) {
+                BubbleTheme.CIRCLE -> when (viewType) {
                     Message.TYPE_SENDING -> R.layout.message_sending_round
                     Message.TYPE_ERROR -> R.layout.message_error_round
                     Message.TYPE_DELIVERED -> R.layout.message_delivered_round
@@ -73,7 +73,7 @@ class WearableMessageListAdapter(context: Context, private val manager: LinearLa
                     Message.TYPE_MEDIA -> R.layout.message_media
                     else -> R.layout.message_sent_round
                 }
-                BubbleTheme.CLASSIC -> when (viewType) {
+                BubbleTheme.SQUARE -> when (viewType) {
                     Message.TYPE_SENDING -> R.layout.message_sending
                     Message.TYPE_ERROR -> R.layout.message_error
                     Message.TYPE_DELIVERED -> R.layout.message_delivered

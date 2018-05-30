@@ -1093,18 +1093,9 @@ object ApiUtils {
     /**
      * Update the rounder bubbles setting.
      */
-    fun updateRounderBubbles(accountId: String?, rounderBubbles: Boolean) {
+    fun updateBubbleStyle(accountId: String?, style: String) {
         if (accountId != null) {
-            updateSetting(accountId, "rounder_bubbles", "boolean", rounderBubbles)
-        }
-    }
-
-    /**
-     * Update the adjustable navigation bar setting.
-     */
-    fun updateAdjustableNavBar(accountId: String?, adjustableNavBar: Boolean) {
-        if (accountId != null) {
-            updateSetting(accountId, "adjustable_nav_bar", "boolean", adjustableNavBar)
+            updateSetting(accountId, "bubble_style", "string", style)
         }
     }
 
@@ -1114,15 +1105,6 @@ object ApiUtils {
     fun updateNotificationActions(accountId: String?, stringified: String?) {
         if (accountId != null) {
             updateSetting(accountId, "notification_actions", "set", stringified)
-        }
-    }
-
-    /**
-     * Update the swipe to delete setting
-     */
-    fun updateSwipeToDelete(accountId: String?, swipeDelete: Boolean) {
-        if (accountId != null) {
-            updateSetting(accountId, "swipe_delete", "boolean", swipeDelete)
         }
     }
 

@@ -61,9 +61,9 @@ class SearchListItemBinder(private val listener: SearchListener) {
         holder.message?.setOnClickListener { listener.onSearchSelected(message) }
 
         val topMargin = DensityUtil.toDp(holder.itemView.context, when (Settings.bubbleTheme) {
-            BubbleTheme.MATERIAL -> 1
-            BubbleTheme.CLASSIC -> 3
-            BubbleTheme.ROUND -> 3
+            BubbleTheme.ROUNDED -> 1
+            BubbleTheme.SQUARE -> 3
+            BubbleTheme.CIRCLE -> 3
         })
 
         (holder.message!!.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = 0

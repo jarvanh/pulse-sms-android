@@ -23,9 +23,8 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
         addPreferencesFromResource(R.xml.settings_theme)
 
         initBaseTheme()
-        initAdjustableNavBar()
+        initBubbleStyle()
         initFontSize()
-        initRounderBubbles()
 
         initUseGlobalTheme()
         setUpColors()
@@ -54,23 +53,6 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                 }
     }
 
-    private fun initAdjustableNavBar() {
-        findPreference(getString(R.string.pref_adjustable_nav_bar))
-                .setOnPreferenceChangeListener { _, o ->
-                    val adjustable = o as Boolean
-                    ApiUtils.updateAdjustableNavBar(Account.accountId, adjustable)
-
-                    activity.recreate()
-                    true
-                }
-
-        // TODO: Remove all this at some point. We aren't going to use this preference anymore
-//        if (!AndroidVersionUtil.isAndroidO_MR1) {
-            val prefCategory = findPreference(getString(R.string.pref_general_category)) as PreferenceCategory
-            prefCategory.removePreference(findPreference(getString(R.string.pref_adjustable_nav_bar)))
-//        }
-    }
-
     private fun initFontSize() {
         findPreference(getString(R.string.pref_font_size))
                 .setOnPreferenceChangeListener { _, o ->
@@ -81,17 +63,13 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                 }
     }
 
-    private fun initRounderBubbles() {
-        findPreference(getString(R.string.pref_rounder_bubbles))
+    private fun initBubbleStyle() {
+        findPreference(getString(R.string.pref_bubble_style))
                 .setOnPreferenceChangeListener { _, o ->
-                    val rounder = o as Boolean
-                    ApiUtils.updateRounderBubbles(Account.accountId, rounder)
+                    val style = o as String
+                    ApiUtils.updateBubbleStyle(Account.accountId, style)
                     true
                 }
-
-        // TODO: Remove all this at some point. We aren't going to use this preference anymore
-        val prefCategory = findPreference(getString(R.string.pref_general_category)) as PreferenceCategory
-        prefCategory.removePreference(findPreference(getString(R.string.pref_rounder_bubbles)))
     }
 
     private fun initUseGlobalTheme() {

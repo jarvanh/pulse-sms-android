@@ -54,7 +54,7 @@ object Settings {
     var quickCompose: Boolean = false
     var wakeScreen: Boolean = false
     var headsUp: Boolean = false
-    var bubbleTheme: BubbleTheme = BubbleTheme.MATERIAL
+    var bubbleTheme: BubbleTheme = BubbleTheme.ROUNDED
     var legacySwipeDelete: Boolean = false
     var leftToRightSwipe: SwipeOption = SwipeOption.ARCHIVE
     var rightToLeftSwipe: SwipeOption = SwipeOption.ARCHIVE
@@ -142,6 +142,9 @@ object Settings {
         val rightToLeftSwipeRep = sharedPrefs.getString(context.getString(R.string.pref_right_to_left_swipe), SwipeOption.ARCHIVE.rep)
         leftToRightSwipe = SwipeOption.values().firstOrNull { it.rep == leftToRightSwipeRep } ?: SwipeOption.ARCHIVE
         rightToLeftSwipe = SwipeOption.values().firstOrNull { it.rep == rightToLeftSwipeRep } ?: SwipeOption.ARCHIVE
+
+        val bubbleStyleValue = sharedPrefs.getString(context.getString(R.string.pref_bubble_style), BubbleTheme.ROUNDED.value)
+        bubbleTheme = BubbleTheme.values().firstOrNull { it.value == bubbleStyleValue } ?: BubbleTheme.ROUNDED
 
         // configuration
         if (this.ringtone == null) {

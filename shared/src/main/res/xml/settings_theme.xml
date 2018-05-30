@@ -13,16 +13,12 @@
             android:entryValues="@array/base_theme_values"
             android:defaultValue="day_night" />
 
-        <SwitchPreference
-            android:key="@string/pref_adjustable_nav_bar"
-            android:title="@string/adjustable_nav_bar"
-            android:summary="@string/adjustable_nav_bar_summary"
-            android:defaultValue="false" />
-
-        <SwitchPreference
-            android:key="@string/pref_rounder_bubbles"
-            android:title="@string/rounder_bubbles"
-            android:defaultValue="false" />
+        <xyz.klinker.messenger.view.AutoSummaryListPreference
+            android:key="@string/pref_bubble_style"
+            android:title="@string/bubble_style"
+            android:entries="@array/bubble_style"
+            android:entryValues="@array/bubble_style_values"
+            android:defaultValue="rounded" />
 
         <xyz.klinker.messenger.view.AutoSummaryListPreference
             android:key="@string/pref_font_size"

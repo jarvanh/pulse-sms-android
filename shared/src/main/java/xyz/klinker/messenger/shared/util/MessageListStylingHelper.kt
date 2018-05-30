@@ -106,9 +106,9 @@ class MessageListStylingHelper(context: Context?) {
             messageHolder.background = null
         } else {
             val background = when (Settings.bubbleTheme) {
-                BubbleTheme.MATERIAL -> fourTypeBackground(roundReceived, roundSent)
-                BubbleTheme.ROUND -> fourTypeBackground(circleReceived, circleSent)
-                BubbleTheme.CLASSIC -> dialogSquareBackground()
+                BubbleTheme.SQUARE -> dialogSquareBackground()
+                BubbleTheme.ROUNDED -> fourTypeBackground(roundReceived, roundSent)
+                BubbleTheme.CIRCLE -> fourTypeBackground(circleReceived, circleSent)
             }
 
             messageHolder.background = messageHolder.context.resources.getDrawable(background)

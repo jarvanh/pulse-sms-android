@@ -370,6 +370,10 @@
     <string name="global_theme_color">Theme Color</string>
     <string name="font_size">Font Size</string>
     <string name="rounder_bubbles">Round Message Bubbles</string>
+    <string name="bubble_style">Message Bubble Style</string>
+    <string name="bubble_style_round">Rounded</string>
+    <string name="bubble_style_square">Squared</string>
+    <string name="bubble_style_circle">Circle (No Tail)</string>
     <string name="adjustable_nav_bar">Match Nav Bar to Base Theme</string>
     <string name="adjustable_nav_bar_summary">The light theme will use the white navigation bar, while the
         darker themes will use the black navigation bar</string>
