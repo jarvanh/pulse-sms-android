@@ -15,78 +15,77 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="6dp"
-    android:layout_marginTop="6dp"
-    android:background="@drawable/focusable_background"
-    android:focusable="true"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     android:gravity="end"
-    android:orientation="vertical"
-    android:paddingEnd="8dp"
-    android:paddingStart="8dp">
+    android:focusable="true"
+    android:background="@drawable/focusable_background">
 
     <LinearLayout
-        android:id="@+id/message_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/message_material_theme_sent_background"
-        android:backgroundTint="@color/materialRed"
-        android:clickable="true"
-        android:maxWidth="@dimen/max_message_width"
         android:orientation="vertical"
-        android:paddingEnd="20dp"
+        android:background="@drawable/message_square_sent_background"
+        android:backgroundTint="@color/materialRed"
+        android:maxWidth="@dimen/max_message_width"
         android:paddingStart="8dp"
-        android:gravity="center_vertical">
+        android:paddingEnd="20dp"
+        android:clickable="true"
+        android:id="@+id/message_holder">
 
         <ImageView
-            android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:layout_marginStart="2dp"
-            android:contentDescription="@string/mms_image"
             android:maxHeight="@dimen/max_message_width"
             android:minWidth="@dimen/min_mms_picture_width"
             android:scaleType="centerInside"
-            android:transitionName="image" />
+            android:id="@+id/image"
+            android:transitionName="image"
+            android:layout_marginBottom="6dp"
+            android:layout_marginStart="2dp"
+            android:contentDescription="@string/mms_image" />
 
         <xyz.klinker.messenger.shared.view.emoji.EmojiableTextView
-            android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="@dimen/max_message_width"
-            android:padding="6dp"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="6dp"
-            android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:gravity="center_vertical"/>
+            android:textColor="@android:color/white"
+            android:paddingTop="3dp"
+            android:paddingBottom="2dp"
+            android:layout_marginTop="-6dp"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/message" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="-2dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp">
 
         <TextView
-            android:id="@+id/timestamp"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/timestamp_height"
-            android:layout_marginEnd="8dp"
+            android:textSize="12sp"
             android:textColor="@color/secondaryText"
-            android:textSize="12sp" />
+            android:layout_marginEnd="8dp"
+            android:id="@+id/timestamp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/failed"
+            android:textSize="12sp"
             android:textColor="@color/secondaryText"
-            android:textSize="12sp" />
+            android:text="@string/failed" />
 
     </LinearLayout>
 

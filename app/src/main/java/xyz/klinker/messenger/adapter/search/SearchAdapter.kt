@@ -108,46 +108,46 @@ class SearchAdapter(search: String?, private var conversations: MutableList<Conv
 
                 if (viewType == Message.TYPE_RECEIVED) {
                     layoutId = when (Settings.bubbleTheme) {
-                        BubbleTheme.ROUNDED -> R.layout.message_received_material_theme
-                        BubbleTheme.CIRCLE -> R.layout.message_received_round
-                        BubbleTheme.SQUARE -> R.layout.message_received
+                        BubbleTheme.ROUNDED -> R.layout.message_round_received
+                        BubbleTheme.CIRCLE -> R.layout.message_circle_received
+                        BubbleTheme.SQUARE -> R.layout.message_square_received
                     }
                     color = Settings.mainColorSet.color
                 } else {
                     color = Integer.MIN_VALUE
                     layoutId = when (Settings.bubbleTheme) {
                         BubbleTheme.ROUNDED -> when (viewType) {
-                            Message.TYPE_SENDING -> R.layout.message_sending_material_theme
-                            Message.TYPE_ERROR -> R.layout.message_error_material_theme
-                            Message.TYPE_DELIVERED -> R.layout.message_delivered_material_theme
-                            Message.TYPE_IMAGE_SENDING -> R.layout.message_image_sending_material_theme
-                            Message.TYPE_IMAGE_SENT -> R.layout.message_image_sent_material_theme
-                            Message.TYPE_IMAGE_RECEIVED -> R.layout.message_image_received_material_theme
+                            Message.TYPE_SENDING -> R.layout.message_round_sending
+                            Message.TYPE_ERROR -> R.layout.message_round_error
+                            Message.TYPE_DELIVERED -> R.layout.message_round_delivered
+                            Message.TYPE_IMAGE_SENDING -> R.layout.message_round_image_sending
+                            Message.TYPE_IMAGE_SENT -> R.layout.message_round_image_sent
+                            Message.TYPE_IMAGE_RECEIVED -> R.layout.message_round_image_received
                             Message.TYPE_INFO -> R.layout.message_info
                             Message.TYPE_MEDIA -> R.layout.message_media
-                            else -> R.layout.message_sent_material_theme
+                            else -> R.layout.message_round_sent
                         }
                         BubbleTheme.CIRCLE -> when (viewType) {
-                            Message.TYPE_SENDING -> R.layout.message_sending_round
-                            Message.TYPE_ERROR -> R.layout.message_error_round
-                            Message.TYPE_DELIVERED -> R.layout.message_delivered_round
-                            Message.TYPE_IMAGE_SENDING -> R.layout.message_image_sending_round
-                            Message.TYPE_IMAGE_SENT -> R.layout.message_image_sent_round
-                            Message.TYPE_IMAGE_RECEIVED -> R.layout.message_image_received_round
+                            Message.TYPE_SENDING -> R.layout.message_circle_sending
+                            Message.TYPE_ERROR -> R.layout.message_circle_error
+                            Message.TYPE_DELIVERED -> R.layout.message_circle_delivered
+                            Message.TYPE_IMAGE_SENDING -> R.layout.message_circle_image_sending
+                            Message.TYPE_IMAGE_SENT -> R.layout.message_circle_image_sent
+                            Message.TYPE_IMAGE_RECEIVED -> R.layout.message_circle_image_received
                             Message.TYPE_INFO -> R.layout.message_info
                             Message.TYPE_MEDIA -> R.layout.message_media
-                            else -> R.layout.message_sent_round
+                            else -> R.layout.message_circle_sent
                         }
                         BubbleTheme.SQUARE -> when (viewType) {
-                            Message.TYPE_SENDING -> R.layout.message_sending
-                            Message.TYPE_ERROR -> R.layout.message_error
-                            Message.TYPE_DELIVERED -> R.layout.message_delivered
-                            Message.TYPE_IMAGE_SENDING -> R.layout.message_image_sending
-                            Message.TYPE_IMAGE_SENT -> R.layout.message_image_sent
-                            Message.TYPE_IMAGE_RECEIVED -> R.layout.message_image_received
+                            Message.TYPE_SENDING -> R.layout.message_square_sending
+                            Message.TYPE_ERROR -> R.layout.message_square_error
+                            Message.TYPE_DELIVERED -> R.layout.message_square_delivered
+                            Message.TYPE_IMAGE_SENDING -> R.layout.message_square_image_sending
+                            Message.TYPE_IMAGE_SENT -> R.layout.message_square_image_sent
+                            Message.TYPE_IMAGE_RECEIVED -> R.layout.message_square_image_received
                             Message.TYPE_INFO -> R.layout.message_info
                             Message.TYPE_MEDIA -> R.layout.message_media
-                            else -> R.layout.message_sent
+                            else -> R.layout.message_square_sent
                         }
                     }
                 }

@@ -169,17 +169,17 @@ class MessageListStylingHelper(context: Context?) {
 
     companion object {
         private val roundReceived = DrawableHolder(
-                R.drawable.message_material_theme_received_group_both_background,
-                R.drawable.message_material_theme_received_group_top_background,
-                R.drawable.message_material_theme_received_group_bottom_background,
-                R.drawable.message_material_theme_received_background
+                R.drawable.message_round_received_group_both_background,
+                R.drawable.message_round_received_group_top_background,
+                R.drawable.message_round_received_group_bottom_background,
+                R.drawable.message_round_received_background
         )
 
         private val roundSent = DrawableHolder(
-                R.drawable.message_material_theme_sent_group_both_background,
-                R.drawable.message_material_theme_sent_group_top_background,
-                R.drawable.message_material_theme_sent_group_bottom_background,
-                R.drawable.message_material_theme_sent_background
+                R.drawable.message_round_sent_group_both_background,
+                R.drawable.message_round_sent_group_top_background,
+                R.drawable.message_round_sent_group_bottom_background,
+                R.drawable.message_round_sent_background
         )
 
         private val circleReceived = DrawableHolder(
@@ -197,17 +197,17 @@ class MessageListStylingHelper(context: Context?) {
         )
 
         private val squareReceived = DrawableHolder(
-                R.drawable.message_received_group_background,
-                R.drawable.message_received_group_background,
-                R.drawable.message_received_background,
-                R.drawable.message_received_background
+                R.drawable.message_square_received_group_background,
+                R.drawable.message_square_received_group_background,
+                R.drawable.message_square_received_background,
+                R.drawable.message_square_received_background
         )
 
         private val squareSent = DrawableHolder(
-                R.drawable.message_sent_group_background,
-                R.drawable.message_sent_group_background,
-                R.drawable.message_sent_background,
-                R.drawable.message_sent_background
+                R.drawable.message_square_sent_group_background,
+                R.drawable.message_square_sent_group_background,
+                R.drawable.message_square_sent_background,
+                R.drawable.message_square_sent_background
         )
     }
 }

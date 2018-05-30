@@ -30,7 +30,7 @@
         android:id="@+id/message_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/message_material_theme_sent_background"
+        android:background="@drawable/message_round_sent_background"
         android:backgroundTint="@color/drawerBackground"
         android:clickable="true"
         android:maxWidth="@dimen/max_message_width"

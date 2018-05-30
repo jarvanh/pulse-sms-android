@@ -17,6 +17,6 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="@color/ripple">
 
-    <item android:drawable="@drawable/message_material_theme_sent_group_bottom" />
+    <item android:drawable="@drawable/message_round_sent" />
 
 </ripple>

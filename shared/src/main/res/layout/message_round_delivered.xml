@@ -21,6 +21,7 @@
     android:layout_marginTop="6dp"
     android:background="@drawable/focusable_background"
     android:focusable="true"
+    android:gravity="end"
     android:orientation="vertical"
     android:paddingEnd="8dp"
     android:paddingStart="8dp">
@@ -29,13 +30,14 @@
         android:id="@+id/message_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/message_material_theme_received_background"
-        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/message_round_sent_background"
+        android:backgroundTint="@color/drawerBackground"
         android:clickable="true"
         android:maxWidth="@dimen/max_message_width"
+        android:minWidth="@dimen/min_mms_picture_width"
         android:orientation="vertical"
-        android:paddingEnd="8dp"
-        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="8dp"
         android:gravity="center_vertical">
 
         <ImageView
@@ -43,10 +45,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
             android:contentDescription="@string/mms_image"
             android:maxHeight="@dimen/max_message_width"
-            android:minWidth="@dimen/min_mms_picture_width"
             android:scaleType="centerInside"
             android:transitionName="image" />
 
@@ -54,41 +55,34 @@
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:maxWidth="@dimen/max_message_width"
             android:padding="6dp"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="6dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/primaryText"
             android:textSize="16sp"
             android:gravity="center_vertical" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="-20dp"
+        android:contentDescription="@string/delivered"
+        android:src="@drawable/ic_done"
+        android:tint="@color/primaryText"
+        android:elevation="3dp"/>
+
+    <TextView
+        android:id="@+id/timestamp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/timestamp_height"
         android:layout_marginBottom="2dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginTop="-2dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/contact"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/timestamp_height"
-            android:layout_marginEnd="2dp"
-            android:textColor="@color/secondaryText"
-            android:textSize="12sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/timestamp"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/timestamp_height"
-            android:textColor="@color/secondaryText"
-            android:textSize="12sp" />
-
-    </LinearLayout>
+        android:textColor="@color/secondaryText"
+        android:textSize="12sp" />
 
 </LinearLayout>
