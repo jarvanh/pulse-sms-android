@@ -131,25 +131,28 @@ class WearableMessageListAdapter(context: Context, private val manager: LinearLa
         }
 
         if (holder.timestamp != null) {
-            if (!isGroup) {
-                stylingHelper.calculateAdjacentItems(messages!!, position)
-                        .setMargins(holder.itemView)
-                        .setBackground(holder.messageHolder, message.mimeType!!)
-                        .applyTimestampHeight(holder.timestamp!!, timestampHeight)
-            } else {
-                stylingHelper.calculateAdjacentItems(messages!!, position)
-                        .applyTimestampHeight(holder.timestamp!!, timestampHeight)
-            }
+            stylingHelper.calculateAdjacentItems(messages!!, position)
+                    .setMargins(holder.itemView)
+                    .setBackground(holder.messageHolder, message.mimeType!!)
+                    .applyTimestampHeight(holder.timestamp!!, timestampHeight)
         }
 
-        if (isGroup && message.from != null) {
-            if (holder.contact?.visibility == View.GONE) {
-                holder.contact?.visibility = View.VISIBLE
+        if (isGroup) {
+            if (holder.contact != null && !MimeType.isExpandedMedia(message.mimeType!!)) {
+                if (stylingHelper.hideContact) {
+                    holder.contact!!.layoutParams.height = 0
+                } else {
+                    holder.contact!!.layoutParams.height = timestampHeight
+                }
             }
 
-            val label = if (holder.timestamp != null && holder.timestamp!!.layoutParams.height > 0)
+            val label = if (holder.timestamp!!.layoutParams.height > 0)
                 R.string.message_from_bullet else R.string.message_from
-            holder.contact?.text = holder.itemView.resources.getString(label, message.from)
+
+            if (!MimeType.isExpandedMedia(message.mimeType)) {
+                holder.contact?.text = if (stylingHelper.hideContact) "" else holder.itemView.resources.getString(label, message.from)
+                holder.contact?.visibility = View.VISIBLE
+            }
         }
     }
 
