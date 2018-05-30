@@ -19,6 +19,7 @@ package xyz.klinker.messenger.activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
@@ -38,6 +39,7 @@ import xyz.klinker.messenger.utils.UpdateUtils
 import android.view.inputmethod.InputMethodManager
 import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.util.DrawerItemHelper
 
 

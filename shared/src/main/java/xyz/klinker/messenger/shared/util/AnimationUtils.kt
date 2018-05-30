@@ -19,6 +19,7 @@ package xyz.klinker.messenger.shared.util
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.res.Resources
+import android.graphics.Color
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.view.animation.FastOutLinearInInterpolator
 import android.support.v4.view.animation.FastOutSlowInInterpolator
@@ -34,6 +35,8 @@ import android.view.animation.Interpolator
 
 import xyz.klinker.android.drag_dismiss.util.StatusBarHelper
 import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 
 /**
  * Helper for handling all animations such as expanding and contracting conversations so that we
@@ -175,7 +178,11 @@ object AnimationUtils {
         activity.findViewById<View?>(R.id.nav_bar_divider)?.visibility = View.GONE
 
         toolbar.postDelayed({
-            activity.findViewById<View?>(R.id.conversation_list_container)?.setBackgroundColor(activity.resources.getColor(R.color.drawerBackground))
+            if (Settings.baseTheme == BaseTheme.BLACK) {
+                activity.findViewById<View?>(R.id.conversation_list_container)?.setBackgroundColor(Color.BLACK)
+            } else {
+                activity.findViewById<View?>(R.id.conversation_list_container)?.setBackgroundColor(activity.resources.getColor(R.color.drawerBackground))
+            }
         }, EXPAND_CONVERSATION_DURATION + 50L)
 
         val extraDistance = activity.resources
@@ -212,7 +219,12 @@ object AnimationUtils {
         val fab = activity.findViewById<View>(R.id.fab) as FloatingActionButton
 
         activity.findViewById<View?>(R.id.nav_bar_divider)?.visibility = View.VISIBLE
-        activity.findViewById<View?>(R.id.conversation_list_container)?.setBackgroundColor(activity.resources.getColor(R.color.background))
+
+        if (Settings.baseTheme == BaseTheme.BLACK) {
+            activity.findViewById<View?>(R.id.conversation_list_container)?.setBackgroundColor(Color.BLACK)
+        } else {
+            activity.findViewById<View?>(R.id.conversation_list_container)?.setBackgroundColor(activity.resources.getColor(R.color.background))
+        }
 
         animateActivityWithConversation(toolbar, fragmentContainer, fab, 0,
                 fragmentContainer.translationY.toInt(), 0, 0,
