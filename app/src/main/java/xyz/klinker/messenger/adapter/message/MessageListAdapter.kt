@@ -194,24 +194,25 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
                     message.timestamp)
         }
 
-        if (!isGroup) {
-            stylingHelper.calculateAdjacentItems(dataProvider.messages, position)
-                    .setMargins(holder.itemView)
-                    .setBackground(holder.messageHolder, message.mimeType!!)
-                    .applyTimestampHeight(holder.timestamp, timestampHeight)
-        } else {
-            stylingHelper.calculateAdjacentItems(dataProvider.messages, position)
-                    .applyTimestampHeight(holder.timestamp, timestampHeight)
+        stylingHelper.calculateAdjacentItems(dataProvider.messages, position)
+                .setMargins(holder.itemView)
+                .setBackground(holder.messageHolder, message.mimeType!!)
+                .applyTimestampHeight(holder.timestamp, timestampHeight)
 
+        if (isGroup) {
             if (holder.contact != null && !MimeType.isExpandedMedia(message.mimeType!!)) {
-                holder.contact!!.layoutParams.height = timestampHeight
+                if (stylingHelper.hideContact) {
+                    holder.contact!!.layoutParams.height = 0
+                } else {
+                    holder.contact!!.layoutParams.height = timestampHeight
+                }
             }
 
             val label = if (holder.timestamp.layoutParams.height > 0)
                 R.string.message_from_bullet else R.string.message_from
 
             if (!MimeType.isExpandedMedia(message.mimeType)) {
-                holder.contact?.text = holder.itemView.resources.getString(label, message.from)
+                holder.contact?.text = if (stylingHelper.hideContact) "" else holder.itemView.resources.getString(label, message.from)
                 itemBinder.setVisible(holder.contact)
             }
         }
