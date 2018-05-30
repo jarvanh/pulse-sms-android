@@ -106,9 +106,9 @@ class MessageListStylingHelper(context: Context?) {
             messageHolder.background = null
         } else {
             val background = when (Settings.bubbleTheme) {
-                BubbleTheme.SQUARE -> dialogSquareBackground()
-                BubbleTheme.ROUNDED -> fourTypeBackground(roundReceived, roundSent)
-                BubbleTheme.CIRCLE -> fourTypeBackground(circleReceived, circleSent)
+                BubbleTheme.SQUARE -> fourTypeBackground(if (currentType == Message.TYPE_RECEIVED) squareReceived else squareSent)
+                BubbleTheme.ROUNDED -> fourTypeBackground(if (currentType == Message.TYPE_RECEIVED) roundReceived else roundSent)
+                BubbleTheme.CIRCLE -> fourTypeBackground(if (currentType == Message.TYPE_RECEIVED) circleReceived else circleSent)
             }
 
             messageHolder.background = messageHolder.context.resources.getDrawable(background)
@@ -128,45 +128,28 @@ class MessageListStylingHelper(context: Context?) {
     }
 
     @DrawableRes
-    private fun dialogSquareBackground(): Int {
-        return if (currentType == lastType && !TimeUtils.shouldDisplayTimestamp(lastTimestamp, currentTimestamp)) {
-            if (currentType == Message.TYPE_RECEIVED) {
-                R.drawable.message_received_group_background
-            } else {
-                R.drawable.message_sent_group_background
-            }
-        } else {
-            if (currentType == Message.TYPE_RECEIVED) {
-                R.drawable.message_received_background
-            } else {
-                R.drawable.message_sent_background
-            }
-        }
-    }
-
-    @DrawableRes
-    private fun fourTypeBackground(receivedSet: DrawableHolder, sentSet: DrawableHolder): Int {
+    private fun fourTypeBackground(set: DrawableHolder): Int {
         val displayNextTimestamp = TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp)
         val displayLastTimestamp = TimeUtils.shouldDisplayTimestamp(lastTimestamp, currentTimestamp)
 
         return if (same(currentFrom, lastFrom, currentType, lastType) && same(currentFrom, nextFrom, currentType, nextType) && !displayLastTimestamp && !displayNextTimestamp) {
             // both corners
             hideContact = true
-            if (currentType == Message.TYPE_RECEIVED) receivedSet.groupBoth else sentSet.groupBoth
+            set.groupBoth
         } else if ((same(currentFrom, lastFrom, currentType, lastType) && !same(currentFrom, nextFrom, currentType, nextType) && !displayLastTimestamp) ||
                 (same(currentFrom, nextFrom, currentType, nextType) && same(currentFrom, lastFrom, currentType, lastType) && displayNextTimestamp && !displayLastTimestamp)) {
             // top corner bubble
             hideContact = false
-            if (currentType == Message.TYPE_RECEIVED) receivedSet.groupTop else sentSet.groupTop
+            set.groupTop
         } else if ((same(currentFrom, nextFrom, currentType, nextType) && !same(currentFrom, lastFrom, currentType, lastType) && !displayNextTimestamp) ||
                 (same(currentFrom, nextFrom, currentType, nextType) && same(currentFrom, lastFrom, currentType, lastType) && displayLastTimestamp && !displayNextTimestamp)) {
             // bottom corner bubble
             hideContact = true
-            if (currentType == Message.TYPE_RECEIVED) receivedSet.groupBottom else sentSet.groupBottom
+            set.groupBottom
         } else {
             // normal bubble
             hideContact = false
-            if (currentType == Message.TYPE_RECEIVED) receivedSet.noGrouped else sentSet.noGrouped
+            set.noGrouped
         }
     }
 
@@ -211,6 +194,20 @@ class MessageListStylingHelper(context: Context?) {
                 R.drawable.message_circle_sent_group_top_background,
                 R.drawable.message_circle_sent_group_bottom_background,
                 R.drawable.message_circle_background
+        )
+
+        private val squareReceived = DrawableHolder(
+                R.drawable.message_received_group_background,
+                R.drawable.message_received_group_background,
+                R.drawable.message_received_background,
+                R.drawable.message_received_background
+        )
+
+        private val squareSent = DrawableHolder(
+                R.drawable.message_sent_group_background,
+                R.drawable.message_sent_group_background,
+                R.drawable.message_sent_background,
+                R.drawable.message_sent_background
         )
     }
 }
