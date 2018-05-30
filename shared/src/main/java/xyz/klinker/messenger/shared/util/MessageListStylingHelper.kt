@@ -21,7 +21,6 @@ class MessageListStylingHelper(context: Context?) {
     private var columnType = -1
     private var columnTimestamp = -1
 
-    private var isJustSentMessage: Boolean = false
     private var currentType: Int = 0
     private var currentTimestamp: Long = 0
     private var lastType: Int = 0
@@ -56,9 +55,7 @@ class MessageListStylingHelper(context: Context?) {
             cursor.moveToPosition(currentPosition + 1)
             nextType = cursor.getInt(columnType)
             nextTimestamp = cursor.getLong(columnTimestamp)
-            isJustSentMessage = false
         } else {
-            isJustSentMessage = currentType != Message.TYPE_RECEIVED
             nextType = -1
             nextTimestamp = TimeUtils.now
         }
@@ -71,13 +68,13 @@ class MessageListStylingHelper(context: Context?) {
             return this
         }
 
-        if (currentType != lastType) {
+        if (!sameType(currentType, lastType)) {
             (itemView.layoutParams as RecyclerView.LayoutParams).topMargin = eightDp
         } else {
             (itemView.layoutParams as RecyclerView.LayoutParams).topMargin = 0
         }
 
-        if (!isJustSentMessage && (currentType != nextType || TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp))) {
+        if (!sameType(currentType, nextType) || TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp)) {
             (itemView.layoutParams as RecyclerView.LayoutParams).bottomMargin = eightDp
         } else {
             (itemView.layoutParams as RecyclerView.LayoutParams).bottomMargin = 0
@@ -167,21 +164,21 @@ class MessageListStylingHelper(context: Context?) {
         val displayNextTimestamp = TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp)
         val displayLastTimestamp = TimeUtils.shouldDisplayTimestamp(lastTimestamp, currentTimestamp)
 
-        return if (currentType == lastType && currentType == nextType && !displayLastTimestamp && !displayNextTimestamp) {
+        return if (sameType(currentType, lastType) && sameType(currentType, nextType) && !displayLastTimestamp && !displayNextTimestamp) {
             // both corners
             if (currentType == Message.TYPE_RECEIVED) {
                 R.drawable.message_material_theme_received_group_both_background
             } else {
                 R.drawable.message_material_theme_sent_group_both_background
             }
-        } else if (currentType == lastType && currentType != nextType && !displayLastTimestamp || currentType == nextType && currentType == lastType && displayNextTimestamp && !displayLastTimestamp) {
+        } else if (sameType(currentType, lastType) && !sameType(currentType, nextType) && !displayLastTimestamp || sameType(currentType, nextType) && sameType(currentType, lastType) && displayNextTimestamp && !displayLastTimestamp) {
             // top corner bubble
             if (currentType == Message.TYPE_RECEIVED) {
                 R.drawable.message_material_theme_received_group_top_background
             } else {
                 R.drawable.message_material_theme_sent_group_top_background
             }
-        } else if (currentType == nextType && currentType != lastType && !displayNextTimestamp || currentType == nextType && currentType == lastType && displayLastTimestamp && !displayNextTimestamp) {
+        } else if (sameType(currentType, nextType) && !sameType(currentType, lastType) && !displayNextTimestamp || sameType(currentType, nextType) && sameType(currentType, lastType) && displayLastTimestamp && !displayNextTimestamp) {
             // bottom corner bubble
             if (currentType == Message.TYPE_RECEIVED) {
                 R.drawable.message_material_theme_received_group_bottom_background
@@ -194,6 +191,15 @@ class MessageListStylingHelper(context: Context?) {
             } else {
                 R.drawable.message_material_theme_sent_background
             }
+        }
+    }
+
+    private fun sameType(one: Int, two: Int): Boolean {
+        return when {
+            one == two -> true
+            one == Message.TYPE_SENDING && (two == Message.TYPE_SENT || two == Message.TYPE_DELIVERED || two == Message.TYPE_ERROR) -> true
+            two == Message.TYPE_SENDING && (one == Message.TYPE_SENT || one == Message.TYPE_DELIVERED || one == Message.TYPE_ERROR) -> true
+            else -> false
         }
     }
 }
