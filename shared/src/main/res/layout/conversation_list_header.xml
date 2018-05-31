@@ -19,7 +19,9 @@
     android:id="@+id/header_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
 
     <TextView
         android:id="@+id/header"
@@ -33,7 +35,8 @@
         android:paddingEnd="@dimen/conversation_list_padding"
         android:paddingStart="@dimen/conversation_list_padding"
         android:textColor="@color/secondaryText"
-        android:textSize="12sp" />
+        android:textStyle="bold"
+        android:textSize="13sp" />
 
     <ImageButton
         android:id="@+id/section_done"

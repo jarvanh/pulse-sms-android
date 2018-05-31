@@ -118,7 +118,7 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
             false
         }
 
-        header?.textSize = Settings.smallFont.toFloat()
+        header?.textSize = Settings.smallFont.toFloat() + 1
         name?.textSize = Settings.largeFont.toFloat()
         summary?.textSize = Settings.mediumFont.toFloat()
 
