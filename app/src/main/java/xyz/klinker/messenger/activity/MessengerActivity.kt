@@ -90,6 +90,10 @@ class MessengerActivity : AppCompatActivity() {
         }
 
         drawerItemHelper.prepareDrawer()
+
+        if (Settings.baseTheme == BaseTheme.BLACK) {
+            findViewById<View?>(xyz.klinker.messenger.shared.R.id.nav_bar_divider)?.visibility = View.GONE
+        }
     }
 
     public override fun onStart() {

@@ -218,11 +218,11 @@ object AnimationUtils {
         val fragmentContainer = activity.findViewById<View>(R.id.conversation_list_container)
         val fab = activity.findViewById<View>(R.id.fab) as FloatingActionButton
 
-        activity.findViewById<View?>(R.id.nav_bar_divider)?.visibility = View.VISIBLE
 
         if (Settings.baseTheme == BaseTheme.BLACK) {
             activity.findViewById<View?>(R.id.conversation_list_container)?.setBackgroundColor(Color.BLACK)
         } else {
+            activity.findViewById<View?>(R.id.nav_bar_divider)?.visibility = View.VISIBLE
             activity.findViewById<View?>(R.id.conversation_list_container)?.setBackgroundColor(activity.resources.getColor(R.color.background))
         }
 
