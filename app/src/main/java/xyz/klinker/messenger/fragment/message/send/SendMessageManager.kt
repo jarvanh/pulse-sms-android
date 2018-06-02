@@ -327,7 +327,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                         val newId = DataSource.insertMessage(activity, imageMessage, imageMessage.conversationId, true)
                         val imageUri = SendUtils(conversation?.simSubscriptionId)
                                 .setForceNoSignature(forceNoSignature)
-                                .send(activity, message, argManager.phoneNumbers,
+                                .send(activity, /*message*/ "", argManager.phoneNumbers,
                                         sendUri, mimeType)
                         MarkAsSentJob.scheduleNextRun(activity, newId)
 
