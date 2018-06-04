@@ -24,6 +24,7 @@ import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
+import xyz.klinker.messenger.shared.data.pojo.BubbleTheme
 import xyz.klinker.messenger.shared.util.*
 
 @Suppress("DEPRECATION")
@@ -66,6 +67,10 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
         if (Settings.baseTheme == BaseTheme.BLACK) {
             replyBarCard.setCardBackgroundColor(Color.BLACK)
             background.setBackgroundColor(Color.BLACK)
+        }
+
+        if (Settings.bubbleTheme != BubbleTheme.ROUNDED) {
+            replyBarCard.radius = DensityUtil.toDp(activity, 2).toFloat()
         }
 
         if (Settings.useGlobalThemeColor) {
