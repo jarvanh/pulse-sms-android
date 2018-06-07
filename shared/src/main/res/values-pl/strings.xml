@@ -24,6 +24,10 @@
     <!-- Drawer Items -->
     <string name="menu_conversations">Lista konwersacji</string>
     <string name="menu_archived_conversations">Archiwum konwersacji</string>
+    <string name="menu_private_conversations">Prywatne konwersacje</string>
+    <string name="menu_unread_conversations">Nieprzeczytane konwersacje</string>
+    <string name="menu_edit_folders">Zarządzaj folderami...</string>
+    <string name="menu_edit_folders_no_ellipse">Zarządzanie folderami</string>
     <string name="menu_schedule">Wiadomości zaplanowane</string>
     <string name="menu_mute_contacts">Czarna lista</string>
     <string name="menu_invite">Zaproś znajomych</string>
@@ -134,6 +138,7 @@ Możesz używać Pulse do wysyłania wiadomości z <b>dowolnego</b> urządzenia!
     <string name="remove_image">Usuń załączony obraz</string>
     <string name="edit_image">Edytuj załączony obraz</string>
     <string name="edit_recipients">Edytuj adresatów</string>
+    <string name="select_folder">Wybierz folder dla konwersacji</string>
     <string name="permission_needed_for_action">Wymagane są dodatkowe uprawnienia aby wykonać tę czynność.</string>
     <string name="request_permission">Wymagane uprawnienie</string>
     <string name="no_messages_with_contact">Nie masz żadnych wiadomości w tej konwersacji,
@@ -173,10 +178,12 @@ czas ją rozpocząć!</string>
     <string name="compose_message">Stwórz nową wiadomość</string>
     <string name="send_message">Wyślij wiadomość</string>
     <string name="enter_contact_name">Wpisz nazwę kontaktu</string>
+    <string name="enter_contact_name_or_number">Podaj nazwę lub numer kontaktu</string>
     <string name="error_processing_vcard">Błąd przetwarzania wizytówki kontaktu</string>
     <string name="compose_recents">Ostatni</string>
     <string name="compose_groups">Grupy</string>
     <string name="compose_all_contacts">Wszystkie kontakty</string>
+    <string name="private_conversation_disclaimer">To jest <b>prywatna konwersacja</b> i nie może być otwarta na ekranie tworzenia</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">Aplikacja nie może poprawnie funkcjonować bez przyznania jej wymienionych uprawnień. Zatwierdź wymagane uprawnienia aby móc kontynuować.</string>
     <string name="loading_messages">Optymalizuję...</string>
@@ -235,11 +242,17 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="default_notifications_channel_description">Ustawienia te zostaną przypisane dla wszystkich konwersacji, do których nie zostały przypisane indywidualne kanały notyfikacji.</string>
     <string name="test_notifications_channel">Powiadomienia testowe</string>
     <string name="status_notifications_channel">Powiadomienia o statusie</string>
+    <string name="background_service_channel">Powiadomienia w tle</string>
     <string name="general_notifications_channel">Powiadomienia ogólne</string>
     <string name="media_parse_channel">Kompresor multimediów</string>
     <string name="group_summary_notifications">Podsumowanie rozmów grupowych</string>
     <string name="failed_messages_channel">Nie wysłane wiadomości</string>
+    <string name="silent_background_services">Wycisz powiadomienia w tle</string>
+    <string name="silent_conversations_channel">Wycisz powiadomienia konwersacji</string>
+    <string name="account_activity_notifications">Powiadomienia aktywności konta</string>
+    <string name="quick_text_channel">Powiadomienia szybkich wiadomości</string>
     <string name="media_parse_text">Kompresuję multimedia z poprzedniej wiadomości...</string>
+    <string name="auto_reply_parse_text">Poszukuję automatycznej odpowiedzi w poprzedniej wiadomości...</string>
     <string name="creating_channels_text">Tworzenie kanałów powiadomień...</string>
     <string name="write_new_message">Napisz nową wiadomość...</string>
     <string name="receiving_a_message">Odbieranie wiadomości...</string>
@@ -263,6 +276,8 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="get_in_touch">Bądź w kontakcie</string>
     <string name="faqs">FAQ - często zadawane pytania</string>
     <string name="get_help">Uzyskaj pomoc</string>
+    <string name="get_help_summary">Masz pytanie? Dostaję masę maili dziennie, więc poświęcając swój czasu na wczytywanie się w nie pozbawiam się czasu na tworzenie nowych funkcjonalności aplikacji. Możesz mi w tym pomóc, przeszukując wpierw FAQ - być może znajdziesz tutaj odpowiedź na swoje pytanie.</string>
+    <string name="get_help_summary_2">FAQ staje się co raz bardziej obszerniejsza, lecz jeżeli nie widzisz w niej odpowiedzi na swoje pytanie skontaktuj się ze mną, a ja niebawem odezwę się do Ciebie!</string>
     <string name="features">Możliwości aplikacji</string>
     <string name="issues">Śledzenie błędów</string>
     <string name="issues_summary">Służy również jako przewodnik po możliwościach</string>
@@ -291,6 +306,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="mute_conversation_summary">Ukryj powiadomienia konwersacji</string>
     <string name="private_conversation">Konwersacja prywatna</string>
     <string name="private_conversation_summary">Ukryj zawartość konwersacji na powiadomieniach</string>
+    <string name="private_conversation_summary_2">Ukryj zawartość wiadomości na powiadomieniach i przenieś konwersację do <i>Prywatnych konwersacji</i></string>
     <string name="primary_color">Kolor podstawowy</string>
     <string name="primary_dark_color">Kolor podstawowy ciemny</string>
     <string name="accent_color">Kolor akcentu</string>
@@ -329,6 +345,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="delivery_reports">Potwierdzenie dostarczenia</string>
     <string name="delivery_reports_summary">Większość operatorów nie wspiera tej opcji</string>
     <string name="theme_settings">Personalizacja</string>
+    <string name="theme_settings_category">Wygląd i użytkowanie</string>
     <string name="conversation_list_category">Lista konwersacji</string>
     <string name="general_category">Ogólne</string>
     <string name="theme_settings_redirect">Motyw</string>
@@ -336,6 +353,8 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="global_theme_color">Kolor motywu</string>
     <string name="font_size">Rozmiar czcionki</string>
     <string name="rounder_bubbles">Okrągłe bąbelki wiadomości</string>
+    <string name="adjustable_nav_bar">Motyw główny na pasku nawigacyjnym</string>
+    <string name="adjustable_nav_bar_summary">Jasny motyw wyświetli biały pasek nawigacyjny, ciemne motywy wyświetlą czarny pasek nawigacyjny</string>
     <string name="apply_theme_globally">Zastosuj do wszystkich konwersacji</string>
     <string name="apply_theme_globally_summary">Usuń motywy przypisane do poszczególnych konwersacji i zatwierdź ustawienie globalne</string>
     <string name="swipe_delete">Przesuń aby usunąć</string>
@@ -364,6 +383,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="resync_account_summary">Brakujące wiadomości? Użyj tego aby zaktualizować Pulse do stanu ze swojego podstawowego urządzenia.</string>
     <string name="resync_account_summary_phone">Kontynuując wyczyścisz swoje konto na tym urządzeniu i przywrócisz historię wiadomości przechowywaną w pamięci Twojego urządzenia.</string>
     <string name="resync_account_confirmation">W ten sposób usuniesz wszystkie wiadomości z tego urządzenia i przywrócisz aktualną zawartość ze swojego podstawowego urządzenia. Jesteś pewien, że chcesz to zrobić?</string>
+    <string name="resync_contacts">Zsynchronizuj kontakty</string>
     <string name="normalize_color_scheme">Lub wybierz kolor bazowy:</string>
     <string name="no_apps_found">Nie znaleziono aplikacji mogących wykonać tę czynność</string>
     <string name="you_denied_permission">Odrzucono to uprawnienie</string>
@@ -397,6 +417,9 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="emoji_style">Style Emoij</string>
     <string name="emoji_style_default">Ustawienia domyślne</string>
     <string name="emoji_style_android_o">Android O od Google</string>
+    <string name="settings_phone_number">Numer telefonu</string>
+    <string name="disable_battery_optimization">Wyłącz optymalizację baterii</string>
+    <string name="disable_battery_optimization_summary">Jeżeli wiadomości wysłane na telefonie nie synchronizują się z aplikacją przeglądarkową, spróbuj wyłączyć optymalizację baterii</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maksymalna wielkość obrazu</string>
     <string name="use_group_mms">Grupowe wiadomości MMS</string>
@@ -415,10 +438,42 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="signature_summary">Informacja: wysłane podpisy NIE będą pokazywane na liście wiadomości Pulse. Podpisy będą jedynie widoczne dla odbiorcy wiadomości</string>
     <string name="cleanup_old_messages">Usuń stare wiadomości</string>
     <string name="delayed_sending">Wysyłanie opóźnione</string>
+    <string name="delayed_sending_summary">Opcja da Ci możliwość anulowania i/lub edycji wiadomości zanim zostaną wysłane</string>
+    <string name="messaging_features">Funkcje wiadomości</string>
+    <string name="app_features">Funkcje aplikacji</string>
     <string name="quick_compose">Szybkie tworzenie wiadomości</string>
+    <string name="quick_compose_notification">Pokaż powiadomienie</string>
+    <string name="quick_compose_notification_summary">Zawsze aktywne powiadomienia dadzą Ci najszybszy dostęp do stworzenia nowej wiadomości</string>
+    <string name="quick_compose_favorites">Ulubione kontakty</string>
+    <string name="quick_compose_favorites_summary">Ustawione kontakty będą dostępne w akcjach powiadomień</string>
+    <string name="quick_compose_favorites_title">Ustaw maksymalnie 3 kontakty:</string>
     <string name="secure_private_conversations">Zabezpiecz prywatne konwersacje</string>
     <string name="secure_private_conversations_summary">Wymagaj kodu PIN aby odblokować prywatne konwersacje.</string>
     <string name="use_internal_browser">Używaj przeglądarki internetowej</string>
+    <string name="message_backup">Kopia zapasowa wiadomości</string>
+    <string name="message_backup_pref_summary">Martwisz się, że utracisz swoje wiadomości! Pulse do tego nie dopuści</string>
+    <string name="auto_reply_configuration">Konfiguracja automatycznej odpowiedzi</string>
+    <string name="auto_reply_configuration_summary">Ustaw automatyczne odpowiedzi w zależności od Twojej sytuacji</string>
+    <string name="auto_replies">Automatyczne odpowiedzi</string>
+    <string name="driving_mode">Tryb samochodowy</string>
+    <string name="driving_mode_summary">Automatyczne wiadomości zostaną wysłane dla wszystkich otrzymanych wiadomości</string>
+    <string name="vacation_mode">Tryb wakacyjny</string>
+    <string name="auto_reply_text">Tekst wiadomości</string>
+    <string name="create_auto_reply">Stwórz nową automatyczną odpowiedź</string>
+    <string name="delete_auto_reply">Usunąć automatyczną odpowiedź?</string>
+    <string name="which_auto_reply_type">Jaki typ automatycznej odpowiedzi chcesz utworzyć?</string>
+    <string name="keyword">Słowo kluczowe</string>
+    <string name="response">Odpowiedź</string>
+    <string name="contact">Kontakt</string>
+    <string name="folders_title">Foldery</string>
+    <string name="create">Stwórz</string>
+    <string name="create_folder">Stwórz nowy folder</string>
+    <string name="create_folder_summary">Utworzony folder pozwoli Ci organizować swoje wiadomości</string>
+    <string name="no_folders">Brak folderów - naciśnij górny przycisk preferencji aby utworzyć swój pierwszy folder</string>
+    <string name="folder_name">Nazwa folderu...</string>
+    <string name="private_conversations_cannot_be_added_to_folders">Prywatna konwersacja nie może zostać tutaj dodana.</string>
+    <string name="conversation_already_in_a_folder">Konwersacja znajduje się już w innym folderze.</string>
+    <string name="no_folder">Brak folderów</string>
     <!-- Theming Options -->
     <string name="day_night">Domyślny (dzień/noc)</string>
     <string name="always_light">Jasny</string>
@@ -447,6 +502,12 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="contact_card">Karta kontaktu</string>
     <string name="conversation_with">Konwersacja z %1$s</string>
     <string name="send">Wyślij</string>
+    <string name="quick_share">Szybkie udostępnienie</string>
+    <!-- Passcode Entry -->
+    <string name="passcode">Użyj kodu dostępu</string>
+    <string name="forgot_passcode">Zapomniany kod dostępu?</string>
+    <string name="set_passcode">Zapisz kod dostępu</string>
+    <string name="confirm_fingerprint">Przyłóż teraz palec do czytnika aby kontynuować</string>
     <!-- Other -->
     <string name="updating_database">Wyszukiwanie najnowszych wiadomości...</string>
     <string name="dashclock_description">Informacja o nieprzeczytanych SMS/MMS</string>

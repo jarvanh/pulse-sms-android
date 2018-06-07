@@ -33,7 +33,7 @@
     <string name="menu_mms_configuration">MMS Yapılandırması</string>
     <string name="menu_account">Hesabım</string>
     <string name="menu_device_texting">Herhangi bir cihazdan SMS</string>
-    <string name="menu_help">Yardım &amp; geri bildirim</string>
+    <string name="menu_help">Yardım &amp; Geri bildirim</string>
     <string name="menu_about">Hakkında</string>
     <string name="menu_search">Ara</string>
     <string name="menu_mobile_only">Yalnızca Mobil</string>
@@ -285,7 +285,7 @@ Uzun sürmeyecek!</string>
     <string name="mute_conversation">Sohbeti Sustur</string>
     <string name="mute_conversation_summary">Bu sohbet için bildirimler gizlenir</string>
     <string name="private_conversation">Özel Sohbet</string>
-    <string name="private_conversation_summary">Bildirimlerde sohbet içeriği gizlenir</string>
+    <string name="private_conversation_summary">Bildirimlerde içeriği gizle</string>
     <string name="primary_color">Ana Renk</string>
     <string name="primary_dark_color">Birincil Koyu Renk</string>
     <string name="accent_color">Vurgu Rengi</string>
@@ -357,7 +357,7 @@ Uzun sürmeyecek!</string>
     <string name="delete_account_summary">Hesabı bu cihazdan, oturum açılmış diğer cihazlardan ve sunucudan kaldırır. Bu geri çevrilebilir değildir!</string>
     <string name="delete_account_confirmation">Hesabınızı ve diğer her şeyi silmek istediğinize emin misiniz? Daha sonra her zaman yeniden kayıt olabilirsiniz!</string>
     <string name="change_subscription">Aboneliği Değiştir</string>
-    <string name="cancel_on_the_play_store">Aboneliğinizi iptal edin ve Play Store\'da görüntüleyin</string>
+    <string name="cancel_on_the_play_store">Yükseltmek için buraya tıklayın! Aboneliğinizi Play Store\'dan iptal edebilirsiniz.</string>
     <string name="resync_account">Mesajları Eşitle</string>
     <string name="resync_account_summary">Mesajlar eksik mi? Bunu kullanın ve birincil cihazınızdaki güncel mesajarı bu cihaza getirin.</string>
     <string name="resync_account_summary_phone">Bu, hesabınızı temizleyecek ve dahili SMS veritabanınızda şu anda bulunanlarla yenileyecek.</string>
@@ -432,8 +432,8 @@ sadece mesajın alıcısına gösterilir.</string>
     <string name="quick_compose_favorites">Favori Kişiler</string>
     <string name="quick_compose_favorites_summary">Bu kişiler bildirim alanıda görünür olacak</string>
     <string name="quick_compose_favorites_title">3 kişi seçebilirsiniz</string>
-    <string name="secure_private_conversations">Gizli Sohbetleri Güvende Tut</string>
-    <string name="secure_private_conversations_summary">Özel sohbetlere erişmek için bir PIN isteyin</string>
+    <string name="secure_private_conversations">Özel Sohbet Güvenlik Kodu</string>
+    <string name="secure_private_conversations_summary">Bir parola belirlerseniz, özel sohbetlerinizi görmek için onu girmeniz gerekir</string>
     <string name="use_internal_browser">Dahili Web Tarayıcısını Kullan</string>
     <string name="internal_browser_summary">Bunu kapatmak, mesaj listesinde bağlantıların önizlenmesini de devre dışı bırakır</string>
     <string name="message_backup">Mesajları Yedekle</string>
@@ -484,6 +484,7 @@ Alıcı %1$s?</string>
     <string name="conversation_with">%1$s ile sohbet</string>
     <string name="send">Gönder</string>
     <string name="quick_share">Hızlı Paylaş</string>
+    <!-- Passcode Entry -->
     <!-- Other -->
     <string name="updating_database">En yeni mesajlar bulunuyor...</string>
     <string name="dashclock_description">Okunmamış SMS / MMS bilgisi</string>
@@ -573,6 +574,6 @@ Web\'den, masaüstü bilgisayardan, tabletinizden, saatinizden ve hatta TV\'nizd
     <string name="yearly_purchase_improved">$5,99 /\nyıl</string>
     <string name="subscription_toast">7 günlük deneme tamamlanıncaya kadar ödeme <b>yapmazsınız</b>.
 İstediğiniz zaman iptal edin.</string>
-    <string name="redirect_to_play_store">Yükseltme yaptığınız için teşekkürler! Lütfen eski aboneliği <b>Play Store</b>\'dan iptal edin.</string>
+    <string name="redirect_to_play_store">Yükseltme yaptığınız için teşekkürler! Lütfen eski aboneliği <b>Play Store</b>\'dan iptal edin. Pulse bunu otomatik <b>yapamaz</b>.</string>
     <string name="quick_compose_summary">Yeni mesaj oluşturma işlemine en hızlı şekilde erişebilmeniz için daima aktif olan bildirim.</string>
 </resources>

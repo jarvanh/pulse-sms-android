@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Entrar</string>
+    <string name="api_signup">Inscrever-se</string>
+    <string name="api_signup_failed">"Não é possível inscrever-se neste dispositivo, deve primeiro registar-se com um dispositivo principal que tenha um número de telefone! "</string>
+    <string name="api_skip_signup">Ou, se apenas quiser usar a aplicação neste dispositivo e não as funcionalidades de rede como enviar mensagens a partir de um tablet ou um computador, pode saltar este passo:</string>
+    <string name="api_skip">Dispensar</string>
+    <string name="api_email">Endereço de e-mail</string>
+    <string name="api_password">Palavra-chave</string>
+    <string name="api_forgot_password">Perguntas Frequentes da perda de palavra-chave</string>
+    <string name="api_password_confirmation">Confirmação de palavra-chave</string>
+    <string name="api_name">Nome</string>
+    <string name="api_phone_number">Número de telefone</string>
+    <string name="api_connecting">Ligando ao servidor...</string>
+    <string name="api_device_error">"Ocorreu um erro ao adicionar este dispositivo. Vamos tentar de novo! "</string>
+    <string name="api_add_second_primary_device">"Ao que parece, já tem um dispositivo principal
+(%1$s) da sua conta e apenas um é permitido! Quer remover o actual
+dispositivo principal e definir este como o novo principal? "</string>
+    <string name="api_yes">Sim</string>
+    <string name="api_no">Não</string>
+    <string name="api_no_email">Nenhum endereço de e-mail introduzido</string>
+    <string name="api_email_invalid">Endereço de e-mail inválido</string>
+    <string name="api_no_password">Nenhuma palavra-chave introduzida</string>
+    <string name="api_no_password_confirmation">Nenhuma palavra-chave de confirmação introduzida</string>
+    <string name="api_password_mismatch">As palavras-chave não coincidem</string>
+    <string name="api_no_name">Nenhum nome introduzido</string>
+    <string name="api_no_phone_number">Nenhum número introduzido</string>
+    <string name="api_login_error">Ocorreu um erro ao iniciar sessão, será e-mail ou palavra-chave errado(a)?</string>
+    <string name="api_activate_summary">"Inicie sessão para obter todas as suas mensagens neste dispositivo! "</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
+    <string name="api_activate_1_1">Dirija-se a</string>
+    <string name="api_activate_wear">wear.klinkerapps.com</string>
+    <string name="api_activate_tv">tv.klinkerapps.com</string>
+    <string name="api_activate_1_3">"num dispositivo móvel ou num computador. "</string>
+    <string name="api_activate_2_1">No website</string>
+    <string name="api_activate_2_2">introduza o código à direita</string>
+    <string name="api_activate_2_3">"para ligar a sua conta! "</string>
+    <string name="api_confirm_password">Por favor, confirme a sua palavra-chave:</string>
+    <string name="api_wrong_password">"A confirmação falhou. A palavra-chave está correcta? "</string>
+    <string name="api_email_taken">"Ocorreu um erro ao iniciar sessão, já tem conta com este e-mail? "</string>
+    <string name="api_confirm">Confirme</string>
+    <string name="api_continue">Continue</string>
+</resources>

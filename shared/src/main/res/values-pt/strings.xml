@@ -1,0 +1,251 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2017 Luke Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (Mensageiro SMS/Tablet)</string>
+    <string name="app_title">Pulse</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">Mensagem nova</string>
+    <string name="shortcut_compose_long">"Inicie uma nova conversa! "</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">Lista de conversas</string>
+    <string name="menu_archived_conversations">Conversas arquivadas</string>
+    <string name="menu_private_conversations">Conversas privadas</string>
+    <string name="menu_unread_conversations">Conversas não lidas</string>
+    <string name="menu_edit_folders">Gerir pastas...</string>
+    <string name="menu_edit_folders_no_ellipse">Gerir Pastas</string>
+    <string name="menu_schedule">Mensagens agendadas</string>
+    <string name="menu_mute_contacts">Lista de bloqueio</string>
+    <string name="menu_invite">Convide amigos</string>
+    <string name="menu_feature_settings">Acções avançadas</string>
+    <string name="menu_settings">Definições de personalização</string>
+    <string name="menu_customization_settings">Definições de personalização</string>
+    <string name="menu_mms_configuration">Configuração de MMS</string>
+    <string name="menu_account">A minha conta</string>
+    <string name="menu_device_texting">Envie mensagens de qualquer dispositivo</string>
+    <string name="menu_help">Ajuda e feedback</string>
+    <string name="menu_about">Sobre</string>
+    <string name="menu_search">Pesquisa</string>
+    <string name="menu_mobile_only">Apenas telemóveis</string>
+    <string name="menu_snooze">Adiar notificações</string>
+    <string name="menu_call">Ligar ao contacto</string>
+    <string name="menu_view_contact">Ver contacto</string>
+    <string name="menu_view_contacts">Ver contactos</string>
+    <string name="menu_view_media">Ver multimédia</string>
+    <string name="menu_delete_conversation">Apagar conversa</string>
+    <string name="menu_archive_conversation">Arquivar conversa</string>
+    <string name="menu_move_to_inbox">Mover para a caixa de entrada</string>
+    <string name="menu_conversation_information">Informação da conversa</string>
+    <string name="menu_copy_phone_number">Copiar número</string>
+    <string name="menu_view_full_conversation">Ver histórico</string>
+    <string name="menu_conversation_blacklist">Contactos da lista de bloqueio</string>
+    <string name="menu_conversation_schedule">Agendar uma mensagem</string>
+    <string name="menu_contact_settings">Definições de conversa</string>
+    <string name="menu_group_settings">Definições de grupos</string>
+    <string name="menu_snooze_off">Desligar</string>
+    <string name="menu_snooze_1">1 hora</string>
+    <string name="menu_snooze_2">2 horas</string>
+    <string name="menu_snooze_4">4 horas</string>
+    <string name="menu_snooze_8">8 horas</string>
+    <string name="menu_snooze_24">24 horas</string>
+    <string name="menu_snooze_72">72 horas</string>
+    <string name="menu_snooze_custom">Escolha uma altura</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">Sem mensagens</string>
+    <string name="no_messages_summary">"Comece uma nova conversa ou simplesmente desfrute do seu dia! "</string>
+    <string name="close">Fechar</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">Afixado</string>
+    <string name="today">Hoje</string>
+    <string name="yesterday">Ontem</string>
+    <string name="last_week">Esta semana</string>
+    <string name="last_month">Este mês</string>
+    <string name="older">Mais antigo</string>
+    <string name="mark_section_as_read">Marcar todas %1$s como lidas</string>
+    <string name="marking_section_as_read">Marcando todas %1$s como lidas</string>
+    <string name="undo">Anular</string>
+    <string name="enter_search">Pesquisar por...</string>
+    <string name="text_anywhere_description">"Sabia que: Pulse é mais do que apenas uma aplicação de telemóvel.
+Pode usar Pulse para enviar mensagens a partir de <b>qualquer</b> dispositivo! "</string>
+    <string name="convo_list_try_it">"Experimente! "</string>
+    <string name="convo_list_not_now">Agora não</string>
+    <string name="no_private_messages_description">"Definir conversas privadas a partir do menu de definições! "</string>
+    <string name="no_folder_messages_description">"Adicionar uma conversa a esta pasta para exibi-la aqui! "</string>
+    <string name="no_archived_messages_description">"Arquive uma conversa para exibi-la aqui! "</string>
+    <!-- Search Screen -->
+    <string name="conversations">Conversas</string>
+    <string name="messages">Mensagens</string>
+    <!-- Invite Friends Screen -->
+    <string name="invite_friends_title">"Adora o Pulse? "</string>
+    <string name="invite_friends_summary">Também nós e também outros adorarão! Estamos a tentar fazê-lo chegar
+a tantas mãos quantas conseguirmos de forma a podermos continuar a fazer dele o melhor produto que puder ser e,
+por convidar os seus amigos a experimentá-lo, está a ajudar-nos com isso!
+
+Seleccione abaixo os amigos a quem
+gostaria de enviar a aplicação e ser-lhes-á enviada uma SMS com uma curta descrição e
+um link para download!</string>
+    <string name="invite_friends_sms">Comecei a usar uma nova aplicação de mensagens e pensei
+que vais adorar! Além disso, é grátis, portanto, vale a pena experimentares:
+http://messenger.klinkerapps.com</string>
+    <!-- Message List Screen -->
+    <string name="type_message">Escreva a mensagem</string>
+    <string name="type_message_to">Escreva a mensagem para %1$s</string>
+    <string name="attach">Anexar</string>
+    <string name="select_sim">Escolha o SIM</string>
+    <string name="message_from">%1$s</string>
+    <string name="message_from_bullet">%1$s •</string>
+    <string name="mms_image">Imagem MMS</string>
+    <string name="now">Agora</string>
+    <string name="sending">Enviando...</string>
+    <string name="failed">Falhou</string>
+    <string name="delivered">Mensagem entregue</string>
+    <string name="attach_image">Anexar imagem</string>
+    <string name="capture_image">Capturar imagem</string>
+    <string name="attach_gif">Anexar GIF</string>
+    <string name="record_video">Gravar vídeo</string>
+    <string name="record_audio">Gravar áudio</string>
+    <string name="attach_location">Anexar localização</string>
+    <string name="attach_contact">Anexar contacto</string>
+    <string name="attach_contact_summary">"Seleccionar ou introduzir um contacto para anexar à mensagem! "</string>
+    <string name="apply_template">Aplicar modelo</string>
+    <string name="no_location_found">Não foi possível encontrar a sua localização</string>
+    <string name="camera_permission_needed">"É necessário dar permissão à câmara para poder tirar
+fotos! "</string>
+    <string name="take_picture">Capturar foto</string>
+    <string name="flip_picture">Inverter câmara</string>
+    <string name="fullscreen">Ecrã inteiro</string>
+    <string name="attached_image">Imagem anexa</string>
+    <string name="remove_image">Remover imagem anexa</string>
+    <string name="edit_image">Editar imagem anexa</string>
+    <string name="edit_recipients">Editar destinatários</string>
+    <string name="select_folder">Seleccionar pasta para a conversa</string>
+    <string name="permission_needed_for_action">São necessárias permissões para este acto</string>
+    <string name="request_permission">Pedir permissão</string>
+    <string name="no_messages_with_contact">"Não tem ainda quaisquer mensagens nesta conversa,
+é hora de começar a falar! "</string>
+    <string name="save">Guardar</string>
+    <string name="share">Partilhar</string>
+    <string name="share_content">Partilhar conteúdo...</string>
+    <string name="saved">"Guardado na pasta de transferências! "</string>
+    <string name="failed_to_save">Falha ao guardar</string>
+    <string name="start_recording_audio">"Pressione o botão para começar a gravar áudio! "</string>
+    <string name="audio_recording_error">Erro com a gravação :(</string>
+    <string name="message_copied_to_clipboard">Copiado para a área de transferência</string>
+    <string name="view_details">Ver detalhes</string>
+    <string name="delete">Apagar</string>
+    <string name="copy_message">Copiar texto</string>
+    <string name="resend">Reenviar</string>
+    <string name="no_media">"Nenhuma multimédia nesta conversa! "</string>
+    <string name="error_decrypting">"Erro ao desencriptar! Por favor, visualize esta mensagem no seu telefone. "</string>
+    <string name="message_sending_failed">"Falha ao enviar a mensagem! "</string>
+    <string name="preparing_video">Preparando o vídeo&#8230;</string>
+    <string name="delete_message">"Apagar esta mensagem? "</string>
+    <string name="forward_message">Reencaminhar mensagem</string>
+    <string name="share_message">Partilhar mensagem</string>
+    <string name="copy_message_text">Copiar texto da mensagem</string>
+    <string name="select_text_to_copy">Seleccione o texto que pretende copiar:</string>
+    <string name="copy_all_text">Copiar tudo</string>
+    <string name="open_link_to_browser">Abrir ligação no browser</string>
+    <string name="open_link_internal">Abrir ligação internamente</string>
+    <string name="copy_link">Copiar ligação</string>
+    <string name="attach_vcard">Anexar contacto como vCard</string>
+    <string name="attach_plain_text">Anexar contacto como texto simples</string>
+    <!-- Templates -->
+    <string name="type_template_text">Escreva texto de modelo</string>
+    <string name="delete_template">"De certeza que quer apagar este modelo? "</string>
+    <string name="no_templates">Use o botão <b>+</b> para criar um modelo</string>
+    <!-- Compose Screen -->
+    <string name="compose_message">Compor uma nova mensagem</string>
+    <string name="send_message">Enviar mensagem</string>
+    <string name="enter_contact_name">Introduza o nome do contacto</string>
+    <string name="enter_contact_name_or_number">Introduza o nome ou o número do contacto</string>
+    <string name="error_processing_vcard">Erro processando o vCard</string>
+    <string name="compose_recents">Recentes</string>
+    <string name="compose_groups">Grupos</string>
+    <string name="compose_all_contacts">Todos os contactos</string>
+    <string name="private_conversation_disclaimer">Esta é uma <b>conversa privada</b> e não pode ser aberta a partir do ecrã de composição.</string>
+    <!-- Onboarding Screen -->
+    <string name="permissions_needed">A aplicação não pode funcionar em essas permissões! Precisa de as
+aceitar antes que possamos continuar.</string>
+    <string name="loading_messages">Optimizando...</string>
+    <string name="loading_messages_summary">"Trabalhando em obter as suas mensagens para a aplicação. Não
+vai demorar muito! "</string>
+    <string name="tooltip_got_it">"Feito! "</string>
+    <string name="navigation_drawer_conversation_hint">Mais opções para esta conversa estão guardadas no painel de notificações</string>
+    <string name="onboarding_title_1">As mensagens re-imaginadas</string>
+    <string name="onboarding_title_2">Disponível em todo o lado</string>
+    <string name="onboarding_title_3">Personalização poderosa</string>
+    <string name="onboarding_content_1">Interfaces suaves e fluidas com um desenho poderoso e integração sem falhas.</string>
+    <string name="onboarding_content_2">Envie mensagem a partir do seu tablet, computador, relógio, ou qualquer outro dispositivo conectado.</string>
+    <string name="onboarding_content_3">Adicione pin, silencie, altere o tema e personalize as notificações para quaisquer contactos com que troque mensagem. Torne o Pulse seu.</string>
+    <string name="message_anywhere_onboarding_title_1">Envie mensagem de qualquer lado</string>
+    <string name="message_anywhere_onboarding_title_2">Subscrição ou pagamento único</string>
+    <string name="message_anywhere_onboarding_title_3">Experiência de uma semana</string>
+    <string name="message_anywhere_onboarding_content_1">"Integra-se sem falhas com qualquer dispositivo (tablet, relógio, TV, web, Google Chrome nativo, e aplicações do Firefox) para suportar SMS e MMS em qualquer lugar!  "</string>
+    <string name="message_anywhere_onboarding_content_2">Opções de preços incrivelmente baixas para pagar quando precisa: $10.99 para a vida inteira, $5.99 ao ano, $1.99 por 3 meses, ou $0.99 por mês. Menos que uma chávena de café.</string>
+    <string name="message_anywhere_onboarding_content_3">Use a aplicação Android, GRÁTIS (para sempre!) no seu telefone, ou comece a conversar com todos os seus dispositivos com a experiência gratuita de UMA SEMANA.</string>
+    <string name="start_trial">Inicie\nExperiência</string>
+    <string name="not_now">Agora\nNão</string>
+    <string name="onboarding_done">Feito</string>
+    <string name="play_store_subscription_warning">Será redireccionado para o sistema de compra da subscrição da Play Store. <b>Não será</b> cobrado senão ao fim de sete dias e pode cancelar a qualquer altura a partir da página da Play Store.</string>
+    <!-- Notifications -->
+    <string name="notification_ticker">Nova mensagem de %1$s</string>
+    <string name="read">Ler</string>
+    <string name="mute">Silenciar</string>
+    <string name="reply">Responder</string>
+    <string name="reply_to">Responder a %1$s</string>
+    <string name="call">Ligar</string>
+    <string-array name="reply_choices">
+        <item>Sim</item>
+        <item>Não</item>
+        <item>Talvez</item>
+        <item>Ok</item>
+        <item>Obrigado</item>
+    </string-array>
+    <string name="new_mms_message">Nova mensagem MMS</string>
+    <string name="you">Você</string>
+    <string name="new_message">Nova mensagem</string>
+    <string name="received_new_message">"Recebeu uma nova mensagem! "</string>
+    <string name="media">Multimédia</string>
+    <string name="default_notifications_channel">Notificações de conversa padrão</string>
+    <string name="default_notifications_channel_description">Estas definições vão-se aplicar a quaisquer conversas
+em que não tenha criado um Canal de Notificação individual por personalização por conversa.</string>
+    <string name="test_notifications_channel">Testar notificações</string>
+    <string name="status_notifications_channel">Estado das notificações</string>
+    <string name="background_service_channel">Notificações do serviço em segundo plano</string>
+    <string name="general_notifications_channel">Notificações gerais</string>
+    <string name="media_parse_channel">Análise sintática multimédia</string>
+    <string name="group_summary_notifications">Sumários de mensagem de grupo</string>
+    <string name="failed_messages_channel">Mensagens falhadas</string>
+    <string name="silent_background_services">Serviços silenciosos em segundo plano</string>
+    <string name="silent_conversations_channel">Notificações deconversas silenciadas</string>
+    <string name="account_activity_notifications">Notificações de actividade da conta</string>
+    <string name="quick_text_channel">Notificação de mensagem rápida</string>
+    <string name="media_parse_text">Analisando multimédia da mensagem anterior</string>
+    <!-- About, Help and Feedback and Settings -->
+    <!-- MMS Configuration Settings -->
+    <!-- Advanced Features Settings -->
+    <!-- Theming Options -->
+    <!-- Scheduled Messages Screen -->
+    <!-- Encryption -->
+    <!-- Quick Reply -->
+    <!-- Passcode Entry -->
+    <!-- Other -->
+    <!-- Rate it -->
+    <!-- Times -->
+    <!-- Purchase/Subscriptions -->
+</resources>

@@ -24,11 +24,15 @@
     <!-- Drawer Items -->
     <string name="menu_conversations">Liste des conversations</string>
     <string name="menu_archived_conversations">Conversations archivées</string>
+    <string name="menu_private_conversations">Conversations privées</string>
+    <string name="menu_unread_conversations">Conversations non lues</string>
+    <string name="menu_edit_folders">Gérer les dossiers...</string>
+    <string name="menu_edit_folders_no_ellipse">Gérer les dossiers</string>
     <string name="menu_schedule">Messages programmés</string>
     <string name="menu_mute_contacts">Liste noire</string>
     <string name="menu_invite">Inviter des amis</string>
     <string name="menu_feature_settings">Fonctionnalités avancées</string>
-    <string name="menu_settings">Réglages généraux</string>
+    <string name="menu_settings">Paramètres de personnalisation</string>
     <string name="menu_customization_settings">Paramètres de personnalisation</string>
     <string name="menu_mms_configuration">Configuration des MMS</string>
     <string name="menu_account">Mon compte</string>
@@ -72,7 +76,7 @@
     <string name="last_month">Ce mois-ci</string>
     <string name="older">Plus anciennes</string>
     <string name="mark_section_as_read">Marquer les conversations de %1$s comme lues</string>
-    <string name="marking_section_as_read">Marque les conversations de %1$s comme lues</string>
+    <string name="marking_section_as_read">Marquage des conversations de %1$s comme lues...</string>
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d conversation supprimée</item>
         <item quantity="other">%1$d conversations supprimées</item>
@@ -91,6 +95,9 @@
 Vous pouvez utiliser Pulse pour échanger des messages depuis <b>tout</b> appareil !</string>
     <string name="convo_list_try_it">Essayez !</string>
     <string name="convo_list_not_now">Pas maintenant</string>
+    <string name="no_private_messages_description">Configurer les conversations privées depuis leur menu.</string>
+    <string name="no_folder_messages_description">Ajoutez une conversation à ce dossier pour qu\'elle apparaisse ici !</string>
+    <string name="no_archived_messages_description">Archivez une conversation pour qu\'elle apparaisse ici !</string>
     <!-- Search Screen -->
     <string name="conversations">Conversations</string>
     <string name="messages">Messages</string>
@@ -101,7 +108,7 @@ Vous pouvez utiliser Pulse pour échanger des messages depuis <b>tout</b> appare
     <!-- Message List Screen -->
     <string name="type_message">Composez votre message</string>
     <string name="type_message_to">Composez votre message à %1$s</string>
-    <string name="attach">Attacher une pièce jointe</string>
+    <string name="attach">Joindre</string>
     <string name="select_sim">Sélectionner la carte SIM</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s •</string>
@@ -118,7 +125,7 @@ Vous pouvez utiliser Pulse pour échanger des messages depuis <b>tout</b> appare
     <string name="attach_location">Partager votre localisation</string>
     <string name="attach_contact">Joindre un contact</string>
     <string name="attach_contact_summary">Sélectionner ou saisir un contact à joindre au message !</string>
-    <string name="apply_template">Appliquer le template</string>
+    <string name="apply_template">Appliquer le modèle</string>
     <string name="no_location_found">Impossible de vous localiser.</string>
     <string name="camera_permission_needed">L\'autorisation de caméra doit être accordée pour prendre
 des photos !</string>
@@ -129,6 +136,7 @@ des photos !</string>
     <string name="remove_image">Supprimer l\'image en pièce jointe</string>
     <string name="edit_image">Éditer l\'image en pièce jointe</string>
     <string name="edit_recipients">Editer la liste des destinataires</string>
+    <string name="select_folder">Sélectionnez un dossier pour cette conversation.</string>
     <string name="permission_needed_for_action">Permissions requises pour cette action.</string>
     <string name="request_permission">Autoriser</string>
     <string name="no_messages_with_contact">"Vous n\'avez pas encore de messages dans cette conversation,
@@ -147,14 +155,14 @@ Commencez !
     <string name="copy_message">Copier le texte</string>
     <string name="resend">Renvoyer</string>
     <string name="no_media">Pas de média dans cette conversation</string>
-    <string name="error_decrypting">Erreur lors du décryptage. Veuillez lire ce message sur votre téléphone.</string>
+    <string name="error_decrypting">Erreur lors du déchiffrement. Veuillez lire ce message sur votre téléphone.</string>
     <string name="message_sending_failed">Échec de l\'envoi du message</string>
     <string name="preparing_video">Préparation de la vidéo&#8230;</string>
     <string name="delete_message">Supprimer ce message ?</string>
     <string name="forward_message">Transférer</string>
     <string name="share_message">Partager</string>
     <string name="copy_message_text">Copier le texte du message</string>
-    <string name="select_text_to_copy">Sélectionner le texte à copier:</string>
+    <string name="select_text_to_copy">Sélectionner le texte à copier :</string>
     <string name="copy_all_text">Tout copier</string>
     <string name="open_link_to_browser">Ouvrir dans le navigateur</string>
     <string name="open_link_internal">Ouvrir dans l\'application</string>
@@ -162,23 +170,24 @@ Commencez !
     <string name="attach_vcard">Joindre le contact comme vCard</string>
     <string name="attach_plain_text">Joindre le contact en texte</string>
     <!-- Templates -->
-    <string name="type_template_text">Écrivez le texte du template...</string>
-    <string name="delete_template">Êtes-vous sûre de vous vouloir supprimer ce template ?</string>
-    <string name="no_templates">Utilisez le bouton <b>+</b> pour créer un template</string>
+    <string name="type_template_text">Écrivez le texte du modèle...</string>
+    <string name="delete_template">Êtes-vous sûre de vous vouloir supprimer ce modèle ?</string>
+    <string name="no_templates">Utilisez le bouton <b>+</b> pour créer un modèle.</string>
     <!-- Compose Screen -->
     <string name="compose_message">Écrire un nouveau message</string>
     <string name="send_message">Envoyer un message</string>
     <string name="enter_contact_name">Entrer le nom du contact</string>
+    <string name="enter_contact_name_or_number">Entrer le nom ou le numéro du contact.</string>
     <string name="error_processing_vcard">Erreur de création de la vcard</string>
     <string name="compose_recents">Récents</string>
     <string name="compose_groups">Groupes</string>
     <string name="compose_all_contacts">Tous les contacts</string>
+    <string name="private_conversation_disclaimer">Ceci est une <b>conversation privée</b> qui ne peut être ouverte depuis l\'écran de rédaction.</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">L\'application ne peut fonctionner sans ces permissions ! Vous devez les accepter avant de pouvoir continuer.</string>
     <string name="loading_messages">Optimisation en cours...</string>
-    <string name="loading_messages_summary">Nous téléchargeons vos messages dans l\'application, 
-cela sera rapide!</string>
-    <string name="tooltip_got_it">Je l\'ai !</string>
+    <string name="loading_messages_summary">Juste un instant, nous téléchargeons vos messages dans l\'application.</string>
+    <string name="tooltip_got_it">Compris !</string>
     <string name="navigation_drawer_conversation_hint">Plus d\'options pour cette conversation sont stockées dans le tiroir de navigation.</string>
     <string name="onboarding_title_1">Messagerie réinventée</string>
     <string name="onboarding_title_2">Disponible Partout</string>
@@ -229,17 +238,23 @@ cela sera rapide!</string>
 où vous n\'avez pas créé un canal de notification individuel pour la personnalisation par conversation.</string>
     <string name="test_notifications_channel">Tester les notifications</string>
     <string name="status_notifications_channel">Notifications d\'état</string>
+    <string name="background_service_channel">Notification d\'arrière plan</string>
     <string name="general_notifications_channel">Notifications générales</string>
     <string name="media_parse_channel">Analyseur de média</string>
     <string name="group_summary_notifications">Résumés des groupes de messages</string>
     <string name="failed_messages_channel">Messages en échec</string>
+    <string name="silent_background_services">Service en arrière plan</string>
+    <string name="silent_conversations_channel">Notifications de conversation silencieuse</string>
+    <string name="account_activity_notifications">Notification d\'activité du compte</string>
+    <string name="quick_text_channel">Notification Texto rapide</string>
     <string name="media_parse_text">Analyse des médias des messages précédents...</string>
+    <string name="auto_reply_parse_text">Recherche de réponses automatiques à partir de vos anciens messages...</string>
     <string name="creating_channels_text">Création des canaux de notification...</string>
     <string name="write_new_message">Ecrire un nouveau message...</string>
     <string name="receiving_a_message">Réception d\'un message...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Historique des versions de l\'application</string>
-    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright">© 2018 Luke &amp; Jake Klinker</string>
     <string name="copyright_summary">Voir les informations de la licence open source</string>
     <string name="app_version">Version de l\'application</string>
     <string name="account_information">Informations du compte</string>
@@ -258,7 +273,9 @@ pourriez rencontrer !</string>
     <string name="get_in_touch">Entrer en contact</string>
     <string name="faqs">Questions Fréquemment Posées</string>
     <string name="get_help">Obtenir de l\'aide</string>
-    <string name="features">Fonctionnalités</string>
+    <string name="get_help_summary">Des questions ? Je reçois des tonnes de mails tout les jours, ce qui demande du temps pour faire le tri. Si vous voulez m\'aider, n\'hésitez pas a rechercher ici si j\'y ai déjà répondu.</string>
+    <string name="get_help_summary_2">Globalement, l\'aide est assez complète. Mais si vous ne trouvez pas de réponse à ce que vous cherchez, n\'hésitez pas à me contacter et je vous ferait signe.</string>
+    <string name="features">Fonctionnalités de Pulse</string>
     <string name="issues">Report des problèmes</string>
     <string name="issues_summary">Sert également aux demandes de fonctionnalités</string>
     <string name="google_plus">Google+</string>
@@ -281,7 +298,8 @@ pourriez rencontrer !</string>
     <string name="mute_conversation">Mettre en sourdine cette conversation</string>
     <string name="mute_conversation_summary">Cache les notifications de cette conversation</string>
     <string name="private_conversation">Conversation privée</string>
-    <string name="private_conversation_summary">Cacher le contenu de cette conversation sur les notifications</string>
+    <string name="private_conversation_summary">Cacher le contenu dans les notifications</string>
+    <string name="private_conversation_summary_2">Cacher le contenu dans les notifications et déplacer cette conversation dans les <i>Conversations Privées</i></string>
     <string name="primary_color">Couleur primaire</string>
     <string name="primary_dark_color">Couleur primaire sombre</string>
     <string name="accent_color">Couleur secondaire</string>
@@ -320,6 +338,7 @@ pourriez rencontrer !</string>
     <string name="delivery_reports">Accusés de réception</string>
     <string name="delivery_reports_summary">La plupart des opérateurs ne supportent pas cette option</string>
     <string name="theme_settings">Personnalisation</string>
+    <string name="theme_settings_category">Apparence</string>
     <string name="conversation_list_category">Liste des conversations</string>
     <string name="general_category">Général</string>
     <string name="theme_settings_redirect">Thème</string>
@@ -351,16 +370,17 @@ provenant de ce numéro ne seront plus sauvegardés et vous ne serez plus notifi
     <string name="setup_my_account_summary">Créez un compte ou connectez-vous pour accéder à davantage de fonctions comme envoyer des messages depuis votre tablette ou PC</string>
     <string name="preparing_new_account">Préparation du compte&#8230;</string>
     <string name="delete_account">Supprimer le compte</string>
-    <string name="delete_account_summary">Supprime le compte de vos appareils et du serveur. Cette opération est irréversible.</string>
+    <string name="delete_account_summary">Supprime le compte de cet appareil, de vos autres appareils connectés et du serveur. Cette opération est irréversible !</string>
     <string name="delete_account_confirmation">Êtes vous sur de vouloir supprimer ce compte et tout ce qui va avec ? Vous pourrez toujours vous réinscrire plus tard !</string>
     <string name="change_subscription">Changer d\'abonnement</string>
-    <string name="cancel_on_the_play_store">Annuler et afficher votre abonnement sur Play Store</string>
+    <string name="cancel_on_the_play_store">Appuyer ici pour passer à l\'étape supérieure ! Vous pouvez annuler votre souscription dans le Play Store.</string>
     <string name="resync_account">Resynchroniser les messages</string>
     <string name="resync_account_summary">Des messages manquants ?
 A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
     <string name="resync_account_summary_phone">Cette action effacera votre compte et l\'actualisera avec les messages présents actuellement dans votre base de données SMS interne.</string>
     <string name="resync_account_confirmation">Cela va supprimer tous les messages de cet appareil, et démarrer avec une copie propre de ce qui est actuellement sur votre appareil principal. Etes-vous sûr de vouloir faire ça ?</string>
     <string name="resync_contacts">Resynchroniser les contacts</string>
+    <string name="resync_contacts_summary">Publie immédiatement toutes modifications de contact sur le web.</string>
     <string name="normalize_color_scheme">Ou, vous pouvez choisir une couleur unique basée sur le contact :</string>
     <string name="no_apps_found">Aucune application trouvée pour exécuter cette action</string>
     <string name="you_denied_permission">Vous avez refusé cette permission</string>
@@ -378,13 +398,14 @@ A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
     <string name="after_four_messages">Après quatre messages</string>
     <string name="send_as_mms_summary">Envoyer les longs messages par MMS plutôt que par SMS individuels</string>
     <string name="alert_types">Types d\'alertes</string>
-    <string name="alert_types_summary">Préférences de notifications variées</string>
+    <string name="alert_types_summary">Personnalisez la sonnerie, les vibrations et bien d\'autres choses</string>
     <string name="strip_unicode">Remplacer l\'Unicode</string>
     <string name="strip_unicode_summary">Ces caractères seront effacés des messages sortants.</string>
     <string name="giffgaff_delivery">Accusés de réception giffgaff</string>
     <string name="notification_actions">Actions depuis les notifications</string>
     <string name="notification_actions_summary">Trois actions maximales par notification.</string>
     <string name="mms_download_directory">Dossier de téléchargement des médias</string>
+    <string name="mms_download_directory_summary">Endroit où vous souhaitez sauvegarder les images et autres médias MMS</string>
     <string name="refresh_firebase">Actualiser le compte</string>
     <string name="refresh_firebase_summary">Des problèmes de synchronisation ou de connexion à votre compte ? Utiliser cette option.</string>
     <string name="refreshing_notifications">Rafraîchissement du jeton de notification...</string>
@@ -394,12 +415,16 @@ Une fois cela fait, vous devrez vous connecter à nouveau, sur tous vos autres a
     <string name="show_conversation_history_summary">Les notifications afficheront les précédents messages de la conversation</string>
     <string name="emoji_style">Styles d\'émoticônes</string>
     <string name="emoji_style_default">Système par défaut</string>
-    <string name="emoji_style_android_o">Google Android O</string>
+    <string name="emoji_style_android_o">Google Android Oréo</string>
     <string name="settings_phone_number">Numéro de téléphone</string>
-    <string name="disable_battery_optimization">Désactiver les optimisations de batterie</string>
+    <string name="disable_battery_optimization">Désactiver les optimisations de la batterie</string>
+    <string name="disable_battery_optimization_summary">Si les messages mettent du temps à se synchroniser en ligne, essayez de désactiver les règles d\'optimisation de la batterie pour Pulse.</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Taille maximale de l\'image</string>
+    <string name="max_mms_size_summary">Ne définissez pas une valeur plus élevée que ce que votre opérateur vous permet.</string>
     <string name="use_group_mms">Utiliser les MMS groupés</string>
+    <string name="use_group_mms_summary">Si désactivé, les messages groupés seront envoyés comme SMS individuels, à chaque contact de la conversation.</string>
+    <string name="use_mms_read_receipts">Accusés de Lecture</string>
     <string name="auto_save_media">Sauvegarde auto des médias</string>
     <string name="auto_save_media_summary">Sauvegarder automatiquement tous les médias MMS dans le dossier /Téléchargements quand ils sont reçus.</string>
     <string name="apn_configuration">Configuration des APN</string>
@@ -415,30 +440,50 @@ Une fois cela fait, vous devrez vous connecter à nouveau, sur tous vos autres a
     <string name="signature_summary">Les signatures ne seront pas affichées dans la liste des messages, elles
 seront uniquement affichées au destinataire du message.</string>
     <string name="cleanup_old_messages">Supprimer les anciens messages</string>
+    <string name="cleanup_old_messages_summary">Une fois par jour, les messages plus vieux sont supprimés,  selon l\'interval choisit.</string>
+    <string name="cleanup_old_messages_now_summary">Supprime maintenant les messages les plus vieux de cette conversation, selon l\'interval choisit.</string>
     <string name="delayed_sending">Envoi différé</string>
     <string name="delayed_sending_summary">Cela vous donne l\'opportunité d\'annuler ou modifier vos messages avant leur envoi</string>
     <string name="messaging_features">Fonctionnalités des messages</string>
     <string name="app_features">Fonctionnalités de l\'application</string>
-    <string name="quick_compose">Réponse rapide</string>
+    <string name="quick_compose">Notification de réponse rapide</string>
     <string name="quick_compose_notification">Afficher notification</string>
+    <string name="quick_compose_notification_summary">Les notifications permanentes vous donnes le moyen le plus rapide pour composer un message.</string>
     <string name="quick_compose_favorites">Contacts favoris</string>
+    <string name="quick_compose_favorites_summary">Ces contacts seront disponibles comme actions de notifications.</string>
     <string name="quick_compose_favorites_title">Sélectionner jusqu\'à 3 contacts :</string>
-    <string name="secure_private_conversations">Conversations privées sécurisées</string>
-    <string name="secure_private_conversations_summary">Demander un code pour déverrouiller les conversations privées</string>
-    <string name="use_internal_browser">Utiliser le fureteur interne</string>
+    <string name="secure_private_conversations">Mot de passe des conversations privées</string>
+    <string name="secure_private_conversations_summary">Paramétrer un mot de passe vous demandera de l\'entrer avant de pouvoir voir les conversations privées.</string>
+    <string name="use_internal_browser">Utiliser le navigateur interne</string>
     <string name="internal_browser_summary">Désactiver cette option va aussi désactiver la prévisualisation des liens dans la liste des messages</string>
+    <string name="message_backup">Sauvegarde de message</string>
     <string name="message_backup_pref_summary">Inquiet de la perte de vos messages ? Pulse vous couvre</string>
+    <string name="message_backup_summary">Le saviez-vous ? Le service en ligne de Pulse assure la sauvegarde de vos messages. Si vous créez un compte Pulse, vous pouvez l\'utiliser depuis n\'importe quel appareil ou tablette pour restaurer tous vos messages automatiquement!
+\n\n
+Vous n\'aurez pas besoin de vous prendre la tête avec des sauvegardes manuelles. Avec Pulse, tout est fluide, simple et automatique.</string>
     <string name="auto_reply_configuration">Configuration des réponses automatiques</string>
+    <string name="auto_reply_configuration_summary">Paramétrez des réponses automatiques selon la situation.</string>
     <string name="auto_replies">Réponses automatiques</string>
-    <string name="driving_mode">Mode conduite</string>
-    <string name="vacation_mode">Mode vacances</string>
-    <string name="auto_reply_text">Message texte</string>
+    <string name="auto_reply_top_pref_summary">Le mode Conduite et le mode Vacances sont prioritaires sur les autres mode de réponses automatiques. Si l\'un d\'entre eux est activé, aucune autre forme de réponse automatique ne sera envoyée.</string>
+    <string name="driving_mode">Mode Conduite</string>
+    <string name="driving_mode_summary">Envoie les réponses automatiques à tous les messages que vous recevez.</string>
+    <string name="vacation_mode">Mode Vacances</string>
+    <string name="auto_reply_text">Texte du message</string>
     <string name="create_auto_reply">Créer une nouvelle réponse automatique</string>
     <string name="delete_auto_reply">Supprimer la réponse automatique ?</string>
     <string name="which_auto_reply_type">Quel type de réponse automatique voulez-vous créer ?</string>
     <string name="keyword">Mot-clé</string>
     <string name="response">Réponse</string>
     <string name="contact">Contact</string>
+    <string name="folders_title">Dossiers</string>
+    <string name="create">Créer</string>
+    <string name="create_folder">Créer un Nouveau Dossier</string>
+    <string name="create_folder_summary">Une fois un dossier créé, vous pouvez l\'utiliser pour vous aider à organiser vos conversations</string>
+    <string name="no_folders">Aucun dossier créé - Créez votre premier dossier ci-dessus</string>
+    <string name="folder_name">Nom du Dossier...</string>
+    <string name="private_conversations_cannot_be_added_to_folders">Les conversations privées ne peuvent être ajoutées.</string>
+    <string name="conversation_already_in_a_folder">Déjà dans un autre dossier.</string>
+    <string name="no_folder">Pas de Dossier</string>
     <!-- Theming Options -->
     <string name="day_night">Par défaut (Jour/Nuit)</string>
     <string name="always_light">Toujours clair</string>
@@ -468,6 +513,18 @@ seront uniquement affichées au destinataire du message.</string>
     <string name="conversation_with">Conversation avec %1$s</string>
     <string name="send">Envoyer</string>
     <string name="quick_share">Partage rapide</string>
+    <!-- Passcode Entry -->
+    <string name="passcode">Utiliser le mot de passe</string>
+    <string name="forgot_passcode">Mot de passe oublié ?</string>
+    <string name="set_passcode">Sauvegarder le mot de passe</string>
+    <string name="confirm_fingerprint">Confirmer l\'empreinte pour continuer. Toucher le capteur d\'empreinte maintenant.</string>
+    <string name="confirm_passcode">Confirmer le mot de passe pour continuer.</string>
+    <string name="confirm_pulse_password">Confirmer les identifiants du compte Pulse pour continuer.</string>
+    <string name="type_passcode">Créer un mot de passe.</string>
+    <string name="incorrect_passcode">Mot de passe erroné.</string>
+    <string name="verify">Vérifier</string>
+    <string name="enable_passcode_disclaimer">Les conversations privées peuvent être protégées par un mot de passe ou l\'empreinte digitale, afin que vous soyez seul(e) à pouvoir y accéder.\n\n
+Si vous voulez ajouter cette sécurité, configurez un mot de passe depuis les <i>Fonctionnalités Avancées</i>.</string>
     <!-- Other -->
     <string name="updating_database">Recherche des derniers messages...</string>
     <string name="dashclock_description">Information sur les SMS/MMS non lus</string>
@@ -485,7 +542,7 @@ Essayez aujourd\'hui !</string>
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
     <string name="channel_settings">Paramètres du canal de notification</string>
-    <string name="channel_settings_summary">Des canaux sont nécessaires pour personnaliser les notifications sur Android 8.0 et plus</string>
+    <string name="channel_settings_summary">Avec Android Oréo, ce paramètre système vous permet de personnaliser la sonnerie, les vibrations, la LED de notification, et d\'autres choses encore, pour cette conversation.</string>
     <string name="restore_default_channel_settings">Restaurer les paramètres de notifications par défaut</string>
     <string name="channels">Canaux</string>
     <string name="default_channel">Canal par défaut</string>
@@ -499,6 +556,8 @@ Utilisez le canal par défaut pour personnaliser les conversations auxquelles vo
     <string name="verifying_password">Vérification du mot de passe...</string>
     <!-- Rate it -->
     <string name="rate_it">Noter l\'application !</string>
+    <string name="rate_it_title">Sur la route du succès</string>
+    <string name="rate_it_summary">Noter <b>5 étoiles</b> aide beaucoup à faire connaître cette application sur le Play Store. Si vous voulez <i>la voir grandir</i>, n\'hésitez pas a contribuer !</string>
     <string name="rate_it_not_ready">Pas prêt à noter ? Pas de soucis. Quittez la fenêtre et je ne vous le demanderai plus jamais.</string>
     <string name="love_pulse_question">Vous aimez Pulse ?</string>
     <string name="give_a_rating">Merci de noter l\'application ou de la partager avec vos amis !\n\n
@@ -547,12 +606,14 @@ Envoyez des messages depuis internet, un ordinateur de bureau, votre tablette, e
     <string name="seven_days_free">Gratuit pendant 7 jours !</string>
     <string name="competition_cant_beat">La concurrence ne peut rivaliser avec nos prix, notre vitesse ou notre service -
 <b>Prenez 7 jours</b> pour le constater par vous-même !</string>
-    <string name="select_a_trial_below">Sélectionnez une des options ci-dessous pour commencer votre <b>essai gratuit</b>.</string>
+    <string name="select_a_trial_below">Sélectionnez une des 3 options d\'abonnement ci-dessous pour commencer votre <b>essai gratuit</b>.</string>
     <string name="charged_after_trial">Facturé après l\'essai :</string>
     <string name="monthly_purchase_improved">$0.99 /\nmois</string>
     <string name="three_month_purchase_improved">$1.99 /\n3 mois</string>
     <string name="yearly_purchase_improved">$5.99 /\nan</string>
     <string name="subscription_toast">Vous <b>ne serez pas</b> facturé avant la fin de la période d\'essai de 7 jours.
 Annulez à tout moment.</string>
+    <string name="redirect_to_play_store">Merci pour cette souscription ! Pensez à annuler votre abonnement précédent depuis le <b>Play Store</b>. Pulse <b>ne peut pas</b> le faire automatiquement.</string>
+    <string name="play_store">Play Store</string>
     <string name="quick_compose_summary">Notification permanente pour un accès rapide a la composition des messages.</string>
 </resources>
