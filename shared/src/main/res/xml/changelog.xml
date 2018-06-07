@@ -17,8 +17,16 @@
 <changelog>
 
     <version
+        name="3.1.2"
+        description="June 12th, 2018">
+        <text>Bug fixes</text>
+        <text>Translation updates</text>
+        <text>Dependency updates</text>
+    </version>
+
+    <version
         name="3.1.1"
-        description="June tth, 2018">
+        description="June 7th, 2018">
         <text>UI improvements</text>
         <text>Bug fixes</text>
     </version>
