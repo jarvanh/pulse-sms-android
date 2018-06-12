@@ -54,7 +54,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
     private val activity: FragmentActivity? by lazy { fragment.activity }
 
     private var ignoreSendingStatus: Boolean = false
-    private var timestampHeight = DensityUtil.toDp(activity, Settings.mediumFont + 2)
+    private var timestampHeight = DensityUtil.spToPx(activity, Settings.mediumFont + 2)
 
     private val dataProvider: MessageListDataProvider = MessageListDataProvider(this, fragment, messages)
     private val itemBinder: MessageItemBinder = MessageItemBinder(this)
