@@ -30,7 +30,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
             when {
                 intent.action == ComposeConstants.ACTION_EDIT_RECIPIENTS -> changeGroupMessageParticipants(intent)
                 intent.action == Intent.ACTION_SENDTO -> shareDirectlyToSms(intent)
-                intent.action == Intent.ACTION_VIEW -> viewIntent(intent)
+                intent.action == Intent.ACTION_VIEW && (intent.type == null || intent.type == MimeType.TEXT_PLAIN) -> viewIntent(intent)
                 intent.action == Intent.ACTION_SEND -> shareContent(intent)
             }
         } catch (e: Exception) {
@@ -71,7 +71,27 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
 
     private fun viewIntent(intent: Intent) {
         if (intent.extras != null && intent.extras.containsKey("sms_body")) {
-            activity.sender.resetViews(intent.extras.getString("sms_body"), MimeType.TEXT_PLAIN, false)
+            val body = intent.extras.getString("sms_body")
+            if (intent.dataString != null) {
+                val phoneNumbers = if (intent.dataString.contains("?")) {
+                    PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString.substring(0, intent.dataString.indexOf("?"))))
+                } else {
+                    PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString))
+                }
+
+                val builder = StringBuilder()
+                for (i in phoneNumbers.indices) {
+                    builder.append(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(phoneNumbers[i]))
+                    if (i != phoneNumbers.size - 1) {
+                        builder.append(", ")
+                    }
+                }
+
+                val numbers = builder.toString()
+                activity.shareHandler.apply(MimeType.TEXT_PLAIN, body, numbers)
+            } else {
+                activity.sender.resetViews(body, MimeType.TEXT_PLAIN, false)
+            }
         } else if (intent.dataString != null) {
             initiatedFromWebLink(intent)
         }
