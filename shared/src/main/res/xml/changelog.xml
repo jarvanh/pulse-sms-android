@@ -22,6 +22,7 @@
         <!-- Duplicate scheduled messages (I am just not allowing that broadcast receiver to run more than once every 20 seconds -->
         <!-- Changes to the group message coloring (changes are now persisted on the same thread (UI) to prevent race conditions) -->
         <!-- Changes to how sharing from other apps works https://github.com/klinker-apps/messenger-issues/issues/681 -->
+        <!-- Changes to the delivery receiver, if the database isn't able to find the message by searching https://github.com/klinker-apps/messenger-issues/issues/683 -->
         <text>Bug fixes</text>
     </version>
 

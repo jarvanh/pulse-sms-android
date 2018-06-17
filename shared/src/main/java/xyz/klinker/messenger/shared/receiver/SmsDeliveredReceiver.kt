@@ -31,6 +31,7 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.CursorUtil
 import xyz.klinker.messenger.shared.util.SmsMmsUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 
 /**
  * Receiver for getting notifications of when an SMS has been delivered. By default it's super
@@ -63,6 +64,8 @@ class SmsDeliveredReceiver : DeliveredReceiver() {
         val message = SmsMmsUtils.getSmsMessage(context, uri, null)
 
         if (message != null && message.moveToFirst()) {
+            val time = message.getLong(message.getColumnIndex(Telephony.Sms.DATE))
+            val address = message.getString(message.getColumnIndex(Telephony.Sms.ADDRESS))
             var body = message.getString(message.getColumnIndex(Telephony.Sms.BODY))
             message.close()
 
@@ -81,11 +84,23 @@ class SmsDeliveredReceiver : DeliveredReceiver() {
                         .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID))
                 MessageListUpdatedReceiver.sendBroadcast(context, conversationId)
             } else {
-
+                val conversationId = source.findConversationId(context, address)
+                if (conversationId != null) {
+                    val conversationMessages = source.getMessages(context, conversationId, 20)
+                    for (m in conversationMessages) {
+                        if ((m.type == Message.TYPE_SENT || m.type == Message.TYPE_SENDING) && timestampsMatch(m.timestamp, time)) {
+                            source.updateMessageType(context, m.id, if (error) Message.TYPE_ERROR else Message.TYPE_DELIVERED)
+                            MessageListUpdatedReceiver.sendBroadcast(context, conversationId)
+                        }
+                    }
+                }
             }
 
             CursorUtil.closeSilent(messages)
         }
     }
+
+    private fun timestampsMatch(realTime: Long, internalSmsTime: Long) =
+            Math.abs(realTime - internalSmsTime) < 10 * TimeUtils.SECOND
 
 }
