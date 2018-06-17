@@ -80,6 +80,8 @@ class SmsDeliveredReceiver : DeliveredReceiver() {
                 val conversationId = messages
                         .getLong(messages.getColumnIndex(Message.COLUMN_CONVERSATION_ID))
                 MessageListUpdatedReceiver.sendBroadcast(context, conversationId)
+            } else {
+
             }
 
             CursorUtil.closeSilent(messages)
