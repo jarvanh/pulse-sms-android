@@ -16,14 +16,6 @@ import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 import xyz.klinker.messenger.shared.util.TimeUtils
 
-/**
- * If some requests fail, they get written in to the retryable_requests table to get retried when the
- * device regains connectivity. This service should read that table and execute any request that are pending.
- *
- * It should be set up to run periodically, but only when the phone has a connection. With the way
- * FirebaseJobDispatcher works, this should force it to run whenever the user goes from a loss in connectivity
- * to regaining connectivity, or shortly after.
- */
 class RepostQuickComposeNotification : SimpleJobService() {
 
     override fun onRunJob(job: JobParameters?): Int {
