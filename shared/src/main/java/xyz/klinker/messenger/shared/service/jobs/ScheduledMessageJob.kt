@@ -42,8 +42,10 @@ import android.os.Build.VERSION.SDK_INT
 class ScheduledMessageJob : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        if (context == null) {
+        if (context == null || TimeUtils.now - ScheduledMessageJob.lastRun < (20 * TimeUtils.SECOND)) {
             return
+        } else {
+            ScheduledMessageJob.lastRun = TimeUtils.now
         }
 
         val source = DataSource
@@ -120,7 +122,8 @@ class ScheduledMessageJob : BroadcastReceiver() {
 
     companion object {
 
-        val BROADCAST_SCHEDULED_SENT = "xyz.klinker.messenger.SENT_SCHEDULED_MESSAGE"
+        private var lastRun = 0L
+        const val BROADCAST_SCHEDULED_SENT = "xyz.klinker.messenger.SENT_SCHEDULED_MESSAGE"
 
         fun scheduleNextRun(context: Context, source: DataSource = DataSource) {
             val account = Account
