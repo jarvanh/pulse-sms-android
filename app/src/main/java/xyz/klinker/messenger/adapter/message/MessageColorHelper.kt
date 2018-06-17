@@ -63,10 +63,11 @@ class MessageColorHelper {
                         contact.phoneNumber = message.from
                         contact.colors = ColorUtils.getRandomMaterialColor(holder.itemView.context)
 
-                        fromColorMapper.put(message.from!!, contact)
+                        fromColorMapper[message.from!!] = contact
+                        fromColorMapperByName[message.from!!] = contact
 
                         // then write it to the database for later
-                        Thread {
+//                        Thread {
                             val context = holder.itemView.context
                             val source = DataSource
 
@@ -83,7 +84,7 @@ class MessageColorHelper {
 
                                 source.insertContact(context, contact)
                             }
-                        }.start()
+//                        }.start()
 
                         return contact.colors.color
                     }
