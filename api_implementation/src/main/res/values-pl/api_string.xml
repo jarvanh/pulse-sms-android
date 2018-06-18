@@ -46,11 +46,11 @@ Czy chcesz usunąć obecne urządzenie podstawowe i ustawić bieżące jako nowe
     <string name="api_activate_1_1">Przejdź do</string>
     <string name="api_activate_wear">wear.klinkerapps.com</string>
     <string name="api_activate_tv">tv.klinkerapps.com</string>
-    <string name="api_activate_1_3">na urządzeniu przenośnym bądź komputerze.</string>
+    <string name="api_activate_1_3">na urządzeniu przenośnym lub na komputerze</string>
     <string name="api_activate_2_1">Na stronie internetowej</string>
     <string name="api_activate_2_2">wpisz kod po prawej stronie</string>
     <string name="api_activate_2_3">aby połączyć Cię z Twoim kontem!</string>
-    <string name="api_confirm_password">Powtórz hasło:</string>
+    <string name="api_confirm_password">Potwierdź hasło:</string>
     <string name="api_wrong_password">Błąd potwierdzenia. Czy wpisane hasło jest poprawne?</string>
     <string name="api_email_taken">Wystąpił problem podczas logowania - czy posiadasz już konto zarejestrowane na podany adres email?</string>
     <string name="api_confirm">Potwierdź</string>

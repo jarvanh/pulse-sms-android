@@ -24,6 +24,10 @@
     <!-- Drawer Items -->
     <string name="menu_conversations">Conversaties</string>
     <string name="menu_archived_conversations">Archief</string>
+    <string name="menu_private_conversations">Geheime conversaties</string>
+    <string name="menu_unread_conversations">Ongelezen conversaties</string>
+    <string name="menu_edit_folders">Mappen beheren...</string>
+    <string name="menu_edit_folders_no_ellipse">Mappen beheren</string>
     <string name="menu_schedule">Geplande berichten</string>
     <string name="menu_mute_contacts">Geblokkeerd</string>
     <string name="menu_invite">Vrienden uitnodigen</string>
@@ -38,9 +42,9 @@
     <string name="menu_search">Zoeken</string>
     <string name="menu_mobile_only">Enkel Mobiel</string>
     <string name="menu_snooze">Snooze notificaties</string>
-    <string name="menu_call">Bel contact</string>
-    <string name="menu_view_contact">Bekijk contact</string>
-    <string name="menu_view_contacts">Bekijk contacten</string>
+    <string name="menu_call">Bel contactpersoon</string>
+    <string name="menu_view_contact">Bekijk contactpersoon</string>
+    <string name="menu_view_contacts">Bekijk contactpersonen</string>
     <string name="menu_view_media">Bekijk media</string>
     <string name="menu_delete_conversation">Conversatie verwijderen</string>
     <string name="menu_archive_conversation">Conversatie archiveren</string>
@@ -48,7 +52,7 @@
     <string name="menu_conversation_information">Info over conversatie</string>
     <string name="menu_copy_phone_number">Kopieer nummer</string>
     <string name="menu_view_full_conversation">Bekijk geschiedenis</string>
-    <string name="menu_conversation_blacklist">Blokkeer contact</string>
+    <string name="menu_conversation_blacklist">Blokkeer contactpersoon</string>
     <string name="menu_conversation_schedule">Plan een bericht</string>
     <string name="menu_contact_settings">Instellingen conversatie</string>
     <string name="menu_group_settings">Instellingen groep</string>
@@ -91,6 +95,9 @@
 Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="convo_list_try_it">Probeer het!</string>
     <string name="convo_list_not_now">Niet nu</string>
+    <string name="no_private_messages_description">Stel een geheime conversatie in vanuit het instellingenmenu!</string>
+    <string name="no_folder_messages_description">Voeg een conversatie toe aan deze map om het hier te tonen!</string>
+    <string name="no_archived_messages_description">Archiveer een conversatie om het hier te tonen!</string>
     <!-- Search Screen -->
     <string name="conversations">Conversaties</string>
     <string name="messages">Berichten</string>
@@ -116,8 +123,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="record_video">Video opnemen</string>
     <string name="record_audio">Audio opnemen</string>
     <string name="attach_location">Locatie bijvoegen</string>
-    <string name="attach_contact">Voeg contact toe</string>
-    <string name="attach_contact_summary">Selecteer of vul een contact in om toe te voegen aan het bericht!</string>
+    <string name="attach_contact">Voeg contactpersoon toe</string>
+    <string name="attach_contact_summary">Selecteer of vul een contactpersoon in om toe te voegen aan het bericht!</string>
     <string name="apply_template">Sjabloon toepassen</string>
     <string name="no_location_found">We kunnen je locatie nu niet vinden.</string>
     <string name="camera_permission_needed">We hebben jammer genoeg geen toegang tot jouw camera dus kunnen we geen foto maken.</string>
@@ -128,6 +135,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="remove_image">Verwijder bijgevoegde afbeelding</string>
     <string name="edit_image">Bewerk bijgevoegde afbeelding</string>
     <string name="edit_recipients">Bewerk ontvangers</string>
+    <string name="select_folder">Selecteer map voor conversatie</string>
     <string name="permission_needed_for_action">Permissies nodig voor deze actie</string>
     <string name="request_permission">Verzoek om permissies</string>
     <string name="no_messages_with_contact">Je hebt nog geen berichten in deze conversatie, tijd om te beginnen!</string>
@@ -156,8 +164,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="open_link_to_browser">Open link in browser</string>
     <string name="open_link_internal">Open link intern</string>
     <string name="copy_link">Kopieer link</string>
-    <string name="attach_vcard">Contact toevoegen als vCard</string>
-    <string name="attach_plain_text">Contact toevoegen als gewone tekst</string>
+    <string name="attach_vcard">Contactpersoon toevoegen als vCard</string>
+    <string name="attach_plain_text">Contactpersoon toevoegen als gewone tekst</string>
     <!-- Templates -->
     <string name="type_template_text">Vul tekst voor sjabloon in...</string>
     <string name="delete_template">Ben je zeker dat je dit sjabloon wilt verwijderen?</string>
@@ -166,10 +174,12 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="compose_message">Stel nieuw bericht op</string>
     <string name="send_message">Verstuur bericht</string>
     <string name="enter_contact_name">Kies een contact</string>
+    <string name="enter_contact_name_or_number">Vul contactpersoon of nummer in</string>
     <string name="error_processing_vcard">Fout bij verwerken vcard</string>
     <string name="compose_recents">Recent</string>
     <string name="compose_groups">Groepen</string>
-    <string name="compose_all_contacts">Alle contacten</string>
+    <string name="compose_all_contacts">Alle contactpersonen</string>
+    <string name="private_conversation_disclaimer">Dit is een <b>geheime</b> conversatie en kan niet via hier worden geopend.</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">De app kan niet werken zonder deze permissies! Je moet ze accepteren voordat we verder kunnen gaan.</string>
     <string name="loading_messages">Optimaliseren...</string>
@@ -181,7 +191,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="onboarding_title_3">Enorme aanpassingsmogelijkheden</string>
     <string name="onboarding_content_1">Snel, eenvoudig, modern design en naadloze integratie. Pulse plaatst jouw conversaties in de spotlight.</string>
     <string name="onboarding_content_2">SMS vanaf jouw tablet, computer, smartwatch, of elk ander verbonden toestel.</string>
-    <string name="onboarding_content_3">Prik berichten vast, jouw eigen thema en pas notificaties aan voor elk contact. Maak Pulse van jou!</string>
+    <string name="onboarding_content_3">Prik conversaties vast, kies een thema en pas notificaties aan voor elk contact. Maak Pulse van jou!</string>
     <string name="message_anywhere_onboarding_title_1">SMS overal</string>
     <string name="message_anywhere_onboarding_title_2">Abonnement of eenmalige betaling</string>
     <string name="message_anywhere_onboarding_title_3">1 week trial</string>
@@ -229,6 +239,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="group_summary_notifications">Overzicht van de berichtengroep</string>
     <string name="failed_messages_channel">Mislukte berichten</string>
     <string name="silent_background_services">Stille achtergrondservices</string>
+    <string name="silent_conversations_channel">Stille conversatie notificaties</string>
     <string name="account_activity_notifications">Accountactiviteit notificaties</string>
     <string name="quick_text_channel">Snelle tekst notificatie</string>
     <string name="media_parse_text">Media samenstellen van vorige bericht...</string>
@@ -280,8 +291,9 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="pin_conversation_summary">Hou deze conversatie bovenaan de lijst</string>
     <string name="mute_conversation">Demp conversatie</string>
     <string name="mute_conversation_summary">Verberg notificaties voor deze conversatie</string>
-    <string name="private_conversation">Private conversatie</string>
-    <string name="private_conversation_summary">Verberg inhoud van deze conversatie op notificaties</string>
+    <string name="private_conversation">Geheime conversatie</string>
+    <string name="private_conversation_summary">Verberg inhoud op notificaties</string>
+    <string name="private_conversation_summary_2">Verberg inhoud in notificaties en verplaats deze conversatie naar de sectie <i>Geheime conversaties</i></string>
     <string name="primary_color">Hoofdkleur</string>
     <string name="primary_dark_color">Hoofdkleur Donker</string>
     <string name="accent_color">Accentkleur</string>
@@ -358,12 +370,12 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="resync_account_summary">Mis je berichten? Gebruik dit om jouw toestel up-to-date te brengen met jouw hoofdtoestel.</string>
     <string name="resync_account_summary_phone">Dit wist je hele account en laadt de gegevens in van jouw huidige interne sms database.</string>
     <string name="resync_account_confirmation">Dit zal alle berichten verwijderen van dit toestel en zal alle berichten van jouw hoofdtoestel overbrengen naar hier. Zeker dat je dit wil?</string>
-    <string name="resync_contacts">Hersynchroniseer contacten</string>
-    <string name="resync_contacts_summary">Onmiddellijk alle wijzigingen aan contacten doorvoeren naar het web</string>
+    <string name="resync_contacts">Hersynchroniseer contactpersonen</string>
+    <string name="resync_contacts_summary">Onmiddellijk alle wijzigingen aan contactpersonen doorvoeren naar het web</string>
     <string name="normalize_color_scheme">Of, je kan een kleur kiezen om jouw thema op te baseren:</string>
     <string name="no_apps_found">Geen apps gevonden om deze actie mee uit te voeren</string>
     <string name="you_denied_permission">Je hebt de permissie geweigerd</string>
-    <string name="supported_platforms">Supported Platforms</string>
+    <string name="supported_platforms">Ondersteunende platformen</string>
     <string name="supported_platforms_summary">Alle officiële plaatsen waar je toegang hebt tot de app</string>
     <string name="font_size_small">Klein</string>
     <string name="font_size_normal">Normaal</string>
@@ -384,6 +396,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="notification_actions">Notificatieacties</string>
     <string name="notification_actions_summary">Je kan maximum 3 acties toevoegen aan een notificatie</string>
     <string name="mms_download_directory">Media Download Map</string>
+    <string name="mms_download_directory_summary">Waar wil je afbeeldingen en andere MMS media opslaan</string>
     <string name="refresh_firebase">Account hernieuwen</string>
     <string name="refresh_firebase_summary">Problemen met je account, de synchronisatie of kan je niet inloggen? Gebruik deze optie.</string>
     <string name="refreshing_notifications">Nieuw notificatie token aanmaken...</string>
@@ -401,6 +414,8 @@ Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</s
     <string name="max_mms_size">Max afbeelding grootte</string>
     <string name="max_mms_size_summary">Zet dit niet hoger dan dat jouw provider toestaat</string>
     <string name="use_group_mms">Gebruik groep MMS</string>
+    <string name="use_group_mms_summary">Wanneer uitgeschakeld, groepsberichten zullen worden verzonden als individuele sms\'en naar de ontvangers</string>
+    <string name="use_mms_read_receipts">Leesbevestigingen</string>
     <string name="auto_save_media">Auto-save media</string>
     <string name="auto_save_media_summary">Automatisch inkomende MMS-media opslaan in de Downloads-map</string>
     <string name="apn_configuration">APN Configuratie</string>
@@ -424,11 +439,11 @@ Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</s
     <string name="quick_compose">Snel opstellen notificatie</string>
     <string name="quick_compose_notification">Toon notificatie</string>
     <string name="quick_compose_notification_summary">Altijd-actieve notificatie om snel nieuwe berichten op te stellen</string>
-    <string name="quick_compose_favorites">Favoriete contacten</string>
-    <string name="quick_compose_favorites_summary">Drie contacten worden beschikbaar gesteld als notificatieacties</string>
-    <string name="quick_compose_favorites_title">Selecteer tot 3 contacten:</string>
-    <string name="secure_private_conversations">Beveilig private conversaties</string>
-    <string name="secure_private_conversations_summary">Geef PIN in om private conversaties te bekijken</string>
+    <string name="quick_compose_favorites">Favoriete contactpersonen</string>
+    <string name="quick_compose_favorites_summary">Drie contactpersonen worden beschikbaar gesteld als notificatieacties</string>
+    <string name="quick_compose_favorites_title">Selecteer tot 3 contactpersonen:</string>
+    <string name="secure_private_conversations">Wachtwoord Geheime conversaties</string>
+    <string name="secure_private_conversations_summary">Als je een wachtwoord instelt, moet je dit invoeren voordat u geheime conversaties kunt bekijken</string>
     <string name="use_internal_browser">Gebruik interne browser</string>
     <string name="internal_browser_summary">Als je dit uitschakelen zullen er ook geen web-previews worden weergegeven</string>
     <string name="message_backup">Berichtenbackup</string>
@@ -451,6 +466,15 @@ Met Pulse wordt alles automatisch voor jou gedaan!</string>
     <string name="keyword">Sleutelwoord</string>
     <string name="response">Antwoord</string>
     <string name="contact">Contact</string>
+    <string name="folders_title">Mappen</string>
+    <string name="create">Aanmaken</string>
+    <string name="create_folder">Maak een nieuwe map aan</string>
+    <string name="create_folder_summary">Nadat een map is aangemaakt, kan je jouw conversaties beginnen organiseren</string>
+    <string name="no_folders">Geen mappen aangemaakt</string>
+    <string name="folder_name">Mapnaam...</string>
+    <string name="private_conversations_cannot_be_added_to_folders">Geheime conversaties kunnen niet worden toegevoegd.</string>
+    <string name="conversation_already_in_a_folder">Reeds aanwezig in een andere map.</string>
+    <string name="no_folder">Geen map</string>
     <!-- Theming Options -->
     <string name="day_night">Standaard (dag/nacht)</string>
     <string name="always_light">Altijd licht</string>
@@ -459,7 +483,7 @@ Met Pulse wordt alles automatisch voor jou gedaan!</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Ben je zeker dat je dit gepland bericht naar %1$s wilt verwijderen?</string>
     <string name="scheduled_message_hint">Bericht om te versturen...</string>
-    <string name="scheduled_to_hint">Contact om naar te verzenden...</string>
+    <string name="scheduled_to_hint">Contactpersoon om naar te verzenden...</string>
     <string name="scheduled_message_sent">Gepland bericht met succes verstuurd</string>
     <string name="no_scheduled_messages">Geen geplande berichten</string>
     <string name="no_scheduled_messages_summary">Plan een nieuw bericht met de plus-knop onderaan.</string>
@@ -475,10 +499,22 @@ Met Pulse wordt alles automatisch voor jou gedaan!</string>
     <string name="video_message">Video bericht</string>
     <string name="picture_message">Afbeelding bericht</string>
     <string name="gif_message">GIF bericht</string>
-    <string name="contact_card">Contact card</string>
+    <string name="contact_card">Contactpersoon kaart</string>
     <string name="conversation_with">Conversatie met %1$s</string>
     <string name="send">Verzenden</string>
     <string name="quick_share">Snel delen</string>
+    <!-- Passcode Entry -->
+    <string name="passcode">Gebruik wachtwoord</string>
+    <string name="forgot_passcode">Wachtwoord vergeten?</string>
+    <string name="set_passcode">Wachtwoord opslaan</string>
+    <string name="confirm_fingerprint">Bevestig vingerafdruk om door te gaan. Scan je vinger nu.</string>
+    <string name="confirm_passcode">Bevestig wachtwoord om door te gaan.</string>
+    <string name="confirm_pulse_password">Bevestig je Pulse account-details om door te gaan.</string>
+    <string name="type_passcode">Maak een wachtwoord aan.</string>
+    <string name="incorrect_passcode">Fout wachtwoord.</string>
+    <string name="verify">Verifiëren</string>
+    <string name="enable_passcode_disclaimer">Geheime conversaties kunnen d.m.v. een wachtwoord/vingerafdruk worden beveiligd, zodat enkel jij ze kan bekijken.\n\n
+Indien je deze functie wilt gebruiken, kan je een wachtwoord instellen in <i>Geavanceerde opties</i>.</string>
     <!-- Other -->
     <string name="updating_database">Laatste berichten zoeken...</string>
     <string name="dashclock_description">Ongelezen SMS/MMS informatie</string>
@@ -566,5 +602,6 @@ Verstuur berichten via het web, desktop pc, je tablet, je smartwatch en zelfs je
     <string name="subscription_toast">Er zal <b>niets</b> worden aangerekend voordat de 7 dagen trial is afgelopen.
 Je kan elk moment annuleren.</string>
     <string name="redirect_to_play_store">Bedankt voor het upgraden! Gelieve je oude abonnement te annuleren in de <b>Play Store</b>.</string>
+    <string name="play_store">Play Store</string>
     <string name="quick_compose_summary">Altijd-actief notificatie zodat je steeds snel een nieuw bericht kan opstellen</string>
 </resources>

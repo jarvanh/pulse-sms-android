@@ -236,7 +236,129 @@ em que não tenha criado um Canal de Notificação individual por personalizaç�
     <string name="account_activity_notifications">Notificações de actividade da conta</string>
     <string name="quick_text_channel">Notificação de mensagem rápida</string>
     <string name="media_parse_text">Analisando multimédia da mensagem anterior</string>
+    <string name="auto_reply_parse_text">Procurando por respostas automáticas na mensagem anterior...</string>
+    <string name="creating_channels_text">Criando canais de notificação...</string>
+    <string name="write_new_message">Escrever uma nova mensagem...</string>
+    <string name="receiving_a_message">Recebendo uma mensagem...</string>
     <!-- About, Help and Feedback and Settings -->
+    <string name="changelog">Registo de alterações</string>
+    <string name="copyright">© 2018 Luke &amp; Jake Klinker</string>
+    <string name="copyright_summary">Ver informação de licenças de código aberto</string>
+    <string name="app_version">Versão da aplicação</string>
+    <string name="account_information">Informação de conta</string>
+    <string name="account_actions">Acções de conta</string>
+    <string name="danger_zone">Zona de perigo</string>
+    <string name="be_careful_using_these_settings">Siga as instruções e prossiga com cuidado nestas acções</string>
+    <string name="device_id">ID do dispositivo</string>
+    <string name="device_info">Informação do dispositivo</string>
+    <string name="website">Website</string>
+    <string name="access_messages_from_any_device">"Aceda e envie mensagens a partir de qualquer dispositivo! "</string>
+    <string name="beta_disclaimer">"Este projecto ainda está em fase beta, por favor reporte quaisquer problemas que
+possa encontrar! "</string>
+    <string name="app_info">Informação da aplicação</string>
+    <string name="platform_info">Informação da plataforma</string>
+    <string name="troubleshooting">Resolução de problemas</string>
+    <string name="get_in_touch">Entre em contacto</string>
+    <string name="faqs">Questões frequentes</string>
+    <string name="get_help">Obtenha ajuda</string>
+    <string name="get_help_summary">Tem uma questão? Para uma equipa de um só homem, recebo uma quantidade imensa de e-mails todos os dias, o que se imiscui no tempo que tenho para desenvolver novas funcionalidades. Para me ajudar, seria óptimo que pudesse procurar aqui para ver se a sua questão já foi apreciada.</string>
+    <string name="get_help_summary_2">"A secção de ajuda é bastante exaustiva mas, se não encontrar a sua questão específica, por favor entre em contacto e terei todo o gosto em lhe responder! "</string>
+    <string name="features">Funcionalidades do Pulse</string>
+    <string name="issues">Rastreamento de problemas</string>
+    <string name="issues_summary">Também serve como guia de funcionalidades</string>
+    <string name="google_plus">Google+</string>
+    <string name="google_plus_summary">Comunidade Beta do Pulse</string>
+    <string name="email">E-mail</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">Suporte</string>
+    <string name="pin_conversation">Afixar Conversa</string>
+    <string name="pin_conversation_summary">Mantém esta conversa no topo da lista</string>
+    <string name="mute_conversation">Silenciar Conversa</string>
+    <string name="mute_conversation_summary">Esconde as notificações para esta conversa</string>
+    <string name="private_conversation">Conversa privada</string>
+    <string name="private_conversation_summary">Ocultar o conteúdo das notificações</string>
+    <string name="private_conversation_summary_2">Ocultar o conteúdo das notificações e mover esta conversa para a secção <i> Conversas Privadas</i></string>
+    <string name="primary_color">Cor primária</string>
+    <string name="primary_dark_color">Cor principal escura</string>
+    <string name="accent_color">Cor de tom</string>
+    <string name="led_color">Cor do LED</string>
+    <string name="ringtone">Toque</string>
+    <string name="group_name">Nome do grupo</string>
+    <string name="notification_settings">Notificações</string>
+    <string name="repeat_interval">Alerta de repetições</string>
+    <string name="heads_up">Aviso</string>
+    <string name="repeat_never">Nunca</string>
+    <string name="repeat_one_min">A cada minuto</string>
+    <string name="repeat_two_mins">A cada dois minutos</string>
+    <string name="repeat_five_mins">A cada cinco minutos</string>
+    <string name="repeat_ten_mins">A cada dez minutos</string>
+    <string name="repeat_half_hour">A cada meia-hora</string>
+    <string name="repeat_hour">A cada hora</string>
+    <string name="wake_screen">Acordar ecrã</string>
+    <string name="vibrate">Padrão de vibração</string>
+    <string name="vibrate_off">Sem vibração</string>
+    <string name="vibrate_default">Vibração predefinida</string>
+    <string name="vibrate_two_long">Duas vibrações longas</string>
+    <string name="vibrate_two_short">Duas vibrações curtas</string>
+    <string name="vibrate_three_short">Três vibrações curtas</string>
+    <string name="vibrate_one_short_one_long">Uma vibração curta, outra longa</string>
+    <string name="vibrate_one_long_one_short">Uma vibração longa, outra curta</string>
+    <string name="vibrate_one_short">Uma vibração curta</string>
+    <string name="vibrate_one_long">Uma vibração longa</string>
+    <string name="vibrate_one_extra_long">Uma vibração muito longa</string>
+    <string name="vibrate_two_short_one_long">Duas vibrações curtas, uma longa</string>
+    <string name="vibrate_one_long_one_short_one_long">Uma vibração longa, uma curta, uma longa</string>
+    <string name="keyboard_layout">Disposição do teclado</string>
+    <string name="keyboard_default">Teclado predefinido</string>
+    <string name="keyboard_send_key">Tecla de Enviar</string>
+    <string name="keyboard_enter_key">Tecla Enter</string>
+    <string name="sound_effects">Efeitos de Som</string>
+    <string name="delivery_reports">Relatórios de Entrega</string>
+    <string name="delivery_reports_summary">A maior parte dos operadores não suporta esta opção</string>
+    <string name="theme_settings">Personalização</string>
+    <string name="theme_settings_category">Aspecto e Uso</string>
+    <string name="conversation_list_category">Lista de Conversas</string>
+    <string name="general_category">Geral</string>
+    <string name="theme_settings_redirect">Tema</string>
+    <string name="base_theme">Tema Base</string>
+    <string name="global_theme_color">Cor do Tema</string>
+    <string name="font_size">Tamanho da Letra</string>
+    <string name="rounder_bubbles">Bolhas de mensagem arredondadas</string>
+    <string name="adjustable_nav_bar">Combinar a barra de navegação com o tema base</string>
+    <string name="adjustable_nav_bar_summary">O tema claro usará a barra de navegação branca, enquanto os
+temas mais escuros usarão a barra de navegação preta</string>
+    <string name="apply_theme_globally">Aplicar a todas as conversas</string>
+    <string name="apply_theme_globally_summary">Remover os temas individuais para casa conversa, em detrimento
+deste esquema de cores global</string>
+    <string name="swipe_delete">Deslize para Apagar</string>
+    <string name="blacklist_hint">Introduza o número para a lista de bloqueio</string>
+    <string name="add_blacklist">"%1$s
+
+Tem a certeza de que quer adicionar esta entrada à lista de bloqueio? As mensagens
+não mais serão guardadas quando vierem deste número e não será notificado! "</string>
+    <string name="remove_blacklist">"%1$s\n\nQuer apagar este bloqueio? "</string>
+    <string name="blacklist_need_number">"Precisa de introduzir um número à Lista de Bloqueios! "</string>
+    <string name="no_blacklists">Sem listas de bloqueio</string>
+    <string name="no_blacklists_summary">Pode adicionar um com o botão + abaixo</string>
+    <string name="add">Adicionar</string>
+    <string name="privacy_policy">Política de Privacidade</string>
+    <string name="privacy_policy_summary">Confira a nossa política de privacidade na web</string>
+    <string name="account_expiring">Conta a expirar!</string>
+    <string name="signout_time">Terminando sessão em: %1$s</string>
+    <string name="lifetime_subscriber">Subscritor para sempre</string>
+    <string name="trial_period">Período de Experiência</string>
+    <string name="setup_my_account">Configurar Conta</string>
+    <string name="setup_my_account_summary">Registar-se ou iniciar sessão na sua conta para começar a usar
+mais funcionalidades como enviar mensagens do seu tablet ou do seu computador</string>
+    <string name="preparing_new_account">Preparando conta &#8230;</string>
+    <string name="delete_account">Apagar Conta</string>
+    <string name="delete_account_summary">Remove a conta deste dispositivo, de outros dispositivos em que
+tenha iniciado sessão, e do servidor. Isto é irreversível!</string>
+    <string name="delete_account_confirmation">De certeza que quer apagar a sua conta e
+tudo relacionado? Pode sempre registar-se de novo mais tarde!</string>
+    <string name="change_subscription">Mudar subscrição</string>
     <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <!-- Theming Options -->

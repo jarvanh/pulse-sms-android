@@ -32,7 +32,7 @@
     <string name="menu_mute_contacts">Czarna lista</string>
     <string name="menu_invite">Zaproś znajomych</string>
     <string name="menu_feature_settings">Ustawienia zaawansowane</string>
-    <string name="menu_settings">Ustawienia aplikacji</string>
+    <string name="menu_settings">Dostosowanie aplikacji</string>
     <string name="menu_customization_settings">Ustawienia motywu</string>
     <string name="menu_mms_configuration">Konfiguracja MMS</string>
     <string name="menu_account">Moje konto</string>
@@ -97,17 +97,19 @@
     </plurals>
     <string name="undo">Cofnij</string>
     <string name="enter_search">Wyszukaj...</string>
-    <string name="text_anywhere_description">Czy wiesz, że Pulse jest czymś więcej niż aplikacją mobilną?
-Możesz używać Pulse do wysyłania wiadomości z <b>dowolnego</b> urządzenia!</string>
+    <string name="text_anywhere_description">Czy o tym wiedziałeś: Pulse to coś więcej niż aplikacja na telefon. Możesz używać Pulse do wysyłania wiadomości z <b>dowolnego</b> urządzenia!</string>
     <string name="convo_list_try_it">Wypróbuj!</string>
     <string name="convo_list_not_now">Nie teraz</string>
+    <string name="no_private_messages_description">Skonfiguruj prywatne rozmowy w menu ustawień rozmów prywatnych!</string>
+    <string name="no_folder_messages_description">Dodaj rozmowę do tego folderu, aby pojawił się tutaj!</string>
+    <string name="no_archived_messages_description">Zarchiwizuj rozmowę, aby pojawiła się tutaj!</string>
     <!-- Search Screen -->
-    <string name="conversations">Konwersacje</string>
+    <string name="conversations">Rozmowy</string>
     <string name="messages">Wiadomości</string>
     <!-- Invite Friends Screen -->
     <string name="invite_friends_title">Lubisz aplikację Pulse?</string>
     <string name="invite_friends_summary">My już polubiliśmy i czekamy na resztę! Staramy się dotrzeć z Pulse do kogo możemy aby kontynuować rozwijanie jej możliwości i najlepszych cech. Zapraszając swoich znajomych pomożesz nam tego dokonać!\n\nWybierz z listy znajomych, których chcesz poinformować o aplikacji. Otrzymają wiadomość SMS z krótkim opisem i linkiem do pobrania aplikacji!</string>
-    <string name="invite_friends_sms">Znalazłem nową aplikację do SMS, MMS i wydaje mi się, że Tobie też się spodoba! Jest bezpłatna, sprawdź, pobierz ją tutaj: http://messenger.klinkerapps.com</string>
+    <string name="invite_friends_sms">Zacząłem używać nowej aplikacji do SMS-ów i myślę, że spodoba się również Tobie! Dodatkowo jest bezpłatna, możesz ją pobrać stąd: http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">Napisz wiadomość</string>
     <string name="type_message_to">Napisz wiadomość do %1$s</string>
@@ -118,10 +120,10 @@ Możesz używać Pulse do wysyłania wiadomości z <b>dowolnego</b> urządzenia!
     <string name="mms_image">Obraz MMS</string>
     <string name="now">Teraz</string>
     <string name="sending">Wysyłanie...</string>
-    <string name="failed">Nie wysłano</string>
+    <string name="failed">Nie powiodło się</string>
     <string name="delivered">Wiadomość dostarczona</string>
     <string name="attach_image">Załącz obraz</string>
-    <string name="capture_image">Zrzut ekranu</string>
+    <string name="capture_image">Zrób zdjęcie</string>
     <string name="attach_gif">Załącz GIF</string>
     <string name="record_video">Nagraj film</string>
     <string name="record_audio">Nagraj dźwięk</string>
@@ -138,7 +140,7 @@ Możesz używać Pulse do wysyłania wiadomości z <b>dowolnego</b> urządzenia!
     <string name="remove_image">Usuń załączony obraz</string>
     <string name="edit_image">Edytuj załączony obraz</string>
     <string name="edit_recipients">Edytuj adresatów</string>
-    <string name="select_folder">Wybierz folder dla konwersacji</string>
+    <string name="select_folder">Wybierz folder dla rozmowy</string>
     <string name="permission_needed_for_action">Wymagane są dodatkowe uprawnienia aby wykonać tę czynność.</string>
     <string name="request_permission">Wymagane uprawnienie</string>
     <string name="no_messages_with_contact">Nie masz żadnych wiadomości w tej konwersacji,
@@ -172,10 +174,10 @@ czas ją rozpocząć!</string>
     <string name="attach_plain_text">Dodaj kontakt jako zwykły tekst</string>
     <!-- Templates -->
     <string name="type_template_text">Wprowadź tekst szablonu...</string>
-    <string name="delete_template">Czy chcesz usunąć szablon?</string>
-    <string name="no_templates">Użyj klawiszy <b>+</b> aby stworzyć szablon</string>
+    <string name="delete_template">Czy na pewno chcesz usunąć ten szablon?</string>
+    <string name="no_templates">Użyj przycisku <b>+</b> aby utworzyć szablon</string>
     <!-- Compose Screen -->
-    <string name="compose_message">Stwórz nową wiadomość</string>
+    <string name="compose_message">Utwórz nową wiadomość</string>
     <string name="send_message">Wyślij wiadomość</string>
     <string name="enter_contact_name">Wpisz nazwę kontaktu</string>
     <string name="enter_contact_name_or_number">Podaj nazwę lub numer kontaktu</string>
@@ -183,7 +185,7 @@ czas ją rozpocząć!</string>
     <string name="compose_recents">Ostatni</string>
     <string name="compose_groups">Grupy</string>
     <string name="compose_all_contacts">Wszystkie kontakty</string>
-    <string name="private_conversation_disclaimer">To jest <b>prywatna konwersacja</b> i nie może być otwarta na ekranie tworzenia</string>
+    <string name="private_conversation_disclaimer">To jest <b>prywatna rozmowa</b> i nie może być otwarta na ekranie tworzenia wiadomości.</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">Aplikacja nie może poprawnie funkcjonować bez przyznania jej wymienionych uprawnień. Zatwierdź wymagane uprawnienia aby móc kontynuować.</string>
     <string name="loading_messages">Optymalizuję...</string>
@@ -196,9 +198,9 @@ czas ją rozpocząć!</string>
     <string name="onboarding_content_1">Bezproblemowy, płynny layout, mocny design i nieskazitelna integracja.
 Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="onboarding_content_2">Wysyłaj wiadomości z tabletu, komputera, smart zegarka lub każdego innego urządzenia podłączonego do Twojego konta.</string>
-    <string name="onboarding_content_3">Przypinaj, wyciszaj, dostosuj wygląd i powiadomienia każdej konwersacji. Zrób Pulse takim, jaki Ci się podoba.</string>
+    <string name="onboarding_content_3">Przypinaj, wyciszaj, dostosowuj wygląd i powiadomienia dla każdego kontaktu, z którym rozmawiasz. Spraw, by Pulse był twój.</string>
     <string name="message_anywhere_onboarding_title_1">Wysyłaj wiadomości gdziekolwiek jesteś</string>
-    <string name="message_anywhere_onboarding_title_2">Subskrypcja lub pojedynczy zakup</string>
+    <string name="message_anywhere_onboarding_title_2">Abonament lub pojedynczy zakup</string>
     <string name="message_anywhere_onboarding_title_3">Tygodniowa wersja próbna</string>
     <string name="message_anywhere_onboarding_content_1">Bezproblemowa integracja z każdym urządzeniem (tablet, zegarek, TV, aplikacja web oraz aplikacja natywna w Google Chrome i Firefox) wspierająca wiadomości SMS i MMS z każdego miejsca!</string>
     <string name="message_anywhere_onboarding_content_2">Szalenie niskie warianty płatności dostosowane do Twoich potrzeb: $10.99 dożywotnio, $5.99 rocznie, $1.99 co 3 miesiące lub $0.99 co miesiąc. To mniej niż filiżanka kawy.</string>
@@ -216,10 +218,10 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
         <item quantity="many">Otrzymane konwersacje: %1$d</item>
     </plurals>
     <plurals name="new_messages">
-        <item quantity="one">Otrzymane wiadomości: %1$d</item>
-        <item quantity="other">Otrzymane wiadomości: %1$d</item>
-        <item quantity="few">Otrzymane wiadomości: %1$d</item>
-        <item quantity="many">Otrzymane wiadomości: %1$d</item>
+        <item quantity="one">%1$d nowa wiadomość</item>
+        <item quantity="other">%1$d nowych wiadomości</item>
+        <item quantity="few">%1$d nowe wiadomości</item>
+        <item quantity="many">%1$d nowych wiadomości</item>
     </plurals>
     <string name="read">Przeczytane</string>
     <string name="mute">Wycisz</string>
@@ -238,21 +240,21 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="new_message">Nowa wiadomość</string>
     <string name="received_new_message">Otrzymałeś nową wiadomość SMS!</string>
     <string name="media">Multimedia</string>
-    <string name="default_notifications_channel">Domyślna notyfikacja konwersacji</string>
-    <string name="default_notifications_channel_description">Ustawienia te zostaną przypisane dla wszystkich konwersacji, do których nie zostały przypisane indywidualne kanały notyfikacji.</string>
+    <string name="default_notifications_channel">Domyślne powiadomienia o rozmowie</string>
+    <string name="default_notifications_channel_description">Te ustawienia będą dotyczyć każdej rozmowy, dla której nie utworzono indywidualnego kanału powiadomień.</string>
     <string name="test_notifications_channel">Powiadomienia testowe</string>
     <string name="status_notifications_channel">Powiadomienia o statusie</string>
     <string name="background_service_channel">Powiadomienia w tle</string>
     <string name="general_notifications_channel">Powiadomienia ogólne</string>
-    <string name="media_parse_channel">Kompresor multimediów</string>
+    <string name="media_parse_channel">Analizator multimediów</string>
     <string name="group_summary_notifications">Podsumowanie rozmów grupowych</string>
     <string name="failed_messages_channel">Nie wysłane wiadomości</string>
-    <string name="silent_background_services">Wycisz powiadomienia w tle</string>
+    <string name="silent_background_services">Ciche usługi w tle</string>
     <string name="silent_conversations_channel">Wycisz powiadomienia konwersacji</string>
     <string name="account_activity_notifications">Powiadomienia aktywności konta</string>
-    <string name="quick_text_channel">Powiadomienia szybkich wiadomości</string>
-    <string name="media_parse_text">Kompresuję multimedia z poprzedniej wiadomości...</string>
-    <string name="auto_reply_parse_text">Poszukuję automatycznej odpowiedzi w poprzedniej wiadomości...</string>
+    <string name="quick_text_channel">Szybkie powiadomienia tekstowe</string>
+    <string name="media_parse_text">Analizowanie multimediów z poprzedniej wiadomości tekstowej ...</string>
+    <string name="auto_reply_parse_text">Szukam odpowiedzi automatycznych na poprzednią wiadomość tekstową ...</string>
     <string name="creating_channels_text">Tworzenie kanałów powiadomień...</string>
     <string name="write_new_message">Napisz nową wiadomość...</string>
     <string name="receiving_a_message">Odbieranie wiadomości...</string>
@@ -264,23 +266,23 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="account_information">Informacje o koncie</string>
     <string name="account_actions">Ustawienia konta</string>
     <string name="danger_zone">Strefa niebezpieczna</string>
-    <string name="be_careful_using_these_settings">Postępuj zgodnie z instrukcją - z uwagą wykonuj opisywanie akcje.</string>
+    <string name="be_careful_using_these_settings">Postępuj zgodnie z instrukcjami i zachowaj ostrożność podczas korzystania z tych działań.</string>
     <string name="device_id">ID urządzenia</string>
     <string name="device_info">Informacje o urządzeniu</string>
     <string name="website">Strona internetowa</string>
-    <string name="access_messages_from_any_device">Korzystaj i wysyłaj wiadomości z każdego urządzenia!</string>
-    <string name="beta_disclaimer">Ten projekt jest nadal w fazie testowej. Jeśli znajdziesz jakikolwiek błąd proszę o informację!</string>
+    <string name="access_messages_from_any_device">Dostęp i wysyłanie wiadomości z dowolnego urządzenia!</string>
+    <string name="beta_disclaimer">Ten projekt jest nadal w fazie testów, zgłoś problemy, które być może znajdziesz!</string>
     <string name="app_info">Informacje o aplikacji</string>
     <string name="platform_info">Informacje o platformie</string>
     <string name="troubleshooting">Rozwiązywanie problemów</string>
     <string name="get_in_touch">Bądź w kontakcie</string>
     <string name="faqs">FAQ - często zadawane pytania</string>
     <string name="get_help">Uzyskaj pomoc</string>
-    <string name="get_help_summary">Masz pytanie? Dostaję masę maili dziennie, więc poświęcając swój czasu na wczytywanie się w nie pozbawiam się czasu na tworzenie nowych funkcjonalności aplikacji. Możesz mi w tym pomóc, przeszukując wpierw FAQ - być może znajdziesz tutaj odpowiedź na swoje pytanie.</string>
-    <string name="get_help_summary_2">FAQ staje się co raz bardziej obszerniejsza, lecz jeżeli nie widzisz w niej odpowiedzi na swoje pytanie skontaktuj się ze mną, a ja niebawem odezwę się do Ciebie!</string>
-    <string name="features">Możliwości aplikacji</string>
-    <string name="issues">Śledzenie błędów</string>
-    <string name="issues_summary">Służy również jako przewodnik po możliwościach</string>
+    <string name="get_help_summary">Mam pytanie? Każdego dnia dostaję szaloną ilość wiadomości e-mail, które jednoosobowemu zespołowi zabierają czas potrzebny na rozwój nowych funkcji. Aby mi pomóc, najpierw sprawdź w FAQ, czy już nie odpowiedziałem na twoje pytanie.</string>
+    <string name="get_help_summary_2">Sekcja pomocy jest dość obszerna, ale jeśli nie znajdziesz swojego konkretnego pytania, skontaktuj się ze mną, a z przyjemnością odpowiem!</string>
+    <string name="features">Funkcje Pulse</string>
+    <string name="issues">Śledzenie problemów</string>
+    <string name="issues_summary">Służy także jako plan przyszłego rozwoju</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Społeczność Pulse Beta</string>
     <string name="email">Email</string>
@@ -303,10 +305,10 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="pin_conversation">Przypnij konwersację</string>
     <string name="pin_conversation_summary">Utrzymuj tę konwersację na początku listy</string>
     <string name="mute_conversation">Wycisz konwersację</string>
-    <string name="mute_conversation_summary">Ukryj powiadomienia konwersacji</string>
-    <string name="private_conversation">Konwersacja prywatna</string>
-    <string name="private_conversation_summary">Ukryj zawartość konwersacji na powiadomieniach</string>
-    <string name="private_conversation_summary_2">Ukryj zawartość wiadomości na powiadomieniach i przenieś konwersację do <i>Prywatnych konwersacji</i></string>
+    <string name="mute_conversation_summary">Ukrywa powiadomienia dla tej rozmowy</string>
+    <string name="private_conversation">Rozmowa prywatna</string>
+    <string name="private_conversation_summary">Ukryj treść powiadomień</string>
+    <string name="private_conversation_summary_2">Ukryj treść powiadomień i przenieś tę rozmowę do sekcji <i>Prywatne rozmowy</i></string>
     <string name="primary_color">Kolor podstawowy</string>
     <string name="primary_dark_color">Kolor podstawowy ciemny</string>
     <string name="accent_color">Kolor akcentu</string>
@@ -324,7 +326,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="repeat_half_hour">Co pół godziny</string>
     <string name="repeat_hour">Co godzinę</string>
     <string name="wake_screen">Włącz ekran</string>
-    <string name="vibrate">Styl wibracji</string>
+    <string name="vibrate">Wzór wibracji</string>
     <string name="vibrate_off">Brak wibracji</string>
     <string name="vibrate_default">Domyślna wibracja</string>
     <string name="vibrate_two_long">Dwie długie wibracje</string>
@@ -339,13 +341,13 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="vibrate_one_long_one_short_one_long">Długa, krótka, długa wibracja</string>
     <string name="keyboard_layout">Układ klawiatury</string>
     <string name="keyboard_default">Standardowa klawiatura</string>
-    <string name="keyboard_send_key">Przycisk \"Wyślij\"</string>
+    <string name="keyboard_send_key">Przycisk Wyślij</string>
     <string name="keyboard_enter_key">Przycisk Enter</string>
     <string name="sound_effects">Dźwięki aplikacji</string>
-    <string name="delivery_reports">Potwierdzenie dostarczenia</string>
+    <string name="delivery_reports">Potwierdzenia dostarczenia</string>
     <string name="delivery_reports_summary">Większość operatorów nie wspiera tej opcji</string>
     <string name="theme_settings">Personalizacja</string>
-    <string name="theme_settings_category">Wygląd i użytkowanie</string>
+    <string name="theme_settings_category">Wygląd i wrażenia</string>
     <string name="conversation_list_category">Lista konwersacji</string>
     <string name="general_category">Ogólne</string>
     <string name="theme_settings_redirect">Motyw</string>
@@ -353,42 +355,44 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="global_theme_color">Kolor motywu</string>
     <string name="font_size">Rozmiar czcionki</string>
     <string name="rounder_bubbles">Okrągłe bąbelki wiadomości</string>
-    <string name="adjustable_nav_bar">Motyw główny na pasku nawigacyjnym</string>
+    <string name="adjustable_nav_bar">Dopasuj pasek nawigacji do motywu bazowego</string>
     <string name="adjustable_nav_bar_summary">Jasny motyw wyświetli biały pasek nawigacyjny, ciemne motywy wyświetlą czarny pasek nawigacyjny</string>
     <string name="apply_theme_globally">Zastosuj do wszystkich konwersacji</string>
-    <string name="apply_theme_globally_summary">Usuń motywy przypisane do poszczególnych konwersacji i zatwierdź ustawienie globalne</string>
+    <string name="apply_theme_globally_summary">Usuń motywy z poszczególnych konwersacji, użyj globalnego zestawu kolorów</string>
     <string name="swipe_delete">Przesuń aby usunąć</string>
     <string name="blacklist_hint">Dodaj numer do czarnej listy...</string>
-    <string name="add_blacklist">%1$s\n\nCzy jesteś pewien aby dodać ten numer do czarnej listy? Wiadomości przysłane z tego numeru nie będą już zapisywane i nie będziesz o nich informowany!</string>
+    <string name="add_blacklist">%1$s\n\nCzy na pewno chcesz dodać ten numer do czarnej listy? Wiadomości z tego numeru nie będą już zapisywane ani nie otrzymasz o nich powiadomienia!</string>
     <string name="remove_blacklist">%1$s\n\nCzy chcesz usunąć ten numer z czarnej listy?</string>
-    <string name="blacklist_need_number">Podaj numer telefonu aby zapisać go na czarnej liście.</string>
+    <string name="blacklist_need_number">Podaj numer telefonu, aby dodać go do czarnej listy.</string>
     <string name="no_blacklists">Brak numerów na czarnej liście</string>
-    <string name="no_blacklists_summary">Dotknij poniższego przycisku z plusem, aby zacząć nową konwersację.</string>
+    <string name="no_blacklists_summary">Aby dodać numer do czarnej listy, dotknij przycisku z plusem.</string>
     <string name="add">Dodaj</string>
     <string name="privacy_policy">Polityka prywatności</string>
     <string name="privacy_policy_summary">Zobacz naszą politykę prywatności w sieci</string>
     <string name="account_expiring">Konto wygasa!</string>
     <string name="signout_time">Wylogowanie na %1$s</string>
-    <string name="lifetime_subscriber">Dożywotni Subskrybent</string>
+    <string name="lifetime_subscriber">Dożywotni Abonent</string>
     <string name="trial_period">Okres próbny</string>
     <string name="setup_my_account">Ustawienia konta</string>
-    <string name="setup_my_account_summary">Utwórz konto lub zaloguj się aby wykorzytać pełny potencjał aplikacji, taki jak wysyłanie wiadomości z tabletu lub komputera.</string>
+    <string name="setup_my_account_summary">Zarejestruj się lub zaloguj się na swoje konto, aby zacząć korzystać z funkcji takich jak przesyłanie wiadomości z tabletu lub komputera</string>
     <string name="preparing_new_account">Przygotowywanie konta&#8230;</string>
     <string name="delete_account">Usuń konto</string>
     <string name="delete_account_summary">Usuwa konto z tego urządzenia, innych podłączonych urządzeń, oraz z serwera. Tej operacji nie można cofnąć!</string>
-    <string name="delete_account_confirmation">Jesteś pewien, że chcesz usunąć swoje konto i wszystko co jest z nim powiązane? Zawsze możesz się zapisać ponownie później!</string>
+    <string name="delete_account_confirmation">Jesteś pewien, że chcesz usunąć swoje konto i wszystko z nim powiązane? Zawsze możesz zapisać się ponownie później!</string>
     <string name="change_subscription">Zmień subskrypcję</string>
-    <string name="cancel_on_the_play_store">Anuluj i sprawdź swoją subskrypcję w Sklepie Google Play</string>
-    <string name="resync_account">Ponów synchronizację konta</string>
-    <string name="resync_account_summary">Brakujące wiadomości? Użyj tego aby zaktualizować Pulse do stanu ze swojego podstawowego urządzenia.</string>
-    <string name="resync_account_summary_phone">Kontynuując wyczyścisz swoje konto na tym urządzeniu i przywrócisz historię wiadomości przechowywaną w pamięci Twojego urządzenia.</string>
-    <string name="resync_account_confirmation">W ten sposób usuniesz wszystkie wiadomości z tego urządzenia i przywrócisz aktualną zawartość ze swojego podstawowego urządzenia. Jesteś pewien, że chcesz to zrobić?</string>
-    <string name="resync_contacts">Zsynchronizuj kontakty</string>
-    <string name="normalize_color_scheme">Lub wybierz kolor bazowy:</string>
+    <string name="cancel_on_the_play_store">Kliknij tutaj, aby dokonać aktualizacji! Możesz anulować subskrypcję w Sklepie Play.</string>
+    <string name="resync_account">Ponów synchronizację wiadomości</string>
+    <string name="resync_account_summary">Brakujące wiadomości? Użyj tej opcji, aby zsynchronizować to urządzenie z twoim głównym urządzeniem.</string>
+    <string name="resync_account_summary_phone">Spowoduje to wyczyszczenie konta i odświeżenie go
+do stanu zgodnego z twoją wewnętrzną bazą SMS.</string>
+    <string name="resync_account_confirmation">Spowoduje to usunięcie wszystkich wiadomości z tego urządzenia, i utworzenie kopii tego, co aktualnie znajduje się na Twoim głównym urządzeniu. Jesteś pewien, że tego właśnie chcesz?</string>
+    <string name="resync_contacts">Ponownie synchronizuj kontakty</string>
+    <string name="resync_contacts_summary">Natychmiast wyślij wszelkie zmiany kontaktu do sieci.</string>
+    <string name="normalize_color_scheme">Lub możesz wybrać dowolny kolor, na którym będzie oparty motyw:</string>
     <string name="no_apps_found">Nie znaleziono aplikacji mogących wykonać tę czynność</string>
-    <string name="you_denied_permission">Odrzucono to uprawnienie</string>
+    <string name="you_denied_permission">Odrzuciłeś to uprawnienie</string>
     <string name="supported_platforms">Wspierane platformy</string>
-    <string name="supported_platforms_summary">Wszystkie oficjalnie wspierane miejsca z których możesz korzystać z aplikacji</string>
+    <string name="supported_platforms_summary">Wszystkie oficjalnie wspierane miejsca, z których możesz korzystać z aplikacji</string>
     <string name="font_size_small">Mała</string>
     <string name="font_size_normal">Normalna</string>
     <string name="font_size_large">Duża</string>
@@ -399,90 +403,101 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="after_two_messages">Po dwóch wiadomościach</string>
     <string name="after_three_messages">Po trzech wiadomościach</string>
     <string name="after_four_messages">Po czterech wiadomościach</string>
-    <string name="send_as_mms_summary">Długie wiadomości będą wysyłane jako MMS</string>
+    <string name="send_as_mms_summary">Długie wiadomości będą wysyłane jako MMS zamiast pojedynczych SMS-ów</string>
     <string name="alert_types">Typy ostrzeżeń</string>
-    <string name="alert_types_summary">Personalizacja powiadomień</string>
-    <string name="strip_unicode">Wyklucz znaki unicode</string>
-    <string name="strip_unicode_summary">Znaki te zostaną usunięte z wysyłanych wiadomości</string>
+    <string name="alert_types_summary">Dostosuj dzwonek, wzór wibracji i więcej</string>
+    <string name="strip_unicode">Wyklucz znaki Unicode</string>
+    <string name="strip_unicode_summary">Te znaki zostaną usunięte z wiadomości wychodzących</string>
     <string name="giffgaff_delivery">Raporty doręczeń w Giffgaff</string>
     <string name="notification_actions">Akcje na powiadomieniach</string>
-    <string name="notification_actions_summary">Maksymalnie trzy akcje mogą być aktywne na powiadomieniach</string>
+    <string name="notification_actions_summary">Do powiadomień można przypisać maksymalnie trzy akcje</string>
     <string name="mms_download_directory">Miejsce pobierania załączników​</string>
-    <string name="refresh_firebase">Odśwież powiadomienia push</string>
-    <string name="refresh_firebase_summary">Wiadomości nie docierają na to urządzenie? Spróbuj ponownie po użyciu tej opcji.</string>
-    <string name="refreshing_notifications">Odświeżanie tokena powiadomień...</string>
-    <string name="refresh_firebase_warning">Jeżeli będziesz kontynuować, <b>musisz</b> przejść przez cały ten proces. Po zakończeniu należy zalogować się ponownie na wszystkich swoich urządzeniach. Czy chcesz kontynuować?</string>
-    <string name="show_conversation_history">Pokaż historię wiadomości</string>
-    <string name="show_conversation_history_summary">Powiadomienie wyświetli poprzednie wiadomości tej konwersacji</string>
-    <string name="emoji_style">Style Emoij</string>
-    <string name="emoji_style_default">Ustawienia domyślne</string>
-    <string name="emoji_style_android_o">Android O od Google</string>
+    <string name="mms_download_directory_summary">Gdzie chcesz zapisywać obrazy i inne załączniki multimedialne</string>
+    <string name="refresh_firebase">Odśwież konto</string>
+    <string name="refresh_firebase_summary">Problemy z synchronizacją Twojego konta lub logowaniem? Użyj tej opcji.</string>
+    <string name="refreshing_notifications">Odświeżanie tokena powiadomienia ...</string>
+    <string name="refresh_firebase_warning">Jeśli rozpoczniesz ten proces, <b>musisz</b> przejść przez całą procedurę.
+Po zakończeniu będziesz musiał zalogować się ponownie na wszystkich Twoich urządzeniach. Czy chcesz kontynuować?</string>
+    <string name="show_conversation_history">Pokaż historię rozmowy</string>
+    <string name="show_conversation_history_summary">Powiadomienia będą wyświetlać poprzednie wiadomości w tej rozmowie</string>
+    <string name="emoji_style">Style Emotikonek</string>
+    <string name="emoji_style_default">Domyślne ustawienie systemowe</string>
+    <string name="emoji_style_android_o">Android Oreo od Google</string>
     <string name="settings_phone_number">Numer telefonu</string>
     <string name="disable_battery_optimization">Wyłącz optymalizację baterii</string>
-    <string name="disable_battery_optimization_summary">Jeżeli wiadomości wysłane na telefonie nie synchronizują się z aplikacją przeglądarkową, spróbuj wyłączyć optymalizację baterii</string>
+    <string name="disable_battery_optimization_summary">Jeśli wiadomości z telefonu nie docierają do internetu, spróbuj wyłączyć optymalizacje baterii dla Pulse.</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maksymalna wielkość obrazu</string>
-    <string name="use_group_mms">Grupowe wiadomości MMS</string>
+    <string name="max_mms_size_summary">Nie ustawiaj wyższej wartości niż zezwala na to Twój operator</string>
+    <string name="use_group_mms">Użyj grupowej wiadomości MMS</string>
+    <string name="use_group_mms_summary">Po wyłączeniu, wiadomości grupowe będą wysyłane jako osobne wiadomości SMS do każdego z odbiorców</string>
+    <string name="use_mms_read_receipts">Czytaj potwierdzenia</string>
     <string name="auto_save_media">Automatyczne zapisywanie załączników</string>
-    <string name="auto_save_media_summary">Po odebraniu wiadomości MMS automatycznie zapisuje załączniki w systemowym folderze pobierania</string>
+    <string name="auto_save_media_summary">Automatycznie zapisuj wszystkie załączniki z odebranych wiadomości multimedialnych w folderze /Downloads</string>
     <string name="apn_configuration">Konfiguracja APN</string>
-    <string name="override_system_apn">Pomiń systemowe APNy</string>
-    <string name="mmsc_url">URL MMSC</string>
+    <string name="override_system_apn">Zastąp systemowe nazwy APN</string>
+    <string name="mmsc_url">Adres URL MMSC</string>
     <string name="mms_proxy">Proxy MMS</string>
     <string name="mms_port">Port MMS</string>
-    <string name="user_agent">Tag urządzenia</string>
-    <string name="user_agent_profile_url">Adres URL profilu urządzenia</string>
-    <string name="user_agent_profile_tag">Znacznik nazwy profilu urządzenia</string>
+    <string name="user_agent">Agent użytkownika</string>
+    <string name="user_agent_profile_url">Adres URL profilu agenta użytkownika</string>
+    <string name="user_agent_profile_tag">Nazwa znacznika profilu agenta użytkownika</string>
     <!-- Advanced Features Settings -->
     <string name="signature">Podpis</string>
-    <string name="signature_summary">Informacja: wysłane podpisy NIE będą pokazywane na liście wiadomości Pulse. Podpisy będą jedynie widoczne dla odbiorcy wiadomości</string>
+    <string name="signature_summary">Podpisy nie będą wyświetlane na liście wiadomości Pulse, zostaną wyświetlone tylko odbiorcy wiadomości</string>
     <string name="cleanup_old_messages">Usuń stare wiadomości</string>
-    <string name="delayed_sending">Wysyłanie opóźnione</string>
-    <string name="delayed_sending_summary">Opcja da Ci możliwość anulowania i/lub edycji wiadomości zanim zostaną wysłane</string>
+    <string name="cleanup_old_messages_summary">Ta operacja działa raz dziennie, aby usunąć wszystkie wiadomości starsze niż wybrany okres</string>
+    <string name="cleanup_old_messages_now_summary">Ta operacja natychmiast usunie wszystkie wiadomości w tej rozmowie starsze niż wybrany okres</string>
+    <string name="delayed_sending">Opóźnione wysyłanie</string>
+    <string name="delayed_sending_summary">Opcja umożliwia anulowanie i edycję wiadomości przed ich wysłaniem</string>
     <string name="messaging_features">Funkcje wiadomości</string>
     <string name="app_features">Funkcje aplikacji</string>
-    <string name="quick_compose">Szybkie tworzenie wiadomości</string>
+    <string name="quick_compose">Szybkie tworzenie powiadomień</string>
     <string name="quick_compose_notification">Pokaż powiadomienie</string>
     <string name="quick_compose_notification_summary">Zawsze aktywne powiadomienia dadzą Ci najszybszy dostęp do stworzenia nowej wiadomości</string>
     <string name="quick_compose_favorites">Ulubione kontakty</string>
-    <string name="quick_compose_favorites_summary">Ustawione kontakty będą dostępne w akcjach powiadomień</string>
+    <string name="quick_compose_favorites_summary">Te kontakty będą udostępnione w akcjach powiadamiania</string>
     <string name="quick_compose_favorites_title">Ustaw maksymalnie 3 kontakty:</string>
-    <string name="secure_private_conversations">Zabezpiecz prywatne konwersacje</string>
-    <string name="secure_private_conversations_summary">Wymagaj kodu PIN aby odblokować prywatne konwersacje.</string>
-    <string name="use_internal_browser">Używaj przeglądarki internetowej</string>
+    <string name="secure_private_conversations">Kod dostępu do prywatnych konwersacji</string>
+    <string name="secure_private_conversations_summary">Ustawienie hasła będzie wymagało wprowadzenia go przed wyświetleniem prywatnych konwersacji</string>
+    <string name="use_internal_browser">Używaj wbudowanej przeglądarki internetowej</string>
+    <string name="internal_browser_summary">Wyłączenie tej opcji spowoduje również wyłączenie podglądu linków na listach wiadomości</string>
     <string name="message_backup">Kopia zapasowa wiadomości</string>
-    <string name="message_backup_pref_summary">Martwisz się, że utracisz swoje wiadomości! Pulse do tego nie dopuści</string>
-    <string name="auto_reply_configuration">Konfiguracja automatycznej odpowiedzi</string>
-    <string name="auto_reply_configuration_summary">Ustaw automatyczne odpowiedzi w zależności od Twojej sytuacji</string>
+    <string name="message_backup_pref_summary">Martwisz się, że utracisz swoje wiadomości? Pulse nie dopuści do tego</string>
+    <string name="message_backup_summary">Czy o tym wiedziałeś: Usługa internetowa Pulse opiera się na tworzeniu kopii zapasowych wiadomości. Po zarejestrowaniu konta Pulse możesz zalogować się na to konto z dowolnego urządzenia lub tabletu, by przywrócić wszystkie wiadomości automatycznie!\n\n Brak problemów i ręcznego tworzenia kopii zapasowych.
+Z Pulse wszystko przebiega gładko, łatwo i całkowicie automatyczne.</string>
+    <string name="auto_reply_configuration">Konfiguracja automatycznych odpowiedzi</string>
+    <string name="auto_reply_configuration_summary">Skonfiguruj automatyczne odpowiedzi w zależności od sytuacji</string>
     <string name="auto_replies">Automatyczne odpowiedzi</string>
+    <string name="auto_reply_top_pref_summary">Tryb samochodowy i tryb wakacyjny mają pierwszeństwo przed wszystkimi innymi odpowiedziami. Jeśli któryś z nich jest włączony, żadne inne automatyczne odpowiedzi nie będą wysyłane</string>
     <string name="driving_mode">Tryb samochodowy</string>
-    <string name="driving_mode_summary">Automatyczne wiadomości zostaną wysłane dla wszystkich otrzymanych wiadomości</string>
+    <string name="driving_mode_summary">To ustawienie automatycznie wysyła odpowiedzi na wszystkie otrzymane wiadomości</string>
     <string name="vacation_mode">Tryb wakacyjny</string>
     <string name="auto_reply_text">Tekst wiadomości</string>
-    <string name="create_auto_reply">Stwórz nową automatyczną odpowiedź</string>
+    <string name="create_auto_reply">Utwórz nową automatyczną odpowiedź</string>
     <string name="delete_auto_reply">Usunąć automatyczną odpowiedź?</string>
     <string name="which_auto_reply_type">Jaki typ automatycznej odpowiedzi chcesz utworzyć?</string>
     <string name="keyword">Słowo kluczowe</string>
     <string name="response">Odpowiedź</string>
     <string name="contact">Kontakt</string>
     <string name="folders_title">Foldery</string>
-    <string name="create">Stwórz</string>
-    <string name="create_folder">Stwórz nowy folder</string>
-    <string name="create_folder_summary">Utworzony folder pozwoli Ci organizować swoje wiadomości</string>
-    <string name="no_folders">Brak folderów - naciśnij górny przycisk preferencji aby utworzyć swój pierwszy folder</string>
+    <string name="create">Utwórz</string>
+    <string name="create_folder">Utwórz nowy folder</string>
+    <string name="create_folder_summary">Po utworzeniu folderu możesz uporządkować swoje wiadomości</string>
+    <string name="no_folders">Brak folderów - naciśnij <i>Utwórz nowy folder</i> powyżej, aby utworzyć swój pierwszy folder</string>
     <string name="folder_name">Nazwa folderu...</string>
-    <string name="private_conversations_cannot_be_added_to_folders">Prywatna konwersacja nie może zostać tutaj dodana.</string>
-    <string name="conversation_already_in_a_folder">Konwersacja znajduje się już w innym folderze.</string>
+    <string name="private_conversations_cannot_be_added_to_folders">Prywatna rozmowa nie może zostać dodana.</string>
+    <string name="conversation_already_in_a_folder">Rozmowa jest już w innym folderze.</string>
     <string name="no_folder">Brak folderów</string>
     <!-- Theming Options -->
     <string name="day_night">Domyślny (dzień/noc)</string>
-    <string name="always_light">Jasny</string>
-    <string name="always_dark">Ciemny</string>
-    <string name="always_black">Czarny</string>
+    <string name="always_light">Zawsze jasny</string>
+    <string name="always_dark">Zawsze ciemny</string>
+    <string name="always_black">Zawsze czarny</string>
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Czy jesteś pewien, że chcesz usunąć zaplanowaną wiadomość do %1$s?</string>
     <string name="scheduled_message_hint">Wiadomość do wysłania...</string>
-    <string name="scheduled_to_hint">Wpisz kontakt/y do wysłania wiadomości...</string>
+    <string name="scheduled_to_hint">Kontakt do którego wyślesz wiadomość...</string>
     <string name="scheduled_message_sent">Wysłano zaplanowaną wiadomość</string>
     <string name="no_scheduled_messages">Brak zaplanowanych wiadomości</string>
     <string name="no_scheduled_messages_summary">Możesz utworzyć nową używając poniższego przycisku z plusem!</string>
@@ -505,17 +520,24 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="quick_share">Szybkie udostępnienie</string>
     <!-- Passcode Entry -->
     <string name="passcode">Użyj kodu dostępu</string>
-    <string name="forgot_passcode">Zapomniany kod dostępu?</string>
+    <string name="forgot_passcode">Zapomniałeś kodu dostępu?</string>
     <string name="set_passcode">Zapisz kod dostępu</string>
-    <string name="confirm_fingerprint">Przyłóż teraz palec do czytnika aby kontynuować</string>
+    <string name="confirm_fingerprint">Potwierdź odciskiem palca, aby kontynuować. Dotknij czytnika teraz.</string>
+    <string name="confirm_passcode">Potwierdź kod, aby kontynuować.</string>
+    <string name="confirm_pulse_password">Potwierdź uprawnienia Pulse, aby kontynuować.</string>
+    <string name="type_passcode">Utwórz kod dostępu.</string>
+    <string name="incorrect_passcode">Niepoprawny kod dostępu.</string>
+    <string name="verify">Sprawdź</string>
+    <string name="enable_passcode_disclaimer">Prywatne rozmowy mogą być chronione hasłem/odciskiem palca, abyś tylko Ty mógł uzyskać do nich dostęp. \n\n
+Jeśli chcesz dodać to zabezpieczenie, skonfiguruj hasło w sekcji <i>Funkcje zaawansowane</i>.</string>
     <!-- Other -->
-    <string name="updating_database">Wyszukiwanie najnowszych wiadomości...</string>
+    <string name="updating_database">Szukam najnowszych wiadomości...</string>
     <string name="dashclock_description">Informacja o nieprzeczytanych SMS/MMS</string>
     <string name="default_text">Domyślny</string>
     <string name="did_you_know">Czy wiesz że?</string>
-    <string name="use_from_anywhere">Pulse możesz używać na każdym urządzeniu podłączonym do Internetu - Wypróbuj Pulse już dziś!</string>
+    <string name="use_from_anywhere">Pulse może być używany na każdym urządzeniu podłączonym do Internetu - wypróbuj Pulse już dziś!</string>
     <string name="use_from_anywhere_short">Pulse może być używany na każdym Twoim urządzeniu!</string>
-    <string name="learn_more">Czytaj więcej...</string>
+    <string name="learn_more">Dowiedz się więcej</string>
     <string name="dismiss">Odrzuć</string>
     <string name="renew">Odnów</string>
     <string name="no">Nie</string>
@@ -524,20 +546,24 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="minutes">Minuty</string>
     <string name="test">Test</string>
     <string name="channel_settings">Ustawienia Kanałów Powiadomień</string>
-    <string name="channel_settings_summary">Kanały są wymagane do spersonalizowania notyfikacji dla Androida O i późniejszych.</string>
-    <string name="restore_default_channel_settings">Przywróc domyślne ustawienia notyfikacji</string>
+    <string name="channel_settings_summary">"To ustawienie pozwala w systemie Android Oreo  dostosować dzwonek, wibracje, diody LED i inne elementy dla tej rozmowy
+"</string>
+    <string name="restore_default_channel_settings">Przywróć domyślne ustawienia powiadomień</string>
     <string name="channels">Kanały</string>
     <string name="default_channel">Kanał domyślny</string>
-    <string name="channels_global_warning">Wiele ustawień globalnych możesz teraz zmienić dla konkretnego kanału.</string>
-    <string name="channels_global_warning_2"><i>Kanały notyfikacji</i> są teraz wymagane dla większości ustawień konfiguracji notyfikacji.\n\n
-Możesz spersonalizować notyfikacje dowolnej konwersacji tworząc dla niej <i>kanał notyfikacji</i> w ustawieniach tej konwersacji.
-Użyj ustawień domyślnych kanału notyfikacji, aby spersonalizować wszystkie konwersacji, dla których nie został utworzony indywidualny kanał.</string>
+    <string name="channels_global_warning">Wiele ustawień globalnych jest teraz dostępnych tylko na kanał.</string>
+    <string name="channels_global_warning_2">W przypadku systemu Android Oreo aplikacje muszą korzystać z <i> kanałów powiadomień </i> w celu dostosowania dzwonka, wibracji, diody LED i wszystkich innych opcji powiadomień. \n\n
+Możesz dostosować te opcje za pomocą przycisku poniżej i przeczytać więcej o tej zmianie w sekcji pomocy Pulse.</string>
     <string name="off">Wyłącz</string>
-    <string name="on">Włączony</string>
+    <string name="on">Włącz</string>
     <string name="share_promo">Cześć, używam aplikacji Pulse do wysyłania SMSów i jest świetna! Daj jej szansę i wypróbuj ją:</string>
     <string name="verifying_password">Weryfikacja hasła...</string>
     <!-- Rate it -->
     <string name="rate_it">Oceń aplikacje!</string>
+    <string name="rate_it_title">Droga do najlepszych ocen jest długa</string>
+    <string name="rate_it_summary"><b>Oceny 5-gwiazdkowe</b> są niezwykle pomocne dla rozwoju aplikacji
+i widoczności w Sklepie Play. Jeśli chcesz, aby aplikacja <i>dalej wznosiła się w rankingu</i>, pomóż mi!</string>
+    <string name="rate_it_not_ready">Nie jesteś gotowy, aby ocenić? Nie ma problemu. Wycofaj się z tego okna dialogowego, nigdy więcej się nie pojawi.</string>
     <string name="love_pulse_question">Lubisz Pulse?</string>
     <string name="give_a_rating">Rozważ ocenienie aplikacji lub podziel się nią ze znajomymi!/n/n
 Twoja 5-cio gwiazdkowa ocena rozgrzeje moje serce :)</string>
@@ -557,8 +583,8 @@ Twoja 5-cio gwiazdkowa ocena rozgrzeje moje serce :)</string>
     <string name="one_year">Rok</string>
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Nie znaleziono subskrypcji!</string>
-    <string name="cancelled_subscription_error">Wygląda na to, że anulowałeś/aś swoją subskrypcję.
-Jeżeli nie odnowisz subksrypcji przed upływem daty aktualnej subskrypcji, aplikacja wyloguje Cię automatycznie z Twojego konta w ciągu 2 dni. Jeżeli uważasz, że jest to błąd aplikacji, proszę skontaktuj się ze mną poprzez wiadomość email.</string>
+    <string name="cancelled_subscription_error">Wygląda na to, że anulowałeś swój abonament.
+Jeżeli nie odnowisz go na czas, aplikacja wyloguje Cię automatycznie z Twojego konta w ciągu 2 dni. Jeżeli uważasz, że jest to błąd aplikacji, skontaktuj się ze mną przez e-mail.</string>
     <string name="subscription_found">Subskrypcja znaleziona - witaj ponownie!</string>
     <string name="subscription_not_found">Nie wykryto subskrypcji - rozpocznij swój okres próbny!</string>
     <string name="checking_for_active_subscriptions">Sprawdzanie subskrypcji&#8230;</string>
@@ -581,13 +607,17 @@ Jeżeli nie odnowisz subksrypcji przed upływem daty aktualnej subskrypcji, apli
 Wysyłaj wiadomości z przeglądarki internetowej, komputera, tabletu, smart zegarka, lub nawet ze smart tv.</string>
     <string name="true_imessage_competitor">Pierwszy, <b>prawdziwy</b> konkurent iMessage dla systemu Android.</string>
     <string name="try_it">Wypróbuj teraz!</string>
+    <string name="have_an_account">Masz już konto?\nZaloguj się</string>
     <string name="seven_days_free">7 dni za darmo!</string>
-    <string name="competition_cant_beat">Konkurencja nie może się równać z naszymi usługami, ich responsywnością i oferowanymi cenami - <b>wypróbuj przez 7 dni</b> aby się przekonać!</string>
-    <string name="select_a_trial_below">Wybierz odpowiadającą Ci opcję aby rozpocząć Twój <b>darmowy okres próbny</b>.</string>
+    <string name="competition_cant_beat">Konkurencja nie może się równać z naszymi cenami, prędkością ani usługami -
+<b> wypróbuj przez 7 dni </b>, aby przekonać się samemu!</string>
+    <string name="select_a_trial_below">Wybierz jedną z trzech poniższych opcji abonamentu, aby rozpocząć <b> bezpłatną wersję próbną </b>.</string>
     <string name="charged_after_trial">Płatności po zakończeniu okresu próbnego:</string>
     <string name="monthly_purchase_improved">$0.99 /\nmiesiąc</string>
     <string name="three_month_purchase_improved">$1.99 /\n3 miesiące</string>
     <string name="yearly_purchase_improved">$5.99 /\nrok</string>
     <string name="subscription_toast"><b>Nie poniesiesz żadnych kosztów</b> przed zakończeniem 7-dniowego okresu próbnego. Możesz zrezygnować w każdej chwili.</string>
+    <string name="redirect_to_play_store">Dzięki za uaktualnienie! Anuluj poprzedni abonament w <b> Sklepie Play </b>. Pulse <b> nie może </b> zrobić tego automatycznie.</string>
+    <string name="play_store">Sklep Play</string>
     <string name="quick_compose_summary">Zawszeb widoczne powiadomienia aby umożliwić szybki dostęp do utworzenia nowej wiadomości</string>
 </resources>
