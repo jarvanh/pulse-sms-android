@@ -133,7 +133,7 @@ dependencies {
 
     api 'com.firebase:firebase-jobdispatcher:0.8.5'
     api 'com.github.apl-devs:appintro:v4.2.0'
-    api 'com.yalantis:ucrop:2.2.2'
+    api 'com.github.yalantis:ucrop:2.2.2'
     api 'de.hdodenhof:circleimageview:2.2.0'
     api 'com.afollestad:sectioned-recyclerview:0.2.3'
     api 'com.afollestad:easyvideoplayer:0.3.0'
