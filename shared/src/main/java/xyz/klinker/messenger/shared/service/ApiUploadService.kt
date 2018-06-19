@@ -74,7 +74,9 @@ open class ApiUploadService : Service() {
 
         encryptionUtils = Account.encryptor
         if (encryptionUtils == null) {
-            startActivity(Intent(this, LoginActivity::class.java))
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
             return
         }
         
