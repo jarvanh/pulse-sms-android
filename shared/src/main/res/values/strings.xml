@@ -506,6 +506,10 @@
         messages. When you sign up for a Pulse account, you can log in to that account on any device or tablet
         to restore all your messages, automatically!\n\nNo hassle and no messing around with manual backups.
         With Pulse, everything is smooth, easy, and completely automatic.</string>
+    <string name="message_backup_summary_have_account">Looks like you already have a Pulse account, great!
+        With your account, Pulse will automatically backup any messages you send and receive. When you are
+        looking at the app on your other devices, you are actually just accessing this backup. To restore the
+        messages to a new device, all you have to do is log in to your account.</string>
     <string name="auto_reply_configuration">Auto Reply Configuration</string>
     <string name="auto_reply_configuration_summary">Set up automated replies based on your situation</string>
     <string name="auto_replies">Auto Replies</string>

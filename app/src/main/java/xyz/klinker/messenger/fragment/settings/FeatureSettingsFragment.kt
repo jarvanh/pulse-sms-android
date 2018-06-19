@@ -129,11 +129,17 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
 
     private fun initMessageBackup() {
         findPreference(getString(R.string.pref_message_backup)).setOnPreferenceClickListener {
-            AlertDialog.Builder(activity)
-                    .setMessage(R.string.message_backup_summary)
-                    .setPositiveButton(R.string.try_it) { _, _ ->
-                        startActivity(Intent(activity, RedirectToMyAccount::class.java))
-                    }.show()
+            if (Account.exists()) {
+                AlertDialog.Builder(activity)
+                        .setMessage(R.string.message_backup_summary_have_account)
+                        .show()
+            } else {
+                AlertDialog.Builder(activity)
+                        .setMessage(R.string.message_backup_summary)
+                        .setPositiveButton(R.string.try_it) { _, _ ->
+                            startActivity(Intent(activity, RedirectToMyAccount::class.java))
+                        }.show()
+            }
 
             false
         }
