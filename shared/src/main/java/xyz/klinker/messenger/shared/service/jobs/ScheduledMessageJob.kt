@@ -132,9 +132,7 @@ class ScheduledMessageJob : BroadcastReceiver() {
                 return
             }
 
-            val messages = source.getScheduledMessagesAsList(context)
-                    .sortedBy { it.timestamp }
-
+            val messages = source.getScheduledMessagesAsList(context).sortedBy { it.timestamp }
             if (messages.isNotEmpty()) {
                 val intent = Intent(context, ScheduledMessageJob::class.java)
                 val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
