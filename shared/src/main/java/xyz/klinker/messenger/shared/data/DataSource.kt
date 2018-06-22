@@ -856,10 +856,10 @@ object DataSource {
      */
     fun getArchivedConversations(context: Context): Cursor =
             try {
-                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=1", null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
+                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=1 AND " + Conversation.COLUMN_PRIVATE + "=0", null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
             } catch (e: Exception) {
                 ensureActionable(context)
-                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=1", null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
+                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_ARCHIVED + "=1 AND " + Conversation.COLUMN_PRIVATE + "=0", null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
             }
 
 
