@@ -333,7 +333,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
     @Test
     public void getArchivedConversations() {
         Cursor archived = source.getArchivedConversations(context);
-        assertEquals(1, archived.getCount());
+        assertEquals(0, archived.getCount());
         archived.close();
     }
 
