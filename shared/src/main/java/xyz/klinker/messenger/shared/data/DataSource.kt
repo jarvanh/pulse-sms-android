@@ -256,7 +256,7 @@ object DataSource {
             // but we don't want to use that so we'll just generate a new one.
             values.put(Contact.COLUMN_ID, contact.id)
             values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
-            values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default)
+            values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(contact.phoneNumber!!)).default)
             values.put(Contact.COLUMN_NAME, contact.name)
             values.put(Contact.COLUMN_COLOR, contact.colors.color)
             values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
@@ -290,7 +290,7 @@ object DataSource {
             contact.id = generateId()
         }
 
-        contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
+        contact.idMatcher = SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(contact.phoneNumber!!)).default
 
         values.put(Contact.COLUMN_ID, contact.id)
         values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
@@ -348,7 +348,7 @@ object DataSource {
      * @return Contact from the database
      */
     fun getContact(context: Context, phoneNumber: String): Contact? {
-        val idMatcher = SmsMmsUtils.createIdMatcher(phoneNumber).default
+        val idMatcher = SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(phoneNumber)).default
         val cursor = try {
             database(context).query(Contact.TABLE, null, Contact.COLUMN_ID_MATCHER + "=?",
                     arrayOf(idMatcher), null, null, null)
@@ -383,7 +383,7 @@ object DataSource {
 
         val array = numbers.split(", ".toRegex())
                 .dropLastWhile { it.isEmpty() }
-                .map { "%${SmsMmsUtils.createIdMatcher(it).default}%" }
+                .map { "%${SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(it)).default}%" }
                 .toTypedArray()
 
         var where = ""
