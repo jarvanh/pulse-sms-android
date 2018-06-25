@@ -440,7 +440,7 @@ object DataSource {
             else -> {
                 where = Contact.COLUMN_NAME + "=?"
                 for (i in 1 until array.size) {
-                    where += " OR " + Contact.COLUMN_NAME + " LIKE ?"
+                    where += " OR " + Contact.COLUMN_NAME + "=?"
                 }
             }
         }

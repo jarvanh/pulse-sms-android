@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.adapter.message
 
 import android.content.res.ColorStateList
+import android.util.Log
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
 import xyz.klinker.messenger.shared.data.DataSource
@@ -29,10 +30,11 @@ class MessageColorHelper {
         }
 
         try {
-            if (message.type == Message.TYPE_RECEIVED && fromColorMapper.size > 1) {
+            Log.v("message_from", "from: " + message.from)
+            if (message.type == Message.TYPE_RECEIVED && (fromColorMapper.isNotEmpty() || fromColorMapperByName.isNotEmpty())) {
                 when {
-                    fromColorMapper.containsKey(message.from) -> {
-                        val color = fromColorMapper[message.from]!!.colors.color
+                    fromColorMapper.containsKey(message.from!!) -> {
+                        val color = fromColorMapper[message.from!!]!!.colors.color
                         holder.messageHolder?.backgroundTintList = ColorStateList.valueOf(color)
                         holder.color = color
 
@@ -44,8 +46,8 @@ class MessageColorHelper {
 
                         return color
                     }
-                    fromColorMapperByName.containsKey(message.from) -> {
-                        val color = fromColorMapperByName[message.from]!!.colors.color
+                    fromColorMapperByName.containsKey(message.from!!) -> {
+                        val color = fromColorMapperByName[message.from!!]!!.colors.color
                         holder.messageHolder?.backgroundTintList = ColorStateList.valueOf(color)
                         holder.color = color
 
@@ -67,24 +69,34 @@ class MessageColorHelper {
                         fromColorMapperByName[message.from!!] = contact
 
                         // then write it to the database for later
-//                        Thread {
+                        Thread {
                             val context = holder.itemView.context
                             val source = DataSource
 
                             if (contact.phoneNumber != null) {
-                                val originalLength = contact.phoneNumber!!.length
-                                val newLength = contact.phoneNumber!!.replace("[0-9]".toRegex(), "").length
-                                if (originalLength == newLength) {
-                                    // all letters, so we should use the contact name to find the phone number
-                                    val contacts = source.getContactsByNames(context, contact.name)
-                                    if (contacts.isNotEmpty()) {
-                                        contact.phoneNumber = contacts[0].phoneNumber
-                                    }
-                                }
+//                                val originalLength = contact.phoneNumber!!.length
+//                                val newLength = contact.phoneNumber!!.replace("[0-9]".toRegex(), "").length
+//                                if (originalLength == newLength) {
+//                                    // all letters, so we should use the contact name to find the phone number
+//                                    val contacts = source.getContactsByNames(context, contact.name)
+//                                    if (contacts.isNotEmpty()) {
+//                                        contact.phoneNumber = contacts[0].phoneNumber
+//                                    }
+//                                }
 
                                 source.insertContact(context, contact)
                             }
-//                        }.start()
+                        }.start()
+
+                        val color = contact.colors.color
+                        holder.messageHolder?.backgroundTintList = ColorStateList.valueOf(color)
+                        holder.color = color
+
+                        if (!ColorUtils.isColorDark(color)) {
+                            holder.message?.setTextColor(holder.itemView.context.resources.getColor(R.color.darkText))
+                        } else {
+                            holder.message?.setTextColor(holder.itemView.context.resources.getColor(R.color.lightText))
+                        }
 
                         return contact.colors.color
                     }
