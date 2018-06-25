@@ -139,7 +139,7 @@ dependencies {
     api 'com.afollestad:easyvideoplayer:0.3.0'
     api 'com.afollestad:drag-select-recyclerview:1.0.0'
     api 'com.larswerkman:lobsterpicker:1.0.1'
-    api 'me.leolin:ShortcutBadger:1.1.21@aar'
+    api 'me.leolin:ShortcutBadger:1.1.19@aar'
     api 'com.bignerdranch.android:recyclerview-multiselect:0.2'
     api 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     api 'com.github.codekidX:storage-chooser:2.0.3'
