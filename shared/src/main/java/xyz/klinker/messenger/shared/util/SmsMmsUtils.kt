@@ -54,8 +54,8 @@ object SmsMmsUtils {
 
     private val TAG = "SmsMmsUtils"
 
-    val INITIAL_CONVERSATION_LIMIT = 250
-    val INITIAL_MESSAGE_LIMIT = 500
+    val INITIAL_CONVERSATION_LIMIT = 1000
+    val INITIAL_MESSAGE_LIMIT = 10000
 
     /**
      * Gets a list of conversations from the internal sms database that is ready to be inserted
