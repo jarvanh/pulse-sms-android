@@ -46,13 +46,13 @@
     <string name="menu_view_contact">Ver contato</string>
     <string name="menu_view_contacts">Visualizar contatos</string>
     <string name="menu_view_media">Ver mídia</string>
-    <string name="menu_delete_conversation">Deletar conversa</string>
+    <string name="menu_delete_conversation">Apagar conversa</string>
     <string name="menu_archive_conversation">Arquivar conversa</string>
     <string name="menu_move_to_inbox">Mover para caixa de entrada</string>
     <string name="menu_conversation_information">Informação da conversa</string>
     <string name="menu_copy_phone_number">Copiar Número</string>
     <string name="menu_view_full_conversation">Ver histórico</string>
-    <string name="menu_conversation_blacklist">Lista negra de contatos</string>
+    <string name="menu_conversation_blacklist">Adicionar contato a lista negra</string>
     <string name="menu_conversation_schedule">Agendar uma mensagem</string>
     <string name="menu_contact_settings">Configuração de contato</string>
     <string name="menu_group_settings">Configurações de grupo</string>
@@ -64,12 +64,15 @@
     <string name="menu_snooze_24">24 horas</string>
     <string name="menu_snooze_72">72 horas</string>
     <string name="menu_snooze_custom">Escolher uma hora</string>
+    <string name="menu_mark_as_unread">Marcar como não lida</string>
+    <string name="menu_pin_conversation">Fixar/Desafixar Conversa</string>
+    <string name="menu_mute_conversation">Silenciar/Não silenciar Conversa</string>
     <!-- Empty Screen -->
     <string name="no_messages">Sem mensagens</string>
-    <string name="no_messages_summary">Comece uma nova mensagem ou apenas disfrute seu dia!</string>
+    <string name="no_messages_summary">Comece uma nova conversa ou apenas aproveite o dia!</string>
     <string name="close">Fechar</string>
     <!-- Conversation List Screen -->
-    <string name="pinned">Fixada</string>
+    <string name="pinned">Fixas</string>
     <string name="today">Hoje</string>
     <string name="yesterday">Ontem</string>
     <string name="last_week">Esta semana</string>
@@ -103,7 +106,7 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <string name="messages">Mensagens</string>
     <!-- Invite Friends Screen -->
     <string name="invite_friends_title">Gosta do Pulse?</string>
-    <string name="invite_friends_summary">Assim como nós e outros! Estamos tentando obter tantas mãos quanto pudermos para continuar a torná-lo o melhor produto que pode ser e convidando seus amigos para tentar, você está ajudando com isso! \n\nSelecione os amigos abaixo aos quais você gostaria de enviar o aplicativo e enviará um SMS com uma breve descrição e um link para download!</string>
+    <string name="invite_friends_summary">Nós também, e outros também podem gostar! Estamos tentando obter toda ajuda disponível, para continuar a torná-lo o melhor produto possível, e convidando seus amigos para tentar, você estará nos ajudando com isso! \n\nSelecione os contatos abaixo para enviar um SMS com uma breve descrição e um link para download!</string>
     <string name="invite_friends_sms">Eu comecei a usar um novo app de SMS e eu acho que você gostará dele! Ele é grátis e você pode baixar ele em: http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">Digite a mensagem</string>
@@ -161,6 +164,7 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <string name="copy_message_text">Copiar mensagem de texto</string>
     <string name="select_text_to_copy">Selecione a mensagem que deseja copiar:</string>
     <string name="copy_all_text">Copiar Tudo</string>
+    <string name="copy_otp">Copiar</string>
     <string name="open_link_to_browser">Abrir link no browser</string>
     <string name="open_link_internal">Abrir link internamente</string>
     <string name="copy_link">Copiar link internamente</string>
@@ -173,8 +177,8 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <!-- Compose Screen -->
     <string name="compose_message">Escrever nova mensagem</string>
     <string name="send_message">Enviar mensagens</string>
-    <string name="enter_contact_name">Digite o nome do contato</string>
-    <string name="enter_contact_name_or_number">Informe o nome do contato ou o número</string>
+    <string name="enter_contact_name">Informe aqui o contato...</string>
+    <string name="enter_contact_name_or_number">Informe o nome ou número do contato</string>
     <string name="error_processing_vcard">Erro ao processar o vcard</string>
     <string name="compose_recents">Recentes</string>
     <string name="compose_groups">Grupos</string>
@@ -227,6 +231,7 @@ Pulse coloca suas conversa em evidência.</string>
     </string-array>
     <string name="new_mms_message">Nova mensagem MMS</string>
     <string name="you">Você</string>
+    <string name="draft">Rascunho</string>
     <string name="new_message">Nova mensage</string>
     <string name="received_new_message">Você recebeu uma nova mensagem!</string>
     <string name="media">Mídia</string>
@@ -342,6 +347,10 @@ onde não existam configurações individuais para a conversa.</string>
     <string name="global_theme_color">Cor do tema</string>
     <string name="font_size">Tamanho da fonte</string>
     <string name="rounder_bubbles">Arredondar bolhas de mensagens</string>
+    <string name="bubble_style">Estilo de bolha das mensagens</string>
+    <string name="bubble_style_round">Arredondado</string>
+    <string name="bubble_style_square">Cantos retos</string>
+    <string name="bubble_style_circle">Arredondado (sem cauda)</string>
     <string name="adjustable_nav_bar">Corresponder Tema da Barra de Navegação ao Tema Global</string>
     <string name="adjustable_nav_bar_summary">O tema \'Light\' usa uma barra de navegação branca, enquanto os 
 temas escuros usam a barra de navegação preta.</string>
@@ -349,9 +358,14 @@ temas escuros usam a barra de navegação preta.</string>
     <string name="apply_theme_globally_summary">Remova os temas por conversa, e utilize
 este conjunto de cores global</string>
     <string name="swipe_delete">Deslizar para Apagar</string>
-    <string name="blacklist_hint">Digite o número na lista negra...</string>
+    <string name="swipe_actions">Deslizar</string>
+    <string name="swipe_actions_summary">Personalizar ações de deslize</string>
+    <string name="left_to_right_swipe">&lt;&lt;&lt;  Esquerda - Direita</string>
+    <string name="right_to_left_swipe">&gt;&gt;&gt;  Direita - Esquerda</string>
+    <string name="no_swipe">Desabilitado</string>
+    <string name="blacklist_hint">Adicionar número na lista negra...</string>
     <string name="add_blacklist">%1$s\n\nVocê tem certeza que deseja adicionar este número a lista negra? As mensagens desse número não serão mais salvas e você não será notificado!</string>
-    <string name="remove_blacklist">%1$s\n\nVocê deseja deletar este número da lista negra?</string>
+    <string name="remove_blacklist">%1$s\n\nDeseja remover este número da lista negra?</string>
     <string name="blacklist_need_number">Você precisa digitar um número na lista negra!</string>
     <string name="no_blacklists">Sem listas negras</string>
     <string name="no_blacklists_summary">Você pode adicionar uma com o botão \'mais\' abaixo!</string>
@@ -363,11 +377,11 @@ este conjunto de cores global</string>
     <string name="lifetime_subscriber">Assinante ao longo da vida</string>
     <string name="trial_period">Período de testes</string>
     <string name="setup_my_account">Configuração de conta</string>
-    <string name="setup_my_account_summary">inscreva-se ou faça login da sua conta para começar a usar mais funções como mandar mensagens do tablet ou computador</string>
+    <string name="setup_my_account_summary">Inscreva-se ou acesse sua conta para começar a usar mais funções, como enviar mensagens do seu tablet ou computador.</string>
     <string name="preparing_new_account">Preparando conta&#8230;</string>
-    <string name="delete_account">Deletar conta</string>
+    <string name="delete_account">Apagar conta</string>
     <string name="delete_account_summary">Remover a conta deste dispositivo, outros dispositivos inscritos e no servidor. Isto não é reversível!</string>
-    <string name="delete_account_confirmation">Você tem certeza que deseja deletar esta conta e tudo mais? Você poderá sempre se inscrever novamente depois!</string>
+    <string name="delete_account_confirmation">Você tem certeza que deseja apagar esta conta e tudo mais? Você poderá sempre se inscrever novamente depois!</string>
     <string name="change_subscription">Mudar assinatura</string>
     <string name="cancel_on_the_play_store">Cancelar e visualizar sua assinatura na Play Store</string>
     <string name="resync_account">Resincronizar conta</string>
@@ -435,14 +449,14 @@ ao recebê-la</string>
     <!-- Advanced Features Settings -->
     <string name="signature">Assinatura</string>
     <string name="signature_summary">Nota: As assinaturas de envio NÃO serão exibidas na lista de mensagens do Pulse. As assinaturas só serão mostradas ao destinatário da mensagem.</string>
-    <string name="cleanup_old_messages">Limpar mensagens velhas</string>
-    <string name="cleanup_old_messages_summary">Isto executa diariamente para apagar as mensagens mais antigas, conforme o período configurado.</string>
+    <string name="cleanup_old_messages">Limpar mensagens antigas</string>
+    <string name="cleanup_old_messages_summary">Executado diariamente para apagar as mensagens antigas, conforme o período configurado.</string>
     <string name="cleanup_old_messages_now_summary">Isto executa imediatamente apagando todas as mensagens, nesta conversa, mais antigas que o período configurado</string>
     <string name="delayed_sending">Envio atrasado</string>
-    <string name="delayed_sending_summary">Isto de dá a chance de cancelar e editar mensagens antes de enviá-las</string>
-    <string name="messaging_features">Destaques de mensagens</string>
-    <string name="app_features">Destaques do aplicativo</string>
-    <string name="quick_compose">Composição rápida</string>
+    <string name="delayed_sending_summary">Permite que você edite ou cancele mensagens antes de enviá-las</string>
+    <string name="messaging_features">Mensagens</string>
+    <string name="app_features">Aplicativo</string>
+    <string name="quick_compose">Conversa rápida</string>
     <string name="quick_compose_notification">Exibir notificação</string>
     <string name="quick_compose_notification_summary">Notificação persistente para de dar acesso rápido a criar novas mensagens</string>
     <string name="quick_compose_favorites">Contatos favoritos</string>
@@ -458,6 +472,10 @@ ao recebê-la</string>
 mensagens. Quando você se registra em uma conta Pulse, você pode acessar sua conta em qualquer dispositivo ou tablet 
 e restaurar suas mensagens, automaticamente!\n\nSem dificuldade e sem a bagunça de backups manuais. 
 Com o Pulse, tudo é fluido, fácil, e completamente automático.</string>
+    <string name="message_backup_summary_have_account">Parece que você já tem uma conta Pulse. Ótimo!
+Com sua conta, o Pulse irá fazer o backup das mensagens enviadas e recebidas. Quando você
+verifica suas mensagens em outros dispositivos, você está na verdade acessando este backup. Para restaurar as 
+mensagens em um novo dispositivo, tudo que você tem que fazer é acessar a sua conta.</string>
     <string name="auto_reply_configuration">Configuração de Resposta Automática</string>
     <string name="auto_reply_configuration_summary">Configure respostas automáticas com base na sua situação</string>
     <string name="auto_replies">Respostas Automáticas</string>
@@ -491,7 +509,7 @@ Com o Pulse, tudo é fluido, fácil, e completamente automático.</string>
     <string name="scheduled_message_hint">Mensagem para enviar...</string>
     <string name="scheduled_to_hint">Contato para enviar a...</string>
     <string name="scheduled_message_sent">Mensagem agendada enviada</string>
-    <string name="no_scheduled_messages">Sem mensagem agendada</string>
+    <string name="no_scheduled_messages">Nenhuma mensagem agendada</string>
     <string name="no_scheduled_messages_summary">Você pode criar uma nova mensagem com o botão \'mais\' abaixo!</string>
     <string name="scheduled_message_in_future">O tempo deve ser no futuro!</string>
     <!-- Encryption -->
@@ -583,7 +601,7 @@ Sua avaliação com 5 estrelas aquece o meu coração :)</string>
     <string name="purchase_error_bad_google_play">Ahh, o Google play pode estar com problemas, estão nos dando um resultado ruim.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Essa compra não coincide com nenhuma em nosso registro.</string>
     <string name="subscriptions">A assinatura é cobrada após o teste de sete dias e pode ser alterada ou cancelada a qualquer momento:</string>
-    <string name="billed_immediately">Isto é cobrado imediatamente.</string>
+    <string name="billed_immediately">Cobrado imediatamente.</string>
     <string name="lifetime_purchase">$10.99 - Vitalício</string>
     <string name="lifetime_purchase_summary">Pague uma vez e nunca mais!</string>
     <string name="yearly_purchase">$5.99 anualmente</string>
@@ -596,12 +614,12 @@ Sua avaliação com 5 estrelas aquece o meu coração :)</string>
     <string name="beautiful_powerful_instant">Maravilhoso, poderoso, instantâneo.</string>
     <string name="optimized_for_all_your_devices">Pulse é otimizado para <b>todos</b> os dispositivos.
 Envie mensagens pela web, computador, tablet, smartwatch e mesmo de sua TV.</string>
-    <string name="true_imessage_competitor">O primeiro competidor <b>verdadeiro</b> de mensagens instantâneas para Android</string>
+    <string name="true_imessage_competitor">O primeiro competidor <b>de verdade</b> no envio de mensagens instantâneas para Android</string>
     <string name="try_it">Teste agora!</string>
     <string name="have_an_account">Já tem uma conta?\nAcesse</string>
     <string name="seven_days_free">7 dias gratuitos!</string>
-    <string name="competition_cant_beat">A competição não nos alcança em preços, velocidade, ou serviços -
-<b>tome 7 dias</b> e veja você mesmo!</string>
+    <string name="competition_cant_beat">A competição não nos alcança em preços, velocidade, ou serviços.
+<b>Teste por 7 dias</b> e veja você mesmo!</string>
     <string name="select_a_trial_below">Selecione uma das três opções de assinatura abaixo para iniciar o seu <b>período de testes</b>.</string>
     <string name="charged_after_trial">Cobrado após o período de testes:</string>
     <string name="monthly_purchase_improved">$0.99 /\nmês</string>

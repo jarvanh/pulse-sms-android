@@ -359,6 +359,15 @@ tenha iniciado sessão, e do servidor. Isto é irreversível!</string>
     <string name="delete_account_confirmation">De certeza que quer apagar a sua conta e
 tudo relacionado? Pode sempre registar-se de novo mais tarde!</string>
     <string name="change_subscription">Mudar subscrição</string>
+    <string name="cancel_on_the_play_store">Toque aqui para fazer o upgrade! Pode cancelar a sua subscriçãona Play Store.</string>
+    <string name="resync_account">Ressincronizar as mensagens</string>
+    <string name="resync_account_summary">Mensagens em falta? Use isto para actualizar este dispositivo
+com o seu dispositivo principal.</string>
+    <string name="resync_account_summary_phone">Isto vai limpar a sua conta e actualizá-la com
+o que existe de momento na sua base de dados interna de SMS.</string>
+    <string name="resync_account_confirmation">"Isto vai apagar todas as mensagens deste dispositivo, e
+começar com uma cópia limpa do que existe de momento no seu dispositivo principal. De certeza que é o que pretende? "</string>
+    <string name="resync_contacts">Sincronizar contactos novamente</string>
     <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <!-- Theming Options -->

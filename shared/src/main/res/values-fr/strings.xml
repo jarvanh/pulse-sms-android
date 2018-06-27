@@ -64,6 +64,9 @@
     <string name="menu_snooze_24">24 heures</string>
     <string name="menu_snooze_72">72 heures</string>
     <string name="menu_snooze_custom">Sélectionnez une heure</string>
+    <string name="menu_mark_as_unread">Marquer comme non-lu</string>
+    <string name="menu_pin_conversation">(Dés)épingler la conversation</string>
+    <string name="menu_mute_conversation">(Dé)mettre en sourdine</string>
     <!-- Empty Screen -->
     <string name="no_messages">Aucun message</string>
     <string name="no_messages_summary">Commencez une nouvelle conversation ou profitez simplement de votre journée!</string>
@@ -164,6 +167,7 @@ Commencez !
     <string name="copy_message_text">Copier le texte du message</string>
     <string name="select_text_to_copy">Sélectionner le texte à copier :</string>
     <string name="copy_all_text">Tout copier</string>
+    <string name="copy_otp">Copier</string>
     <string name="open_link_to_browser">Ouvrir dans le navigateur</string>
     <string name="open_link_internal">Ouvrir dans l\'application</string>
     <string name="copy_link">Copier le lien</string>
@@ -230,6 +234,7 @@ Commencez !
     </string-array>
     <string name="new_mms_message">Nouveau message multimédia</string>
     <string name="you">Vous</string>
+    <string name="draft">Brouillon</string>
     <string name="new_message">Nouveau message</string>
     <string name="received_new_message">Vous avez reçu un nouveau message !</string>
     <string name="media">Médias</string>
@@ -346,12 +351,20 @@ pourriez rencontrer !</string>
     <string name="global_theme_color">Couleur du thème</string>
     <string name="font_size">Taille de la police</string>
     <string name="rounder_bubbles">Bulles arrondies</string>
+    <string name="bubble_style">Style de message en bulles</string>
+    <string name="bubble_style_round">Arrondi</string>
+    <string name="bubble_style_square">Anguleux</string>
+    <string name="bubble_style_circle">Cercle (sans tige)</string>
     <string name="adjustable_nav_bar">Faire correspondre la barre de navigation au thème de base</string>
     <string name="adjustable_nav_bar_summary">Le thème clair utilise une barre de navigation blanche, tandis que le thème sombre utilise une barre de navigation noire</string>
     <string name="apply_theme_globally">Appliquer à toutes les conversations</string>
-    <string name="apply_theme_globally_summary">Supprimer les thèmes par conversation, en faveur
-de ce jeu de couleurs global.</string>
+    <string name="apply_theme_globally_summary">Supprimer les thèmes par conversation, en faveur de ce jeu de couleurs global.</string>
     <string name="swipe_delete">Glisser pour effacer</string>
+    <string name="swipe_actions">Actions par balayage</string>
+    <string name="swipe_actions_summary">Personnaliser le balayage des conversations</string>
+    <string name="left_to_right_swipe">Balayer à droite</string>
+    <string name="right_to_left_swipe">Balayer à gauche</string>
+    <string name="no_swipe">Désactiver le balayage</string>
     <string name="blacklist_hint">Tapez le numéro à mettre en liste noire</string>
     <string name="add_blacklist">%1$s\n\nÊtes-vous sûr de vouloir l\'ajouter en liste noire ? Les messages 
 provenant de ce numéro ne seront plus sauvegardés et vous ne serez plus notifié.</string>
@@ -381,7 +394,7 @@ A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
     <string name="resync_account_confirmation">Cela va supprimer tous les messages de cet appareil, et démarrer avec une copie propre de ce qui est actuellement sur votre appareil principal. Etes-vous sûr de vouloir faire ça ?</string>
     <string name="resync_contacts">Resynchroniser les contacts</string>
     <string name="resync_contacts_summary">Publie immédiatement toutes modifications de contact sur le web.</string>
-    <string name="normalize_color_scheme">Ou, vous pouvez choisir une couleur unique basée sur le contact :</string>
+    <string name="normalize_color_scheme">Ou, vous pouvez choisir une couleur unique sur laquelle le thème sera basé :</string>
     <string name="no_apps_found">Aucune application trouvée pour exécuter cette action</string>
     <string name="you_denied_permission">Vous avez refusé cette permission</string>
     <string name="supported_platforms">Appareils pris en charge</string>
@@ -424,7 +437,7 @@ Une fois cela fait, vous devrez vous connecter à nouveau, sur tous vos autres a
     <string name="max_mms_size_summary">Ne définissez pas une valeur plus élevée que ce que votre opérateur vous permet.</string>
     <string name="use_group_mms">Utiliser les MMS groupés</string>
     <string name="use_group_mms_summary">Si désactivé, les messages groupés seront envoyés comme SMS individuels, à chaque contact de la conversation.</string>
-    <string name="use_mms_read_receipts">Accusés de Lecture</string>
+    <string name="use_mms_read_receipts">Accusés de lecture</string>
     <string name="auto_save_media">Sauvegarde auto des médias</string>
     <string name="auto_save_media_summary">Sauvegarder automatiquement tous les médias MMS dans le dossier /Téléchargements quand ils sont reçus.</string>
     <string name="apn_configuration">Configuration des APN</string>
@@ -438,7 +451,7 @@ Une fois cela fait, vous devrez vous connecter à nouveau, sur tous vos autres a
     <!-- Advanced Features Settings -->
     <string name="signature">Signature</string>
     <string name="signature_summary">Les signatures ne seront pas affichées dans la liste des messages, elles
-seront uniquement affichées au destinataire du message.</string>
+seront uniquement affichées au destinataire du message</string>
     <string name="cleanup_old_messages">Supprimer les anciens messages</string>
     <string name="cleanup_old_messages_summary">Une fois par jour, les messages plus vieux sont supprimés,  selon l\'interval choisit.</string>
     <string name="cleanup_old_messages_now_summary">Supprime maintenant les messages les plus vieux de cette conversation, selon l\'interval choisit.</string>
@@ -461,8 +474,10 @@ seront uniquement affichées au destinataire du message.</string>
     <string name="message_backup_summary">Le saviez-vous ? Le service en ligne de Pulse assure la sauvegarde de vos messages. Si vous créez un compte Pulse, vous pouvez l\'utiliser depuis n\'importe quel appareil ou tablette pour restaurer tous vos messages automatiquement!
 \n\n
 Vous n\'aurez pas besoin de vous prendre la tête avec des sauvegardes manuelles. Avec Pulse, tout est fluide, simple et automatique.</string>
+    <string name="message_backup_summary_have_account">Il semble que vous avez déjà un compte Pulse, sympa !
+Avec votre compte, Pulse sauvegarde automatiquement tous les messages que vous envoyez et recevez. Quand vous utilisez l\'appli sur vos autres appareils, vous consultez en réalité cette sauvegarde. En vous identifiant sur un autre appareil avec votre compte Pulse, ces messages y sauront restaurés.</string>
     <string name="auto_reply_configuration">Configuration des réponses automatiques</string>
-    <string name="auto_reply_configuration_summary">Paramétrez des réponses automatiques selon la situation.</string>
+    <string name="auto_reply_configuration_summary">Paramétrez des réponses automatiques selon votre situation</string>
     <string name="auto_replies">Réponses automatiques</string>
     <string name="auto_reply_top_pref_summary">Le mode Conduite et le mode Vacances sont prioritaires sur les autres mode de réponses automatiques. Si l\'un d\'entre eux est activé, aucune autre forme de réponse automatique ne sera envoyée.</string>
     <string name="driving_mode">Mode Conduite</string>
@@ -478,7 +493,7 @@ Vous n\'aurez pas besoin de vous prendre la tête avec des sauvegardes manuelles
     <string name="folders_title">Dossiers</string>
     <string name="create">Créer</string>
     <string name="create_folder">Créer un Nouveau Dossier</string>
-    <string name="create_folder_summary">Une fois un dossier créé, vous pouvez l\'utiliser pour vous aider à organiser vos conversations</string>
+    <string name="create_folder_summary">Rangez vos conversations dans des dossiers pour garder votre boîte de réception propre</string>
     <string name="no_folders">Aucun dossier créé - Créez votre premier dossier ci-dessus</string>
     <string name="folder_name">Nom du Dossier...</string>
     <string name="private_conversations_cannot_be_added_to_folders">Les conversations privées ne peuvent être ajoutées.</string>
@@ -596,7 +611,8 @@ Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous
     <string name="three_month_purchase_summary">Vous ne pouvez pas vous tromper avec ça.</string>
     <string name="monthly_purchase">$0,99 par mois</string>
     <string name="monthly_purchase_summary">Vous voulez juste essayer ? Aucun problème.</string>
-    <string name="change_subscription_message">Vous voulez améliorer ? Super ! Après avoir fait votre choix sur l\'écran suivant, rendez vous sur le Play Store, et stoppez l\'ancien abonnement manuellement.</string>
+    <string name="change_subscription_message">Vous voulez améliorer ? Super ! Après avoir fait votre choix sur l\'écran suivant, vous <b>devez</b> aller sur le Play Store afin d\'annuler l\'essai ou le précédent abonnement.
+Je <b>ne peux pas</b> le faire automatiquement.</string>
     <string name="beautiful_powerful_instant">Beau, puissant, instantané.</string>
     <string name="optimized_for_all_your_devices">Pulse est optimisé pour <b>tous</b> vos appareils.
 Envoyez des messages depuis internet, un ordinateur de bureau, votre tablette, et même votre TV.</string>

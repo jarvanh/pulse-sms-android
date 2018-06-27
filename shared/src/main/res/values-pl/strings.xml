@@ -22,10 +22,10 @@
     <string name="shortcut_compose_short">Nowa wiadomość</string>
     <string name="shortcut_compose_long">Rozpocznij nową konwersację!</string>
     <!-- Drawer Items -->
-    <string name="menu_conversations">Lista konwersacji</string>
-    <string name="menu_archived_conversations">Archiwum konwersacji</string>
-    <string name="menu_private_conversations">Prywatne konwersacje</string>
-    <string name="menu_unread_conversations">Nieprzeczytane konwersacje</string>
+    <string name="menu_conversations">Lista rozmów</string>
+    <string name="menu_archived_conversations">Zachowane rozmowy</string>
+    <string name="menu_private_conversations">Rozmowy prywatne</string>
+    <string name="menu_unread_conversations">Nieprzeczytane rozmowy</string>
     <string name="menu_edit_folders">Zarządzaj folderami...</string>
     <string name="menu_edit_folders_no_ellipse">Zarządzanie folderami</string>
     <string name="menu_schedule">Wiadomości zaplanowane</string>
@@ -46,15 +46,15 @@
     <string name="menu_view_contact">Wyświetl kontakt</string>
     <string name="menu_view_contacts">Wyświetl kontakty</string>
     <string name="menu_view_media">Wyświetl załączniki</string>
-    <string name="menu_delete_conversation">Usuń konwersację</string>
-    <string name="menu_archive_conversation">Archiwizuj konwersację</string>
+    <string name="menu_delete_conversation">Usuń rozmowę</string>
+    <string name="menu_archive_conversation">Zachowaj rozmowę</string>
     <string name="menu_move_to_inbox">Przenieś do skrzynki odbiorczej</string>
-    <string name="menu_conversation_information">Szczegóły konwersacji</string>
+    <string name="menu_conversation_information">Szczegóły rozmowy</string>
     <string name="menu_copy_phone_number">Skopiuj numer</string>
-    <string name="menu_view_full_conversation">Historia konwersacji</string>
+    <string name="menu_view_full_conversation">Zobacz historię</string>
     <string name="menu_conversation_blacklist">Dodaj do czarnej listy</string>
     <string name="menu_conversation_schedule">Zaplanuj wiadomość</string>
-    <string name="menu_contact_settings">Ustawienia kontaktu</string>
+    <string name="menu_contact_settings">Ustawienia rozmowy</string>
     <string name="menu_group_settings">Ustawienia grupy</string>
     <string name="menu_snooze_off">Wyłącz</string>
     <string name="menu_snooze_1">1 godzina</string>
@@ -64,9 +64,12 @@
     <string name="menu_snooze_24">24 godziny</string>
     <string name="menu_snooze_72">72 godziny</string>
     <string name="menu_snooze_custom">Wskaż godzinę</string>
+    <string name="menu_mark_as_unread">Zaznacz jako nieprzeczytane</string>
+    <string name="menu_pin_conversation">Przypnij/odepnij rozmowę</string>
+    <string name="menu_mute_conversation">Włącz/wyłącz wyciszenie rozmowy</string>
     <!-- Empty Screen -->
     <string name="no_messages">Brak wiadomości</string>
-    <string name="no_messages_summary">Zacznij nową konwersację lub po prostu ciesz się dniem!</string>
+    <string name="no_messages_summary">Zacznij nową rozmowę lub po prostu ciesz się dniem!</string>
     <string name="close">Zamknij</string>
     <!-- Conversation List Screen -->
     <string name="pinned">Przypięte</string>
@@ -78,22 +81,22 @@
     <string name="mark_section_as_read">Oznaczono %1$s jako przeczytane</string>
     <string name="marking_section_as_read">Oznaczam %1$s jako przeczytane</string>
     <plurals name="conversations_deleted">
-        <item quantity="one">Usunięte konwersacje: %1$d</item>
-        <item quantity="other">Usunięte konwersacje: %1$d</item>
-        <item quantity="few">Usunięte konwersacje: %1$d</item>
-        <item quantity="many">Usunięte konwersacje: %1$d</item>
+        <item quantity="one">Usunięta rozmowa: %1$d</item>
+        <item quantity="other">Usunięte rozmowy: %1$d</item>
+        <item quantity="few">Usunięte rozmowy: %1$d</item>
+        <item quantity="many">Usunięte rozmowy: %1$d</item>
     </plurals>
     <plurals name="conversations_archived">
-        <item quantity="one">Konwersacje przeniesione do archiwum: %1$d</item>
-        <item quantity="other">Konwersacje przeniesione do archiwum: %1$d</item>
-        <item quantity="few">Konwersacje przeniesione do archiwum: %1$d</item>
-        <item quantity="many">Konwersacje przeniesione do archiwum: %1$d</item>
+        <item quantity="one">Rozmowa przeniesiona do archiwum: %1$d</item>
+        <item quantity="other">Rozmowy przeniesione do archiwum: %1$d</item>
+        <item quantity="few">Rozmowy przeniesione do archiwum: %1$d</item>
+        <item quantity="many">Rozmowy przeniesione do archiwum: %1$d</item>
     </plurals>
     <plurals name="conversations_unarchived">
-        <item quantity="one">Konwersacje przeniesione do skrzynki odbiorczej: %1$d</item>
-        <item quantity="other">Konwersacje przeniesione do skrzynki odbiorczej: %1$d</item>
-        <item quantity="few">Konwersacje przeniesione do skrzynki odbiorczej: %1$d</item>
-        <item quantity="many">Konwersacje przeniesione do skrzynki odbiorczej: %1$d</item>
+        <item quantity="one">Rozmowa przeniesiona do skrzynki odbiorczej: %1$d</item>
+        <item quantity="other">Rozmowy  przeniesione do skrzynki odbiorczej: %1$d</item>
+        <item quantity="few">Rozmowy przeniesione do skrzynki odbiorczej: %1$d</item>
+        <item quantity="many">Rozmowy przeniesione do skrzynki odbiorczej: %1$d</item>
     </plurals>
     <string name="undo">Cofnij</string>
     <string name="enter_search">Wyszukaj...</string>
@@ -101,8 +104,8 @@
     <string name="convo_list_try_it">Wypróbuj!</string>
     <string name="convo_list_not_now">Nie teraz</string>
     <string name="no_private_messages_description">Skonfiguruj prywatne rozmowy w menu ustawień rozmów prywatnych!</string>
-    <string name="no_folder_messages_description">Dodaj rozmowę do tego folderu, aby pojawił się tutaj!</string>
-    <string name="no_archived_messages_description">Zarchiwizuj rozmowę, aby pojawiła się tutaj!</string>
+    <string name="no_folder_messages_description">Dodaj rozmowę do tego folderu, aby pojawiła się tutaj!</string>
+    <string name="no_archived_messages_description">Zachowaj rozmowę, aby pojawiła się tutaj!</string>
     <!-- Search Screen -->
     <string name="conversations">Rozmowy</string>
     <string name="messages">Wiadomości</string>
@@ -143,7 +146,7 @@
     <string name="select_folder">Wybierz folder dla rozmowy</string>
     <string name="permission_needed_for_action">Wymagane są dodatkowe uprawnienia aby wykonać tę czynność.</string>
     <string name="request_permission">Wymagane uprawnienie</string>
-    <string name="no_messages_with_contact">Nie masz żadnych wiadomości w tej konwersacji,
+    <string name="no_messages_with_contact">Nie masz żadnych wiadomości w tej rozmowie,
 czas ją rozpocząć!</string>
     <string name="save">Zapisz</string>
     <string name="share">Udostępnij</string>
@@ -157,7 +160,7 @@ czas ją rozpocząć!</string>
     <string name="delete">Usuń</string>
     <string name="copy_message">Kopiuj tekst</string>
     <string name="resend">Wyślij ponownie</string>
-    <string name="no_media">Brak załączników w tej konwersacji!</string>
+    <string name="no_media">Brak załączników w tej rozmowie!</string>
     <string name="error_decrypting">Błąd podczas odszyfrowywania wiadomości! Sprawdź tę wiadomość na swoim telefonie.</string>
     <string name="message_sending_failed">Błąd wysyłania wiadomości!</string>
     <string name="preparing_video">Przygotowywanie wideo&#8230;</string>
@@ -167,6 +170,7 @@ czas ją rozpocząć!</string>
     <string name="copy_message_text">Skopiuj treść wiadomości</string>
     <string name="select_text_to_copy">Zaznacz tekst, który chcesz skopiować:</string>
     <string name="copy_all_text">Kopiuj wszystko</string>
+    <string name="copy_otp">Kopiuj</string>
     <string name="open_link_to_browser">Otwórz link w przeglądarce</string>
     <string name="open_link_internal">Otwórz link</string>
     <string name="copy_link">Skopiuj link</string>
@@ -191,19 +195,18 @@ czas ją rozpocząć!</string>
     <string name="loading_messages">Optymalizuję...</string>
     <string name="loading_messages_summary">Pracujemy nad pobraniem Twoich wiadomości do aplikacji. Nie potrwa to długo!</string>
     <string name="tooltip_got_it">Mamy to!</string>
-    <string name="navigation_drawer_conversation_hint">Więcej opcji dla tej konwersacji dostępnych jest w menu podręcznym.</string>
+    <string name="navigation_drawer_conversation_hint">Więcej opcji dla tej rozmowy dostępnych jest w menu podręcznym.</string>
     <string name="onboarding_title_1">Wiadomości wymyślone od nowa</string>
-    <string name="onboarding_title_2">Dostępne w każdym miejscu</string>
+    <string name="onboarding_title_2">Dostępne wszędzie</string>
     <string name="onboarding_title_3">Potężne możliwości personalizacji</string>
-    <string name="onboarding_content_1">Bezproblemowy, płynny layout, mocny design i nieskazitelna integracja.
-Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
+    <string name="onboarding_content_1">Szybkie i płynne układy, do tego perfekcyjnie wykonane i z możliwością bezbłędnej integracji.</string>
     <string name="onboarding_content_2">Wysyłaj wiadomości z tabletu, komputera, smart zegarka lub każdego innego urządzenia podłączonego do Twojego konta.</string>
     <string name="onboarding_content_3">Przypinaj, wyciszaj, dostosowuj wygląd i powiadomienia dla każdego kontaktu, z którym rozmawiasz. Spraw, by Pulse był twój.</string>
     <string name="message_anywhere_onboarding_title_1">Wysyłaj wiadomości gdziekolwiek jesteś</string>
     <string name="message_anywhere_onboarding_title_2">Abonament lub pojedynczy zakup</string>
     <string name="message_anywhere_onboarding_title_3">Tygodniowa wersja próbna</string>
     <string name="message_anywhere_onboarding_content_1">Bezproblemowa integracja z każdym urządzeniem (tablet, zegarek, TV, aplikacja web oraz aplikacja natywna w Google Chrome i Firefox) wspierająca wiadomości SMS i MMS z każdego miejsca!</string>
-    <string name="message_anywhere_onboarding_content_2">Szalenie niskie warianty płatności dostosowane do Twoich potrzeb: $10.99 dożywotnio, $5.99 rocznie, $1.99 co 3 miesiące lub $0.99 co miesiąc. To mniej niż filiżanka kawy.</string>
+    <string name="message_anywhere_onboarding_content_2">Niemożliwie niskie ceny dopasowane do Ciebie: $10.99 dożywotnio, $5.99 rocznie, $1.99 co 3 miesiące lub $0.99 co miesiąc. Taniej niż kawa.</string>
     <string name="message_anywhere_onboarding_content_3">Używaj aplikacji BEZPŁATNIE (na zawsze!) na swoim telefonie z systemem Android lub pisz z każdego swojego urządzenia rozpoczynając TYGODNIOWY okres próbny.</string>
     <string name="start_trial">Rozpocznij\nokres próbny</string>
     <string name="not_now">Nie\nteraz</string>
@@ -212,10 +215,10 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nowa wiadomość od %1$s</string>
     <plurals name="new_conversations">
-        <item quantity="one">Otrzymane konwersacje: %1$d</item>
-        <item quantity="other">Otrzymane konwersacje: %1$d</item>
-        <item quantity="few">Otrzymane konwersacje: %1$d</item>
-        <item quantity="many">Otrzymane konwersacje: %1$d</item>
+        <item quantity="one">%1$d nowa rozmowa</item>
+        <item quantity="other">%1$d nowe rozmowy</item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
     </plurals>
     <plurals name="new_messages">
         <item quantity="one">%1$d nowa wiadomość</item>
@@ -237,6 +240,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     </string-array>
     <string name="new_mms_message">Nowa wiadomość MMS</string>
     <string name="you">Ty</string>
+    <string name="draft">Szkic</string>
     <string name="new_message">Nowa wiadomość</string>
     <string name="received_new_message">Otrzymałeś nową wiadomość SMS!</string>
     <string name="media">Multimedia</string>
@@ -250,7 +254,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="group_summary_notifications">Podsumowanie rozmów grupowych</string>
     <string name="failed_messages_channel">Nie wysłane wiadomości</string>
     <string name="silent_background_services">Ciche usługi w tle</string>
-    <string name="silent_conversations_channel">Wycisz powiadomienia konwersacji</string>
+    <string name="silent_conversations_channel">Wycisz powiadomienia o rozmowach</string>
     <string name="account_activity_notifications">Powiadomienia aktywności konta</string>
     <string name="quick_text_channel">Szybkie powiadomienia tekstowe</string>
     <string name="media_parse_text">Analizowanie multimediów z poprzedniej wiadomości tekstowej ...</string>
@@ -278,7 +282,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="get_in_touch">Bądź w kontakcie</string>
     <string name="faqs">FAQ - często zadawane pytania</string>
     <string name="get_help">Uzyskaj pomoc</string>
-    <string name="get_help_summary">Mam pytanie? Każdego dnia dostaję szaloną ilość wiadomości e-mail, które jednoosobowemu zespołowi zabierają czas potrzebny na rozwój nowych funkcji. Aby mi pomóc, najpierw sprawdź w FAQ, czy już nie odpowiedziałem na twoje pytanie.</string>
+    <string name="get_help_summary">Masz pytanie? Każdego dnia dostaję szaloną ilość wiadomości e-mail, które jednoosobowemu zespołowi zabierają czas potrzebny na rozwój nowych funkcji. Aby mi pomóc, najpierw sprawdź w FAQ, czy już nie odpowiedziałem na twoje pytanie.</string>
     <string name="get_help_summary_2">Sekcja pomocy jest dość obszerna, ale jeśli nie znajdziesz swojego konkretnego pytania, skontaktuj się ze mną, a z przyjemnością odpowiem!</string>
     <string name="features">Funkcje Pulse</string>
     <string name="issues">Śledzenie problemów</string>
@@ -297,18 +301,18 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
         <item quantity="many">%1$d wiadomości</item>
     </plurals>
     <plurals name="conversation_count">
-        <item quantity="one">w %1$d wiadomości</item>
-        <item quantity="other">w %1$d wiadomościach</item>
-        <item quantity="few">w %1$d wiadomościach</item>
-        <item quantity="many">w %1$d wiadomościach</item>
+        <item quantity="one">w %1$d rozmowa</item>
+        <item quantity="other">w %1$d rozmów</item>
+        <item quantity="few">w %1$d rozmowy</item>
+        <item quantity="many">w %1$d rozmów</item>
     </plurals>
-    <string name="pin_conversation">Przypnij konwersację</string>
-    <string name="pin_conversation_summary">Utrzymuj tę konwersację na początku listy</string>
-    <string name="mute_conversation">Wycisz konwersację</string>
+    <string name="pin_conversation">Przypnij rozmowę</string>
+    <string name="pin_conversation_summary">Utrzymuj tę rozmowę na początku listy</string>
+    <string name="mute_conversation">Wycisz rozmowę</string>
     <string name="mute_conversation_summary">Ukrywa powiadomienia dla tej rozmowy</string>
     <string name="private_conversation">Rozmowa prywatna</string>
     <string name="private_conversation_summary">Ukryj treść powiadomień</string>
-    <string name="private_conversation_summary_2">Ukryj treść powiadomień i przenieś tę rozmowę do sekcji <i>Prywatne rozmowy</i></string>
+    <string name="private_conversation_summary_2">Ukryj treść powiadomień i przenieś tę rozmowę do sekcji <i>Rozmowy prywatne</i></string>
     <string name="primary_color">Kolor podstawowy</string>
     <string name="primary_dark_color">Kolor podstawowy ciemny</string>
     <string name="accent_color">Kolor akcentu</string>
@@ -348,21 +352,30 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="delivery_reports_summary">Większość operatorów nie wspiera tej opcji</string>
     <string name="theme_settings">Personalizacja</string>
     <string name="theme_settings_category">Wygląd i wrażenia</string>
-    <string name="conversation_list_category">Lista konwersacji</string>
+    <string name="conversation_list_category">Lista rozmów</string>
     <string name="general_category">Ogólne</string>
     <string name="theme_settings_redirect">Motyw</string>
     <string name="base_theme">Motyw podstawowy</string>
     <string name="global_theme_color">Kolor motywu</string>
     <string name="font_size">Rozmiar czcionki</string>
-    <string name="rounder_bubbles">Okrągłe bąbelki wiadomości</string>
+    <string name="rounder_bubbles">Zaokrąglone dymki wiadomości</string>
+    <string name="bubble_style">Styl dymków wiadomości</string>
+    <string name="bubble_style_round">Zaokrąglony</string>
+    <string name="bubble_style_square">Kwadratowy</string>
+    <string name="bubble_style_circle">Zaokrąglony (bez ogonka)</string>
     <string name="adjustable_nav_bar">Dopasuj pasek nawigacji do motywu bazowego</string>
     <string name="adjustable_nav_bar_summary">Jasny motyw wyświetli biały pasek nawigacyjny, ciemne motywy wyświetlą czarny pasek nawigacyjny</string>
-    <string name="apply_theme_globally">Zastosuj do wszystkich konwersacji</string>
-    <string name="apply_theme_globally_summary">Usuń motywy z poszczególnych konwersacji, użyj globalnego zestawu kolorów</string>
+    <string name="apply_theme_globally">Zastosuj do wszystkich rozmów</string>
+    <string name="apply_theme_globally_summary">Usuń motywy z poszczególnych rozmów, użyj globalnego zestawu kolorów</string>
     <string name="swipe_delete">Przesuń aby usunąć</string>
+    <string name="swipe_actions">Akcje gestu przesuwania</string>
+    <string name="swipe_actions_summary">Dostosuj gesty przesuwania w rozmowie</string>
+    <string name="left_to_right_swipe">Przesunięcie w prawo</string>
+    <string name="right_to_left_swipe">Przesunięcie w lewo</string>
+    <string name="no_swipe">Wyłącz gesty przesuwania</string>
     <string name="blacklist_hint">Dodaj numer do czarnej listy...</string>
     <string name="add_blacklist">%1$s\n\nCzy na pewno chcesz dodać ten numer do czarnej listy? Wiadomości z tego numeru nie będą już zapisywane ani nie otrzymasz o nich powiadomienia!</string>
-    <string name="remove_blacklist">%1$s\n\nCzy chcesz usunąć ten numer z czarnej listy?</string>
+    <string name="remove_blacklist">%1$s\n\nCzy chcesz usunąć tę czarną listę?</string>
     <string name="blacklist_need_number">Podaj numer telefonu, aby dodać go do czarnej listy.</string>
     <string name="no_blacklists">Brak numerów na czarnej liście</string>
     <string name="no_blacklists_summary">Aby dodać numer do czarnej listy, dotknij przycisku z plusem.</string>
@@ -378,7 +391,7 @@ Jakość Twoich rozmów jest dla Pulse\'a priorytetowa.</string>
     <string name="preparing_new_account">Przygotowywanie konta&#8230;</string>
     <string name="delete_account">Usuń konto</string>
     <string name="delete_account_summary">Usuwa konto z tego urządzenia, innych podłączonych urządzeń, oraz z serwera. Tej operacji nie można cofnąć!</string>
-    <string name="delete_account_confirmation">Jesteś pewien, że chcesz usunąć swoje konto i wszystko z nim powiązane? Zawsze możesz zapisać się ponownie później!</string>
+    <string name="delete_account_confirmation">Na pewno chcesz usunąć swoje konto i wszystko z nim powiązane? W razie czego możesz utworzyć nowe konto!</string>
     <string name="change_subscription">Zmień subskrypcję</string>
     <string name="cancel_on_the_play_store">Kliknij tutaj, aby dokonać aktualizacji! Możesz anulować subskrypcję w Sklepie Play.</string>
     <string name="resync_account">Ponów synchronizację wiadomości</string>
@@ -447,7 +460,7 @@ Po zakończeniu będziesz musiał zalogować się ponownie na wszystkich Twoich 
     <string name="signature_summary">Podpisy nie będą wyświetlane na liście wiadomości Pulse, zostaną wyświetlone tylko odbiorcy wiadomości</string>
     <string name="cleanup_old_messages">Usuń stare wiadomości</string>
     <string name="cleanup_old_messages_summary">Ta operacja działa raz dziennie, aby usunąć wszystkie wiadomości starsze niż wybrany okres</string>
-    <string name="cleanup_old_messages_now_summary">Ta operacja natychmiast usunie wszystkie wiadomości w tej rozmowie starsze niż wybrany okres</string>
+    <string name="cleanup_old_messages_now_summary">Ta operacja natychmiast usunie wszystkie starsze niż wybrany okres wiadomości w tej rozmowie</string>
     <string name="delayed_sending">Opóźnione wysyłanie</string>
     <string name="delayed_sending_summary">Opcja umożliwia anulowanie i edycję wiadomości przed ich wysłaniem</string>
     <string name="messaging_features">Funkcje wiadomości</string>
@@ -458,14 +471,16 @@ Po zakończeniu będziesz musiał zalogować się ponownie na wszystkich Twoich 
     <string name="quick_compose_favorites">Ulubione kontakty</string>
     <string name="quick_compose_favorites_summary">Te kontakty będą udostępnione w akcjach powiadamiania</string>
     <string name="quick_compose_favorites_title">Ustaw maksymalnie 3 kontakty:</string>
-    <string name="secure_private_conversations">Kod dostępu do prywatnych konwersacji</string>
-    <string name="secure_private_conversations_summary">Ustawienie hasła będzie wymagało wprowadzenia go przed wyświetleniem prywatnych konwersacji</string>
+    <string name="secure_private_conversations">Kod dostępu do prywatnych rozmów</string>
+    <string name="secure_private_conversations_summary">Ustawienie hasła będzie wymagało wprowadzenia go przed wyświetleniem prywatnych rozmów</string>
     <string name="use_internal_browser">Używaj wbudowanej przeglądarki internetowej</string>
     <string name="internal_browser_summary">Wyłączenie tej opcji spowoduje również wyłączenie podglądu linków na listach wiadomości</string>
     <string name="message_backup">Kopia zapasowa wiadomości</string>
     <string name="message_backup_pref_summary">Martwisz się, że utracisz swoje wiadomości? Pulse nie dopuści do tego</string>
     <string name="message_backup_summary">Czy o tym wiedziałeś: Usługa internetowa Pulse opiera się na tworzeniu kopii zapasowych wiadomości. Po zarejestrowaniu konta Pulse możesz zalogować się na to konto z dowolnego urządzenia lub tabletu, by przywrócić wszystkie wiadomości automatycznie!\n\n Brak problemów i ręcznego tworzenia kopii zapasowych.
 Z Pulse wszystko przebiega gładko, łatwo i całkowicie automatyczne.</string>
+    <string name="message_backup_summary_have_account">Super, wygląda na to, że już masz konto Pulse.
+Posiadając konto, Pulse automatycznie tworzy kopię zapasową wiadomości które wysyłasz i otrzymujesz. Działa to tak, że używając Pulse na innych urządzeniach korzystasz właśnie z tej kopii. Jeśli chcesz odtworzyć kopię zapasową na nowym urządzeniu, jedyne co musisz zrobić to się na nim zalogować do swojego konta Pulse.</string>
     <string name="auto_reply_configuration">Konfiguracja automatycznych odpowiedzi</string>
     <string name="auto_reply_configuration_summary">Skonfiguruj automatyczne odpowiedzi w zależności od sytuacji</string>
     <string name="auto_replies">Automatyczne odpowiedzi</string>
@@ -483,7 +498,7 @@ Z Pulse wszystko przebiega gładko, łatwo i całkowicie automatyczne.</string>
     <string name="folders_title">Foldery</string>
     <string name="create">Utwórz</string>
     <string name="create_folder">Utwórz nowy folder</string>
-    <string name="create_folder_summary">Po utworzeniu folderu możesz uporządkować swoje wiadomości</string>
+    <string name="create_folder_summary">Umieść rozmowy w folderze, aby ułatwić organizowanie i szybką nawigację w pełnej skrzynce odbiorczej</string>
     <string name="no_folders">Brak folderów - naciśnij <i>Utwórz nowy folder</i> powyżej, aby utworzyć swój pierwszy folder</string>
     <string name="folder_name">Nazwa folderu...</string>
     <string name="private_conversations_cannot_be_added_to_folders">Prywatna rozmowa nie może zostać dodana.</string>
@@ -515,7 +530,7 @@ Z Pulse wszystko przebiega gładko, łatwo i całkowicie automatyczne.</string>
     <string name="picture_message">MMS</string>
     <string name="gif_message">GIF</string>
     <string name="contact_card">Karta kontaktu</string>
-    <string name="conversation_with">Konwersacja z %1$s</string>
+    <string name="conversation_with">Rozmowa z %1$s</string>
     <string name="send">Wyślij</string>
     <string name="quick_share">Szybkie udostępnienie</string>
     <!-- Passcode Entry -->
@@ -589,9 +604,9 @@ Jeżeli nie odnowisz go na czas, aplikacja wyloguje Cię automatycznie z Twojego
     <string name="subscription_not_found">Nie wykryto subskrypcji - rozpocznij swój okres próbny!</string>
     <string name="checking_for_active_subscriptions">Sprawdzanie subskrypcji&#8230;</string>
     <string name="purchase_error_cancelled">Anulowałeś zakup :(</string>
-    <string name="purchase_error_bad_google_play">Ups, wystąpiły problemy z Google Play, otrzymaliśmy niepoprawną odpowiedź.</string>
-    <string name="purchase_error_bad_sku">Hmm&#8230; Twój zakup nie jest zgodny z wpisem w naszej bazie danych.</string>
-    <string name="subscriptions">Subskrypcje są rozliczane po 7-dniowym okresie próbnym i mogą być zmienione/anulowane w każdym momencie:</string>
+    <string name="purchase_error_bad_google_play">Ups, pojawił się problem z Google Play i otrzymano niepoprawną odpowiedź.</string>
+    <string name="purchase_error_bad_sku">Hmm&#8230; Nie zarejestrowaliśmy tej transakcji.</string>
+    <string name="subscriptions">Subskrypcje są rozliczane po 7-dniowym okresie próbnym i mogą być zmienione/anulowane w każdym momencie</string>
     <string name="billed_immediately">Rozliczenie następuje bezzwłocznie.</string>
     <string name="lifetime_purchase">$10.99 - subskrypcja dożywotnia</string>
     <string name="lifetime_purchase_summary">Płacisz raz i nigdy więcej!</string>
@@ -601,7 +616,7 @@ Jeżeli nie odnowisz go na czas, aplikacja wyloguje Cię automatycznie z Twojego
     <string name="three_month_purchase_summary">Nie da się tutaj pomylić ;)</string>
     <string name="monthly_purchase">$0.99 - co miesiąc</string>
     <string name="monthly_purchase_summary">Chcesz tylko wypróbować? Nie ma problemu.</string>
-    <string name="change_subscription_message">Czy chcesz zmienić subskrypcję? Świetnie! Po wybraniu interesującej Cię opcji przejdź do aplikacji Sklep Google Play i ręcznie usuń poprzednią subskrypcję.</string>
+    <string name="change_subscription_message">Chcesz upgrade? Świetnie! Po wybraniu opcji na następnym ekranie, w aplikacji Play Store<b>musisz</b> anulować swoją subskrypcję lub wersję próbną. <b>Nie mogę</b> zrobić tego automatycznie.</string>
     <string name="beautiful_powerful_instant">Piękny, potężny, błyskawiczny.</string>
     <string name="optimized_for_all_your_devices">Pulse jest zoptymalizowany do działania <b>ze wszystkimi</b> Twoimi urządzeniami.
 Wysyłaj wiadomości z przeglądarki internetowej, komputera, tabletu, smart zegarka, lub nawet ze smart tv.</string>
