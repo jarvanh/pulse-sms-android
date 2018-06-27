@@ -79,6 +79,9 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
 
         val recyclerView = layout.findViewById<RecyclerView>(R.id.conversation_list)
         recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = ConversationsForFolderAdapter(emptyList(), object : ContactClickedListener {
+            override fun onClicked(conversation: Conversation) { }
+        }, emptyList(), folder.id)
 
         Thread {
             val conversations = DataSource.getAllConversationsAsList(activity)
