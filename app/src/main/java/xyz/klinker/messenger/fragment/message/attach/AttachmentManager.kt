@@ -57,6 +57,7 @@ class AttachmentManager(private val fragment: MessageListFragment) {
                 options.setActiveWidgetColor(argManager.colorAccent)
                 options.setCompressionFormat(Bitmap.CompressFormat.JPEG)
                 options.setCompressionQuality(100)
+                options.setFreeStyleCropEnabled(true)
 
                 val destination = File.createTempFile("ucrop", "jpg", activity!!.cacheDir)
                 UCrop.of(attachedUri!!, Uri.fromFile(destination))
