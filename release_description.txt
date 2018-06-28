@@ -1,5 +1,1 @@
-In this release:<br/>
-- UI improvements<br/>
-- Display previews of drafts on the conversation list<br/>
-- Provide media type previews as the snippet on the conversation list, instead of an empty box<br/>
-+ Bug fixes, performance improvements, and tweaks
+In this release, Pulse adds freeform image cropping! When attaching images to your messages, you can now crop them using whatever aspect ratio you want, rather than just the pre-defined ratios.
