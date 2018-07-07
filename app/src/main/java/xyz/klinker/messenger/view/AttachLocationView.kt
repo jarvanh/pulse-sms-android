@@ -168,7 +168,7 @@ class AttachLocationView(context: Context, private val imageListener: ImageSelec
     }
 
     private fun attachAddress() {
-        textListener?.onTextSelected("https://maps.google.com/maps/@$latitude,$longitude,16z")
+        textListener?.onTextSelected("https://www.google.com/maps/place/$latitude,$longitude")
     }
 
     override fun onLocationChanged(location: Location) {
