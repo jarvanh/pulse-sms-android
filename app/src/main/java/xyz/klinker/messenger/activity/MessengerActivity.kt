@@ -78,6 +78,7 @@ class MessengerActivity : AppCompatActivity() {
         colorController.configureGlobalColors()
         colorController.configureNavigationBarColor()
         intentHandler.dismissIfFromNotification()
+        intentHandler.restoreNavigationSelection(savedInstanceState)
         navController.conversationActionDelegate.displayConversations(savedInstanceState)
         navController.initToolbarTitleClick()
         accountController.startIntroOrLogin(savedInstanceState)

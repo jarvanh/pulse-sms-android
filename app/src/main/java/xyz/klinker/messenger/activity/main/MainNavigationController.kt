@@ -36,6 +36,7 @@ class MainNavigationController(private val activity: MessengerActivity)
     var conversationListFragment: ConversationListFragment? = null
     var otherFragment: Fragment? = null
     var inSettings = false
+    var selectedNavigationItemId: Int = R.id.drawer_conversation
 
     fun isConversationListExpanded() = conversationListFragment != null && conversationListFragment!!.isExpanded
     fun isOtherFragmentConvoAndShowing() = otherFragment != null && otherFragment is ConversationListFragment && (otherFragment as ConversationListFragment).isExpanded
@@ -200,6 +201,7 @@ class MainNavigationController(private val activity: MessengerActivity)
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         closeDrawer()
+        selectedNavigationItemId = item.itemId
 
         if (item.isChecked || ApiDownloadService.IS_RUNNING) {
             return true

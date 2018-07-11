@@ -49,10 +49,10 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
 
         if (updateConversationListSize) {
             val content = activity.findViewById<View>(R.id.content)
-            content.post({
+            content.post {
                 AnimationUtils.conversationListSize = content.height
                 AnimationUtils.toolbarSize = activity.toolbar.height
-            })
+            }
         }
 
         navController.otherFragment = null

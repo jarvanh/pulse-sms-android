@@ -81,11 +81,20 @@ class MainIntentHandler(private val activity: MessengerActivity) {
             outState = Bundle()
         }
 
-        if (navController.isConversationListExpanded()) {
+        if (navController.selectedNavigationItemId != R.id.drawer_conversation) {
+            outState.putInt(MessengerActivityExtras.EXTRA_NAVIGATION_ITEM_ID, navController.selectedNavigationItemId)
+        } else if (navController.isConversationListExpanded()) {
             outState.putLong(MessengerActivityExtras.EXTRA_CONVERSATION_ID, navController.getShownConversationList()!!.expandedId)
         }
 
         return outState
+    }
+
+    fun restoreNavigationSelection(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(MessengerActivityExtras.EXTRA_NAVIGATION_ITEM_ID)) {
+            val navItemId = savedInstanceState.getInt(MessengerActivityExtras.EXTRA_NAVIGATION_ITEM_ID)
+            navController.onNavigationItemSelected(navItemId)
+        }
     }
 
     fun dismissIfFromNotification() {
