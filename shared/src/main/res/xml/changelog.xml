@@ -18,7 +18,7 @@
 
     <version
         name="3.2.1"
-        description="June 16th, 2018">
+        description="June 11th, 2018">
         <!-- Issue with the main fragment getting reset to the conversation list, when the device is rotated -->
         <!-- Fix widget coloring issues, due to dark mode switch, where the text would know about dark mode, while the background of the widget didn't -->
         <text>Bug fixes</text>
