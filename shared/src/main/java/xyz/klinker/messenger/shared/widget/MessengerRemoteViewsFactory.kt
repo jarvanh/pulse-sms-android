@@ -133,7 +133,7 @@ class MessengerRemoteViewsFactory(private val context: Context) : RemoteViewsSer
             else -> {
                 rv.setTextColor(R.id.conversation_title, context.resources.getColor(R.color.primaryText))
                 rv.setTextColor(R.id.conversation_summary, context.resources.getColor(R.color.secondaryText))
-                rv.setInt(R.id.widget_item, "setBackgroundColor", Color.WHITE)
+                rv.setInt(R.id.widget_item, "setBackgroundColor", context.resources.getColor(R.color.background))
             }
         }
 

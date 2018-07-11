@@ -95,7 +95,7 @@ class MessengerAppWidgetProvider : AppWidgetProvider() {
             when(Settings.baseTheme) {
                 BaseTheme.ALWAYS_DARK -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.parseColor("#202B30"))
                 BaseTheme.BLACK -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.BLACK)
-                else -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.WHITE)
+                else -> rv.setInt(R.id.widget_list, "setBackgroundColor", context.resources.getColor(R.color.background))
             }
 
             baseWidgetTheme = Settings.baseTheme
