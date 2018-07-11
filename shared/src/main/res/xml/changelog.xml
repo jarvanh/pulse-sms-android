@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="3.2.1"
+        description="June 16th, 2018">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="3.2.0"
         description="June 28th, 2018">
         <text>Freeform image cropping. Crop images using whatever aspect ratio you want, rather than just the pre-defined ratios</text>
