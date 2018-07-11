@@ -98,6 +98,8 @@ class MessengerAppWidgetProvider : AppWidgetProvider() {
                 else -> rv.setInt(R.id.widget_list, "setBackgroundColor", Color.WHITE)
             }
 
+            baseWidgetTheme = Settings.baseTheme
+
             val color = ImageUtils.createColoredBitmap(Settings.mainColorSet.color)
             rv.setImageViewBitmap(R.id.toolbar, color)
 
@@ -118,9 +120,11 @@ class MessengerAppWidgetProvider : AppWidgetProvider() {
     companion object {
         private val TAG = "AppWidgetProvider"
 
-        val REFRESH_ACTION = "xyz.klinker.messenger.shared.widget.REFRESH"
-        val OPEN_ACTION = "xyz.klinker.messenger.shared.widget.OPEN"
-        val EXTRA_ITEM_ID = "xyz.klinker.messenger.shared.widget.EXTRA_ITEM_ID"
+        const val REFRESH_ACTION = "xyz.klinker.messenger.shared.widget.REFRESH"
+        const val OPEN_ACTION = "xyz.klinker.messenger.shared.widget.OPEN"
+        const val EXTRA_ITEM_ID = "xyz.klinker.messenger.shared.widget.EXTRA_ITEM_ID"
+
+        var baseWidgetTheme = BaseTheme.DAY_NIGHT
 
         fun refreshWidget(context: Context) {
             try {

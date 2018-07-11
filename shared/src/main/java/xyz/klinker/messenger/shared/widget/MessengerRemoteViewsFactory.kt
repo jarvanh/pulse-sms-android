@@ -119,7 +119,7 @@ class MessengerRemoteViewsFactory(private val context: Context) : RemoteViewsSer
 
         rv.setImageViewBitmap(R.id.picture, image)
 
-        when (Settings.baseTheme) {
+        when (MessengerAppWidgetProvider.baseWidgetTheme) {
             BaseTheme.ALWAYS_DARK -> {
                 rv.setTextColor(R.id.conversation_title, Color.WHITE)
                 rv.setTextColor(R.id.conversation_summary, Color.parseColor("#B2FFFFFF"))
