@@ -45,9 +45,9 @@ import xyz.klinker.messenger.encryption.EncryptionUtils
 object ApiUtils {
     const val RETRY_COUNT = 4
 
-    private val TAG = "ApiUtils"
-    private val MAX_SIZE = (1024 * 1024 * 5).toLong()
-    private val FIREBASE_STORAGE_URL = "gs://messenger-42616.appspot.com"
+    private const val TAG = "ApiUtils"
+    private const val MAX_SIZE = (1024 * 1024 * 5).toLong()
+    private const val FIREBASE_STORAGE_URL = "gs://messenger-42616.appspot.com"
 
     fun isCallSuccessful(response: Response<*>): Boolean {
         val code = response.code()

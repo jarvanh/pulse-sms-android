@@ -30,8 +30,10 @@ import org.json.JSONException
 import org.json.JSONObject
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
+import xyz.klinker.messenger.api.implementation.BinaryUtils
 import xyz.klinker.messenger.api.implementation.LoginActivity
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseDownloadCallback
+import xyz.klinker.messenger.api.implementation.firebase.FirebaseUploadCallback
 import xyz.klinker.messenger.api.implementation.firebase.MessengerFirebaseMessagingService
 import xyz.klinker.messenger.encryption.EncryptionUtils
 import xyz.klinker.messenger.shared.R
@@ -66,8 +68,8 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
 
     companion object {
 
-        private val TAG = "FirebaseHandlerService"
-        private val INFORMATION_NOTIFICATION_ID = 13
+        private const val TAG = "FirebaseHandlerService"
+        private const val INFORMATION_NOTIFICATION_ID = 13
 
         fun process(context: Context, operation: String, data: String) {
             val account = Account
@@ -313,8 +315,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         private fun addMessageAfterFirebaseDownload(context: Context, encryptionUtils: EncryptionUtils, message: Message, to: String? = null) {
             val apiUtils = ApiUtils
             apiUtils.saveFirebaseFolderRef(Account.accountId)
-            val file = File(context.filesDir,
-                    message.id.toString() + MimeType.getExtension(message.mimeType!!))
+            val file = File(context.filesDir, message.id.toString() + MimeType.getExtension(message.mimeType!!))
 
             if (to == null) {
                 DataSource.insertMessage(context, message, message.conversationId, false, false)
@@ -344,8 +345,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                                     .send(context, message.data!!, conversation.phoneNumbers!!)
                         } else {
                             SendUtils(conversation.simSubscriptionId)
-                                    .send(context, "", conversation.phoneNumbers!!,
-                                            Uri.parse(message.data), message.mimeType)
+                                    .send(context, "", conversation.phoneNumbers!!, Uri.parse(message.data), message.mimeType)
                         }
                     } else {
                         Log.e(TAG, "trying to send message without the conversation, so can't find phone numbers")
@@ -372,7 +372,13 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                         NotificationManagerCompat.from(context).cancel(message.conversationId.toInt())
                         NotificationUtils.cancelGroupedNotificationWithNoContent(context)
                     }
-                    else -> { }
+                    else -> {
+                    }
+                }
+
+                if (to != null) {
+                    val bytes = BinaryUtils.getMediaBytes(context, message.data, message.mimeType, true)
+                    ApiUtils.uploadBytesToFirebase(Account.accountId, bytes, message.id, encryptionUtils, FirebaseUploadCallback {  }, 0)
                 }
             }
 
@@ -898,7 +904,8 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 }
 
                 if (type.toLowerCase() == "string" && pref == context.getString(R.string.pref_secure_private_conversations)) {
-                    settings.setValue(context, pref, Account.encryptor?.decrypt(json.getString("value")) ?: "")
+                    settings.setValue(context, pref, Account.encryptor?.decrypt(json.getString("value"))
+                            ?: "")
                 } else if (type.toLowerCase() == "boolean" && pref == context.getString(R.string.pref_quick_compose)) {
                     val turnOn = json.getBoolean("value")
                     if (turnOn) {
@@ -977,12 +984,18 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
 
         @Throws(JSONException::class)
         private fun forwardToPhone(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
-
             if (!Account.primary) {
                 return
             }
 
-            val mimeType = json.getString("mime_type")
+            val messageId: Long? = if (json.has("message_id")) {
+                json.getLong("message_id")
+            } else null
+
+            val mimeType: String? = if (json.has("mime_type")) {
+                json.getString("mime_type")
+            } else null
+
             val text = json.getString("message")
             val toFromWeb = json.getString("to")
             val split = toFromWeb.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -997,6 +1010,11 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             }
 
             val message = Message()
+
+            if (messageId != null) {
+                message.id = messageId
+            }
+
             message.type = Message.TYPE_SENDING
             message.data = text
             message.timestamp = TimeUtils.now
