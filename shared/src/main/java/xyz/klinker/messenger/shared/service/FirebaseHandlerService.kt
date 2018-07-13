@@ -136,8 +136,8 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                     "update_subscription" -> updateSubscription(json, context)
                     "update_primary_device" -> updatePrimaryDevice(json, context)
                     "feature_flag" -> writeFeatureFlag(json, context)
-                    "forward_to_phone" -> forwardToPhone(json, context)
-                    else -> Log.e(TAG, "unsupported operation: " + operation)
+                    "forward_to_phone" -> forwardToPhone(json, context, encryptionUtils)
+                    else -> Log.e(TAG, "unsupported operation: $operation")
                 }
             } catch (e: JSONException) {
                 Log.e(TAG, "error parsing data json", e)
@@ -310,13 +310,18 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             }
         }
 
-        private fun addMessageAfterFirebaseDownload(context: Context, encryptionUtils: EncryptionUtils, message: Message) {
+        private fun addMessageAfterFirebaseDownload(context: Context, encryptionUtils: EncryptionUtils, message: Message, to: String? = null) {
             val apiUtils = ApiUtils
             apiUtils.saveFirebaseFolderRef(Account.accountId)
             val file = File(context.filesDir,
                     message.id.toString() + MimeType.getExtension(message.mimeType!!))
 
-            DataSource.insertMessage(context, message, message.conversationId, false, false)
+            if (to == null) {
+                DataSource.insertMessage(context, message, message.conversationId, false, false)
+            } else {
+                message.conversationId = DataSource.insertMessage(message, to, context, true)
+            }
+
             Log.v(TAG, "added message")
 
             val isSending = message.type == Message.TYPE_SENDING
@@ -971,12 +976,13 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         }
 
         @Throws(JSONException::class)
-        private fun forwardToPhone(json: JSONObject, context: Context) {
+        private fun forwardToPhone(json: JSONObject, context: Context, encryptionUtils: EncryptionUtils?) {
 
             if (!Account.primary) {
                 return
             }
 
+            val mimeType = json.getString("mime_type")
             val text = json.getString("message")
             val toFromWeb = json.getString("to")
             val split = toFromWeb.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -994,7 +1000,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             message.type = Message.TYPE_SENDING
             message.data = text
             message.timestamp = TimeUtils.now
-            message.mimeType = MimeType.TEXT_PLAIN
+            message.mimeType = mimeType ?: MimeType.TEXT_PLAIN
             message.read = true
             message.seen = true
             message.simPhoneNumber = if (DualSimUtils.availableSims.size > 1) DualSimUtils.defaultPhoneNumber else null
@@ -1005,11 +1011,17 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 message.sentDeviceId = 0
             }
 
-            val conversationId = DataSource.insertMessage(message, to, context, true)
-            val conversation = DataSource.getConversation(context, conversationId)
+            if (message.data == "firebase -1" && message.mimeType != MimeType.TEXT_PLAIN) {
+                Log.v(TAG, "downloading binary from firebase")
 
-            SendUtils(conversation?.simSubscriptionId)
-                    .send(context, message.data!!, to)
+                addMessageAfterFirebaseDownload(context, encryptionUtils!!, message, to)
+                return
+            } else {
+                val conversationId = DataSource.insertMessage(message, to, context, true)
+                val conversation = DataSource.getConversation(context, conversationId)
+
+                SendUtils(conversation?.simSubscriptionId).send(context, message.data!!, to)
+            }
         }
 
         private fun getLong(json: JSONObject, identifier: String) = try {
