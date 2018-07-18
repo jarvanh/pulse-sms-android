@@ -41,7 +41,6 @@ import xyz.klinker.messenger.view.preference.NotificationAlertsPreference
 import android.widget.ArrayAdapter
 
 
-
 /**
  * Fragment for modifying app settings_global.
  */
@@ -181,13 +180,15 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
     }
 
     private fun initReadReceipts() {
-        findPreference(getString(R.string.pref_mms_read_receipts))
-                .setOnPreferenceChangeListener { _, o ->
-                    val receipts = o as Boolean
-                    ApiUtils.updateGroupMMS(Account.accountId,
-                            receipts)
-                    true
-                }
+        val preference = findPreference(getString(R.string.pref_mms_read_receipts))
+        preference.setOnPreferenceChangeListener { _, o ->
+            val receipts = o as Boolean
+            ApiUtils.updateGroupMMS(Account.accountId,
+                    receipts)
+            true
+        }
+
+        (findPreference(getString(R.string.pref_advanced_category)) as PreferenceGroup).removePreference(preference)
     }
 
     private fun initStripUnicode() {

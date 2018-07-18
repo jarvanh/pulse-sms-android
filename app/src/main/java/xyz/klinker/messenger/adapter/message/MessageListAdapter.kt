@@ -225,6 +225,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
             dataProvider.messages.moveToPosition(position)
             var type = dataProvider.messages.getInt(dataProvider.messages.getColumnIndex(Message.COLUMN_TYPE))
             val mimeType = dataProvider.messages.getString(dataProvider.messages.getColumnIndex(Message.COLUMN_MIME_TYPE))
+            val time = dataProvider.messages.getLong(dataProvider.messages.getColumnIndex(Message.COLUMN_TIMESTAMP))
 
             if (ignoreSendingStatus && type == Message.TYPE_SENDING) {
                 type = if (mimeType != null && (mimeType.contains("image") || mimeType.contains("video") || mimeType == MimeType.MEDIA_MAP))
@@ -235,6 +236,9 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
                     Message.TYPE_SENDING -> Message.TYPE_IMAGE_SENDING
                     else -> Message.TYPE_IMAGE_SENT
                 }
+            } else if (Account.exists() && !Account.primary && type == Message.TYPE_SENDING && time < TimeUtils.now - TimeUtils.MINUTE) {
+                type = if (mimeType != null && (mimeType.contains("image") || mimeType.contains("video") || mimeType == MimeType.MEDIA_MAP))
+                    Message.TYPE_IMAGE_SENT else Message.TYPE_SENT
             }
 
             return type

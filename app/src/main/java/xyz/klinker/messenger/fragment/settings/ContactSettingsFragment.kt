@@ -25,6 +25,7 @@ import android.preference.*
 import android.support.annotation.RequiresApi
 import android.text.InputType
 import android.util.Log
+import android.widget.Toast
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.activity.compose.ComposeConstants
@@ -304,6 +305,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
 
             restoreDefaultsPref.setOnPreferenceClickListener {
                 NotificationUtils.deleteChannel(activity, conversation.id)
+                Toast.makeText(activity, R.string.restore_default_channel_settings_popup, Toast.LENGTH_SHORT).show()
                 true
             }
         } else {

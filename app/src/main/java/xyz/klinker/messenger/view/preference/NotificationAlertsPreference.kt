@@ -68,25 +68,31 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
                 .setView(layout)
                 .setPositiveButton(R.string.ok) { _, _ ->  }
 
-        if (AndroidVersionUtil.isAndroidO) {
-            layout.findViewById<View>(R.id.vibrate).visibility = View.GONE
-            layout.findViewById<View>(R.id.ringtone).visibility = View.GONE
-            layout.findViewById<View>(R.id.heads_up).visibility = View.GONE
-
-            builder.setNeutralButton(R.string.default_channel) { _, _ ->
-                val intent = Intent(android.provider.Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
-                intent.putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, context.packageName)
-                intent.putExtra(android.provider.Settings.EXTRA_CHANNEL_ID, NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID)
-                context.startActivity(intent)
-            }
-        } else {
-            builder.setNegativeButton(R.string.test) { _, _ -> makeTestNotification() }
+//        if (AndroidVersionUtil.isAndroidO) {
+//            layout.findViewById<View>(R.id.vibrate).visibility = View.GONE
+//            layout.findViewById<View>(R.id.ringtone).visibility = View.GONE
+//            layout.findViewById<View>(R.id.heads_up).visibility = View.GONE
+//
+//            builder.setNeutralButton(R.string.default_channel) { _, _ -> openNotificationChannel() }
+//        } else {
+        builder.setNegativeButton(R.string.test) { _, _ -> makeTestNotification() }
+        if (!AndroidVersionUtil.isAndroidO) {
             layout.findViewById<View>(R.id.channels_disclaimer).visibility = View.GONE
         }
+//        }
 
         builder.show()
 
         return false
+    }
+
+    private fun openNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val intent = Intent(android.provider.Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+            intent.putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, context.packageName)
+            intent.putExtra(android.provider.Settings.EXTRA_CHANNEL_ID, NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID)
+            context.startActivity(intent)
+        }
     }
 
     fun handleRingtoneResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
@@ -149,6 +155,11 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
     }
 
     private fun headsUpClicked() {
+        if (AndroidVersionUtil.isAndroidO) {
+            openNotificationChannel()
+            return
+        }
+
         val prefs = Settings.getSharedPrefs(context)
         val current = prefs.getString(context.getString(R.string.pref_heads_up), "on")
 
@@ -168,6 +179,11 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
     }
 
     private fun vibrateClicked() {
+        if (AndroidVersionUtil.isAndroidO) {
+            openNotificationChannel()
+            return
+        }
+
         val prefs = Settings.getSharedPrefs(context)
         val currentPattern = prefs.getString(context.getString(R.string.pref_vibrate), "vibrate_default")
 
@@ -187,6 +203,11 @@ class NotificationAlertsPreference : Preference, Preference.OnPreferenceClickLis
     }
 
     private fun ringtoneClicked() {
+        if (AndroidVersionUtil.isAndroidO) {
+            openNotificationChannel()
+            return
+        }
+
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
         val ringtone = Settings.ringtone
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,

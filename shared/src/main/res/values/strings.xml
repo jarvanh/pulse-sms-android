@@ -341,7 +341,7 @@
     <string name="repeat_half_hour">Every half hour</string>
     <string name="repeat_hour">Every hour</string>
     <string name="wake_screen">Wake Screen</string>
-    <string name="vibrate">Vibrate Pattern</string>
+    <string name="vibrate">Vibration</string>
     <string name="vibrate_off">No vibration</string>
     <string name="vibrate_default">Default vibration</string>
     <string name="vibrate_two_long">Two long vibrations</string>
@@ -438,7 +438,8 @@
     <string name="after_four_messages">After four messages</string>
     <string name="send_as_mms_summary">Long messages will be sent as MMS instead of individual SMS</string>
     <string name="alert_types">Alert Types</string>
-    <string name="alert_types_summary">Customize the ringtone, vibration pattern and more</string>
+    <string name="notification_customization">Notification Customization</string>
+    <string name="alert_types_summary">Customize the ringtone, vibration and more</string>
     <string name="strip_unicode">Strip Unicode</string>
     <string name="strip_unicode_summary">These characters will be removed from outgoing messages</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
@@ -598,14 +599,16 @@
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
-    <string name="channel_settings">Notification Channel Settings</string>
-    <string name="channel_settings_summary">With Android Oreo, this system level setting allows you to customize the ringtone, vibration, LED, and more, for this conversation</string>
+    <string name="channel_settings">Conversation Notification Customization</string>
+    <string name="channel_settings_summary">With Android Oreo, these system-level settings allows you to customize notifications, for this conversation</string>
     <string name="restore_default_channel_settings">Restore Default Notification Settings</string>
+    <string name="restore_default_channel_settings_popup">Default settings have been restored.</string>
     <string name="channels">Channels</string>
     <string name="default_channel">Default Channel</string>
     <string name="channels_global_warning">Many global customizations are now only possible per-channel.</string>
     <string name="channels_global_warning_2">With Android Oreo, apps are forced to go through <i>Notification Channels</i> to customize the ringtone, vibration, LED, and all other notification options.\n\n
         You can customize these options with the button below and read more about this change, in the help section of Pulse.</string>
+    <string name="channels_global_warning_3">With Android Oreo, some of the above options will redirect you to the system-level <i>Notification Channels</i> preferences for customization. To learn more about these channels, how they work, and why they must be used, please see Pulse\'s help page.</string>
     <string name="off">Off</string>
     <string name="on">On</string>
     <string name="share_promo">Hey, I am loving Pulse for texting! Give it a try:

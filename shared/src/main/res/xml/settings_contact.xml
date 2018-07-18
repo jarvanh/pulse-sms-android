@@ -75,7 +75,7 @@
         <Preference
             android:key="@string/pref_contact_notification_channel"
             android:title="@string/channel_settings"
-            android:summary="@string/channel_settings_summary"/>
+            android:summary="@string/alert_types_summary"/>
 
         <Preference
             android:key="@string/pref_contact_notification_channel_restore_default"

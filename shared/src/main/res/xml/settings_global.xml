@@ -60,7 +60,7 @@
 
         <xyz.klinker.messenger.view.preference.NotificationAlertsPreference
             android:key="@string/pref_alert_types"
-            android:title="@string/alert_types"
+            android:title="@string/notification_customization"
             android:summary="@string/alert_types_summary" />
 
         <MultiSelectListPreference

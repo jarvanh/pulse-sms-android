@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="3.2.3"
+        description="June 21th, 2018">
+        <!-- On non-primary devices, only display the sending status if it is less than a minute old -->
+        <text>Cleanup for the settings pages</text>
+    </version>
+
+    <version
         name="3.2.2"
         description="June 14th, 2018">
         <!-- Allow composing conversations with images, from the pulsesms.app web app -->
