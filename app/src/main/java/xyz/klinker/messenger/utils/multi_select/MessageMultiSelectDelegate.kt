@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.utils.multi_select
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
@@ -19,6 +20,10 @@ import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.ColorUtils
 import java.util.*
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+
 
 @Suppress("DEPRECATION")
 class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : MultiSelector() {
@@ -94,6 +99,9 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(activity?.findViewById<View>(android.R.id.content)?.windowToken, 0)
+
             val handled: Boolean
 
             val selectedIds = ArrayList<Long>()
