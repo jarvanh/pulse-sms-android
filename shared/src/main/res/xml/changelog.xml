@@ -17,22 +17,31 @@
 <changelog>
 
     <version
+        name="4.0.0"
+        description="July 26th, 2018">
+        <text>Pulse got a brand new web app! It is faster, smoother, has some great new features, and comes with plenty of bug fixes</text>
+        <text>To start using it, head to https://pulsesms.app</text>
+        <text>To learn more: https://blog.klinkerapps.com/upgrading-pulses-web-app</text>
+        <text>To top it off, it is open source: https://github.com/klinker-apps/messenger-web</text>
+    </version>
+
+    <version
         name="3.2.3"
-        description="June 21th, 2018">
+        description="July 21th, 2018">
         <!-- On non-primary devices, only display the sending status if it is less than a minute old -->
         <text>Cleanup for the settings pages</text>
     </version>
 
     <version
         name="3.2.2"
-        description="June 14th, 2018">
+        description="July 14th, 2018">
         <!-- Allow composing conversations with images, from the pulsesms.app web app -->
         <text>Changes to support new web functionality</text>
     </version>
 
     <version
         name="3.2.1"
-        description="June 11th, 2018">
+        description="July 11th, 2018">
         <!-- Issue with the main fragment getting reset to the conversation list, when the device is rotated -->
         <!-- Fix widget coloring issues, due to dark mode switch, where the text would know about dark mode, while the background of the widget didn't -->
         <text>Bug fixes</text>

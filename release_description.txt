@@ -1,1 +1,7 @@
-In this release, Pulse adds freeform image cropping! When attaching images to your messages, you can now crop them using whatever aspect ratio you want, rather than just the pre-defined ratios.
+With v4.0.0 Pulse gets a brand new web app! It is faster, smoother, has some awesome new features, and comes with plenty of bug fixes. If you have never tried Pulse cross-platform experience, there is no better time!<br/><br/>
+
+To try it: https://pulsesms.app<br/>
+To learn more: https://blog.klinkerapps.com/upgrading-pulses-web-app<br/>
+And, it is open source: https://github.com/klinker-apps/messenger-web<br/><br/>
+
+Current web users will automatically be migrated to the new app.
