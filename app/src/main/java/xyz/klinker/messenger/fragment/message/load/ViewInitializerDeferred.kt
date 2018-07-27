@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.fragment.message.load
 
 import android.content.Context
+import android.os.Build
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
@@ -10,6 +11,7 @@ import com.klinker.android.logger.Log
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.fragment.message.MessageListFragment
+import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.util.DualSimApplication
 import xyz.klinker.messenger.shared.util.TvUtils
 import xyz.klinker.messenger.view.ElasticDragDismissFrameLayout
@@ -59,10 +61,12 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
             }
         }
 
-        if (fragment.argManager.shouldOpenKeyboard) {
+        if (fragment.argManager.shouldOpenKeyboard || Build.MANUFACTURER.toLowerCase() == "blackberry") {
+            // coming from the compose screen, or they have a physical keyboard (blackberry)
             messageEntry.requestFocus()
             (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?)
                     ?.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+            fragment.activity?.intent?.putExtra(MessengerActivityExtras.EXTRA_SHOULD_OPEN_KEYBOARD, false)
         }
     }
 }

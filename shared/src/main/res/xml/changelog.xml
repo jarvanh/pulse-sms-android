@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="4.0.1"
+        description="July 31th, 2018">
+        <!-- blackberry phones will focus on the text entry, since they have a physical keyboard -->
+        <text>Bug fixes</text>
+        <text>Translation updates</text>
+    </version>
+
+    <version
         name="4.0.0"
         description="July 26th, 2018">
         <text>Pulse got a brand new web app! It is faster, smoother, has some great new features, and comes with plenty of bug fixes</text>

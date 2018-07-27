@@ -3,5 +3,3 @@ With v4.0.0 Pulse gets a brand new web app! It is faster, smoother, has some awe
 To try it: https://pulsesms.app<br/>
 To learn more: https://blog.klinkerapps.com/upgrading-pulses-web-app<br/>
 And, it is open source: https://github.com/klinker-apps/messenger-web<br/><br/>
-
-Current web users will automatically be migrated to the new app.
