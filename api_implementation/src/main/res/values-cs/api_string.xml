@@ -28,6 +28,7 @@ psát zprávy z vašeho tabletu či počítače, tak můžete přeskočit tento 
     <string name="api_password_confirmation">Potvrzení hesla</string>
     <string name="api_name">Jméno</string>
     <string name="api_phone_number">Telefonní číslo</string>
+    <string name="api_connecting">Připojuji se k serveru...</string>
     <string name="api_device_error">Nastala chyba při přidávání tohoto zařízení. Zkuste to znovu.</string>
     <string name="api_add_second_primary_device">Vypadá to, že už máte primární zařízení (%1$s) pro tento účet a pouze jedno je povolené.
 Chcete odstranit současné zařízení a nastavit toto jako primární?</string>
@@ -45,6 +46,8 @@ Chcete odstranit současné zařízení a nastavit toto jako primární?</string
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Přejděte na</string>
+    <string name="api_activate_wear">wear.klinkerapps.com</string>
+    <string name="api_activate_tv">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">na mobilním zařízení, nebo počítači.</string>
     <string name="api_activate_2_1">Na webové stránce</string>
     <string name="api_activate_2_2">vložte kód napravo</string>

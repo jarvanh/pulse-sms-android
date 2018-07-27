@@ -368,6 +368,34 @@ o que existe de momento na sua base de dados interna de SMS.</string>
     <string name="resync_account_confirmation">"Isto vai apagar todas as mensagens deste dispositivo, e
 começar com uma cópia limpa do que existe de momento no seu dispositivo principal. De certeza que é o que pretende? "</string>
     <string name="resync_contacts">Sincronizar contactos novamente</string>
+    <string name="resync_contacts_summary">Enviar imediatamente quaisquer alterações para a web</string>
+    <string name="normalize_color_scheme">Ou, pode escolher uma única cor na qual queira
+basear o tema:</string>
+    <string name="no_apps_found">Nenhuma app encontrada para efectuar esta acção</string>
+    <string name="you_denied_permission">Você negou essa permissão</string>
+    <string name="supported_platforms">Plataformas suportadas</string>
+    <string name="supported_platforms_summary">Todos os locais oficiais onde pode aceder à app</string>
+    <string name="font_size_small">Pequeno</string>
+    <string name="font_size_normal">Normal</string>
+    <string name="font_size_large">Grande</string>
+    <string name="font_size_extra_large">Extra grande</string>
+    <string name="advanced">Avançado</string>
+    <string name="send_as_mms">Converter em MMS</string>
+    <string name="after_one_message">Após uma mensagem</string>
+    <string name="after_two_messages">Após duas mensagens</string>
+    <string name="after_three_messages">Após três mensagens</string>
+    <string name="after_four_messages">Após quatro mensagens</string>
+    <string name="send_as_mms_summary">Mensagens longas serão enviadas como MMS ao invés de SMS\'s individuais</string>
+    <string name="alert_types">Tipos de Alerta</string>
+    <string name="alert_types_summary">Personalizar o toque, o padrão de vibração e mais</string>
+    <string name="strip_unicode">Substituir Unicode</string>
+    <string name="strip_unicode_summary">Estes caracteres serão removidos das mensagens a enviar</string>
+    <string name="giffgaff_delivery">Relatórios de Entrega Giffgaff</string>
+    <string name="notification_actions">Acções de notificação</string>
+    <string name="notification_actions_summary">Pode ser aplicado um máximo de três acções à notificação</string>
+    <string name="mms_download_directory">Pasta de transferências multimédia</string>
+    <string name="mms_download_directory_summary">Onde quer que imagens e outras multimédia MMS sejam guardadas</string>
+    <string name="refresh_firebase">Refrescar conta</string>
     <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <!-- Theming Options -->

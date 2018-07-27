@@ -24,6 +24,10 @@
     <!-- Drawer Items -->
     <string name="menu_conversations">Seznam konverzací</string>
     <string name="menu_archived_conversations">Archivované konverzace</string>
+    <string name="menu_private_conversations">Soukromé konverzace</string>
+    <string name="menu_unread_conversations">Nepřečtené konverzace</string>
+    <string name="menu_edit_folders">Spravovat složky...</string>
+    <string name="menu_edit_folders_no_ellipse">Spravovat složky</string>
     <string name="menu_schedule">Naplánované zprávy</string>
     <string name="menu_mute_contacts">Černá listina</string>
     <string name="menu_invite">Pozvat přátele</string>
@@ -46,6 +50,7 @@
     <string name="menu_archive_conversation">Archivovat konverzaci</string>
     <string name="menu_move_to_inbox">Přesunout do doručených zpráv</string>
     <string name="menu_conversation_information">Informace o konverzaci</string>
+    <string name="menu_copy_phone_number">Kopírovat číslo</string>
     <string name="menu_view_full_conversation">Zobrazit historii</string>
     <string name="menu_conversation_blacklist">Blokovat tento kontakt</string>
     <string name="menu_conversation_schedule">Naplánovat zprávu</string>
@@ -59,6 +64,9 @@
     <string name="menu_snooze_24">24 hodin</string>
     <string name="menu_snooze_72">72 hodin</string>
     <string name="menu_snooze_custom">Vybrat čas</string>
+    <string name="menu_mark_as_unread">Označit jako nepřečtené</string>
+    <string name="menu_pin_conversation">Připnout/Odepnout konverzaci</string>
+    <string name="menu_mute_conversation">Ztlumit/Odtlumit konverzaci</string>
     <!-- Empty Screen -->
     <string name="no_messages">Žádné zprávy</string>
     <string name="no_messages_summary">Začněte novou konverzaci, nebo si prostě užívejte svůj den!</string>
@@ -92,6 +100,13 @@
     </plurals>
     <string name="undo">Vrátit zpět</string>
     <string name="enter_search">Vyhledat...</string>
+    <string name="text_anywhere_description">Věděli jste že: Pulse je víc než jen mobilní aplikace.
+Pulse můžete použít z <b>jakéhokoli</b> zařízení!</string>
+    <string name="convo_list_try_it">Vyzkoušet!</string>
+    <string name="convo_list_not_now">Nyní ne</string>
+    <string name="no_private_messages_description">Nastavte si soukromé konverzace z jejich nastavení!</string>
+    <string name="no_folder_messages_description">Přidejte si konverzaci do této složky, aby se zde zobrazila!</string>
+    <string name="no_archived_messages_description">Archivujte konverzaci, aby se zde zobrazila!</string>
     <!-- Search Screen -->
     <string name="conversations">Konverzace</string>
     <string name="messages">Zprávy</string>
@@ -122,6 +137,8 @@ http://messenger.klinkerapps.com</string>
     <string name="record_video">Nahrát video</string>
     <string name="record_audio">Nahrát zvuk</string>
     <string name="attach_location">Připojit polohu</string>
+    <string name="attach_contact">Připojit kontakt</string>
+    <string name="attach_contact_summary">Pro připojení kontaktu ke zprávě ho vyberte nebo vložte!</string>
     <string name="apply_template">Použít šablonu</string>
     <string name="no_location_found">Nelze zjistit vaši polohu</string>
     <string name="camera_permission_needed">Pro pořizování fotografií je nejprve nutné povolit přístupu k funkci fotoaparátu.</string>
@@ -132,6 +149,7 @@ http://messenger.klinkerapps.com</string>
     <string name="remove_image">Odstranit připojený obrázek</string>
     <string name="edit_image">Upravit připojený obrázek</string>
     <string name="edit_recipients">Upravit příjemce</string>
+    <string name="select_folder">Vyberte složku pro konverzaci</string>
     <string name="permission_needed_for_action">Je potřeba povolení pro tuto akci</string>
     <string name="request_permission">Vyžádat povolení</string>
     <string name="no_messages_with_contact">Zatím v této konverzaci nemáte žádné zprávy,
@@ -158,6 +176,7 @@ je čas začít!</string>
     <string name="copy_message_text">Kopírovat text zprávy</string>
     <string name="select_text_to_copy">Vyberte text, který chcete zkopírovat</string>
     <string name="copy_all_text">Zkopírovat vše</string>
+    <string name="copy_otp">Kopírovat</string>
     <string name="open_link_to_browser">Otevřít odkaz v prohlížeči</string>
     <string name="open_link_internal">Otevřít odkaz uvnitř aplikace</string>
     <string name="copy_link">Kopírovat odkaz</string>
@@ -171,10 +190,12 @@ je čas začít!</string>
     <string name="compose_message">Napsat novou zprávu</string>
     <string name="send_message">Odeslat zprávu</string>
     <string name="enter_contact_name">Vložte kontaktní jméno</string>
+    <string name="enter_contact_name_or_number">Napište jméno kontaktu nebo číslo</string>
     <string name="error_processing_vcard">Chyba při zpracovávání vcard-u</string>
     <string name="compose_recents">Nedávné kontakty</string>
     <string name="compose_groups">Skupiny</string>
     <string name="compose_all_contacts">Všechny kontakty</string>
+    <string name="private_conversation_disclaimer">Toto je <b>soukromá konverzace</b> a nemůže být otevřena z obrazovky pro psaní zpráv.</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">Tato aplikace nemůže pracovat bez těchto povolení! Musíte je
 přijmout, než můžeme pokračovat.</string>
@@ -199,6 +220,7 @@ Pulse staví vaše konverzace na první místo.</string>
     <string name="start_trial">Spustit\ntrial</string>
     <string name="not_now">Teď\nne</string>
     <string name="onboarding_done">Hotovo</string>
+    <string name="play_store_subscription_warning">Budete přesměrováni do systému předplatného Obchodu Play. Prvních sedm dní Vám <b>nebude</b> nic účtováno a objednávku můžete kdykoli zrušit z Obchodu Play.</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nová zpráva od %1$s</string>
     <plurals name="new_conversations">
@@ -227,27 +249,52 @@ Pulse staví vaše konverzace na první místo.</string>
     </string-array>
     <string name="new_mms_message">Nová zpráva MMS</string>
     <string name="you">Vy</string>
+    <string name="draft">Koncept</string>
     <string name="new_message">Nová zpráva</string>
     <string name="received_new_message">Obdrželi jste novou zprávu</string>
     <string name="media">Média</string>
+    <string name="default_notifications_channel">Výchozí oznámení konverzace</string>
+    <string name="default_notifications_channel_description">Tato nastavení se budou aplikovat na všechny konverzace,
+pro které jste nevytvořili individuální Kanál oznámení pro úpravu jednotlivé konverzace.</string>
+    <string name="test_notifications_channel">Vyzkoušet oznámení</string>
+    <string name="status_notifications_channel">Stavová oznámení</string>
     <string name="background_service_channel">Oznámení služby na pozadí</string>
+    <string name="general_notifications_channel">Obecná oznámení</string>
+    <string name="media_parse_channel">Analýza médií</string>
+    <string name="group_summary_notifications">Shrnutí skupin zpráv</string>
+    <string name="failed_messages_channel">Selhané zprávy</string>
     <string name="silent_background_services">Tiché služby na pozadí</string>
+    <string name="silent_conversations_channel">Tichá oznámení konverzací</string>
     <string name="account_activity_notifications">Oznámení o aktivitě na účtu</string>
     <string name="quick_text_channel">Rychlá textová oznámení</string>
+    <string name="media_parse_text">Analyzuji média z předchozí textové zprávy...</string>
     <string name="auto_reply_parse_text">Hledám automatické odpovědi na předchozí zprávu...</string>
+    <string name="creating_channels_text">Vytvářím kanál oznámení</string>
     <string name="write_new_message">Napsat novou zprávu...</string>
+    <string name="receiving_a_message">Přijímám zprávu</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Historie změn</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">Zobrazit informace o open source</string>
     <string name="app_version">Verze aplikace</string>
+    <string name="account_information">Informace o účtu</string>
+    <string name="account_actions">Akce účtu</string>
+    <string name="danger_zone">Nebezpečná oblast</string>
+    <string name="be_careful_using_these_settings">Následujte instrukce a buďte opatrní při používání těchto akcí.</string>
     <string name="device_id">ID zařízení</string>
     <string name="device_info">Informace o zařízení</string>
     <string name="website">Webová stránka</string>
     <string name="access_messages_from_any_device">Čtěte a pište zprávy za jakéhokoli zařízení!</string>
     <string name="beta_disclaimer">Tento projekt je stále v beta verzi, nahlaste prosím jakékoli problémy
 na které narazíte!</string>
+    <string name="app_info">Informace o aplikaci</string>
+    <string name="platform_info">Informace o platformě</string>
+    <string name="troubleshooting">Řešení problémů</string>
+    <string name="get_in_touch">Zkontaktujte nás</string>
     <string name="faqs">Často kladené dotazy</string>
+    <string name="get_help">Získat pomoc</string>
+    <string name="get_help_summary">Máte dotaz? Pro jednočlenný tým dostávám šílené množství emailů každý den, což snižuje množství času, který mám na vývoj nových funkcí. Abyste mi pomohli tak se nejdřív podívejte, jestli jsem už Vaší otázku nezodpověděl.</string>
+    <string name="get_help_summary_2">Sekce s nápovědou je docela rozsáhlá, ale pokud nenajdete odpověď na svoji otázku, prosím spojte se se mnou a rád Vám pomůžu.</string>
     <string name="features">Vlastnosti</string>
     <string name="issues">Issue Tracker</string>
     <string name="issues_summary">Také funguje jako plán do budoucna.</string>
@@ -276,6 +323,7 @@ na které narazíte!</string>
     <string name="mute_conversation_summary">Skryje oznámení k této konverzaci</string>
     <string name="private_conversation">Soukromá konverzace</string>
     <string name="private_conversation_summary">Skrýt obsah zprávy v oznámeních</string>
+    <string name="private_conversation_summary_2">Skrýt obsah z notifikace a přesunout tuto konverzaci do <i>Skoukromých konverzací</i></string>
     <string name="primary_color">Primární barva</string>
     <string name="primary_dark_color">Primární tmavá barva</string>
     <string name="accent_color">Sekundární barva</string>
@@ -287,6 +335,7 @@ na které narazíte!</string>
     <string name="heads_up">Oznámení na obrazovce</string>
     <string name="repeat_never">Nikdy</string>
     <string name="repeat_one_min">Každou minutu</string>
+    <string name="repeat_two_mins">Každé dvě minuty</string>
     <string name="repeat_five_mins">Každých pět minut</string>
     <string name="repeat_ten_mins">Každých deset minut</string>
     <string name="repeat_half_hour">Jednou za půl hodiny</string>
@@ -302,18 +351,40 @@ na které narazíte!</string>
     <string name="vibrate_one_long_one_short">Jedna dlouhá, jedna krátká vibrace</string>
     <string name="vibrate_one_short">Jedna krátká vibrace</string>
     <string name="vibrate_one_long">Jedna dlouhá vibrace</string>
+    <string name="vibrate_one_extra_long">Jedna extra dlouhá vibrace</string>
+    <string name="vibrate_two_short_one_long">Dvě krátké, jedna dlouhá vibrace</string>
+    <string name="vibrate_one_long_one_short_one_long">Jedna dlouhá, jedna krátká, jedna dlouhá vibrace</string>
     <string name="keyboard_layout">Rozložení klávesnice</string>
     <string name="keyboard_default">Výchozí klávesnice</string>
     <string name="keyboard_send_key">Klávesa odeslat</string>
     <string name="keyboard_enter_key">Klávesa enter</string>
     <string name="sound_effects">Zvukové efekty</string>
     <string name="delivery_reports">Potvrzení o doručení</string>
+    <string name="delivery_reports_summary">Většina operátorů nepodporuje tuto volbu. Není RCS</string>
     <string name="theme_settings">Přispůsobení</string>
+    <string name="theme_settings_category">Nastavení vzhledu</string>
+    <string name="conversation_list_category">Seznam konverzací</string>
+    <string name="general_category">Obecné</string>
+    <string name="theme_settings_redirect">Téma</string>
     <string name="base_theme">Základní téma</string>
     <string name="global_theme_color">Barva tématu</string>
     <string name="font_size">Velikosti písma</string>
     <string name="rounder_bubbles">Kulaté bubliny zpráv</string>
+    <string name="bubble_style">Styl bublin zpráv</string>
+    <string name="bubble_style_round">Zakulacené</string>
+    <string name="bubble_style_square">Hranaté</string>
+    <string name="bubble_style_circle">Kruhové (bez ocásku)</string>
+    <string name="adjustable_nav_bar">Sladit navigační lištu se základním tématem</string>
+    <string name="adjustable_nav_bar_summary">Světlé téma bude používat bílou navigační lištu, zatímco tmavá témata budou používat černou</string>
+    <string name="apply_theme_globally">Aplikovat na všechny konverzace</string>
+    <string name="apply_theme_globally_summary">Odstranit témata jednotlivých konverzací a místo toho použít tuto
+globální sadu barev</string>
     <string name="swipe_delete">Táhnout pro smazání</string>
+    <string name="swipe_actions">Akce při přejetí</string>
+    <string name="swipe_actions_summary">Upravit akce při přejetí</string>
+    <string name="left_to_right_swipe">Přejetí zleva doprava</string>
+    <string name="right_to_left_swipe">Přejetí zprava doleva</string>
+    <string name="no_swipe">Vypnout přejetí</string>
     <string name="blacklist_hint">Napište číslo pro přidání na černou listinu...</string>
     <string name="add_blacklist">%1$s\n\nJste si jisti, že chcete toto číslo přidat na černou listinu? Zprávy od tohoto
 čísla se nebudou ukládat a vy nebudete upozorněni, že přišly.</string>
@@ -342,8 +413,12 @@ Vždy se můžete znovu zaregistrovat!</string>
     <string name="resync_account">Znovu synchronizovat účet</string>
     <string name="resync_account_summary">Chybí vám zprávy? Použijte toto pro synchronizaci tohoto zařízení s vaším
 primárním zařízením.</string>
+    <string name="resync_account_summary_phone">Toto vyčistí Váš účet a naplní ho tím
+co je v místní SMS databázi.</string>
     <string name="resync_account_confirmation">Toto smaže všechny zprávy z tohoto zařízení a začne s čistou kopií toho, co
 je na vašem primárním zařízení. Jste si jisti, že to je to co chcete?</string>
+    <string name="resync_contacts">Synchronizovat kontakty</string>
+    <string name="resync_contacts_summary">Okamžitě nahrát jakékoli změny kontaktů na web</string>
     <string name="normalize_color_scheme">Nebo můžete vybrat jednu barvu na které budete chtít
 založit kontakt:</string>
     <string name="no_apps_found">Nebyla nalezena aplikace, která by uměla vykonat tuto akci</string>
@@ -356,6 +431,10 @@ založit kontakt:</string>
     <string name="font_size_extra_large">Extra velké</string>
     <string name="advanced">Pokročilé</string>
     <string name="send_as_mms">Konvertovat na MMS</string>
+    <string name="after_one_message">Po jedné zprávě</string>
+    <string name="after_two_messages">Po dvou zprávách</string>
+    <string name="after_three_messages">Po třech zprávách</string>
+    <string name="after_four_messages">Po čtyřech zprávách</string>
     <string name="send_as_mms_summary">Dlouhé zprávy budou odeslány jako MMS místo jednotlivých SMS</string>
     <string name="alert_types">Typy oznámení</string>
     <string name="alert_types_summary">Různé přizpůsobení oznámení</string>
@@ -365,12 +444,26 @@ založit kontakt:</string>
     <string name="notification_actions">Akce notifikací</string>
     <string name="notification_actions_summary">Jedno upozornění může mít maximálně tři akce</string>
     <string name="mms_download_directory">Složka ke stahování medií</string>
+    <string name="mms_download_directory_summary">Kde chcete mít uloženy obrázky a jiná MMS média</string>
     <string name="refresh_firebase">Aktualizovat push notifikace</string>
     <string name="refresh_firebase_summary">Zprávy nedoráží na toto zařízení? Zkuste to znovu po použití této volby.</string>
     <string name="refreshing_notifications">Aktualizuji upozorňovací token</string>
+    <string name="refresh_firebase_warning">Jakmile spustíte tento proces, tak ho <b>musíte</b> dokončit.
+Jakmile bude hotov, pak se můžete přihlásit na Vašich ostatních zařízeních. Chcete pokračovat?</string>
+    <string name="show_conversation_history">Zobrazit historii konverzace</string>
+    <string name="show_conversation_history_summary">Oznámení zobrazí předchozí zprávy v konverzaci</string>
+    <string name="emoji_style">Styl emotikonů</string>
+    <string name="emoji_style_default">Výchozí systémové</string>
+    <string name="emoji_style_android_o">Google Android Oreo</string>
+    <string name="settings_phone_number">Telefonní číslo</string>
+    <string name="disable_battery_optimization">Vypnout úsporu baterie</string>
+    <string name="disable_battery_optimization_summary">Pokud se zprávy nezobrazují na webu, tak zkuste vypnout úsporu baterie v Pulse.</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maximální velikost obrázku</string>
+    <string name="max_mms_size_summary">Nenastavujte na vyšší, než umožňuje Váš operátor</string>
     <string name="use_group_mms">Použít skupinovou MMS</string>
+    <string name="use_group_mms_summary">Pokud je vypnuto, tak skupinové zprávy budou odeslány jako jednotlivé SMS pro každého příjemce</string>
+    <string name="use_mms_read_receipts">Potvrzení o přečtení</string>
     <string name="auto_save_media">Automaticky uložit média</string>
     <string name="auto_save_media_summary">Automaticky uložit jakékoli MMS ve složce stažené po jejich přijetí.</string>
     <string name="apn_configuration">Konfigurace APN</string>
@@ -385,10 +478,55 @@ založit kontakt:</string>
     <string name="signature">Podpis</string>
     <string name="signature_summary">Podpisy nebudou zobrazeny v seznamu zpráv, zobrazí se pouze příjemci zprávy.</string>
     <string name="cleanup_old_messages">Vyčistit staré zprávy</string>
+    <string name="cleanup_old_messages_summary">Toto se spouští jednou denně pro smazání zpráv starších než je daný časový úsek</string>
+    <string name="cleanup_old_messages_now_summary">Toto se spustí okamžitě pro smazání všech zpráv v této konverzaci, které jsou starší než vybraný časový úsek</string>
     <string name="delayed_sending">Odložené odesílání</string>
+    <string name="delayed_sending_summary">Toto Vám umožní zrušit odeslání nebo upravit zprávu před jejím odesláním</string>
+    <string name="messaging_features">Funkce zpráv</string>
+    <string name="app_features">Funkce aplikace</string>
     <string name="quick_compose">Rychlé psaní</string>
+    <string name="quick_compose_notification">Zobrazit oznámení</string>
+    <string name="quick_compose_notification_summary">Vždy aktivní oznámení pro nejrychlejší přístup k vytvoření nové zprávy</string>
+    <string name="quick_compose_favorites">Oblíbené kontakty</string>
+    <string name="quick_compose_favorites_summary">Tyto kontakty budou dostupné v akcích oznámení</string>
+    <string name="quick_compose_favorites_title">Vyberte až 3 kontakty</string>
     <string name="secure_private_conversations">Bezpečné soukromé konverzace</string>
     <string name="secure_private_conversations_summary">Vyžadovat PIN k odemčení soukromých konverzací</string>
+    <string name="use_internal_browser">Použít interní webový prohlížeč</string>
+    <string name="internal_browser_summary">Vypnutí této volby také zabrání zobrazování náhledů v seznamu zpráv</string>
+    <string name="message_backup">Záloha zpráv</string>
+    <string name="message_backup_pref_summary">Máte obavu, že přijdete o své zprávy? Pulse Vám hlídá záda</string>
+    <string name="message_backup_summary">Věděli jste že: Pulse online služba je postavena okolo zálohování Vašich zpráv.
+Když si založíte účet Pulse, pak se do něj můžete přihlásit z libovolného zařízení
+pro automatickou obnovu Vašich zpráv!\n\nŽádné nepříjemnosti a žádné zdržování se s ručními zálohami.
+S Pulse je všechno jednoduché a naprosto automatické.</string>
+    <string name="message_backup_summary_have_account">Vypadá to, že už máte učet Pulse, skvěle!
+S Vaším účtem, Pulse Vám bude automaticky zálohovat všechny zprávy, které odešlete a přijmete. Když si otevřete
+aplikaci na jiném Vašem zařízení tak přistupujete k této záloze. Pro obnovení zpráv na novém zařízení vše co musíte
+udělat je přihlásit se do Vašeho účtu.</string>
+    <string name="auto_reply_configuration">Nastavení automatických odpovědí</string>
+    <string name="auto_reply_configuration_summary">Nastavit automatické odpovědi podle situace</string>
+    <string name="auto_replies">Automatické odpovědi</string>
+    <string name="auto_reply_top_pref_summary">Režim řízení a dovolené mají přednost před všemi ostatními odpověďmi. Pokud jakákoli z nich je zaplá, žádná jiná automatická odpověď se nepošle.</string>
+    <string name="driving_mode">Režim řízení</string>
+    <string name="driving_mode_summary">Toto odešle automatickou odpověď na všechny zprávy, které obdržíte</string>
+    <string name="vacation_mode">Režim dovolené</string>
+    <string name="auto_reply_text">Text zprávy</string>
+    <string name="create_auto_reply">Vytvořit novou automatickou odpověď</string>
+    <string name="delete_auto_reply">Smazat automatickou odpověď?</string>
+    <string name="which_auto_reply_type">Jaký typ automatické odpověďi si přejete vytvořit?</string>
+    <string name="keyword">Klíčové slovo</string>
+    <string name="response">Odpověď</string>
+    <string name="contact">Kontakt</string>
+    <string name="folders_title">Složky</string>
+    <string name="create">Vytvořit</string>
+    <string name="create_folder">Vytvořit novou složku</string>
+    <string name="create_folder_summary">Umístěte konverzaci do této složky pro organizaci a rychlou navigaci přeplněného seznamu konverzací</string>
+    <string name="no_folders">Žádné složky nebyly vytvořeny - klikněte na první volbu pro vytvoření nové složky</string>
+    <string name="folder_name">Jméno složky...</string>
+    <string name="private_conversations_cannot_be_added_to_folders">Soukromé konverzace nemohou být přidány</string>
+    <string name="conversation_already_in_a_folder">Už je v jiné složce</string>
+    <string name="no_folder">Žádná složka</string>
     <!-- Theming Options -->
     <string name="day_night">Výchozí (Den/Noc)</string>
     <string name="always_light">Vždy světlé</string>
@@ -418,6 +556,19 @@ pro %1$s?</string>
     <string name="contact_card">Kontakt</string>
     <string name="conversation_with">Konverzace s %1$s</string>
     <string name="send">Odeslat</string>
+    <string name="quick_share">Rychlé sdílení</string>
+    <!-- Passcode Entry -->
+    <string name="passcode">Použít kód</string>
+    <string name="forgot_passcode">Zapoměli jste kód?</string>
+    <string name="set_passcode">Uložit kód</string>
+    <string name="confirm_fingerprint">Potvrďte otisk prstu pro pokračování. Dotkněte se senzoru.</string>
+    <string name="confirm_passcode">Potvrďte heslo pro pokračování.</string>
+    <string name="confirm_pulse_password">Potvrďte přihlašovací údaje Pulse účtu pro pokračování.</string>
+    <string name="type_passcode">Vytvořit kód.</string>
+    <string name="incorrect_passcode">Nesprávný kód.</string>
+    <string name="verify">Ověřit</string>
+    <string name="enable_passcode_disclaimer">Soukromé konverzace mohou být chráněny kódem nebo otiskem prstu, takže se k nim dostanete jenom Vy.\n\n
+Pokud chcete toto zabezpečení tak si nastavte kód v <i>Pokročilých nastaveních</i>.</string>
     <!-- Other -->
     <string name="updating_database">Hledám poslední zprávy...</string>
     <string name="dashclock_description">Informace o nepřečtených SMS/MMS</string>
@@ -434,12 +585,25 @@ Vyzkoušejte to dnes!</string>
     <string name="hours">Hodiny</string>
     <string name="minutes">Minuty</string>
     <string name="test">Otestovat</string>
+    <string name="channel_settings">Nastavení kanálu oznámení</string>
+    <string name="channel_settings_summary">S Androidem Oreo toto systémové nastavení Vám umožní nastavit vyzvánění, vybrace, LED a další pro tuto konverzaci.</string>
+    <string name="restore_default_channel_settings">Obnovit výchozí nastavení oznámení</string>
+    <string name="channels">Kanály</string>
+    <string name="default_channel">Výchozí kanál</string>
+    <string name="channels_global_warning">Mnoho globálních nastavení je nyní možno upravit pro každý kanál zvlášť.</string>
+    <string name="channels_global_warning_2">S Androidem Oreo jsou aplikace nuceny projít přes <i>Kanály oznámení</i> pro úpravu vyzvánění, vibrací, LED a jiných nastavení oznámení.\n\n
+Tato nastavení můžete upravit s pomocí tlačítka níže. Více o této změně se dočtete v nápovědě Pulse.</string>
     <string name="off">Vypnuto</string>
     <string name="on">Zapnuto</string>
     <string name="share_promo">Ahoj, miluji Pulse pro psaní zpráv! Zkus to:
 https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="verifying_password">Ověřuji heslo...</string>
     <!-- Rate it -->
     <string name="rate_it">Ohodnoťe ho!</string>
+    <string name="rate_it_title">Dobrá hodnocení velmi pomohou</string>
+    <string name="rate_it_summary"><b>pěti hvězdičkové</b> hodnocení velmi pomohou růstu aplikace
+a její viditelnosti v Obchodě Play. Pokud chcete této vidět tuto aplikaci <i>pokračovat stoupat</i>, tak mi pomožte!</string>
+    <string name="rate_it_not_ready">Nejste připraveni hodnotit? Není problém. Opustě toto okno a už se nezeptám.</string>
     <string name="love_pulse_question">Milujete Pulse?</string>
     <string name="give_a_rating">Zvažte ohodnocení nebo sdílení s přáteli!\n\n
 Pětihvězdičková ohodnocení mě zahřejí z srdce :)</string>
@@ -478,5 +642,23 @@ Pokud nevytvoříte nové tak vás aplikace automaticky odhlásí z vašeho úč
     <string name="monthly_purchase">$0.99 každý měsíc</string>
     <string name="monthly_purchase_summary">Nechcete platit? Žádný problém. Vyzkoušejte si aplikaci zdarma.</string>
     <string name="change_subscription_message">Chcete upgrade? Skvěle! Až uděláte výběr na následující obrazovce, otevřete obchod Play Store a zrušte staré předplatné ručně.</string>
+    <string name="beautiful_powerful_instant">Krásné, mocné, rychlé.</string>
+    <string name="optimized_for_all_your_devices">Pulse je optimalizované pro <b>všechna</b> Vaše zařízení.
+Posílejte zprávy z webu, z počítače, z tabletu, hodinek a dokonce i z televize.</string>
+    <string name="true_imessage_competitor">První opravdový iMessage konkurent pro Android.</string>
+    <string name="try_it">Vyzkoušet nyní!</string>
+    <string name="have_an_account">Máte účet?\nPřihlašte se</string>
+    <string name="seven_days_free">7 dní zdarma!</string>
+    <string name="competition_cant_beat">Konkurence se nemůže dotknout našich cen, rychlosti či služeb -
+<b>vyzkoušejte 7 dní</b> a zjistěte sami!</string>
+    <string name="select_a_trial_below">Vyberte jednu ze tří možností odběru níže pro spuštění Vaší <b>zkušební verze zdarma</b>.</string>
+    <string name="charged_after_trial">Účtováno po zkušebním období:</string>
+    <string name="monthly_purchase_improved">$0.99 za měsíc</string>
+    <string name="three_month_purchase_improved">$1.99 za měsíc</string>
+    <string name="yearly_purchase_improved">$5.99 za měsíc</string>
+    <string name="subscription_toast">Nic Vám nebude účtováno před zkončením 7 denního zkušebního období.
+Zrušte kdykoli.</string>
+    <string name="redirect_to_play_store">Děkujeme za upgrade! Zrušte si starý odběr z <b>Obchodu Play</b>. Pulse <b>nemůže</b> toto udělat automaticky.</string>
+    <string name="play_store">Obchod Play</string>
     <string name="quick_compose_summary">Vždy aktivní oznámení, které vám dá nejrychlejší přístup k psaní nové zprávy.</string>
 </resources>

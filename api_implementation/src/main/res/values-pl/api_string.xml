@@ -15,40 +15,40 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="api_login">zaloguj się</string>
-    <string name="api_signup">Zapisz się</string>
-    <string name="api_signup_failed">Nie można się zalogować na tym urządzeniu. Najpierw musisz zarejestrować się na urządzeniu, które posiada numer telefonu!</string>
+    <string name="api_login">Zaloguj się</string>
+    <string name="api_signup">Zarejestruj się</string>
+    <string name="api_signup_failed">Nie można zarejestrować się na tym urządzeniu. Musisz to zrobić najpierw na urządzeniu, które ma numer telefonu!</string>
     <string name="api_skip_signup">Jeżeli chcesz używać aplikacji tylko na tym urządzeniu, bez korzystania z możliwości sieciowych takich jak pisanie wiadomości z tabletu lub komputera, możesz pominąć ten krok:</string>
     <string name="api_skip">Pomiń</string>
     <string name="api_email">Adres email</string>
     <string name="api_password">Hasło</string>
     <string name="api_forgot_password">Nie pamiętasz hasła?</string>
-    <string name="api_password_confirmation">Powtórz hasło</string>
+    <string name="api_password_confirmation">Potwierdzenie hasła</string>
     <string name="api_name">Nazwa</string>
     <string name="api_phone_number">Numer telefonu</string>
     <string name="api_connecting">Łączenie z serwerem...</string>
     <string name="api_device_error">Wystąpił błąd podczas dodawania tego urządzenia. Spróbujmy jeszcze raz!</string>
-    <string name="api_add_second_primary_device">Wygląda na to, że już posiadasz podstawowe urządzenie (%1$s) przypisane do tego konta, a tylko jedno urządzenie tego typu jest dozwolone.
-Czy chcesz usunąć obecne urządzenie podstawowe i ustawić bieżące jako nowe urządzenie podstawowe?</string>
+    <string name="api_add_second_primary_device">Tylko jedno urządzenie może być urządzeniem głównym, a wygląda na to, że do tego konta zostało już przypisane urządzenie (%1$s).
+Czy chcesz usunąć dotychczasowe urządzenie główne i ustawić bieżące jako nowe?</string>
     <string name="api_yes">Tak</string>
     <string name="api_no">Nie</string>
     <string name="api_no_email">Nie wpisano adresu email</string>
     <string name="api_email_invalid">Nieprawidłowy adres email</string>
     <string name="api_no_password">Nie wpisano hasła</string>
-    <string name="api_no_password_confirmation">Nie wpisano potwierdzenia hasła</string>
+    <string name="api_no_password_confirmation">Nie wprowadzono potwierdzenia hasła</string>
     <string name="api_password_mismatch">Wpisane hasła nie zgadzają się</string>
-    <string name="api_no_name">Nie wpisano nazwy</string>
-    <string name="api_no_phone_number">Nie wpisano numeru telefonu</string>
+    <string name="api_no_name">Nie wprowadzono nazwy</string>
+    <string name="api_no_phone_number">Nie wprowadzono numeru telefonu</string>
     <string name="api_login_error">Wystąpił problem podczas logowania, podano zły login lub hasło.</string>
-    <string name="api_activate_summary">Zaloguj się aby mieć wszystkie swoje wiadomości na tym urządzeniu!</string>
+    <string name="api_activate_summary">Zaloguj się aby uzyskać dostęp do wszyskich wiadomości na tym urządzeniu!</string>
     <string name="api_activate_1">1</string>
     <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Przejdź do</string>
     <string name="api_activate_wear">wear.klinkerapps.com</string>
     <string name="api_activate_tv">tv.klinkerapps.com</string>
-    <string name="api_activate_1_3">na urządzeniu przenośnym lub na komputerze</string>
+    <string name="api_activate_1_3">na urządzeniu przenośnym lub na komputerze.</string>
     <string name="api_activate_2_1">Na stronie internetowej</string>
-    <string name="api_activate_2_2">wpisz kod po prawej stronie</string>
+    <string name="api_activate_2_2">wpisz kod z prawej strony</string>
     <string name="api_activate_2_3">aby połączyć Cię z Twoim kontem!</string>
     <string name="api_confirm_password">Potwierdź hasło:</string>
     <string name="api_wrong_password">Błąd potwierdzenia. Czy wpisane hasło jest poprawne?</string>

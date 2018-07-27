@@ -24,6 +24,10 @@
     <!-- Drawer Items -->
     <string name="menu_conversations">Sohbet listesi</string>
     <string name="menu_archived_conversations">Arşivlenmiş sohbetler</string>
+    <string name="menu_private_conversations">Özel sohbetler</string>
+    <string name="menu_unread_conversations">Okunmamış sohbetler</string>
+    <string name="menu_edit_folders">Klasörleri yönet...</string>
+    <string name="menu_edit_folders_no_ellipse">Klasörleri Yönet</string>
     <string name="menu_schedule">Zamanlanmış mesajlar</string>
     <string name="menu_mute_contacts">Kara liste</string>
     <string name="menu_invite">Arkadaşlarını davet et</string>
@@ -60,6 +64,9 @@
     <string name="menu_snooze_24">24 saat</string>
     <string name="menu_snooze_72">72 saat</string>
     <string name="menu_snooze_custom">Bir zaman seç</string>
+    <string name="menu_mark_as_unread">Okunmadı Olarak İşaretle</string>
+    <string name="menu_pin_conversation">Sohbeti Sabitle/Aç</string>
+    <string name="menu_mute_conversation">Sohbeti Sustur/Aç</string>
     <!-- Empty Screen -->
     <string name="no_messages">Mesaj yok</string>
     <string name="no_messages_summary">Yeni bir sohbet başlatın veya sadece günün tadını çıkarın!</string>
@@ -90,6 +97,9 @@
     <string name="text_anywhere_description">Biliyor musunuz: Pulse bir telefon uygulamasından çok daha fazlasıdır. Pulse ile <b>herhangi</b> bir cihazdan SMS gönderebilirsiniz!</string>
     <string name="convo_list_try_it">Dene!</string>
     <string name="convo_list_not_now">Şimdi değil</string>
+    <string name="no_private_messages_description">Özel sohbetler, sohbetin kendi ayarlar menüsünden belirlenir!</string>
+    <string name="no_folder_messages_description">Bu klasöre, burada görünmesi için bir sohbet ekleyin!</string>
+    <string name="no_archived_messages_description">Burada görünmesi için bir sohbeti arşivleyin!</string>
     <!-- Search Screen -->
     <string name="conversations">Sohbetler</string>
     <string name="messages">Mesajlar</string>
@@ -130,6 +140,7 @@ resimleri!</string>
     <string name="remove_image">Ekli Resmi Kaldır</string>
     <string name="edit_image">Eklenmiş Resmi Düzenle</string>
     <string name="edit_recipients">Alıcıları Düzenle</string>
+    <string name="select_folder">Sohbet için Klasör Seçin</string>
     <string name="permission_needed_for_action">Bu eylem için gerekli izinler.</string>
     <string name="request_permission">İzin İste</string>
     <string name="no_messages_with_contact">Bu sohbette hiçbir mesaj yok,
@@ -156,6 +167,7 @@ hadi başlatın!</string>
     <string name="copy_message_text">Mesaj Metnini Kopyala</string>
     <string name="select_text_to_copy">Kopyalayacağınız metni seçin:</string>
     <string name="copy_all_text">Tümünü Kopyala</string>
+    <string name="copy_otp">Kopyala</string>
     <string name="open_link_to_browser">Bağlantıyı Tarayıcıda Aç</string>
     <string name="open_link_internal">Bağlantıyı Dahili Olarak Aç</string>
     <string name="copy_link">Linki kopyala</string>
@@ -169,10 +181,12 @@ hadi başlatın!</string>
     <string name="compose_message">Yeni mesaj oluştur</string>
     <string name="send_message">Mesaj gönder</string>
     <string name="enter_contact_name">Kişi adını girin</string>
+    <string name="enter_contact_name_or_number">Kişi adı veya numara girin</string>
     <string name="error_processing_vcard">Vcard işlenirken hata oluştu</string>
     <string name="compose_recents">Yakın Zamanda</string>
     <string name="compose_groups">Gruplar</string>
     <string name="compose_all_contacts">Tüm Kişiler</string>
+    <string name="private_conversation_disclaimer">Bu bir <b>özel sohbet</b> ve mesaj yazma ekranından açılamaz.</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">Uygulama, bu izinler olmadan çalışamaz! Devam etmeden önce onları kabul etmeniz gerekiyor.</string>
     <string name="loading_messages">Optimize ...</string>
@@ -220,6 +234,7 @@ Uzun sürmeyecek!</string>
     </string-array>
     <string name="new_mms_message">Yeni MMS mesajı</string>
     <string name="you">Sen</string>
+    <string name="draft">Taslak</string>
     <string name="new_message">Yeni Mesaj</string>
     <string name="received_new_message">Yeni bir metin aldınız!</string>
     <string name="media">Medya</string>
@@ -233,6 +248,7 @@ Uzun sürmeyecek!</string>
     <string name="group_summary_notifications">Grup özetleri mesajı</string>
     <string name="failed_messages_channel">Başarısız mesajlar</string>
     <string name="silent_background_services">Sessiz arkaplan hizmetleri</string>
+    <string name="silent_conversations_channel">Sohbet bildirimlerini sustur</string>
     <string name="account_activity_notifications">Hesap etkinlik bildirimleri</string>
     <string name="quick_text_channel">Hızlı metin bildirimi</string>
     <string name="media_parse_text">Önceki mesajlardan medya ayrıştırılıyor</string>
@@ -286,6 +302,7 @@ Uzun sürmeyecek!</string>
     <string name="mute_conversation_summary">Bu sohbet için bildirimler gizlenir</string>
     <string name="private_conversation">Özel Sohbet</string>
     <string name="private_conversation_summary">Bildirimlerde içeriği gizle</string>
+    <string name="private_conversation_summary_2">Bildirimlerde içeriği gizle ve bu sohbeti <i>Özel Sohbetler</i> bölümüne taşı</string>
     <string name="primary_color">Ana Renk</string>
     <string name="primary_dark_color">Birincil Koyu Renk</string>
     <string name="accent_color">Vurgu Rengi</string>
@@ -322,7 +339,7 @@ Uzun sürmeyecek!</string>
     <string name="keyboard_enter_key">Enter Key</string>
     <string name="sound_effects">Ses Efektleri</string>
     <string name="delivery_reports">Teslim Raporları</string>
-    <string name="delivery_reports_summary">Çoğu taşıyıcı bu özelliği desteklemez</string>
+    <string name="delivery_reports_summary">Çoğu taşıyıcı bu özelliği desteklemez. RCS değil.</string>
     <string name="theme_settings">Özelleştirme</string>
     <string name="theme_settings_category">Görünüm</string>
     <string name="conversation_list_category">Sohbet Listesi</string>
@@ -332,11 +349,20 @@ Uzun sürmeyecek!</string>
     <string name="global_theme_color">Tema Rengi</string>
     <string name="font_size">Yazı Boyutu</string>
     <string name="rounder_bubbles">Yuvarlak Mesaj Balonları</string>
+    <string name="bubble_style">Mesaj Balonu Biçimi</string>
+    <string name="bubble_style_round">Yuvarlanmış</string>
+    <string name="bubble_style_square">Kare</string>
+    <string name="bubble_style_circle">Daire (Kuyruk yok)</string>
     <string name="adjustable_nav_bar">Gezinti Çubuğunu, Ana Tema ile Eşleştir</string>
     <string name="adjustable_nav_bar_summary">Aydınlık temalarda, beyaz gezinti çubuğu kullanılırken, koyu temalarda siyah gezinti çubuğu kullanılır.</string>
     <string name="apply_theme_globally">Tüm Sohbetlere Uygula</string>
     <string name="apply_theme_globally_summary">Sohbete-özel temaları sil, bu genel renk setini kullan</string>
     <string name="swipe_delete">Kaydırarak Sil</string>
+    <string name="swipe_actions">Kaydırma Eylemleri</string>
+    <string name="swipe_actions_summary">Bir sohbetin kaydırma eylemini özelleştir</string>
+    <string name="left_to_right_swipe">Soldan-Sağa Kaydır</string>
+    <string name="right_to_left_swipe">Sağdan-Sola Kaydır</string>
+    <string name="no_swipe">Kaydırmayı kapat</string>
     <string name="blacklist_hint">Kara listeye alınacak numarayı yazın...</string>
     <string name="add_blacklist">%1$s\n\nBunu kara listeye almak istediğinize emin misiniz? Artık bu numaradan gelen mesajlar kaydedilmeyecek ve bildirim almayacaksınız!</string>
     <string name="remove_blacklist">%1$s\n\nBunu kara listeden silmek istiyor musun?</string>
@@ -360,7 +386,7 @@ Uzun sürmeyecek!</string>
     <string name="cancel_on_the_play_store">Yükseltmek için buraya tıklayın! Aboneliğinizi Play Store\'dan iptal edebilirsiniz.</string>
     <string name="resync_account">Mesajları Eşitle</string>
     <string name="resync_account_summary">Mesajlar eksik mi? Bunu kullanın ve birincil cihazınızdaki güncel mesajarı bu cihaza getirin.</string>
-    <string name="resync_account_summary_phone">Bu, hesabınızı temizleyecek ve dahili SMS veritabanınızda şu anda bulunanlarla yenileyecek.</string>
+    <string name="resync_account_summary_phone">Bu, hesabınızı temizleyecek ve dahili SMS veritabanında şu anda bulunan mesajları yedekleyecek.</string>
     <string name="resync_account_confirmation">Bu cihazdan gelen tüm mesajlar silinecek ve şu anda birincil cihazınızda bulunalar ile temiz bir kopya başlatılacak. Bunu yapmak istediğinize emin misin?</string>
     <string name="resync_contacts">Kişileri Eşitle</string>
     <string name="resync_contacts_summary">Herhangi bir kişi değişikliğini hemen Web\'e gönder.</string>
@@ -388,11 +414,12 @@ Uzun sürmeyecek!</string>
     <string name="notification_actions">Bildirim Eylemleri</string>
     <string name="notification_actions_summary">Bir bildirime en fazla üç eylem uygulanabilir</string>
     <string name="mms_download_directory">Medya İndirme Klasörü</string>
+    <string name="mms_download_directory_summary">Resimlerin ve diğer MMS medyalarının kaydedilmesini istediğiniz yer</string>
     <string name="refresh_firebase">Hesabı Yenile</string>
-    <string name="refresh_firebase_summary">Hesabınızın eşitlemeye veya oturum açmanıza izin vermeyen sorunları mı var? Bu seçeneği kullanın.</string>
+    <string name="refresh_firebase_summary">Hesabınızınla ilgili eşitleme veya oturum açma sorunu mu var? Bu seçeneği kullanın.</string>
     <string name="refreshing_notifications">Bildirim tırmazı yenileniyor ...</string>
-    <string name="refresh_firebase_warning">Bu işlemi başlatırsanız, her şeyden önce <b> gerekir </b>.
-İşlem tamamlandıktan sonra tekrar, diğer tüm cihazlarınızda oturum açmanız gerekecek. Devam etmek istiyor musunuz?</string>
+    <string name="refresh_firebase_warning">Bu işlemi başlatırsanız, her şeyi en baştan yapmanız <b>gerekir</b>.
+İşlem tamamlandıktan sonra, diğer tüm cihazlarınızda yeniden oturum açmanız gerekecek. Devam etmek istiyor musunuz?</string>
     <string name="show_conversation_history">Sohbet Geçmişini Göster</string>
     <string name="show_conversation_history_summary">Bildirimlerde önceki sohbet mesajları gösterilir</string>
     <string name="emoji_style">Emoji Stili</string>
@@ -405,6 +432,8 @@ Uzun sürmeyecek!</string>
     <string name="max_mms_size">Maksimum Görüntü Boyutu</string>
     <string name="max_mms_size_summary">Taşıyıcınızın izin verdiğinden daha yüksek belirlemeyin</string>
     <string name="use_group_mms">MMS Grubu Kullan</string>
+    <string name="use_group_mms_summary">Kapatıldığında, grup mesajları, her bir alıcıya bireysel mesaj olarak gönderilir</string>
+    <string name="use_mms_read_receipts">Alıcıları Oku</string>
     <string name="auto_save_media">Medyayı Otomatik-Kaydet</string>
     <string name="auto_save_media_summary">Herhangi bir MMS medyası alındığında \"İndirilenler\" klasörüne otomatik kaydet</string>
     <string name="apn_configuration">APN Yapılandırması</string>
@@ -441,6 +470,7 @@ sadece mesajın alıcısına gösterilir.</string>
     <string name="message_backup_summary">Biliyor musunuz: Pulse\'un çevrimiçi hizmeti, mesajlarınızı yedeklemek için geliştirildi. 
 Bir Pulse hesabı oluşturduğunuzda, herhangi bir cihazınızdan bu hesaba giriş yapabilir ve tüm mesajlarınızı, otomatik olarak geri yükleyebilirsiniz.\n\nElle yedekleme yapmanın güçlüğünü ve karışıklığını yaşamazsınız. 
 Pulse ile her şey pürüzsüz, kolay ve tamamen otomatiktir.</string>
+    <string name="message_backup_summary_have_account">Zaten bir Pulse hesabınızın olduğu görünüyor, harika! Pulse otomatik olarak gönderdiğiniz ve aldığınız mesajları hesabınıza yedekler. Başka bir cihazda uygulamayı açtığınızda, tam olarak bu yedeğe erişirsiniz. Yeni bir cihaza mesajları geri yüklemek için tüm yapmanız gereken, bu cihazda hesabınıza giriş yapmaktır.</string>
     <string name="auto_reply_configuration">Otomatik Yanıt Yapılandırması</string>
     <string name="auto_reply_configuration_summary">Otomatik yanıtları, durumunuza göre belirleyin</string>
     <string name="auto_replies">Otomatik Yanıtlar</string>
@@ -455,6 +485,15 @@ Pulse ile her şey pürüzsüz, kolay ve tamamen otomatiktir.</string>
     <string name="keyword">Anahtar Sözcük</string>
     <string name="response">Yanıt</string>
     <string name="contact">Kişi</string>
+    <string name="folders_title">Klasörler</string>
+    <string name="create">Oluştur</string>
+    <string name="create_folder">Yeni Klasör Oluştur</string>
+    <string name="create_folder_summary">Sohbetleri bir klasöre koymak, kalabalık gelen kutularının düzenlenmesine ve sohbetlere hızlıca erişmesine yardımcı olur</string>
+    <string name="no_folders">Hiç bir klasör yok - yukarıdaki alana tıklayarak ilk klasörünüzü oluşturun</string>
+    <string name="folder_name">Klasör adı...</string>
+    <string name="private_conversations_cannot_be_added_to_folders">Özel sohbetler eklenemez.</string>
+    <string name="conversation_already_in_a_folder">Zaten başka bir klasörde.</string>
+    <string name="no_folder">Klasör yok</string>
     <!-- Theming Options -->
     <string name="day_night">Varsayılan (Gündüz/Gece)</string>
     <string name="always_light">Daima aydınlık</string>
@@ -470,8 +509,8 @@ Alıcı %1$s?</string>
     <string name="no_scheduled_messages_summary">Aşağıdaki artı düğmesini kullanarak oluşturabilirsiniz!</string>
     <string name="scheduled_message_in_future">Zaman ileri tarihli olmalı!</string>
     <!-- Encryption -->
-    <string name="encrypting_and_uploading">Şifreleme ve yükleme ...</string>
-    <string name="encrypting_and_uploading_media">Medya mesajlarını şifrelemek ve sıkıştırmak ...</string>
+    <string name="encrypting_and_uploading">Şifreleniyor ve yükleniyor...</string>
+    <string name="encrypting_and_uploading_media">Medya mesajlarını şifreleniyor ve sıkıştırılıyor...</string>
     <string name="encrypting_and_uploading_count">Medya mesajları şifreleniyor ve sıkıştırılıyor... (%1$d/%2$d)</string>
     <string name="downloading_and_decrypting">İndirme ve şifre çözme ...</string>
     <string name="decrypting_and_downloading_media">Medya indiriliyor ve şifresini çözüyor ...</string>
@@ -485,6 +524,16 @@ Alıcı %1$s?</string>
     <string name="send">Gönder</string>
     <string name="quick_share">Hızlı Paylaş</string>
     <!-- Passcode Entry -->
+    <string name="passcode">Güvenlik Kodu kullan</string>
+    <string name="forgot_passcode">Güvenlik Kodu unuttum?</string>
+    <string name="set_passcode">Güvenlik Kodu kaydet</string>
+    <string name="confirm_fingerprint">Devam etmek için parmak izini doğrulayın. Sensöre dokunun.</string>
+    <string name="confirm_passcode">Devam etmek için güvenlik kodunu doğrulayın</string>
+    <string name="confirm_pulse_password">Devam etmek için Pulse hesap kimliğinizi doğrulayın.</string>
+    <string name="type_passcode">Bir güvenlik kodu oluşturun</string>
+    <string name="incorrect_passcode">Güvenlik kodu yanlış</string>
+    <string name="verify">Doğrula</string>
+    <string name="enable_passcode_disclaimer">Özel sohbetler güvenlik kodu/parmak izi korumalı yapılabilir, böylece onlara sadece siz erişirsiniz.\n\nBu güvenliği eklemek isterseniz, <i>Gelişmiş Özellikler</i> bölümünden bir güvenlik kodu belirleyin.</string>
     <!-- Other -->
     <string name="updating_database">En yeni mesajlar bulunuyor...</string>
     <string name="dashclock_description">Okunmamış SMS / MMS bilgisi</string>
@@ -575,5 +624,6 @@ Web\'den, masaüstü bilgisayardan, tabletinizden, saatinizden ve hatta TV\'nizd
     <string name="subscription_toast">7 günlük deneme tamamlanıncaya kadar ödeme <b>yapmazsınız</b>.
 İstediğiniz zaman iptal edin.</string>
     <string name="redirect_to_play_store">Yükseltme yaptığınız için teşekkürler! Lütfen eski aboneliği <b>Play Store</b>\'dan iptal edin. Pulse bunu otomatik <b>yapamaz</b>.</string>
+    <string name="play_store">Play Store</string>
     <string name="quick_compose_summary">Yeni mesaj oluşturma işlemine en hızlı şekilde erişebilmeniz için daima aktif olan bildirim.</string>
 </resources>

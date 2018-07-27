@@ -48,7 +48,7 @@
     <string name="menu_view_media">Bekijk media</string>
     <string name="menu_delete_conversation">Conversatie verwijderen</string>
     <string name="menu_archive_conversation">Conversatie archiveren</string>
-    <string name="menu_move_to_inbox">Verplaatsen naar Inbox</string>
+    <string name="menu_move_to_inbox">Verplaatsen naar inbox</string>
     <string name="menu_conversation_information">Info over conversatie</string>
     <string name="menu_copy_phone_number">Kopieer nummer</string>
     <string name="menu_view_full_conversation">Bekijk geschiedenis</string>
@@ -64,6 +64,9 @@
     <string name="menu_snooze_24">24 uur</string>
     <string name="menu_snooze_72">72 uur</string>
     <string name="menu_snooze_custom">Kies een tijd</string>
+    <string name="menu_mark_as_unread">Markeer als ongelezen</string>
+    <string name="menu_pin_conversation">Conversatie vastmaken/losmaken</string>
+    <string name="menu_mute_conversation">Conversatie dempen/dempen opheffen</string>
     <!-- Empty Screen -->
     <string name="no_messages">Geen berichten</string>
     <string name="no_messages_summary">Het is hier nogal leeg. Waarom geen nieuwe conversatie starten?</string>
@@ -161,6 +164,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="copy_message_text">Kopieer berichtinhoud</string>
     <string name="select_text_to_copy">Selecteer de tekst die je wenst te kopiëren:</string>
     <string name="copy_all_text">Alles kopiëren</string>
+    <string name="copy_otp">Kopiëren</string>
     <string name="open_link_to_browser">Open link in browser</string>
     <string name="open_link_internal">Open link intern</string>
     <string name="copy_link">Kopieer link</string>
@@ -226,6 +230,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     </string-array>
     <string name="new_mms_message">Nieuwe MMS</string>
     <string name="you">Jij</string>
+    <string name="draft">Concept</string>
     <string name="new_message">Nieuw bericht</string>
     <string name="received_new_message">Je hebt een nieuw bericht ontvangen!</string>
     <string name="media">Media</string>
@@ -249,7 +254,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="receiving_a_message">Een bericht ontvangen...</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>
-    <string name="copyright">© 2017 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright">© 2018 Jake Klinker &amp; Luke Klinker</string>
     <string name="copyright_summary">Bekijk open source license information</string>
     <string name="app_version">App Versie</string>
     <string name="account_information">Account informatie</string>
@@ -330,7 +335,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="keyboard_enter_key">Vul sleutel in</string>
     <string name="sound_effects">Geluidseffecten</string>
     <string name="delivery_reports">Afleverrapporten</string>
-    <string name="delivery_reports_summary">De meeste providers ondersteunen deze optie niet</string>
+    <string name="delivery_reports_summary">De meeste providers ondersteunen deze optie niet. Het is geen RCS.</string>
     <string name="theme_settings">Aanpassingen</string>
     <string name="theme_settings_category">Look en feel</string>
     <string name="conversation_list_category">Conversatielijst</string>
@@ -340,11 +345,20 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="global_theme_color">Thema kleur</string>
     <string name="font_size">Grootte lettertype</string>
     <string name="rounder_bubbles">Ronde berichtenbubbels</string>
+    <string name="bubble_style">Stijl van berichtenbubbels</string>
+    <string name="bubble_style_round">Afgerond</string>
+    <string name="bubble_style_square">Vierkantig</string>
+    <string name="bubble_style_circle">Cirkel (geen staartje)</string>
     <string name="adjustable_nav_bar">Nav bar aanpassen aan basis thema</string>
     <string name="adjustable_nav_bar_summary">Het lichte thema zal een witte navigatiebalk gebruiken terwijl donkere thema\'s de zwarte navigatiebalk gebruiken</string>
     <string name="apply_theme_globally">Toepassen op alle conversaties</string>
     <string name="apply_theme_globally_summary">Verwijder de aangepaste conversatiethema\'s en vervang door deze algemene kleuren</string>
     <string name="swipe_delete">Swipe om te verwijderen</string>
+    <string name="swipe_actions">Swipe acties</string>
+    <string name="swipe_actions_summary">Pas het swipen van een conversatie aan</string>
+    <string name="left_to_right_swipe">Links-naar-rechts swipe</string>
+    <string name="right_to_left_swipe">Rechts-naar-links swipe</string>
+    <string name="no_swipe">Swipen uitschakelen</string>
     <string name="blacklist_hint">Type nummer om te blokkeren...</string>
     <string name="add_blacklist">%1$s\n\nBen je zeker dat je dit nummer wilt blokkeren? Berichten zullen niet langer opgeslagen worden wanneer ze afkomstig zijn van dit nummer en je zal ook geen notificaties ontvangen.</string>
     <string name="remove_blacklist">%1$s\n\nWil je deze blokkering verwijderen?</string>
@@ -365,7 +379,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="delete_account_summary">Verwijder het account van dit toestel, alle andere toestellen waar je bent op ingelogd en de server. Dit is niet omkeerbaar!</string>
     <string name="delete_account_confirmation">Ben je echt zeker dat je jouw account wilt verwijderen en alles wat zich in jouw account bevindt? Je kan later altijd opnieuw registreren!</string>
     <string name="change_subscription">Verander abonnement</string>
-    <string name="cancel_on_the_play_store">Annuleer en bekijk jouw abonnement in de Play Store</string>
+    <string name="cancel_on_the_play_store">Tik hier om te upgraden! Je kan je abonnement annuleren via de Play Store.</string>
     <string name="resync_account">Synchroniseer berichten</string>
     <string name="resync_account_summary">Mis je berichten? Gebruik dit om jouw toestel up-to-date te brengen met jouw hoofdtoestel.</string>
     <string name="resync_account_summary_phone">Dit wist je hele account en laadt de gegevens in van jouw huidige interne sms database.</string>
@@ -431,7 +445,7 @@ Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</s
     <string name="signature_summary">Handtekeningen worden niet weergegeven in Pulse maar worden wel verzonden.</string>
     <string name="cleanup_old_messages">Oude berichten opkuisen</string>
     <string name="cleanup_old_messages_summary">Dit loopt dagelijks en verwijderd alle berichten ouder dan de ingestelde periode</string>
-    <string name="cleanup_old_messages_now_summary">Dit verwijderd direct alle berichten, in deze conversatie, ouder dan de ingestelde periode</string>
+    <string name="cleanup_old_messages_now_summary">Verwijder onmiddellijk alle berichten in deze conversatie die ouder zijn dat de opgegeven datum</string>
     <string name="delayed_sending">Vertraagd verzenden</string>
     <string name="delayed_sending_summary">Dit geeft je een kans om berichten te annuleren en aan te passen voordat ze worden verzonden</string>
     <string name="messaging_features">Messaging-functies</string>
@@ -445,13 +459,15 @@ Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</s
     <string name="secure_private_conversations">Wachtwoord Geheime conversaties</string>
     <string name="secure_private_conversations_summary">Als je een wachtwoord instelt, moet je dit invoeren voordat u geheime conversaties kunt bekijken</string>
     <string name="use_internal_browser">Gebruik interne browser</string>
-    <string name="internal_browser_summary">Als je dit uitschakelen zullen er ook geen web-previews worden weergegeven</string>
+    <string name="internal_browser_summary">Als je dit uitschakelt, zullen er ook geen web-previews worden weergegeven</string>
     <string name="message_backup">Berichtenbackup</string>
     <string name="message_backup_pref_summary">Schrik voor het verliezen van berichten? Pulse helpt je</string>
     <string name="message_backup_summary">Wist je dat: Pulse\'s online service is gebouwd rond het maken van een back-up van jouw sms\'en. Met een Pulse-account, kan je inloggen op elk toestel en heb je meteen toegang tot al jouw sms\'en.
 
 Geen gezeur en gedoe met het maken van manuele back-ups.
 Met Pulse wordt alles automatisch voor jou gedaan!</string>
+    <string name="message_backup_summary_have_account">Het lijkt erop dat je al een Pulse-account hebt, goed zo!
+Dankzij jouw account zal Pulse een back-up maken van al je berichten die je ontvangt en verzend. Wanneer je Pulse opent op een ander toestel zie je de berichten in deze back-up. Om je berichten te herstellen op een nieuw toestel, dien je gewoon in te loggen met dit account.</string>
     <string name="auto_reply_configuration">Automatisch antwoorden instellen</string>
     <string name="auto_reply_configuration_summary">Stel automatisch antwoorden zo in dat antwoorden worden gebaseerd op de huidige situatie</string>
     <string name="auto_replies">Automatisch antwoorden</string>
@@ -568,7 +584,7 @@ en de weergave in de Play Store. Als je de app wil zien groeien, help me hiermee
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Geen abonnement gevonden!</string>
     <string name="cancelled_subscription_error">Het lijkt erop dat je jouw abonnement hebt beëindigd.
-Indien je geen nieuw abonnement hebt voor 2 dagen, zal je automatisch worden uitgelogd. Indien dit een fout is, neem contact met me op.</string>
+Indien je geen nieuw abonnement afsluit binnen de 2 dagen, zal je automatisch worden uitgelogd. Indien dit een fout is, contacteer ons.</string>
     <string name="subscription_found">Abonnement gevonden - welkom terug!</string>
     <string name="subscription_not_found">Geen abonnement gevonden, laten we met jouw trial beginnen!</string>
     <string name="checking_for_active_subscriptions">Voor abonnement zoeken&#8230;</string>
@@ -585,7 +601,7 @@ Indien je geen nieuw abonnement hebt voor 2 dagen, zal je automatisch worden uit
     <string name="three_month_purchase_summary">Je kan niet missen met deze!</string>
     <string name="monthly_purchase">$0.99 elke maand</string>
     <string name="monthly_purchase_summary">Wil je juist proberen? Geen probleem.</string>
-    <string name="change_subscription_message">Wil je upgraden? Super! Nadat je je selectie hebt aangepast in het volgende scherm, dien je naar de Play Store te gaan en annuleer je het oude abonnement manueel.</string>
+    <string name="change_subscription_message">Wil je upgraden? Super! Nadat je je selectie hebt aangepast in het volgende scherm, dien je naar de Play Store te gaan en annuleer je het oude abonnement manueel. Dit gebeurt <b>niet</b> automatisch.</string>
     <string name="beautiful_powerful_instant">Mooi, krachtig, snel.</string>
     <string name="optimized_for_all_your_devices">Pulse is geoptimaliseerd voor <b>al</b> jouw toestellen.
 Verstuur berichten via het web, desktop pc, je tablet, je smartwatch en zelfs je televisie.</string>
@@ -601,7 +617,7 @@ Verstuur berichten via het web, desktop pc, je tablet, je smartwatch en zelfs je
     <string name="yearly_purchase_improved">$5.99 /\njaar</string>
     <string name="subscription_toast">Er zal <b>niets</b> worden aangerekend voordat de 7 dagen trial is afgelopen.
 Je kan elk moment annuleren.</string>
-    <string name="redirect_to_play_store">Bedankt voor het upgraden! Gelieve je oude abonnement te annuleren in de <b>Play Store</b>.</string>
+    <string name="redirect_to_play_store">Bedankt voor het upgraden! Gelieve je oude abonnement te annuleren in de <b>Play Store</b>. Dit gebeurt <b>niet</b> automatisch.</string>
     <string name="play_store">Play Store</string>
     <string name="quick_compose_summary">Altijd-actief notificatie zodat je steeds snel een nieuw bericht kan opstellen</string>
 </resources>

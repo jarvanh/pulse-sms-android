@@ -24,6 +24,10 @@
     <!-- Drawer Items -->
     <string name="menu_conversations">Список диалогов</string>
     <string name="menu_archived_conversations">Архив</string>
+    <string name="menu_private_conversations">Личные сообщения</string>
+    <string name="menu_unread_conversations">Непрочитанные сообщения</string>
+    <string name="menu_edit_folders">Редактировать папки...</string>
+    <string name="menu_edit_folders_no_ellipse">Редактировать папки</string>
     <string name="menu_schedule">Отложенные диалоги</string>
     <string name="menu_mute_contacts">Чёрный список</string>
     <string name="menu_invite">Пригласить друзей</string>
@@ -60,6 +64,9 @@
     <string name="menu_snooze_24">24 часа</string>
     <string name="menu_snooze_72">72 часа</string>
     <string name="menu_snooze_custom">Задать время</string>
+    <string name="menu_mark_as_unread">Отметить как непрочтенные</string>
+    <string name="menu_pin_conversation">Прикрепить/открепить  диалоги</string>
+    <string name="menu_mute_conversation">Отключить/Включить диалоги</string>
     <!-- Empty Screen -->
     <string name="no_messages">Здесь ничего нет</string>
     <string name="no_messages_summary">Начните новый диалог или просто занимайтесь своими делами!</string>
@@ -76,26 +83,29 @@
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d диалог удален</item>
         <item quantity="other">%1$d диалоги удалены</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
+        <item quantity="few">Исходный язык не содержит эту множественную форму</item>
+        <item quantity="many">Исходный язык не содержит эту множественную форму</item>
     </plurals>
     <plurals name="conversations_archived">
         <item quantity="one">%1$d диалог отправлен в архив</item>
         <item quantity="other">%1$d диалоги отправлены в архив</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
+        <item quantity="few">Исходный язык не содержит эту множественную форму</item>
+        <item quantity="many">Исходный язык не содержит эту множественную форму</item>
     </plurals>
     <plurals name="conversations_unarchived">
         <item quantity="one">%1$d диалог перемещен во Входящие</item>
         <item quantity="other">%1$d диалоги перемещены во Входящие</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
+        <item quantity="few">Исходный язык не содержит эту множественную форму</item>
+        <item quantity="many">Исходный язык не содержит эту множественную форму</item>
     </plurals>
     <string name="undo">Отменить</string>
     <string name="enter_search">Найти...</string>
     <string name="text_anywhere_description">Знаете ли Вы:  Pulse - это больше, чем просто мобильное приложение. Вы можете пользоваться Pulse на <b>любом</b> устройстве!</string>
     <string name="convo_list_try_it">Попробуйте!</string>
     <string name="convo_list_not_now">Позже</string>
+    <string name="no_private_messages_description">Настройте личные беседы из меню настроек!</string>
+    <string name="no_folder_messages_description">Добавьте разговор в эту папку, чтобы он появился здесь!</string>
+    <string name="no_archived_messages_description">Архивируйте разговор, чтобы он появился здесь!</string>
     <!-- Search Screen -->
     <string name="conversations">Диалоги</string>
     <string name="messages">Сообщения</string>
@@ -133,6 +143,7 @@
     <string name="remove_image">Удалить прикреплённое изображение</string>
     <string name="edit_image">Редактировать прикреплённое изображение</string>
     <string name="edit_recipients">Редактировать получателей</string>
+    <string name="select_folder">Выберите папку для разговора</string>
     <string name="permission_needed_for_action">Необходимо разрешение для данного действия.</string>
     <string name="request_permission">Запрос разрешения</string>
     <string name="no_messages_with_contact">Никто ещё ничего не написал. Самое время начать!</string>
@@ -158,6 +169,7 @@
     <string name="copy_message_text">Скопировать только текст</string>
     <string name="select_text_to_copy">Выберите текст, который вы хотите скопировать:</string>
     <string name="copy_all_text">Копировать все</string>
+    <string name="copy_otp">Копировать</string>
     <string name="open_link_to_browser">Открыть ссылку в браузере</string>
     <string name="open_link_internal">Открыть ссылку</string>
     <string name="copy_link">Копировать ссылку</string>
@@ -171,9 +183,12 @@
     <string name="compose_message">Написать новое сообщение</string>
     <string name="send_message">Отправить сообщение</string>
     <string name="enter_contact_name">Введите имя</string>
+    <string name="enter_contact_name_or_number">Введите имя или номер контакта</string>
     <string name="error_processing_vcard">Ошибка обработки визитки</string>
     <string name="compose_recents">Недавний</string>
     <string name="compose_groups">Группы</string>
+    <string name="compose_all_contacts">Все контакты</string>
+    <string name="private_conversation_disclaimer">Это <b> закрытый разговор </b> и не может быть открыт с экрана компоновки.</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">Приложение не сможет работать без этих разрешений! Нужно принять их прежде чем мы продолжим.</string>
     <string name="loading_messages">Обработка...</string>
@@ -201,8 +216,8 @@
     <plurals name="new_conversations">
         <item quantity="one">%1$d новый диалог</item>
         <item quantity="other">%1$d новые диалоги</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
+        <item quantity="few">Исходный язык не содержит эту множественную форму</item>
+        <item quantity="many">Исходный язык не содержит эту множественную форму</item>
     </plurals>
     <plurals name="new_messages">
         <item quantity="one">%1$d новое сообщение</item>
@@ -211,6 +226,7 @@
         <item quantity="many">Много новых сообщений</item>
     </plurals>
     <string name="read">Прочитано</string>
+    <string name="mute">Бесшумно</string>
     <string name="reply">Ответ</string>
     <string name="reply_to">Ответить %1$s</string>
     <string name="call">Вызов</string>
@@ -223,6 +239,7 @@
     </string-array>
     <string name="new_mms_message">Новое MMS</string>
     <string name="you">Вы</string>
+    <string name="draft">Черновик</string>
     <string name="new_message">Новое сообщение</string>
     <string name="received_new_message">Получено новое сообщение!</string>
     <string name="media">Медиа</string>
@@ -233,8 +250,10 @@
     <string name="background_service_channel">Фоновые уведомления</string>
     <string name="general_notifications_channel">Основные</string>
     <string name="media_parse_channel">Медиа анализатор</string>
+    <string name="group_summary_notifications">Сводка групп сообщений</string>
     <string name="failed_messages_channel">Неотправленные сообщения</string>
     <string name="silent_background_services">Тихие фоновые уведомления</string>
+    <string name="silent_conversations_channel">Бесшумные уведомления о разговоре</string>
     <string name="account_activity_notifications">Уведомления об активности учетной записи</string>
     <string name="quick_text_channel">Быстрое текстовое уведомление</string>
     <string name="media_parse_text">Анализируем медиафайлы в предыдущих сообщениях...</string>
@@ -338,12 +357,21 @@
     <string name="global_theme_color">Цвет темы</string>
     <string name="font_size">Размер шрифта</string>
     <string name="rounder_bubbles">Закруглённые пузырьки сообщений</string>
+    <string name="bubble_style">Стиль сообщений</string>
+    <string name="bubble_style_round">Закругленные</string>
+    <string name="bubble_style_square">Квадратные</string>
+    <string name="bubble_style_circle">Круглые (без хвоста)</string>
     <string name="adjustable_nav_bar">Выберите Nav Bar для Базовой темы.</string>
     <string name="adjustable_nav_bar_summary">Светлая тема будет использовать белую навигационную панель, в то время как
 темные темы будут использовать черную навигационную панель</string>
     <string name="apply_theme_globally">Применить для всех диалогов</string>
     <string name="apply_theme_globally_summary">Удалить все индивидуальные настройки оформления диалогов в пользу общей цветовой палитры.</string>
     <string name="swipe_delete">Удалить жестом</string>
+    <string name="swipe_actions">Жесты</string>
+    <string name="swipe_actions_summary">Настройки жестов для диалогов</string>
+    <string name="left_to_right_swipe">Жест слева</string>
+    <string name="right_to_left_swipe">Жест справа</string>
+    <string name="no_swipe">Отключить жест</string>
     <string name="blacklist_hint">Номер для добавления в ч/с</string>
     <string name="add_blacklist">%1$s\n\nВы уверены, что хотите добавить этот номер в чёрный список? Сообщения от него не будут сохранены и вы не будете получать уведомления при получении!</string>
     <string name="remove_blacklist">%1$s\n\nВы хотите удалить этот номер из ч/с?</string>

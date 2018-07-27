@@ -18,7 +18,8 @@
     <string name="api_login">Login</string>
     <string name="api_signup">Inscrever-se</string>
     <string name="api_signup_failed">Não pode inscrever-se neste dispositivos, você deve registrar primeiro um dispositivo primário que possua um número de telefone!</string>
-    <string name="api_skip_signup">Ou se você quiser usar o app neste dispositivo sem as funções de rede como enviar SMS do tablet ou computador, você pode pular este passo:</string>
+    <string name="api_skip_signup">Ou, se você quiser usar o app neste dispositivo sem as funções de rede,
+ como enviar SMS do tablet ou computador, você pode pular este passo:</string>
     <string name="api_skip">Pular</string>
     <string name="api_email">Endereço de e-mail</string>
     <string name="api_password">Senha</string>
