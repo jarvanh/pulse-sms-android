@@ -20,6 +20,7 @@
         name="4.0.1"
         description="July 31th, 2018">
         <!-- blackberry phones will focus on the text entry, since they have a physical keyboard -->
+        <!-- update the timestamp text whenever a message is clicked to show the timestamp -->
         <text>Bug fixes</text>
         <text>Translation updates</text>
     </version>
