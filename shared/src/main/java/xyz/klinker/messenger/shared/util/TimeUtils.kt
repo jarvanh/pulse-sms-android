@@ -161,7 +161,7 @@ object TimeUtils {
      * @return the formatted string.
      */
     fun formatTimestamp(context: Context, timestamp: Long): String {
-        return formatTimestamp(context, timestamp, now)
+        return formatTimestamp(context, timestamp, TimeUtils.now)
     }
 
     fun formatTimestamp(context: Context, timestamp: Long, currentTime: Long): String {

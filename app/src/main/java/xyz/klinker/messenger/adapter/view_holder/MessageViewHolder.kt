@@ -42,13 +42,11 @@ import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
-import xyz.klinker.messenger.shared.util.ColorUtils
-import xyz.klinker.messenger.shared.util.DensityUtil
-import xyz.klinker.messenger.shared.util.ImageUtils
-import xyz.klinker.messenger.shared.util.MediaSaver
+import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.listener.ForcedRippleTouchListener
 import xyz.klinker.messenger.shared.util.listener.MessageDeletedListener
 import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
+import java.util.*
 
 @Suppress("DEPRECATION")
 /**
@@ -72,6 +70,7 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
     var messageId: Long = 0
     var data: String? = null
     var mimeType: String? = null
+    var messageTime: Long = 0
 
     var color = Integer.MIN_VALUE
     var textColor = Integer.MIN_VALUE
@@ -285,6 +284,8 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
         } else {
             animator = ValueAnimator.ofInt(0, timestampHeight)
             animator.interpolator = DecelerateInterpolator()
+
+            timestamp.text = TimeUtils.formatTimestamp(timestamp.context, messageTime)
         }
 
         val params = timestamp.layoutParams

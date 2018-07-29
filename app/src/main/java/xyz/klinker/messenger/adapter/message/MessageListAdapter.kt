@@ -152,6 +152,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
         holder.messageId = message.id
         holder.mimeType = message.mimeType
         holder.data = message.data
+        holder.messageTime = message.timestamp
 
         val backgroundColor = colorHelper.getColor(holder, message)
 
@@ -188,10 +189,10 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
 
         if (message.simPhoneNumber != null) {
             holder.timestamp.text = TimeUtils.formatTimestamp(holder.timestamp.context,
-                    message.timestamp) + " (SIM " + message.simPhoneNumber + ")"
+                    holder.messageTime) + " (SIM " + message.simPhoneNumber + ")"
         } else {
             holder.timestamp.text = TimeUtils.formatTimestamp(holder.itemView.context,
-                    message.timestamp)
+                    holder.messageTime)
         }
 
         stylingHelper.calculateAdjacentItems(dataProvider.messages, position)
