@@ -254,6 +254,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void performSignup() {
+        if (password.getText().length() > 55) {
+            Toast.makeText(getApplicationContext(), R.string.api_password_to_long,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.api_connecting));
         dialog.show();
