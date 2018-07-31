@@ -81,8 +81,16 @@ class SendUtils constructor(private val subscriptionId: Int? = null) {
 
         val settings = Settings()
         settings.deliveryReports = appSettings.deliveryReports
-        settings.sendLongAsMms = MmsSettings.convertLongMessagesToMMS
-        settings.sendLongAsMmsAfter = MmsSettings.numberOfMessagesBeforeMms
+
+        if (sendingToEmail(addresses)) {
+            // force it to be an MMS message
+            settings.sendLongAsMms = true
+            settings.sendLongAsMmsAfter = 0
+        } else {
+            settings.sendLongAsMms = MmsSettings.convertLongMessagesToMMS
+            settings.sendLongAsMmsAfter = MmsSettings.numberOfMessagesBeforeMms
+        }
+
         settings.group = MmsSettings.groupMMS
         settings.stripUnicode = appSettings.stripUnicode
         settings.preText = if (appSettings.giffgaffDeliveryReports) "*0#" else ""
@@ -174,6 +182,8 @@ class SendUtils constructor(private val subscriptionId: Int? = null) {
 
         return false
     }
+
+    private fun sendingToEmail(addresses: Array<String>) = addresses.firstOrNull { it.contains("@") } != null
 
     companion object {
         @Throws(IOException::class, NullPointerException::class, SecurityException::class, OutOfMemoryError::class)
