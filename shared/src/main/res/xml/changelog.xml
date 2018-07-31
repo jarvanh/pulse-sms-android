@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.0.2"
+        description="August 5th, 2018">
+        <text>Fix bug when sending a message to an email address</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.0.1"
         description="July 31th, 2018">
         <!-- blackberry phones will focus on the text entry, since they have a physical keyboard -->
