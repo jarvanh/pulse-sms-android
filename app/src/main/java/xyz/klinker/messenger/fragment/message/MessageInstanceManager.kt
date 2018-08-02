@@ -1,8 +1,11 @@
 package xyz.klinker.messenger.fragment.message
 
+import android.app.Notification
 import android.os.Bundle
+import android.support.v4.app.NotificationCompat
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.model.Conversation
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 
 class MessageInstanceManager(private val fragment: MessageListFragment) {
 
@@ -24,6 +27,12 @@ class MessageInstanceManager(private val fragment: MessageListFragment) {
     val messageToOpen: Long by lazy { arguments!!.getLong(ARG_MESSAGE_TO_OPEN_ID, -1L) }
     val limitMessages: Boolean by lazy { arguments!!.getBoolean(ARG_LIMIT_MESSAGES) }
     val shouldOpenKeyboard: Boolean by lazy { fragment.activity?.intent?.getBooleanExtra(MessengerActivityExtras.EXTRA_SHOULD_OPEN_KEYBOARD, false) ?: false }
+    val notificationInputDraft: String?
+        get() {
+            return if (AndroidVersionUtil.isAndroidP) {
+                fragment.activity?.intent?.getStringExtra(Notification.EXTRA_REMOTE_INPUT_DRAFT)
+            } else null
+        }
 
     companion object {
         val ARG_TITLE = "title"

@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.fragment.message
 
+import android.app.Notification
 import android.net.Uri
 import android.support.v4.app.FragmentActivity
 import android.text.Editable
@@ -61,33 +62,41 @@ class DraftManager(private val fragment: MessageListFragment) {
     }
 
     private fun setDrafts(drafts: List<Draft>) {
-        for (draft in drafts) {
-            when {
-                draft.mimeType == MimeType.TEXT_PLAIN -> {
-                    textChanged = true
-                    messageEntry.setText(draft.data)
-                    messageEntry.setSelection(messageEntry.text.length)
-                }
-                MimeType.isStaticImage(draft.mimeType) -> attachManager.attachImage(Uri.parse(draft.data))
-                draft.mimeType == MimeType.IMAGE_GIF -> {
-                    attachManager.attachImage(Uri.parse(draft.data))
-                    attachManager.attachedMimeType = draft.mimeType
-                    editImage.visibility = View.GONE
-                }
-                draft.mimeType!!.contains("audio/") -> {
-                    attachManager.attachImage(Uri.parse(draft.data))
-                    attachManager.attachedMimeType = draft.mimeType
-                    editImage.visibility = View.GONE
-                }
-                draft.mimeType!!.contains("video/") -> {
-                    attachManager.attachImage(Uri.parse(draft.data))
-                    attachManager.attachedMimeType = draft.mimeType
-                    editImage.visibility = View.GONE
-                }
-                draft.mimeType == MimeType.TEXT_VCARD -> {
-                    attachManager.attachImage(Uri.parse(draft.data))
-                    attachManager.attachedMimeType = draft.mimeType
-                    editImage.visibility = View.GONE
+        val notificationDraft = fragment.argManager.notificationInputDraft
+        if (!notificationDraft.isNullOrBlank()) {
+            messageEntry.setText(notificationDraft)
+
+            val extra: String? = null
+            fragment.activity?.intent?.putExtra(Notification.EXTRA_REMOTE_INPUT_DRAFT, extra)
+        } else {
+            for (draft in drafts) {
+                when {
+                    draft.mimeType == MimeType.TEXT_PLAIN -> {
+                        textChanged = true
+                        messageEntry.setText(draft.data)
+                        messageEntry.setSelection(messageEntry.text.length)
+                    }
+                    MimeType.isStaticImage(draft.mimeType) -> attachManager.attachImage(Uri.parse(draft.data))
+                    draft.mimeType == MimeType.IMAGE_GIF -> {
+                        attachManager.attachImage(Uri.parse(draft.data))
+                        attachManager.attachedMimeType = draft.mimeType
+                        editImage.visibility = View.GONE
+                    }
+                    draft.mimeType!!.contains("audio/") -> {
+                        attachManager.attachImage(Uri.parse(draft.data))
+                        attachManager.attachedMimeType = draft.mimeType
+                        editImage.visibility = View.GONE
+                    }
+                    draft.mimeType!!.contains("video/") -> {
+                        attachManager.attachImage(Uri.parse(draft.data))
+                        attachManager.attachedMimeType = draft.mimeType
+                        editImage.visibility = View.GONE
+                    }
+                    draft.mimeType == MimeType.TEXT_VCARD -> {
+                        attachManager.attachImage(Uri.parse(draft.data))
+                        attachManager.attachedMimeType = draft.mimeType
+                        editImage.visibility = View.GONE
+                    }
                 }
             }
         }
