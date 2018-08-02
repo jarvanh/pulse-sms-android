@@ -239,6 +239,7 @@
         <item quantity="other">%1$d new messages</item>
     </plurals>
     <string name="read">Read</string>
+    <string name="mark_as_read">Mark as Read</string>
     <string name="mute">Mute</string>
     <string name="reply">Reply</string>
     <string name="reply_to">Reply to %1$s</string>

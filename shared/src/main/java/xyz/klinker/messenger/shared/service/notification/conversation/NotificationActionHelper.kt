@@ -18,6 +18,7 @@ import xyz.klinker.messenger.shared.service.*
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.util.ActivityUtils
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 
 class NotificationActionHelper(private val service: Context) {
 
@@ -136,8 +137,8 @@ class NotificationActionHelper(private val service: Context) {
                 read, PendingIntent.FLAG_UPDATE_CURRENT)
 
         if (Settings.notificationActions.contains(NotificationAction.READ)) {
-            builder.addAction(NotificationCompat.Action(R.drawable.ic_done_dark, service.getString(R.string.read), pendingRead))
-            wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_done_white, service.getString(R.string.read), pendingRead))
+            builder.addAction(NotificationCompat.Action(R.drawable.ic_done_dark, service.getString(if (AndroidVersionUtil.isAndroidN) R.string.mark_as_read else R.string.read), pendingRead))
+            wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_done_white, service.getString(if (AndroidVersionUtil.isAndroidN) R.string.mark_as_read else R.string.read), pendingRead))
         }
 
         val mute = Intent(service, NotificationMuteService::class.java)

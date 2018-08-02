@@ -6,10 +6,14 @@ import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.Icon
+import android.net.Uri
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import android.support.v4.app.Person
 import android.support.v4.app.RemoteInput
+import android.support.v4.graphics.drawable.IconCompat
 import android.text.Html
 import android.util.Log
 import xyz.klinker.messenger.shared.R
@@ -68,7 +72,9 @@ class NotificationConversationProvider(private val service: Context, private val
         if (!conversation.privateNotification) {
             val otp = try {
                 OneTimePasswordParser.getOtp(conversation.messages[0].data)
-            } catch (e: Exception) { null }
+            } catch (e: Exception) {
+                null
+            }
 
             if (otp != null) {
                 actionHelper.addOtpAction(builder, otp, conversation.id)
@@ -108,17 +114,17 @@ class NotificationConversationProvider(private val service: Context, private val
 
     private fun prepareBuilder(conversation: NotificationConversation, conversationIndex: Int) =
             prepareCommonBuilder(conversation, conversationIndex)
-            .setContentTitle(conversation.title)
-            .setShowWhen(true)
-            .setTicker(service.getString(R.string.notification_ticker, conversation.title))
-            .setVisibility(Notification.VISIBILITY_PRIVATE)
-            .setWhen(if (AndroidVersionUtil.isAndroidO) TimeUtils.now else  conversation.timestamp)
+                    .setContentTitle(conversation.title)
+                    .setShowWhen(true)
+                    .setTicker(service.getString(R.string.notification_ticker, conversation.title))
+                    .setVisibility(Notification.VISIBILITY_PRIVATE)
+                    .setWhen(if (AndroidVersionUtil.isAndroidO) TimeUtils.now else conversation.timestamp)
 
     private fun preparePublicBuilder(conversation: NotificationConversation, conversationIndex: Int) =
             prepareCommonBuilder(conversation, conversationIndex)
-            .setContentTitle(service.resources.getQuantityString(R.plurals.new_conversations, 1, 1))
-            .setContentText(service.resources.getQuantityString(R.plurals.new_messages, conversation.messages.size, conversation.messages.size))
-            .setVisibility(Notification.VISIBILITY_PUBLIC)
+                    .setContentTitle(service.resources.getQuantityString(R.plurals.new_conversations, 1, 1))
+                    .setContentText(service.resources.getQuantityString(R.plurals.new_messages, conversation.messages.size, conversation.messages.size))
+                    .setVisibility(Notification.VISIBILITY_PUBLIC)
 
     private fun buildContactImage(conversation: NotificationConversation): Bitmap? {
         var contactImage = ImageUtils.clipToCircle(ImageUtils.getBitmap(service, conversation.imageUri))
@@ -161,24 +167,43 @@ class NotificationConversationProvider(private val service: Context, private val
 
         if (conversation.groupConversation) {
             messagingStyle.conversationTitle = conversation.title
+            messagingStyle.isGroupConversation = true
         }
 
-        val messages = DataSource.getMessages(service, conversation.id, 10)
+        val messages = DataSource.getMessages(service, conversation.id, 4)
+        val imageCache = mutableMapOf<String, Bitmap?>()
 
         for (i in messages.indices.reversed()) {
             val message = messages[i]
 
-            var from: String? = null
-            if (message.type == Message.TYPE_RECEIVED) {
+            val person: Person? = if (message.type == Message.TYPE_RECEIVED) {
                 // we split it so that we only get the first name,
                 // if there is more than one
 
-                from = if (message.from != null) {
-                    // it is most likely a group message.
-                    message.from
+                val image = if (conversation.imageUri != null && AndroidVersionUtil.isAndroidP) {
+                    val circle = if (imageCache.containsKey(conversation.imageUri!!)) {
+                        imageCache[conversation.imageUri!!]
+                    } else {
+                        val image = ImageUtils.getBitmap(service, conversation.imageUri)
+                        val circleImage = ImageUtils.clipToCircle(image)
+
+                        imageCache[conversation.imageUri!!] = circleImage
+
+                        circleImage
+                    }
+
+                    circle
                 } else {
-                    conversation.title
+                    null
                 }
+
+
+                Person.Builder()
+                        .setName(if (message.from != null) message.from else conversation.title)
+                        .setIcon(if (conversation.imageUri != null) IconCompat.createWithBitmap(image) else null)
+                        .build()
+            } else {
+                null
             }
 
             val messageText = when {
@@ -191,7 +216,12 @@ class NotificationConversationProvider(private val service: Context, private val
                 else -> message.data
             }
 
-            messagingStyle.addMessage(messageText, message.timestamp, from)
+            val m = NotificationCompat.MessagingStyle.Message(messageText, message.timestamp, person)
+            if (MimeType.isStaticImage(message.mimeType)) {
+                m.setData(message.mimeType, Uri.parse(message.data))
+            }
+
+            messagingStyle.addMessage(m)
         }
 
         return messagingStyle
@@ -212,13 +242,11 @@ class NotificationConversationProvider(private val service: Context, private val
     }
 
 
-
     //
     //
     // Extension methods on the notification builder
     //
     //
-
 
 
     private fun NotificationCompat.Builder.applyLightsSoundAndVibrate(conversation: NotificationConversation, conversationIndex: Int): NotificationCompat.Builder {
@@ -303,7 +331,7 @@ class NotificationConversationProvider(private val service: Context, private val
             this.setContentText(formattedText)
 
             when {
-                pictureStyle != null -> {
+                pictureStyle != null && !AndroidVersionUtil.isAndroidP -> {
                     this.setStyle(pictureStyle)
                     this.setContentText(service.getString(R.string.picture_message))
                 }

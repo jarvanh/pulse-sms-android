@@ -14,4 +14,7 @@ object AndroidVersionUtil {
 
     val isAndroidN_MR1: Boolean
         get() =  Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
+
+    val isAndroidN: Boolean
+        get() =  Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
 }
