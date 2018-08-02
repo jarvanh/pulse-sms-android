@@ -26,6 +26,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
@@ -99,6 +100,20 @@ class ReplyService : IntentService("Reply Service") {
         } else {
             NotificationManagerCompat.from(this).cancel(conversationId.toInt())
         }
+
+//        if (Settings.dismissNotificationAfterReply) {
+//            val conversationIdInt = conversationId.toInt()
+//            val manager = NotificationManagerCompat.from(this)
+//
+//            Thread {
+//                try {
+//                    Thread.sleep(1000)
+//                } catch (e: Exception) {
+//                }
+//
+//                manager.cancel(conversationIdInt)
+//            }.start()
+//        }
 
         ApiUtils.dismissNotification(Account.accountId,
                 Account.deviceId,

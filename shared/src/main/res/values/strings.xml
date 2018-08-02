@@ -455,6 +455,8 @@
         After it is done, you will need to log in again, on all your other devices. Do you wish to continue?</string>
     <string name="show_conversation_history">Show Conversation History</string>
     <string name="show_conversation_history_summary">Notifications will display previous messages in the conversation</string>
+    <string name="dismiss_notifications_on_reply">Dismiss Notification after Replying</string>
+    <string name="dismiss_notifications_on_reply_summary">Notifications remain active after replying, allowing you to continue conversation in the notification</string>
     <string name="emoji_style">Emoji Style</string>
     <string name="emoji_style_default">System Default</string>
     <string name="emoji_style_android_o">Google\'s Android Oreo</string>

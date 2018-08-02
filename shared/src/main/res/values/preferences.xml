@@ -103,6 +103,7 @@
     <string name="pref_heads_up" translatable="false">heads_up</string>
     <string name="pref_strip_unicode" translatable="false">strip_unicode</string>
     <string name="pref_history_in_notifications" translatable="false">history_in_notifications</string>
+    <string name="pref_dismiss_notifications_on_reply_android_p" translatable="false">dismiss_notifications_on_reply_android_p</string>
     <string name="pref_giffgaff" translatable="false">giffgaff_delivery</string>
     <string name="pref_notification_actions" translatable="false">notification_actions</string>
     <string name="pref_emoji_style" translatable="false">emoji_style</string>

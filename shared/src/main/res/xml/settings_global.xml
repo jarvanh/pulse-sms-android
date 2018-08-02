@@ -77,6 +77,11 @@
             android:summary="@string/show_conversation_history_summary"
             android:defaultValue="true" />
 
+        <SwitchPreference
+            android:key="@string/pref_dismiss_notifications_on_reply_android_p"
+            android:title="@string/dismiss_notifications_on_reply"
+            android:summary="@string/dismiss_notifications_on_reply_summary"
+            android:defaultValue="false" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 

@@ -60,6 +60,7 @@ object Settings {
     var rightToLeftSwipe: SwipeOption = SwipeOption.ARCHIVE
     var stripUnicode: Boolean = false
     var historyInNotifications: Boolean = false
+    var dismissNotificationAfterReply: Boolean = false
     var internalBrowser: Boolean = false
     var snooze: Long = 0
     var repeatNotifications: Long = 0
@@ -134,6 +135,7 @@ object Settings {
         this.legacySwipeDelete = sharedPrefs.getBoolean(context.getString(R.string.pref_swipe_delete), false)
         this.stripUnicode = sharedPrefs.getBoolean(context.getString(R.string.pref_strip_unicode), false)
         this.historyInNotifications = sharedPrefs.getBoolean(context.getString(R.string.pref_history_in_notifications), true)
+        this.dismissNotificationAfterReply = sharedPrefs.getBoolean(context.getString(R.string.pref_dismiss_notifications_on_reply_android_p), false)
         this.internalBrowser = sharedPrefs.getBoolean(context.getString(R.string.pref_internal_browser), true)
         this.drivingMode = sharedPrefs.getBoolean(context.getString(R.string.pref_driving_mode), false)
         this.vacationMode = sharedPrefs.getBoolean(context.getString(R.string.pref_vacation_mode), false)

@@ -39,6 +39,7 @@ import xyz.klinker.messenger.shared.util.EmojiInitializer
 import xyz.klinker.messenger.shared.util.SetUtils
 import xyz.klinker.messenger.view.preference.NotificationAlertsPreference
 import android.widget.ArrayAdapter
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 
 
 /**
@@ -63,6 +64,7 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
         initSoundEffects()
         initStripUnicode()
         initNotificationHistory()
+        initDismissNotificationsOnReply()
         initEmojiStyle()
     }
 
@@ -214,6 +216,22 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
             (findPreference(getString(R.string.pref_notification_category)) as PreferenceCategory)
                     .removePreference(pref)
         }
+    }
+
+    private fun initDismissNotificationsOnReply() {
+        val pref = findPreference(getString(R.string.pref_dismiss_notifications_on_reply_android_p))
+        pref.setOnPreferenceChangeListener { _, o ->
+            val dismiss = o as Boolean
+            ApiUtils.updateDismissNotificationsAfterReply(Account.accountId,
+                    dismiss)
+            true
+        }
+
+        // this wasn't working.. Remove it for all
+//        if (!AndroidVersionUtil.isAndroidP) {
+            (findPreference(getString(R.string.pref_notification_category)) as PreferenceCategory)
+                    .removePreference(pref)
+//        }
     }
 
     private fun initEmojiStyle() {

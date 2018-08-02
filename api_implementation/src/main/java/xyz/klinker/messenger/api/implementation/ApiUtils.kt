@@ -1091,6 +1091,15 @@ object ApiUtils {
     }
 
     /**
+     * Update the notification dismissal option
+     */
+    fun updateDismissNotificationsAfterReply(accountId: String?, dismiss: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "dismiss_notifications_on_reply_android_p", "boolean", dismiss)
+        }
+    }
+
+    /**
      * Update the rounder bubbles setting.
      */
     fun updateBubbleStyle(accountId: String?, style: String) {
