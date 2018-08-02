@@ -104,9 +104,9 @@ abstract class SwipeSetupBase(private val adapter: ConversationListAdapter) : It
         action.onPerform(adapter, viewHolder.adapterPosition)
     }
 
-    override fun getSwipeDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
+    override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         return when {
-            viewHolder!!.itemView is FrameLayout -> 0 // header view
+            viewHolder.itemView is FrameLayout -> 0 // header view
             getRightToLeftAction() !is SwipeNoAction && getLeftToRightAction() !is SwipeNoAction -> RIGHT_TO_LEFT or LEFT_TO_RIGHT
             getRightToLeftAction() !is SwipeNoAction -> RIGHT_TO_LEFT
             getLeftToRightAction() !is SwipeNoAction -> LEFT_TO_RIGHT

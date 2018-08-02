@@ -44,7 +44,7 @@ class MessageListDataProvider(private val adapter: MessageListAdapter, private v
 
             if (Math.abs((recycler.layoutManager as LinearLayoutManager).findLastVisibleItemPosition() - initialCount) < 4) {
                 // near the bottom, scroll to the new item
-                recycler.layoutManager.scrollToPosition(finalCount - 1)
+                recycler.layoutManager?.scrollToPosition(finalCount - 1)
             } else if (messages.moveToLast()) {
                 val message = Message()
                 message.fillFromCursor(messages)
@@ -52,7 +52,7 @@ class MessageListDataProvider(private val adapter: MessageListAdapter, private v
                     val text = recycler.context.getString(R.string.new_message)
                     adapter.snackbar = Snackbar
                             .make(recycler, text, Snackbar.LENGTH_INDEFINITE)
-                            .setAction(R.string.read) { recycler.layoutManager.scrollToPosition(finalCount - 1) }
+                            .setAction(R.string.read) { recycler.layoutManager?.scrollToPosition(finalCount - 1) }
 
                     try {
                         (adapter.snackbar!!.view.layoutParams as CoordinatorLayout.LayoutParams)

@@ -92,7 +92,7 @@ class MainSearchHelper(private val activity: MessengerActivity) : MaterialSearch
         if (searchFragment != null) {
             try {
                 activity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.conversation_list_container, searchFragment)
+                        .replace(R.id.conversation_list_container, searchFragment!!)
                         .commit()
             } catch (e: Exception) {
             }

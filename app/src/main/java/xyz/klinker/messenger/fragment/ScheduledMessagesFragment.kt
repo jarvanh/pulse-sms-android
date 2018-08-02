@@ -159,7 +159,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         progress?.visibility = View.GONE
         list.adapter = ScheduledMessagesAdapter(messages, this)
 
-        if (list.adapter.itemCount == 0) {
+        if (list.adapter!!.itemCount == 0) {
             emptyView.visibility = View.VISIBLE
         } else {
             emptyView.visibility = View.GONE

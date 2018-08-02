@@ -72,7 +72,7 @@ class ConversationRecyclerViewManager(private val fragment: ConversationListFrag
 
     fun canScroll(scrollable: Boolean) { layoutManager.setCanScroll(scrollable) }
     fun scrollToPosition(position: Int) { layoutManager.scrollToPosition(position) }
-    fun getViewAtPosition(position: Int): View = recyclerView.findViewHolderForAdapterPosition(position).itemView
+    fun getViewAtPosition(position: Int): View = recyclerView.findViewHolderForAdapterPosition(position)!!.itemView
 
     private fun getCursorSafely() = when {
         fragment is ArchivedConversationListFragment && activity != null -> DataSource.getArchivedConversationsAsList(activity!!)
@@ -109,12 +109,12 @@ class ConversationRecyclerViewManager(private val fragment: ConversationListFrag
     }
 
     fun checkEmptyViewDisplay() {
-        if (recyclerView.adapter.itemCount == 0 && empty.visibility == View.GONE) {
+        if (recyclerView.adapter?.itemCount == 0 && empty.visibility == View.GONE) {
             empty.alpha = 0f
             empty.visibility = View.VISIBLE
 
             empty.animate().alpha(1f).setDuration(250).setListener(null)
-        } else if (recyclerView.adapter.itemCount != 0 && empty.visibility == View.VISIBLE) {
+        } else if (recyclerView.adapter?.itemCount != 0 && empty.visibility == View.VISIBLE) {
             empty.visibility = View.GONE
         }
     }

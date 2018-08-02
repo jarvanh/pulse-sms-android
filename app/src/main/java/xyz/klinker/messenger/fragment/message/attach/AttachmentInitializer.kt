@@ -183,7 +183,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         prepareAttachHolder(1)
 
         cameraFragment = Camera2BasicFragment.newInstance()
-        activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, cameraFragment)?.commit()
+        activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, cameraFragment!!)?.commit()
         cameraFragment?.attachImageSelectedListener(attachListener)
     }
 

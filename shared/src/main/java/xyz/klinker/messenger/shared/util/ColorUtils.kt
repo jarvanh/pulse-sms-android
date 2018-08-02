@@ -327,7 +327,7 @@ object ColorUtils {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             private var invoked = false
 
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
                 // only invoke this once

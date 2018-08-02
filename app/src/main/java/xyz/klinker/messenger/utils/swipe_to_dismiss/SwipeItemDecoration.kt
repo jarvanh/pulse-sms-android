@@ -43,12 +43,11 @@ class SwipeItemDecoration : RecyclerView.ItemDecoration() {
     private var background: Drawable? = null
     private var initiated: Boolean = false
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
-                                state: RecyclerView.State?) {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         if (parent.getChildAdapterPosition(view) == 0) {
             outRect.top = parent.context.resources
                     .getDimensionPixelSize(R.dimen.top_extra_padding)
-        } else if (parent.getChildAdapterPosition(view) == parent.adapter.itemCount - 1) {
+        } else if (parent.getChildAdapterPosition(view) == parent.adapter!!.itemCount - 1) {
             outRect.bottom = parent.context.resources
                     .getDimensionPixelSize(R.dimen.bottom_extra_padding)
         }
@@ -63,13 +62,13 @@ class SwipeItemDecoration : RecyclerView.ItemDecoration() {
         initiated = true
     }
 
-    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
+    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
 
         if (!initiated) {
             init(parent.context)
         }
 
-        if (parent.itemAnimator.isRunning) {
+        if (parent.itemAnimator!!.isRunning) {
 
             // some items might be animating down and some items might be animating up to close the
             // gap left by the removed item this is not exclusive, both movement can be happening
@@ -89,10 +88,10 @@ class SwipeItemDecoration : RecyclerView.ItemDecoration() {
             var bottom = 0
 
             // find relevant translating views
-            val childCount = parent.layoutManager.childCount
+            val childCount = parent.layoutManager!!.childCount
             for (i in 0 until childCount) {
-                val child = parent.layoutManager.getChildAt(i)
-                left = child.left
+                val child = parent.layoutManager!!.getChildAt(i)
+                left = child!!.left
                 right = child.right
 
                 if (child.translationY < 0) {

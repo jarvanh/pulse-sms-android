@@ -60,7 +60,7 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
         val transaction = activity.supportFragmentManager.beginTransaction()
 
         if (navController.conversationListFragment != null) {
-            transaction.replace(R.id.conversation_list_container, navController.conversationListFragment)
+            transaction.replace(R.id.conversation_list_container, navController.conversationListFragment!!)
         }
 
         val messageList = activity.supportFragmentManager

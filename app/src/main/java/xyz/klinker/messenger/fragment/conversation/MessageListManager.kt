@@ -52,7 +52,7 @@ class MessageListManager(private val fragment: ConversationListFragment) {
         if (messageListFragment != null) {
             try {
                 activity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.message_list_container, messageListFragment)
+                        .replace(R.id.message_list_container, messageListFragment!!)
                         .commit()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -88,7 +88,7 @@ class MessageListManager(private val fragment: ConversationListFragment) {
                 if (messageListFragment != null) {
                     try {
                         activity?.supportFragmentManager?.beginTransaction()
-                                ?.remove(messageListFragment)
+                                ?.remove(messageListFragment!!)
                                 ?.commit()
                     } catch (e: Exception) {
                         e.printStackTrace()
