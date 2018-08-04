@@ -19,6 +19,7 @@
     <version
         name="4.0.2"
         description="August 5th, 2018">
+        <text>New notification features for Android P</text>
         <text>Fix bug when sending a message to an email address</text>
         <text>Bug fixes</text>
     </version>
