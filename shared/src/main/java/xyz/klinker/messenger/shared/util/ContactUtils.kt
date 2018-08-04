@@ -304,7 +304,7 @@ object ContactUtils {
      * @param context the current application context.
      * @return the image uri or null if one could not be found.
      */
-    fun findImageUri(number: String?, context: Context?): String? {
+    fun findImageUri(number: String?, context: Context?, forceTryFilterQuery: Boolean = false): String? {
         if (context == null) {
             return null
         }
@@ -328,7 +328,7 @@ object ContactUtils {
                     if (uri != null) {
                         uri = uri.replace("/photo", "")
                     }
-                } else if (useContentFilterQuery(number)) {
+                } else if (forceTryFilterQuery || useContentFilterQuery(number)) {
                     phoneUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
                             Uri.encode(number))
 

@@ -173,6 +173,8 @@ class NotificationConversationProvider(private val service: Context, private val
         val messages = DataSource.getMessages(service, conversation.id, 4)
         val imageCache = mutableMapOf<String, Bitmap?>()
 
+
+
         for (i in messages.indices.reversed()) {
             val message = messages[i]
 
@@ -180,27 +182,44 @@ class NotificationConversationProvider(private val service: Context, private val
                 // we split it so that we only get the first name,
                 // if there is more than one
 
-                val image = if (conversation.imageUri != null && AndroidVersionUtil.isAndroidP) {
-                    val circle = if (imageCache.containsKey(conversation.imageUri!!)) {
-                        imageCache[conversation.imageUri!!]
-                    } else {
-                        val image = ImageUtils.getBitmap(service, conversation.imageUri)
-                        val circleImage = ImageUtils.clipToCircle(image)
+                val image = if (AndroidVersionUtil.isAndroidP) {
+                    val circle = when {
+                        conversation.imageUri != null -> {
+                            if (imageCache.containsKey(conversation.imageUri!!)) {
+                                imageCache[conversation.imageUri!!]
+                            } else {
+                                val image = ImageUtils.getBitmap(service, conversation.imageUri)
+                                val circleImage = ImageUtils.clipToCircle(image)
 
-                        imageCache[conversation.imageUri!!] = circleImage
+                                imageCache[conversation.imageUri!!] = circleImage
 
-                        circleImage
+                                circleImage
+                            }
+                        }
+                        message.from != null -> {
+                            if (imageCache.containsKey(message.from!!)) {
+                                imageCache[message.from!!]
+                            } else {
+                                val uri = ContactUtils.findImageUri(message.from!!, service, true)
+                                val image = ImageUtils.getBitmap(service, uri)
+                                val circleImage = ImageUtils.clipToCircle(image)
+
+                                imageCache[conversation.imageUri!!] = circleImage
+
+                                circleImage
+                            }
+                        }
+                        else -> null
                     }
 
                     circle
                 } else {
                     null
                 }
-
-
+                
                 Person.Builder()
                         .setName(if (message.from != null) message.from else conversation.title)
-                        .setIcon(if (conversation.imageUri != null) IconCompat.createWithBitmap(image) else null)
+                        .setIcon(if (image != null) IconCompat.createWithBitmap(image) else null)
                         .build()
             } else {
                 null
