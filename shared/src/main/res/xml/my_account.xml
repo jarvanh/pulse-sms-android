@@ -14,7 +14,8 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
         android:title="@string/account_information"
@@ -27,17 +28,21 @@
 
         <Preference
             android:key="@string/pref_subscriber_status"
-            android:title="@string/lifetime_subscriber" />
+            android:title="@string/lifetime_subscriber"
+            app:iconSpaceReserved="false"/>
 
-        <Preference android:key="@string/pref_message_count" />
+        <Preference android:key="@string/pref_message_count"
+            app:iconSpaceReserved="false"/>
 
         <Preference
             android:key="@string/pref_about_device_id"
-            android:title="@string/device_id" />
+            android:title="@string/device_id"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="@string/pref_go_to_web"
-            android:title="@string/website" />
+            android:title="@string/website"
+            app:iconSpaceReserved="false" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
@@ -48,31 +53,36 @@
         <xyz.klinker.messenger.shared.view.AlwaysOffSwitchPreference
             android:key="@string/pref_enable_danger_zone"
             android:summary="@string/be_careful_using_these_settings"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="@string/pref_refresh_firebase"
             android:title="@string/refresh_firebase"
             android:summary="@string/refresh_firebase_summary"
-            android:dependency="@string/pref_enable_danger_zone"/>
+            android:dependency="@string/pref_enable_danger_zone"
+            app:iconSpaceReserved="false"/>
 
         <Preference
             android:key="@string/pref_resync_account"
             android:title="@string/resync_account"
             android:summary="@string/resync_account_summary"
-            android:dependency="@string/pref_enable_danger_zone"/>
+            android:dependency="@string/pref_enable_danger_zone"
+            app:iconSpaceReserved="false"/>
 
         <Preference
             android:key="@string/pref_resync_contacts"
             android:title="@string/resync_contacts"
             android:summary="@string/resync_contacts_summary"
-            android:dependency="@string/pref_enable_danger_zone"/>
+            android:dependency="@string/pref_enable_danger_zone"
+            app:iconSpaceReserved="false"/>
 
         <Preference
             android:key="@string/pref_delete_account"
             android:title="@string/delete_account"
             android:summary="@string/delete_account_summary"
-            android:dependency="@string/pref_enable_danger_zone"/>
+            android:dependency="@string/pref_enable_danger_zone"
+            app:iconSpaceReserved="false"/>
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 

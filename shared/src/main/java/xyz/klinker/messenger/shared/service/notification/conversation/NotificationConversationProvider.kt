@@ -204,7 +204,7 @@ class NotificationConversationProvider(private val service: Context, private val
                                 val image = ImageUtils.getBitmap(service, uri)
                                 val circleImage = ImageUtils.clipToCircle(image)
 
-                                imageCache[conversation.imageUri!!] = circleImage
+                                imageCache[message.from!!] = circleImage
 
                                 circleImage
                             }
@@ -216,7 +216,7 @@ class NotificationConversationProvider(private val service: Context, private val
                 } else {
                     null
                 }
-                
+
                 Person.Builder()
                         .setName(if (message.from != null) message.from else conversation.title)
                         .setIcon(if (image != null) IconCompat.createWithBitmap(image) else null)

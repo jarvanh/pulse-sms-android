@@ -338,9 +338,9 @@ object ContactUtils {
 
                     if (phonesCursor?.moveToFirst() == true) {
                         uri = phonesCursor.getString(0)
-                        if (uri != null) {
-                            uri = uri.replace("/photo", "")
-                        }
+//                        if (uri != null) {
+//                            uri = uri.replace("/photo", "")
+//                        }
                     }
                 }
 

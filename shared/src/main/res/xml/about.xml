@@ -14,22 +14,26 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
         android:title="@string/app_info">
 
         <Preference
             android:key="@string/pref_about_changelog"
-            android:title="@string/changelog" />
+            android:title="@string/changelog"
+            app:iconSpaceReserved="false"/>
 
         <Preference
             android:key="@string/pref_about_app_version"
-            android:title="@string/app_version" />
+            android:title="@string/app_version"
+            app:iconSpaceReserved="false"/>
 
         <Preference
             android:key="@string/pref_about_device_info"
-            android:title="@string/device_info" />
+            android:title="@string/device_info"
+            app:iconSpaceReserved="false" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
@@ -41,25 +45,30 @@
     <Preference
         android:key="@string/pref_about_copyright"
         android:title="@string/copyright"
-        android:summary="@string/copyright_summary" />
+        android:summary="@string/copyright_summary"
+        app:iconSpaceReserved="false" />
 
     <Preference
         android:key="@string/pref_website"
         android:title="@string/website"
-        android:summary="@string/access_messages_from_any_device" />
+        android:summary="@string/access_messages_from_any_device"
+        app:iconSpaceReserved="false"/>
 
     <Preference
         android:key="@string/pref_supported_platforms"
         android:title="@string/supported_platforms"
-        android:summary="@string/supported_platforms_summary"/>
+        android:summary="@string/supported_platforms_summary"
+        app:iconSpaceReserved="false"/>
 
     <Preference
         android:key="@string/pref_about_privacy_policy"
         android:title="@string/privacy_policy"
-        android:summary="@string/privacy_policy_summary" />
+        android:summary="@string/privacy_policy_summary"
+        app:iconSpaceReserved="false" />
 
     <!--<Preference
         android:key="@string/pref_about_beta"
-        android:summary="@string/beta_disclaimer" />-->
+        android:summary="@string/beta_disclaimer" />
+        app:iconSpaceReserved="false"-->
 
 </PreferenceScreen>

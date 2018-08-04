@@ -14,7 +14,8 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat
         android:key="@string/pref_help_troubleshooting_category"
@@ -23,19 +24,23 @@
         <Preference
             android:key="@string/pref_help_faqs"
             android:title="@string/get_help"
-            android:summary="@string/get_help_summary" />
+            android:summary="@string/get_help_summary"
+            app:iconSpaceReserved="false"/>
 
         <Preference
-            android:summary="@string/get_help_summary_2" />
+            android:summary="@string/get_help_summary_2"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="@string/pref_help_battery_optimization"
             android:title="@string/disable_battery_optimization"
-            android:summary="@string/disable_battery_optimization_summary" />
+            android:summary="@string/disable_battery_optimization_summary"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="@string/pref_help_features"
-            android:title="@string/features" />
+            android:title="@string/features"
+            app:iconSpaceReserved="false"/>
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
@@ -45,22 +50,26 @@
         <Preference
             android:key="@string/pref_help_google_plus"
             android:title="@string/google_plus"
-            android:summary="@string/google_plus_summary" />
+            android:summary="@string/google_plus_summary"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="@string/pref_help_email"
             android:title="@string/email"
-            android:summary="@string/email_summary" />
+            android:summary="@string/email_summary"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="@string/pref_help_twitter"
             android:title="@string/twitter"
-            android:summary="@string/twitter_summary" />
+            android:summary="@string/twitter_summary"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="@string/pref_help_issues"
             android:title="@string/issues"
-            android:summary="@string/issues_summary" />
+            android:summary="@string/issues_summary"
+            app:iconSpaceReserved="false" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
