@@ -16,7 +16,6 @@ import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.receiver.NotificationDismissedReceiver
 import xyz.klinker.messenger.shared.service.*
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 

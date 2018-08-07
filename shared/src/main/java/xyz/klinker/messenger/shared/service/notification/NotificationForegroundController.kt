@@ -1,11 +1,7 @@
 package xyz.klinker.messenger.shared.service.notification
 
-import android.app.Notification
-import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil

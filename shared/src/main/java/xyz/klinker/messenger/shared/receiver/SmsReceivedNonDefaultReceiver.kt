@@ -27,7 +27,6 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.service.notification.Notifier
 import xyz.klinker.messenger.shared.util.BlacklistUtils
 import xyz.klinker.messenger.shared.util.PermissionsUtils

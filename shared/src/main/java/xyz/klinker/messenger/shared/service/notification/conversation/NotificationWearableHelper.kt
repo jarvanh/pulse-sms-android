@@ -10,8 +10,6 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
-import xyz.klinker.messenger.shared.service.notification.NotificationService
-import xyz.klinker.messenger.shared.service.notification.NotificationSummaryProvider
 
 class NotificationWearableHelper(private val service: Context, private val conversationNotificationProvider: NotificationConversationProvider) {
 

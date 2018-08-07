@@ -10,7 +10,6 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.service.NotificationMarkReadService
 import xyz.klinker.messenger.shared.service.ReplyService
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 
 class NotificationCarHelper(private val service: Context) {
 

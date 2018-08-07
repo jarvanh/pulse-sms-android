@@ -36,7 +36,7 @@ class NotificationDismissedService : IntentService("NotificationDismissedService
     }
 
     companion object {
-        val EXTRA_CONVERSATION_ID = "conversation_id"
+        const val EXTRA_CONVERSATION_ID = "conversation_id"
 
         fun handle(intent: Intent?, context: Context) {
             NotificationService.cancelRepeats(context)
@@ -48,7 +48,7 @@ class NotificationDismissedService : IntentService("NotificationDismissedService
                 DataSource.seenConversation(context, conversationId)
             }
 
-            Log.v("dismissed_notification", "id: " + conversationId)
+            Log.v("dismissed_notification", "id: $conversationId")
             ApiUtils.dismissNotification(Account.accountId, Account.deviceId, conversationId)
         }
     }

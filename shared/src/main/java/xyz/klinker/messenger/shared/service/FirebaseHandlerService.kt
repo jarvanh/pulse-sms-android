@@ -300,7 +300,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                         if (message.mimeType == MimeType.TEXT_PLAIN) message.data else MimeType.getTextDescription(context, message.mimeType!!),
                         message.type != Message.TYPE_RECEIVED)
 
-                if (message.type == Message.TYPE_RECEIVED) {
+                if (message.type == Message.TYPE_RECEIVED && conversation?.mute != true) {
                     Notifier(context).notify()
                 } else if (isSending) {
                     DataSource.readConversation(context, message.conversationId, false)
@@ -336,7 +336,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 DataSource.updateMessageData(context, message.id, message.data!!)
                 MessageListUpdatedReceiver.sendBroadcast(context, message.conversationId)
 
-                if (Account.primary && isSending) {
+                val conversation = if (Account.primary && isSending) {
                     val conversation = DataSource.getConversation(context, message.conversationId)
 
                     if (conversation != null) {
@@ -352,6 +352,9 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                     }
 
                     Log.v(TAG, "sent message")
+                    conversation
+                } else {
+                    null
                 }
 
                 if (!Utils.isDefaultSmsApp(context) && Account.primary && message.type == Message.TYPE_SENDING) {
@@ -365,7 +368,9 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
 
                 when (message.type) {
                     Message.TYPE_RECEIVED -> {
-                        Notifier(context).notify()
+                        if (conversation?.mute != true) {
+                            Notifier(context).notify()
+                        }
                     }
                     Message.TYPE_SENDING -> {
                         DataSource.readConversation(context, message.conversationId, false)

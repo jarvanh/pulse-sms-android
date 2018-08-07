@@ -15,10 +15,8 @@ import android.util.Log
 
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 
 import android.content.Context.UI_MODE_SERVICE
-import android.support.v4.app.NotificationManagerCompat
 import xyz.klinker.messenger.shared.service.notification.NotificationRingtoneProvider
 
 class AudioWrapper {

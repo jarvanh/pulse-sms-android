@@ -30,7 +30,6 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment
 import xyz.klinker.messenger.shared.util.AudioWrapper
 
