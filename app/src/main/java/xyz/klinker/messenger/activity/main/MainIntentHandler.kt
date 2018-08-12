@@ -54,6 +54,8 @@ class MainIntentHandler(private val activity: MessengerActivity) {
         if (activityIntent.getBooleanExtra(MessengerActivityExtras.EXTRA_START_MY_ACCOUNT, false)) {
             NotificationManagerCompat.from(activity).cancel(SubscriptionExpirationCheckJob.NOTIFICATION_ID)
             navController.onNavigationItemSelected(R.id.drawer_account)
+
+            activityIntent.removeExtra(MessengerActivityExtras.EXTRA_START_MY_ACCOUNT)
         }
     }
 
