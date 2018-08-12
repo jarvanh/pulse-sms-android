@@ -173,7 +173,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                         Toast.makeText(fragmentActivity, R.string.subscription_found, Toast.LENGTH_LONG).show()
                         startLoginActivity()
                     } else if (Settings.hasUsedFreeTrial) {
-                        Toast.makeText(fragmentActivity, R.string.subscription_found, Toast.LENGTH_LONG).show()
+                        Toast.makeText(fragmentActivity, R.string.trial_finished, Toast.LENGTH_LONG).show()
                         pickSubscription(false)
                     } else {
                         startTrial()
