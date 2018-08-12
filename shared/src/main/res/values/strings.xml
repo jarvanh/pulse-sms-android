@@ -702,5 +702,8 @@
         Cancel at any time.</string>
     <string name="redirect_to_play_store">Thanks for the upgrade! Please cancel the old subscription from the <b>Play Store</b>. Pulse <b>cannot</b> do this automatically.</string>
     <string name="play_store">Play Store</string>
+    <string name="notification_trial_title">Text from any Device - Trial</string>
+    <string name="notification_days_remaining_in_trial">%s days remaining in your trial. Click to upgrade!</string>
+    <string name="notification_last_day_of_trial">This is the last day of your trial. Click to upgrade!</string>
 
 </resources>

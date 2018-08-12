@@ -36,6 +36,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
             if (intent.action == Intent.ACTION_BOOT_COMPLETED || intent.action == Intent.ACTION_MY_PACKAGE_REPLACED) {
                 ScheduledMessageJob.scheduleNextRun(context)
                 CleanupOldMessagesJob.scheduleNextRun(context)
+                FreeTrialNotifierJob.scheduleNextRun(context)
                 ContactSyncJob.scheduleNextRun(context)
                 SubscriptionExpirationCheckJob.scheduleNextRun(context)
                 SignoutJob.scheduleNextRun(context)

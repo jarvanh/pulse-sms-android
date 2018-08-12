@@ -55,6 +55,7 @@ class UpdateUtils(private val context: Activity) {
 
     private fun runEveryUpdate() {
         CleanupOldMessagesJob.scheduleNextRun(context)
+        FreeTrialNotifierJob.scheduleNextRun(context)
         ScheduledMessageJob.scheduleNextRun(context)
         ContactSyncJob.scheduleNextRun(context)
         SubscriptionExpirationCheckJob.scheduleNextRun(context)
