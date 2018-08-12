@@ -18,6 +18,7 @@
 
 package xyz.klinker.messenger.fragment.settings
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
@@ -78,6 +79,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     private val deviceId: String?
         get() = Account.deviceId
 
+    @SuppressLint("RestrictedApi")
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.my_account)
 
@@ -94,6 +96,13 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
 
         initWebsitePreference()
+
+        if (openTrialUpgradePreference) {
+            val pref = findPreference(getString(R.string.pref_subscriber_status))
+            pref?.onPreferenceClickListener?.onPreferenceClick(pref)
+
+            openTrialUpgradePreference = false
+        }
     }
 
     override fun onDestroy() {
@@ -160,7 +169,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
             fragmentActivity?.runOnUiThread {
                 try {
-                    if (/*!resources.getBoolean(R.bool.check_subscription) || */hasSubs || Account.hasPurchased) {
+                    if (!resources.getBoolean(R.bool.check_subscription) || hasSubs || Account.hasPurchased) {
                         Toast.makeText(fragmentActivity, R.string.subscription_found, Toast.LENGTH_LONG).show()
                         startLoginActivity()
                     } else if (Settings.hasUsedFreeTrial) {
@@ -217,11 +226,12 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             if (daysLeftInTrial < 0) {
                 daysLeftInTrial = 0
             }
+
             preference.title = resources.getString(R.string.trial_subscription_title, daysLeftInTrial.toString())
             preference.setSummary(R.string.trial_subscription_summary)
 
             preference.setOnPreferenceClickListener { AlertDialog.Builder(fragmentActivity!!)
-                    .setTitle(R.string.upgrade_or_cancel_title)
+                    .setTitle(if (daysLeftInTrial == 0) R.string.trial_expired else R.string.upgrade_or_cancel_title)
                     .setMessage(R.string.upgrade_or_cancel)
                     .setCancelable(daysLeftInTrial > 0)
                     .setPositiveButton(R.string.upgrade) { _, _ -> pickSubscription(true) }
@@ -570,5 +580,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
         val RESPONSE_START_TRIAL = 101
         val RESPONSE_SKIP_TRIAL_FOR_NOW = 102
+
+        var openTrialUpgradePreference = false
     }
 }

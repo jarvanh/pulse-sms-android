@@ -4,16 +4,23 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Handler
+import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.activity.RateItDialog
 import xyz.klinker.messenger.shared.data.Settings
 
 class PromotionUtils(private val context: Context) {
     private val sharedPreferences: SharedPreferences = Settings.getSharedPrefs(context)
 
-    fun checkPromotions() {
-        if (shouldAskForRating()) {
+    fun checkPromotions(onTrialExpired: () -> Unit) {
+        if (trialExpired()) {
+            onTrialExpired()
+        } else if (shouldAskForRating()) {
             askForRating()
         }
+    }
+
+    private fun trialExpired(): Boolean {
+        return Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL && Account.getDaysLeftInTrial() <= 0
     }
 
     private fun shouldAskForRating(): Boolean {
