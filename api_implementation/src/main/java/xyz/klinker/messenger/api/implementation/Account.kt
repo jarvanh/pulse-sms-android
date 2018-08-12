@@ -182,7 +182,7 @@ object Account {
                 && key != null
     }
 
-    private const val TRIAL_LENGTH = 4 // days
+    private const val TRIAL_LENGTH = 7 // days
     fun getDaysLeftInTrial(): Int {
         return if (subscriptionType == SubscriptionType.FREE_TRIAL) {
             val timeInTrial = Date().time - trialStartTime
