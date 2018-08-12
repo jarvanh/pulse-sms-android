@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.0.3"
+        description="August 5th, 2018">
+        <!-- Don't notify a muted conversation, when a message is received through the firebase handler service -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.0.2"
         description="August 5th, 2018">
         <text>New notification features for Android P</text>
