@@ -70,6 +70,9 @@ public class AnalyticsHelper {
     private static final String ACCOUNT_LOGGED_IN = "ACCOUNT_LOGGED_IN";
     private static final String ACCOUNT_START_FREE_TRIAL_TUTORIAL = "ACCOUNT_START_FREE_TRIAL_TUTORIAL";
     private static final String ACCOUNT_ACCEPT_FREE_TRIAL = "ACCOUNT_ACCEPT_FREE_TRIAL";
+    private static final String ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_SHOWN = "ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_SHOWN";
+    private static final String ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_UPGRADE_CLICKED = "ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_UPGRADE_CLICKED";
+    private static final String ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_CANCEL_CLICKED = "ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_CANCEL_CLICKED";
 
     public static void accountTutorialStarted(Context context) {
         logEvent(context, ACCOUNT_TUTORIAL_STARTED);
@@ -95,9 +98,20 @@ public class AnalyticsHelper {
         logEvent(context, ACCOUNT_START_FREE_TRIAL_TUTORIAL);
     }
 
-
     public static void accountAcceptFreeTrial(Context context) {
         logEvent(context, ACCOUNT_ACCEPT_FREE_TRIAL);
+    }
+
+    public static void accountFreeTrialUpgradeDialogShown(Context context) {
+        logEvent(context, ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_SHOWN);
+    }
+
+    public static void accountFreeTrialUpgradeDialogUpgradeClicked(Context context) {
+        logEvent(context, ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_UPGRADE_CLICKED);
+    }
+
+    public static void accountFreeTrialUpgradeDialogCancelClicked(Context context) {
+        logEvent(context, ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_CANCEL_CLICKED);
     }
 
     public static void accountSignedUp(Context context) {

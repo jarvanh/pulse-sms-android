@@ -230,13 +230,21 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             preference.title = resources.getString(R.string.trial_subscription_title, daysLeftInTrial.toString())
             preference.setSummary(R.string.trial_subscription_summary)
 
-            preference.setOnPreferenceClickListener { AlertDialog.Builder(fragmentActivity!!)
+            preference.setOnPreferenceClickListener {
+                AlertDialog.Builder(fragmentActivity!!)
                     .setTitle(if (daysLeftInTrial == 0) R.string.trial_expired else R.string.upgrade_or_cancel_title)
                     .setMessage(R.string.upgrade_or_cancel)
                     .setCancelable(daysLeftInTrial > 0)
-                    .setPositiveButton(R.string.upgrade) { _, _ -> pickSubscription(true) }
-                    .setNegativeButton(R.string.cancel_trial) { _, _ -> deleteAccount() }
-                    .show()
+                    .setPositiveButton(R.string.upgrade) { _, _ ->
+                        AnalyticsHelper.accountFreeTrialUpgradeDialogUpgradeClicked(fragmentActivity!!)
+                        pickSubscription(true)
+                    }
+                    .setNegativeButton(R.string.cancel_trial) { _, _ ->
+                        AnalyticsHelper.accountFreeTrialUpgradeDialogCancelClicked(fragmentActivity!!)
+                        deleteAccount()
+                    }.show()
+
+                AnalyticsHelper.accountFreeTrialUpgradeDialogShown(fragmentActivity!!)
                 false
             }
         }
