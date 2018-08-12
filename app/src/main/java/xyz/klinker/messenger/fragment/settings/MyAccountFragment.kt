@@ -531,6 +531,8 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                         Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.LIFETIME, Date(1))
                         "PURCHASE_LIFETIME"
                     } else {
+                        val newExperation = ProductPurchased.getExpiration(product.productId)
+                        Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.SUBSCRIBER, Date(newExperation))
                         "PURCHASE_SUBSCRIPTION"
                     }
 
@@ -542,6 +544,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                 } else {
                     // they switched their subscription, lets write the new timeout to their account.
                     val newExperation = ProductPurchased.getExpiration(product.productId)
+                    val oldSubscription = Account.subscriptionType
 
                     if (product.productId.contains("lifetime")) {
                         Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.LIFETIME, Date(newExperation))
@@ -550,7 +553,10 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                     }
 
                     returnToConversationsAfterLogin()
-                    redirectToPlayStoreToCancel()
+
+                    if (oldSubscription != Account.SubscriptionType.FREE_TRIAL) {
+                        redirectToPlayStoreToCancel()
+                    }
                 }
             }
 
