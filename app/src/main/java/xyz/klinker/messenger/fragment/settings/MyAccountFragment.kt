@@ -39,6 +39,7 @@ import java.util.Date
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.AccountPurchaseActivity
+import xyz.klinker.messenger.activity.AccountTrialActivity
 import xyz.klinker.messenger.activity.InitialLoadActivity
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.api.implementation.Account
@@ -159,11 +160,14 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
             fragmentActivity?.runOnUiThread {
                 try {
-                    if (!resources.getBoolean(R.bool.check_subscription) || hasSubs || Account.hasPurchased) {
+                    if (/*!resources.getBoolean(R.bool.check_subscription) || */hasSubs || Account.hasPurchased) {
                         Toast.makeText(fragmentActivity, R.string.subscription_found, Toast.LENGTH_LONG).show()
                         startLoginActivity()
+                    } else if (Settings.hasUsedFreeTrial) {
+                        Toast.makeText(fragmentActivity, R.string.subscription_found, Toast.LENGTH_LONG).show()
+                        pickSubscription(false)
                     } else {
-                        pickSubscription()
+                        startTrial()
                     }
                 } catch (e: IllegalStateException) {
                     // resources bad, fragment destroyed
@@ -198,15 +202,9 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             return
         }
 
-        if (Account.subscriptionType === Account.SubscriptionType.SUBSCRIBER || Account.subscriptionType === Account.SubscriptionType.TRIAL) {
-//            val signoutTime = SignoutJob.isScheduled(fragmentActivity!!)
-//            if (signoutTime != 0L) {
-//                preference.title = getString(R.string.account_expiring)
-//                preference.summary = getString(R.string.signout_time, Date(signoutTime).toString())
-//            } else {
-                preference.setTitle(R.string.change_subscription)
-                preference.setSummary(R.string.cancel_on_the_play_store)
-//            }
+        if (Account.subscriptionType == Account.SubscriptionType.SUBSCRIBER || Account.subscriptionType == Account.SubscriptionType.TRIAL) {
+            preference.setTitle(R.string.change_subscription)
+            preference.setSummary(R.string.cancel_on_the_play_store)
 
             preference.setOnPreferenceClickListener {
                 AlertDialog.Builder(fragmentActivity!!)
@@ -214,7 +212,24 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                         .setPositiveButton(R.string.ok) { _, _ -> pickSubscription(true) }.show()
                 false
             }
-       }
+       } else if (Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL) {
+            var daysLeftInTrial = Account.getDaysLeftInTrial()
+            if (daysLeftInTrial < 0) {
+                daysLeftInTrial = 0
+            }
+            preference.title = resources.getString(R.string.trial_subscription_title, daysLeftInTrial.toString())
+            preference.setSummary(R.string.trial_subscription_summary)
+
+            preference.setOnPreferenceClickListener { AlertDialog.Builder(fragmentActivity!!)
+                    .setTitle(R.string.upgrade_or_cancel_title)
+                    .setMessage(R.string.upgrade_or_cancel)
+                    .setCancelable(daysLeftInTrial > 0)
+                    .setPositiveButton(R.string.upgrade) { _, _ -> pickSubscription(true) }
+                    .setNegativeButton(R.string.cancel_trial) { _, _ -> deleteAccount() }
+                    .show()
+                false
+            }
+        }
     }
 
     private fun initMessageCountPreference() {
@@ -239,23 +254,27 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         preference.setOnPreferenceClickListener {
             AlertDialog.Builder(fragmentActivity!!)
                     .setMessage(R.string.delete_account_confirmation)
-                    .setPositiveButton(android.R.string.yes) { _, _ ->
-                        val account = Account
-                        val accountId = account.accountId
-
-                        Thread { ApiUtils.deleteAccount(accountId) }.start()
-                        account.clearAccount(fragmentActivity!!)
-
-                        returnToConversationsAfterLogin()
-
-                        val nav = fragmentActivity?.findViewById<View>(R.id.navigation_view) as NavigationView?
-                        nav?.menu?.findItem(R.id.drawer_account)?.setTitle(R.string.menu_device_texting)
-                    }
+                    .setPositiveButton(android.R.string.yes) { _, _ -> deleteAccount() }
                     .setNegativeButton(android.R.string.no, null)
                     .show()
 
             true
         }
+    }
+
+    private fun deleteAccount() {
+        Settings.setValue(fragmentActivity!!, getString(R.string.pref_has_used_free_trial), true)
+
+        val account = Account
+        val accountId = account.accountId
+
+        Thread { ApiUtils.deleteAccount(accountId) }.start()
+        account.clearAccount(fragmentActivity!!)
+
+        returnToConversationsAfterLogin()
+
+        val nav = fragmentActivity?.findViewById<View>(R.id.navigation_view) as NavigationView?
+        nav?.menu?.findItem(R.id.drawer_account)?.setTitle(R.string.menu_device_texting)
     }
 
     private fun initResyncAccountPreference() {
@@ -329,11 +348,13 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
     override fun onActivityResult(requestCode: Int, responseCode: Int, data: Intent?) {
         Settings.forceUpdate(fragmentActivity!!)
-        if (requestCode == PURCHASE_REQUEST && responseCode == RESULT_SIGN_IN) {
+        if (requestCode == TRIAL_REQUEST && responseCode == RESULT_START_TRIAL) {
+            startLoginActivity(false)
+        } else if (requestCode == PURCHASE_REQUEST && responseCode == RESULT_SIGN_IN) {
             startLoginActivity(true)
         } else if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
             val productId = data?.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA)
-            Log.v("pulse_purchase", "on activity result. Purchasing product: " + productId)
+            Log.v("pulse_purchase", "on activity result. Purchasing product: $productId")
 
             when (productId) {
                 ProductAvailable.createLifetime().productId -> purchaseProduct(ProductAvailable.createLifetime())
@@ -480,6 +501,11 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         startActivityForResult(intent, PURCHASE_REQUEST)
     }
 
+    private fun startTrial() {
+        val intent = Intent(fragmentActivity!!, AccountTrialActivity::class.java)
+        startActivityForResult(intent, TRIAL_REQUEST)
+    }
+
     private fun purchaseProduct(product: ProductAvailable) {
         billing!!.purchaseItem(fragmentActivity!!, product, object : PurchasedItemCallback {
             override fun onItemPurchased(productId: String) {
@@ -521,6 +547,14 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             override fun onPurchaseError(message: String) {
                 AnalyticsHelper.purchaseError(fragmentActivity!!)
                 fragmentActivity?.runOnUiThread { Toast.makeText(activity, message, Toast.LENGTH_SHORT).show() }
+
+                if (Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL && Account.getDaysLeftInTrial() <= 0) {
+                    AlertDialog.Builder(activity!!)
+                            .setCancelable(false)
+                            .setMessage(R.string.purchase_cancelled_trial_finished)
+                            .setPositiveButton(R.string.ok) { _, _ -> deleteAccount() }
+                            .show()
+                }
             }
         })
     }
@@ -529,8 +563,10 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         val ONBOARDING_REQUEST = 54320
         val SETUP_REQUEST = 54321
         val PURCHASE_REQUEST = 54322
+        val TRIAL_REQUEST = 5432
 
         val RESULT_SIGN_IN = 54323
+        val RESULT_START_TRIAL = 54321
 
         val RESPONSE_START_TRIAL = 101
         val RESPONSE_SKIP_TRIAL_FOR_NOW = 102

@@ -38,16 +38,16 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/api_login"
+            android:text="@string/api_signup"
             style="?attr/borderlessButtonStyle"
-            android:id="@+id/login" />
+            android:id="@+id/signup" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/api_signup"
+            android:text="@string/api_login"
             style="?attr/borderlessButtonStyle"
-            android:id="@+id/signup" />
+            android:id="@+id/login" />
 
         <TextView
             android:layout_width="match_parent"

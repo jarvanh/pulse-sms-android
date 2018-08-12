@@ -198,6 +198,12 @@
             android:launchMode="singleTask"/>
 
         <activity
+            android:name=".activity.AccountTrialActivity"
+            android:theme="@style/api_Theme.AppCompat.Translucent"
+            android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
+            android:launchMode="singleTask"/>
+
+        <activity
             android:name=".activity.NoLimitMessageListActivity"
             android:theme="@style/PulseTheme.NoActionBar" />
         <activity

@@ -68,6 +68,8 @@ public class AnalyticsHelper {
     private static final String ACCOUNT_COMPLETED_PURCHASE = "ACCOUNT_COMPLETED_PURCHASE";
     private static final String ACCOUNT_SIGNED_UP = "ACCOUNT_SIGNED_UP";
     private static final String ACCOUNT_LOGGED_IN = "ACCOUNT_LOGGED_IN";
+    private static final String ACCOUNT_START_FREE_TRIAL_TUTORIAL = "ACCOUNT_START_FREE_TRIAL_TUTORIAL";
+    private static final String ACCOUNT_ACCEPT_FREE_TRIAL = "ACCOUNT_ACCEPT_FREE_TRIAL";
 
     public static void accountTutorialStarted(Context context) {
         logEvent(context, ACCOUNT_TUTORIAL_STARTED);
@@ -87,6 +89,15 @@ public class AnalyticsHelper {
 
     public static void accountCompetedPurchase(Context context) {
         logEvent(context, ACCOUNT_COMPLETED_PURCHASE);
+    }
+
+    public static void accountStartTrialTutorial(Context context) {
+        logEvent(context, ACCOUNT_START_FREE_TRIAL_TUTORIAL);
+    }
+
+
+    public static void accountAcceptFreeTrial(Context context) {
+        logEvent(context, ACCOUNT_ACCEPT_FREE_TRIAL);
     }
 
     public static void accountSignedUp(Context context) {

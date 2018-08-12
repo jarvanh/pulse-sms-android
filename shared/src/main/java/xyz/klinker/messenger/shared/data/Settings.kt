@@ -41,6 +41,7 @@ object Settings {
     var seenConvoNavToolTip: Boolean = false
     var showTextOnlineOnConversationList: Boolean = false
     var phoneNumber: String? = null
+    var hasUsedFreeTrial: Boolean = false
 
     // Global Settings
     var vibrate: VibratePattern = VibratePattern.DEFAULT
@@ -116,6 +117,8 @@ object Settings {
             installTime = Date().time
             sharedPrefs.edit().putLong(context.getString(R.string.pref_install_time), installTime).apply()
         }
+
+        this.hasUsedFreeTrial = sharedPrefs.getBoolean(context.getString(R.string.pref_has_used_free_trial), false)
 
         // global settings
         this.deliveryReports = sharedPrefs.getBoolean(context.getString(R.string.pref_delivery_reports), false)

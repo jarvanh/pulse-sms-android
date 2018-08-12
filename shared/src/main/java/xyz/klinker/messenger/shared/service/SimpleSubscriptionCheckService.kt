@@ -28,7 +28,6 @@ open class SimpleSubscriptionCheckService : IntentService("SimpleSubscriptionChe
 
         if (purchasedList.size > 0) {
             val best = getBestProduct(purchasedList)
-
             handleBestProduct(best)
         }
     }

@@ -103,7 +103,7 @@ class AccountPurchaseActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, result)
 
         if (product.type == ProductType.SUBSCRIPTION) {
-            Toast.makeText(this, R.string.subscription_toast, Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, R.string.subscription_toast, Toast.LENGTH_LONG).show()
         }
 
         AnalyticsHelper.accountSelectedPurchase(this)
@@ -118,10 +118,11 @@ class AccountPurchaseActivity : AppCompatActivity() {
     }
 
     private fun warnOfPlayStoreSubscriptionProcess(product: ProductAvailable) {
-        AlertDialog.Builder(this, R.style.SubscriptionPicker)
-                .setMessage(R.string.play_store_subscription_warning)
-                .setPositiveButton(R.string.ok) { _, _ -> finishWithPurchaseResult(product) }
-                .show()
+//        AlertDialog.Builder(this, R.style.SubscriptionPicker)
+//                .setMessage(R.string.play_store_subscription_warning)
+//                .setPositiveButton(R.string.ok) { _, _ -> finishWithPurchaseResult(product) }
+//                .show()
+        finishWithPurchaseResult(product)
     }
 
     private fun circularRevealIn() {

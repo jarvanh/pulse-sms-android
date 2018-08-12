@@ -5,13 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import android.support.annotation.VisibleForTesting
 import android.util.Base64
 
-import java.nio.charset.StandardCharsets
 import java.util.Date
 
-import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
 
 import xyz.klinker.messenger.encryption.EncryptionUtils
@@ -21,7 +18,7 @@ import xyz.klinker.messenger.encryption.KeyUtils
 object Account {
 
     enum class SubscriptionType constructor(var typeCode: Int) {
-        TRIAL(1), SUBSCRIBER(2), LIFETIME(3);
+        TRIAL(1), SUBSCRIBER(2), LIFETIME(3), FREE_TRIAL(4), FINISHED_FREE_TRIAL_WITH_NO_ACCOUNT_SETUP(5);
 
         companion object {
             fun findByTypeCode(code: Int): SubscriptionType? {
@@ -34,6 +31,7 @@ object Account {
         private set
 
     var primary: Boolean = false
+    var trialStartTime: Long = 0
     var subscriptionType: SubscriptionType? = null
     var subscriptionExpiration: Long = 0
     var myName: String? = null
@@ -53,6 +51,7 @@ object Account {
         this.primary = sharedPrefs.getBoolean(context.getString(R.string.api_pref_primary), false)
         this.subscriptionType = SubscriptionType.findByTypeCode(sharedPrefs.getInt(context.getString(R.string.api_pref_subscription_type), 1))
         this.subscriptionExpiration = sharedPrefs.getLong(context.getString(R.string.api_pref_subscription_expiration), -1)
+        this.trialStartTime = sharedPrefs.getLong(context.getString(R.string.api_pref_trial_start), -1)
         this.myName = sharedPrefs.getString(context.getString(R.string.api_pref_my_name), null)
         this.myPhoneNumber = sharedPrefs.getString(context.getString(R.string.api_pref_my_phone_number), null)
         this.deviceId = sharedPrefs.getString(context.getString(R.string.api_pref_device_id), null)
@@ -181,5 +180,16 @@ object Account {
     fun exists(): Boolean {
         return accountId != null && !accountId!!.isEmpty() && deviceId != null && salt != null && passhash != null
                 && key != null
+    }
+
+    fun getDaysLeftInTrial(): Int {
+        return if (subscriptionType == SubscriptionType.FREE_TRIAL) {
+            val timeInTrial = Date().time - trialStartTime
+            val timeLeftInTrial = (1000 * 60 * 60 * 24 * 7) - timeInTrial
+            val timeInDays = (timeLeftInTrial / (1000 * 60 * 60 * 24)) + 1
+            timeInDays.toInt()
+        } else {
+            0
+        }
     }
 }

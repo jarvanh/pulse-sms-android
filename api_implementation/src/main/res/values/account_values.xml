@@ -8,6 +8,7 @@
     <string name="api_pref_primary" translatable="false">primary</string>
     <string name="api_pref_subscription_type" translatable="false">subscription_type</string>
     <string name="api_pref_subscription_expiration" translatable="false">subscription_expiration</string>
+    <string name="api_pref_trial_start" translatable="false">trial_start_time</string>
     <string name="api_pref_device_id" translatable="false">device_id</string>
     <string name="api_pref_key" translatable="false">key</string>
     <string name="api_pref_has_purchased" translatable="false">has_purchased_an_account_on_device</string>

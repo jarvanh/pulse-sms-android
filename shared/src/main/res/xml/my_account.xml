@@ -24,7 +24,8 @@
         <Preference
             android:key="@string/pref_my_account_setup"
             android:title="@string/setup_my_account"
-            android:summary="@string/setup_my_account_summary" />
+            android:summary="@string/setup_my_account_summary"
+            app:iconSpaceReserved="false"/>
 
         <Preference
             android:key="@string/pref_subscriber_status"
