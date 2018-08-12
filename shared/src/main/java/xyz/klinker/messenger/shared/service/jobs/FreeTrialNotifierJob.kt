@@ -22,6 +22,9 @@ class FreeTrialNotifierJob : SimpleJobService() {
     override fun onRunJob(job: JobParameters?): Int {
         if (Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL) {
             when (Account.getDaysLeftInTrial()) {
+//                7 -> notifyDaysLeft(7)
+//                6 -> notifyDaysLeft(6)
+//                5 -> notifyDaysLeft(5)
                 4 -> notifyDaysLeft(4)
                 2 -> notifyDaysLeft(2)
                 1 -> notifyLastDay()
@@ -38,6 +41,7 @@ class FreeTrialNotifierJob : SimpleJobService() {
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setLocalOnly(true)
                 .setColor(Settings.mainColorSet.color)
+                .setAutoCancel(true)
                 .setContentText(getString(R.string.notification_days_remaining_in_trial, left.toString()))
 
         val upgrade = Intent(this, RedirectToMyAccount::class.java)
@@ -53,6 +57,7 @@ class FreeTrialNotifierJob : SimpleJobService() {
                 .setSmallIcon(R.drawable.ic_stat_notify_group)
                 .setLocalOnly(true)
                 .setColor(Settings.mainColorSet.color)
+                .setAutoCancel(true)
                 .setContentText(getString(R.string.notification_last_day_of_trial))
 
         val upgrade = Intent(this, RedirectToMyAccount::class.java)
