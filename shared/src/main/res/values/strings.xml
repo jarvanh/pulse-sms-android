@@ -289,6 +289,7 @@
     <string name="device_id">Device ID</string>
     <string name="device_info">Device Info</string>
     <string name="website">Website</string>
+    <string name="view_platforms">Available Pulse Platforms</string>
     <string name="access_messages_from_any_device">Access and send messages from any device!</string>
     <string name="beta_disclaimer">This project is still in beta, please report issues that you
         might find!</string>
