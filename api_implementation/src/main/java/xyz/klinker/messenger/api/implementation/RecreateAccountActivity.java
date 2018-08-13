@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import java.util.Date;
+
 public class RecreateAccountActivity extends LoginActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,8 @@ public class RecreateAccountActivity extends LoginActivity {
     @Override
     protected void close() {
         super.close();
+
+        Account.INSTANCE.updateSubscription(this, Account.SubscriptionType.SUBSCRIBER, new Date().getTime(), true);
 
         final Intent uploadService = new Intent();
         uploadService.setComponent(new ComponentName("xyz.klinker.messenger",
