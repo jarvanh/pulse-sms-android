@@ -37,36 +37,18 @@ class AccountPurchaseActivity : AppCompatActivity() {
 
         setResult(Activity.RESULT_CANCELED)
         setContentView(R.layout.activity_account_purchase)
-        setUpInitialLayout()
+        setUpPurchaseLayout()
 
         if (Settings.mainColorSet.color == Color.WHITE) {
-            findViewById<View>(R.id.initial_layout).setBackgroundColor(ColorSet.TEAL(this).color)
             findViewById<View>(R.id.purchase_layout).setBackgroundColor(ColorSet.TEAL(this).color)
-            (findViewById<View>(R.id.try_it) as TextView)
-                    .setTextColor(ColorStateList.valueOf(ColorSet.TEAL(this).color))
         } else {
-            findViewById<View>(R.id.initial_layout).setBackgroundColor(Settings.mainColorSet.color)
             findViewById<View>(R.id.purchase_layout).setBackgroundColor(Settings.mainColorSet.color)
-            (findViewById<View>(R.id.try_it) as TextView)
-                    .setTextColor(ColorStateList.valueOf(Settings.mainColorSet.color))
         }
 
         Handler().postDelayed({ this.circularRevealIn() }, 100)
     }
 
-    private fun setUpInitialLayout() {
-        findViewById<View>(R.id.try_it).setOnClickListener { tryIt() }
-
-        val startTime: Long = 500
-        quickViewReveal(findViewById(R.id.icon_watch), startTime)
-        quickViewReveal(findViewById(R.id.icon_tablet), startTime + 75)
-        quickViewReveal(findViewById(R.id.icon_computer), startTime + 150)
-        quickViewReveal(findViewById(R.id.icon_phone), startTime + 225)
-        quickViewReveal(findViewById(R.id.icon_notify), startTime + 300)
-    }
-
-    private fun tryIt() {
-        slidePurchaseOptionsIn()
+    private fun setUpPurchaseLayout() {
         AnalyticsHelper.accountTutorialFinished(this)
 
         // set up purchasing views here
@@ -76,15 +58,11 @@ class AccountPurchaseActivity : AppCompatActivity() {
         val lifetime = findViewById<View>(R.id.lifetime)
         val signIn = findViewById<View>(R.id.sign_in)
 
-        if (!revealedPurchaseOptions) {
-            val startTime: Long = 300
-            quickViewReveal(yearly, startTime)
-            quickViewReveal(threeMonth, startTime + 75)
-            quickViewReveal(monthly, startTime + 150)
-            quickViewReveal(lifetime, startTime + 225)
-
-            revealedPurchaseOptions = true
-        }
+        val startTime: Long = 300
+        quickViewReveal(yearly, startTime)
+        quickViewReveal(threeMonth, startTime + 75)
+        quickViewReveal(monthly, startTime + 150)
+        quickViewReveal(lifetime, startTime + 225)
 
         monthly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createMonthly()) }
         threeMonth.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonth()) }
@@ -126,7 +104,7 @@ class AccountPurchaseActivity : AppCompatActivity() {
     }
 
     private fun circularRevealIn() {
-        val view = findViewById<View>(R.id.initial_layout)
+        val view = findViewById<View>(R.id.purchase_layout)
         view.visibility = View.VISIBLE
 
         try {
@@ -183,78 +161,13 @@ class AccountPurchaseActivity : AppCompatActivity() {
                 .start()
     }
 
-    private fun slidePurchaseOptionsIn() {
-        slideIn(findViewById(R.id.purchase_layout))
-    }
-
-    private fun slideIn(view: View) {
-        isInitial = false
-        val initial = findViewById<View>(R.id.initial_layout)
-
-        view.visibility = View.VISIBLE
-        view.alpha = 0f
-        view.translationX = view.width.toFloat()
-        view.animate()
-                .alpha(1f)
-                .translationX(0f)
-                .setListener(null)
-                .start()
-
-        initial.animate()
-                .alpha(0f)
-                .translationX((-1 * initial.width).toFloat())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        super.onAnimationEnd(animation)
-                        initial.visibility = View.INVISIBLE
-                        initial.translationX = 0f
-                    }
-                }).start()
-    }
-
-    private fun slideOut() {
-        isInitial = true
-        val visible = findVisibleHolder()
-        val initial = findViewById<View>(R.id.initial_layout)
-
-        visible.animate()
-                .alpha(0f)
-                .translationX(visible.width.toFloat())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        super.onAnimationEnd(animation)
-                        visible.visibility = View.INVISIBLE
-                        visible.translationX = 0f
-                    }
-                }).start()
-
-        initial.visibility = View.VISIBLE
-        initial.alpha = 0f
-        initial.translationX = (-1 * initial.width).toFloat()
-        initial.animate()
-                .alpha(1f)
-                .translationX(0f)
-                .setListener(null)
-                .start()
-    }
-
     private fun findVisibleHolder(): View {
-        val initial = findViewById<View>(R.id.initial_layout)
         val purchase = findViewById<View>(R.id.purchase_layout)
-
-        return if (initial.visibility != View.INVISIBLE) {
-            initial
-        } else {
-            purchase
-        }
+        return purchase
     }
 
     override fun onBackPressed() {
-        if (isInitial) {
-            circularRevealOut()
-        } else {
-            slideOut()
-        }
+        circularRevealOut()
     }
 
     private fun close() {
