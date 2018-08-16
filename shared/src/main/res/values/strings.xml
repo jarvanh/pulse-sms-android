@@ -690,7 +690,7 @@
     <string name="select_purchase">Select Purchase</string>
     <string name="have_an_account">Have an account?\nSign in</string>
     <string name="select_a_purchase">Select a Purchase</string>
-    <string name="select_a_purchase_description">Pick any of the three subscriptions, or pay the one-time fee to never worry about it again.</string>
+    <string name="select_a_purchase_description">Choose any of the three subscriptions, or select the <b>lifetime membership</b> to make a one-time purchase for the app.</string>
     <string name="seven_days_free">7 days free!</string>
     <string name="competition_cant_beat">The competition can\'t touch our prices, speed, or service -
         <b>take 7 days</b> to find out for yourself!</string>
