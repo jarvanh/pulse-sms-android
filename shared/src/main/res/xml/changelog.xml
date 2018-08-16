@@ -18,7 +18,7 @@
 
     <version
         name="4.0.3"
-        description="August 13th, 2018">
+        description="August 22nd, 2018">
         <!-- Go to a free 7 day trial, outside of Google Play -->
         <!-- Don't notify a muted conversation, when a message is received through the firebase handler service -->
         <text>Improvements to the trial process for the "Text from any Device" functionality</text>
