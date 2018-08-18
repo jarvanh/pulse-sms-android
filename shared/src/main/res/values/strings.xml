@@ -416,8 +416,8 @@
     <string name="trial_subscription_summary">Tap here to upgrade or cancel the trial!</string>
     <string name="upgrade_or_cancel_title">Done with the trial?</string>
     <string name="trial_expired">Thanks for the trial!</string>
-    <string name="upgrade_or_cancel">You can upgrade your account to a subscription or lifetime membership to keep using your other devices with Pulse!\n\nIf you need to cancel, I am sorry to see you go.
-        Your account will be removed and you won\'t be charged. You can continue to use the app on your phone, just like normal, for free! Feel free to come back, any time.</string>
+    <string name="upgrade_or_cancel">You can upgrade your account to a subscription or lifetime membership to keep using Pulse across all your devices!\n\nNeed to cancel?
+        Your account will be removed and you won\'t be charged. You can continue to use the app on your phone for free! Feel free to come back at any time.</string>
     <string name="upgrade">Upgrade!</string>
     <string name="cancel_trial">Cancel Trial</string>
     <string name="cancel_on_the_play_store">Tap here to upgrade! You can cancel your subscription on the Play Store.</string>
