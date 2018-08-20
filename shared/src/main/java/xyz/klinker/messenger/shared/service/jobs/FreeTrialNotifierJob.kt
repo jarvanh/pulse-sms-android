@@ -28,6 +28,7 @@ class FreeTrialNotifierJob : SimpleJobService() {
                 4 -> notifyDaysLeft(4)
                 2 -> notifyDaysLeft(2)
                 1 -> notifyLastDay()
+                0 -> notifyExpired()
             }
         }
 
@@ -59,6 +60,22 @@ class FreeTrialNotifierJob : SimpleJobService() {
                 .setColor(Settings.mainColorSet.color)
                 .setAutoCancel(true)
                 .setContentText(getString(R.string.notification_last_day_of_trial))
+
+        val upgrade = Intent(this, RedirectToMyAccount::class.java)
+        val upgradePending = PendingIntent.getActivity(this, 1006, upgrade, PendingIntent.FLAG_UPDATE_CURRENT)
+        notification.setContentIntent(upgradePending)
+
+        NotificationManagerCompat.from(this).notify(667443, notification.build())
+    }
+
+    private fun notifyExpired() {
+        val notification = NotificationCompat.Builder(this, NotificationUtils.ACCOUNT_ACTIVITY_CHANNEL_ID)
+                .setContentTitle(getString(R.string.notification_trial_title))
+                .setSmallIcon(R.drawable.ic_stat_notify_group)
+                .setLocalOnly(true)
+                .setColor(Settings.mainColorSet.color)
+                .setAutoCancel(true)
+                .setContentText(getString(R.string.notification_trial_expired))
 
         val upgrade = Intent(this, RedirectToMyAccount::class.java)
         val upgradePending = PendingIntent.getActivity(this, 1006, upgrade, PendingIntent.FLAG_UPDATE_CURRENT)

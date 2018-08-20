@@ -706,5 +706,6 @@
     <string name="notification_trial_title">Text from any Device - Trial</string>
     <string name="notification_days_remaining_in_trial">%s days remaining in your trial. Click to upgrade!</string>
     <string name="notification_last_day_of_trial">This is the last day of your trial. Click to upgrade!</string>
+    <string name="notification_trial_expired">Your seven day trial is over. Click to upgrade!</string>
 
 </resources>
