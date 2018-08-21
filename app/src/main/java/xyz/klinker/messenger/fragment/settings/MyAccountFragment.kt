@@ -216,9 +216,10 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             preference.setSummary(R.string.cancel_on_the_play_store)
 
             preference.setOnPreferenceClickListener {
-                AlertDialog.Builder(fragmentActivity!!)
-                        .setMessage(R.string.change_subscription_message)
-                        .setPositiveButton(R.string.ok) { _, _ -> pickSubscription(true) }.show()
+//                AlertDialog.Builder(fragmentActivity!!)
+//                        .setMessage(R.string.change_subscription_message)
+//                        .setPositiveButton(R.string.ok) { _, _ -> pickSubscription(true) }.show()
+                pickSubscription(true)
                 false
             }
        } else if (Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL) {
@@ -483,11 +484,9 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     }
 
     private fun returnToConversationsAfterLogin() {
-        if (fragmentActivity == null) {
-            return
-        }
+        val holderActivity = activity ?: return
 
-        val nav = fragmentActivity?.findViewById<View>(R.id.navigation_view) as NavigationView?
+        val nav = holderActivity.findViewById<View>(R.id.navigation_view) as NavigationView?
         nav?.setCheckedItem(R.id.drawer_conversation)
 
         val account = Account
@@ -498,11 +497,11 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
         SubscriptionExpirationCheckJob.scheduleNextRun(fragmentActivity!!)
 
-        if (fragmentActivity is MessengerActivity) {
-            (fragmentActivity!! as MessengerActivity).displayConversations()
-            fragmentActivity?.title = StringUtils.titleize(fragmentActivity!!.getString(R.string.app_name))
+        if (holderActivity is MessengerActivity) {
+            holderActivity.displayConversations()
+            holderActivity.title = StringUtils.titleize(fragmentActivity!!.getString(R.string.app_name))
         } else {
-            fragmentActivity?.recreate()
+            holderActivity.recreate()
         }
     }
 
