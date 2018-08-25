@@ -69,7 +69,7 @@ class ConversationItemBinder(private val activity: Activity) {
     }
 
     fun showContactLetter(holder: ConversationViewHolder, conversation: Conversation) {
-        holder.imageLetter?.text = conversation.title?.substring(0, 1)
+        holder.imageLetter?.text = conversation.title?.substring(0, 1).toUpperCase()
 
         val colorToInspect = if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.colors.color
         holder.groupIcon?.imageTintList = ColorStateList.valueOf(if (ColorUtils.isColorDark(colorToInspect)) Color.WHITE else lightToolbarTextColor)
