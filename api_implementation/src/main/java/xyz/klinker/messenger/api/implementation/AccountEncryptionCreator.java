@@ -70,8 +70,9 @@ public class AccountEncryptionCreator {
                                           String passhash, SecretKey key) {
         sharedPrefs.edit()
                 .putInt(context.getString(R.string.api_pref_subscription_type), Account.INSTANCE.getSubscriptionType() == Account.SubscriptionType.LIFETIME ?
-                        Account.SubscriptionType.LIFETIME.getTypeCode() : Account.SubscriptionType.TRIAL.getTypeCode())
+                        Account.SubscriptionType.LIFETIME.getTypeCode() : Account.SubscriptionType.FREE_TRIAL.getTypeCode())
                 .putLong(context.getString(R.string.api_pref_subscription_expiration), getTrialEnd())
+                .putLong(context.getString(R.string.api_pref_trial_start), new Date().getTime())
                 .putString(context.getString(R.string.api_pref_my_name), name)
                 .putString(context.getString(R.string.api_pref_my_phone_number), phone)
                 .putString(context.getString(R.string.api_pref_account_id), accountId)

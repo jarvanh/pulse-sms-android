@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/seven_days_free"
+            android:text="@string/select_a_purchase"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -31,15 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/competition_cant_beat"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/select_a_trial_below"
+            android:text="@string/select_a_purchase_description"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
@@ -191,14 +183,6 @@
                     android:textColor="@color/primaryText"
                     android:textSize="14sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="@string/billed_immediately"
-                    android:textColor="@color/primaryText"
-                    android:textSize="14sp" />
-
             </LinearLayout>
 
         </LinearLayout>
@@ -214,12 +198,12 @@
         android:paddingStart="20dp"
         android:paddingBottom="6dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="6dp"
-            android:layout_height="6dp"
-            android:alpha=".6"
-            android:src="@color/primaryText"
-            app:civ_border_width="0dp" />
+        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+            <!--android:layout_width="6dp"-->
+            <!--android:layout_height="6dp"-->
+            <!--android:alpha=".6"-->
+            <!--android:src="@color/primaryText"-->
+            <!--app:civ_border_width="0dp" />-->
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="9dp"

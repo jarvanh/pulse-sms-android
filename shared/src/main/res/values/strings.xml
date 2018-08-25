@@ -289,6 +289,7 @@
     <string name="device_id">Device ID</string>
     <string name="device_info">Device Info</string>
     <string name="website">Website</string>
+    <string name="view_platforms">Available Pulse Platforms</string>
     <string name="access_messages_from_any_device">Access and send messages from any device!</string>
     <string name="beta_disclaimer">This project is still in beta, please report issues that you
         might find!</string>
@@ -411,6 +412,14 @@
     <string name="delete_account_confirmation">Are you sure you want to delete your account and
         everything else with it? You can always sign up again later!</string>
     <string name="change_subscription">Change Subscription</string>
+    <string name="trial_subscription_title">You have %s days left in the trial</string>
+    <string name="trial_subscription_summary">Tap here to upgrade or cancel the trial!</string>
+    <string name="upgrade_or_cancel_title">Done with the trial?</string>
+    <string name="trial_expired">Thanks for the trial!</string>
+    <string name="upgrade_or_cancel">You can upgrade your account to a subscription or lifetime membership to keep using Pulse across all your devices!\n\nNeed to cancel?
+        Your account will be removed and you won\'t be charged. You can continue to use the app on your phone for free! Feel free to come back at any time.</string>
+    <string name="upgrade">Upgrade!</string>
+    <string name="cancel_trial">Cancel Trial</string>
     <string name="cancel_on_the_play_store">Tap here to upgrade! You can cancel your subscription on the Play Store.</string>
     <string name="resync_account">Resync Messages</string>
     <string name="resync_account_summary">Missing messages? Use this to bring this device up to date
@@ -651,9 +660,12 @@
         If you do not make a new subscription within that time, the app will automatically sign you
         out of your account in 2 days. If this is an error, please contact me via email.</string>
     <string name="subscription_found">Subscription found - welcome back!</string>
+    <string name="trial_finished">Looks like you have gone through the free trial, already.</string>
     <string name="subscription_not_found">No subscription found, let\'s start your trial!</string>
     <string name="checking_for_active_subscriptions">Checking for subscriptions&#8230;</string>
     <string name="purchase_error_cancelled">You cancelled the purchase :(</string>
+    <string name="purchase_cancelled_trial_finished">Your trial is expired and the purchase was cancelled. Your account will be deleted for now.\n\nFeel free to set it up again,
+        whenever you want to use the multi-device functionality again!</string>
     <string name="purchase_error_bad_google_play">Uh oh, Google Play might be having issues, they gave us a bad result.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; That purchase didn\'t match one on our record.</string>
     <string name="subscriptions">Subscription are billed after the seven day trial and can be changed/cancelled at any time</string>
@@ -673,8 +685,12 @@
     <string name="optimized_for_all_your_devices">Pulse is optimized for <b>all</b> your devices.
         Send texts from the web, a desktop computer, your tablet, a watch, and even your TV.</string>
     <string name="true_imessage_competitor">The first <b>true</b> iMessage competitor for Android.</string>
+    <string name="trial_description">Try Pulse across all of your devices, <b>free for seven days</b>! Cancel at any time.\n\nAt the end, you will be asked to choose from a subscription or the one-time purchase to continue using the app on your other devices.</string>
     <string name="try_it">Try it now!</string>
+    <string name="select_purchase">Select Purchase</string>
     <string name="have_an_account">Have an account?\nSign in</string>
+    <string name="select_a_purchase">Select a Purchase</string>
+    <string name="select_a_purchase_description">Choose any of the three subscriptions, or select the <b>lifetime membership</b> to make a one-time purchase for the app.</string>
     <string name="seven_days_free">7 days free!</string>
     <string name="competition_cant_beat">The competition can\'t touch our prices, speed, or service -
         <b>take 7 days</b> to find out for yourself!</string>
@@ -687,5 +703,9 @@
         Cancel at any time.</string>
     <string name="redirect_to_play_store">Thanks for the upgrade! Please cancel the old subscription from the <b>Play Store</b>. Pulse <b>cannot</b> do this automatically.</string>
     <string name="play_store">Play Store</string>
+    <string name="notification_trial_title">Text from any Device - Trial</string>
+    <string name="notification_days_remaining_in_trial">%s days remaining in your trial. Click to upgrade!</string>
+    <string name="notification_last_day_of_trial">This is the last day of your trial. Click to upgrade!</string>
+    <string name="notification_trial_expired">Your seven day trial is over. Click to upgrade!</string>
 
 </resources>

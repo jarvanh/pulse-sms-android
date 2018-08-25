@@ -18,6 +18,7 @@
 
 package xyz.klinker.messenger.fragment.settings
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
@@ -39,6 +40,7 @@ import java.util.Date
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.AccountPurchaseActivity
+import xyz.klinker.messenger.activity.AccountTrialActivity
 import xyz.klinker.messenger.activity.InitialLoadActivity
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.api.implementation.Account
@@ -77,6 +79,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     private val deviceId: String?
         get() = Account.deviceId
 
+    @SuppressLint("RestrictedApi")
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.my_account)
 
@@ -93,6 +96,13 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
 
         initWebsitePreference()
+
+        if (openTrialUpgradePreference) {
+            val pref = findPreference(getString(R.string.pref_subscriber_status))
+            pref?.onPreferenceClickListener?.onPreferenceClick(pref)
+
+            openTrialUpgradePreference = false
+        }
     }
 
     override fun onDestroy() {
@@ -162,8 +172,11 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                     if (!resources.getBoolean(R.bool.check_subscription) || hasSubs || Account.hasPurchased) {
                         Toast.makeText(fragmentActivity, R.string.subscription_found, Toast.LENGTH_LONG).show()
                         startLoginActivity()
+                    } else if (Settings.hasUsedFreeTrial) {
+                        Toast.makeText(fragmentActivity, R.string.trial_finished, Toast.LENGTH_LONG).show()
+                        pickSubscription(false)
                     } else {
-                        pickSubscription()
+                        startTrial()
                     }
                 } catch (e: IllegalStateException) {
                     // resources bad, fragment destroyed
@@ -198,23 +211,44 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             return
         }
 
-        if (Account.subscriptionType === Account.SubscriptionType.SUBSCRIBER || Account.subscriptionType === Account.SubscriptionType.TRIAL) {
-//            val signoutTime = SignoutJob.isScheduled(fragmentActivity!!)
-//            if (signoutTime != 0L) {
-//                preference.title = getString(R.string.account_expiring)
-//                preference.summary = getString(R.string.signout_time, Date(signoutTime).toString())
-//            } else {
-                preference.setTitle(R.string.change_subscription)
-                preference.setSummary(R.string.cancel_on_the_play_store)
-//            }
+        if (Account.subscriptionType == Account.SubscriptionType.SUBSCRIBER || Account.subscriptionType == Account.SubscriptionType.TRIAL) {
+            preference.setTitle(R.string.change_subscription)
+            preference.setSummary(R.string.cancel_on_the_play_store)
+
+            preference.setOnPreferenceClickListener {
+//                AlertDialog.Builder(fragmentActivity!!)
+//                        .setMessage(R.string.change_subscription_message)
+//                        .setPositiveButton(R.string.ok) { _, _ -> pickSubscription(true) }.show()
+                pickSubscription(true)
+                false
+            }
+       } else if (Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL) {
+            var daysLeftInTrial = Account.getDaysLeftInTrial()
+            if (daysLeftInTrial < 0) {
+                daysLeftInTrial = 0
+            }
+
+            preference.title = resources.getString(R.string.trial_subscription_title, daysLeftInTrial.toString())
+            preference.setSummary(R.string.trial_subscription_summary)
 
             preference.setOnPreferenceClickListener {
                 AlertDialog.Builder(fragmentActivity!!)
-                        .setMessage(R.string.change_subscription_message)
-                        .setPositiveButton(R.string.ok) { _, _ -> pickSubscription(true) }.show()
+                    .setTitle(if (daysLeftInTrial == 0) R.string.trial_expired else R.string.upgrade_or_cancel_title)
+                    .setMessage(R.string.upgrade_or_cancel)
+                    .setCancelable(daysLeftInTrial > 0)
+                    .setPositiveButton(R.string.upgrade) { _, _ ->
+                        AnalyticsHelper.accountFreeTrialUpgradeDialogUpgradeClicked(fragmentActivity!!)
+                        pickSubscription(true)
+                    }
+                    .setNegativeButton(R.string.cancel_trial) { _, _ ->
+                        AnalyticsHelper.accountFreeTrialUpgradeDialogCancelClicked(fragmentActivity!!)
+                        deleteAccount()
+                    }.show()
+
+                AnalyticsHelper.accountFreeTrialUpgradeDialogShown(fragmentActivity!!)
                 false
             }
-       }
+        }
     }
 
     private fun initMessageCountPreference() {
@@ -239,23 +273,27 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         preference.setOnPreferenceClickListener {
             AlertDialog.Builder(fragmentActivity!!)
                     .setMessage(R.string.delete_account_confirmation)
-                    .setPositiveButton(android.R.string.yes) { _, _ ->
-                        val account = Account
-                        val accountId = account.accountId
-
-                        Thread { ApiUtils.deleteAccount(accountId) }.start()
-                        account.clearAccount(fragmentActivity!!)
-
-                        returnToConversationsAfterLogin()
-
-                        val nav = fragmentActivity?.findViewById<View>(R.id.navigation_view) as NavigationView?
-                        nav?.menu?.findItem(R.id.drawer_account)?.setTitle(R.string.menu_device_texting)
-                    }
+                    .setPositiveButton(android.R.string.yes) { _, _ -> deleteAccount() }
                     .setNegativeButton(android.R.string.no, null)
                     .show()
 
             true
         }
+    }
+
+    private fun deleteAccount() {
+        Settings.setValue(fragmentActivity!!, getString(R.string.pref_has_used_free_trial), true)
+
+        val account = Account
+        val accountId = account.accountId
+
+        Thread { ApiUtils.deleteAccount(accountId) }.start()
+        account.clearAccount(fragmentActivity!!)
+
+        returnToConversationsAfterLogin()
+
+        val nav = fragmentActivity?.findViewById<View>(R.id.navigation_view) as NavigationView?
+        nav?.menu?.findItem(R.id.drawer_account)?.setTitle(R.string.menu_device_texting)
     }
 
     private fun initResyncAccountPreference() {
@@ -329,11 +367,13 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
     override fun onActivityResult(requestCode: Int, responseCode: Int, data: Intent?) {
         Settings.forceUpdate(fragmentActivity!!)
-        if (requestCode == PURCHASE_REQUEST && responseCode == RESULT_SIGN_IN) {
+        if (requestCode == TRIAL_REQUEST && responseCode == RESULT_START_TRIAL) {
+            startLoginActivity(false)
+        } else if (requestCode == PURCHASE_REQUEST && responseCode == RESULT_SIGN_IN) {
             startLoginActivity(true)
         } else if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
             val productId = data?.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA)
-            Log.v("pulse_purchase", "on activity result. Purchasing product: " + productId)
+            Log.v("pulse_purchase", "on activity result. Purchasing product: $productId")
 
             when (productId) {
                 ProductAvailable.createLifetime().productId -> purchaseProduct(ProductAvailable.createLifetime())
@@ -444,11 +484,9 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     }
 
     private fun returnToConversationsAfterLogin() {
-        if (fragmentActivity == null) {
-            return
-        }
+        val holderActivity = activity ?: return
 
-        val nav = fragmentActivity?.findViewById<View>(R.id.navigation_view) as NavigationView?
+        val nav = holderActivity.findViewById<View>(R.id.navigation_view) as NavigationView?
         nav?.setCheckedItem(R.id.drawer_conversation)
 
         val account = Account
@@ -459,11 +497,11 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
         SubscriptionExpirationCheckJob.scheduleNextRun(fragmentActivity!!)
 
-        if (fragmentActivity is MessengerActivity) {
-            (fragmentActivity!! as MessengerActivity).displayConversations()
-            fragmentActivity?.title = StringUtils.titleize(fragmentActivity!!.getString(R.string.app_name))
+        if (holderActivity is MessengerActivity) {
+            holderActivity.displayConversations()
+            holderActivity.title = StringUtils.titleize(fragmentActivity!!.getString(R.string.app_name))
         } else {
-            fragmentActivity?.recreate()
+            holderActivity.recreate()
         }
     }
 
@@ -478,6 +516,11 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         intent.putExtra(AccountPurchaseActivity.ARG_CHANGING_SUBSCRIPTION, changingSubscription)
 
         startActivityForResult(intent, PURCHASE_REQUEST)
+    }
+
+    private fun startTrial() {
+        val intent = Intent(fragmentActivity!!, AccountTrialActivity::class.java)
+        startActivityForResult(intent, TRIAL_REQUEST)
     }
 
     private fun purchaseProduct(product: ProductAvailable) {
@@ -495,6 +538,8 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                         Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.LIFETIME, Date(1))
                         "PURCHASE_LIFETIME"
                     } else {
+                        val newExperation = ProductPurchased.getExpiration(product.productId)
+                        Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.SUBSCRIBER, Date(newExperation))
                         "PURCHASE_SUBSCRIPTION"
                     }
 
@@ -506,6 +551,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                 } else {
                     // they switched their subscription, lets write the new timeout to their account.
                     val newExperation = ProductPurchased.getExpiration(product.productId)
+                    val oldSubscription = Account.subscriptionType
 
                     if (product.productId.contains("lifetime")) {
                         Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.LIFETIME, Date(newExperation))
@@ -514,13 +560,24 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                     }
 
                     returnToConversationsAfterLogin()
-                    redirectToPlayStoreToCancel()
+
+                    if (oldSubscription != Account.SubscriptionType.FREE_TRIAL) {
+                        redirectToPlayStoreToCancel()
+                    }
                 }
             }
 
             override fun onPurchaseError(message: String) {
                 AnalyticsHelper.purchaseError(fragmentActivity!!)
                 fragmentActivity?.runOnUiThread { Toast.makeText(activity, message, Toast.LENGTH_SHORT).show() }
+
+                if (Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL && Account.getDaysLeftInTrial() <= 0) {
+                    AlertDialog.Builder(activity!!)
+                            .setCancelable(false)
+                            .setMessage(R.string.purchase_cancelled_trial_finished)
+                            .setPositiveButton(R.string.ok) { _, _ -> deleteAccount() }
+                            .show()
+                }
             }
         })
     }
@@ -529,10 +586,14 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         val ONBOARDING_REQUEST = 54320
         val SETUP_REQUEST = 54321
         val PURCHASE_REQUEST = 54322
+        val TRIAL_REQUEST = 5432
 
         val RESULT_SIGN_IN = 54323
+        val RESULT_START_TRIAL = 54321
 
         val RESPONSE_START_TRIAL = 101
         val RESPONSE_SKIP_TRIAL_FOR_NOW = 102
+
+        var openTrialUpgradePreference = false
     }
 }

@@ -247,6 +247,12 @@ public class LoginActivity extends AppCompatActivity {
                     sharedPrefs.edit().putString("private_conversations_passcode", encryptionUtils.decrypt(response.passcode)).commit();
                 }
 
+                // whenever they sign in, it should assign either the trial or the subscriber status to the phone.
+                // the account encryption creator automatically creates the FREE_TRIAL status if they are not LIFETIME
+                SharedPreferences sharedPrefs = encryptionCreator.getSharedPrefs(LoginActivity.this);
+                sharedPrefs.edit().putInt(getString(R.string.api_pref_subscription_type), Account.INSTANCE.getSubscriptionType() == Account.SubscriptionType.LIFETIME ?
+                        Account.SubscriptionType.LIFETIME.getTypeCode() : Account.SubscriptionType.SUBSCRIBER.getTypeCode()).commit();
+
                 addDevice(utils, response.accountId, hasTelephony(LoginActivity.this), false);
                 AnalyticsHelper.accountLoggedIn(LoginActivity.this);
             }
@@ -280,6 +286,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 });
             } else {
+                // This will automatically give them the free trial status, unless they have the LIFETIME
                 AccountEncryptionCreator encryptionCreator =
                         new AccountEncryptionCreator(LoginActivity.this, password.getText().toString());
                 encryptionCreator.createAccountEncryptionFromSignup(

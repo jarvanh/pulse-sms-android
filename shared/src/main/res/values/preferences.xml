@@ -26,6 +26,7 @@
     <string name="pref_resync_contacts" translatable="false">resync_contacts</string>
     <string name="pref_refresh_firebase" translatable="false">refresh_firebase</string>
     <string name="pref_enable_danger_zone" translatable="false">enable_danger_zone</string>
+    <string name="pref_has_used_free_trial" translatable="false">has_used_free_trial</string>
 
     <string name="pref_about_changelog" translatable="false">changelog</string>
     <string name="pref_about_copyright" translatable="false">copyright</string>

@@ -39,6 +39,7 @@ import xyz.klinker.messenger.utils.UpdateUtils
 import android.view.inputmethod.InputMethodManager
 import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
+import xyz.klinker.messenger.fragment.settings.MyAccountFragment
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.util.DrawerItemHelper
 
@@ -100,7 +101,11 @@ class MessengerActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
 
-        PromotionUtils(this).checkPromotions()
+        PromotionUtils(this).checkPromotions {
+            MyAccountFragment.openTrialUpgradePreference = true
+            clickNavigationItem(R.id.drawer_account)
+        }
+
         UnreadBadger(this).clearCount()
 
         colorController.colorActivity()

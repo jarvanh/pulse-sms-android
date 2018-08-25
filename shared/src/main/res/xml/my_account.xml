@@ -24,7 +24,8 @@
         <Preference
             android:key="@string/pref_my_account_setup"
             android:title="@string/setup_my_account"
-            android:summary="@string/setup_my_account_summary" />
+            android:summary="@string/setup_my_account_summary"
+            app:iconSpaceReserved="false"/>
 
         <Preference
             android:key="@string/pref_subscriber_status"
@@ -41,7 +42,7 @@
 
         <Preference
             android:key="@string/pref_go_to_web"
-            android:title="@string/website"
+            android:title="@string/view_platforms"
             app:iconSpaceReserved="false" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>

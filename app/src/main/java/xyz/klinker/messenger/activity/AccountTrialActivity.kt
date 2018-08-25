@@ -25,86 +25,50 @@ import xyz.klinker.messenger.shared.util.DensityUtil
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable
 import xyz.klinker.messenger.shared.util.billing.ProductType
 
-class AccountPurchaseActivity : AppCompatActivity() {
-
-    private var isInitial = true
-    private var revealedPurchaseOptions = false
+class AccountTrialActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AnalyticsHelper.accountTutorialStarted(this)
+        AnalyticsHelper.accountStartTrialTutorial(this)
 
         setResult(Activity.RESULT_CANCELED)
-        setContentView(R.layout.activity_account_purchase)
-        setUpPurchaseLayout()
+        setContentView(R.layout.activity_account_trial)
+        setUpInitialLayout()
 
         if (Settings.mainColorSet.color == Color.WHITE) {
-            findViewById<View>(R.id.purchase_layout).setBackgroundColor(ColorSet.TEAL(this).color)
+            findViewById<View>(R.id.initial_layout).setBackgroundColor(ColorSet.TEAL(this).color)
+            (findViewById<View>(R.id.try_it) as TextView)
+                    .setTextColor(ColorStateList.valueOf(ColorSet.TEAL(this).color))
         } else {
-            findViewById<View>(R.id.purchase_layout).setBackgroundColor(Settings.mainColorSet.color)
+            findViewById<View>(R.id.initial_layout).setBackgroundColor(Settings.mainColorSet.color)
+            (findViewById<View>(R.id.try_it) as TextView)
+                    .setTextColor(ColorStateList.valueOf(Settings.mainColorSet.color))
         }
 
         Handler().postDelayed({ this.circularRevealIn() }, 100)
     }
 
-    private fun setUpPurchaseLayout() {
-        AnalyticsHelper.accountTutorialFinished(this)
+    private fun setUpInitialLayout() {
+        findViewById<View>(R.id.try_it).setOnClickListener { tryIt() }
 
-        // set up purchasing views here
-        val monthly = findViewById<View>(R.id.monthly)
-        val threeMonth = findViewById<View>(R.id.three_month)
-        val yearly = findViewById<View>(R.id.yearly)
-        val lifetime = findViewById<View>(R.id.lifetime)
-        val signIn = findViewById<View>(R.id.sign_in)
-
-        val startTime: Long = 300
-        quickViewReveal(yearly, startTime)
-        quickViewReveal(threeMonth, startTime + 75)
-        quickViewReveal(monthly, startTime + 150)
-        quickViewReveal(lifetime, startTime + 225)
-
-        monthly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createMonthly()) }
-        threeMonth.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonth()) }
-        yearly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearly()) }
-        lifetime.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createLifetime()) }
-        signIn.setOnClickListener { startSignIn() }
-
-        if (intent.getBooleanExtra(ARG_CHANGING_SUBSCRIPTION, false)) {
-            signIn.visibility = View.INVISIBLE
-        }
+        val startTime: Long = 500
+        quickViewReveal(findViewById(R.id.icon_watch), startTime)
+        quickViewReveal(findViewById(R.id.icon_tablet), startTime + 75)
+        quickViewReveal(findViewById(R.id.icon_computer), startTime + 150)
+        quickViewReveal(findViewById(R.id.icon_phone), startTime + 225)
+        quickViewReveal(findViewById(R.id.icon_notify), startTime + 300)
     }
 
-    private fun finishWithPurchaseResult(product: ProductAvailable) {
-        val result = Intent()
-        result.putExtra(PRODUCT_ID_EXTRA, product.productId)
-        setResult(Activity.RESULT_OK, result)
+    private fun tryIt() {
+        setResult(MyAccountFragment.RESULT_START_TRIAL)
+        AnalyticsHelper.accountAcceptFreeTrial(this)
 
-        if (product.type == ProductType.SUBSCRIPTION) {
-//            Toast.makeText(this, R.string.subscription_toast, Toast.LENGTH_LONG).show()
-        }
-
-        AnalyticsHelper.accountSelectedPurchase(this)
-        finish()
-    }
-
-    private fun startSignIn() {
-        setResult(MyAccountFragment.RESULT_SIGN_IN)
-        AnalyticsHelper.accountSignInInsteadOfPurchase(this)
-
-        finish()
-    }
-
-    private fun warnOfPlayStoreSubscriptionProcess(product: ProductAvailable) {
-//        AlertDialog.Builder(this, R.style.SubscriptionPicker)
-//                .setMessage(R.string.play_store_subscription_warning)
-//                .setPositiveButton(R.string.ok) { _, _ -> finishWithPurchaseResult(product) }
-//                .show()
-        finishWithPurchaseResult(product)
+        close()
     }
 
     private fun circularRevealIn() {
-        val view = findViewById<View>(R.id.purchase_layout)
+        val view = findViewById<View>(R.id.initial_layout)
         view.visibility = View.VISIBLE
 
         try {
@@ -162,8 +126,14 @@ class AccountPurchaseActivity : AppCompatActivity() {
     }
 
     private fun findVisibleHolder(): View {
+        val initial = findViewById<View>(R.id.initial_layout)
         val purchase = findViewById<View>(R.id.purchase_layout)
-        return purchase
+
+        return if (initial.visibility != View.INVISIBLE) {
+            initial
+        } else {
+            purchase
+        }
     }
 
     override fun onBackPressed() {
@@ -176,7 +146,6 @@ class AccountPurchaseActivity : AppCompatActivity() {
     }
 
     companion object {
-        val PRODUCT_ID_EXTRA = "product_id"
-        val ARG_CHANGING_SUBSCRIPTION = "arg_changing_subscription"
+
     }
 }
