@@ -26,7 +26,11 @@ public class AnalyticsHelper {
     private static final String PURCHASE_MONTH = "subscription_one_month";
 
     public static void userSubscribed(Context context, String subscription) {
-        logEvent(context, subscription);
+        logEvent(context, "FIRST_TIME_SUBSCRIPTION_" + subscription);
+    }
+
+    public static void userUpgraded(Context context, String subscription) {
+        logEvent(context, "USER_UPGRADED_SUBSCRIPTION_" + subscription);
     }
 
     public static void purchaseError(Context context) {

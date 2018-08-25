@@ -34,7 +34,6 @@ import android.support.v7.preference.PreferenceCategory
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.amplitude.api.Amplitude
 
 import java.util.Date
 
@@ -533,19 +532,14 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                 }
 
                 if (Account.accountId == null) {
-                    // New user
-                    val event = if (product.productId.contains("lifetime")) {
+                    AnalyticsHelper.userSubscribed(fragmentActivity!!, productId)
+
+                    if (product.productId.contains("lifetime")) {
                         Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.LIFETIME, Date(1))
-                        "PURCHASE_LIFETIME"
                     } else {
                         val newExperation = ProductPurchased.getExpiration(product.productId)
                         Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.SUBSCRIBER, Date(newExperation))
-                        "PURCHASE_SUBSCRIPTION"
                     }
-
-                    try {
-                        Amplitude.getInstance().logEvent(event)
-                    } catch (t: Throwable) { }
 
                     startLoginActivity()
                 } else {
@@ -553,6 +547,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                     val newExperation = ProductPurchased.getExpiration(product.productId)
                     val oldSubscription = Account.subscriptionType
 
+                    AnalyticsHelper.userUpgraded(fragmentActivity!!, productId)
                     if (product.productId.contains("lifetime")) {
                         Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.LIFETIME, Date(newExperation))
                     } else {

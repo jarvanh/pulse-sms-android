@@ -20,18 +20,15 @@ import android.app.Application
 import android.content.Intent
 import android.os.Build
 import android.support.v7.app.AppCompatDelegate
-import com.amplitude.api.Amplitude
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.AccountInvalidator
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler
 import xyz.klinker.messenger.api.implementation.retrofit.ApiErrorPersister
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.RetryableRequest
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
-import xyz.klinker.messenger.shared.service.CreateNotificationChannelService
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
 import xyz.klinker.messenger.shared.service.FirebaseResetService
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
@@ -47,11 +44,6 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
         super.onCreate()
 
         KotlinObjectInitializers.initializeObjects(this)
-
-        try {
-            Amplitude.getInstance().initialize(this, "c9f494701f3ed188aa8ebcdb2a7d046c")
-                    .enableForegroundTracking(this)
-        } catch (e: Throwable) { }
 
         enableSecurity()
 
