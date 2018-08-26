@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -70,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String ARG_SKIP_LOGIN = "arg_skip_login";
     public static final String ARG_FORCE_NO_CREATE_ACCOUNT = "arg_no_create_account";
+    public static final String ARG_BACKGROUND_COLOR = "arg_background_color";
+    public static final String ARG_ACCENT_COLOR = "arg_accent_color";
 
     public static final int RESULT_START_NETWORK_SYNC = 32;
     public static final int RESULT_START_DEVICE_SYNC = 33;
@@ -98,6 +101,25 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.api_activity_login);
+
+        int backgroundColor = getIntent().getIntExtra(ARG_BACKGROUND_COLOR, Integer.MIN_VALUE);
+        if (backgroundColor != Integer.MIN_VALUE) {
+            findViewById(R.id.initial_layout).setBackgroundColor(backgroundColor);
+            findViewById(R.id.login_dialog).setBackgroundColor(backgroundColor);
+            findViewById(R.id.signup_dialog).setBackgroundColor(backgroundColor);
+
+            int accentColor = getIntent().getIntExtra(ARG_ACCENT_COLOR, Integer.MIN_VALUE);
+            if (accentColor != Integer.MIN_VALUE) {
+                FloatingActionButton signupFab = (FloatingActionButton) findViewById(R.id.signup_fab);
+                FloatingActionButton loginFab = (FloatingActionButton) findViewById(R.id.login_fab);
+
+                signupFab.setBackgroundTintList(ColorStateList.valueOf(accentColor));
+                loginFab.setBackgroundTintList(ColorStateList.valueOf(accentColor));
+
+                TextView forgotPassword = (TextView) findViewById(R.id.forgot_password);
+                forgotPassword.setTextColor(accentColor);
+            }
+        }
 
         skipLogin = getIntent().getBooleanExtra(ARG_SKIP_LOGIN, false);
         if (!skipLogin || !hasTelephony(this)) {
@@ -210,6 +232,7 @@ public class LoginActivity extends AppCompatActivity {
         attachSignupTextWatcher(name);
         attachSignupTextWatcher(phoneNumber);
 
+        email.setText(getEmail());
         name.setText(getName());
 
         String number = getPhoneNumber();
@@ -608,6 +631,28 @@ public class LoginActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
+    private String getEmail() {
+//        try {
+//            Cursor cursor = getContentResolver()
+//                    .query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
+//
+//            if (cursor != null && cursor.moveToFirst()) {
+//                cursor.moveToFirst();
+//                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+//                cursor.close();
+//                return name;
+//            } else {
+//                try {
+//                    cursor.close();
+//                } catch (Exception e) { }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        return null;
+    }
+
     private String getName() {
         try {
             Cursor cursor = getContentResolver()
@@ -667,5 +712,4 @@ public class LoginActivity extends AppCompatActivity {
         return !TextUtils.isEmpty(target) &&
                 android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
-
 }

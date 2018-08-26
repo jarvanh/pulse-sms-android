@@ -113,8 +113,6 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         val preference = findPreference(getString(R.string.pref_my_account_setup))
         val account = Account
 
-        startTrial()
-
         if (!account.exists() && preference != null) {
             preference.setOnPreferenceClickListener {
                 checkSubscriptions()
@@ -509,6 +507,8 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     private fun startLoginActivity(signInOnly: Boolean = false) {
         val intent = Intent(context, LoginActivity::class.java)
         intent.putExtra(LoginActivity.ARG_FORCE_NO_CREATE_ACCOUNT, signInOnly)
+        intent.putExtra(LoginActivity.ARG_BACKGROUND_COLOR, Settings.mainColorSet.color)
+        intent.putExtra(LoginActivity.ARG_ACCENT_COLOR, Settings.mainColorSet.colorAccent)
         startActivityForResult(intent, SETUP_REQUEST)
     }
 
