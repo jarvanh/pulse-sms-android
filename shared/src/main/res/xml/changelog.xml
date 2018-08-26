@@ -16,6 +16,16 @@
 
 <changelog>
 
+    <!--<version-->
+        <!--name="4.1.0"-->
+        <!--description="September 10th, 2018">-->
+        <!--&lt;!&ndash; Add menu item to call with duo, but it didn't work: https://github.com/klinker-apps/messenger-issues/issues/704 &ndash;&gt;-->
+        <!--&lt;!&ndash; TODO: remove feature flag for the toolbar coloring &ndash;&gt;-->
+        <!--<text>Option to decouple the app bar theme from the primary color. This will allow you to use a white (or dark) app bar, while still maintaining the message coloring.</text>-->
+        <!--<text>This was requested by users, since that is how Google has started to do it in some of their apps.</text>-->
+        <!--<text>Find this preference under the "Theme" section of settings. The web and desktop apps contain the same functionality.</text>-->
+    <!--</version>-->
+
     <version
         name="4.0.5"
         description="August 27th, 2018">
