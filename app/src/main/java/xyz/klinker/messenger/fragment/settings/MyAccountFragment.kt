@@ -218,9 +218,6 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             preference.setSummary(R.string.cancel_on_the_play_store)
 
             preference.setOnPreferenceClickListener {
-//                AlertDialog.Builder(fragmentActivity!!)
-//                        .setMessage(R.string.change_subscription_message)
-//                        .setPositiveButton(R.string.ok) { _, _ -> pickSubscription(true) }.show()
                 pickSubscription(true)
                 false
             }

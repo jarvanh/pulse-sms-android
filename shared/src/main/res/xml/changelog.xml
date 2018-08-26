@@ -17,8 +17,14 @@
 <changelog>
 
     <version
+        name="4.0.5"
+        description="August 27th, 2018">
+        <text>Optimizations around signing up for a Pulse account</text>
+    </version>
+
+    <version
         name="4.0.4"
-        description="August 25nd, 2018">
+        description="August 25th, 2018">
         <!-- Change a few of the analytics events -->
         <text>Bug fixes</text>
     </version>
