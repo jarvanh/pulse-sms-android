@@ -681,12 +681,13 @@
     <string name="change_subscription_message">Want to upgrade? Great! After you have made your
         selection on the next screen, you <b>must</b> go through the Play Store app and cancel your old trial or subscription.
         I <b>cannot</b> do this automatically.</string>
-    <string name="beautiful_powerful_instant">Beautiful, powerful, instant.</string>
+    <string name="beautiful_powerful_instant">Welcome to the modern era.</string>
     <string name="optimized_for_all_your_devices">Pulse is optimized for <b>all</b> your devices.
         Send texts from the web, a desktop computer, your tablet, a watch, and even your TV.</string>
     <string name="true_imessage_competitor">The first <b>true</b> iMessage competitor for Android.</string>
-    <string name="trial_description">Try Pulse across all of your devices, <b>free for seven days</b>! Cancel at any time.\n\nAt the end, you will be asked to choose from a subscription or the one-time purchase to continue using the app on your other devices.</string>
-    <string name="try_it">Try it now!</string>
+    <string name="trial_description">With an online account, Pulse can be used to instantly send and receive SMS/MMS across <b>all of your devices</b>.</string>
+    <string name="purchase_description">Try it <b>absolutely free for seven days</b>, then decide if you want to continue with a subscription or one-time purchase:\n\n<b>$0.99</b> per month\n<b>$1.99</b> every three months\n<b>$5.99</b> per year\n<b>$10.99</b> for a lifetime membership</string>
+    <string name="try_it">Start your free trial!</string>
     <string name="select_purchase">Select Purchase</string>
     <string name="have_an_account">Have an account?\nSign in</string>
     <string name="select_a_purchase">Select a Purchase</string>

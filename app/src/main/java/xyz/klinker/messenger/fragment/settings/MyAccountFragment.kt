@@ -113,6 +113,8 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         val preference = findPreference(getString(R.string.pref_my_account_setup))
         val account = Account
 
+        startTrial()
+
         if (!account.exists() && preference != null) {
             preference.setOnPreferenceClickListener {
                 checkSubscriptions()
