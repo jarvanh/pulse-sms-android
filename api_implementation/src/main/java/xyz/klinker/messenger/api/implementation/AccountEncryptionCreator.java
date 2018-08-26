@@ -45,6 +45,7 @@ public class AccountEncryptionCreator {
 
         editor.putBoolean("apply_theme_globally", loginResponse.useGlobalTheme)
                 .putBoolean("rounder_bubbles", loginResponse.rounderBubbles)
+                .putBoolean("apply_primary_color_toolbar", loginResponse.applyPrimaryColorToToolbar)
                 .putString("base_theme", loginResponse.baseTheme)
                 .apply();
 

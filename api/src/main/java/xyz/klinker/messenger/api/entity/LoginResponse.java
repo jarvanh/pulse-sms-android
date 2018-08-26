@@ -27,6 +27,7 @@ public class LoginResponse {
     public String passcode;
     public boolean rounderBubbles;
     public boolean useGlobalTheme;
+    public boolean applyPrimaryColorToToolbar;
     public int color;
     public int colorDark;
     public int colorLight;
