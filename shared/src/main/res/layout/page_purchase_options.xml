@@ -20,6 +20,7 @@
         android:padding="24dp">
 
         <TextView
+            android:id="@+id/select_purchase_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/select_a_purchase"
@@ -187,16 +188,66 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/cancel_trial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pulse_ripple"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:padding="9dp"
+                android:src="@drawable/ic_close"
+                android:tint="@color/primaryText" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@string/cancel_trial"
+                    android:textColor="@color/primaryText"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/continue_with_phone_app"
+                    android:textColor="@color/primaryText"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/drawerBackground"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="20dp"
-        android:paddingBottom="6dp">
+        android:paddingBottom="6dp"
+        android:visibility="gone">
 
         <!--<de.hdodenhof.circleimageview.CircleImageView-->
             <!--android:layout_width="6dp"-->

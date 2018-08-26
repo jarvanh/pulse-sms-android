@@ -56,6 +56,7 @@ class AccountPurchaseActivity : AppCompatActivity() {
         val threeMonth = findViewById<View>(R.id.three_month)
         val yearly = findViewById<View>(R.id.yearly)
         val lifetime = findViewById<View>(R.id.lifetime)
+        val cancelTrial = findViewById<View>(R.id.cancel_trial)
         val signIn = findViewById<View>(R.id.sign_in)
 
         val startTime: Long = 300
@@ -68,10 +69,20 @@ class AccountPurchaseActivity : AppCompatActivity() {
         threeMonth.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonth()) }
         yearly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearly()) }
         lifetime.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createLifetime()) }
+        cancelTrial.setOnClickListener { finishWithTrialCancellation() }
         signIn.setOnClickListener { startSignIn() }
 
         if (intent.getBooleanExtra(ARG_CHANGING_SUBSCRIPTION, false)) {
             signIn.visibility = View.INVISIBLE
+        }
+
+        if (intent.getBooleanExtra(ARG_FREE_TRIAL, false)) {
+            quickViewReveal(cancelTrial, startTime + 300)
+
+            cancelTrial.visibility = View.VISIBLE
+            signIn.visibility = View.INVISIBLE
+
+            findViewById<TextView>(R.id.select_purchase_title).setText(R.string.thanks_for_trying)
         }
     }
 
@@ -85,6 +96,13 @@ class AccountPurchaseActivity : AppCompatActivity() {
         }
 
         AnalyticsHelper.accountSelectedPurchase(this)
+        finish()
+    }
+
+    private fun finishWithTrialCancellation() {
+        AnalyticsHelper.accountFreeTrialUpgradeDialogCancelClicked(this)
+
+        setResult(RESULT_CANCEL_TRIAL)
         finish()
     }
 
@@ -178,5 +196,8 @@ class AccountPurchaseActivity : AppCompatActivity() {
     companion object {
         val PRODUCT_ID_EXTRA = "product_id"
         val ARG_CHANGING_SUBSCRIPTION = "arg_changing_subscription"
+        val ARG_FREE_TRIAL= "arg_free_trial"
+
+        val RESULT_CANCEL_TRIAL = 33425
     }
 }

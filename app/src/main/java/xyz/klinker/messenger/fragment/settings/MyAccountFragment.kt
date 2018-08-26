@@ -97,9 +97,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         initWebsitePreference()
 
         if (openTrialUpgradePreference) {
-            val pref = findPreference(getString(R.string.pref_subscriber_status))
-            pref?.onPreferenceClickListener?.onPreferenceClick(pref)
-
+            upgradeTrial()
             openTrialUpgradePreference = false
         }
     }
@@ -231,19 +229,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             preference.setSummary(R.string.trial_subscription_summary)
 
             preference.setOnPreferenceClickListener {
-                AlertDialog.Builder(fragmentActivity!!)
-                    .setTitle(if (daysLeftInTrial == 0) R.string.trial_expired else R.string.upgrade_or_cancel_title)
-                    .setMessage(R.string.upgrade_or_cancel)
-                    .setCancelable(daysLeftInTrial > 0)
-                    .setPositiveButton(R.string.upgrade) { _, _ ->
-                        AnalyticsHelper.accountFreeTrialUpgradeDialogUpgradeClicked(fragmentActivity!!)
-                        pickSubscription(true)
-                    }
-                    .setNegativeButton(R.string.cancel_trial) { _, _ ->
-                        AnalyticsHelper.accountFreeTrialUpgradeDialogCancelClicked(fragmentActivity!!)
-                        deleteAccount()
-                    }.show()
-
+                upgradeTrial()
                 AnalyticsHelper.accountFreeTrialUpgradeDialogShown(fragmentActivity!!)
                 false
             }
@@ -370,6 +356,10 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             startLoginActivity(false)
         } else if (requestCode == PURCHASE_REQUEST && responseCode == RESULT_SIGN_IN) {
             startLoginActivity(true)
+        } else if (requestCode == PURCHASE_REQUEST && responseCode == AccountPurchaseActivity.RESULT_CANCEL_TRIAL) {
+            promptCancelTrial()
+        } else if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_CANCELED) {
+            purchaseCancelled()
         } else if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
             val productId = data?.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA)
             Log.v("pulse_purchase", "on activity result. Purchasing product: $productId")
@@ -519,6 +509,13 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         startActivityForResult(intent, PURCHASE_REQUEST)
     }
 
+    private fun upgradeTrial() {
+        val intent = Intent(fragmentActivity!!, AccountPurchaseActivity::class.java)
+        intent.putExtra(AccountPurchaseActivity.ARG_FREE_TRIAL, true)
+
+        startActivityForResult(intent, PURCHASE_REQUEST)
+    }
+
     private fun startTrial() {
         val intent = Intent(fragmentActivity!!, AccountTrialActivity::class.java)
         startActivityForResult(intent, TRIAL_REQUEST)
@@ -565,18 +562,28 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             }
 
             override fun onPurchaseError(message: String) {
-                AnalyticsHelper.purchaseError(fragmentActivity!!)
-                fragmentActivity?.runOnUiThread { Toast.makeText(activity, message, Toast.LENGTH_SHORT).show() }
-
-                if (Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL && Account.getDaysLeftInTrial() <= 0) {
-                    AlertDialog.Builder(activity!!)
-                            .setCancelable(false)
-                            .setMessage(R.string.purchase_cancelled_trial_finished)
-                            .setPositiveButton(R.string.ok) { _, _ -> deleteAccount() }
-                            .show()
-                }
+                purchaseCancelled(message)
             }
         })
+    }
+
+    private fun purchaseCancelled(message: String? = null) {
+        AnalyticsHelper.purchaseError(fragmentActivity!!)
+        if (message != null) {
+            fragmentActivity?.runOnUiThread { Toast.makeText(activity, message, Toast.LENGTH_SHORT).show() }
+        }
+
+        if (Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL && Account.getDaysLeftInTrial() <= 0) {
+            promptCancelTrial()
+        }
+    }
+
+    private fun promptCancelTrial() {
+        AlertDialog.Builder(activity!!)
+                .setCancelable(false)
+                .setMessage(R.string.purchase_cancelled_trial_finished)
+                .setPositiveButton(R.string.ok) { _, _ -> deleteAccount() }
+                .show()
     }
 
     companion object {
