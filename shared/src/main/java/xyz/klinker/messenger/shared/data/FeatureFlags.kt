@@ -80,6 +80,7 @@ object FeatureFlags {
     private val FLAG_DISABLE_HARDWARE_ACCEL = "flag_disable_hardware_accel"
     private val FLAG_OTP_PARSE = "flag_otp_parse"
     private val FLAG_MATERIAL_THEME = "flag_material_theme"
+    private val FLAG_TOOLBAR_COLOR = "flag_apply_toolbar_color"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -100,6 +101,7 @@ object FeatureFlags {
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
     var DISABLE_HARDWARE_ACCEL: Boolean = false
+    var TOOLBAR_COLOR: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -107,6 +109,7 @@ object FeatureFlags {
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
         QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
         DISABLE_HARDWARE_ACCEL = getValue(context, sharedPrefs, FLAG_DISABLE_HARDWARE_ACCEL)
+        TOOLBAR_COLOR = getValue(context, sharedPrefs, FLAG_TOOLBAR_COLOR)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -118,6 +121,8 @@ object FeatureFlags {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
             FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
             FLAG_DISABLE_HARDWARE_ACCEL -> DISABLE_HARDWARE_ACCEL = flag
+            FLAG_TOOLBAR_COLOR -> TOOLBAR_COLOR = flag
+
         }
     }
 

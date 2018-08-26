@@ -19,6 +19,7 @@ package xyz.klinker.messenger.shared.util
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -27,6 +28,7 @@ import android.view.View
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 
 /**
  * Utils for helping with different activity tasks such as setting the task description.
@@ -65,12 +67,18 @@ object ActivityUtils {
         }
     }
 
+    @Suppress("NAME_SHADOWING")
     fun setStatusBarColor(activity: Activity?, color: Int) {
+        val color = if (activity == null) color else possiblyOverrideColorSelection(activity, color)
+
         activity?.window?.statusBarColor = color
         setUpLightStatusBar(activity, color)
     }
 
+    @Suppress("NAME_SHADOWING")
     fun setUpLightStatusBar(activity: Activity?, color: Int) {
+        val color = if (activity == null) color else possiblyOverrideColorSelection(activity, color)
+
         if (!ColorUtils.isColorDark(color)) {
             activateLightStatusBar(activity, true)
         } else {
@@ -133,6 +141,18 @@ object ActivityUtils {
 
         if (newSystemUiFlags != oldSystemUiFlags) {
             activity.window.decorView.systemUiVisibility = newSystemUiFlags
+        }
+    }
+
+    fun possiblyOverrideColorSelection(context: Context, color: Int): Int {
+        if (Settings.applyPrimaryColorToToolbar) {
+            return color
+        }
+
+        return when {
+            Settings.baseTheme == BaseTheme.BLACK -> Color.BLACK
+            Settings.isCurrentlyDarkTheme -> context.resources.getColor(R.color.dark_background)
+            else -> Color.WHITE
         }
     }
 }

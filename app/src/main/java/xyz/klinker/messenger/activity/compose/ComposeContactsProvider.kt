@@ -28,7 +28,7 @@ import java.util.ArrayList
 @Suppress("DEPRECATION")
 class ComposeContactsProvider(private val activity: ComposeActivity) : ContactClickedListener {
 
-    private val contactEntry: RecipientEditTextView by lazy { activity.findViewById<View>(R.id.contact_entry) as RecipientEditTextView }
+    val contactEntry: RecipientEditTextView by lazy { activity.findViewById<View>(R.id.contact_entry) as RecipientEditTextView }
     private val bottomNavigation: BottomBar by lazy { activity.findViewById<View>(R.id.bottom_navigation) as BottomBar }
     private val recyclerView: RecyclerView by lazy { activity.findViewById<View>(R.id.recent_contacts) as RecyclerView }
     private val loadingSpinner: ProgressBar by lazy { activity.findViewById(R.id.loading) as ProgressBar }
@@ -64,13 +64,13 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
             bottomNavigation.setActiveTabColor(Settings.mainColorSet.colorAccent)
         }
 
-        bottomNavigation.setOnTabSelectListener({ item ->
+        bottomNavigation.setOnTabSelectListener { item ->
             when (item) {
                 R.id.tab_recents -> displayRecents()
                 R.id.tab_groups -> displayGroups()
                 R.id.tab_all_contacts -> displayAllContacts()
             }
-        })
+        }
 
         if (!ColorUtils.isColorDark(Settings.mainColorSet.color)) {
             contactEntry.setTextColor(ColorStateList.valueOf(activity.resources.getColor(R.color.lightToolbarTextColor)))

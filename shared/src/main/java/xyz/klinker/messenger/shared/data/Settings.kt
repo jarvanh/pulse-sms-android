@@ -74,6 +74,7 @@ object Settings {
     var signature: String? = null
     var drivingMode: Boolean = false
     var vacationMode: Boolean = false
+    var applyPrimaryColorToToolbar = true
 
     // configuration
     var smallFont: Int = 0
@@ -142,6 +143,7 @@ object Settings {
         this.internalBrowser = sharedPrefs.getBoolean(context.getString(R.string.pref_internal_browser), true)
         this.drivingMode = sharedPrefs.getBoolean(context.getString(R.string.pref_driving_mode), false)
         this.vacationMode = sharedPrefs.getBoolean(context.getString(R.string.pref_vacation_mode), false)
+        this.applyPrimaryColorToToolbar = sharedPrefs.getBoolean(context.getString(R.string.pref_apply_primary_color_toolbar), true)
 
         val leftToRightSwipeRep = sharedPrefs.getString(context.getString(R.string.pref_left_to_right_swipe), SwipeOption.ARCHIVE.rep)
         val rightToLeftSwipeRep = sharedPrefs.getString(context.getString(R.string.pref_right_to_left_swipe), SwipeOption.ARCHIVE.rep)

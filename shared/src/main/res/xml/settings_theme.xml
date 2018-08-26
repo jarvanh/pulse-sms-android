@@ -27,6 +27,12 @@
             android:entryValues="@array/font_size_values"
             android:defaultValue="normal" />
 
+        <SwitchPreference
+            android:key="@string/pref_apply_primary_color_toolbar"
+            android:title="@string/apply_primary_theme_toolbar"
+            android:summary="@string/apply_primary_theme_toolbar_summary"
+            android:defaultValue="true" />
+
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory

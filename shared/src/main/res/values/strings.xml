@@ -382,6 +382,8 @@
     <string name="apply_theme_globally">Apply to all Conversations</string>
     <string name="apply_theme_globally_summary">Remove the per-conversation themes, in favor
         of this global color set</string>
+    <string name="apply_primary_theme_toolbar">Apply Primary Color to App Bar</string>
+    <string name="apply_primary_theme_toolbar_summary">Whether or not the app bar should be colorized</string>
     <string name="swipe_delete">Swipe to Delete</string>
     <string name="swipe_actions">Swipe Actions</string>
     <string name="swipe_actions_summary">Customize swiping a conversation</string>

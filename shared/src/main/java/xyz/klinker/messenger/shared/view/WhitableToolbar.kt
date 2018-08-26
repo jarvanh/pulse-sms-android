@@ -8,14 +8,16 @@ import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
 
 import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.ColorUtils
 
+@Suppress("NAME_SHADOWING")
 class WhitableToolbar : Toolbar {
 
-    private var backgroundColor = Integer.MIN_VALUE
+    private var appliedBackgroundColor = Integer.MIN_VALUE
 
     val textColor: Int
-        get() = if (backgroundColor == Integer.MIN_VALUE || ColorUtils.isColorDark(backgroundColor)) {
+        get() = if (appliedBackgroundColor == Integer.MIN_VALUE || ColorUtils.isColorDark(appliedBackgroundColor)) {
             Color.WHITE
         } else {
             resources.getColor(R.color.lightToolbarTextColor)
@@ -26,8 +28,10 @@ class WhitableToolbar : Toolbar {
     constructor(context: Context) : super(context)
 
     override fun setBackgroundColor(color: Int) {
+        val color = ActivityUtils.possiblyOverrideColorSelection(context, color)
+
         super.setBackgroundColor(color)
-        this.backgroundColor = color
+        this.appliedBackgroundColor = color
 
         val textColor = textColor
         val tintList = ColorStateList.valueOf(textColor)

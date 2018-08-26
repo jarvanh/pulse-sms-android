@@ -106,6 +106,8 @@ object ColorUtils {
             color = Settings.mainColorSet.colorDark
         }
 
+        color = ActivityUtils.possiblyOverrideColorSelection(activity, color)
+
         if (!activity.resources.getBoolean(R.bool.pin_drawer)) {
             val drawerLayout = activity
                     .findViewById<View>(R.id.drawer_layout) as DrawerLayout?
@@ -440,7 +442,7 @@ object ColorUtils {
         animator.addUpdateListener { valueAnimator ->
             val color = valueAnimator.animatedValue as Int
             if (toolbar != null) {
-                toolbar?.setBackgroundColor(color)
+                toolbar.setBackgroundColor(color)
             } else {
                 drawable.color = color
                 actionBar?.setBackgroundDrawable(drawable)

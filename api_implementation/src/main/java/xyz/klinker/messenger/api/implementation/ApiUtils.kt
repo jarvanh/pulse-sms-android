@@ -1372,11 +1372,20 @@ object ApiUtils {
     }
 
     /**
-     * Update the mobile only setting
+     * Update whether or not to apply the theme globally
      */
     fun updateUseGlobalTheme(accountId: String?, useGlobal: Boolean) {
         if (accountId != null) {
             updateSetting(accountId, "apply_theme_globally", "boolean", useGlobal)
+        }
+    }
+
+    /**
+     * Update whether or not to colorize the toolbar
+     */
+    fun updateApplyToolbarColor(accountId: String?, toolbarColor: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "apply_primary_color_toolbar", "boolean", toolbarColor)
         }
     }
 

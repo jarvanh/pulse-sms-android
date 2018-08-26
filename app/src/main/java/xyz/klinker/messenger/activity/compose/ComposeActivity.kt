@@ -18,7 +18,6 @@ package xyz.klinker.messenger.activity.compose
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -30,6 +29,7 @@ import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.ColorUtils
+import xyz.klinker.messenger.shared.view.WhitableToolbar
 
 /**
  * Activity to display UI for creating a new conversation.
@@ -48,8 +48,10 @@ class ComposeActivity : AppCompatActivity() {
 
         MainColorController(this).configureNavigationBarColor()
 
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<View>(R.id.toolbar) as WhitableToolbar
         toolbar.setBackgroundColor(Settings.mainColorSet.color)
+
+        contactsProvider.contactEntry.setTextColor(toolbar.textColor)
 
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

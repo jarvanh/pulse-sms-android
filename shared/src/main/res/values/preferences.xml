@@ -78,6 +78,7 @@
     <string name="pref_global_primary_light_color" translatable="false">global_primary_light_color</string>
     <string name="pref_global_accent_color" translatable="false">global_accent_color</string>
     <string name="pref_apply_theme_globally" translatable="false">apply_theme_globally</string>
+    <string name="pref_apply_primary_color_toolbar" translatable="false">apply_primary_color_toolbar</string>
 
     <string name="pref_customization_category" translatable="false">customization_category</string>
     <string name="pref_notification_category" translatable="false">notification_category</string>
