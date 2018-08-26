@@ -25,6 +25,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_call_with_duo"
+        android:icon="@drawable/ic_call_video"
+        android:title="@string/menu_video_call"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_conversation_information"
         android:icon="@drawable/ic_about"
         android:title="@string/menu_conversation_information"

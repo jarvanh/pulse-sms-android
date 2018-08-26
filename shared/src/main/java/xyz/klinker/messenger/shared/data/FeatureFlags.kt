@@ -92,6 +92,7 @@ object FeatureFlags {
     // 3. Add the switch case for the flag in the updateFlag method
 
     val SKIP_INTRO_PAGER = true
+    val DISPLAY_DUO_BUTTON = false
 
     // always on
     var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false

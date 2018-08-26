@@ -132,12 +132,12 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
                 toolbar.inflateMenu(if (argManager.isGroup) R.menu.fragment_messages_group else R.menu.fragment_messages)
             }
 
-            toolbar.setOnMenuItemClickListener({ item ->
+            toolbar.setOnMenuItemClickListener { item ->
                 fragment.dismissKeyboard()
                 (activity as MessengerActivity).navController.drawerItemClicked(item.itemId)
 
                 false
-            })
+            }
 
             if (!fragment.isAdded) {
                 return@postDelayed
@@ -200,6 +200,12 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
 
             navItem?.setTitle(R.string.menu_move_to_inbox)
             toolbarItem?.setTitle(R.string.menu_move_to_inbox)
+        }
+
+        if (!FeatureFlags.DISPLAY_DUO_BUTTON) {
+            try {
+                toolbar.menu.findItem(R.id.menu_call_with_duo)?.isVisible = false
+            } catch (e: Exception) { }
         }
     }
 }

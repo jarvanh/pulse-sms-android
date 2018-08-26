@@ -25,7 +25,7 @@ class RateItDialog : FloatingTutorialActivity(), TutorialFinishedListener {
 
     override fun onTutorialFinished() {
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
             AnalyticsHelper.rateItClicked(this)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, "Couldn't launch the Play Store!", Toast.LENGTH_SHORT).show()

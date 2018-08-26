@@ -30,8 +30,6 @@ import xyz.klinker.messenger.shared.util.listener.ContactClickedListener
 import java.util.ArrayList
 import java.util.NoSuchElementException
 import android.content.Intent
-import android.util.Log
-
 
 class MainNavigationMessageListActionDelegate(private val activity: MessengerActivity) {
 
@@ -77,6 +75,27 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
         }
 
         return true
+    }
+
+    fun callWithDuo(): Boolean {
+        val otherFrag = navController.otherFragment
+        val conversation = if (navController.isConversationListExpanded()) {
+            navController.conversationListFragment!!.expandedItem!!.conversation!!
+        } else if (otherFrag is ConversationListFragment && otherFrag.isExpanded) {
+            otherFrag.expandedItem!!.conversation!!
+        } else {
+            return false
+        }
+
+        return try {
+            val intent = activity.packageManager.getLaunchIntentForPackage("com.google.android.apps.tachyon")
+            intent.data = Uri.parse("tel:${conversation.phoneNumbers!!}")
+            activity.startActivity(intent)
+            true
+        } catch (e: Exception) {
+            activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.apps.tachyon")))
+            false
+        }
     }
 
     internal fun viewContact(): Boolean {

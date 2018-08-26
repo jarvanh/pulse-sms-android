@@ -162,6 +162,7 @@ class MainNavigationController(private val activity: MessengerActivity)
             R.id.menu_conversation_blacklist, R.id.drawer_conversation_blacklist -> return messageActionDelegate.conversationBlacklist()
             R.id.menu_conversation_schedule, R.id.drawer_conversation_schedule -> return messageActionDelegate.conversationSchedule()
             R.id.menu_contact_settings, R.id.drawer_contact_settings -> return messageActionDelegate.contactSettings()
+            R.id.menu_call_with_duo -> return messageActionDelegate.callWithDuo()
             R.id.menu_call -> return if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 messageActionDelegate.callContact()
             } else {
@@ -172,6 +173,7 @@ class MainNavigationController(private val activity: MessengerActivity)
                     messageActionDelegate.callContact()
                 }
             }
+
             else -> {
                 val folder = activity.drawerItemHelper.findFolder(id)
                 return if (folder != null) {
