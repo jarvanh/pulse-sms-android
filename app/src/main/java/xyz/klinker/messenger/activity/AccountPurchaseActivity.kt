@@ -74,6 +74,8 @@ class AccountPurchaseActivity : AppCompatActivity() {
 
         if (intent.getBooleanExtra(ARG_CHANGING_SUBSCRIPTION, false)) {
             signIn.visibility = View.INVISIBLE
+        } else {
+            findViewById<View>(R.id.buttons).visibility = View.VISIBLE
         }
 
         if (intent.getBooleanExtra(ARG_FREE_TRIAL, false)) {
@@ -83,6 +85,7 @@ class AccountPurchaseActivity : AppCompatActivity() {
             signIn.visibility = View.INVISIBLE
 
             findViewById<TextView>(R.id.select_purchase_title).setText(R.string.thanks_for_trying)
+            findViewById<View>(R.id.buttons).visibility = View.GONE
         }
     }
 

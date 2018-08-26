@@ -96,6 +96,11 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
         initWebsitePreference()
 
+//        startTrial()
+//        upgradeTrial()
+//        pickSubscription(true)
+//        pickSubscription(false)
+
         if (openTrialUpgradePreference) {
             upgradeTrial()
             openTrialUpgradePreference = false
