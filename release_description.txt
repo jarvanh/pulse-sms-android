@@ -1,5 +1,1 @@
-With v4.0.0 Pulse gets a brand new web app! It is faster, smoother, has some awesome new features, and comes with plenty of bug fixes. If you have never tried Pulse cross-platform experience, there is no better time!<br/><br/>
-
-To try it: https://pulsesms.app<br/>
-To learn more: https://blog.klinkerapps.com/upgrading-pulses-web-app<br/>
-And, it is open source: https://github.com/klinker-apps/messenger-web<br/><br/>
+This release comes with bug fixes, performance improvements, and some optimizations around setting up a Pulse account. Nothing too exciting.
