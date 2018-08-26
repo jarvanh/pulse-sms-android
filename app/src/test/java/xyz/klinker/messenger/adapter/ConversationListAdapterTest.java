@@ -228,7 +228,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         verify(summary).setText("Maybe they'll run into each other on the way back... idk");
         verify(name).setTypeface(Typeface.DEFAULT_BOLD, Typeface.ITALIC);
         verify(summary).setTypeface(Typeface.DEFAULT_BOLD, Typeface.ITALIC);
-        verify(imageLetter).setText("t");
+        verify(imageLetter).setText("T");
     }
 
     @Test
