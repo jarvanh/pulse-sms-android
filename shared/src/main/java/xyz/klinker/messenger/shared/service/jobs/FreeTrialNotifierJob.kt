@@ -19,6 +19,7 @@ import xyz.klinker.messenger.shared.util.NotificationUtils
 import xyz.klinker.messenger.shared.util.RedirectToMyAccount
 
 class FreeTrialNotifierJob : SimpleJobService() {
+
     override fun onRunJob(job: JobParameters?): Int {
         if (Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL) {
             when (Account.getDaysLeftInTrial()) {

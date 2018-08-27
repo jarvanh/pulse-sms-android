@@ -54,6 +54,7 @@ import xyz.klinker.messenger.shared.service.SimpleSubscriptionCheckService
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.service.ContactResyncService
 import xyz.klinker.messenger.shared.util.StringUtils
 import xyz.klinker.messenger.shared.util.billing.BillingHelper
@@ -128,6 +129,8 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         } else if (preference != null) {
             (findPreference(getString(R.string.pref_category_account_information)) as PreferenceCategory)
                     .removePreference(preference)
+
+            checkSubscriptions(false)
             return true
         } else {
             return true
@@ -150,22 +153,35 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
     }
 
-    private fun checkSubscriptions() {
+    private fun checkSubscriptions(runUi: Boolean = true) {
         val dialog = ProgressDialog(fragmentActivity!!)
         dialog.setMessage(getString(R.string.checking_for_active_subscriptions))
         dialog.setCancelable(false)
         dialog.isIndeterminate = true
-        dialog.show()
+
+        if (runUi) {
+            dialog.show()
+        }
 
         Thread {
             val hasSubs = billing?.hasPurchasedProduct() ?: false
 
-            try {
-                dialog.dismiss()
-            } catch (e: Exception) {
+            if (runUi) {
+                try {
+                    dialog.dismiss()
+                } catch (e: Exception) {
+                }
             }
 
             if (fragmentActivity == null) {
+                return@Thread
+            }
+
+            if (!runUi && FeatureFlags.CHECK_SUB_STATUS_ON_ACCOUNT_PAGE) {
+                if (hasSubs && Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL) {
+                    Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.SUBSCRIBER, 1L, true)
+                }
+
                 return@Thread
             }
 

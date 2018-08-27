@@ -81,6 +81,7 @@ object FeatureFlags {
     private val FLAG_OTP_PARSE = "flag_otp_parse"
     private val FLAG_MATERIAL_THEME = "flag_material_theme"
     private val FLAG_TOOLBAR_COLOR = "flag_apply_toolbar_color"
+    private val FLAG_CHECK_SUB_STATUS_ON_ACCOUNT_PAGE = "flag_check_sub_status_on_account_page"
 
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
@@ -98,19 +99,23 @@ object FeatureFlags {
     var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false
 
     // disabled for future features
+    var TOOLBAR_COLOR: Boolean = false
 
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
     var DISABLE_HARDWARE_ACCEL: Boolean = false
-    var TOOLBAR_COLOR: Boolean = false
+    var CHECK_SUB_STATUS_ON_ACCOUNT_PAGE: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
+
+        TOOLBAR_COLOR = getValue(context, sharedPrefs, FLAG_TOOLBAR_COLOR)
+
         QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
         DISABLE_HARDWARE_ACCEL = getValue(context, sharedPrefs, FLAG_DISABLE_HARDWARE_ACCEL)
-        TOOLBAR_COLOR = getValue(context, sharedPrefs, FLAG_TOOLBAR_COLOR)
+        CHECK_SUB_STATUS_ON_ACCOUNT_PAGE = getValue(context, sharedPrefs, FLAG_CHECK_SUB_STATUS_ON_ACCOUNT_PAGE)
     }
 
     fun updateFlag(context: Context, identifier: String, flag: Boolean) {
@@ -120,10 +125,12 @@ object FeatureFlags {
 
         when (identifier) {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
-            FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
-            FLAG_DISABLE_HARDWARE_ACCEL -> DISABLE_HARDWARE_ACCEL = flag
+
             FLAG_TOOLBAR_COLOR -> TOOLBAR_COLOR = flag
 
+            FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
+            FLAG_DISABLE_HARDWARE_ACCEL -> DISABLE_HARDWARE_ACCEL = flag
+            FLAG_CHECK_SUB_STATUS_ON_ACCOUNT_PAGE -> CHECK_SUB_STATUS_ON_ACCOUNT_PAGE = flag
         }
     }
 
