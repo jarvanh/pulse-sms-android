@@ -77,6 +77,7 @@ public class AnalyticsHelper {
     private static final String ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_SHOWN = "ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_SHOWN";
     private static final String ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_UPGRADE_CLICKED = "ACCOUNT_FREE_TRIAL_UPGRADED";
     private static final String ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_CANCEL_CLICKED = "ACCOUNT_FREE_TRIAL_CANCELED";
+    private static final String ACCOUNT_RESTORED_SUB_TO_TRIAL = "ACCOUNT_RESTORE_SUB_TO_TRIAL";
 
     public static void accountTutorialStarted(Context context) {
         logEvent(context, ACCOUNT_TUTORIAL_STARTED);
@@ -116,6 +117,10 @@ public class AnalyticsHelper {
 
     public static void accountFreeTrialUpgradeDialogCancelClicked(Context context) {
         logEvent(context, ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_CANCEL_CLICKED);
+    }
+
+    public static void accountRestoreSubToTrial(Context context) {
+        logEvent(context, ACCOUNT_RESTORED_SUB_TO_TRIAL);
     }
 
     public static void accountSignedUp(Context context) {

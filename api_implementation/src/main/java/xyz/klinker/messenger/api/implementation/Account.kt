@@ -48,27 +48,27 @@ object Account {
         val sharedPrefs = getSharedPrefs(context)
 
         // account info
-        this.primary = sharedPrefs.getBoolean(context.getString(R.string.api_pref_primary), false)
-        this.subscriptionType = SubscriptionType.findByTypeCode(sharedPrefs.getInt(context.getString(R.string.api_pref_subscription_type), 1))
-        this.subscriptionExpiration = sharedPrefs.getLong(context.getString(R.string.api_pref_subscription_expiration), -1)
-        this.trialStartTime = sharedPrefs.getLong(context.getString(R.string.api_pref_trial_start), -1)
-        this.myName = sharedPrefs.getString(context.getString(R.string.api_pref_my_name), null)
-        this.myPhoneNumber = sharedPrefs.getString(context.getString(R.string.api_pref_my_phone_number), null)
-        this.deviceId = sharedPrefs.getString(context.getString(R.string.api_pref_device_id), null)
-        this.accountId = sharedPrefs.getString(context.getString(R.string.api_pref_account_id), null)
-        this.salt = sharedPrefs.getString(context.getString(R.string.api_pref_salt), null)
-        this.passhash = sharedPrefs.getString(context.getString(R.string.api_pref_passhash), null)
-        this.key = sharedPrefs.getString(context.getString(R.string.api_pref_key), null)
+        Account.primary = sharedPrefs.getBoolean(context.getString(R.string.api_pref_primary), false)
+        Account.subscriptionType = SubscriptionType.findByTypeCode(sharedPrefs.getInt(context.getString(R.string.api_pref_subscription_type), 1))
+        Account.subscriptionExpiration = sharedPrefs.getLong(context.getString(R.string.api_pref_subscription_expiration), -1)
+        Account.trialStartTime = sharedPrefs.getLong(context.getString(R.string.api_pref_trial_start), -1)
+        Account.myName = sharedPrefs.getString(context.getString(R.string.api_pref_my_name), null)
+        Account.myPhoneNumber = sharedPrefs.getString(context.getString(R.string.api_pref_my_phone_number), null)
+        Account.deviceId = sharedPrefs.getString(context.getString(R.string.api_pref_device_id), null)
+        Account.accountId = sharedPrefs.getString(context.getString(R.string.api_pref_account_id), null)
+        Account.salt = sharedPrefs.getString(context.getString(R.string.api_pref_salt), null)
+        Account.passhash = sharedPrefs.getString(context.getString(R.string.api_pref_passhash), null)
+        Account.key = sharedPrefs.getString(context.getString(R.string.api_pref_key), null)
 
-        this.hasPurchased = sharedPrefs.getBoolean(context.getString(R.string.api_pref_has_purchased), false)
+        Account.hasPurchased = sharedPrefs.getBoolean(context.getString(R.string.api_pref_has_purchased), false)
 
         if (key == null && passhash != null && accountId != null && salt != null) {
             // we have all the requirements to recompute the key,
             // not sure why this wouldn't have worked in the first place..
             recomputeKey(context)
-            this.key = sharedPrefs.getString(context.getString(R.string.api_pref_key), null)
+            Account.key = sharedPrefs.getString(context.getString(R.string.api_pref_key), null)
 
-            val secretKey = SecretKeySpec(Base64.decode(key, Base64.DEFAULT), "AES")
+            val secretKey = SecretKeySpec(Base64.decode(Account.key, Base64.DEFAULT), "AES")
             encryptor = EncryptionUtils(secretKey)
         } else if (key == null && accountId != null) {
             // we cannot compute the key, uh oh. lets just start up the login activity and grab them...
@@ -76,13 +76,13 @@ object Account {
             // something, or receiving a message. But they will have to re-login sometime I guess
             context.startActivity(Intent(context, LoginActivity::class.java))
         } else if (key != null) {
-            val secretKey = SecretKeySpec(Base64.decode(key, Base64.DEFAULT), "AES")
+            val secretKey = SecretKeySpec(Base64.decode(Account.key, Base64.DEFAULT), "AES")
             encryptor = EncryptionUtils(secretKey)
         }
 
         val application = context.applicationContext
         if (application is AccountInvalidator) {
-            application.onAccountInvalidated(this)
+            application.onAccountInvalidated(Account)
         }
     }
 
@@ -92,7 +92,7 @@ object Account {
 
     fun forceUpdate(context: Context): Account {
         init(context)
-        return this
+        return Account
     }
 
     fun clearAccount(context: Context) {
@@ -113,8 +113,8 @@ object Account {
     }
 
     fun updateSubscription(context: Context, type: SubscriptionType?, expiration: Long?, sendToApi: Boolean) {
-        this.subscriptionType = type
-        this.subscriptionExpiration = expiration!!
+        Account.subscriptionType = type
+        Account.subscriptionExpiration = expiration!!
 
         getSharedPrefs(context).edit()
                 .putInt(context.getString(R.string.api_pref_subscription_type), type?.typeCode ?: 0)
@@ -127,7 +127,7 @@ object Account {
     }
 
     fun setName(context: Context, name: String?) {
-        this.myName = name
+        Account.myName = name
 
         getSharedPrefs(context).edit()
                 .putString(context.getString(R.string.api_pref_my_name), name)
@@ -135,7 +135,7 @@ object Account {
     }
 
     fun setPhoneNumber(context: Context, phoneNumber: String?) {
-        this.myPhoneNumber = phoneNumber
+        Account.myPhoneNumber = phoneNumber
 
         getSharedPrefs(context).edit()
                 .putString(context.getString(R.string.api_pref_my_name), phoneNumber)
@@ -143,7 +143,7 @@ object Account {
     }
 
     fun setPrimary(context: Context, primary: Boolean) {
-        this.primary = primary
+        Account.primary = primary
 
         getSharedPrefs(context).edit()
                 .putBoolean(context.getString(R.string.api_pref_primary), primary)
@@ -151,7 +151,7 @@ object Account {
     }
 
     fun setDeviceId(context: Context, deviceId: String?) {
-        this.deviceId = deviceId
+        Account.deviceId = deviceId
 
         getSharedPrefs(context).edit()
                 .putString(context.getString(R.string.api_pref_device_id), deviceId)
@@ -159,7 +159,7 @@ object Account {
     }
 
     fun setHasPurchased(context: Context, hasPurchased: Boolean) {
-        this.hasPurchased = hasPurchased
+        Account.hasPurchased = hasPurchased
 
         getSharedPrefs(context).edit()
                 .putBoolean(context.getString(R.string.api_pref_has_purchased), hasPurchased)

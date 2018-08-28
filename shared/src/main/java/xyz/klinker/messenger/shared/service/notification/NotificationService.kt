@@ -80,7 +80,7 @@ class Notifier(private val context: Context) {
                 }
 
                 val numberToNotify = NotificationServiceHelper.calculateNumberOfNotificationsToProvide(context, conversations)
-                for (i in 0 until numberToNotify) {
+                for (i in 0 until if (numberToNotify < conversations.size) numberToNotify else conversations.size ) {
                     val conversation = conversations[i]
                     conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
                 }

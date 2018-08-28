@@ -371,7 +371,9 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     }
 
     override fun onActivityResult(requestCode: Int, responseCode: Int, data: Intent?) {
+        checkSubscriptions(false)
         Settings.forceUpdate(fragmentActivity!!)
+
         if (requestCode == TRIAL_REQUEST && responseCode == RESULT_START_TRIAL) {
             startLoginActivity(false)
         } else if (requestCode == PURCHASE_REQUEST && responseCode == RESULT_SIGN_IN) {
