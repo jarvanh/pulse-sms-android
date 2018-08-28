@@ -182,6 +182,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
             if (!runUi) {
                 if (FeatureFlags.CHECK_SUB_STATUS_ON_ACCOUNT_PAGE && hasSubs && Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL) {
                     Account.updateSubscription(fragmentActivity!!, Account.SubscriptionType.SUBSCRIBER, 1L, true)
+                    AnalyticsHelper.accountRestoreSubToTrial(fragmentActivity!!)
                 }
 
                 return@Thread
