@@ -27,6 +27,12 @@
     <!--</version>-->
 
     <version
+        name="4.0.6"
+        description="August 30th, 2018">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.0.5"
         description="August 27th, 2018">
         <text>Optimizations around signing up for a Pulse account</text>
