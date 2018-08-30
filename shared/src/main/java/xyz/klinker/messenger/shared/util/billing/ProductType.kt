@@ -7,6 +7,6 @@ enum class ProductType private constructor(val identifier: String) {
         get() = if (this == SINGLE_PURCHASE) {
             arrayOf("lifetime")
         } else {
-            arrayOf("subscription_one_month", "subscription_three_months", "subscription_one_year")
+            arrayOf("subscription_one_month_no_trial", "subscription_three_months_no_trial", "subscription_one_year_no_trial")
         }
 }
