@@ -74,6 +74,8 @@ public class AnalyticsHelper {
     private static final String ACCOUNT_LOGGED_IN = "ACCOUNT_LOGGED_IN";
     private static final String ACCOUNT_START_FREE_TRIAL_TUTORIAL = "ACCOUNT_START_FREE_TRIAL_TUTORIAL";
     private static final String ACCOUNT_ACCEPT_FREE_TRIAL = "ACCOUNT_ACCEPT_FREE_TRIAL";
+    private static final String ACCOUNT_EXPIRED_FREE_TRIAL = "ACCOUNT_EXPIRED_FREE_TRIAL";
+    private static final String ACCOUNT_TRIAL_DAY = "TRIAL_DAY_";
     private static final String ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_SHOWN = "ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_SHOWN";
     private static final String ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_UPGRADE_CLICKED = "ACCOUNT_FREE_TRIAL_UPGRADED";
     private static final String ACCOUNT_FREE_TRIAL_UPGRADE_DIALOG_CANCEL_CLICKED = "ACCOUNT_FREE_TRIAL_CANCELED";
@@ -105,6 +107,14 @@ public class AnalyticsHelper {
 
     public static void accountAcceptFreeTrial(Context context) {
         logEvent(context, ACCOUNT_ACCEPT_FREE_TRIAL);
+    }
+
+    public static void accountExpiredFreeTrial(Context context) {
+        logEvent(context, ACCOUNT_EXPIRED_FREE_TRIAL);
+    }
+
+    public static void accountTrialDay(Context context, int daysLeftInTrial) {
+        logEvent(context, ACCOUNT_TRIAL_DAY + daysLeftInTrial);
     }
 
     public static void accountFreeTrialUpgradeDialogShown(Context context) {

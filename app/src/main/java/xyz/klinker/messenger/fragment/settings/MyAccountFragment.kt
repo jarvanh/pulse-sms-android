@@ -104,6 +104,8 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
         if (openTrialUpgradePreference) {
             upgradeTrial()
+
+            AnalyticsHelper.accountExpiredFreeTrial(fragmentActivity!!)
             AnalyticsHelper.accountFreeTrialUpgradeDialogShown(fragmentActivity!!)
             
             openTrialUpgradePreference = false

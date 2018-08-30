@@ -13,6 +13,7 @@ import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.Trigger
 import com.firebase.jobdispatcher.Lifetime
 import xyz.klinker.messenger.api.implementation.Account
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.NotificationUtils
@@ -22,7 +23,9 @@ class FreeTrialNotifierJob : SimpleJobService() {
 
     override fun onRunJob(job: JobParameters?): Int {
         if (Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL) {
-            when (Account.getDaysLeftInTrial()) {
+            val daysLeft = Account.getDaysLeftInTrial()
+            AnalyticsHelper.accountTrialDay(this, daysLeft)
+            when (daysLeft) {
 //                7 -> notifyDaysLeft(7)
 //                6 -> notifyDaysLeft(6)
 //                5 -> notifyDaysLeft(5)
