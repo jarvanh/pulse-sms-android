@@ -106,11 +106,11 @@
     <color name="colorToReplaceWhite">#F3F3F3</color>
 
     <!-- Theme Specific Colors -->
-    <color name="background">#EEEEEE</color>
+    <color name="background">#F2F2F2</color>
     <color name="dark_background">#374248</color>
     <color name="quickReplyBackground">#FFFFFF</color>
     <color name="replyBarCard">#FFFFFF</color>
-    <color name="swipeBackground">#D5D5D5</color>
+    <color name="swipeBackground">#F2F2F2</color>
     <color name="drawerBackground">@android:color/white</color>
     <color name="selectedBackground">#EEEEEE</color>
     <color name="primaryText">#E2000000</color>
