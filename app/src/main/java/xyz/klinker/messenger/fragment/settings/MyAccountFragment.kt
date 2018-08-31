@@ -97,6 +97,8 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
         initWebsitePreference()
 
+        Thread { ApiUtils.recordNewPurchase("lifetime") }.start()
+
 //        startTrial()
 //        upgradeTrial()
 //        pickSubscription(true)
@@ -550,6 +552,9 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         billing!!.purchaseItem(fragmentActivity!!, product, object : PurchasedItemCallback {
             override fun onItemPurchased(productId: String) {
                 if (fragmentActivity != null) {
+                    // record the purchase to the API
+                    Thread { ApiUtils.recordNewPurchase(product.productId) }.start()
+
                     AnalyticsHelper.accountCompetedPurchase(fragmentActivity!!)
                     AnalyticsHelper.userSubscribed(fragmentActivity!!, productId)
                     Account.setHasPurchased(fragmentActivity!!, true)

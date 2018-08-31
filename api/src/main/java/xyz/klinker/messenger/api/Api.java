@@ -53,6 +53,7 @@ import xyz.klinker.messenger.api.service.DeviceService;
 import xyz.klinker.messenger.api.service.DraftService;
 import xyz.klinker.messenger.api.service.FolderService;
 import xyz.klinker.messenger.api.service.MessageService;
+import xyz.klinker.messenger.api.service.PurchaseService;
 import xyz.klinker.messenger.api.service.ScheduledMessageService;
 import xyz.klinker.messenger.api.service.TemplateService;
 
@@ -243,6 +244,12 @@ public class Api {
      */
     public TemplateService template() {
         return retrofit.create(TemplateService.class);
+    }
+    /**
+     * Gets a service that can be used for template requests.
+     */
+    public PurchaseService purchases() {
+        return retrofit.create(PurchaseService.class);
     }
 
     /**
