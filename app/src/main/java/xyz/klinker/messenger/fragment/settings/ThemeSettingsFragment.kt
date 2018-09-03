@@ -82,11 +82,6 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                     activity?.recreate()
                     true
                 }
-
-        if (!FeatureFlags.TOOLBAR_COLOR) {
-            (findPreference(getString(R.string.pref_general_category)) as PreferenceCategory)
-                    .removePreference(findPreference(getString(R.string.pref_apply_primary_color_toolbar)))
-        }
     }
 
     private fun initUseGlobalTheme() {
