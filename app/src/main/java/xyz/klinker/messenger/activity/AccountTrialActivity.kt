@@ -38,12 +38,8 @@ class AccountTrialActivity : AppCompatActivity() {
 
         if (Settings.mainColorSet.color == Color.WHITE) {
             findViewById<View>(R.id.initial_layout).setBackgroundColor(ColorSet.TEAL(this).color)
-            (findViewById<View>(R.id.try_it) as TextView)
-                    .setTextColor(ColorStateList.valueOf(ColorSet.TEAL(this).color))
         } else {
             findViewById<View>(R.id.initial_layout).setBackgroundColor(Settings.mainColorSet.color)
-            (findViewById<View>(R.id.try_it) as TextView)
-                    .setTextColor(ColorStateList.valueOf(Settings.mainColorSet.color))
         }
 
         Handler().postDelayed({ this.circularRevealIn() }, 100)
