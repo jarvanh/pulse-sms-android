@@ -688,17 +688,18 @@
     <string name="optimized_for_all_your_devices">Pulse is optimized for <b>all</b> your devices.
         Send texts from the web, a desktop computer, your tablet, a watch, and even your TV.</string>
     <string name="true_imessage_competitor">The first <b>true</b> iMessage competitor for Android.</string>
-    <string name="trial_description">No completion can touch Pulse\'s <b>endless platform support</b> paired with it\'s <b>low price</b>. Messages sync between all your devices, instantly and seamlessly.</string>
+    <string name="trial_description">No competition can touch Pulse\'s <b>endless platform support</b> paired with it\'s <b>low price</b>. Messages sync between all your devices, instantly and seamlessly.</string>
     <string name="purchase_description">Give the online version a try, for <b>seven days</b>, then you decide how you want to support the app:\n\n<b>$10.99</b> for a lifetime membership\n<b>$5.99</b> per year\n<b>$1.99</b> every three months\n<b>$0.99</b> per month</string>
-    <string name="try_it">Start your free trial!</string>
+    <string name="start_free_trial">Start your free trial!</string>
+    <string name="create_your_pulse_account">Create a Pulse account!</string>
+    <string name="try_it">Try it!</string>
     <string name="select_purchase">Select Purchase</string>
     <string name="have_an_account">Have an account?\nSign in</string>
     <string name="select_a_purchase">Select a Purchase</string>
     <string name="select_a_purchase_description">Choose any of the three subscriptions, or select the <b>lifetime membership</b> to make a one-time purchase for the app.</string>
     <string name="seven_days_free">7 days free!</string>
-    <string name="competition_cant_beat">The competition can\'t touch our prices, speed, or service -
-        <b>take 7 days</b> to find out for yourself!</string>
-    <string name="select_a_trial_below">Select one of the three subscription options below to start your <b>free trial</b>.</string>
+    <string name="competition_cant_beat"><b>Take 7 days FREE</b> to find out for yourself why no one can touch our <b>speed, pricing, or service</b>.</string>
+    <string name="select_a_trial_below">Select any of the three subscription options below to start your <b>free trial</b>.</string>
     <string name="charged_after_trial">Charged after the trial:</string>
     <string name="monthly_purchase_improved">$0.99 /\nmonth</string>
     <string name="three_month_purchase_improved">$1.99 /\n3 month</string>

@@ -36,16 +36,28 @@ class ProductAvailable(val type: ProductType, val productId: String, val price: 
             return ProductAvailable(ProductType.SINGLE_PURCHASE, "lifetime", "$10.99")
         }
 
-        fun createYearly(): ProductAvailable {
+        fun createYearlyNoTrial(): ProductAvailable {
             return ProductAvailable(ProductType.SUBSCRIPTION, "subscription_one_year_no_trial", "$5.99")
         }
 
-        fun createThreeMonth(): ProductAvailable {
+        fun createThreeMonthNoTrial(): ProductAvailable {
             return ProductAvailable(ProductType.SUBSCRIPTION, "subscription_three_months_no_trial", "$1.99")
         }
 
-        fun createMonthly(): ProductAvailable {
+        fun createMonthlyNoTrial(): ProductAvailable {
             return ProductAvailable(ProductType.SUBSCRIPTION, "subscription_one_month_no_trial", "$0.99")
+        }
+
+        fun createYearlyTrial(): ProductAvailable {
+            return ProductAvailable(ProductType.SUBSCRIPTION, "subscription_one_year", "$5.99")
+        }
+
+        fun createThreeMonthTrial(): ProductAvailable {
+            return ProductAvailable(ProductType.SUBSCRIPTION, "subscription_three_months", "$1.99")
+        }
+
+        fun createMonthlyTrial(): ProductAvailable {
+            return ProductAvailable(ProductType.SUBSCRIPTION, "subscription_one_month", "$0.99")
         }
     }
 }

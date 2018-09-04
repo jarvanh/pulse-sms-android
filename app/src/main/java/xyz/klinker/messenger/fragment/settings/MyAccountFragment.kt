@@ -26,7 +26,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AlertDialog
@@ -38,10 +37,7 @@ import android.widget.Toast
 import java.util.Date
 
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.activity.AccountPurchaseActivity
-import xyz.klinker.messenger.activity.AccountTrialActivity
-import xyz.klinker.messenger.activity.InitialLoadActivity
-import xyz.klinker.messenger.activity.MessengerActivity
+import xyz.klinker.messenger.activity.*
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.api.implementation.LoginActivity
@@ -51,10 +47,8 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.ApiUploadService
 import xyz.klinker.messenger.shared.service.SimpleLifetimeSubscriptionCheckService
 import xyz.klinker.messenger.shared.service.SimpleSubscriptionCheckService
-import xyz.klinker.messenger.shared.service.jobs.SignoutJob
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.service.ContactResyncService
 import xyz.klinker.messenger.shared.util.StringUtils
 import xyz.klinker.messenger.shared.util.billing.BillingHelper
@@ -99,6 +93,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
         Thread { ApiUtils.recordNewPurchase("lifetime") }.start()
 
+//        startInitialPurchase()
 //        startTrial()
 //        upgradeTrial()
 //        pickSubscription(true)
@@ -202,6 +197,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                         pickSubscription(false)
                     } else {
                         startTrial()
+//                        startInitialPurchase()
                     }
                 } catch (e: IllegalStateException) {
                     // resources bad, fragment destroyed
@@ -375,56 +371,6 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, responseCode: Int, data: Intent?) {
-        checkSubscriptions(false)
-        Settings.forceUpdate(fragmentActivity!!)
-
-        if (requestCode == TRIAL_REQUEST && responseCode == RESULT_START_TRIAL) {
-            startLoginActivity(false)
-        } else if (requestCode == PURCHASE_REQUEST && responseCode == RESULT_SIGN_IN) {
-            startLoginActivity(true)
-        } else if (requestCode == PURCHASE_REQUEST && responseCode == AccountPurchaseActivity.RESULT_CANCEL_TRIAL) {
-            promptCancelTrial()
-        } else if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_CANCELED) {
-            purchaseCancelled()
-        } else if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
-            val productId = data?.getStringExtra(AccountPurchaseActivity.PRODUCT_ID_EXTRA)
-            Log.v("pulse_purchase", "on activity result. Purchasing product: $productId")
-
-            when (productId) {
-                ProductAvailable.createLifetime().productId -> purchaseProduct(ProductAvailable.createLifetime())
-                ProductAvailable.createYearly().productId -> purchaseProduct(ProductAvailable.createYearly())
-                ProductAvailable.createThreeMonth().productId -> purchaseProduct(ProductAvailable.createThreeMonth())
-                ProductAvailable.createMonthly().productId -> purchaseProduct(ProductAvailable.createMonthly())
-            }
-        } else if (!billing!!.handleOnActivityResult(requestCode, responseCode, data)) {
-            if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
-                if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
-                    ApiUploadService.start(fragmentActivity!!)
-                    returnToConversationsAfterLogin()
-
-                    val nav = fragmentActivity!!.findViewById<View>(R.id.navigation_view) as NavigationView
-                    nav.menu.findItem(R.id.drawer_account).setTitle(R.string.menu_account)
-
-                    fragmentActivity!!.startService(Intent(fragmentActivity!!, SimpleLifetimeSubscriptionCheckService::class.java))
-                } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
-                    restoreAccount()
-                }
-            } else if (requestCode == ONBOARDING_REQUEST) {
-                if (responseCode == RESPONSE_SKIP_TRIAL_FOR_NOW) {
-                    returnToConversationsAfterLogin()
-                } else if (responseCode == RESPONSE_START_TRIAL) {
-                    val preference = preferenceScreen
-                            .findPreference(getString(R.string.pref_my_account_setup))
-
-                    if (preference.onPreferenceClickListener != null) {
-                        preference.onPreferenceClickListener.onPreferenceClick(preference)
-                    }
-                }
-            }
-        }
-    }
-
     private fun restoreAccount() {
         val dialog = ProgressDialog(fragmentActivity!!)
         dialog.setCancelable(false)
@@ -521,31 +467,57 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
     }
 
-    private fun startLoginActivity(signInOnly: Boolean = false) {
-        val intent = Intent(context, LoginActivity::class.java)
-        intent.putExtra(LoginActivity.ARG_FORCE_NO_CREATE_ACCOUNT, signInOnly)
-        intent.putExtra(LoginActivity.ARG_BACKGROUND_COLOR, Settings.mainColorSet.color)
-        intent.putExtra(LoginActivity.ARG_ACCENT_COLOR, Settings.mainColorSet.colorAccent)
-        startActivityForResult(intent, SETUP_REQUEST)
-    }
+    override fun onActivityResult(requestCode: Int, responseCode: Int, data: Intent?) {
+        checkSubscriptions(false)
+        Settings.forceUpdate(fragmentActivity!!)
 
-    private fun pickSubscription(changingSubscription: Boolean = false) {
-        val intent = Intent(fragmentActivity!!, AccountPurchaseActivity::class.java)
-        intent.putExtra(AccountPurchaseActivity.ARG_CHANGING_SUBSCRIPTION, changingSubscription)
+        if (requestCode == TRIAL_REQUEST && responseCode == RESULT_START_TRIAL) {
+            startLoginActivity(false)
+        } else if (requestCode == PURCHASE_REQUEST && responseCode == RESULT_SIGN_IN) {
+            startLoginActivity(true)
+        } else if (requestCode == PURCHASE_REQUEST && responseCode == AccountPickSubscriptionActivity.RESULT_CANCEL_TRIAL) {
+            promptCancelTrial()
+        } else if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_CANCELED) {
+            purchaseCancelled()
+        } else if (requestCode == PURCHASE_REQUEST && responseCode == Activity.RESULT_OK) {
+            val productId = data?.getStringExtra(AccountPickSubscriptionActivity.PRODUCT_ID_EXTRA)
+            Log.v("pulse_purchase", "on activity result. Purchasing product: $productId")
 
-        startActivityForResult(intent, PURCHASE_REQUEST)
-    }
+            when (productId) {
+                ProductAvailable.createLifetime().productId -> purchaseProduct(ProductAvailable.createLifetime())
+                ProductAvailable.createYearlyTrial().productId -> purchaseProduct(ProductAvailable.createYearlyTrial())
+                ProductAvailable.createYearlyNoTrial().productId -> purchaseProduct(ProductAvailable.createYearlyNoTrial())
+                ProductAvailable.createThreeMonthTrial().productId -> purchaseProduct(ProductAvailable.createThreeMonthTrial())
+                ProductAvailable.createThreeMonthNoTrial().productId -> purchaseProduct(ProductAvailable.createThreeMonthNoTrial())
+                ProductAvailable.createMonthlyTrial().productId -> purchaseProduct(ProductAvailable.createMonthlyTrial())
+                ProductAvailable.createMonthlyNoTrial().productId -> purchaseProduct(ProductAvailable.createMonthlyNoTrial())
+            }
+        } else if (!billing!!.handleOnActivityResult(requestCode, responseCode, data)) {
+            if (requestCode == SETUP_REQUEST && responseCode != Activity.RESULT_CANCELED) {
+                if (responseCode == LoginActivity.RESULT_START_DEVICE_SYNC) {
+                    ApiUploadService.start(fragmentActivity!!)
+                    returnToConversationsAfterLogin()
 
-    private fun upgradeTrial() {
-        val intent = Intent(fragmentActivity!!, AccountPurchaseActivity::class.java)
-        intent.putExtra(AccountPurchaseActivity.ARG_FREE_TRIAL, true)
+                    val nav = fragmentActivity!!.findViewById<View>(R.id.navigation_view) as NavigationView
+                    nav.menu.findItem(R.id.drawer_account).setTitle(R.string.menu_account)
 
-        startActivityForResult(intent, PURCHASE_REQUEST)
-    }
+                    fragmentActivity!!.startService(Intent(fragmentActivity!!, SimpleLifetimeSubscriptionCheckService::class.java))
+                } else if (responseCode == LoginActivity.RESULT_START_NETWORK_SYNC) {
+                    restoreAccount()
+                }
+            } else if (requestCode == ONBOARDING_REQUEST) {
+                if (responseCode == RESPONSE_SKIP_TRIAL_FOR_NOW) {
+                    returnToConversationsAfterLogin()
+                } else if (responseCode == RESPONSE_START_TRIAL) {
+                    val preference = preferenceScreen
+                            .findPreference(getString(R.string.pref_my_account_setup))
 
-    private fun startTrial() {
-        val intent = Intent(fragmentActivity!!, AccountTrialActivity::class.java)
-        startActivityForResult(intent, TRIAL_REQUEST)
+                    if (preference.onPreferenceClickListener != null) {
+                        preference.onPreferenceClickListener.onPreferenceClick(preference)
+                    }
+                }
+            }
+        }
     }
 
     private fun purchaseProduct(product: ProductAvailable) {
@@ -615,6 +587,48 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                 .setPositiveButton(R.string.ok) { _, _ -> deleteAccount() }
                 .show()
     }
+
+
+
+    // ACCOUNT ACTIONS
+
+    private fun startInitialPurchase() {
+        val intent = Intent(fragmentActivity!!, AccountPurchaseActivity::class.java)
+        startActivityForResult(intent, PURCHASE_REQUEST)
+    }
+
+
+    private fun startTrial() {
+        val intent = Intent(fragmentActivity!!, AccountTrialActivity::class.java)
+        startActivityForResult(intent, TRIAL_REQUEST)
+    }
+
+    private fun upgradeTrial() {
+        val intent = Intent(fragmentActivity!!, AccountPickSubscriptionActivity::class.java)
+        intent.putExtra(AccountPickSubscriptionActivity.ARG_FREE_TRIAL, true)
+
+        startActivityForResult(intent, PURCHASE_REQUEST)
+    }
+
+    private fun pickSubscription(changingSubscription: Boolean = false) {
+        val intent = Intent(fragmentActivity!!, AccountPickSubscriptionActivity::class.java)
+        intent.putExtra(AccountPickSubscriptionActivity.ARG_CHANGING_SUBSCRIPTION, changingSubscription)
+
+        startActivityForResult(intent, PURCHASE_REQUEST)
+    }
+
+    private fun startLoginActivity(signInOnly: Boolean = false) {
+        val intent = Intent(context, LoginActivity::class.java)
+        intent.putExtra(LoginActivity.ARG_FORCE_NO_CREATE_ACCOUNT, signInOnly)
+        intent.putExtra(LoginActivity.ARG_BACKGROUND_COLOR, Settings.mainColorSet.color)
+        intent.putExtra(LoginActivity.ARG_ACCENT_COLOR, Settings.mainColorSet.colorAccent)
+        startActivityForResult(intent, SETUP_REQUEST)
+    }
+
+
+
+
+
 
     companion object {
         val ONBOARDING_REQUEST = 54320

@@ -22,8 +22,6 @@
     android:background="@color/api_window_background"
     tools:ignore="Overdraw">
 
-    <include layout="@layout/page_account_intro" />
-
-    <include layout="@layout/page_purchase_options" />
+    <include layout="@layout/page_pick_subscription_options" />
 
 </FrameLayout>

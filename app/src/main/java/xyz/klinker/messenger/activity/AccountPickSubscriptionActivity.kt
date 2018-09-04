@@ -3,7 +3,6 @@ package xyz.klinker.messenger.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -12,7 +11,7 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewAnimationUtils
-import android.widget.Toast
+import android.widget.TextView
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
@@ -23,10 +22,7 @@ import xyz.klinker.messenger.shared.util.DensityUtil
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable
 import xyz.klinker.messenger.shared.util.billing.ProductType
 
-class AccountPurchaseActivity : AppCompatActivity() {
-
-    private var isInitial = true
-    private var revealedPurchaseOptions = false
+class AccountPickSubscriptionActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,33 +30,19 @@ class AccountPurchaseActivity : AppCompatActivity() {
         AnalyticsHelper.accountTutorialStarted(this)
 
         setResult(Activity.RESULT_CANCELED)
-        setContentView(R.layout.activity_account_purchase)
-        setUpInitialLayout()
+        setContentView(R.layout.activity_account_pick_subscription)
+        setUpPurchaseLayout()
 
         if (Settings.mainColorSet.color == Color.WHITE) {
-            findViewById<View>(R.id.initial_layout).setBackgroundColor(ColorSet.TEAL(this).color)
             findViewById<View>(R.id.purchase_layout).setBackgroundColor(ColorSet.TEAL(this).color)
         } else {
-            findViewById<View>(R.id.initial_layout).setBackgroundColor(Settings.mainColorSet.color)
             findViewById<View>(R.id.purchase_layout).setBackgroundColor(Settings.mainColorSet.color)
         }
 
         Handler().postDelayed({ this.circularRevealIn() }, 100)
     }
 
-    private fun setUpInitialLayout() {
-        findViewById<View>(R.id.try_it).setOnClickListener { tryIt() }
-
-        val startTime: Long = 500
-        quickViewReveal(findViewById(R.id.icon_watch), startTime)
-        quickViewReveal(findViewById(R.id.icon_tablet), startTime + 75)
-        quickViewReveal(findViewById(R.id.icon_computer), startTime + 150)
-        quickViewReveal(findViewById(R.id.icon_phone), startTime + 225)
-        quickViewReveal(findViewById(R.id.icon_notify), startTime + 300)
-    }
-
-    private fun tryIt() {
-        slidePurchaseOptionsIn()
+    private fun setUpPurchaseLayout() {
         AnalyticsHelper.accountTutorialFinished(this)
 
         // set up purchasing views here
@@ -68,26 +50,36 @@ class AccountPurchaseActivity : AppCompatActivity() {
         val threeMonth = findViewById<View>(R.id.three_month)
         val yearly = findViewById<View>(R.id.yearly)
         val lifetime = findViewById<View>(R.id.lifetime)
+        val cancelTrial = findViewById<View>(R.id.cancel_trial)
         val signIn = findViewById<View>(R.id.sign_in)
 
-        if (!revealedPurchaseOptions) {
-            val startTime: Long = 300
-            quickViewReveal(yearly, startTime)
-            quickViewReveal(threeMonth, startTime + 75)
-            quickViewReveal(monthly, startTime + 150)
-            quickViewReveal(lifetime, startTime + 225)
+        val startTime: Long = 300
+        quickViewReveal(yearly, startTime)
+        quickViewReveal(threeMonth, startTime + 75)
+        quickViewReveal(monthly, startTime + 150)
+        quickViewReveal(lifetime, startTime + 225)
 
-            revealedPurchaseOptions = true
-        }
-
-        monthly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createMonthlyTrial()) }
-        threeMonth.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonthTrial()) }
-        yearly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearlyTrial()) }
+        monthly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createMonthlyNoTrial()) }
+        threeMonth.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonthNoTrial()) }
+        yearly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearlyNoTrial()) }
         lifetime.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createLifetime()) }
+        cancelTrial.setOnClickListener { finishWithTrialCancellation() }
         signIn.setOnClickListener { startSignIn() }
 
         if (intent.getBooleanExtra(ARG_CHANGING_SUBSCRIPTION, false)) {
             signIn.visibility = View.INVISIBLE
+        } else {
+            findViewById<View>(R.id.buttons).visibility = View.VISIBLE
+        }
+
+        if (intent.getBooleanExtra(ARG_FREE_TRIAL, false)) {
+            quickViewReveal(cancelTrial, startTime + 300)
+
+            cancelTrial.visibility = View.VISIBLE
+            signIn.visibility = View.INVISIBLE
+
+            findViewById<TextView>(R.id.select_purchase_title).setText(R.string.thanks_for_trying)
+            findViewById<View>(R.id.buttons).visibility = View.GONE
         }
     }
 
@@ -97,10 +89,17 @@ class AccountPurchaseActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, result)
 
         if (product.type == ProductType.SUBSCRIPTION) {
-            Toast.makeText(this, R.string.subscription_toast, Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, R.string.subscription_toast, Toast.LENGTH_LONG).show()
         }
 
         AnalyticsHelper.accountSelectedPurchase(this)
+        finish()
+    }
+
+    private fun finishWithTrialCancellation() {
+        AnalyticsHelper.accountFreeTrialUpgradeDialogCancelClicked(this)
+
+        setResult(RESULT_CANCEL_TRIAL)
         finish()
     }
 
@@ -112,14 +111,15 @@ class AccountPurchaseActivity : AppCompatActivity() {
     }
 
     private fun warnOfPlayStoreSubscriptionProcess(product: ProductAvailable) {
-        AlertDialog.Builder(this, R.style.SubscriptionPicker)
-                .setMessage(R.string.play_store_subscription_warning)
-                .setPositiveButton(R.string.ok) { _, _ -> finishWithPurchaseResult(product) }
-                .show()
+//        AlertDialog.Builder(this, R.style.SubscriptionPicker)
+//                .setMessage(R.string.play_store_subscription_warning)
+//                .setPositiveButton(R.string.ok) { _, _ -> finishWithPurchaseResult(product) }
+//                .show()
+        finishWithPurchaseResult(product)
     }
 
     private fun circularRevealIn() {
-        val view = findViewById<View>(R.id.initial_layout)
+        val view = findViewById<View>(R.id.purchase_layout)
         view.visibility = View.VISIBLE
 
         try {
@@ -176,78 +176,13 @@ class AccountPurchaseActivity : AppCompatActivity() {
                 .start()
     }
 
-    private fun slidePurchaseOptionsIn() {
-        slideIn(findViewById(R.id.purchase_layout))
-    }
-
-    private fun slideIn(view: View) {
-        isInitial = false
-        val initial = findViewById<View>(R.id.initial_layout)
-
-        view.visibility = View.VISIBLE
-        view.alpha = 0f
-        view.translationX = view.width.toFloat()
-        view.animate()
-                .alpha(1f)
-                .translationX(0f)
-                .setListener(null)
-                .start()
-
-        initial.animate()
-                .alpha(0f)
-                .translationX((-1 * initial.width).toFloat())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        super.onAnimationEnd(animation)
-                        initial.visibility = View.INVISIBLE
-                        initial.translationX = 0f
-                    }
-                }).start()
-    }
-
-    private fun slideOut() {
-        isInitial = true
-        val visible = findVisibleHolder()
-        val initial = findViewById<View>(R.id.initial_layout)
-
-        visible.animate()
-                .alpha(0f)
-                .translationX(visible.width.toFloat())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        super.onAnimationEnd(animation)
-                        visible.visibility = View.INVISIBLE
-                        visible.translationX = 0f
-                    }
-                }).start()
-
-        initial.visibility = View.VISIBLE
-        initial.alpha = 0f
-        initial.translationX = (-1 * initial.width).toFloat()
-        initial.animate()
-                .alpha(1f)
-                .translationX(0f)
-                .setListener(null)
-                .start()
-    }
-
     private fun findVisibleHolder(): View {
-        val initial = findViewById<View>(R.id.initial_layout)
         val purchase = findViewById<View>(R.id.purchase_layout)
-
-        return if (initial.visibility != View.INVISIBLE) {
-            initial
-        } else {
-            purchase
-        }
+        return purchase
     }
 
     override fun onBackPressed() {
-        if (isInitial) {
-            circularRevealOut()
-        } else {
-            slideOut()
-        }
+        circularRevealOut()
     }
 
     private fun close() {
@@ -258,5 +193,8 @@ class AccountPurchaseActivity : AppCompatActivity() {
     companion object {
         val PRODUCT_ID_EXTRA = "product_id"
         val ARG_CHANGING_SUBSCRIPTION = "arg_changing_subscription"
+        val ARG_FREE_TRIAL= "arg_free_trial"
+
+        val RESULT_CANCEL_TRIAL = 33425
     }
 }
