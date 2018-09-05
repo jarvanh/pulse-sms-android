@@ -3,6 +3,7 @@ package xyz.klinker.messenger.shared.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import xyz.klinker.messenger.api.implementation.Account
 
 import xyz.klinker.messenger.shared.R
 
@@ -94,6 +95,7 @@ object FeatureFlags {
 
     val SKIP_INTRO_PAGER = true
     val DISPLAY_DUO_BUTTON = false
+    val REVERT_TO_ORIGINAL_TRIAL_SYSTEM = Account.REVERT_TO_ORIGINAL_TRIAL_SYSTEM
 
     // always on
     var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false

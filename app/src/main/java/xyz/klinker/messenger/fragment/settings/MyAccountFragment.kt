@@ -49,6 +49,7 @@ import xyz.klinker.messenger.shared.service.SimpleLifetimeSubscriptionCheckServi
 import xyz.klinker.messenger.shared.service.SimpleSubscriptionCheckService
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.service.ContactResyncService
 import xyz.klinker.messenger.shared.util.StringUtils
 import xyz.klinker.messenger.shared.util.billing.BillingHelper
@@ -90,8 +91,6 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
 
         initWebsitePreference()
-
-        Thread { ApiUtils.recordNewPurchase("lifetime") }.start()
 
 //        startInitialPurchase()
 //        startTrial()
@@ -196,8 +195,11 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                         Toast.makeText(fragmentActivity, R.string.trial_finished, Toast.LENGTH_LONG).show()
                         pickSubscription(false)
                     } else {
-                        startTrial()
-//                        startInitialPurchase()
+                        if (FeatureFlags.REVERT_TO_ORIGINAL_TRIAL_SYSTEM) {
+                            startInitialPurchase()
+                        } else {
+                            startTrial()
+                        }
                     }
                 } catch (e: IllegalStateException) {
                     // resources bad, fragment destroyed
