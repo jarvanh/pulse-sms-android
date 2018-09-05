@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -24,11 +24,16 @@
     <!-- Drawer Items -->
     <string name="menu_conversations">Konversationslista</string>
     <string name="menu_archived_conversations">Arkiverade konversationer</string>
+    <string name="menu_private_conversations">Privata konversationer</string>
+    <string name="menu_unread_conversations">Olästa konversationer</string>
+    <string name="menu_edit_folders">Hantera mappar...</string>
+    <string name="menu_edit_folders_no_ellipse">Hantera mappar</string>
     <string name="menu_schedule">Schemalagda meddelanden</string>
     <string name="menu_mute_contacts">Blockerade</string>
     <string name="menu_invite">Bjud in vänner</string>
     <string name="menu_feature_settings">Avancerade funktioner</string>
-    <string name="menu_settings">Globala Inställningar</string>
+    <string name="menu_settings">Allmänna inställningar</string>
+    <string name="menu_customization_settings">Allmänna inställningar</string>
     <string name="menu_mms_configuration">MMS Inställningar</string>
     <string name="menu_account">Mitt konto</string>
     <string name="menu_device_texting">Skriv från valfri enhet</string>
@@ -45,9 +50,11 @@
     <string name="menu_archive_conversation">Arkivera konversation</string>
     <string name="menu_move_to_inbox">Flytta till inkorgen</string>
     <string name="menu_conversation_information">Konversation information</string>
+    <string name="menu_copy_phone_number">Kopiera nummer</string>
+    <string name="menu_view_full_conversation">Se historik</string>
     <string name="menu_conversation_blacklist">Blockera kontakt</string>
     <string name="menu_conversation_schedule">Schemalägg ett meddelande</string>
-    <string name="menu_contact_settings">Kontaktinställningar</string>
+    <string name="menu_contact_settings">Konversationsinställningar</string>
     <string name="menu_group_settings">Gruppinställningar</string>
     <string name="menu_snooze_off">Av</string>
     <string name="menu_snooze_1">1 timme</string>
@@ -57,6 +64,9 @@
     <string name="menu_snooze_24">24 timmar</string>
     <string name="menu_snooze_72">72 timmar</string>
     <string name="menu_snooze_custom">Välj en tid</string>
+    <string name="menu_mark_as_unread">Markera som oläst</string>
+    <string name="menu_pin_conversation">Fäst/lossa konversation</string>
+    <string name="menu_mute_conversation">Tysta/slå på ljud för konversation</string>
     <!-- Empty Screen -->
     <string name="no_messages">Inga meddelanden</string>
     <string name="no_messages_summary">Starta en ny konversation eller njut bara av dagen!</string>
@@ -84,6 +94,12 @@
     </plurals>
     <string name="undo">Ångra</string>
     <string name="enter_search">Sök efter...</string>
+    <string name="text_anywhere_description">Visste du att: Pulse är betydligt mer än bara en app i telefonen. Du kan använda Pulse för att skicka sms från <b>alla</b> enheter!</string>
+    <string name="convo_list_try_it">Prova nu!</string>
+    <string name="convo_list_not_now">Inte nu</string>
+    <string name="no_private_messages_description">Ställ in privata konversationer i deras inställningar!</string>
+    <string name="no_folder_messages_description">Lägg till en konversation för den här mappen för att visa den här.</string>
+    <string name="no_archived_messages_description">Arkivera en konversation för att visa den här.</string>
     <!-- Search Screen -->
     <string name="conversations">Konversationer</string>
     <string name="messages">Meddelanden</string>
@@ -113,6 +129,9 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
     <string name="record_video">Spela in video</string>
     <string name="record_audio">Spela in ljud</string>
     <string name="attach_location">Bifoga plats</string>
+    <string name="attach_contact">Lägg till kontakt</string>
+    <string name="attach_contact_summary">Välj eller skriv namnet på en kontakt för att lägga till den till meddelandet!</string>
+    <string name="apply_template">Applicera mall</string>
     <string name="no_location_found">Kunde inte hitta din plats.</string>
     <string name="camera_permission_needed">Din tillåtelse krävs för att använda din kamera!</string>
     <string name="take_picture">Ta kort</string>
@@ -121,6 +140,8 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
     <string name="attached_image">Bifogad bild</string>
     <string name="remove_image">Radera bifogad bild</string>
     <string name="edit_image">Redigera bifogad bild</string>
+    <string name="edit_recipients">Redigera mottagare</string>
+    <string name="select_folder">Välj mapp för konversation</string>
     <string name="permission_needed_for_action">Tillåtelse krävs för att slutföra.</string>
     <string name="request_permission">Begär tillåtelse</string>
     <string name="no_messages_with_contact">Du har inga meddelanden i denna konversationen än, dags att börja skriva!</string>
@@ -144,28 +165,50 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
     <string name="forward_message">Vidarebefordra meddelande</string>
     <string name="share_message">Dela meddelande</string>
     <string name="copy_message_text">Kopiera meddelandetext</string>
+    <string name="select_text_to_copy">Markera texten du vill kopiera:</string>
+    <string name="copy_all_text">Kopiera allt</string>
+    <string name="copy_otp">Kopiera</string>
     <string name="open_link_to_browser">Öppna länk i webläsare</string>
     <string name="open_link_internal">Öppna länk lokalt</string>
     <string name="copy_link">Kopiera länk</string>
+    <string name="attach_vcard">Bifoga kontakt som vCard</string>
+    <string name="attach_plain_text">Bifoga kontakt som ren text</string>
+    <!-- Templates -->
+    <string name="type_template_text">Skriv exempeltext...</string>
+    <string name="delete_template">Är du säker på att du vill radera den här mallen</string>
+    <string name="no_templates">Använd <b>+</b> knappen för att skapa en mall</string>
     <!-- Compose Screen -->
     <string name="compose_message">Skriv nytt meddelande</string>
     <string name="send_message">Skicka meddelande</string>
     <string name="enter_contact_name">Skriv kontaktnamn</string>
+    <string name="enter_contact_name_or_number">Skriv kontaktnamn eller nummer</string>
     <string name="error_processing_vcard">Fel vid bearbetning av vcard</string>
+    <string name="compose_recents">Senaste</string>
+    <string name="compose_groups">Grupper</string>
+    <string name="compose_all_contacts">Alla kontakter</string>
+    <string name="private_conversation_disclaimer">Det här är en <b>privat konversation</b> och kan inte öppnas från skärmen nytt meddelande</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">Appen fungerar inte utan dessa behörigheter! Du måste tillåta dem innan vi kan fortsätta.</string>
     <string name="loading_messages">Optimerar...</string>
     <string name="loading_messages_summary">Arbetar med att få in meddelanden i appen, detta är strax klart!</string>
     <string name="tooltip_got_it">Klart!</string>
     <string name="navigation_drawer_conversation_hint">Mer alternativ för denna konversation finns i navigationslisten.</string>
+    <string name="onboarding_title_1">Meddelanden på ett nytt sätt</string>
     <string name="onboarding_title_2">Tillgänglig överallt</string>
+    <string name="onboarding_title_3">Kraftfulla anpassningsmöjligheter</string>
+    <string name="onboarding_content_1">Ett mjukt, flytande upplägg med en kraftfull design och sömlös integration</string>
     <string name="onboarding_content_2">Meddelande från din platta, dator, klocka eller annan ansluten enhet.</string>
+    <string name="onboarding_content_3">Fäst, tysta, tema och anpassa notiser för valfria kontakter du skriver med. Gör Pulse din egen.</string>
     <string name="message_anywhere_onboarding_title_1">Meddelande Överallt</string>
     <string name="message_anywhere_onboarding_title_2">Prenumeration eller Engångsavgift</string>
     <string name="message_anywhere_onboarding_title_3">En veckas testperiod</string>
+    <string name="message_anywhere_onboarding_content_1">Integrerar sömlöst med alla enheter (surfplattor, klockor, TV, web, Google Chrome och Firefox appar) för att stödja sms och mms överallt!</string>
+    <string name="message_anywhere_onboarding_content_2">Galet låga prisalternativ för att betala när du behöver den: $10,99 för livstid, $5,99 per år, $1,99 för 3 månader eller $0,99 per månad. Mindre än en kopp kaffe.</string>
+    <string name="message_anywhere_onboarding_content_3">Använd Android-appen, gratis (för alltid!) på din telefon, eller börja skicka meddelanden från alla dina enheter med EN VECKAS gratis testperiod.</string>
     <string name="start_trial">Börja\nTestperiod.</string>
     <string name="not_now">Inte\nNu</string>
     <string name="onboarding_done">Klart</string>
+    <string name="play_store_subscription_warning">Du kommer att omdirigeras till Play Stores system för löpande prenumerationer. Du <b>kommer inte</b> att debiteras något innan slutet av din sju dagars prövoperiod och du kan avbryta prenumerationen när som helst i Play Store.</string>
     <!-- Notifications -->
     <string name="notification_ticker">Nytt meddelande från %1$s</string>
     <plurals name="new_conversations">
@@ -177,6 +220,7 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
         <item quantity="other">%1$d nya meddelanden</item>
     </plurals>
     <string name="read">Läst</string>
+    <string name="mute">Tysta</string>
     <string name="reply">Svara</string>
     <string name="reply_to">Svara till  %1$s</string>
     <string name="call">Ring</string>
@@ -189,13 +233,60 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
     </string-array>
     <string name="new_mms_message">Nytt MMS meddelande</string>
     <string name="you">Du</string>
+    <string name="draft">Utkast</string>
     <string name="new_message">Nytt meddelande</string>
     <string name="received_new_message">Du har fått ett nytt textmeddelande!</string>
     <string name="media">Media</string>
+    <string name="default_notifications_channel">Standardnotiser för konversationer</string>
+    <string name="default_notifications_channel_description">Dessa inställningar kommer appliceras på alla konversationer där du inte har skapat en individuell notiskanal för en enskild konversation.</string>
+    <string name="test_notifications_channel">Test-notiser</string>
+    <string name="status_notifications_channel">Statusnotiser</string>
+    <string name="background_service_channel">Bakgrundstjänst-notiser</string>
+    <string name="general_notifications_channel">Allmänna notiser</string>
+    <string name="media_parse_channel">Media parser</string>
+    <string name="group_summary_notifications">Gruppmeddelande-sammanställning</string>
+    <string name="failed_messages_channel">Misslyckade meddelanden</string>
+    <string name="silent_background_services">Tysta bakgrundstjänster</string>
+    <string name="silent_conversations_channel">Tysta konversationsnotiser</string>
+    <string name="account_activity_notifications">Kontoaktivitet-notiser</string>
+    <string name="quick_text_channel">Snabbtext notis</string>
+    <string name="media_parse_text">Slår ihop media från tidigare meddelande...</string>
+    <string name="auto_reply_parse_text">Letar efter autosvar från tidigare meddelande...</string>
+    <string name="creating_channels_text">Skapar notiskanaler...</string>
+    <string name="write_new_message">Skriv ett nytt meddelande...</string>
+    <string name="receiving_a_message">Tar emot ett meddelande...</string>
     <!-- About, Help and Feedback and Settings -->
+    <string name="changelog">Nyheter i appen</string>
+    <string name="copyright">© 2018 Luke &amp; Jake Klinker</string>
+    <string name="copyright_summary">Se information om licens för öppen källkod</string>
+    <string name="app_version">Appversion</string>
+    <string name="account_information">Kontoinformation</string>
+    <string name="account_actions">Kontoinställningar</string>
+    <string name="danger_zone">Farliga inställningar</string>
+    <string name="be_careful_using_these_settings">Följ instruktionerna och var försiktig när du använder de här inställningarna.</string>
+    <string name="device_id">Enhets-ID</string>
+    <string name="device_info">Enhetsinformation</string>
+    <string name="website">Hemsida</string>
+    <string name="access_messages_from_any_device">Kom åt och skicka meddelanden på alla enheter!</string>
+    <string name="beta_disclaimer">Det här projektet är fortfarande i betafas, rapportera gärna eventuella problem/buggar som du hittar!</string>
+    <string name="app_info">Appinformation</string>
+    <string name="platform_info">Plattformsinformation</string>
+    <string name="troubleshooting">Felsökning</string>
+    <string name="get_in_touch">Komma i kontakt</string>
+    <string name="faqs">Vanliga frågor</string>
+    <string name="get_help">Hjälp</string>
+    <string name="get_help_summary">Har du en fråga? Som ett en-mans-lag får jag en galen mängd email varje dag, som tar tid från utvecklingen av appen. För att hjälpa mig vore det toppen om du kan söka här för att se om jag redan har svarat på din fråga.</string>
+    <string name="get_help_summary_2">Hjälp-sektionen är omfattande, men om du inte hittar svaret på just din fråga, kontakta mig gärna så återkommer jag gärna till dig!</string>
     <string name="features">Funktioner</string>
     <string name="issues">Problemsökning</string>
     <string name="issues_summary">Fungerar även som en framtida färdplan</string>
+    <string name="google_plus">Google+</string>
+    <string name="google_plus_summary">Pulse beta-forum</string>
+    <string name="email">Email</string>
+    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="support">Hjälp</string>
     <plurals name="message_count">
         <item quantity="one">%1$d meddelande</item>
         <item quantity="other">%1$d meddelanden</item>
@@ -210,6 +301,7 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
     <string name="mute_conversation_summary">Dölj aviseringar för denna konversation</string>
     <string name="private_conversation">Privat konversation</string>
     <string name="private_conversation_summary">Göm konversationsinnehåll i aviseringen</string>
+    <string name="private_conversation_summary_2">Göm innehåll i notiser och flytta den här konversationen till sektionen <i>Privata konversationer</i></string>
     <string name="primary_color">Huvudfärg</string>
     <string name="primary_dark_color">Sekundär mörk färg</string>
     <string name="accent_color">Accent färg</string>
@@ -218,8 +310,10 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
     <string name="group_name">Gruppnamn</string>
     <string name="notification_settings">Notifikationer</string>
     <string name="repeat_interval">Upprepa larm</string>
+    <string name="heads_up">Se upp</string>
     <string name="repeat_never">Aldrig</string>
     <string name="repeat_one_min">Varje minut</string>
+    <string name="repeat_two_mins">Varannan minut</string>
     <string name="repeat_five_mins">Var femte minut</string>
     <string name="repeat_ten_mins">Var tionde minut</string>
     <string name="repeat_half_hour">Varje halvtimme</string>
@@ -235,18 +329,39 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
     <string name="vibrate_one_long_one_short">En lång och en kort vibration</string>
     <string name="vibrate_one_short">En kort vibration</string>
     <string name="vibrate_one_long">En lång vibration</string>
+    <string name="vibrate_one_extra_long">En extra lång vibration</string>
+    <string name="vibrate_two_short_one_long">Två korta, en lång vibration</string>
+    <string name="vibrate_one_long_one_short_one_long">En lång, en kort, en lång vibration</string>
     <string name="keyboard_layout">Tangentbordslayout</string>
     <string name="keyboard_default">Standard tangentbord</string>
     <string name="keyboard_send_key">Sändknapp</string>
     <string name="keyboard_enter_key">Enter-tangent</string>
     <string name="sound_effects">Ljudeffekter</string>
     <string name="delivery_reports">Leveransrapporter</string>
+    <string name="delivery_reports_summary">De flesta operatörer stödjer inte detta alternativ. Det är inte RCS.</string>
     <string name="theme_settings">Anpassning</string>
+    <string name="theme_settings_category">Utseende och känsla</string>
+    <string name="conversation_list_category">Konversationslista</string>
+    <string name="general_category">Allmänt</string>
+    <string name="theme_settings_redirect">Tema</string>
     <string name="base_theme">Bastema</string>
     <string name="global_theme_color">Temafärg</string>
     <string name="font_size">Textstorlek</string>
     <string name="rounder_bubbles">Runda meddelandebubblor</string>
+    <string name="bubble_style">Meddelandestil på \"bubbla\"</string>
+    <string name="bubble_style_round">Rund</string>
+    <string name="bubble_style_square">Fyrkantig</string>
+    <string name="bubble_style_circle">Cirkel (Ingen svans)</string>
+    <string name="adjustable_nav_bar">Matcha navigationsfältet med bastemat</string>
+    <string name="adjustable_nav_bar_summary">Det ljusa temat kommer använda den vita navigationsbaren medan de mörka teman kommer använda den svarta navigationsbaren</string>
+    <string name="apply_theme_globally">Applicera på alla konversationer</string>
+    <string name="apply_theme_globally_summary">Ta bort per-konversations teman och använd detta globala färgtema</string>
     <string name="swipe_delete">Svep för att ta bort</string>
+    <string name="swipe_actions">Svepgester</string>
+    <string name="swipe_actions_summary">Anpassa svep över konversation</string>
+    <string name="left_to_right_swipe">Vänster-till-höger svep</string>
+    <string name="right_to_left_swipe">Höger-till-vänster svep</string>
+    <string name="no_swipe">Inaktivera svep</string>
     <string name="blacklist_hint">Ange nummer som ska svartlistas...</string>
     <string name="add_blacklist">"%1$s\n\nÄr du säker att du vill svartlista detta nummer? Meddelanden sparas inte längre från detta nummer och du får heller ingen notifikation! "</string>
     <string name="remove_blacklist">%1$s\n\nVill du radera denna svartlistning?</string>
@@ -270,44 +385,121 @@ och servern. Detta går inte att ångra!</string>
     <string name="delete_account_confirmation">Är du säker på att du vill radera ditt konto och allt
 det medför? Du kan alltid registrera dig igen senare!</string>
     <string name="change_subscription">Ändra prenumeration</string>
-    <string name="cancel_on_the_play_store">Avbryta och se din prenumeration på Play Store</string>
+    <string name="cancel_on_the_play_store">Tryck här för att uppgradera! Du kan avbryts din prenumeration på Play Store.</string>
     <string name="resync_account">Omsynkronisera konto</string>
+    <string name="resync_account_summary">Saknar du meddelanden? Använd det här alternativet för att uppdatera enheten mot din primära enhet.</string>
+    <string name="resync_account_summary_phone">Detta kommer att rensa ditt konto och ersätta det med din aktuella lokala SMS-databas.</string>
+    <string name="resync_account_confirmation">Detta kommer att radera alla meddelanden på den här enheten och starta med en fräsch kopia av vad som för närvarande finns på din primära enhet. Är du säker på att det är detta du vill?</string>
+    <string name="resync_contacts">Synkronisera kontakter på nytt</string>
+    <string name="resync_contacts_summary">Skicka omedelbart kontaktändringar till webben.</string>
+    <string name="normalize_color_scheme">Alternativt kan du välja en enda färg som du vill basera temat på:</string>
+    <string name="no_apps_found">Inga appar hittades som kan hantera händelsen</string>
+    <string name="you_denied_permission">Du ha nekat den här behörigheten</string>
+    <string name="supported_platforms">Plattformar som stödjs</string>
+    <string name="supported_platforms_summary">Alla officiella platser där du kan nå appen</string>
     <string name="font_size_small">Liten</string>
     <string name="font_size_normal">Normal</string>
     <string name="font_size_large">Stor</string>
     <string name="font_size_extra_large">Extra Stor</string>
     <string name="advanced">Avancerad</string>
     <string name="send_as_mms">Konvertera till MMS</string>
+    <string name="after_one_message">Efter ett meddelande</string>
+    <string name="after_two_messages">Efter två meddelande</string>
+    <string name="after_three_messages">Efter tre meddelande</string>
+    <string name="after_four_messages">Efter fyra meddelande</string>
     <string name="send_as_mms_summary">Långa meddelanden kommer skickas som MMS istället för enskilda SMS</string>
     <string name="alert_types">Aviseringstyper</string>
-    <string name="alert_types_summary">Olika anpassningar för aviseringar</string>
+    <string name="alert_types_summary">Anpassningar för aviseringar, ringsignal, vibration m.m</string>
+    <string name="strip_unicode">Ta bort Unicode</string>
     <string name="strip_unicode_summary">De här tecknen kommer raderas från det utgående meddelandet</string>
     <string name="giffgaff_delivery">Giffgaff Leveransrapporter</string>
     <string name="notification_actions">Aviseringsåtgärder</string>
     <string name="notification_actions_summary">Max tre alternativ kan användas i snabbsvar</string>
     <string name="mms_download_directory">"Nedladdningsmapp för media "</string>
-    <string name="refresh_firebase">"Uppdatera Push-Aviseringar "</string>
+    <string name="mms_download_directory_summary">Där du vill att bilder och annan MMS media skall sparas</string>
+    <string name="refresh_firebase">Uppdatera konto</string>
+    <string name="refresh_firebase_summary">Problem med att ditt konto inte syntar eller låter dig logga in? Använd det här alternativet.</string>
+    <string name="refreshing_notifications">Uppdaterar notis-token...</string>
+    <string name="refresh_firebase_warning">Om du startar den här processen så <b>måste</b> du slutföra den. Efter att den är klar kommer du behöva logga in igen på alla dina enheter. Vill du verkligen fortsätta?</string>
+    <string name="show_conversation_history">Visa konversationshistorik</string>
+    <string name="show_conversation_history_summary">Notiser visar tidigare meddelanden i konversationen</string>
+    <string name="emoji_style">Emoji stil</string>
+    <string name="emoji_style_default">Standard</string>
+    <string name="emoji_style_android_o">Google Android Oreo</string>
+    <string name="settings_phone_number">Telefonnummer</string>
+    <string name="disable_battery_optimization">Inaktivera batterioptimering</string>
+    <string name="disable_battery_optimization_summary">Om meddelanden inte syncar från din telefon till webben, prova att stänga av batterioptimering för Pulse.</string>
     <!-- MMS Configuration Settings -->
-    <string name="max_mms_size">Max bild storlek</string>
-    <string name="use_group_mms">Använd grupp MMS</string>
-    <string name="auto_save_media">Auto spara media</string>
+    <string name="max_mms_size">Max bildstorlek</string>
+    <string name="max_mms_size_summary">Använd inte ett högre värde än vad din operatör tillåter</string>
+    <string name="use_group_mms">Använd grupp-MMS</string>
+    <string name="use_group_mms_summary">Om avstängd kommer gruppmeddelanden att skickas som individuella SMS till varje mottagare</string>
+    <string name="use_mms_read_receipts">Läskvitton</string>
+    <string name="auto_save_media">Autospara media</string>
     <string name="auto_save_media_summary">Spara automatiskt all inkommen MMS media i /Downloads-mappen.</string>
     <string name="apn_configuration">APN konfiguration</string>
     <string name="override_system_apn">Ersätt systemets APN</string>
     <string name="mmsc_url">MMSC URL</string>
     <string name="mms_proxy">MMS proxy</string>
     <string name="mms_port">MMS port</string>
+    <string name="user_agent">Användaragent</string>
+    <string name="user_agent_profile_url">Användaragent profil-URL</string>
+    <string name="user_agent_profile_tag">User Agent Profile Tag Name</string>
     <!-- Advanced Features Settings -->
     <string name="signature">Signatur</string>
+    <string name="signature_summary">Signaturer kommer inte att visas i Pulse meddelandelista, de kommer endast visas för mottagaren av meddelandet</string>
     <string name="cleanup_old_messages">Rensa gamla meddelanden</string>
+    <string name="cleanup_old_messages_summary">Det här valet kör en gång per dag för att ta bort meddelanden äldre än din valda tidsperiod</string>
+    <string name="cleanup_old_messages_now_summary">Det här valet kör omedelbart för att ta bort meddelanden i den här konversationen som är äldre än din valda tidsperiod</string>
     <string name="delayed_sending">Fördröjd sändning</string>
+    <string name="delayed_sending_summary">Det här valet ger dig ett val att avbryta eller redigera meddelanden innan de skickas</string>
+    <string name="messaging_features">Meddelandefunktioner</string>
+    <string name="app_features">Appfunktioner</string>
     <string name="quick_compose">Snabbsvar</string>
+    <string name="quick_compose_notification">Visa notis</string>
+    <string name="quick_compose_notification_summary">Alltid-aktiva notiser för snabb tillgång till att skapa ett nytt meddelande</string>
+    <string name="quick_compose_favorites">Favoritkontakter</string>
+    <string name="quick_compose_favorites_summary">De här kontakterna kommer bli tillgängliga i snabbnotis-inställningarna</string>
+    <string name="quick_compose_favorites_title">Välj upp till tre kontakter:</string>
+    <string name="secure_private_conversations">Lösenord för privata konversationer</string>
+    <string name="secure_private_conversations_summary">Om du ställer in ett lösenord kommer du behöva fylla i det innan du kan se privata konversationer</string>
+    <string name="use_internal_browser">Använd intern webbläsare</string>
+    <string name="internal_browser_summary">Om du inaktiverar detta kommer också förhandsvisning av länkar att sluta fungera i meddelanden</string>
+    <string name="message_backup">Säkerhetskopia av meddelande</string>
+    <string name="message_backup_pref_summary">Orolig för att förlora dina meddelanden? Pulse tar hand om dig</string>
+    <string name="message_backup_summary">Visste du att: Pulse onlinetjänst är uppbyggd kring att säkerhetskopiera dina meddelanden. När du registrerar dig för ett Pulse-konto så kan du logga in på kontot från vilket enhet som helst för att återställa dina meddelanden, automatiskt! Inget krångel och inget besvär med manuella säkerhetskopior. Med Pulse är allt smidigt, enkelt och helt automatiskt.</string>
+    <string name="message_backup_summary_have_account">Det verkar som att du redan har ett Pulse-konto, fantastiskt!
+Med ditt konto kommer Pulse automatiskt säkerhetskopiera alla meddelanden som du skickar och tar emot. När du tittar på appen på en av dina andra enheter tittar du faktiskt på säkerhetskopian. För att återställa meddelanden på en ny enhet behöver du bara logga in på ditt konto.</string>
+    <string name="auto_reply_configuration">Autosvar-inställning</string>
+    <string name="auto_reply_configuration_summary">Ställ in automatiska svar baserade på din situation</string>
+    <string name="auto_replies">Autosvar</string>
+    <string name="auto_reply_top_pref_summary">Körläge och semesterpåminnelser prioriteras över alla andra svar. Om någon av dem är påslagna kommer inga andra autosvar att skickas</string>
+    <string name="driving_mode">Körläge</string>
+    <string name="driving_mode_summary">Skickar detta autosvar till alla meddelanden du tar emot</string>
+    <string name="vacation_mode">Semesterläge</string>
+    <string name="auto_reply_text">Meddelandetext</string>
+    <string name="create_auto_reply">Skapa ett nytt autosvar</string>
+    <string name="delete_auto_reply">Ta bort autosvar?</string>
+    <string name="which_auto_reply_type">Vilken typ av autosvar vill du skapa?</string>
+    <string name="keyword">Nyckelord</string>
+    <string name="response">Svar</string>
+    <string name="contact">Kontakt</string>
+    <string name="folders_title">Mappar</string>
+    <string name="create">Skapa</string>
+    <string name="create_folder">Skapa en ny mapp</string>
+    <string name="create_folder_summary">Placera konversationer i mappar för att organisera och snabbt navigera i en rörig inkorg</string>
+    <string name="no_folders">Inga mappar skapade - tryck på översta alternativet för att skapa din första mapp</string>
+    <string name="folder_name">Mappnamn...</string>
+    <string name="private_conversations_cannot_be_added_to_folders">Privata konversationer kan inte läggas till.</string>
+    <string name="conversation_already_in_a_folder">Finns redan i en annan mapp.</string>
+    <string name="no_folder">Ingen mapp</string>
     <!-- Theming Options -->
     <string name="day_night">Standard (Dag/Natt)</string>
     <string name="always_light">Alltid Ljust</string>
     <string name="always_dark">Alltid Mörkt</string>
     <string name="always_black">Alltid Svart</string>
     <!-- Scheduled Messages Screen -->
+    <string name="delete_scheduled_message">Är du säker på att du vill ta bort det schemalagda meddelandet till %1$s?</string>
     <string name="scheduled_message_hint">Meddelande att skicka...</string>
     <string name="scheduled_to_hint">Kontakt för att skicka till...</string>
     <string name="scheduled_message_sent">Lyckades att skicka det schemalagda meddelandet</string>
@@ -315,6 +507,12 @@ det medför? Du kan alltid registrera dig igen senare!</string>
     <string name="no_scheduled_messages_summary">Du kan skapa ett nytt ,ed plusknappen nedan!</string>
     <string name="scheduled_message_in_future">Tiden måste vara i framtiden!</string>
     <!-- Encryption -->
+    <string name="encrypting_and_uploading">Krypterar och laddar upp...</string>
+    <string name="encrypting_and_uploading_media">Krypterar och komprimerar media-meddelanden...</string>
+    <string name="encrypting_and_uploading_count">Krypterar och komprimerar media-meddelanden…
+(%1$d/%2$d)</string>
+    <string name="downloading_and_decrypting">Laddar ner och avkrypterar...</string>
+    <string name="decrypting_and_downloading_media">Laddar ner och avkrypterar media...</string>
     <!-- Quick Reply -->
     <string name="audio_message">Ljudmeddelande</string>
     <string name="video_message">Videomeddelande</string>
@@ -323,6 +521,18 @@ det medför? Du kan alltid registrera dig igen senare!</string>
     <string name="contact_card">Kontakt</string>
     <string name="conversation_with">Konversation med %1$s</string>
     <string name="send">Skicka</string>
+    <string name="quick_share">Snabbdela</string>
+    <!-- Passcode Entry -->
+    <string name="passcode">Använd lösenord</string>
+    <string name="forgot_passcode">Glömt lösenord?</string>
+    <string name="set_passcode">Spara lösenord</string>
+    <string name="confirm_fingerprint">Bekräfta fingeravtryck för att fortsätta. Placera fingret på fingertryckssensorn nu.</string>
+    <string name="confirm_passcode">Bekräfta lösenordet för att fortsätta.</string>
+    <string name="confirm_pulse_password">Bekräfta Pulse kontoinformation för att fortsätta.</string>
+    <string name="type_passcode">Skapa ett lösenord.</string>
+    <string name="incorrect_passcode">Ogiltigt lösenord.</string>
+    <string name="verify">Bekräfta</string>
+    <string name="enable_passcode_disclaimer">Privata konversationer kan skyddas med lösenord/fingeravtryck så att bara du kan läsa dem. Om du vill aktivera den här säkerheten, aktivera funktionen under <i>avancerade inställningar</i>.</string>
     <!-- Other -->
     <string name="updating_database">"Letar efter senaste meddelanden... "</string>
     <string name="dashclock_description">Oläst SMS/MMS information</string>
@@ -338,13 +548,25 @@ det medför? Du kan alltid registrera dig igen senare!</string>
     <string name="hours">Timmar</string>
     <string name="minutes">Minuter</string>
     <string name="test">Test</string>
+    <string name="channel_settings">Notiskanalinställningar</string>
+    <string name="channel_settings_summary">Med Android Oreo kan du ställa in ringsignal, vibration, LED och mer för varje enskild konversation</string>
+    <string name="restore_default_channel_settings">Återställ standardinställningar för notiser</string>
+    <string name="channels">Kanaler</string>
+    <string name="default_channel">Standardkanal</string>
+    <string name="channels_global_warning">Många globala inställningar är nu enbart möjliga genom notiskanaler.</string>
+    <string name="channels_global_warning_2">Med Android Oreo är appar tvungna att använda <i>notiskanaler</i> för att ställa in ringsignal, vibration, LED och alla andra notisinställningar. Du kan göra dessa inställning genom att trycka på knappen nedan. Läs mer om förändringen i hjälpsektionen i Pulse.</string>
     <string name="off">Av</string>
     <string name="on">På</string>
+    <string name="share_promo">Hej, jag älskar Pulse för meddelanden! Prova du med: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="verifying_password">Bekräftar lösenord...</string>
+    <!-- Rate it -->
     <string name="rate_it">Betygsätt!</string>
+    <string name="rate_it_title">Toppbetyg hjälper långt</string>
+    <string name="rate_it_summary"><b>5-stjärniga betyg</b> är extremt hjälpsamma för att locka fler användare och synlighet på Play Store. Om du vill att appen ska <i>fortsätta utvecklas</i>, hjälp mig gärna!</string>
+    <string name="rate_it_not_ready">Inte redo att ge ett betyg? Inga problem. Backa ur den här dialogrutan så kommer jag aldrig fråga igen.</string>
     <string name="love_pulse_question">Gillar Pulse?</string>
     <string name="give_a_rating">Funderar du på att betygsätta eller dela med dig till dina vänner!\n\n
 Din 5 stjärniga recension värmer mitt hjärta :)</string>
-    <string name="share_promo">Hej, jag älskar Pulse för meddelanden! Prova du med: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <!-- Times -->
     <string name="one_second">En sekund</string>
     <string name="three_seconds">Tre sekunder</string>
@@ -371,7 +593,7 @@ dig i 2 dagar. Om detta är ett fel kontakta mig via epost.
     <string name="purchase_error_cancelled">Du avbröt ditt köp :(</string>
     <string name="purchase_error_bad_google_play">Hoppsan, något är antagligen något fel med Google Play, de gav oss ett dåligt resultat.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Den betalningen matchade inte våra uppgifter.</string>
-    <string name="subscriptions">"Prenumerationen faktureras 7 dagar efter att prövotiden startas och kan ändras/avbrytas när som helst: "</string>
+    <string name="subscriptions">Prenumerationen faktureras 7 dagar efter att prövotiden startas och kan ändras/avbrytas när som helst</string>
     <string name="billed_immediately">Den här faktureras direkt.</string>
     <string name="lifetime_purchase">$10.99 - Livstidsmedlemskap</string>
     <string name="lifetime_purchase_summary">Betala en gång och aldrig igen!</string>
@@ -381,5 +603,21 @@ dig i 2 dagar. Om detta är ett fel kontakta mig via epost.
     <string name="three_month_purchase_summary">Med denna kan inget gå fel.</string>
     <string name="monthly_purchase">$0.99 per månad</string>
     <string name="monthly_purchase_summary">Vill du bara prova? Inga problem.</string>
-    <string name="change_subscription_message">"Vill du uppgradera? Härligt! Efter du gjort ditt val på nästa skärm ska du gå och avbryta din gamla prenumeration i Play Store manuellt. "</string>
+    <string name="change_subscription_message">Vill du uppgradera? Härligt! Efter du gjort ditt val på nästa skärm <b>måste</b> du gå och avbryta din gamla prenumeration i Play Store manuellt. Jag kan <b>inte</b> göra det automatiskt tyvärr.</string>
+    <string name="beautiful_powerful_instant">Vacker, kraftfull, omedelbar.</string>
+    <string name="optimized_for_all_your_devices">Pulse är optimerad för <b>alla</b> dina enheter. Skicka SMS från webben, datorn, surfplattan, smartklockan och t.o.m din TV.</string>
+    <string name="true_imessage_competitor">Den första <b>riktiga</b> iMessage-konkurrenten för Android.</string>
+    <string name="try_it">Prova nu!</string>
+    <string name="have_an_account">Har du ett konto?\nLogga in</string>
+    <string name="seven_days_free">7 dagar gratis!</string>
+    <string name="competition_cant_beat">Konkurrenterna kan inte tävla med våra priser, hastigheter eller service - <b>ta 7 dagar</b> och upptäck själv!</string>
+    <string name="select_a_trial_below">Välj en av de tre prenumerationsalternativen nedan för att påbörja din <b>gratis prövotid</b></string>
+    <string name="charged_after_trial">Debiteras efter prövotiden:</string>
+    <string name="monthly_purchase_improved">$0.99 /\nmånad</string>
+    <string name="three_month_purchase_improved">$1.99 /\n3 månader</string>
+    <string name="yearly_purchase_improved">$5.99 /\når</string>
+    <string name="subscription_toast">Du <b>kommer inte</b> debiteras innan 7-dagars prövotiden är avslutad. Avbryt när som helst.</string>
+    <string name="redirect_to_play_store">Tack för uppgraderingen! Vänligen avbryt din gamla prenumeration i <b>Play Store</b>. Pulse <b>kan inte</b> göra det automatiskt tyvärr.</string>
+    <string name="play_store">Play Store</string>
+    <string name="quick_compose_summary">Alltid-aktiva notiser för snabb tillgång till att skapa ett nytt meddelande</string>
 </resources>

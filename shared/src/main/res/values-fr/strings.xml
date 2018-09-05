@@ -143,7 +143,7 @@ des photos !</string>
     <string name="permission_needed_for_action">Permissions requises pour cette action.</string>
     <string name="request_permission">Autoriser</string>
     <string name="no_messages_with_contact">"Vous n\'avez pas encore de messages dans cette conversation,
-Commencez !
+commencez !
 "</string>
     <string name="save">Sauvegarder</string>
     <string name="share">Partager</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -145,6 +145,7 @@ http://messenger.klinkerapps.com</string>
     <string name="open_link_to_browser">Apri il Link nel Browser</string>
     <string name="open_link_internal">Apri il Link Internamente</string>
     <string name="copy_link">Copia il Link</string>
+    <!-- Templates -->
     <!-- Compose Screen -->
     <string name="compose_message">Componi un nuovo messaggio</string>
     <string name="send_message">Invia messaggio</string>
@@ -307,7 +308,6 @@ con ciò che è sul dispositivo principale.</string>
     <string name="cleanup_old_messages">Elimina i vecchi messaggi</string>
     <string name="delayed_sending">Invio ritardato</string>
     <string name="quick_compose">Composizione Veloce</string>
-    <string name="quick_compose_summary">Notifiche sempre attive per un accesso veloce al messaggio</string>
     <string name="secure_private_conversations">Conversazioni Private</string>
     <string name="secure_private_conversations_summary">E\' neccessario un PIN per sbloccare le conversazioni private.</string>
     <!-- Theming Options -->
@@ -339,6 +339,7 @@ a %1$s?</string>
     <string name="contact_card">Scheda Contatto</string>
     <string name="conversation_with">Conversazione con %1$s</string>
     <string name="send">Invia</string>
+    <!-- Passcode Entry -->
     <!-- Other -->
     <string name="dashclock_description">Info sugli SMS/MMS non letti</string>
     <string name="default_text">Default</string>
@@ -355,6 +356,7 @@ provalo oggi!</string>
     <string name="minutes">Minuti</string>
     <string name="test">Test</string>
     <string name="off">Off</string>
+    <!-- Rate it -->
     <!-- Times -->
     <string name="five_seconds">5 secondi</string>
     <string name="ten_seconds">10 secondi</string>
@@ -388,4 +390,5 @@ Se non fai una nuova sottoscrizione entro il termine di 2 giorni  l\'app automat
     <string name="monthly_purchase">$0.99 ogni mese</string>
     <string name="monthly_purchase_summary">Vuoi solo provarla? Nessun problema.</string>
     <string name="change_subscription_message">Desideri eseguire l\'upgrade? Ottimo! Dopo aver fatto la selezione nella schermata successiva, deve andare nel Play Store e cancellare manualmente la vecchia sottoscrizione.</string>
+    <string name="quick_compose_summary">Notifiche sempre attive per un accesso veloce al messaggio</string>
 </resources>
