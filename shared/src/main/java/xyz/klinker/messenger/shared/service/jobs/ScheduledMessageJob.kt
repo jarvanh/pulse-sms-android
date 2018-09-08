@@ -58,7 +58,7 @@ class ScheduledMessageJob : BroadcastReceiver() {
 
                 // if message scheduled to be sent in less than a half hour in the future,
                 // or more than 60 in the past
-                if (timestamp > TimeUtils.now - TimeUtils.DAY && timestamp < TimeUtils.now + TimeUtils.HOUR / 2) {
+                if (timestamp > TimeUtils.now - TimeUtils.DAY && timestamp < TimeUtils.now + TimeUtils.MINUTE * 15) {
                     val message = ScheduledMessage()
                     message.fillFromCursor(messages)
 
