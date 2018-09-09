@@ -48,7 +48,7 @@ class MediaParserService : IntentService("MediaParserService") {
         }
 
         val parser = createParser(this, message)
-        if (parser == null || !Settings.internalBrowser && parser is ArticleParser) {
+        if (parser == null || (!Settings.internalBrowser && parser is ArticleParser)) {
             stopForeground(true)
             return
         }
@@ -78,9 +78,9 @@ class MediaParserService : IntentService("MediaParserService") {
             }
         }
 
-        private val MEDIA_PARSE_FOREGROUND_ID = 1334
+        private const val MEDIA_PARSE_FOREGROUND_ID = 1334
 
-        val EXTRA_MESSAGE_ID = "message_id"
+        const val EXTRA_MESSAGE_ID = "message_id"
 
         fun createParser(context: Context, message: Message): MediaParser? {
             return MediaMessageParserFactory().getInstance(context, message)
