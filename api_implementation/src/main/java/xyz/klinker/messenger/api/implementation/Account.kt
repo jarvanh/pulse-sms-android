@@ -17,7 +17,8 @@ import xyz.klinker.messenger.encryption.KeyUtils
 @SuppressLint("ApplySharedPref")
 object Account {
 
-    val REVERT_TO_ORIGINAL_TRIAL_SYSTEM = false
+    @JvmStatic
+    val QUICK_SIGN_UP_SYSTEM = false
 
     enum class SubscriptionType constructor(var typeCode: Int) {
         TRIAL(1), SUBSCRIBER(2), LIFETIME(3), FREE_TRIAL(4), FINISHED_FREE_TRIAL_WITH_NO_ACCOUNT_SETUP(5);

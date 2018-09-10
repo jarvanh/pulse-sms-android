@@ -195,10 +195,10 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                         Toast.makeText(fragmentActivity, R.string.trial_finished, Toast.LENGTH_LONG).show()
                         pickSubscription(false)
                     } else {
-                        if (FeatureFlags.REVERT_TO_ORIGINAL_TRIAL_SYSTEM) {
-                            startInitialPurchase()
-                        } else {
+                        if (FeatureFlags.QUICK_SIGN_UP_SYSTEM) {
                             startTrial()
+                        } else {
+                            startInitialPurchase()
                         }
                     }
                 } catch (e: IllegalStateException) {

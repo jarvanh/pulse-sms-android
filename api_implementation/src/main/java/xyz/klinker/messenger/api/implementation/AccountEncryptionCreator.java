@@ -2,9 +2,7 @@ package xyz.klinker.messenger.api.implementation;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
-import android.support.annotation.VisibleForTesting;
 import android.util.Base64;
 
 import java.util.Date;
@@ -72,9 +70,9 @@ public class AccountEncryptionCreator {
         sharedPrefs.edit()
                 .putInt(context.getString(R.string.api_pref_subscription_type), Account.INSTANCE.getSubscriptionType() == Account.SubscriptionType.LIFETIME ?
                         Account.SubscriptionType.LIFETIME.getTypeCode() :
-                        Account.INSTANCE.getREVERT_TO_ORIGINAL_TRIAL_SYSTEM() ?
-                                Account.SubscriptionType.SUBSCRIBER.getTypeCode() :
-                                Account.SubscriptionType.FREE_TRIAL.getTypeCode())
+                        Account.getQUICK_SIGN_UP_SYSTEM() ?
+                                Account.SubscriptionType.FREE_TRIAL.getTypeCode() :
+                                Account.SubscriptionType.SUBSCRIBER.getTypeCode())
                 .putLong(context.getString(R.string.api_pref_subscription_expiration), getTrialEnd())
                 .putLong(context.getString(R.string.api_pref_trial_start), new Date().getTime())
                 .putString(context.getString(R.string.api_pref_my_name), name)

@@ -95,7 +95,7 @@ object FeatureFlags {
 
     val SKIP_INTRO_PAGER = true
     val DISPLAY_DUO_BUTTON = false
-    val REVERT_TO_ORIGINAL_TRIAL_SYSTEM = Account.REVERT_TO_ORIGINAL_TRIAL_SYSTEM
+    val QUICK_SIGN_UP_SYSTEM = Account.QUICK_SIGN_UP_SYSTEM
 
     // always on
     var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false
