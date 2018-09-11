@@ -17,6 +17,7 @@ import xyz.klinker.messenger.shared.activity.PasscodeVerificationActivity
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Folder
 import xyz.klinker.messenger.shared.util.AnimationUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 
 class MainNavigationConversationListActionDelegate(private val activity: MessengerActivity) {
 
@@ -83,7 +84,8 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
     }
 
     internal fun displayPrivate(): Boolean {
-        return if (Settings.privateConversationsPasscode.isNullOrEmpty()) {
+        val lastEntry = Settings.privateConversationsLastPasscodeEntry
+        return if (Settings.privateConversationsPasscode.isNullOrEmpty() || TimeUtils.now - lastEntry < TimeUtils.MINUTE) {
             displayFragmentWithBackStack(PrivateConversationListFragment())
         } else {
             activity.startActivityForResult(Intent(activity, PasscodeVerificationActivity::class.java), PasscodeVerificationActivity.REQUEST_CODE)

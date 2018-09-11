@@ -52,6 +52,7 @@ object Settings {
     var mobileOnly: Boolean = false
     var soundEffects: Boolean = false
     var privateConversationsPasscode: String? = null
+    var privateConversationsLastPasscodeEntry = 0L
     var quickCompose: Boolean = false
     var wakeScreen: Boolean = false
     var headsUp: Boolean = false
@@ -127,6 +128,7 @@ object Settings {
         this.mobileOnly = sharedPrefs.getBoolean(context.getString(R.string.pref_mobile_only), false)
         this.soundEffects = sharedPrefs.getBoolean(context.getString(R.string.pref_sound_effects), true)
         this.privateConversationsPasscode = sharedPrefs.getString(context.getString(R.string.pref_secure_private_conversations), null)
+        this.privateConversationsLastPasscodeEntry = sharedPrefs.getLong(context.getString(R.string.pref_private_conversation_passcode_last_entry), 0L)
         this.quickCompose = sharedPrefs.getBoolean(context.getString(R.string.pref_quick_compose), false)
         this.snooze = sharedPrefs.getLong(context.getString(R.string.pref_snooze), 0)
         this.ringtone = sharedPrefs.getString(context.getString(R.string.pref_ringtone), null)

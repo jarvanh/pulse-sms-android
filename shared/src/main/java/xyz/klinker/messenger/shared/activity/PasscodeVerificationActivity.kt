@@ -38,6 +38,8 @@ class PasscodeVerificationActivity : FloatingTutorialActivity(), AuthenticationL
     override fun onSuccess(moduleTag: Int) {
         setResult(Activity.RESULT_OK)
         finishAnimated()
+
+
     }
 
     override fun onFailure(failureReason: AuthenticationFailureReason, fatal: Boolean,
