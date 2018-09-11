@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="4.1.1"
+        description="September 11th, 2018">
+        <!-- Revert purchase process to original style -->
+        <!-- Only request the passcode once every minute, instead of every time we go to it -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.1.0"
         description="September 3rd, 2018">
         <!-- Add menu item to call with duo, but it didn't work: https://github.com/klinker-apps/messenger-issues/issues/704 -->
