@@ -43,6 +43,7 @@
     <string name="menu_mobile_only">Endast mobil</string>
     <string name="menu_snooze">Snooze notiser</string>
     <string name="menu_call">Samtalskontakter</string>
+    <string name="menu_video_call">Videosamtal med Duo</string>
     <string name="menu_view_contact">Visa kontakt</string>
     <string name="menu_view_contacts">Visa kontakter</string>
     <string name="menu_view_media">Visa media</string>
@@ -220,6 +221,7 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
         <item quantity="other">%1$d nya meddelanden</item>
     </plurals>
     <string name="read">Läst</string>
+    <string name="mark_as_read">Markera som läst</string>
     <string name="mute">Tysta</string>
     <string name="reply">Svara</string>
     <string name="reply_to">Svara till  %1$s</string>
@@ -267,6 +269,7 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
     <string name="device_id">Enhets-ID</string>
     <string name="device_info">Enhetsinformation</string>
     <string name="website">Hemsida</string>
+    <string name="view_platforms">Tillgängliga plattformar för Pulse</string>
     <string name="access_messages_from_any_device">Kom åt och skicka meddelanden på alla enheter!</string>
     <string name="beta_disclaimer">Det här projektet är fortfarande i betafas, rapportera gärna eventuella problem/buggar som du hittar!</string>
     <string name="app_info">Appinformation</string>
@@ -319,7 +322,7 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
     <string name="repeat_half_hour">Varje halvtimme</string>
     <string name="repeat_hour">Varje timme</string>
     <string name="wake_screen">Väck skärm</string>
-    <string name="vibrate">Vibrationsmönster</string>
+    <string name="vibrate">Vibration</string>
     <string name="vibrate_off">Ingen vibration</string>
     <string name="vibrate_default">Standard vibration</string>
     <string name="vibrate_two_long">Två långa vibrationer</string>
@@ -356,6 +359,8 @@ att du kommer gilla den! Dessutom är den gratis, testa: http://messenger.klinke
     <string name="adjustable_nav_bar_summary">Det ljusa temat kommer använda den vita navigationsbaren medan de mörka teman kommer använda den svarta navigationsbaren</string>
     <string name="apply_theme_globally">Applicera på alla konversationer</string>
     <string name="apply_theme_globally_summary">Ta bort per-konversations teman och använd detta globala färgtema</string>
+    <string name="apply_primary_theme_toolbar">Applicera primär färg på app bar</string>
+    <string name="apply_primary_theme_toolbar_summary">Huruvida app baren ska ha en färg</string>
     <string name="swipe_delete">Svep för att ta bort</string>
     <string name="swipe_actions">Svepgester</string>
     <string name="swipe_actions_summary">Anpassa svep över konversation</string>
@@ -385,6 +390,14 @@ och servern. Detta går inte att ångra!</string>
     <string name="delete_account_confirmation">Är du säker på att du vill radera ditt konto och allt
 det medför? Du kan alltid registrera dig igen senare!</string>
     <string name="change_subscription">Ändra prenumeration</string>
+    <string name="trial_subscription_title">Du har %s dagar kvar av provversionen</string>
+    <string name="trial_subscription_summary">Tryck här för att uppgradera eller avbryta provversionen</string>
+    <string name="upgrade_or_cancel_title">Klar med provversionen?</string>
+    <string name="trial_expired">Tack för att du provade Pulse!</string>
+    <string name="upgrade_or_cancel">Du kan uppgradera ditt konto till en prenumeration eller livstidsmedlemskap för att fortsätta använda Pulse på alla dina enheter! \n\nVill du avbryta?
+Ditt konto kommer att tas bort och du kommer inte att debiteras. Du kan fortsätta använda appen på din telefon gratis! Kom tillbaka när som helst.</string>
+    <string name="upgrade">Uppgradera!</string>
+    <string name="cancel_trial">Avbryt provversionen</string>
     <string name="cancel_on_the_play_store">Tryck här för att uppgradera! Du kan avbryts din prenumeration på Play Store.</string>
     <string name="resync_account">Omsynkronisera konto</string>
     <string name="resync_account_summary">Saknar du meddelanden? Använd det här alternativet för att uppdatera enheten mot din primära enhet.</string>
@@ -409,7 +422,8 @@ det medför? Du kan alltid registrera dig igen senare!</string>
     <string name="after_four_messages">Efter fyra meddelande</string>
     <string name="send_as_mms_summary">Långa meddelanden kommer skickas som MMS istället för enskilda SMS</string>
     <string name="alert_types">Aviseringstyper</string>
-    <string name="alert_types_summary">Anpassningar för aviseringar, ringsignal, vibration m.m</string>
+    <string name="notification_customization">Anpassa notiser</string>
+    <string name="alert_types_summary">Anpassningar för ringsignal, vibration m.m</string>
     <string name="strip_unicode">Ta bort Unicode</string>
     <string name="strip_unicode_summary">De här tecknen kommer raderas från det utgående meddelandet</string>
     <string name="giffgaff_delivery">Giffgaff Leveransrapporter</string>
@@ -423,6 +437,8 @@ det medför? Du kan alltid registrera dig igen senare!</string>
     <string name="refresh_firebase_warning">Om du startar den här processen så <b>måste</b> du slutföra den. Efter att den är klar kommer du behöva logga in igen på alla dina enheter. Vill du verkligen fortsätta?</string>
     <string name="show_conversation_history">Visa konversationshistorik</string>
     <string name="show_conversation_history_summary">Notiser visar tidigare meddelanden i konversationen</string>
+    <string name="dismiss_notifications_on_reply">Avfärda notis efter svar</string>
+    <string name="dismiss_notifications_on_reply_summary">Notiser förblir aktiva efter svar, vilket låter dig fortsätta konversationen i notisen</string>
     <string name="emoji_style">Emoji stil</string>
     <string name="emoji_style_default">Standard</string>
     <string name="emoji_style_android_o">Google Android Oreo</string>
@@ -548,13 +564,15 @@ Med ditt konto kommer Pulse automatiskt säkerhetskopiera alla meddelanden som d
     <string name="hours">Timmar</string>
     <string name="minutes">Minuter</string>
     <string name="test">Test</string>
-    <string name="channel_settings">Notiskanalinställningar</string>
+    <string name="channel_settings">Notisinställningar för konversationer</string>
     <string name="channel_settings_summary">Med Android Oreo kan du ställa in ringsignal, vibration, LED och mer för varje enskild konversation</string>
     <string name="restore_default_channel_settings">Återställ standardinställningar för notiser</string>
+    <string name="restore_default_channel_settings_popup">Standardinställningar har återställts.</string>
     <string name="channels">Kanaler</string>
     <string name="default_channel">Standardkanal</string>
     <string name="channels_global_warning">Många globala inställningar är nu enbart möjliga genom notiskanaler.</string>
     <string name="channels_global_warning_2">Med Android Oreo är appar tvungna att använda <i>notiskanaler</i> för att ställa in ringsignal, vibration, LED och alla andra notisinställningar. Du kan göra dessa inställning genom att trycka på knappen nedan. Läs mer om förändringen i hjälpsektionen i Pulse.</string>
+    <string name="channels_global_warning_3">Med Android Oreo kommer några av inställningarna ovan att omdirigera dig till systeminställningarna för <i>notiskanaler</i>. För att läsa mer om notiskanaler, hur de fungerar och varför de måste användas, var vänlig läs Pulse hjälpsidor.</string>
     <string name="off">Av</string>
     <string name="on">På</string>
     <string name="share_promo">Hej, jag älskar Pulse för meddelanden! Prova du med: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
@@ -588,9 +606,11 @@ Om du inte återupptar din prenumeration  i tid kommer appen automatiskt logga u
 dig i 2 dagar. Om detta är ett fel kontakta mig via epost.
 "</string>
     <string name="subscription_found">Prenumeration hittad - välkommen tillbaka</string>
+    <string name="trial_finished">Det verkar som att du har använt provversionen redan.</string>
     <string name="subscription_not_found">"Hittade ingen prenumeration, starta prövotiden! "</string>
     <string name="checking_for_active_subscriptions">Letar efter prenumeration &#8230;</string>
     <string name="purchase_error_cancelled">Du avbröt ditt köp :(</string>
+    <string name="purchase_cancelled_trial_finished">Din prövotid har löpt ut och köpet avbröts. Ditt konto kommer att raderas för tillfället. \n\nKänn dig välkommen att ställa in det igen, när du vill använda Pulse på flera enheter igen!</string>
     <string name="purchase_error_bad_google_play">Hoppsan, något är antagligen något fel med Google Play, de gav oss ett dåligt resultat.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Den betalningen matchade inte våra uppgifter.</string>
     <string name="subscriptions">Prenumerationen faktureras 7 dagar efter att prövotiden startas och kan ändras/avbrytas när som helst</string>
@@ -604,14 +624,21 @@ dig i 2 dagar. Om detta är ett fel kontakta mig via epost.
     <string name="monthly_purchase">$0.99 per månad</string>
     <string name="monthly_purchase_summary">Vill du bara prova? Inga problem.</string>
     <string name="change_subscription_message">Vill du uppgradera? Härligt! Efter du gjort ditt val på nästa skärm <b>måste</b> du gå och avbryta din gamla prenumeration i Play Store manuellt. Jag kan <b>inte</b> göra det automatiskt tyvärr.</string>
-    <string name="beautiful_powerful_instant">Vacker, kraftfull, omedelbar.</string>
+    <string name="beautiful_powerful_instant">Välkommen till den moderna eran.</string>
     <string name="optimized_for_all_your_devices">Pulse är optimerad för <b>alla</b> dina enheter. Skicka SMS från webben, datorn, surfplattan, smartklockan och t.o.m din TV.</string>
     <string name="true_imessage_competitor">Den första <b>riktiga</b> iMessage-konkurrenten för Android.</string>
+    <string name="trial_description">Inga av konkurrenterna kan mäta sig med Pulse <b>oändliga plattformsstöd</b> ihop med dess <b>låga pris</b>. Meddelanden synkroniseras mellan alla dina enheter, omedelbart och sömlöst.</string>
+    <string name="purchase_description">Prova online-versionen i <b>sju dagar</b> innan du avgör hur du vill stödja appen:\n\n<b>$10.99</b> för livstidsmedlemskap\n<b>$5.99</b> per år\n<b>$1.99</b> var tredje månad\n<b>$0.99</b> per månad</string>
+    <string name="start_free_trial">Påbörja din gratis prövotid!</string>
+    <string name="create_your_pulse_account">Skapa ett Pulse-konto!</string>
     <string name="try_it">Prova nu!</string>
+    <string name="select_purchase">Välj köp</string>
     <string name="have_an_account">Har du ett konto?\nLogga in</string>
+    <string name="select_a_purchase">Välj ett köp</string>
+    <string name="select_a_purchase_description">Välj en av tre prenumerationer eller välj <b>livstidsmedlemskap</b> för att göra ett engångsköp av appen.</string>
     <string name="seven_days_free">7 dagar gratis!</string>
-    <string name="competition_cant_beat">Konkurrenterna kan inte tävla med våra priser, hastigheter eller service - <b>ta 7 dagar</b> och upptäck själv!</string>
-    <string name="select_a_trial_below">Välj en av de tre prenumerationsalternativen nedan för att påbörja din <b>gratis prövotid</b></string>
+    <string name="competition_cant_beat"><b>Prova i 7 dagar</b> och upptäck själv varför konkurrenterna inte kan tävla med våra <b>hastigheter, priser eller service</b>.</string>
+    <string name="select_a_trial_below">Välj en av de <b>tre prenumerationsalternativen</b> nedan för att påbörja din <b>gratis prövotid</b>.</string>
     <string name="charged_after_trial">Debiteras efter prövotiden:</string>
     <string name="monthly_purchase_improved">$0.99 /\nmånad</string>
     <string name="three_month_purchase_improved">$1.99 /\n3 månader</string>
@@ -619,5 +646,11 @@ dig i 2 dagar. Om detta är ett fel kontakta mig via epost.
     <string name="subscription_toast">Du <b>kommer inte</b> debiteras innan 7-dagars prövotiden är avslutad. Avbryt när som helst.</string>
     <string name="redirect_to_play_store">Tack för uppgraderingen! Vänligen avbryt din gamla prenumeration i <b>Play Store</b>. Pulse <b>kan inte</b> göra det automatiskt tyvärr.</string>
     <string name="play_store">Play Store</string>
+    <string name="notification_trial_title">Smsa från alla enheter - provversion</string>
+    <string name="notification_days_remaining_in_trial">%s dagar kvar på provversionen. Tryck för att uppgradera!</string>
+    <string name="notification_last_day_of_trial">Det här är sista dagen på din provversion. Tryck här för att uppgradera!</string>
+    <string name="notification_trial_expired">Din sjudagars provversion är över. Tryck här för att uppgradera!</string>
+    <string name="continue_with_phone_app">Du kan fortsätta använda appen på din telefon, helt gratis!</string>
+    <string name="thanks_for_trying">Tack för att du provade Pulse!</string>
     <string name="quick_compose_summary">Alltid-aktiva notiser för snabb tillgång till att skapa ett nytt meddelande</string>
 </resources>

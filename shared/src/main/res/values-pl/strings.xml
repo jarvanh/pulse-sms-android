@@ -43,6 +43,7 @@
     <string name="menu_mobile_only">Tylko telefon</string>
     <string name="menu_snooze">Uśpij powiadomienia</string>
     <string name="menu_call">Zadzwoń</string>
+    <string name="menu_video_call">Rozmowa wideo przez Google Duo</string>
     <string name="menu_view_contact">Wyświetl kontakt</string>
     <string name="menu_view_contacts">Wyświetl kontakty</string>
     <string name="menu_view_media">Wyświetl załączniki</string>
@@ -227,6 +228,7 @@ czas ją rozpocząć!</string>
         <item quantity="many">%1$d nowych wiadomości</item>
     </plurals>
     <string name="read">Przeczytane</string>
+    <string name="mark_as_read">Oznacz jako przeczytane</string>
     <string name="mute">Wycisz</string>
     <string name="reply">Odpowiedz</string>
     <string name="reply_to">Wyślij odpowiedź do %1$s</string>
@@ -274,6 +276,7 @@ czas ją rozpocząć!</string>
     <string name="device_id">ID urządzenia</string>
     <string name="device_info">Informacje o urządzeniu</string>
     <string name="website">Strona internetowa</string>
+    <string name="view_platforms">Dostępne platformy systemowe Pulse</string>
     <string name="access_messages_from_any_device">Dostęp i wysyłanie wiadomości z dowolnego urządzenia!</string>
     <string name="beta_disclaimer">Ten projekt jest nadal w fazie testów, zgłoś problemy, które być może znajdziesz!</string>
     <string name="app_info">Informacje o aplikacji</string>
@@ -367,6 +370,8 @@ czas ją rozpocząć!</string>
     <string name="adjustable_nav_bar_summary">Jasny motyw wyświetli biały pasek nawigacyjny, ciemne motywy wyświetlą czarny pasek nawigacyjny</string>
     <string name="apply_theme_globally">Zastosuj do wszystkich rozmów</string>
     <string name="apply_theme_globally_summary">Usuń motywy z poszczególnych rozmów, użyj globalnego zestawu kolorów</string>
+    <string name="apply_primary_theme_toolbar">Zastosuj główny kolor do paska aplikacji</string>
+    <string name="apply_primary_theme_toolbar_summary">Czy pasek aplikacji ma być kolorowany czy nie</string>
     <string name="swipe_delete">Przesuń aby usunąć</string>
     <string name="swipe_actions">Akcje gestu przesuwania</string>
     <string name="swipe_actions_summary">Dostosuj gesty przesuwania w rozmowie</string>
@@ -393,6 +398,14 @@ czas ją rozpocząć!</string>
     <string name="delete_account_summary">Usuwa konto z tego urządzenia, innych podłączonych urządzeń, oraz z serwera. Tej operacji nie można cofnąć!</string>
     <string name="delete_account_confirmation">Na pewno chcesz usunąć swoje konto i wszystko z nim powiązane? W razie czego możesz utworzyć nowe konto!</string>
     <string name="change_subscription">Zmień subskrypcję</string>
+    <string name="trial_subscription_title">Masz jeszcze %s dni do końca okresu próbnego</string>
+    <string name="trial_subscription_summary">Kliknij tutaj, aby uaktualnić lub anulować okres próbny!</string>
+    <string name="upgrade_or_cancel_title">Koniec okresu próbnego?</string>
+    <string name="trial_expired">Dzięki za okres próbny!</string>
+    <string name="upgrade_or_cancel">Możesz uaktualnić swoje konto do abonamentu lub dożywotniego członkostwa, aby nadal używać Pulse na wszystkich urządzeniach!\n\nCzy chcesz anulować?
+Twoje konto zostanie usunięte i nie zostaniesz obciążony opłatą. Możesz nadal bezpłatnie korzystać z aplikacji w telefonie! W każdej chwili możesz wrócić.</string>
+    <string name="upgrade">Uaktualnij!</string>
+    <string name="cancel_trial">Anuluj okres próbny</string>
     <string name="cancel_on_the_play_store">Kliknij tutaj, aby dokonać aktualizacji! Możesz anulować subskrypcję w Sklepie Play.</string>
     <string name="resync_account">Ponów synchronizację wiadomości</string>
     <string name="resync_account_summary">Brakujące wiadomości? Użyj tej opcji, aby zsynchronizować to urządzenie z twoim głównym urządzeniem.</string>
@@ -418,6 +431,7 @@ do stanu zgodnego z twoją wewnętrzną bazą SMS.</string>
     <string name="after_four_messages">Po czterech wiadomościach</string>
     <string name="send_as_mms_summary">Długie wiadomości będą wysyłane jako MMS zamiast pojedynczych SMS-ów</string>
     <string name="alert_types">Typy ostrzeżeń</string>
+    <string name="notification_customization">Dostosowanie powiadomienia</string>
     <string name="alert_types_summary">Dostosuj dzwonek, wzór wibracji i więcej</string>
     <string name="strip_unicode">Wyklucz znaki Unicode</string>
     <string name="strip_unicode_summary">Te znaki zostaną usunięte z wiadomości wychodzących</string>
@@ -433,6 +447,8 @@ do stanu zgodnego z twoją wewnętrzną bazą SMS.</string>
 Po zakończeniu będziesz musiał zalogować się ponownie na wszystkich Twoich urządzeniach. Czy chcesz kontynuować?</string>
     <string name="show_conversation_history">Pokaż historię rozmowy</string>
     <string name="show_conversation_history_summary">Powiadomienia będą wyświetlać poprzednie wiadomości w tej rozmowie</string>
+    <string name="dismiss_notifications_on_reply">Odrzuć powiadomienie po udzieleniu odpowiedzi</string>
+    <string name="dismiss_notifications_on_reply_summary">Powiadomienia pozostają aktywne po udzieleniu odpowiedzi, pozwalając na kontynuację rozmowy w powiadomieniu</string>
     <string name="emoji_style">Style Emotikonek</string>
     <string name="emoji_style_default">Domyślne ustawienie systemowe</string>
     <string name="emoji_style_android_o">Android Oreo od Google</string>
@@ -564,11 +580,13 @@ Jeśli chcesz dodać to zabezpieczenie, skonfiguruj hasło w sekcji <i>Funkcje z
     <string name="channel_settings_summary">"To ustawienie pozwala w systemie Android Oreo  dostosować dzwonek, wibracje, diody LED i inne elementy dla tej rozmowy
 "</string>
     <string name="restore_default_channel_settings">Przywróć domyślne ustawienia powiadomień</string>
+    <string name="restore_default_channel_settings_popup">Ustawienia domyślne zostały przywrócone.</string>
     <string name="channels">Kanały</string>
     <string name="default_channel">Kanał domyślny</string>
     <string name="channels_global_warning">Wiele ustawień globalnych jest teraz dostępnych tylko na kanał.</string>
     <string name="channels_global_warning_2">W przypadku systemu Android Oreo aplikacje muszą korzystać z <i> kanałów powiadomień </i> w celu dostosowania dzwonka, wibracji, diody LED i wszystkich innych opcji powiadomień. \n\n
 Możesz dostosować te opcje za pomocą przycisku poniżej i przeczytać więcej o tej zmianie w sekcji pomocy Pulse.</string>
+    <string name="channels_global_warning_3">W systemie Android Oreo niektóre z powyższych opcji przekierują do systemowych ustawień <i>Powiadomienia</i> w celu ich dostosowania. Aby dowiedzieć się więcej o powiadomieniach, jak działają i dlaczego muszą być używane, zajrzyj na stronę pomocy Pulse.</string>
     <string name="off">Wyłącz</string>
     <string name="on">Włącz</string>
     <string name="share_promo">Cześć, używam aplikacji Pulse do wysyłania SMSów i jest świetna! Daj jej szansę i wypróbuj ją:</string>
@@ -601,9 +619,11 @@ Twoja 5-cio gwiazdkowa ocena rozgrzeje moje serce :)</string>
     <string name="cancelled_subscription_error">Wygląda na to, że anulowałeś swój abonament.
 Jeżeli nie odnowisz go na czas, aplikacja wyloguje Cię automatycznie z Twojego konta w ciągu 2 dni. Jeżeli uważasz, że jest to błąd aplikacji, skontaktuj się ze mną przez e-mail.</string>
     <string name="subscription_found">Subskrypcja znaleziona - witaj ponownie!</string>
+    <string name="trial_finished">Wygląda na to, że już korzystałeś z okresu próbnego.</string>
     <string name="subscription_not_found">Nie wykryto subskrypcji - rozpocznij swój okres próbny!</string>
     <string name="checking_for_active_subscriptions">Sprawdzanie subskrypcji&#8230;</string>
     <string name="purchase_error_cancelled">Anulowałeś zakup :(</string>
+    <string name="purchase_cancelled_trial_finished">Twój okres próbny zakończył się, a zakup został anulowany. Twoje konto zostanie na razie usunięte.\n\nMożesz włączyć je ponownie w dowolnym momencie, jeśli znów zechcesz korzystać z obsługi wielu urządzeń!</string>
     <string name="purchase_error_bad_google_play">Ups, pojawił się problem z Google Play i otrzymano niepoprawną odpowiedź.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Nie zarejestrowaliśmy tej transakcji.</string>
     <string name="subscriptions">Subskrypcje są rozliczane po 7-dniowym okresie próbnym i mogą być zmienione/anulowane w każdym momencie</string>
@@ -621,8 +641,14 @@ Jeżeli nie odnowisz go na czas, aplikacja wyloguje Cię automatycznie z Twojego
     <string name="optimized_for_all_your_devices">Pulse jest zoptymalizowany do działania <b>ze wszystkimi</b> Twoimi urządzeniami.
 Wysyłaj wiadomości z przeglądarki internetowej, komputera, tabletu, smart zegarka, lub nawet ze smart tv.</string>
     <string name="true_imessage_competitor">Pierwszy, <b>prawdziwy</b> konkurent iMessage dla systemu Android.</string>
+    <string name="trial_description">Żadna konkurencyjna aplikacja nie może nawet zbliżyć się do Pulse w <b>nieskończonej ilości obsługiwanych platform</b> połączonej z <b>niską ceną</b>. Wiadomości synchronizowane są pomiędzy wszystkimi urządzeniami, natychmiast i bez problemów.</string>
+    <string name="purchase_description">Wypróbuj wersję online przez <b>siedem dni</b>, a następnie zdecyduj, w jaki sposób chcesz wesprzeć aplikację:\n\n<b>10,99 USD</b> za dożywotnie członkostwo\n<b>5,99 USD</b> rocznie\n<b>1,99 USD</b> co trzy miesiące\n<b>0,99 USD</b> miesięcznie</string>
+    <string name="start_free_trial">Rozpocznij bezpłatny okres próbny!</string>
+    <string name="create_your_pulse_account">Utwórz konto Pulse!</string>
     <string name="try_it">Wypróbuj teraz!</string>
+    <string name="select_purchase">Wybierz zakup</string>
     <string name="have_an_account">Masz już konto?\nZaloguj się</string>
+    <string name="select_a_purchase">Wybierz sposób zakupu</string>
     <string name="seven_days_free">7 dni za darmo!</string>
     <string name="competition_cant_beat">Konkurencja nie może się równać z naszymi cenami, prędkością ani usługami -
 <b> wypróbuj przez 7 dni </b>, aby przekonać się samemu!</string>
@@ -634,5 +660,11 @@ Wysyłaj wiadomości z przeglądarki internetowej, komputera, tabletu, smart zeg
     <string name="subscription_toast"><b>Nie poniesiesz żadnych kosztów</b> przed zakończeniem 7-dniowego okresu próbnego. Możesz zrezygnować w każdej chwili.</string>
     <string name="redirect_to_play_store">Dzięki za uaktualnienie! Anuluj poprzedni abonament w <b> Sklepie Play </b>. Pulse <b> nie może </b> zrobić tego automatycznie.</string>
     <string name="play_store">Sklep Play</string>
+    <string name="notification_trial_title">Tekst z dowolnego urządzenia - wersja próbna</string>
+    <string name="notification_days_remaining_in_trial">Pozostało %s dni okresu próbnego. Kliknij, aby uaktualnić!</string>
+    <string name="notification_last_day_of_trial">To ostatni dzień Twojego okresu próbnego. Kliknij, aby uaktualnić!</string>
+    <string name="notification_trial_expired">Zakończył się Twój siedmiodniowy okres próbny. Kliknij, aby uaktualnić!</string>
+    <string name="continue_with_phone_app">Możesz nadal używać bezpłatnej aplikacji w telefonie!</string>
+    <string name="thanks_for_trying">Dzięki za okres próbny!</string>
     <string name="quick_compose_summary">Zawszeb widoczne powiadomienia aby umożliwić szybki dostęp do utworzenia nowej wiadomości</string>
 </resources>

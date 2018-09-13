@@ -29,7 +29,7 @@
     <string name="menu_edit_folders">Gerenciar pastas</string>
     <string name="menu_edit_folders_no_ellipse">Gerenciar pastas</string>
     <string name="menu_schedule">Mensagens agendadas</string>
-    <string name="menu_mute_contacts">Lista negra</string>
+    <string name="menu_mute_contacts">Contatos bloqueados</string>
     <string name="menu_invite">Convidar amigos</string>
     <string name="menu_feature_settings">Recursos avançados</string>
     <string name="menu_settings">Configurações globais</string>
@@ -43,6 +43,7 @@
     <string name="menu_mobile_only">Apenas para celular</string>
     <string name="menu_snooze">Silenciar notificações</string>
     <string name="menu_call">Chamar contato</string>
+    <string name="menu_video_call">Chamada de Vídeo com Duo</string>
     <string name="menu_view_contact">Ver contato</string>
     <string name="menu_view_contacts">Visualizar contatos</string>
     <string name="menu_view_media">Ver mídia</string>
@@ -52,7 +53,7 @@
     <string name="menu_conversation_information">Informação da conversa</string>
     <string name="menu_copy_phone_number">Copiar Número</string>
     <string name="menu_view_full_conversation">Ver histórico</string>
-    <string name="menu_conversation_blacklist">Adicionar contato a lista negra</string>
+    <string name="menu_conversation_blacklist">Bloquear Contato</string>
     <string name="menu_conversation_schedule">Agendar uma mensagem</string>
     <string name="menu_contact_settings">Configuração de contato</string>
     <string name="menu_group_settings">Configurações de grupo</string>
@@ -100,7 +101,7 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <string name="convo_list_not_now">Agora não</string>
     <string name="no_private_messages_description">Configure conversas privadas no menu de configurações!</string>
     <string name="no_folder_messages_description">Adicione uma conversa a esta pasta para que apareça aqui!</string>
-    <string name="no_archived_messages_description">Arquive uma conversa para que apareça aqui!</string>
+    <string name="no_archived_messages_description">Se você arquivar uma mensagem, ela aparecerá aqui!</string>
     <!-- Search Screen -->
     <string name="conversations">Conversas</string>
     <string name="messages">Mensagens</string>
@@ -218,6 +219,7 @@ Pulse coloca suas conversa em evidência.</string>
         <item quantity="other">%1$d novas mensagens</item>
     </plurals>
     <string name="read">Lida</string>
+    <string name="mark_as_read">Marcar como Lida</string>
     <string name="mute">Silenciar</string>
     <string name="reply">Responder</string>
     <string name="reply_to">Responder para %1$s</string>
@@ -266,6 +268,7 @@ onde não existam configurações individuais para a conversa.</string>
     <string name="device_id">ID do dispositivo</string>
     <string name="device_info">Informação do dispositivo</string>
     <string name="website">Site</string>
+    <string name="view_platforms">Plataformas disponíveis do Pulse</string>
     <string name="access_messages_from_any_device">Acesse e envie mensagens de qualquer dispositivo!</string>
     <string name="beta_disclaimer">Este projeto ainda está em beta, por favor reporte os erros que você possa encontrar!</string>
     <string name="app_info">Informações do App</string>
@@ -357,16 +360,19 @@ temas escuros usam a barra de navegação preta.</string>
     <string name="apply_theme_globally">Aplicar em todas as Conversas</string>
     <string name="apply_theme_globally_summary">Remova os temas por conversa, e utilize
 este conjunto de cores global</string>
+    <string name="apply_primary_theme_toolbar">Aplicar cor principal à barra do App</string>
+    <string name="apply_primary_theme_toolbar_summary">Se a barra de aplicativos deve ou não ser colorida</string>
     <string name="swipe_delete">Deslizar para Apagar</string>
     <string name="swipe_actions">Deslizar</string>
     <string name="swipe_actions_summary">Personalizar ações de deslize</string>
-    <string name="left_to_right_swipe">&lt;&lt;&lt;  Esquerda - Direita</string>
-    <string name="right_to_left_swipe">&gt;&gt;&gt;  Direita - Esquerda</string>
-    <string name="no_swipe">Desabilitado</string>
-    <string name="blacklist_hint">Adicionar número na lista negra...</string>
-    <string name="add_blacklist">%1$s\n\nVocê tem certeza que deseja adicionar este número a lista negra? As mensagens desse número não serão mais salvas e você não será notificado!</string>
-    <string name="remove_blacklist">%1$s\n\nDeseja remover este número da lista negra?</string>
-    <string name="blacklist_need_number">Você precisa digitar um número na lista negra!</string>
+    <string name="left_to_right_swipe">Esquerda &gt;&gt;&gt; Direita</string>
+    <string name="right_to_left_swipe">Direita &lt;&lt;&lt; Esquerda</string>
+    <string name="no_swipe">Não fazer nada</string>
+    <string name="blacklist_hint">Adicionar número a Contatos Bloqueados...</string>
+    <string name="add_blacklist">%1$s\n\nVocê tem certeza que deseja bloquear este contato? As mensagens 
+desse número não serão mais salvas e você não será notificado!</string>
+    <string name="remove_blacklist">%1$s\n\nDeseja desbloquear este contato?</string>
+    <string name="blacklist_need_number">Nenhum número informado!</string>
     <string name="no_blacklists">Sem listas negras</string>
     <string name="no_blacklists_summary">Você pode adicionar uma com o botão \'mais\' abaixo!</string>
     <string name="add">Adicionar</string>
@@ -383,6 +389,14 @@ este conjunto de cores global</string>
     <string name="delete_account_summary">Remover a conta deste dispositivo, outros dispositivos inscritos e no servidor. Isto não é reversível!</string>
     <string name="delete_account_confirmation">Você tem certeza que deseja apagar esta conta e tudo mais? Você poderá sempre se inscrever novamente depois!</string>
     <string name="change_subscription">Mudar assinatura</string>
+    <string name="trial_subscription_title">Você ainda tem %s dias para testar</string>
+    <string name="trial_subscription_summary">Clique aqui para atualizar ou cancelar a avaliação!</string>
+    <string name="upgrade_or_cancel_title">Chega de testar?</string>
+    <string name="trial_expired">Obrigado por testar!</string>
+    <string name="upgrade_or_cancel">Você pode atualizar sua conta para um plano ou associação vitalícia para continuar usando o Pulse em todos os seus dispositivos!\n\nPrecisa cancelar?
+Sua conta será removida e você não será cobrado. Você pode continuar a usar o aplicativo no seu telefone gratuitamente! Fique à vontade para voltar a qualquer momento.</string>
+    <string name="upgrade">Atualize!</string>
+    <string name="cancel_trial">Cancelar período de teste</string>
     <string name="cancel_on_the_play_store">Cancelar e visualizar sua assinatura na Play Store</string>
     <string name="resync_account">Resincronizar conta</string>
     <string name="resync_account_summary">Mensagens faltando? use isto para atualizar este dispositivo com o dispositivo primário.</string>
@@ -408,6 +422,7 @@ o que está atualmente em seu banco de dados interno.</string>
     <string name="after_four_messages">Após quatro mensagens</string>
     <string name="send_as_mms_summary">Mensagens longas serão enviadas como MMS ao invés de SMS\'s individuais</string>
     <string name="alert_types">Tipos de alerta</string>
+    <string name="notification_customization">Personalizar Notificações</string>
     <string name="alert_types_summary">Várias personalizações para notificações</string>
     <string name="strip_unicode">Strip Unicode</string>
     <string name="strip_unicode_summary">Estes caracteres serão removidos das mensagens enviadas</string>
@@ -423,6 +438,8 @@ o que está atualmente em seu banco de dados interno.</string>
 Uma vez concluído, você precisará acessar novamente, em todos os dispositivos. Deseja continuar?</string>
     <string name="show_conversation_history">Exibir Histórico de Conversas</string>
     <string name="show_conversation_history_summary">As notificações exibirão conversas anteriores na conversa</string>
+    <string name="dismiss_notifications_on_reply">Dispensar notificação após responder</string>
+    <string name="dismiss_notifications_on_reply_summary">As notificações permanecem ativas após a resposta, permitindo que você continue conversando na notificação</string>
     <string name="emoji_style">Estilo dos Emojis</string>
     <string name="emoji_style_default">Padrão do Sistema</string>
     <string name="emoji_style_android_o">Google\'s Android Oreo</string>
@@ -507,10 +524,10 @@ mensagens em um novo dispositivo, tudo que você tem que fazer é acessar a sua 
     <!-- Scheduled Messages Screen -->
     <string name="delete_scheduled_message">Tem certeza que deseja apagar esta mensagem agendada para %1$s?</string>
     <string name="scheduled_message_hint">Mensagem para enviar...</string>
-    <string name="scheduled_to_hint">Contato para enviar a...</string>
+    <string name="scheduled_to_hint">Enviar para...</string>
     <string name="scheduled_message_sent">Mensagem agendada enviada</string>
     <string name="no_scheduled_messages">Nenhuma mensagem agendada</string>
-    <string name="no_scheduled_messages_summary">Você pode criar uma nova mensagem com o botão \'mais\' abaixo!</string>
+    <string name="no_scheduled_messages_summary">Clique em \' + \' para criar uma nova mensagem!</string>
     <string name="scheduled_message_in_future">O tempo deve ser no futuro!</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Criptografando e enviando...</string>
@@ -558,11 +575,13 @@ Se você deseja adicionar esta segurança, configure uma senha na seção <i>Con
     <string name="channel_settings">Configuração de Canais de Notificação</string>
     <string name="channel_settings_summary">Com Android Oreo, este nível de configuração permite personalizar toques, vibração, LED, e mais, para esta conversa</string>
     <string name="restore_default_channel_settings">Restaurar configurações de notificação padrão</string>
+    <string name="restore_default_channel_settings_popup">As configurações padrão foram restauradas.</string>
     <string name="channels">Canais</string>
     <string name="default_channel">Canal padrão</string>
     <string name="channels_global_warning">Muitas personalizações globais agora somente são possíveis por canais.</string>
     <string name="channels_global_warning_2">No Android Oreo, apps são forçados a utilizar os  <i>Canais de Notificação</i> para personalizar toques, vibrações, LED, e todas as outras opções de notificação.\n\n
 Você pode personalizar estas opções tocando no botão abaixo e saber mais a respeito desta mudança na seção de ajuda do Pulse.</string>
+    <string name="channels_global_warning_3">Com o Android Oreo, algumas das opções acima o redirecionarão para a opção <i>Canais de Notificação</i> nas preferências do sistema para personalização. Para saber mais sobre esses canais, como eles funcionam e por que eles devem ser usados, consulte a página de ajuda do Pulse.</string>
     <string name="off">Desligado</string>
     <string name="on">Ligado</string>
     <string name="share_promo">Ei, estou adorando o Pulse para o envio de mensagens! Dê uma olhada:
@@ -595,9 +614,12 @@ Sua avaliação com 5 estrelas aquece o meu coração :)</string>
     <string name="no_subscription_found">Nenhuma assinatura encontrada!</string>
     <string name="cancelled_subscription_error">Parece que você cancelou sua assinatura. Se você não assinar novamente dentro do tempo, o app automaticamente fará um logoff na conta em 2 dias. Se isso for um erro por favor contate-me por e-mail.</string>
     <string name="subscription_found">Assinatura encontrada - Bem vindo de volta!</string>
+    <string name="trial_finished">Parece que você já utilizou o seu período de teste gratuito.</string>
     <string name="subscription_not_found">Nenhuma assinatura encontrada, vamos iniciar a avaliação!</string>
     <string name="checking_for_active_subscriptions">Checando assinaturas&#8230;</string>
     <string name="purchase_error_cancelled">Você cancelou a compra :(</string>
+    <string name="purchase_cancelled_trial_finished">Seu período de teste acabou e a compra foi cancelada. Sua conta será excluída por enquanto.\n \nFique a vontade para configurá-la novamente, 
+sempre que você quiser usar o Pulse em vários dispositivos novamente!</string>
     <string name="purchase_error_bad_google_play">Ahh, o Google play pode estar com problemas, estão nos dando um resultado ruim.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Essa compra não coincide com nenhuma em nosso registro.</string>
     <string name="subscriptions">A assinatura é cobrada após o teste de sete dias e pode ser alterada ou cancelada a qualquer momento:</string>
@@ -615,8 +637,15 @@ Sua avaliação com 5 estrelas aquece o meu coração :)</string>
     <string name="optimized_for_all_your_devices">Pulse é otimizado para <b>todos</b> os dispositivos.
 Envie mensagens pela web, computador, tablet, smartwatch e mesmo de sua TV.</string>
     <string name="true_imessage_competitor">O primeiro competidor <b>de verdade</b> no envio de mensagens instantâneas para Android</string>
+    <string name="trial_description">A competição não alcança <b>o amplo suporte a plataformas</b> do Pulse e seu <b>preço baixo</b>. As mensagens são sincronizadas entre todos os seus dispositivos, instantaneamente e com perfeição.</string>
+    <string name="purchase_description">Experimente a versão on-line por <b>sete dias</b> e decida o melhor plano:\n\n<b>$10.99</b> Vitalício\n  <b>$5.99</b> Anual\n  <b>$1.99</b> Trimestral\n  <b>$0.99</b> Mensal</string>
+    <string name="start_free_trial">Comece a testar gratuitamente!</string>
+    <string name="create_your_pulse_account">Crie uma conta Pulse!</string>
     <string name="try_it">Teste agora!</string>
+    <string name="select_purchase">Selecionar Plano</string>
     <string name="have_an_account">Já tem uma conta?\nAcesse</string>
+    <string name="select_a_purchase">Selecione um Plano</string>
+    <string name="select_a_purchase_description">Escolha uma dos três Planos ou selecione a <b>associação vitalícia.</b></string>
     <string name="seven_days_free">7 dias gratuitos!</string>
     <string name="competition_cant_beat">A competição não nos alcança em preços, velocidade, ou serviços.
 <b>Teste por 7 dias</b> e veja você mesmo!</string>
@@ -629,5 +658,11 @@ Envie mensagens pela web, computador, tablet, smartwatch e mesmo de sua TV.</str
 Cancele a qualquer momento.</string>
     <string name="redirect_to_play_store">Obrigado pelo upgrade! Por favor, cancele sua inscrição anterior na <b>Play Store</b>. Pulse <b>não</b> fará isto automaticamente.</string>
     <string name="play_store">Play Store</string>
+    <string name="notification_trial_title">Mensagens de qualquer dispositivo - Testes</string>
+    <string name="notification_days_remaining_in_trial">%s dias restantes em seu período de testes. Clique para atualizar!</string>
+    <string name="notification_last_day_of_trial">Hoje é o último dia do período de testes. Clique para atualizar!</string>
+    <string name="notification_trial_expired">Seu período de testes acabou. Clique para atualizar!</string>
+    <string name="continue_with_phone_app">Você pode continuar a utilizar o app em seu telefone, de graça!</string>
+    <string name="thanks_for_trying">Obrigado por testar!</string>
     <string name="quick_compose_summary">Notivicação sempre ativa para lhe dar o acesso mais rápido para a composição de uma nova mensagem.</string>
 </resources>

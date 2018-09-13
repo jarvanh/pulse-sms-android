@@ -43,6 +43,7 @@
     <string name="menu_mobile_only">Yalnızca Mobil</string>
     <string name="menu_snooze">Bildirimleri ertele</string>
     <string name="menu_call">Kişiyi ara</string>
+    <string name="menu_video_call">Duo ile görüntülü çağrı</string>
     <string name="menu_view_contact">Kişiyi göster</string>
     <string name="menu_view_contacts">Kişileri göster</string>
     <string name="menu_view_media">Medyayı göster</string>
@@ -65,7 +66,7 @@
     <string name="menu_snooze_72">72 saat</string>
     <string name="menu_snooze_custom">Bir zaman seç</string>
     <string name="menu_mark_as_unread">Okunmadı Olarak İşaretle</string>
-    <string name="menu_pin_conversation">Sohbeti Sabitle/Aç</string>
+    <string name="menu_pin_conversation">Sohbeti Sabitle/Çöz</string>
     <string name="menu_mute_conversation">Sohbeti Sustur/Aç</string>
     <!-- Empty Screen -->
     <string name="no_messages">Mesaj yok</string>
@@ -168,7 +169,7 @@ hadi başlatın!</string>
     <string name="select_text_to_copy">Kopyalayacağınız metni seçin:</string>
     <string name="copy_all_text">Tümünü Kopyala</string>
     <string name="copy_otp">Kopyala</string>
-    <string name="open_link_to_browser">Bağlantıyı Tarayıcıda Aç</string>
+    <string name="open_link_to_browser">Tarayıcıda Aç</string>
     <string name="open_link_internal">Bağlantıyı Dahili Olarak Aç</string>
     <string name="copy_link">Linki kopyala</string>
     <string name="attach_vcard">Kişiyi vCard olarak Ekle</string>
@@ -189,7 +190,7 @@ hadi başlatın!</string>
     <string name="private_conversation_disclaimer">Bu bir <b>özel sohbet</b> ve mesaj yazma ekranından açılamaz.</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">Uygulama, bu izinler olmadan çalışamaz! Devam etmeden önce onları kabul etmeniz gerekiyor.</string>
-    <string name="loading_messages">Optimize ...</string>
+    <string name="loading_messages">Optimize ediliyor...</string>
     <string name="loading_messages_summary">Mesajlarınızı uygulamaya almaya çalışıyorum.
 Uzun sürmeyecek!</string>
     <string name="tooltip_got_it">Anladım!</string>
@@ -221,6 +222,7 @@ Uzun sürmeyecek!</string>
         <item quantity="other">%1$d yeni mesaj</item>
     </plurals>
     <string name="read">Okundu Yap</string>
+    <string name="mark_as_read">Okundu Yap</string>
     <string name="mute">Sustur</string>
     <string name="reply">Yanıtla</string>
     <string name="reply_to">%1$s yanıtladı</string>
@@ -263,11 +265,12 @@ Uzun sürmeyecek!</string>
     <string name="app_version">Uygulama Sürümü</string>
     <string name="account_information">Hesap Bilgileri</string>
     <string name="account_actions">Hesap İşlemleri</string>
-    <string name="danger_zone">Tehlike Alanı</string>
+    <string name="danger_zone">Tehlikeli Bölge</string>
     <string name="be_careful_using_these_settings">Yönergeleri takip edin ve bu eylemleri kullanırken dikkatli olun</string>
     <string name="device_id">Cihaz Kimliği</string>
     <string name="device_info">Cihaz Bilgisi</string>
     <string name="website">Web Sitesi</string>
+    <string name="view_platforms">Mevcut Pulse Platformları</string>
     <string name="access_messages_from_any_device">Herhangi bir cihazdan erişin ve mesaj gönderin!</string>
     <string name="beta_disclaimer">Bu proje hala beta aşamasında. Lütfen, bulduğunuz sorunları bildirin!</string>
     <string name="app_info">Uygulama Bilgisi</string>
@@ -303,7 +306,7 @@ Uzun sürmeyecek!</string>
     <string name="private_conversation">Özel Sohbet</string>
     <string name="private_conversation_summary">Bildirimlerde içeriği gizle</string>
     <string name="private_conversation_summary_2">Bildirimlerde içeriği gizle ve bu sohbeti <i>Özel Sohbetler</i> bölümüne taşı</string>
-    <string name="primary_color">Ana Renk</string>
+    <string name="primary_color">Birincil Renk</string>
     <string name="primary_dark_color">Birincil Koyu Renk</string>
     <string name="accent_color">Vurgu Rengi</string>
     <string name="led_color">LED Rengi</string>
@@ -320,7 +323,7 @@ Uzun sürmeyecek!</string>
     <string name="repeat_half_hour">Yarım saatte bir</string>
     <string name="repeat_hour">Her saat</string>
     <string name="wake_screen">Ekranı Uyandır</string>
-    <string name="vibrate">Titreşim Deseni</string>
+    <string name="vibrate">Titreşim</string>
     <string name="vibrate_off">Titreşim yok</string>
     <string name="vibrate_default">Varsayılan titreşim</string>
     <string name="vibrate_two_long">İki uzun titreşim</string>
@@ -357,6 +360,8 @@ Uzun sürmeyecek!</string>
     <string name="adjustable_nav_bar_summary">Aydınlık temalarda, beyaz gezinti çubuğu kullanılırken, koyu temalarda siyah gezinti çubuğu kullanılır.</string>
     <string name="apply_theme_globally">Tüm Sohbetlere Uygula</string>
     <string name="apply_theme_globally_summary">Sohbete-özel temaları sil, bu genel renk setini kullan</string>
+    <string name="apply_primary_theme_toolbar">Uygulama Çubuğuna Birincil Rengi Uygula</string>
+    <string name="apply_primary_theme_toolbar_summary">Uygulama çubuğu renklendirilsin mi?</string>
     <string name="swipe_delete">Kaydırarak Sil</string>
     <string name="swipe_actions">Kaydırma Eylemleri</string>
     <string name="swipe_actions_summary">Bir sohbetin kaydırma eylemini özelleştir</string>
@@ -380,14 +385,22 @@ Uzun sürmeyecek!</string>
     <string name="setup_my_account_summary">Tabletinizden veya bilgisayarınızdan mesajlaşma gibi özellikleri kullanmaya başlamak için kaydolun veya hesabınıza giriş yapın</string>
     <string name="preparing_new_account">Hesap hazırlanıyor&#8230;</string>
     <string name="delete_account">Hesabı sil</string>
-    <string name="delete_account_summary">Hesabı bu cihazdan, oturum açılmış diğer cihazlardan ve sunucudan kaldırır. Bu geri çevrilebilir değildir!</string>
+    <string name="delete_account_summary">Hesabınızı bu cihazdan, oturum açılmış diğer cihazlardan ve sunucudan kaldırın. Bu geri döndürülemez!</string>
     <string name="delete_account_confirmation">Hesabınızı ve diğer her şeyi silmek istediğinize emin misiniz? Daha sonra her zaman yeniden kayıt olabilirsiniz!</string>
     <string name="change_subscription">Aboneliği Değiştir</string>
+    <string name="trial_subscription_title">%s deneme gününüz kaldı</string>
+    <string name="trial_subscription_summary">Yükseltmek veya denemeyi iptal etmek için buraya dokunun!</string>
+    <string name="upgrade_or_cancel_title">Denemeyi tamamladınız mi?</string>
+    <string name="trial_expired">Deneme için teşekkürler!</string>
+    <string name="upgrade_or_cancel">Pulse\'u tüm cihazlarınızda kullanmaya devam etmek için bir abonelik satın alabilir veya ömür boyu üyeliğe yükseltebilirsiniz!\n\nİptal edilsin mi?
+Hesabınız kaldırılacak ve sizden ödeme alınmayacak. Uygulamayı ücretsiz olarak telefonunuzda kullanmaya devam edebilirsiniz! İstediğiniz zaman geri gelebilirsiniz.</string>
+    <string name="upgrade">Yükselt!</string>
+    <string name="cancel_trial">Denemeyi İptal Et</string>
     <string name="cancel_on_the_play_store">Yükseltmek için buraya tıklayın! Aboneliğinizi Play Store\'dan iptal edebilirsiniz.</string>
     <string name="resync_account">Mesajları Eşitle</string>
     <string name="resync_account_summary">Mesajlar eksik mi? Bunu kullanın ve birincil cihazınızdaki güncel mesajarı bu cihaza getirin.</string>
-    <string name="resync_account_summary_phone">Bu, hesabınızı temizleyecek ve dahili SMS veritabanında şu anda bulunan mesajları yedekleyecek.</string>
-    <string name="resync_account_confirmation">Bu cihazdan gelen tüm mesajlar silinecek ve şu anda birincil cihazınızda bulunalar ile temiz bir kopya başlatılacak. Bunu yapmak istediğinize emin misin?</string>
+    <string name="resync_account_summary_phone">Bu, hesabınızı temizler ve dahili SMS veritabanında şu anda bulunan mesajları yedekler.</string>
+    <string name="resync_account_confirmation">Bu cihazdan gelen tüm mesajlar silinecek ve şu anda birincil cihazınızda bulunanlar ile temiz bir kopya başlatılacak. Bunu yapmak istediğinize emin misin?</string>
     <string name="resync_contacts">Kişileri Eşitle</string>
     <string name="resync_contacts_summary">Herhangi bir kişi değişikliğini hemen Web\'e gönder.</string>
     <string name="normalize_color_scheme">Veya temaya temel olacak istediğiniz tek bir rengi seçebilirsiniz:</string>
@@ -407,7 +420,8 @@ Uzun sürmeyecek!</string>
     <string name="after_four_messages">Dört mesajın ardından</string>
     <string name="send_as_mms_summary">Uzun mesajları tek tek SMS yerine MMS olarak gönderin</string>
     <string name="alert_types">İkaz Türleri</string>
-    <string name="alert_types_summary">Zil sesi, titreşim şablonu ve dahasını özelleştirin</string>
+    <string name="notification_customization">Bildirim Özelleştirmeleri</string>
+    <string name="alert_types_summary">Zil sesini, titreşimi ve dahasını özelleştirin</string>
     <string name="strip_unicode">Unicode Şeridi</string>
     <string name="strip_unicode_summary">Bu karakterler giden mesajlardan kaldırılacak</string>
     <string name="giffgaff_delivery">Giffgaff Teslim Raporları</string>
@@ -422,6 +436,8 @@ Uzun sürmeyecek!</string>
 İşlem tamamlandıktan sonra, diğer tüm cihazlarınızda yeniden oturum açmanız gerekecek. Devam etmek istiyor musunuz?</string>
     <string name="show_conversation_history">Sohbet Geçmişini Göster</string>
     <string name="show_conversation_history_summary">Bildirimlerde önceki sohbet mesajları gösterilir</string>
+    <string name="dismiss_notifications_on_reply">Yanıtladıktan Sonra Bildirimi Reddet</string>
+    <string name="dismiss_notifications_on_reply_summary">Yanıt verdikten sonra bildirimler etkin kalır ve bildirimler üzerinden görüşmeye devam edebilirsiniz.</string>
     <string name="emoji_style">Emoji Stili</string>
     <string name="emoji_style_default">Sistem Varsayılanı</string>
     <string name="emoji_style_android_o">Google\'s Android Oreo</string>
@@ -550,14 +566,16 @@ Bugün deneyin!</string>
     <string name="hours">Saat</string>
     <string name="minutes">Dakika</string>
     <string name="test">Ölçek</string>
-    <string name="channel_settings">Bildirim Kanalı Ayarları</string>
-    <string name="channel_settings_summary">Android Oreo ile gelen sistem seviyesi ayarları, bu sohbet için zil sesini, titreşimi, LED ve daha fazlasını özelleştirme imkanı verir</string>
+    <string name="channel_settings">Sohbet Bildirim Özelleştirmeleri</string>
+    <string name="channel_settings_summary">Android Oreo ile gelen sistem-seviyesi ayarları, bu sohbet için bildirimleri özelleştirilmenize imkan verir</string>
     <string name="restore_default_channel_settings">Varsayılan Bildirim Ayarlarını Geri Yükle</string>
+    <string name="restore_default_channel_settings_popup">Varsayılan ayarlar geri yüklendi.</string>
     <string name="channels">Kanallar</string>
     <string name="default_channel">Varsayılan Kanal</string>
     <string name="channels_global_warning">Çoğu genel kişiselleştirmeyi artık her bir kanal için yapmak mümkün</string>
     <string name="channels_global_warning_2">Android Oreo ile zil sesi, titreşim, LED ve diğer bildirim seçeneklerini özelleştirmek için uygulamalara <i>Bildirim Kanalları</i>nı kullanma zorunluluğu getirildi.\n\n
 Aşağıdaki düğme ile bu seçenekleri özelleştirebilirsiniz. Daha fazla bilgi için Pulse\'un yardım bölümünü okuyun.</string>
+    <string name="channels_global_warning_3">Android Oreo\'da, yukarıdaki seçeneklerden bazıları sizi özelleştirme için sistem düzeyinde <i>Bildirim Kanalları</i> tercihlerine yönlendirir. Bu kanallar hakkında daha fazla bilgi edinmek, nasıl çalıştıklarını ve neden kullanılmaları gerektiğini öğrenmek için lütfen Pulse\'un yardım sayfasına bakın.</string>
     <string name="off">Kapalı</string>
     <string name="on">Açık</string>
     <string name="share_promo">Selam, mesajlaşmak için Pulse\'a bayılıyorum! Bir şans ver:
@@ -590,9 +608,11 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="cancelled_subscription_error">Aboneliğinizi iptal etmişsiniz gibi görünüyor.
 Bu süre içinde yeni bir abonelik oluşturmazsanız, uygulama otomatik olarak 2 gün içinde oturumunuzu sonlandıracak. Bu bir hata ise, lütfen bana e-posta ile ulaşın.</string>
     <string name="subscription_found">Abonelik bulundu - hoş geldiniz!</string>
+    <string name="trial_finished">Ücretsiz denemeyi zaten tamamladınız.</string>
     <string name="subscription_not_found">Abonelik bulunamadı, denemeye başlayalım!</string>
     <string name="checking_for_active_subscriptions">Abonelikler kontrol ediyor &#8230;</string>
     <string name="purchase_error_cancelled">Satın alma işlemini iptal ettiniz :(</string>
+    <string name="purchase_cancelled_trial_finished">Denemenizin süresi doldu ve satın alma iptal edildi. Hesabınız şimdilik silinecek.\n\nÇok-cihazlı işlevselliği tekrar kullanmak istediğinizde, yeniden kurabilirsiniz!</string>
     <string name="purchase_error_bad_google_play">Uh oh, Google Play\'in sorunları olabilir, bize kötü bir sonuç verdi.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Bu satın alma işlemi, kayıtlarımızla eşleşmedi.</string>
     <string name="subscriptions">Abonelik, yedi günlük denemeden sonra faturalandırılır ve istenildiği zaman değiştirilebilir/iptal edilebilir</string>
@@ -607,16 +627,22 @@ Bu süre içinde yeni bir abonelik oluşturmazsanız, uygulama otomatik olarak 2
     <string name="monthly_purchase_summary">Sadece denemek ister misin? Sorun değil.</string>
     <string name="change_subscription_message">Yeni sürüme geçirmek ister misiniz? Harika! Sonraki ekranda seçim yaptıktan sonra Play Store uygulamasına gidip, eski aboneliğinizi iptal etmeniz <b>gerekiyor</b>.
 Ben, bunu otomatik <b>yapamam</b>.</string>
-    <string name="beautiful_powerful_instant">Güzel, güçlü, anında.</string>
+    <string name="beautiful_powerful_instant">Modern çağa hoş geldiniz.</string>
     <string name="optimized_for_all_your_devices">Pulse, <b>tüm</b> cihazlarınız için optimize edildi.
 Web\'den, masaüstü bilgisayardan, tabletinizden, saatinizden ve hatta TV\'nizden metin gönderin.</string>
     <string name="true_imessage_competitor">Android için ilk <b>gerçek</b> iMessage rakibi.</string>
-    <string name="try_it">Hemen dene!</string>
+    <string name="trial_description">Hiçbir rakip, Pulse\'un <b>düşük fiyatı</b> ve <b>sonsuz platform desteği</b> ile rekabet edemez. Mesajlar, tüm cihazlarınız arasında anında ve sorunsuz bir şekilde senkronize edilir.</string>
+    <string name="purchase_description">Çevrimiçi sürümü <b>yedi gün</b> süresince deneyin, ardından uygulamayı nasıl desteklemek istediğinize karar verin:\n\n<b>$10.99</b> ömür boyu üyelik\n<b>$5.99</b> yıllık\n<b>$1.99</b> üç aylık\n<b>$0.99</b> aylık</string>
+    <string name="start_free_trial">Ücretsiz deneme sürümünü başlat!</string>
+    <string name="create_your_pulse_account">Bir Pulse hesabı oluştur!</string>
+    <string name="try_it">Deneyin!</string>
+    <string name="select_purchase">Satın Al\'ı Seçin</string>
     <string name="have_an_account">Hasabınız var mı?\nOturum açın</string>
+    <string name="select_a_purchase">Bir Satın Alma Seçin</string>
+    <string name="select_a_purchase_description">Üç abonelikten birini seçin veya bir kerelik satın alma yapmak için <b>ömür boyu üyelik</b>\'i seçin.</string>
     <string name="seven_days_free">7 gün ücretsiz!</string>
-    <string name="competition_cant_beat">Fiyatlarımız, hızımız veya hizmetimizle rekabet edilemez -
-<b>7 gün süresince</b> kendiniz öğrenin!</string>
-    <string name="select_a_trial_below"><b>Ücretsiz deneme</b> sürecini başlatmak için aşağıdaki 3 abonelikten birini seçin.</string>
+    <string name="competition_cant_beat"><b>7 gün ÜCRETSİZ deneyin</b> ve neden hızımız, fiyatımız, veya hizmetimizle rekabet edilemeyeceğini kendiniz keşfedin.</string>
+    <string name="select_a_trial_below"><b>Ücretsiz deneme</b> sürecini başlatmak için <b>üç abonelik seçeneğinden</b> birini seçin.</string>
     <string name="charged_after_trial">Denemeden sonra ücretlendirildi:</string>
     <string name="monthly_purchase_improved">$0,99 /\nay</string>
     <string name="three_month_purchase_improved">$1,99 /\n3 ay</string>
@@ -625,5 +651,11 @@ Web\'den, masaüstü bilgisayardan, tabletinizden, saatinizden ve hatta TV\'nizd
 İstediğiniz zaman iptal edin.</string>
     <string name="redirect_to_play_store">Yükseltme yaptığınız için teşekkürler! Lütfen eski aboneliği <b>Play Store</b>\'dan iptal edin. Pulse bunu otomatik <b>yapamaz</b>.</string>
     <string name="play_store">Play Store</string>
+    <string name="notification_trial_title">Herhangi bir cihazdan SMS - Deneme</string>
+    <string name="notification_days_remaining_in_trial">%s deneme gününüz kaldı. Yükseltmek için tıklayın!</string>
+    <string name="notification_last_day_of_trial">Bugün denemenizin son günü. Yükseltmek için tıklayın!</string>
+    <string name="notification_trial_expired">Yedi günlük deneme süreniz bitti. Yükseltmek için tıklayın!</string>
+    <string name="continue_with_phone_app">Uygulamayı ücretsiz olarak telefonunuzda kullanmaya devam edebilirsiniz!</string>
+    <string name="thanks_for_trying">Deneme için teşekkürler!</string>
     <string name="quick_compose_summary">Yeni mesaj oluşturma işlemine en hızlı şekilde erişebilmeniz için daima aktif olan bildirim.</string>
 </resources>
