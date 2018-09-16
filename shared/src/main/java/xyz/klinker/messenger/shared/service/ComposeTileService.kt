@@ -15,6 +15,7 @@ class ComposeTileService : TileService() {
     override fun onClick() {
         try {
             val compose = ActivityUtils.buildForComponent(ActivityUtils.QUICK_SHARE_ACTIVITY)
+            compose.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivityAndCollapse(compose)
         } catch (e: Exception) {
             e.printStackTrace()
