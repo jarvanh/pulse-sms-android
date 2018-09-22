@@ -18,7 +18,7 @@
 
     <version
         name="4.1.2"
-        description="September 18th, 2018">
+        description="September 19th, 2018">
         <text>Bug fixes</text>
         <text>Translation updates</text>
     </version>
@@ -26,7 +26,7 @@
     <version
         name="4.1.1"
         description="September 11th, 2018">
-        <!-- Revert purchase process to original style -->
+        <!-- Revert purchase process to original style. It just wasn't working -->
         <!-- Only request the passcode once every minute, instead of every time we go to it -->
         <text>Bug fixes</text>
     </version>
