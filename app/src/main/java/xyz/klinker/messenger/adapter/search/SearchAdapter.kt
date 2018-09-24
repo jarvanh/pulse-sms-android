@@ -17,9 +17,9 @@
 package xyz.klinker.messenger.adapter.search
 
 import android.annotation.SuppressLint
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter
 import com.klinker.android.link_builder.Link
 import com.klinker.android.link_builder.applyLinks

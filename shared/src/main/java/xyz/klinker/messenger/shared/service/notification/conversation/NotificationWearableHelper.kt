@@ -2,7 +2,7 @@ package xyz.klinker.messenger.shared.service.notification.conversation
 
 import android.content.Context
 import android.os.Build
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import android.text.Html
 import android.text.Spanned
 import xyz.klinker.messenger.shared.R

@@ -1,9 +1,6 @@
 package xyz.klinker.messenger.shared.util
 
-import android.content.Context
-import android.support.annotation.VisibleForTesting
 import android.text.InputType
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 
 import xyz.klinker.messenger.shared.data.Settings

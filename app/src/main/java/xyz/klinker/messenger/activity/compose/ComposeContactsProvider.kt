@@ -4,13 +4,13 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.os.Handler
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.MultiAutoCompleteTextView
 import android.widget.ProgressBar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.ex.chips.BaseRecipientAdapter
 import com.android.ex.chips.RecipientEditTextView
 import com.android.ex.chips.recipientchip.DrawableRecipientChip

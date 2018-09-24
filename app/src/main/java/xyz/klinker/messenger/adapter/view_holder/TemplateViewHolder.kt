@@ -16,9 +16,9 @@
 
 package xyz.klinker.messenger.adapter.view_holder
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 
 import xyz.klinker.messenger.R
 

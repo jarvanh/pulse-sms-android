@@ -2,11 +2,11 @@ package xyz.klinker.messenger.fragment.message
 
 import android.app.Notification
 import android.net.Uri
-import android.support.v4.app.FragmentActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType

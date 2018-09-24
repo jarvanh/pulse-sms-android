@@ -34,7 +34,7 @@ android {
         minSdkVersion parseSdkVersion(project.MIN_SDK)
         targetSdkVersion parseSdkVersion(TARGET_SDK)
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "GIPHY_API_KEY", "\"${apiKeys['GIPHY']}\"")
         buildConfigField("String", "ARTICLE_API_KEY", "\"${apiKeys['ARTICLE']}\"")
@@ -99,24 +99,23 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$KOTLIN_VERSION"
 
     //noinspection GradleCompatible
-    api "com.android.support:appcompat-v7:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:support-v4:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:support-v13:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:support-emoji:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:support-annotations:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:design:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:recyclerview-v7:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:palette-v7:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:preference-v14:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:leanback-v17:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:percent:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:customtabs:$ANDROID_SUPPORT_VERSION"
-    api "com.android.support:exifinterface:$ANDROID_SUPPORT_VERSION"
+    api 'androidx.appcompat:appcompat:1.0.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.legacy:legacy-support-v13:1.0.0'
+    api 'androidx.emoji:emoji:1.0.0'
+    api 'androidx.annotation:annotation:1.0.0'
+    api 'com.google.android.material:material:1.0.0'
+    api 'androidx.recyclerview:recyclerview:1.0.0'
+    api 'androidx.palette:palette:1.0.0'
+    api 'androidx.legacy:legacy-preference-v14:1.0.0'
+    api 'androidx.leanback:leanback:1.0.0'
+    api 'androidx.percentlayout:percentlayout:1.0.0'
+    api 'androidx.browser:browser:1.0.0'
+    api 'androidx.exifinterface:exifinterface:1.0.0'
 
     api('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') { transitive = true }
     api "com.google.firebase:firebase-core:$FIREBASE_CORE"
     api "com.google.firebase:firebase-perf:$FIREBASE_PERF"
-    api "com.google.firebase:firebase-crash:$FIREBASE_CORE"
     api "com.google.firebase:firebase-auth:$FIREBASE_AUTH"
     api "com.google.android.gms:play-services-maps:$GOOGLE_PLAY_SERVICES_VERSION"
 

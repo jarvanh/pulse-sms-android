@@ -1,11 +1,11 @@
 package xyz.klinker.messenger.view
 
 import android.content.Context
-import android.support.v13.view.inputmethod.EditorInfoCompat
-import android.support.v13.view.inputmethod.InputConnectionCompat
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
+import androidx.core.view.inputmethod.EditorInfoCompat
+import androidx.core.view.inputmethod.InputConnectionCompat
 import xyz.klinker.messenger.activity.share.QuickShareActivity
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout

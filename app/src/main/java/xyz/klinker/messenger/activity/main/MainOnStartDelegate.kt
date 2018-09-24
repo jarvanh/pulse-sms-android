@@ -2,9 +2,8 @@ package xyz.klinker.messenger.activity.main
 
 import android.os.Build
 import android.os.Handler
-import android.support.v4.app.NotificationManagerCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
+import androidx.core.app.NotificationManagerCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob

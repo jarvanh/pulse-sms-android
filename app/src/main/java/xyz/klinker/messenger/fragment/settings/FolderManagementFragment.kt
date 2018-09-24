@@ -4,15 +4,14 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceGroup
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.ConversationsForFolderAdapter
-import xyz.klinker.messenger.adapter.InviteFriendsAdapter
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Conversation

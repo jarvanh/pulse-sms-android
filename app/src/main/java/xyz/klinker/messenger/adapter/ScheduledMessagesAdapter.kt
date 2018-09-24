@@ -17,9 +17,9 @@
 package xyz.klinker.messenger.adapter
 
 import android.annotation.SuppressLint
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.ScheduledMessageViewHolder
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage

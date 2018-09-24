@@ -1,7 +1,7 @@
 package xyz.klinker.messenger.activity.notification
 
 import android.content.Intent
-import android.support.v4.app.RemoteInput
+import androidx.core.app.RemoteInput
 import xyz.klinker.messenger.shared.service.ReplyService
 
 class ReplyWearableHandler(private val activity: MarshmallowReplyActivity) {

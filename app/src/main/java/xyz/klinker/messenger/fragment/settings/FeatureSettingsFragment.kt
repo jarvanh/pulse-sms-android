@@ -3,8 +3,7 @@ package xyz.klinker.messenger.fragment.settings
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceCategory
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
@@ -13,9 +12,7 @@ import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.activity.PasscodeSetupActivity
-import xyz.klinker.messenger.shared.activity.PasscodeSetupPage
 import xyz.klinker.messenger.shared.activity.PasscodeVerificationActivity
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 import xyz.klinker.messenger.shared.util.RedirectToMyAccount

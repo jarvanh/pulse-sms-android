@@ -3,12 +3,8 @@ package xyz.klinker.messenger.shared.util
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
-import android.support.annotation.VisibleForTesting
 import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
-import android.widget.Toast
-
-import java.util.ArrayList
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 object DualSimUtils {

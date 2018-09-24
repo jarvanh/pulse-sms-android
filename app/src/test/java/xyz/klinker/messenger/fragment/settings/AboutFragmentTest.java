@@ -16,7 +16,7 @@
 
 package xyz.klinker.messenger.fragment.settings;
 
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import org.junit.Before;
 import org.junit.Ignore;

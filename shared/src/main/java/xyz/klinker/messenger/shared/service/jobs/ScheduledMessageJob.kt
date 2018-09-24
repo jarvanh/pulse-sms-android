@@ -19,8 +19,8 @@ package xyz.klinker.messenger.shared.service.jobs
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import android.text.Html
 import android.util.Log
 import xyz.klinker.messenger.api.implementation.Account

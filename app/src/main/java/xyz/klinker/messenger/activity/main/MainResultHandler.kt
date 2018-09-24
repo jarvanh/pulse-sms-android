@@ -3,7 +3,7 @@ package xyz.klinker.messenger.activity.main
 import android.app.Activity
 import android.content.Intent
 import android.os.Handler
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.fragment.PrivateConversationListFragment

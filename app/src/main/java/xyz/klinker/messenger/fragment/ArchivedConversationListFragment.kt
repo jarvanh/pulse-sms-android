@@ -1,7 +1,7 @@
 package xyz.klinker.messenger.fragment
 
-import android.support.design.widget.NavigationView
 import android.view.View
+import com.google.android.material.navigation.NavigationView
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity

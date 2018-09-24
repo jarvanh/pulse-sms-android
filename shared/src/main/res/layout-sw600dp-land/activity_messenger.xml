@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
@@ -39,7 +39,7 @@
         tools:ignore="InconsistentLayout"
         android:orientation="horizontal">
 
-        <android.support.design.widget.NavigationView
+        <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigation_view"
             android:layout_width="292dp"
             android:layout_height="match_parent"
@@ -52,7 +52,7 @@
             app:itemIconTint="@drawable/drawer_icon_selector"
             app:theme="@style/EllipsizeText" />
 
-        <android.support.design.widget.CoordinatorLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -62,7 +62,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <android.support.design.widget.AppBarLayout
+                <com.google.android.material.appbar.AppBarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -92,7 +92,7 @@
 
                     </FrameLayout>
 
-                </android.support.design.widget.AppBarLayout>
+                </com.google.android.material.appbar.AppBarLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                 android:background="@color/navigationBarDivider"
                 android:layout_gravity="bottom"/>
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_add"
@@ -126,8 +126,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/message_list_container" />
 
-        </android.support.design.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

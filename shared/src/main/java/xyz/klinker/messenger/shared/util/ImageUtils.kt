@@ -17,26 +17,22 @@
 package xyz.klinker.messenger.shared.util
 
 import android.content.Context
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Matrix
 import android.graphics.Path
-import android.graphics.drawable.Drawable
+import android.media.ExifInterface
 import android.net.Uri
 import android.provider.ContactsContract
-import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.support.annotation.DrawableRes
-import android.support.media.ExifInterface
-import android.support.v4.content.FileProvider
+import androidx.core.content.FileProvider
 import android.util.Log
+import androidx.annotation.DrawableRes
 
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
 import java.util.Date
 
 import xyz.klinker.messenger.shared.R

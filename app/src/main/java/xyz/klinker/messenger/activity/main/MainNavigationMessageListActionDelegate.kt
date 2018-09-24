@@ -4,9 +4,7 @@ import android.content.*
 import android.net.Uri
 import android.os.Handler
 import android.provider.ContactsContract
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AlertDialog
 import android.widget.Toast
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.ContactSettingsActivity
@@ -30,6 +28,8 @@ import xyz.klinker.messenger.shared.util.listener.ContactClickedListener
 import java.util.ArrayList
 import java.util.NoSuchElementException
 import android.content.Intent
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainNavigationMessageListActionDelegate(private val activity: MessengerActivity) {
 
@@ -305,7 +305,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             val fragment = navController.getShownConversationList()
             val conversation = fragment!!.expandedItem!!.conversation
 
-            BlacklistFragment.addBlacklist(activity, conversation!!.phoneNumbers, {
+            BlacklistFragment.addBlacklist(activity, conversation!!.phoneNumbers) {
                 val position = fragment.expandedItem!!.adapterPosition
                 fragment.expandedItem!!.itemView.performClick()
 
@@ -316,7 +316,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-            })
+            }
 
             true
         } else {

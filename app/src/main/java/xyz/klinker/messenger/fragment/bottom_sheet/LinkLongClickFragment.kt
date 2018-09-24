@@ -1,13 +1,12 @@
 package xyz.klinker.messenger.fragment.bottom_sheet
 
 import android.app.PendingIntent
-import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.support.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsIntent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast

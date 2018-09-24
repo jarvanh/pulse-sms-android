@@ -5,8 +5,6 @@ import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.CountDownTimer
 import android.os.Handler
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.FragmentActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
@@ -14,7 +12,8 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ProgressBar
-import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.fragment.message.MessageListFragment
@@ -55,7 +54,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         KeyboardLayoutHelper.applyLayout(messageEntry)
         messageEntry.textSize = Settings.largeFont.toFloat()
 
-        messageEntry.setOnEditorActionListener({ _, actionId, keyEvent ->
+        messageEntry.setOnEditorActionListener { _, actionId, keyEvent ->
             var handled = false
 
             if (keyEvent != null && keyEvent.action == KeyEvent.ACTION_DOWN &&
@@ -66,7 +65,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
             }
 
             handled
-        })
+        }
 
         messageEntry.setOnClickListener {
             val attachLayout: View? = fragment.rootView!!.findViewById(R.id.attach_layout)

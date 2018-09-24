@@ -1,7 +1,7 @@
 package xyz.klinker.messenger.shared.util
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 

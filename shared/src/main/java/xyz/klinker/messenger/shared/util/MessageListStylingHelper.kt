@@ -2,10 +2,10 @@ package xyz.klinker.messenger.shared.util
 
 import android.content.Context
 import android.database.Cursor
-import android.support.annotation.DrawableRes
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.RecyclerView
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.MimeType

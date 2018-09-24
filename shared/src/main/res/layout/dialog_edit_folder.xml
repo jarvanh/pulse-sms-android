@@ -30,7 +30,7 @@
         android:maxLines="8"
         android:scrollHorizontally="false" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/conversation_list"
         android:layout_width="match_parent"
         android:layout_height="350dp" />

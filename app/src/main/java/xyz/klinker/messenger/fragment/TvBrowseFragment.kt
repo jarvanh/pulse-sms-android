@@ -16,12 +16,11 @@
 
 package xyz.klinker.messenger.fragment
 
-import android.support.v17.leanback.widget.ArrayObjectAdapter
-import android.support.v17.leanback.widget.HeaderItem
-import android.support.v17.leanback.widget.ListRow
+import androidx.leanback.widget.ArrayObjectAdapter
+import androidx.leanback.widget.HeaderItem
+import androidx.leanback.widget.ListRow
 import com.sgottard.sofa.support.BrowseSupportFragment
 import xyz.klinker.messenger.adapter.TvAdapter
-import xyz.klinker.messenger.fragment.message.MessageInstanceManager
 import xyz.klinker.messenger.shared.data.DataSource
 
 /**

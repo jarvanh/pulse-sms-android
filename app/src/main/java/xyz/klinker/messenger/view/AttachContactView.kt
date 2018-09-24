@@ -3,12 +3,12 @@ package xyz.klinker.messenger.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.MultiAutoCompleteTextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.ex.chips.BaseRecipientAdapter
 import com.android.ex.chips.RecipientEditTextView
 import xyz.klinker.messenger.R

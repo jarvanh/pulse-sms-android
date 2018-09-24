@@ -10,13 +10,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.FileUriExposedException
 import android.preference.Preference
-import android.support.annotation.RequiresApi
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account

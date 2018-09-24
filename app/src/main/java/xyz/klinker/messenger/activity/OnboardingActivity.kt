@@ -1,9 +1,9 @@
 package xyz.klinker.messenger.activity
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.Button
+import androidx.fragment.app.Fragment
 
 import com.github.paolorotolo.appintro.AppIntro
 import com.github.paolorotolo.appintro.AppIntroFragment

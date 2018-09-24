@@ -3,8 +3,8 @@ package xyz.klinker.messenger.shared.service.jobs
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.firebase.jobdispatcher.JobParameters
 import com.firebase.jobdispatcher.SimpleJobService
 import xyz.klinker.messenger.shared.util.TimeUtils

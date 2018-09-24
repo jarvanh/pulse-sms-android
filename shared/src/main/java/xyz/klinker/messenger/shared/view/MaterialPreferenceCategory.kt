@@ -2,7 +2,6 @@ package xyz.klinker.messenger.shared.view
 
 import android.content.Context
 import android.preference.PreferenceCategory
-import android.support.v14.preference.SwitchPreference
 import android.util.AttributeSet
 
 import xyz.klinker.messenger.shared.R

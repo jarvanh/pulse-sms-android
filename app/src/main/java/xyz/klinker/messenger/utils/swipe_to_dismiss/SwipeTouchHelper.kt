@@ -16,7 +16,7 @@
 
 package xyz.klinker.messenger.utils.swipe_to_dismiss
 
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper
 
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.utils.swipe_to_dismiss.setup.SwipeSetupBase

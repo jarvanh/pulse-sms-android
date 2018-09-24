@@ -2,10 +2,10 @@ package xyz.klinker.messenger.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.navigation.NavigationView
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
@@ -25,11 +25,11 @@ class PrivateConversationListFragment : ConversationListFragment() {
                 AlertDialog.Builder(fragmentActivity)
                         .setMessage(R.string.enable_passcode_disclaimer)
                         .setPositiveButton(android.R.string.ok, { _, _ -> })
-                        .setNegativeButton(R.string.menu_feature_settings, { _, _ ->
+                        .setNegativeButton(R.string.menu_feature_settings) { _, _ ->
                             if (fragmentActivity is MessengerActivity) {
                                 fragmentActivity.clickNavigationItem(R.id.drawer_feature_settings)
                             }
-                        }).show()
+                        }.show()
 
                 prefs.edit().putBoolean("private_conversation_security_disclainer", false).commit()
             }

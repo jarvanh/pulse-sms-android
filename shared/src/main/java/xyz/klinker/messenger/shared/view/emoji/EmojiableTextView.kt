@@ -1,10 +1,10 @@
 package xyz.klinker.messenger.shared.view.emoji
 
 import android.content.Context
-import android.support.text.emoji.widget.EmojiTextViewHelper
-import android.support.v7.widget.AppCompatTextView
+import androidx.appcompat.widget.AppCompatTextView
 import android.text.InputFilter
 import android.util.AttributeSet
+import androidx.emoji.widget.EmojiTextViewHelper
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.EmojiStyle
 

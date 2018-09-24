@@ -24,8 +24,7 @@ import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
-import android.support.v4.app.FragmentActivity
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.animation.AccelerateInterpolator
@@ -33,6 +32,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.SwappingHolder
 import xyz.klinker.android.article.ArticleIntent
@@ -46,7 +46,6 @@ import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.listener.ForcedRippleTouchListener
 import xyz.klinker.messenger.shared.util.listener.MessageDeletedListener
 import xyz.klinker.messenger.shared.util.media.parsers.ArticleParser
-import java.util.*
 
 @Suppress("DEPRECATION")
 /**

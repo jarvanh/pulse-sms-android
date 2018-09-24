@@ -5,9 +5,9 @@ package xyz.klinker.messenger.fragment.message.attach
 import android.app.ProgressDialog
 import android.net.Uri
 import android.os.ParcelFileDescriptor
-import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import net.ypresto.androidtranscoder.MediaTranscoder
 import net.ypresto.androidtranscoder.format.AndroidStandardFormatStrategy
 import net.ypresto.androidtranscoder.format.MediaFormatStrategyPresets

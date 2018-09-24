@@ -3,8 +3,8 @@ package xyz.klinker.messenger.utils.multi_select
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.view.ActionMode
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
@@ -20,9 +20,6 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import java.util.*
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
-import xyz.klinker.messenger.shared.data.FeatureFlags
-
 
 @Suppress("DEPRECATION")
 class ConversationsMultiSelectDelegate(private val fragment: ConversationListFragment) : MultiSelector() {

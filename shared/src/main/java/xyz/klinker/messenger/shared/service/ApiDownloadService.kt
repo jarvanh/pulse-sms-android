@@ -22,8 +22,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import android.util.Log
 
 import com.google.firebase.auth.FirebaseAuth

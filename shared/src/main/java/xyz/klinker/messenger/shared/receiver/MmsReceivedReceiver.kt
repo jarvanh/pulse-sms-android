@@ -17,19 +17,16 @@
 package xyz.klinker.messenger.shared.receiver
 
 import android.content.Context
-import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
-import android.support.annotation.VisibleForTesting
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.service.notification.NotificationConstants
-import xyz.klinker.messenger.shared.service.notification.NotificationService
 import xyz.klinker.messenger.shared.service.notification.Notifier
 import xyz.klinker.messenger.shared.util.*
 

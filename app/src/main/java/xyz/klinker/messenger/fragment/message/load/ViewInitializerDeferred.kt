@@ -2,12 +2,11 @@ package xyz.klinker.messenger.fragment.message.load
 
 import android.content.Context
 import android.os.Build
-import android.support.v4.app.FragmentActivity
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import com.klinker.android.logger.Log
+import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.fragment.message.MessageListFragment

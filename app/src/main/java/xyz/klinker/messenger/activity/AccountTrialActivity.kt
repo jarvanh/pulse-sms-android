@@ -3,18 +3,13 @@ package xyz.klinker.messenger.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
-import android.app.AlertDialog
-import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewAnimationUtils
-import android.widget.TextView
-import android.widget.Toast
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
@@ -22,8 +17,6 @@ import xyz.klinker.messenger.fragment.settings.MyAccountFragment
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.DensityUtil
-import xyz.klinker.messenger.shared.util.billing.ProductAvailable
-import xyz.klinker.messenger.shared.util.billing.ProductType
 
 class AccountTrialActivity : AppCompatActivity() {
 

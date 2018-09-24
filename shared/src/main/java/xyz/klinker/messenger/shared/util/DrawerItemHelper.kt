@@ -1,6 +1,6 @@
 package xyz.klinker.messenger.shared.util
 
-import android.support.design.widget.NavigationView
+import com.google.android.material.navigation.NavigationView
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.FeatureFlags

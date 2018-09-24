@@ -1,7 +1,6 @@
 package xyz.klinker.messenger.fragment.conversation
 
-import android.support.v4.app.FragmentActivity
-import android.util.Log
+import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message

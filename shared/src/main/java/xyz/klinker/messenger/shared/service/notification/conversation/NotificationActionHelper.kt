@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.RemoteInput
+import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.R

@@ -1,11 +1,6 @@
 package xyz.klinker.messenger.shared.util
 
-import android.support.design.widget.BaseTransientBottomBar
-import android.support.design.widget.Snackbar
-import android.util.Log
-import android.view.accessibility.AccessibilityManager
-
-import java.lang.reflect.Field
+import com.google.android.material.snackbar.Snackbar
 
 object SnackbarAnimationFix {
 

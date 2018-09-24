@@ -1,6 +1,5 @@
 package xyz.klinker.messenger.activity.main
 
-import android.support.v4.app.Fragment
 import android.view.MenuItem
 import android.view.View
 import com.miguelcatalan.materialsearchview.MaterialSearchView

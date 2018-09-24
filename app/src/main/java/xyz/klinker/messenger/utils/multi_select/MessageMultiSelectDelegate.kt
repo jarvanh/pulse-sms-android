@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.view.ActionMode
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import com.bignerdranch.android.multiselector.SelectableHolder
@@ -20,7 +20,6 @@ import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.ColorUtils
 import java.util.*
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 

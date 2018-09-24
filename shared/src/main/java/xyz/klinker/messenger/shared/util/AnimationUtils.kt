@@ -20,18 +20,13 @@ import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.res.Resources
 import android.graphics.Color
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.view.animation.FastOutLinearInInterpolator
-import android.support.v4.view.animation.FastOutSlowInInterpolator
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewPropertyAnimator
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 import xyz.klinker.android.drag_dismiss.util.StatusBarHelper
 import xyz.klinker.messenger.shared.R

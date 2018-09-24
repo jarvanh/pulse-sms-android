@@ -13,9 +13,7 @@ import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate
 
 import android.content.Context.CLIPBOARD_SERVICE
-import android.content.res.ColorStateList
-import android.support.v4.app.FragmentActivity
-import android.widget.ImageView
+import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Conversation
 

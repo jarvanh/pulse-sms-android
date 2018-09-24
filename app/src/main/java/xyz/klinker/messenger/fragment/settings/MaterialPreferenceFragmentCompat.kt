@@ -1,8 +1,8 @@
 package xyz.klinker.messenger.fragment.settings
 
 import android.os.Bundle
-import android.support.v7.preference.PreferenceFragmentCompat
 import android.view.View
+import androidx.preference.PreferenceFragmentCompat
 
 import xyz.klinker.messenger.R
 

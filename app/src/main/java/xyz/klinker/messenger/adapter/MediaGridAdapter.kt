@@ -1,26 +1,20 @@
 package xyz.klinker.messenger.adapter
 
-import android.database.Cursor
 import android.graphics.Color
 import android.net.Uri
-import android.provider.MediaStore
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.dragselectrecyclerview.IDragSelectAdapter
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-import java.io.File
-
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.ImageViewHolder
 import xyz.klinker.messenger.shared.data.MediaMessage
 import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.util.listener.ImageSelectedListener
 import xyz.klinker.messenger.shared.util.listener.MediaSelectedListener
 
 /**

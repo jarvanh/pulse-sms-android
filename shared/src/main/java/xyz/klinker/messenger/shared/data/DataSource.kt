@@ -24,11 +24,11 @@ import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.os.Build
-import android.support.annotation.VisibleForTesting
 import android.text.Html
 import android.text.Spanned
 import android.text.format.Formatter
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 
 import java.text.SimpleDateFormat
 import java.util.ArrayList

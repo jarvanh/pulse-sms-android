@@ -4,10 +4,10 @@ import android.app.Activity
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.ImageViewerActivity
@@ -15,7 +15,6 @@ import xyz.klinker.messenger.activity.MediaGridActivity
 import xyz.klinker.messenger.adapter.MediaGridAdapter
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MediaMessage
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation

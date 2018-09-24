@@ -2,12 +2,10 @@ package xyz.klinker.messenger.fragment
 
 import android.app.Activity
 import android.os.Bundle
-import android.os.Handler
-import android.support.design.widget.NavigationView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.navigation.NavigationView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder

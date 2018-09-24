@@ -1,9 +1,9 @@
 package xyz.klinker.messenger.fragment.message
 
 import android.os.Handler
-import android.support.v4.app.FragmentActivity
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import android.view.View
+import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.shared.data.DataSource

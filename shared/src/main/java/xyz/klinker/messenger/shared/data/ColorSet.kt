@@ -19,8 +19,8 @@ package xyz.klinker.messenger.shared.data
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.util.ColorConverter

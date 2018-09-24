@@ -22,10 +22,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.preference.*
-import android.support.annotation.RequiresApi
 import android.text.InputType
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.activity.compose.ComposeConstants

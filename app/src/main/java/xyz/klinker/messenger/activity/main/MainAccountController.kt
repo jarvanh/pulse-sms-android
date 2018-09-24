@@ -7,8 +7,8 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.Snackbar
 import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.InitialLoadActivity
 import xyz.klinker.messenger.activity.MessengerActivity

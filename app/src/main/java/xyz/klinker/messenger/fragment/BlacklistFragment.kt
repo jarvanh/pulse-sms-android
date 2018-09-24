@@ -20,17 +20,17 @@ import android.app.Activity
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AlertDialog
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.BlacklistAdapter
@@ -40,7 +40,6 @@ import xyz.klinker.messenger.shared.data.model.Blacklist
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 import xyz.klinker.messenger.shared.util.listener.BlacklistClickedListener
-import kotlin.math.acos
 
 /**
  * Fragment for displaying/managing blacklisted contacts.

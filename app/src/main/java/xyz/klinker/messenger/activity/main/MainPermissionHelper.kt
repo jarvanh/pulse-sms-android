@@ -1,6 +1,5 @@
 package xyz.klinker.messenger.activity.main
 
-import android.support.annotation.NonNull
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.MessengerActivityExtras

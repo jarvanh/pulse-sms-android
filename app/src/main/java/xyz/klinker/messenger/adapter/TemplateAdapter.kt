@@ -17,20 +17,13 @@
 package xyz.klinker.messenger.adapter
 
 import android.annotation.SuppressLint
-import android.support.design.R.id.message
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.adapter.view_holder.ScheduledMessageViewHolder
 import xyz.klinker.messenger.adapter.view_holder.TemplateViewHolder
-import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.shared.data.model.Template
-import xyz.klinker.messenger.shared.util.listener.ScheduledMessageClickListener
 import xyz.klinker.messenger.shared.util.listener.TemplateClickListener
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Adapter for displaying scheduled messages in a recyclerview.

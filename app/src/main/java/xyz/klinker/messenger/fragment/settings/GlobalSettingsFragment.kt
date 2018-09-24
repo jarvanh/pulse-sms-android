@@ -23,23 +23,19 @@ import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceCategory
 import android.preference.PreferenceGroup
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.telephony.TelephonyManager
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.EditText
 import android.widget.Spinner
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.EmojiInitializer
 import xyz.klinker.messenger.shared.util.SetUtils
 import xyz.klinker.messenger.view.preference.NotificationAlertsPreference
 import android.widget.ArrayAdapter
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 
 
 /**

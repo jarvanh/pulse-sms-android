@@ -21,10 +21,10 @@ import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Handler
-import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.service.notification.NotificationService

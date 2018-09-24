@@ -1,9 +1,8 @@
 package xyz.klinker.messenger.fragment.conversation
 
 import android.os.Handler
-import android.support.v4.app.FragmentActivity
 import android.util.Log
-import android.view.View
+import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
 import xyz.klinker.messenger.fragment.message.MessageListFragment

@@ -3,8 +3,8 @@ package xyz.klinker.messenger.shared.service.notification.conversation
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.RemoteInput
+import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation

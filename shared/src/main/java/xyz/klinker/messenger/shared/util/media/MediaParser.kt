@@ -1,9 +1,6 @@
 package xyz.klinker.messenger.shared.util.media
 
 import android.content.Context
-import android.support.annotation.VisibleForTesting
-
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 import xyz.klinker.messenger.api.implementation.Account

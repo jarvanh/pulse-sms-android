@@ -20,14 +20,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView
 
 import com.sgottard.sofa.ContentFragment
 
@@ -36,11 +36,8 @@ import xyz.klinker.messenger.activity.MessengerTvActivity
 import xyz.klinker.messenger.fragment.message.attach.AttachmentInitializer
 import xyz.klinker.messenger.fragment.message.attach.AttachmentListener
 import xyz.klinker.messenger.fragment.message.attach.AttachmentManager
-import xyz.klinker.messenger.fragment.message.DraftManager
 import xyz.klinker.messenger.fragment.message.send.MessageCounterCalculator
-import xyz.klinker.messenger.fragment.message.MessageInstanceManager
 import xyz.klinker.messenger.fragment.message.load.MessageListLoader
-import xyz.klinker.messenger.fragment.message.MessageListNotificationManager
 import xyz.klinker.messenger.fragment.message.send.PermissionHelper
 import xyz.klinker.messenger.fragment.message.send.SendMessageManager
 import xyz.klinker.messenger.fragment.message.load.ViewInitializerDeferred

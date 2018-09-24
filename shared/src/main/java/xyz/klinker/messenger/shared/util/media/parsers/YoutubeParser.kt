@@ -2,7 +2,6 @@ package xyz.klinker.messenger.shared.util.media.parsers
 
 import android.content.Context
 import android.net.Uri
-import android.support.annotation.VisibleForTesting
 
 import org.json.JSONObject
 

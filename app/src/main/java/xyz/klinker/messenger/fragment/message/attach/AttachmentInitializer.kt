@@ -7,8 +7,7 @@ import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.support.v4.app.FragmentActivity
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import androidx.fragment.app.FragmentActivity
 import com.afollestad.materialcamera.MaterialCamera
 import xyz.klinker.giphy.Giphy
 import xyz.klinker.messenger.BuildConfig
@@ -24,11 +24,9 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.fragment.Camera2BasicFragment
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.message.send.PermissionHelper
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
-import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.TvUtils
 import xyz.klinker.messenger.shared.util.listener.TextSelectedListener
 import xyz.klinker.messenger.view.*

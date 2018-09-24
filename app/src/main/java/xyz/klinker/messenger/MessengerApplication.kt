@@ -19,7 +19,7 @@ package xyz.klinker.messenger
 import android.app.Application
 import android.content.Intent
 import android.os.Build
-import android.support.v7.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.AccountInvalidator
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication

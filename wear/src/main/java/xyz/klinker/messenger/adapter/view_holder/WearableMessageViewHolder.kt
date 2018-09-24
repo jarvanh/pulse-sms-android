@@ -4,12 +4,12 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import xyz.klinker.android.article.ArticleIntent
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.ArticlePreview

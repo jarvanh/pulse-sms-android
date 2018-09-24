@@ -3,8 +3,7 @@ package xyz.klinker.messenger.shared.view
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import android.util.AttributeSet
 
 import xyz.klinker.messenger.shared.R

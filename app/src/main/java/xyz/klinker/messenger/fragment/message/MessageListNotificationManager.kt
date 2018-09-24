@@ -3,8 +3,8 @@ package xyz.klinker.messenger.fragment.message
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.NotificationManagerCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.util.NotificationUtils

@@ -2,10 +2,10 @@ package xyz.klinker.messenger.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import android.support.wearable.view.WearableRecyclerView
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.WearableConversationListAdapter
 import xyz.klinker.messenger.api.implementation.Account

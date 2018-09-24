@@ -1,9 +1,8 @@
 package xyz.klinker.messenger.shared.service
 
 import android.app.IntentService
-import android.app.Notification
 import android.content.Intent
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.R

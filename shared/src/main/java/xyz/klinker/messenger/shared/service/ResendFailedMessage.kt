@@ -2,12 +2,10 @@ package xyz.klinker.messenger.shared.service
 
 import android.app.IntentService
 import android.content.Intent
-import android.support.v4.app.NotificationManagerCompat
-import android.util.Log
+import androidx.core.app.NotificationManagerCompat
 
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.util.DualSimUtils

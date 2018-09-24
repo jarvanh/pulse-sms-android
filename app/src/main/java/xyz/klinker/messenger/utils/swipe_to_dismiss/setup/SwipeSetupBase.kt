@@ -21,9 +21,9 @@ import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.widget.FrameLayout
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter

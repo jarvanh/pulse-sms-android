@@ -2,10 +2,10 @@ package xyz.klinker.messenger.adapter.view_holder
 
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 
 import de.hdodenhof.circleimageview.CircleImageView
 import xyz.klinker.messenger.R

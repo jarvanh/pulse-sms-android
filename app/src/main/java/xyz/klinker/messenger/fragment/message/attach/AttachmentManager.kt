@@ -6,10 +6,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Handler
-import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions

@@ -18,15 +18,14 @@ package xyz.klinker.messenger.shared.service
 
 import android.app.IntentService
 import android.content.Intent
-import android.support.v4.app.NotificationManagerCompat
-import android.support.v4.app.RemoteInput
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.RemoteInput
 import android.util.Log
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
-import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver

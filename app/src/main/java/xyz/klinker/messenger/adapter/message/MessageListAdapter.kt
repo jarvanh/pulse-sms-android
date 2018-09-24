@@ -20,13 +20,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.os.Build
-import android.support.design.widget.Snackbar
-import android.support.v4.app.FragmentActivity
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider
+import com.google.android.material.snackbar.Snackbar
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
 import xyz.klinker.messenger.api.implementation.Account

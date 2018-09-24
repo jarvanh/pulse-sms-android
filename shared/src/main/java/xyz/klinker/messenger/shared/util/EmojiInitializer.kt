@@ -2,10 +2,10 @@ package xyz.klinker.messenger.shared.util
 
 import android.content.Context
 import android.os.Build
-import android.support.text.emoji.EmojiCompat
-import android.support.text.emoji.FontRequestEmojiCompatConfig
-import android.support.v4.provider.FontRequest
+import androidx.core.provider.FontRequest
 import android.util.Log
+import androidx.emoji.text.EmojiCompat
+import androidx.emoji.text.FontRequestEmojiCompatConfig
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.EmojiStyle

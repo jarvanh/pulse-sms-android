@@ -23,8 +23,8 @@ import android.os.Handler
 import android.provider.BaseColumns
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.AttachImageListAdapter
 import xyz.klinker.messenger.shared.util.ColorUtils

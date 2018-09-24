@@ -21,10 +21,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Telephony
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import android.telephony.SmsManager
-import android.util.Log
 import com.klinker.android.send_message.SentReceiver
 import com.klinker.android.send_message.StripAccents
 import xyz.klinker.messenger.api.implementation.Account

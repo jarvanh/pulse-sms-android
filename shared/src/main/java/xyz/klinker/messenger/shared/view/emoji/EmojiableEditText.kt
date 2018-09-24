@@ -1,11 +1,11 @@
 package xyz.klinker.messenger.shared.view.emoji
 
 import android.content.Context
-import android.support.text.emoji.widget.EmojiEditTextHelper
-import android.support.v7.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatEditText
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
+import androidx.emoji.widget.EmojiEditTextHelper
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.EmojiStyle
 
