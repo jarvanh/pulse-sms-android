@@ -16,7 +16,7 @@
 
 <resources>
 
-    <style name="api_Theme.AppCompat.Translucent" parent="@style/Theme.AppCompat.NoActionBar">
+    <style name="api_Theme.MaterialComponents.Translucent" parent="@style/Theme.MaterialComponents.NoActionBar">
         <item name="colorAccent">@android:color/white</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
@@ -26,7 +26,7 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
-    <style name="api_Theme.AppCompat.Activate" parent="@style/Theme.AppCompat.NoActionBar">
+    <style name="api_Theme.MaterialComponents.Activate" parent="@style/Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/api_login_background</item>
         <item name="colorPrimaryDark">@color/api_login_background_dark</item>
         <item name="colorAccent">@color/api_fab_background</item>

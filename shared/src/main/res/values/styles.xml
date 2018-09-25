@@ -85,11 +85,11 @@
         <item name="android:windowSharedElementEnterTransition">@transition/transition_change_image</item>
     </style>
 
-    <style name="AppIntro" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppIntro" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="SubscriptionPicker" parent="Theme.AppCompat.Light.Dialog.Alert" />
+    <style name="SubscriptionPicker" parent="Theme.MaterialComponents.Light.Dialog.Alert" />
 
     <style name="Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_overflow</item>

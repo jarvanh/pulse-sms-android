@@ -193,19 +193,19 @@
 
         <activity
             android:name=".activity.AccountPurchaseActivity"
-            android:theme="@style/api_Theme.AppCompat.Translucent"
+            android:theme="@style/api_Theme.MaterialComponents.Translucent"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
             android:launchMode="singleTask"/>
 
         <activity
             android:name=".activity.AccountPickSubscriptionActivity"
-            android:theme="@style/api_Theme.AppCompat.Translucent"
+            android:theme="@style/api_Theme.MaterialComponents.Translucent"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
             android:launchMode="singleTask"/>
 
         <activity
             android:name=".activity.AccountTrialActivity"
-            android:theme="@style/api_Theme.AppCompat.Translucent"
+            android:theme="@style/api_Theme.MaterialComponents.Translucent"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
             android:launchMode="singleTask"/>
 
@@ -214,11 +214,11 @@
             android:theme="@style/PulseTheme.NoActionBar" />
         <activity
             android:name=".shared.util.RedirectToMyAccount"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".activity.OnboardingActivity"
             android:launchMode="singleInstance"
@@ -250,7 +250,7 @@
             android:name=".activity.notification.MarshmallowReplyActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
-            android:theme="@style/api_Theme.AppCompat.Translucent"
+            android:theme="@style/api_Theme.MaterialComponents.Translucent"
             android:windowSoftInputMode="adjustPan|stateAlwaysVisible" />
         <activity android:name="net.rdrei.android.dirchooser.DirectoryChooserActivity" />
 

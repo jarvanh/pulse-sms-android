@@ -16,6 +16,7 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     dexOptions {
@@ -70,8 +71,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
 
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.exifinterface:exifinterface:1.0.0'
+    implementation "com.google.android.material:material:$ANDROID_X_VERSION"
+    implementation "androidx.exifinterface:exifinterface:$ANDROID_X_VERSION"
 
     implementation "com.google.firebase:firebase-core:$FIREBASE_CORE"
     implementation "com.google.firebase:firebase-storage:$FIREBASE_STORAGE"

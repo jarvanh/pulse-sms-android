@@ -16,6 +16,7 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 def propsFile = rootProject.file('api_keys.properties')
 def apiKeys = new Properties()
@@ -99,19 +100,17 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$KOTLIN_VERSION"
 
     //noinspection GradleCompatible
-    api 'androidx.appcompat:appcompat:1.0.0'
-    api 'androidx.legacy:legacy-support-v4:1.0.0'
-    api 'androidx.legacy:legacy-support-v13:1.0.0'
-    api 'androidx.emoji:emoji:1.0.0'
-    api 'androidx.annotation:annotation:1.0.0'
-    api 'com.google.android.material:material:1.0.0'
-    api 'androidx.recyclerview:recyclerview:1.0.0'
-    api 'androidx.palette:palette:1.0.0'
-    api 'androidx.legacy:legacy-preference-v14:1.0.0'
-    api 'androidx.leanback:leanback:1.0.0'
-    api 'androidx.percentlayout:percentlayout:1.0.0'
-    api 'androidx.browser:browser:1.0.0'
-    api 'androidx.exifinterface:exifinterface:1.0.0'
+    api "androidx.core:core-ktx:$ANDROID_X_VERSION"
+    api "androidx.appcompat:appcompat:$ANDROID_X_VERSION"
+    api "androidx.emoji:emoji:$ANDROID_X_VERSION"
+    api "androidx.annotation:annotation:$ANDROID_X_VERSION"
+    api "com.google.android.material:material:$ANDROID_X_VERSION"
+    api "androidx.palette:palette:$ANDROID_X_VERSION"
+    api "androidx.legacy:legacy-preference-v14:$ANDROID_X_VERSION"
+    api "androidx.leanback:leanback:$ANDROID_X_VERSION"
+    api "androidx.percentlayout:percentlayout:$ANDROID_X_VERSION"
+    api "androidx.browser:browser:$ANDROID_X_VERSION"
+    api "androidx.exifinterface:exifinterface:$ANDROID_X_VERSION"
 
     api('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') { transitive = true }
     api "com.google.firebase:firebase-core:$FIREBASE_CORE"

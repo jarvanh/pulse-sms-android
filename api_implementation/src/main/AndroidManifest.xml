@@ -27,19 +27,19 @@
             android:name=".LoginActivity"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
             android:launchMode="singleTask"
-            android:theme="@style/api_Theme.AppCompat.Translucent" />
+            android:theme="@style/api_Theme.MaterialComponents.Translucent" />
 
         <activity
             android:name=".RecreateAccountActivity"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
             android:launchMode="singleTask"
-            android:theme="@style/api_Theme.AppCompat.Translucent" />
+            android:theme="@style/api_Theme.MaterialComponents.Translucent" />
 
         <activity
             android:name=".ActivateActivity"
             android:configChanges="keyboardHidden|keyboard|screenLayout|orientation|screenSize"
             android:launchMode="singleTask"
-            android:theme="@style/api_Theme.AppCompat.Activate" />
+            android:theme="@style/api_Theme.MaterialComponents.Activate" />
 
         <service
             android:name=".firebase.MessengerFirebaseMessagingService"
