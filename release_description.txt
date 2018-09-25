@@ -1,1 +1,1 @@
-With this release, there is an option in the <b>Theme</b> section of settings for whether or not you want to apply the primary color to the app bar at the top of the screen. Disabling this option will allow you to use a white or dark colored app bar to better match the design of some of Google's latest apps.
+Every app needs them... This update just brings bug fixes and dependency updates.
