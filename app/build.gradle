@@ -92,6 +92,8 @@ android {
             matchingFallbacks = ['release_fast', 'release']
         }
         release {
+//            minifyEnabled false
+//            shrinkResources false
             minifyEnabled true
             shrinkResources true
             proguardFiles 'proguard-android-optimize.txt', 'proguard-rules.pro'

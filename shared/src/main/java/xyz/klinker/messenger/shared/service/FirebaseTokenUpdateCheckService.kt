@@ -3,10 +3,12 @@ package xyz.klinker.messenger.shared.service
 import android.app.IntentService
 import android.content.Intent
 import android.os.Build
+import com.google.firebase.FirebaseApp
 import com.google.firebase.iid.FirebaseInstanceId
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
+import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication
 import xyz.klinker.messenger.shared.data.Settings
 
 class FirebaseTokenUpdateCheckService : IntentService("FirebaseTokenRefresh") {
