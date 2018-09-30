@@ -33,6 +33,7 @@ import com.klinker.android.send_message.Utils
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ActivateActivity
+import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.api.implementation.LoginActivity
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.data.DataSource
@@ -83,6 +84,12 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial_load)
+
+        Thread { try {
+            ApiUtils.recordNewPurchase("new_install")
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        } }.start()
 
         if (intent.getBooleanExtra(UPLOAD_AFTER_SYNC, false)) {
             startUploadAfterSync = true

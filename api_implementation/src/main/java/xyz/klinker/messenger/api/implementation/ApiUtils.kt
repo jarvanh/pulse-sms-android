@@ -1447,7 +1447,7 @@ object ApiUtils {
      * Pulse tracks purchases. This will add a new purchase record, on the API.
      */
     fun recordNewPurchase(type: String) {
-        val message = "added a new purchase"
+        val message = "added a new purchase/install"
         val call = api.purchases().record(type)
 
         call.enqueue(LoggingRetryableCallback(call, RETRY_COUNT, message))
