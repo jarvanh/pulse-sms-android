@@ -363,7 +363,7 @@ object ImageUtils {
         } catch (e: Error) {
             e.printStackTrace()
         }
-        
+
         return bitmap
     }
 
