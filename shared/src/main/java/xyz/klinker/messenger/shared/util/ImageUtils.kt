@@ -360,12 +360,10 @@ object ImageUtils {
             val bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
             bitmap.recycle()
             return bmRotated
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } catch (e: OutOfMemoryError) {
+        } catch (e: Error) {
             e.printStackTrace()
         }
-
+        
         return bitmap
     }
 

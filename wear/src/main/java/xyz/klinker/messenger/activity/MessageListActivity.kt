@@ -133,8 +133,11 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
     private fun dismissNotification() {
         NotificationManagerCompat.from(this).cancel(conversation!!.id.toInt())
 
-        ApiUtils.dismissNotification(Account.accountId,
-                Account.deviceId, conversation!!.id)
+        try {
+            ApiUtils.dismissNotification(Account.accountId,
+                    Account.deviceId, conversation!!.id)
+        } catch (e: Error) {
+        }
 
         NotificationUtils.cancelGroupedNotificationWithNoContent(this)
     }
