@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.api_activity_login);
 
         int backgroundColor = getIntent().getIntExtra(ARG_BACKGROUND_COLOR, Integer.MIN_VALUE);
-        if (backgroundColor != Integer.MIN_VALUE) {
+        if (backgroundColor != Integer.MIN_VALUE && backgroundColor != Color.WHITE) {
             findViewById(R.id.initial_layout).setBackgroundColor(backgroundColor);
             findViewById(R.id.login_dialog).setBackgroundColor(backgroundColor);
             findViewById(R.id.signup_dialog).setBackgroundColor(backgroundColor);
