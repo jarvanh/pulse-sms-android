@@ -70,6 +70,7 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
     var data: String? = null
     var mimeType: String? = null
     var messageTime: Long = 0
+    var sim: String? = null
 
     var color = Integer.MIN_VALUE
     var textColor = Integer.MIN_VALUE
@@ -284,7 +285,11 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
             animator = ValueAnimator.ofInt(0, timestampHeight)
             animator.interpolator = DecelerateInterpolator()
 
-            timestamp.text = TimeUtils.formatTimestamp(timestamp.context, messageTime)
+            if (sim != null) {
+                timestamp.text = TimeUtils.formatTimestamp(timestamp.context, messageTime) + " (SIM " + sim + ")"
+            } else {
+                timestamp.text = TimeUtils.formatTimestamp(timestamp.context, messageTime)
+            }
         }
 
         val params = timestamp.layoutParams

@@ -153,6 +153,7 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
         holder.mimeType = message.mimeType
         holder.data = message.data
         holder.messageTime = message.timestamp
+        holder.sim = message.simPhoneNumber
 
         val backgroundColor = colorHelper.getColor(holder, message)
 
