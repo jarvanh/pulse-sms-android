@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.adapter.view_holder
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -78,7 +79,7 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
         }
 
         itemView.setOnClickListener {
-            if (header == null && (adapter != null && adapter.multiSelector != null &&
+            if (header == null && (adapter?.multiSelector != null &&
                     !adapter.multiSelector.tapSelection(this@ConversationViewHolder) || adapter == null)) {
                 if (conversation == null) {
                     return@setOnClickListener

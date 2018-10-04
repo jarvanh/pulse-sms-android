@@ -20,6 +20,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import java.util.*
 import android.graphics.PorterDuff
+import android.util.Log
 
 @Suppress("DEPRECATION")
 class ConversationsMultiSelectDelegate(private val fragment: ConversationListFragment) : MultiSelector() {
@@ -210,6 +211,8 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
 
         if (holder.itemView != null) {
             holder.itemView.backgroundTintList = states
+        } else {
+            Log.v("ConversationMultiSelect", "null item view")
         }
     }
 

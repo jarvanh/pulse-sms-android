@@ -137,7 +137,6 @@ dependencies {
     api 'com.afollestad:drag-select-recyclerview:1.0.0'
     api 'com.larswerkman:lobsterpicker:1.0.1'
     api 'me.leolin:ShortcutBadger:1.1.19@aar'
-    api 'com.bignerdranch.android:recyclerview-multiselect:0.2'
     api 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     api 'com.github.codekidX:storage-chooser:2.0.3'
     api 'com.afollestad.material-dialogs:core:0.9.4.5'
@@ -152,6 +151,7 @@ dependencies {
 
     api(name: 'sofa', ext: 'aar')
     api(name: 'material-camera', ext: 'aar')
+    api(name: 'recyclerview-multiselect', ext: 'aar')
 
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
