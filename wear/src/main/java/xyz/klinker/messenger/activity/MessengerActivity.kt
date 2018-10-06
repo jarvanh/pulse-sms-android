@@ -3,9 +3,9 @@ package xyz.klinker.messenger.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.support.wearable.view.WearableRecyclerView
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.wear.widget.WearableRecyclerView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.WearableConversationListAdapter
 import xyz.klinker.messenger.api.implementation.Account
@@ -16,9 +16,9 @@ import xyz.klinker.messenger.shared.shared_interfaces.IConversationListFragment
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.PermissionsUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
-import xyz.klinker.messenger.util.CircularOffsettingHelper
 
 class MessengerActivity : AppCompatActivity(), IConversationListFragment {
+
 
     private val recyclerView: WearableRecyclerView by lazy { findViewById<View>(R.id.recycler_view) as WearableRecyclerView }
     private var updatedReceiver: ConversationListUpdatedReceiver? = null
@@ -40,7 +40,6 @@ class MessengerActivity : AppCompatActivity(), IConversationListFragment {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
-        recyclerView.offsettingHelper = CircularOffsettingHelper()
 
         loadConversations()
 

@@ -3,12 +3,13 @@ package xyz.klinker.messenger.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.wearable.view.WearableRecyclerView
-import android.support.wearable.view.drawer.WearableActionDrawer
 import androidx.core.app.NotificationManagerCompat
+import androidx.wear.widget.WearableRecyclerView
+import androidx.wear.widget.drawer.WearableActionDrawerView
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.wear.widget.drawer.WearableDrawerLayout
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.WearableMessageListAdapter
 import xyz.klinker.messenger.api.implementation.Account
@@ -21,14 +22,14 @@ import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.shared_interfaces.IMessageListFragment
 import xyz.klinker.messenger.shared.util.*
-import xyz.klinker.messenger.util.CircularOffsettingHelper
 import xyz.klinker.wear.reply.WearableReplyActivity
 
 class MessageListActivity : AppCompatActivity(), IMessageListFragment {
 
     private val conversation: Conversation? by lazy { DataSource.getConversation(this, intent.getLongExtra(CONVERSATION_ID, -1L)) }
 
-    private val actionDrawer: WearableActionDrawer by lazy { findViewById<View>(R.id.action_drawer) as WearableActionDrawer }
+    private val drawerLayout: WearableDrawerLayout by lazy { findViewById<View>(R.id.drawer_layout) as WearableDrawerLayout }
+    private val actionDrawer: WearableActionDrawerView by lazy { findViewById<View>(R.id.action_drawer) as WearableActionDrawerView }
     private val recyclerView: WearableRecyclerView by lazy { findViewById<View>(R.id.recycler_view) as WearableRecyclerView }
 
     private val manager: LinearLayoutManager by lazy { LinearLayoutManager(this) }
@@ -62,8 +63,6 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
 
         actionDrawer.setBackgroundColor(conversation!!.colors.color)
         actionDrawer.setOnMenuItemClickListener { menuItem ->
-            actionDrawer.closeDrawer()
-
             when (menuItem.itemId) {
                 R.id.menu_close -> {
                     finish()
@@ -94,7 +93,6 @@ class MessageListActivity : AppCompatActivity(), IMessageListFragment {
 
         recyclerView.layoutManager = manager
         recyclerView.adapter = adapter
-        recyclerView.offsettingHelper = CircularOffsettingHelper()
     }
 
     override fun loadMessages() {

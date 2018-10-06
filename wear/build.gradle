@@ -117,8 +117,10 @@ dependencies {
 
     implementation 'com.klinkerapps:wearable-reply:1.0.1'
     implementation "com.google.android.gms:play-services-wearable:${GOOGLE_PLAY_SERVICES_VERSION}"
+    implementation 'com.google.firebase:firebase-perf:16.0.0'
 
     implementation "com.google.android.support:wearable:2.3.0"
+    implementation "androidx.wear:wear:$ANDROID_X_VERSION"
 
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"

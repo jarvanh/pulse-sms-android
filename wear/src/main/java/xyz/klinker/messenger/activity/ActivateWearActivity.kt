@@ -41,11 +41,15 @@ class ActivateWearActivity : Activity() {
         handler.postDelayed({
             Thread {
                 Log.v(TAG, "checking activate response")
-                val response = try {
+
+                val response: LoginResponse? = try {
                     api.activate().check(code).execute().body()
-                } catch (e: IOException) {
+                } catch (e: Throwable) {
+                    e.printStackTrace()
                     null
                 }
+
+                Log.v(TAG, "finished checking activation")
 
                 if (response == null) {
                     Log.v(TAG, "not activated")

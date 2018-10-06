@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.drawer.WearableDrawerLayout
+<androidx.wear.widget.drawer.WearableDrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,16 +8,16 @@
     android:layout_height="match_parent"
     tools:deviceIds="wear">
 
-    <android.support.wearable.view.WearableRecyclerView
+    <androidx.wear.widget.WearableRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
-    <android.support.wearable.view.drawer.WearableActionDrawer
+    <androidx.wear.widget.drawer.WearableActionDrawerView
         android:id="@+id/action_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:action_menu="@menu/menu_message_list" />
+        app:actionMenu="@menu/menu_message_list" />
 
-</android.support.wearable.view.drawer.WearableDrawerLayout>
+</androidx.wear.widget.drawer.WearableDrawerLayout>
