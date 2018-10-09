@@ -405,8 +405,8 @@
     <string name="signout_time">Signing out on: %1$s</string>
     <string name="lifetime_subscriber">Lifetime Subscriber</string>
     <string name="trial_period">Trial Period</string>
-    <string name="setup_my_account">Setup Account</string>
-    <string name="setup_my_account_summary">Sign up or login to your account to start using
+    <string name="setup_my_account">Set Up Account</string>
+    <string name="setup_my_account_summary">Sign up or log in to your account to start using
         more features like messaging from your tablet or computer</string>
     <string name="preparing_new_account">Preparing account&#8230;</string>
     <string name="delete_account">Delete Account</string>
@@ -499,7 +499,7 @@
     <string name="signature">Signature</string>
     <string name="signature_summary">Signatures will not be displayed in Pulse\'s message list, they
         will only be shown to the receiver of the message</string>
-    <string name="cleanup_old_messages">Cleanup Old Messages</string>
+    <string name="cleanup_old_messages">Clean Up Old Messages</string>
     <string name="cleanup_old_messages_summary">This runs once per day to delete any messages older than your selected time period</string>
     <string name="cleanup_old_messages_now_summary">This runs immediately to delete any messages, in this conversation, older than the selected time period</string>
     <string name="delayed_sending">Delayed Sending</string>
