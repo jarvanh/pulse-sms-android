@@ -14,7 +14,8 @@
   ~ limitations under the License.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
 
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>

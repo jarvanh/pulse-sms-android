@@ -138,6 +138,15 @@ open class SmsSentReceiver : SentReceiver() {
         resend.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
         if (error) {
+            val conversation = DataSource.getConversation(context, conversationId)
+            if (conversation != null) {
+                conversation.snippet = conversation.snippet!!.replace("You: ", "")
+                conversation.snippet = context.getString(R.string.failed) + ": " + conversation.snippet
+
+                DataSource.updateConversationSnippet(context, conversationId, conversation.timestamp, conversation.snippet!!, true)
+                ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, conversation.snippet, true)
+            }
+
             if (retryFailedMessages()) {
                 context.startService(resend)
             } else {

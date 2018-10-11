@@ -17,11 +17,16 @@
 <changelog>
 
     <version
+        name="4.2.0"
+        description="October 6th, 2018">
+        <text>Indicate when the latest message has failed, on the conversation list</text>
+    </version>
+
+    <version
         name="4.1.5"
         description="October 6th, 2018">
         <text>Fixes for Android Wear app</text>
     </version>
-
 
     <version
         name="4.1.4"
