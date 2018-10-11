@@ -169,6 +169,7 @@
     <string name="audio_recording_error">Error with recording :(</string>
     <string name="message_copied_to_clipboard">Copied to clipboard</string>
     <string name="view_details">View Details</string>
+    <string name="speak_message">Speak Message Aloud</string>
     <string name="select_all_messages">Select All Messages</string>
     <string name="select_all_conversations">Select All Conversations</string>
     <string name="delete">Delete</string>

@@ -23,6 +23,9 @@ import xyz.klinker.messenger.shared.util.ColorUtils
 import java.util.*
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.speech.tts.TextToSpeech
+
+
 
 
 @Suppress("DEPRECATION")
@@ -30,6 +33,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
 
     private val activity: AppCompatActivity? by lazy { fragment.activity as AppCompatActivity? }
     private var adapter: MessageListAdapter? = null
+    private var tts: TextToSpeech? = null
 
     private var mode: ActionMode? = null
     private val actionMode = object : ActionMode.Callback {
@@ -48,6 +52,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             val info = menu.findItem(R.id.menu_message_details)
             val copy = menu.findItem(R.id.menu_copy_message)
             val selectAll = menu.findItem(R.id.menu_message_select_all)
+            val speakMessage = menu.findItem(R.id.menu_speak_message)
 
             ConversationsMultiSelectDelegate.changeMenuItemColor(delete)
             ConversationsMultiSelectDelegate.changeMenuItemColor(share)
@@ -67,16 +72,18 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                 checked > 1 -> {
                     delete.isVisible = true
                     share.isVisible = true
+                    selectAll.isVisible = true
                     info.isVisible = false
                     copy.isVisible = false
-                    selectAll.isVisible = true
+                    speakMessage.isVisible = false
                 }
                 else -> {
                     delete.isVisible = true
                     share.isVisible = true
+                    selectAll.isVisible = true
                     info.isVisible = true
                     copy.isVisible = true
-                    selectAll.isVisible = true
+                    speakMessage.isVisible = true
                 }
             }
 
@@ -104,7 +111,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(activity?.findViewById<View>(android.R.id.content)?.windowToken, 0)
 
-            val handled: Boolean
+            var handled = false
 
             val selectedIds = ArrayList<Long>()
             var highestKey = -1
@@ -160,12 +167,25 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
 
                     refreshAllHolders()
                 }
-                else -> {
+                item.itemId == R.id.menu_message_details -> {
                     handled = true
                     AlertDialog.Builder(activity!!)
                             .setMessage(DataSource.getMessageDetails(activity!!, selectedIds[0]))
                             .setPositiveButton(android.R.string.ok, null)
                             .show()
+                }
+                item.itemId == R.id.menu_speak_message -> {
+                    handled = true
+
+                    val message = DataSource.getMessage(activity!!, selectedIds[0])
+                    val text = MessageMultiSelectDelegate.getMessageContent(message)
+
+                    tts = TextToSpeech(activity, TextToSpeech.OnInitListener { status ->
+                        if (status != TextToSpeech.ERROR) {
+                            tts?.language = Locale.ENGLISH
+                            tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, message!!.id.toString())
+                        }
+                    })
                 }
             }
 

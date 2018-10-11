@@ -22,6 +22,7 @@
         <text>Option to select all messages, when using the multi-select on the message list</text>
         <text>Option to select all conversations, when using the multi-select on the conversation list</text>
         <text>Indicate when the latest message has failed, on the conversation list</text>
+        <text>Allow Android to speak messages to you, from the multi-select menu on the message list</text>
     </version>
 
     <version
