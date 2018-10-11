@@ -174,9 +174,16 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
                 R.id.menu_conversations_select_all -> {
                     handled = false
 
-                    val count = adapter?.conversations?.size
-                    for (i in 0 until count!!) {
-                        mSelections.put(i, true)
+                    val counts = adapter?.sectionCounts!!
+                    var index = 1
+
+                    for (type in counts) {
+                        for (i in 0 until type.count) {
+                            mSelections.put(index, true)
+                            index++
+                        }
+
+                        index++
                     }
 
                     refreshAllHolders()
