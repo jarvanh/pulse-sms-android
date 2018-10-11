@@ -45,7 +45,6 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
             val delete = menu.findItem(R.id.menu_delete_conversation)
             val archive = menu.findItem(R.id.menu_archive_conversation)
-            val unread = menu.findItem(R.id.menu_mark_as_unread)
 
             changeMenuItemColor(delete)
             changeMenuItemColor(archive)
@@ -172,9 +171,22 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
 
                     fragment.recyclerManager.loadConversations()
                 }
+                R.id.menu_conversations_select_all -> {
+                    handled = false
+
+                    val count = adapter?.conversations?.size
+                    for (i in 0 until count!!) {
+                        mSelections.put(i, true)
+                    }
+
+                    refreshAllHolders()
+                }
             }
 
-            mode.finish()
+            if (handled) {
+                mode.finish()
+            }
+
             return handled
         }
     }

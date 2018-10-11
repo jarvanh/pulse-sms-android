@@ -20,18 +20,23 @@
         android:id="@+id/menu_pin_conversation"
         android:title="@string/menu_pin_conversation"
         android:icon="@drawable/ic_pin"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_mute_conversation"
         android:title="@string/menu_mute_conversation"
         android:icon="@drawable/ic_mute"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_mark_as_unread"
         android:title="@string/menu_mark_as_unread"
         android:icon="@drawable/ic_unread"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_conversations_select_all"
+        android:title="@string/select_all_conversations"
+        app:showAsAction="never" />
 
 </menu>

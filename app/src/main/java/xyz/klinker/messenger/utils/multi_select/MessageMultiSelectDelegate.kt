@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Handler
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
@@ -46,11 +47,11 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             val share = menu.findItem(R.id.menu_share_message)
             val info = menu.findItem(R.id.menu_message_details)
             val copy = menu.findItem(R.id.menu_copy_message)
+            val selectAll = menu.findItem(R.id.menu_message_select_all)
 
             ConversationsMultiSelectDelegate.changeMenuItemColor(delete)
             ConversationsMultiSelectDelegate.changeMenuItemColor(share)
             ConversationsMultiSelectDelegate.changeMenuItemColor(info)
-            ConversationsMultiSelectDelegate.changeMenuItemColor(copy)
 
             var checked = 0
             for (i in 0 until mSelections.size()) {
@@ -68,12 +69,14 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                     share.isVisible = true
                     info.isVisible = false
                     copy.isVisible = false
+                    selectAll.isVisible = true
                 }
                 else -> {
                     delete.isVisible = true
                     share.isVisible = true
                     info.isVisible = true
                     copy.isVisible = true
+                    selectAll.isVisible = true
                 }
             }
 
@@ -105,6 +108,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
 
             val selectedIds = ArrayList<Long>()
             var highestKey = -1
+
             for (i in 0 until mSelections.size()) {
                 val key = mSelections.keyAt(i)
                 if (highestKey == -1 || key > highestKey)
@@ -146,6 +150,16 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                     val fragment = CopyMessageTextFragment(text!!)
                     fragment.show(activity!!.supportFragmentManager, "")
                 }
+                item.itemId == R.id.menu_message_select_all -> {
+                    handled = false
+
+                    val count = adapter?.messages?.count
+                    for (i in 0 until count!!) {
+                        mSelections.put(i, true)
+                    }
+
+                    refreshAllHolders()
+                }
                 else -> {
                     handled = true
                     AlertDialog.Builder(activity!!)
@@ -155,7 +169,10 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
                 }
             }
 
-            mode.finish()
+            if (handled) {
+                mode.finish()
+            }
+
             return handled
         }
     }

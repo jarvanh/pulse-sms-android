@@ -26,6 +26,11 @@
         android:id="@+id/menu_message_details"
         android:title="@string/view_details"
         android:icon="@drawable/ic_info"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_message_select_all"
+        android:title="@string/select_all_messages"
+        app:showAsAction="never" />
 
 </menu>
