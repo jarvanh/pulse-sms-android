@@ -95,7 +95,11 @@ class MessengerRemoteViewsFactory(private val context: Context) : RemoteViewsSer
 
         var image = ImageUtils.getBitmap(context, item.imageUri)
         if (image == null) {
-            image = ImageUtils.createColoredBitmap(item.colors.color)
+            image = if (Settings.useGlobalThemeColor) {
+                ImageUtils.createColoredBitmap(Settings.mainColorSet.color)
+            } else {
+                ImageUtils.createColoredBitmap(item.colors.color)
+            }
 
             if (ContactUtils.shouldDisplayContactLetter(item)) {
                 rv.setTextViewText(R.id.image_letter, item.title!!.substring(0, 1))
