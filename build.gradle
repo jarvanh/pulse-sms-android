@@ -49,8 +49,8 @@ buildscript {
 
             'firebaseCore'      : '16.0.4',
             'firebaseMessaging' : '17.3.4',
-            'firebaseStorage'   : '16.0.2',
-            'firebaseAuth'      : '16.0.3',
+            'firebaseStorage'   : '16.0.3',
+            'firebaseAuth'      : '16.0.5',
 
             'mockito'           : '2.18.3',
             'robolectric'       : '3.8',
@@ -163,7 +163,6 @@ subprojects {
                         matchingFallbacks = ['release_fast', 'release']
                     }
                     release {
-                        minifyEnabled true
                         proguardFiles 'proguard-android-optimize.txt', 'proguard-rules.pro'
                         signingConfig signingConfigs.release
 
