@@ -41,10 +41,6 @@ buildscript {
             'kotlin'            : '1.2.71',
 
             'playServices'      : '16.0.0',
-            'archCore'          : '2.0.1-alpha01',
-            'room'              : '2.1.0-alpha01',
-            'work'              : '1.0.0-alpha10',
-            'aws'               : '2.1.10',
             'glide'             : '4.8.0',
             'retrofit'          : '2.4.0',
 
