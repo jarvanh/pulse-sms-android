@@ -25,7 +25,6 @@ apiKeys.load(new FileInputStream(propsFile))
 buildscript {
 
     def buildNumber = System.getenv("BUILD_NUMBER") as Integer ?: 135
-    buildNumber += 300
 
     ext.buildInfo = [
             'id'                : 'xyz.klinker.messenger',
