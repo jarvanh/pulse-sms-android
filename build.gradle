@@ -14,23 +14,73 @@
  * limitations under the License.
  */
 
+def propsFile = project.file('keystore.properties')
+def props = new Properties()
+props.load(new FileInputStream(propsFile))
+
+propsFile = rootProject.file('api_keys.properties')
+def apiKeys = new Properties()
+apiKeys.load(new FileInputStream(propsFile))
+
 buildscript {
+
+    def buildNumber = System.getenv("BUILD_NUMBER") as Integer ?: 135
+    buildNumber += 300
+
+    ext.buildInfo = [
+            'id'                : 'xyz.klinker.messenger',
+            'name'              : '4.2.0',
+            'number'            : buildNumber,
+    ]
+
+    ext.versions = [
+            'gradlePlugin'      : '3.2.1',
+            'targetSdk'         : 28,
+            'minSdk'            : 21,
+
+            'kotlin'            : '1.2.71',
+
+            'playServices'      : '16.0.0',
+            'archCore'          : '2.0.1-alpha01',
+            'room'              : '2.1.0-alpha01',
+            'work'              : '1.0.0-alpha10',
+            'aws'               : '2.1.10',
+            'glide'             : '4.8.0',
+            'retrofit'          : '2.4.0',
+
+            'androidX'          : '1.0.0',
+            'androidXTester'    : '1.1.0',
+            'androidXEspresso'  : '3.1.0',
+
+            'firebaseCore'      : '16.0.4',
+            'firebaseMessaging' : '17.3.4',
+            'firebaseStorage'   : '16.0.2',
+            'firebaseAuth'      : '16.0.3',
+
+            'mockito'           : '2.18.3',
+            'robolectric'       : '3.8',
+            'testEspresso'      : '3.0.1',
+            'testRunner'        : '1.0.1',
+    ]
+
     repositories {
         google()
         jcenter()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
     }
+
     dependencies {
-        classpath "com.android.tools.build:gradle:$ANDROID_GRADLE_VERSION"
-        classpath 'com.google.gms:google-services:4.0.1'
-        classpath 'com.google.firebase:firebase-plugins:1.1.5'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
+        classpath "com.android.tools.build:gradle:${versions.gradlePlugin}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath 'com.google.gms:google-services:4.1.0'
         classpath 'io.fabric.tools:gradle:1.25.4'
     }
+
 }
 
 allprojects {
+
     repositories {
         google()
         jcenter()
@@ -46,21 +96,119 @@ allprojects {
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested
-            if (requested.group == 'com.google.firebase' && requested.name.contains("common")) {
-                details.useVersion FIREBASE_STORAGE
+            if (requested.group == 'com.google.android.gms' && requested.name == 'play-services-basement') {
+                details.useVersion '15.0.1'
+            } else if (requested.group == 'com.google.android.gms' && requested.name == 'play-services-tasks') {
+                details.useVersion '15.0.1'
+            } else if (requested.group == 'com.google.android.gms' && requested.name == 'play-services-base') {
+                details.useVersion '15.0.1'
             }
         }
     }
+
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+// add the common project properties, to each app variant
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty("android")) {
 
-ext.parseSdkVersion = { sdk ->
-    try {
-        return Integer.parseInt(sdk)
-    } catch (NumberFormatException e) {
-        return sdk
+            android {
+                compileSdkVersion versions.targetSdk
+
+                defaultConfig {
+                    targetSdkVersion versions.targetSdk
+
+                    buildConfigField("String", "GIPHY_API_KEY", "\"${apiKeys['GIPHY']}\"")
+                    buildConfigField("String", "ARTICLE_API_KEY", "\"${apiKeys['ARTICLE']}\"")
+                    buildConfigField("String", "YOUTUBE_API_KEY", "\"${apiKeys['YOUTUBE']}\"")
+
+                    vectorDrawables.useSupportLibrary = true
+                    multiDexEnabled true
+
+                    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+                }
+
+                signingConfigs {
+                    debug {
+                        storeFile file("debug.keystore")
+                        storePassword "android"
+                        keyAlias "androiddebugkey"
+                        keyPassword "android"
+                    }
+                    release {
+                        storeFile file(props['keystorefile'])
+                        storePassword props['keystorepassword']
+                        keyAlias props['keyalias']
+                        keyPassword props['keypassword']
+                    }
+                }
+
+                buildTypes {
+                    debug {
+                        versionNameSuffix "-DEBUG"
+                        signingConfig signingConfigs.debug
+
+                        matchingFallbacks = ['release_fast', 'release']
+                    }
+                    staging {
+                        versionNameSuffix "-STAGING"
+                        debuggable true
+                        signingConfig signingConfigs.debug
+
+                        matchingFallbacks = ['release_fast', 'release']
+                    }
+                    release_fast {
+                        versionNameSuffix "-RELEASE"
+                        minifyEnabled false
+                        shrinkResources false
+                        debuggable true
+                        signingConfig signingConfigs.release
+
+                        matchingFallbacks = ['release_fast', 'release']
+                    }
+                    release {
+                        minifyEnabled true
+                        proguardFiles 'proguard-android-optimize.txt', 'proguard-rules.pro'
+                        signingConfig signingConfigs.release
+
+                        matchingFallbacks = ['release_fast', 'release']
+                    }
+                }
+
+                dexOptions {
+                    jumboMode = true
+                    javaMaxHeapSize "4g"
+                }
+
+                lintOptions {
+                    checkReleaseBuilds false
+                    abortOnError true
+                    disable 'GoogleAppIndexingWarning', 'AllowBackup', 'IconMissingDensityFolder',
+                            'InconsistentLayout', 'InvalidPackage', 'TrustAllX509TrustManager',
+                            'UnusedResources', 'StaticFieldLeak', 'NestedWeights', 'InflateParams',
+                            'MissingTranslation', 'GradleCompatible', 'ApplySharedPref', 'Assert',
+                            'LocaleFolder', 'TypographyEllipsis', 'InconsistentArrays', 'DefaultLocale',
+                            'AppCompatCustomView', 'UnusedQuantity', 'MergeRootFrame', 'NewApi', 'Typos',
+                            'IconDensities', 'IconDuplicates', 'ContentDescription', 'LabelFor'
+                    textOutput 'stdout'
+                    xmlReport false
+                    htmlReport true
+                }
+
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_1_8
+                    targetCompatibility JavaVersion.VERSION_1_8
+                }
+
+                testOptions {
+                    unitTests {
+                        includeAndroidResources = true
+                    }
+                }
+
+            }
+        }
+
     }
 }

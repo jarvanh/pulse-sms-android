@@ -19,68 +19,32 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    dexOptions {
-        jumboMode = true
-    }
 
-    compileSdkVersion parseSdkVersion(COMPILE_SDK)
     resourcePrefix 'api_'
 
-    defaultConfig {
-        minSdkVersion parseSdkVersion(project.MIN_SDK)
-        targetSdkVersion parseSdkVersion(TARGET_SDK)
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            shrinkResources false
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    lintOptions {
-        abortOnError true
-        disable 'InvalidPackage', 'UnusedAttribute', 'CommitPrefEdits', 'HardwareIds', 'MissingTranslation',
-                'StaticFieldLeak', 'Assert', 'ApplySharedPref', 'LocaleFolder'
-        textOutput 'stdout'
-        xmlReport false
-        htmlReport true
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-    }
 }
 
 dependencies {
     api project(":api")
     api project(":encryption")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$KOTLIN_VERSION"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
-    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
 
-    implementation "com.google.android.material:material:$ANDROID_X_VERSION"
-    implementation "androidx.exifinterface:exifinterface:$ANDROID_X_VERSION"
+    implementation "com.google.android.material:material:${versions.androidX}"
+    implementation "androidx.exifinterface:exifinterface:${versions.androidX}"
 
-    implementation "com.google.firebase:firebase-core:$FIREBASE_CORE"
-    implementation "com.google.firebase:firebase-storage:$FIREBASE_STORAGE"
-    implementation "com.google.firebase:firebase-auth:$FIREBASE_AUTH"
-    api "com.google.firebase:firebase-messaging:$FIREBASE_MESSAGING"
+    implementation "com.google.firebase:firebase-core:${versions.firebaseCore}"
+    implementation "com.google.firebase:firebase-storage:${versions.firebaseStorage}"
+    implementation "com.google.firebase:firebase-auth:${versions.firebaseAuth}"
+    api ("com.google.firebase:firebase-messaging:${versions.firebaseMessaging}") {
+        exclude group: 'com.google.firebase', module: 'firebase-iid'
+    }
 
     testImplementation 'junit:junit:4.12'
-    testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
-    testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testImplementation "org.robolectric:robolectric:${versions.robolectric}"
+    testImplementation "org.mockito:mockito-core:${versions.mockito}"
     testImplementation 'org.apache.maven:maven-ant-tasks:2.1.3'
 }
