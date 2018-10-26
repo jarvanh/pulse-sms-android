@@ -90,11 +90,11 @@ allprojects {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested
             if (requested.group == 'com.google.android.gms' && requested.name == 'play-services-basement') {
-                details.useVersion '15.0.1'
+                details.useVersion '16.1.0'
             } else if (requested.group == 'com.google.android.gms' && requested.name == 'play-services-tasks') {
-                details.useVersion '15.0.1'
+                details.useVersion '16.0.1'
             } else if (requested.group == 'com.google.android.gms' && requested.name == 'play-services-base') {
-                details.useVersion '15.0.1'
+                details.useVersion '16.0.1'
             }
         }
     }

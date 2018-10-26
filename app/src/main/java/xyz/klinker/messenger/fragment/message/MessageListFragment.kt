@@ -29,8 +29,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 
-import com.sgottard.sofa.ContentFragment
-
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerTvActivity
 import xyz.klinker.messenger.fragment.message.attach.AttachmentInitializer
@@ -53,7 +51,7 @@ import xyz.klinker.messenger.utils.multi_select.MessageMultiSelectDelegate
 /**
  * Fragment for displaying messages for a certain conversation.
  */
-class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
+class MessageListFragment : Fragment(), IMessageListFragment {
 
     private val fragmentActivity: FragmentActivity? by lazy { activity }
 
@@ -193,16 +191,16 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
         attachListener.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun getFocusRootView() = try {
-            messageLoader.messageList.getChildAt(messageLoader.messageList.childCount - 1)
-        } catch (e: NullPointerException) { null }
-
-    override fun setExtraMargin(marginTop: Int, marginLeft: Int) {
-        this.extraMarginTop = marginTop
-        this.extraMarginLeft = marginLeft
-    }
-
-    override fun isScrolling() = false
+//    override fun getFocusRootView() = try {
+//            messageLoader.messageList.getChildAt(messageLoader.messageList.childCount - 1)
+//        } catch (e: NullPointerException) { null }
+//
+//    override fun setExtraMargin(marginTop: Int, marginLeft: Int) {
+//        this.extraMarginTop = marginTop
+//        this.extraMarginLeft = marginLeft
+//    }
+//
+//    override fun isScrolling() = false
     override fun setConversationUpdateInfo(text: String) { messageLoader.informationUpdater.setConversationUpdateInfo(text) }
     override fun setDismissOnStartup() { notificationManager.dismissOnStartup = true }
     override fun setShouldPullDrafts(pull: Boolean) { draftManager.pullDrafts = pull }
