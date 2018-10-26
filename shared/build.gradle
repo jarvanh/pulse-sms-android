@@ -75,6 +75,7 @@ dependencies {
     api project(":api_implementation")
     api project(":encryption")
 
+    api(name: 'sofa', ext: 'aar')
     api(name: 'material-camera', ext: 'aar')
     api(name: 'recyclerview-multiselect', ext: 'aar')
 
