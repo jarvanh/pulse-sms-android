@@ -19,6 +19,8 @@ package xyz.klinker.messenger.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
+import android.database.MatrixCursor
+import android.database.SQLException
 import android.os.Handler
 import android.provider.BaseColumns
 import android.provider.MediaStore
@@ -50,11 +52,15 @@ class AttachImageView(context: Context, private val callback: ImageSelectedListe
             val where = arrayOf("" + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE, "" + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
 
             val cr = context.contentResolver
-            images = Images.Media.query(cr, MediaStore.Files.getContentUri("external"),
-                    select, "(" + MediaStore.Files.FileColumns.MEDIA_TYPE + "=? OR " +
-                    MediaStore.Files.FileColumns.MEDIA_TYPE + "=?) AND " +
-                    MediaStore.Files.FileColumns.DATA + " NOT LIKE '%http%'",
-                    where, MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC")
+            images = try {
+                Images.Media.query(cr, MediaStore.Files.getContentUri("external"),
+                        select, "(" + MediaStore.Files.FileColumns.MEDIA_TYPE + "=? OR " +
+                        MediaStore.Files.FileColumns.MEDIA_TYPE + "=?) AND " +
+                        MediaStore.Files.FileColumns.DATA + " NOT LIKE '%http%'",
+                        where, MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC")
+            } catch (e: SQLException) {
+                MatrixCursor(emptyArray())
+            }
 
             if (images == null) {
                 return@Thread

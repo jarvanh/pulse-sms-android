@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.2.1"
+        description="October 29th, 2018">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.2.0"
         description="October 15th, 2018">
         <text>Option to select all messages, when using the multi-select on the message list</text>
