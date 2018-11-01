@@ -89,7 +89,7 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
             }
         }
 
-        messageEntry.setOnEditorActionListener({ _, actionId, keyEvent ->
+        messageEntry.setOnEditorActionListener { _, actionId, keyEvent ->
             if (keyEvent != null && keyEvent.action == KeyEvent.ACTION_DOWN &&
                     keyEvent.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_SEND) {
                 sendButton.performClick()
@@ -97,7 +97,7 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
             }
 
             return@setOnEditorActionListener false
-        })
+        }
 
         val outValue = TypedValue()
         context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, outValue, true)
