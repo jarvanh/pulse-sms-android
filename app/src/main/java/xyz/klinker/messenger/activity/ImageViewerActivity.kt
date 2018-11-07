@@ -57,7 +57,7 @@ class ImageViewerActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (AndroidVersionUtil.isAndroidO) {
+        if (AndroidVersionUtil.isAndroidO && supportsWideColorGamut()) {
             window.colorMode = ActivityInfo.COLOR_MODE_WIDE_COLOR_GAMUT
         }
 
@@ -168,5 +168,10 @@ class ImageViewerActivity : AppCompatActivity() {
         val EXTRA_CONVERSATION_ID = "conversation_id"
         val EXTRA_MESSAGE_ID = "message_id"
         private val PERMISSION_STORAGE_REQUEST = 1
+
+        private fun supportsWideColorGamut(): Boolean {
+            val disabledManufacturers = arrayOf("oneplus")
+            return !disabledManufacturers.contains(Build.MANUFACTURER.toLowerCase())
+        }
     }
 }
