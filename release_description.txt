@@ -1,4 +1,1 @@
-This update comes with a few new features:<br/><br/>
-- Indicator for messages that fail to send, on the conversation list<br/>
-- Android can speak messages to you, from the long click menu on any message<br/>
-- When using the multi-select on the conversation list and message list, there is a "select all" option<br/>
+This update just has some bug fixes. More exciting things to come, in the future.
