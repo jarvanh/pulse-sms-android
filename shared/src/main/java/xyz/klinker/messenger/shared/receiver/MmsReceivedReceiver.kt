@@ -119,6 +119,10 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
                 message.from = null
             }
 
+            if (message.mimeType == MimeType.TEXT_PLAIN && from.contains("@")) {
+                message.data = message.data!!.replace("$from ", "").replace(from, "")
+            }
+
             if (SmsReceivedReceiver.shouldSaveMessage(context, message, phoneNumbers)) {
                 conversationId = source.insertMessage(message, phoneNumbers, context)
 
