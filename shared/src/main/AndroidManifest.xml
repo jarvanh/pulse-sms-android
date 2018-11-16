@@ -211,7 +211,31 @@
             android:exported="false" />
 
         <receiver
-            android:name=".receiver.NotificationDismissedReceiver"
+            android:name=".receiver.notification_action.NotificationDismissedReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".service.NotificationDismissedReceiver"
+            android:exported="false"/>
+
+        <receiver
+            android:name=".receiver.notification_action.NotificationMarkReadReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".receiver.notification_action.NotificationCallReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".receiver.notification_action.NotificationCopyOtpReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".receiver.notification_action.NotificationArchiveReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".receiver.notification_action.NotificationDeleteReceiver"
             android:exported="false" />
 
         <receiver
@@ -320,13 +344,7 @@
         <service android:name=".service.FirebaseTokenUpdateCheckService" />
         <service android:name=".service.FirebaseHandlerService" />
         <service android:name=".service.notification.NotificationService" />
-        <service android:name=".service.NotificationDismissedService" />
-        <service android:name=".service.NotificationMarkReadService" />
-        <service android:name=".service.NotificationCopyOtpService" />
-        <service android:name=".service.NotificationArchiveService" />
-        <service android:name=".service.NotificationMuteService" />
-        <service android:name=".service.NotificationDeleteService" />
-        <service android:name=".service.NotificationCallService" />
+        <service android:name=".receiver.notification_action.NotificationMuteReceiver" />
         <service android:name=".service.ReplyService" />
         <service android:name=".service.ApiUploadService" />
         <service android:name=".service.ApiDownloadService" />

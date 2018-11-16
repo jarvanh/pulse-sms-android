@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.shared.service
 
 import android.app.IntentService
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -29,10 +30,16 @@ import xyz.klinker.messenger.shared.service.notification.NotificationService
 /**
  * A service to get run when a notification is dismissed.
  */
-class NotificationDismissedService : IntentService("NotificationDismissedService") {
+class NotificationDismissedReceiver : BroadcastReceiver() {
 
-    override fun onHandleIntent(intent: Intent?) {
-        handle(intent, this)
+    override fun onReceive(context: Context?, intent: Intent?) {
+        if (context == null || intent == null) {
+            return
+        }
+
+        Thread {
+            handle(intent, context)
+        }.start()
     }
 
     companion object {

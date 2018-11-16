@@ -11,7 +11,7 @@ import android.text.Html
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
-import xyz.klinker.messenger.shared.service.NotificationDismissedService
+import xyz.klinker.messenger.shared.service.NotificationDismissedReceiver
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.NotificationUtils
 
@@ -106,8 +106,8 @@ class NotificationSummaryProvider(private val service: Context) {
 
 
     private fun applyPendingIntents(builder: NotificationCompat.Builder): NotificationCompat.Builder {
-        val delete = Intent(service, NotificationDismissedService::class.java)
-        val pendingDelete = PendingIntent.getService(service, 0,
+        val delete = Intent(service, NotificationDismissedReceiver::class.java)
+        val pendingDelete = PendingIntent.getBroadcast(service, 0,
                 delete, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY)

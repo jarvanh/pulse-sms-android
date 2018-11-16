@@ -8,7 +8,7 @@ import androidx.core.app.RemoteInput
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
-import xyz.klinker.messenger.shared.service.NotificationMarkReadService
+import xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver
 import xyz.klinker.messenger.shared.service.ReplyService
 
 class NotificationCarHelper(private val service: Context) {
@@ -23,7 +23,7 @@ class NotificationCarHelper(private val service: Context) {
 
         val carRead = Intent().addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
                 .setAction("xyz.klinker.messenger.CAR_READ")
-                .putExtra(NotificationMarkReadService.EXTRA_CONVERSATION_ID, conversation.id)
+                .putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
                 .setPackage("xyz.klinker.messenger")
         val pendingCarRead = PendingIntent.getBroadcast(service, conversation.id.toInt(),
                 carRead, PendingIntent.FLAG_UPDATE_CURRENT)
