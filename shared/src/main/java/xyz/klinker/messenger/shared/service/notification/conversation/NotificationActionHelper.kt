@@ -166,7 +166,7 @@ class NotificationActionHelper(private val service: Context) {
 
     fun addContentIntents(builder: NotificationCompat.Builder, conversation: NotificationConversation) {
         val delete = Intent(service, NotificationDismissedReceiver::class.java)
-        delete.putExtra(NotificationDismissedReceiver.EXTRA_CONVERSATION_ID, conversation.id)
+        delete.putExtra(xyz.klinker.messenger.shared.service.NotificationDismissedReceiver.EXTRA_CONVERSATION_ID, conversation.id)
         val pendingDelete = PendingIntent.getBroadcast(service, conversation.id.toInt(),
                 delete, PendingIntent.FLAG_UPDATE_CURRENT)
 
