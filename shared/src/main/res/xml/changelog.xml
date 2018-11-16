@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.2.3"
+        description="November 19th, 2018">
+        <text>Translation updates</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.2.2"
         description="November 7th, 2018">
         <text>Bug fixes</text>
