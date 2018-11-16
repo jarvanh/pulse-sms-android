@@ -43,6 +43,7 @@
     <string name="menu_mobile_only">Pouze na telefonu</string>
     <string name="menu_snooze">Odložit oznámení</string>
     <string name="menu_call">Zavolat kontakt</string>
+    <string name="menu_video_call">Videohovor pomocí Duo</string>
     <string name="menu_view_contact">Zobrazit kontakt</string>
     <string name="menu_view_contacts">Zobrazit kontakty</string>
     <string name="menu_view_media">Zobrazit média</string>
@@ -235,6 +236,7 @@ Nebude to trvat dlouho!</string>
         <item quantity="many">%1$d nových zpráv</item>
     </plurals>
     <string name="read">Přečteno</string>
+    <string name="mark_as_read">Přečteno</string>
     <string name="mute">Ztišit</string>
     <string name="reply">Odpovědět</string>
     <string name="reply_to">Odpovědět %1$s</string>
@@ -283,6 +285,7 @@ pro které jste nevytvořili individuální Kanál oznámení pro úpravu jednot
     <string name="device_id">ID zařízení</string>
     <string name="device_info">Informace o zařízení</string>
     <string name="website">Webová stránka</string>
+    <string name="view_platforms">Dostupné platformy pro Pulse</string>
     <string name="access_messages_from_any_device">Čtěte a pište zprávy za jakéhokoli zařízení!</string>
     <string name="beta_disclaimer">Tento projekt je stále v beta verzi, nahlaste prosím jakékoli problémy
 na které narazíte!</string>
@@ -378,6 +381,8 @@ na které narazíte!</string>
     <string name="apply_theme_globally">Aplikovat na všechny konverzace</string>
     <string name="apply_theme_globally_summary">Odstranit témata jednotlivých konverzací a místo toho použít tuto
 globální sadu barev</string>
+    <string name="apply_primary_theme_toolbar">Aplikovat primární barvu na lištu</string>
+    <string name="apply_primary_theme_toolbar_summary">Má být lišta aplikace barevná?</string>
     <string name="swipe_delete">Táhnout pro smazání</string>
     <string name="swipe_actions">Akce při přejetí</string>
     <string name="swipe_actions_summary">Upravit akce při přejetí</string>
@@ -408,6 +413,14 @@ Tuto akce nelze vrátit.</string>
     <string name="delete_account_confirmation">Jste si jistí, že chcete smazat váš účet a všechno ostatní s ním?
 Vždy se můžete znovu zaregistrovat!</string>
     <string name="change_subscription">Změnit předplatné</string>
+    <string name="trial_subscription_title">Ve zkušební době zbývá %s dní</string>
+    <string name="trial_subscription_summary">Klepněte sem pro upgrade nebo zrušení zkušební verze!</string>
+    <string name="upgrade_or_cancel_title">Stačila vám zkušební verze?</string>
+    <string name="trial_expired">Děkujeme za vyzkoušení!</string>
+    <string name="upgrade_or_cancel">Můžete povýšit svůj účet na předplatné nebo doživotní členství, abyste mohli používat Pulse na jakémkoliv ze svých zařízení.\n\nChcete ukončit používání zkušební verze?
+Váš účet bude odstraněn a vy nemusíte nic platit. Můžete nadále zdarma používat aplikaci na svém telefonu. Kdykoliv se můžete vrátit zpět.</string>
+    <string name="upgrade">Upgrade!</string>
+    <string name="cancel_trial">Zrušit zkušební verzi</string>
     <string name="cancel_on_the_play_store">Upgradujte klepnutím sem! Předplatné můžete zrušit v Obchodě Play.</string>
     <string name="resync_account">Znovu synchronizovat zprávy</string>
     <string name="resync_account_summary">Chybí vám zprávy? Použijte toto pro synchronizaci tohoto zařízení s vaším
@@ -435,6 +448,7 @@ je na vašem primárním zařízení. Jste si jisti, že to je to co chcete?</st
     <string name="after_four_messages">Po čtyřech zprávách</string>
     <string name="send_as_mms_summary">Dlouhé zprávy budou odeslány jako MMS místo jednotlivých SMS</string>
     <string name="alert_types">Typy oznámení</string>
+    <string name="notification_customization">Přizpůsobení notifikací</string>
     <string name="alert_types_summary">Nastavte vyzvánění, vibrace a další</string>
     <string name="strip_unicode">Odstranit znaky Unicode</string>
     <string name="strip_unicode_summary">Tyto znaky budou odstraněny z odchozích zpráv</string>
@@ -450,6 +464,8 @@ je na vašem primárním zařízení. Jste si jisti, že to je to co chcete?</st
 Jakmile bude hotov, pak se můžete přihlásit na Vašich ostatních zařízeních. Chcete pokračovat?</string>
     <string name="show_conversation_history">Zobrazit historii konverzace</string>
     <string name="show_conversation_history_summary">Oznámení zobrazí předchozí zprávy v konverzaci</string>
+    <string name="dismiss_notifications_on_reply">Zrušit oznámení po odpovědi</string>
+    <string name="dismiss_notifications_on_reply_summary">Oznámení zůstávají po odpovědi aktivní, takže můžete skrze ně pokračovat v konverzaci</string>
     <string name="emoji_style">Styl emotikonů</string>
     <string name="emoji_style_default">Výchozí systémové</string>
     <string name="emoji_style_android_o">Google Android Oreo</string>
@@ -588,11 +604,13 @@ Vyzkoušejte to dnes!</string>
     <string name="channel_settings">Nastavení kanálu oznámení</string>
     <string name="channel_settings_summary">S Androidem Oreo toto systémové nastavení Vám umožní nastavit vyzvánění, vybrace, LED a další pro tuto konverzaci.</string>
     <string name="restore_default_channel_settings">Obnovit výchozí nastavení oznámení</string>
+    <string name="restore_default_channel_settings_popup">Bylo obnoveno výchozí nastavení</string>
     <string name="channels">Kanály</string>
     <string name="default_channel">Výchozí kanál</string>
     <string name="channels_global_warning">Mnoho globálních nastavení je nyní možno upravit pro každý kanál zvlášť.</string>
     <string name="channels_global_warning_2">S Androidem Oreo jsou aplikace nuceny projít přes <i>Kanály oznámení</i> pro úpravu vyzvánění, vibrací, LED a jiných nastavení oznámení.\n\n
 Tato nastavení můžete upravit s pomocí tlačítka níže. Více o této změně se dočtete v nápovědě Pulse.</string>
+    <string name="channels_global_warning_3">Na Androidu Oreo vás některé z výše uvedených položek přesměrují na nastavení systémových <i>Kategorií oznámení</i>. O tom, jak tyto kanály fungují a proč je nutné je použít, se dozvíte více na stránce nápovědy pro Pulse.</string>
     <string name="off">Vypnuto</string>
     <string name="on">Zapnuto</string>
     <string name="share_promo">Ahoj, miluji Pulse pro psaní zpráv! Zkus to:
@@ -626,9 +644,11 @@ Pětihvězdičková ohodnocení mě zahřejí z srdce :)</string>
     <string name="cancelled_subscription_error">Vypadá to, že jste zrušili vaše předplatné.
 Pokud nevytvoříte nové tak vás aplikace automaticky odhlásí z vašeho účtu za 2 dny. Pokud je toto chyba tak mě prosím kontaktujte pomocí emailu.</string>
     <string name="subscription_found">Předplatné nalezeno - vítejte zpět!</string>
+    <string name="trial_finished">Zdá se, že zkušební verzi jste již vyzkoušeli.</string>
     <string name="subscription_not_found">Předplatné nebylo nalezeno, započněte zkušební období!</string>
     <string name="checking_for_active_subscriptions">Kontroluji vaše předplatné&#8230;</string>
     <string name="purchase_error_cancelled">Zrušili jste nákup :(</string>
+    <string name="purchase_cancelled_trial_finished">Platnost vaší zkušební verze vypršela a nákup byl zrušen. Váš účet bude smazán.\n\nAž budete chtít aplikaci používat na více zařízeních, můžete si jej kdykoliv založit znovu.</string>
     <string name="purchase_error_bad_google_play">Uh oh, Google Play má problémy, dalo mi špatný výsledek.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Tento nákup nesouhlasí s našimi záznamy.</string>
     <string name="subscriptions">Předplatné se platí po sedmidenním zkušebním období a může být kdykoliv změněno/zrušeno</string>
@@ -644,12 +664,19 @@ Pokud nevytvoříte nové tak vás aplikace automaticky odhlásí z vašeho úč
     <string name="change_subscription_message">Chcete upgrade? Skvělé! Až si na následující obrazovce
 vyberete, <b>musíte</b> otevřít aplikaci Obchod Play a zrušit své staré předplatné ručně.
 <b>Nelze</b> to udělat automaticky.</string>
-    <string name="beautiful_powerful_instant">Krásné, mocné, rychlé.</string>
+    <string name="beautiful_powerful_instant">Vítejte v moderní době.</string>
     <string name="optimized_for_all_your_devices">Pulse je optimalizované pro <b>všechna</b> Vaše zařízení.
 Posílejte zprávy z webu, z počítače, z tabletu, hodinek a dokonce i z televize.</string>
     <string name="true_imessage_competitor">První opravdový iMessage konkurent pro Android.</string>
+    <string name="trial_description">Žádná konkurence nemůže nabídnout <b>doživotní podporu platformy</b> a <b>nízkou cenu</b> tak, jako Pulse. Zprávy se mezi všemi zařízeními synchronizují okamžitě a bez námahy.</string>
+    <string name="purchase_description">Vyzkoušejte online verzi po dobu <b>sedmi dní</b>, pak se rozhodněte, jak chcete aplikaci podpořit:\n\n<b>$10.99</b> za doživotní členství\n<b>$5.99</b> za rok\n<b>$1.99</b> čtvrtletně\n<b>$0.99</b> za měsíc</string>
+    <string name="start_free_trial">Začněte používat bezplatnou zkušební verzi!</string>
+    <string name="create_your_pulse_account">Vytvořte si účet Pulse!</string>
     <string name="try_it">Vyzkoušet nyní!</string>
+    <string name="select_purchase">Vyberte nákup</string>
     <string name="have_an_account">Máte účet?\nPřihlašte se</string>
+    <string name="select_a_purchase">Vyberte nákup</string>
+    <string name="select_a_purchase_description">Vyberte si jeden ze tří druhů předplatného, nebo zvolte <b>doživotní členství</b> a zaplaťte za aplikaci jednorázově.</string>
     <string name="seven_days_free">7 dní zdarma!</string>
     <string name="competition_cant_beat">Konkurence se nemůže dotknout našich cen, rychlosti či služeb -
 <b>vyzkoušejte 7 dní</b> a zjistěte sami!</string>
@@ -662,5 +689,11 @@ Posílejte zprávy z webu, z počítače, z tabletu, hodinek a dokonce i z telev
 Zrušte kdykoli.</string>
     <string name="redirect_to_play_store">Děkujeme za upgrade! Zrušte si starý odběr z <b>Obchodu Play</b>. Pulse <b>nemůže</b> toto udělat automaticky.</string>
     <string name="play_store">Obchod Play</string>
+    <string name="notification_trial_title">Zprávy z libovolného zařízení - zkušební verze</string>
+    <string name="notification_days_remaining_in_trial">%s dní zbývá ve zkušební verzi. Klikněte pro upgrade!</string>
+    <string name="notification_last_day_of_trial">Dnes je poslední den vaší zkušební verze. Klikněte pro upgrade!</string>
+    <string name="notification_trial_expired">Vaše sedmidenní zkušební verze vypršela. Klikněte pro upgrade!</string>
+    <string name="continue_with_phone_app">Aplikaci můžete nadále zdarma používat na svém telefonu!</string>
+    <string name="thanks_for_trying">Děkujeme za použití zkušební verze!</string>
     <string name="quick_compose_summary">Vždy aktivní oznámení, které vám dá nejrychlejší přístup k psaní nové zprávy.</string>
 </resources>

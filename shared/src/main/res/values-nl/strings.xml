@@ -43,6 +43,7 @@
     <string name="menu_mobile_only">Enkel Mobiel</string>
     <string name="menu_snooze">Snooze notificaties</string>
     <string name="menu_call">Bel contactpersoon</string>
+    <string name="menu_video_call">Videobellen met Duo</string>
     <string name="menu_view_contact">Bekijk contactpersoon</string>
     <string name="menu_view_contacts">Bekijk contactpersonen</string>
     <string name="menu_view_media">Bekijk media</string>
@@ -217,6 +218,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
         <item quantity="other">%1$d nieuwe berichten</item>
     </plurals>
     <string name="read">Gelezen</string>
+    <string name="mark_as_read">Markeren als gelezen</string>
     <string name="mute">Dempen</string>
     <string name="reply">Beantwoorden</string>
     <string name="reply_to">Beantwoord %1$s</string>
@@ -264,6 +266,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="device_id">Toestel ID</string>
     <string name="device_info">Toestel Info</string>
     <string name="website">Website</string>
+    <string name="view_platforms">Beschikbare Pulse platformen</string>
     <string name="access_messages_from_any_device">Krijg toegang en verzend berichten vanop elk toestel!</string>
     <string name="beta_disclaimer">Dit project is nog in ontwikkeling, gelieve eventuele fouten te rapporteren!</string>
     <string name="app_info">App info</string>
@@ -316,7 +319,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="repeat_half_hour">Elk half uur</string>
     <string name="repeat_hour">Elk uur</string>
     <string name="wake_screen">Scherm oplichten</string>
-    <string name="vibrate">Vibratie patroon</string>
+    <string name="vibrate">Vibratie</string>
     <string name="vibrate_off">Geen vibratie</string>
     <string name="vibrate_default">Standaard vibratie</string>
     <string name="vibrate_two_long">Twee lange vibraties</string>
@@ -353,6 +356,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="adjustable_nav_bar_summary">Het lichte thema zal een witte navigatiebalk gebruiken terwijl donkere thema\'s de zwarte navigatiebalk gebruiken</string>
     <string name="apply_theme_globally">Toepassen op alle conversaties</string>
     <string name="apply_theme_globally_summary">Verwijder de aangepaste conversatiethema\'s en vervang door deze algemene kleuren</string>
+    <string name="apply_primary_theme_toolbar">Primaire kleur toepassen op App Bar</string>
+    <string name="apply_primary_theme_toolbar_summary">Geef de app bar een kleur</string>
     <string name="swipe_delete">Swipe om te verwijderen</string>
     <string name="swipe_actions">Swipe acties</string>
     <string name="swipe_actions_summary">Pas het swipen van een conversatie aan</string>
@@ -379,6 +384,14 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="delete_account_summary">Verwijder het account van dit toestel, alle andere toestellen waar je bent op ingelogd en de server. Dit is niet omkeerbaar!</string>
     <string name="delete_account_confirmation">Ben je echt zeker dat je jouw account wilt verwijderen en alles wat zich in jouw account bevindt? Je kan later altijd opnieuw registreren!</string>
     <string name="change_subscription">Verander abonnement</string>
+    <string name="trial_subscription_title">Je hebt nog %s dagen tegoed in de trial.</string>
+    <string name="trial_subscription_summary">Tik hier om de trial te beëindigen of uit te breiden!</string>
+    <string name="upgrade_or_cancel_title">Klaar met de trial?</string>
+    <string name="trial_expired">Bedankt om uit te testen!</string>
+    <string name="upgrade_or_cancel">Je kan je account upgraden naar een abonnement of levenslang abonnement om Pulse op al jouw toestellen te blijven gebruiken.\n\nWil je annuleren?
+Jouw account zal worden verwijderd en er wordt niets in rekening gebracht.  Je kan de app gratis blijven gebruiken op je telefoon. Voel je vrij om terug te keren!</string>
+    <string name="upgrade">Upgraden!</string>
+    <string name="cancel_trial">Trial annuleren</string>
     <string name="cancel_on_the_play_store">Tik hier om te upgraden! Je kan je abonnement annuleren via de Play Store.</string>
     <string name="resync_account">Synchroniseer berichten</string>
     <string name="resync_account_summary">Mis je berichten? Gebruik dit om jouw toestel up-to-date te brengen met jouw hoofdtoestel.</string>
@@ -403,7 +416,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="after_four_messages">Na vier berichten</string>
     <string name="send_as_mms_summary">Lange berichten verzenden als MMS i.p.v. SMS</string>
     <string name="alert_types">Instellingen notificaties</string>
-    <string name="alert_types_summary">Pas de notificaties aan</string>
+    <string name="notification_customization">Notificatie aanpassingen</string>
+    <string name="alert_types_summary">Wijzig de beltoon, vibratie en meer</string>
     <string name="strip_unicode">Strip Unicode</string>
     <string name="strip_unicode_summary">Deze karakters zullen worden verwijderd bij uitgaande berichten.</string>
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
@@ -418,6 +432,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
 Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</string>
     <string name="show_conversation_history">Toon conversatie geschiedenis</string>
     <string name="show_conversation_history_summary">Notificaties zullen vorige berichten uit de conversatie weergeven</string>
+    <string name="dismiss_notifications_on_reply">Verwijder notificatie na het antwoorden</string>
+    <string name="dismiss_notifications_on_reply_summary">Notificaties blijven actief na het antwoorden, dit staat je toe een conversatie te voeren via de notificaties</string>
     <string name="emoji_style">Emoji stijl</string>
     <string name="emoji_style_default">Standaard systeem</string>
     <string name="emoji_style_android_o">Google\'s Android Oreo</string>
@@ -549,11 +565,13 @@ Indien je deze functie wilt gebruiken, kan je een wachtwoord instellen in <i>Gea
     <string name="channel_settings">Instellingen notificatiekanaal</string>
     <string name="channel_settings_summary">Kanalen zijn verplicht in Android 8.0 en hoger voor het aanpassen van notificaties</string>
     <string name="restore_default_channel_settings">Herstel standaard instellingen voor notificaties</string>
+    <string name="restore_default_channel_settings_popup">Standaardinstellingen zijn teruggezet.</string>
     <string name="channels">Kanalen</string>
     <string name="default_channel">Standaard kanaal</string>
     <string name="channels_global_warning">Veel globale aanpassingen zijn nu enkel per kanaal beschikbaar.</string>
     <string name="channels_global_warning_2">Android\'s <i>notificatiekanalen</i>zijn nu verplicht voor het meeste van deze configuratie.\n\n Je kan elke melding van elke conversatie individueel aanpassen door het aanmaken van een <i>notificatiekanaal</i> in het conversatie instellingen menu.
 Gebruik het standaard kanaal om meldingen weer te geven voor conversaties die je niet aanpast.</string>
+    <string name="channels_global_warning_3">Met Android Oreo, sommige van de bovenstaande opties zullen jou doorlinken naar de <i>notificatie kanalen</i> van het systeem. Indien je meer wilt weten hoe deze werken, dan kan je altijd een kijkje nemen via de Help-sectie.</string>
     <string name="off">Uit</string>
     <string name="on">Aan</string>
     <string name="share_promo">Hey, I am loving Pulse for texting! Give it a try:
@@ -586,9 +604,11 @@ en de weergave in de Play Store. Als je de app wil zien groeien, help me hiermee
     <string name="cancelled_subscription_error">Het lijkt erop dat je jouw abonnement hebt beëindigd.
 Indien je geen nieuw abonnement afsluit binnen de 2 dagen, zal je automatisch worden uitgelogd. Indien dit een fout is, contacteer ons.</string>
     <string name="subscription_found">Abonnement gevonden - welkom terug!</string>
+    <string name="trial_finished">Oeps! Je hebt de trial al gebruikt.</string>
     <string name="subscription_not_found">Geen abonnement gevonden, laten we met jouw trial beginnen!</string>
     <string name="checking_for_active_subscriptions">Voor abonnement zoeken&#8230;</string>
     <string name="purchase_error_cancelled">Je annuleerde de betaling :\'(</string>
+    <string name="purchase_cancelled_trial_finished">Jouw trial is verlopen en je upgrade was geannuleerd. Je account zal worden verwijderd voor nu.\n\nJe kan het altijd opnieuw instellen wanneer je opnieuw via alle apparaten toegang wilt hebben tot je berichten.</string>
     <string name="purchase_error_bad_google_play">Oeps! Google Play heeft precies enkele problemen.</string>
     <string name="purchase_error_bad_sku">Hmmm&#8230; Deze betaling kon niet worden goedgekeurd.</string>
     <string name="subscriptions">Abonnementen worden aangerekend na de trial en kunnen ten allen tijde geannuleerd worden.</string>
@@ -602,12 +622,19 @@ Indien je geen nieuw abonnement afsluit binnen de 2 dagen, zal je automatisch wo
     <string name="monthly_purchase">$0.99 elke maand</string>
     <string name="monthly_purchase_summary">Wil je juist proberen? Geen probleem.</string>
     <string name="change_subscription_message">Wil je upgraden? Super! Nadat je je selectie hebt aangepast in het volgende scherm, dien je naar de Play Store te gaan en annuleer je het oude abonnement manueel. Dit gebeurt <b>niet</b> automatisch.</string>
-    <string name="beautiful_powerful_instant">Mooi, krachtig, snel.</string>
+    <string name="beautiful_powerful_instant">Welkom in een moderne wereld.</string>
     <string name="optimized_for_all_your_devices">Pulse is geoptimaliseerd voor <b>al</b> jouw toestellen.
 Verstuur berichten via het web, desktop pc, je tablet, je smartwatch en zelfs je televisie.</string>
     <string name="true_imessage_competitor">Het eerste <b>echte</b> iMessage alternatief voor Android.</string>
-    <string name="try_it">Probeer het nu!</string>
+    <string name="trial_description">Geen enkele andere app kan tippen aan de <b>eindeloze functies</b> van Pulse. Synchroniseer berichten tussen al jouw toestellen.</string>
+    <string name="purchase_description">Geef de online versie een kans. Gedurende <b>7 dagen</b> kan je alles uittesten. Daarna kan je beslissen om te app vrij te schakelen:\n\n<b>$10.99</b> voor een levenslange toegang\n<b>$5.99</b> per jaar\n<b>$1.99</b> per 3 maand\n<b>$0.99</b> per maand</string>
+    <string name="start_free_trial">Start jouw trial!</string>
+    <string name="create_your_pulse_account">Creëer een Pulse account!</string>
+    <string name="try_it">Probeer nu!</string>
+    <string name="select_purchase">Selecteer kopen</string>
     <string name="have_an_account">Heb je een account?\nInloggen</string>
+    <string name="select_a_purchase">Selecteer een optie</string>
+    <string name="select_a_purchase_description">Selecteer een van deze abonnementen, of kies voor het <b>levenslange abonnement</b> om slechts eenmalig te betalen.</string>
     <string name="seven_days_free">7 dagen gratis!</string>
     <string name="competition_cant_beat">De concurrentie kan niet op tegen onze prijzen, snelheid, service - je krijgt van ons <b>7 dagen gratis</b> en test het zelf uit!</string>
     <string name="select_a_trial_below">Selecteer een van de opties om je <b>gratis trial</b> te starten.</string>
@@ -619,5 +646,11 @@ Verstuur berichten via het web, desktop pc, je tablet, je smartwatch en zelfs je
 Je kan elk moment annuleren.</string>
     <string name="redirect_to_play_store">Bedankt voor het upgraden! Gelieve je oude abonnement te annuleren in de <b>Play Store</b>. Dit gebeurt <b>niet</b> automatisch.</string>
     <string name="play_store">Play Store</string>
+    <string name="notification_trial_title">Sms van elk toestel - Trial</string>
+    <string name="notification_days_remaining_in_trial">%s dagen resterend in je trial. Klik om te upgraden!</string>
+    <string name="notification_last_day_of_trial">Dit is de laatste dag van je trial. Klik om te upgraden!</string>
+    <string name="notification_trial_expired">Jouw zeven dagen trial is gedaan. Klik om te upgraden!</string>
+    <string name="continue_with_phone_app">Je kan de app blijven gebruiken op je gsm. Gratis!</string>
+    <string name="thanks_for_trying">Bedankt voor de trial!</string>
     <string name="quick_compose_summary">Altijd-actief notificatie zodat je steeds snel een nieuw bericht kan opstellen</string>
 </resources>

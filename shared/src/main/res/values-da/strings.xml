@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@
     <string name="menu_mobile_only">Kun mobiltelefon</string>
     <string name="menu_snooze">Udsæt notifikationer</string>
     <string name="menu_call">Ring til kontakt</string>
+    <string name="menu_video_call">Videoopkald med Duo</string>
     <string name="menu_view_contact">Se kontakt</string>
     <string name="menu_view_contacts">Se kontakter</string>
     <string name="menu_view_media">Se medier</string>
@@ -151,6 +152,7 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
     <string name="open_link_to_browser">Åbn link i browser</string>
     <string name="open_link_internal">Åbn link internt</string>
     <string name="copy_link">Kopier link</string>
+    <!-- Templates -->
     <!-- Compose Screen -->
     <string name="compose_message">Skriv ny besked</string>
     <string name="send_message">Send besked</string>
@@ -189,6 +191,7 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
         <item quantity="other">%1$d nye beskeder</item>
     </plurals>
     <string name="read">Læs</string>
+    <string name="mark_as_read">Marker som læst</string>
     <string name="reply">Svar</string>
     <string name="reply_to">Svar til %1$s</string>
     <string name="call">Ring</string>
@@ -345,7 +348,6 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
     <string name="alert_types">Indstillinger for notifikationer</string>
     <string name="alert_types_summary">Forskellige valgmuligheder for notifikationer</string>
     <string name="strip_unicode">Fjern unicode</string>
-    <string name="use_internal_browser">Benyt intern browser</string>
     <string name="strip_unicode_summary">Disse tegn fjernes fra udgående beskeder</string>
     <string name="giffgaff_delivery">Giffgaff leveringsrapporter</string>
     <string name="notification_actions">Valgmuligheder i notifikationer</string>
@@ -379,9 +381,9 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
     <string name="cleanup_old_messages">Oprydning i gamle beskeder</string>
     <string name="delayed_sending">Forsinket afsendelse</string>
     <string name="quick_compose">Hurtig besked</string>
-    <string name="quick_compose_summary">Altid aktive notifikationer giver dig den hurtigste adgang til at skrive en ny besked.</string>
     <string name="secure_private_conversations">Sikre private samtaler</string>
     <string name="secure_private_conversations_summary">Kræv PIN-kode for at låse op for private samtaler.</string>
+    <string name="use_internal_browser">Benyt intern browser</string>
     <!-- Theming Options -->
     <string name="day_night">Standard (dag/nat)</string>
     <string name="always_light">Altid lys</string>
@@ -410,6 +412,7 @@ Du kan bruge Pulse til at sende besked fra <b>alle</b>enheder!</string>
     <string name="contact_card">Kontaktoplysninger</string>
     <string name="conversation_with">Samtale med %1$s</string>
     <string name="send">Send</string>
+    <!-- Passcode Entry -->
     <!-- Other -->
     <string name="updating_database">Finder seneste beskeder...</string>
     <string name="dashclock_description">Ulæst SMS/MMS information</string>
@@ -436,12 +439,13 @@ prøv det i dag!</string>
 Brug standard kanaler for at tilpasse de samtaler, du ikke har lavet individuelle kanaler til.</string>
     <string name="off">Fra</string>
     <string name="on">Til</string>
+    <string name="share_promo">Hej, jeg elsker at bruge Pulse til beskeder. Prøv det: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
+    <string name="verifying_password">Bekræfter adgangskode...</string>
+    <!-- Rate it -->
     <string name="rate_it">Bedøm!</string>
     <string name="love_pulse_question">Elsker du Pulse?</string>
     <string name="give_a_rating">Overvej at give en bedømmelse eller del med dine venner!\n\n
 Din 5-stjernede bedømmelse vil varme mit hjerte :)</string>
-    <string name="share_promo">Hej, jeg elsker at bruge Pulse til beskeder. Prøv det: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
-    <string name="verifying_password">Bekræfter adgangskode...</string>
     <!-- Times -->
     <string name="one_second">et sekund</string>
     <string name="three_seconds">Tre sekunder</string>
@@ -490,4 +494,5 @@ Din 5-stjernede bedømmelse vil varme mit hjerte :)</string>
     <string name="yearly_purchase_improved">$5.99 /\n1 år</string>
     <string name="subscription_toast">Du <b>bliver ikke</b> opkrævet noget, før din 7 dages prøveperiode er slut.
 Fortryd på ethvert tidspunkt.</string>
+    <string name="quick_compose_summary">Altid aktive notifikationer giver dig den hurtigste adgang til at skrive en ny besked.</string>
 </resources>
