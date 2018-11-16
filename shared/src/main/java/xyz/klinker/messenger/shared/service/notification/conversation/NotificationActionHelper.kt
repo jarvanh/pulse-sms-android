@@ -171,6 +171,10 @@ class NotificationActionHelper(private val service: Context) {
         val open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY)
         open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversation.id)
         open.putExtra(MessengerActivityExtras.EXTRA_FROM_NOTIFICATION, true)
+        if (conversation.privateNotification) {
+            open.putExtra(MessengerActivityExtras.EXTRA_OPEN_PRIVATE, true)
+        }
+
         open.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         val pendingOpen = PendingIntent.getActivity(service,
                 conversation.id.toInt(), open, PendingIntent.FLAG_UPDATE_CURRENT)

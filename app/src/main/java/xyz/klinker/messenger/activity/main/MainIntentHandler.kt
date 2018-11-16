@@ -50,6 +50,16 @@ class MainIntentHandler(private val activity: MessengerActivity) {
         return false
     }
 
+    fun displayPrivateFromNotification() {
+        val openPrivate = activityIntent.getBooleanExtra(MessengerActivityExtras.EXTRA_OPEN_PRIVATE, false)
+        val conversationId = activityIntent.getLongExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, -1L)
+        activityIntent.putExtra(MessengerActivityExtras.EXTRA_OPEN_PRIVATE, false)
+
+        if (openPrivate) {
+            navController.conversationActionDelegate.displayPrivate()
+        }
+    }
+
     fun displayAccount() {
         if (activityIntent.getBooleanExtra(MessengerActivityExtras.EXTRA_START_MY_ACCOUNT, false)) {
             NotificationManagerCompat.from(activity).cancel(SubscriptionExpirationCheckJob.NOTIFICATION_ID)

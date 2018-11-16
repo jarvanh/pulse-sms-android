@@ -79,6 +79,7 @@ class MessengerActivity : AppCompatActivity() {
         intentHandler.dismissIfFromNotification()
         intentHandler.restoreNavigationSelection(savedInstanceState)
         navController.conversationActionDelegate.displayConversations(savedInstanceState)
+        intentHandler.displayPrivateFromNotification()
         navController.initToolbarTitleClick()
         accountController.startIntroOrLogin(savedInstanceState)
         permissionHelper.requestDefaultSmsApp()
@@ -132,7 +133,6 @@ class MessengerActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         intentHandler.newIntent(intent)
     }
-
 
     public override fun onPause() {
         super.onPause()
