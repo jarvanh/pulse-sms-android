@@ -109,7 +109,7 @@ class MessageShareFragment : TabletOptimizedBottomSheetDialogFragment() {
     }
 
     private fun getMimeType(): String? {
-        return if (messages!!.size == 1) {
+        return if (messages != null && messages!!.size == 1) {
             messages!![0]?.mimeType
         } else {
             MimeType.TEXT_PLAIN
