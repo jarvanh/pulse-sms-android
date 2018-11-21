@@ -599,8 +599,8 @@
     <string name="type_passcode">Create a passcode.</string>
     <string name="incorrect_passcode">Incorrect passcode.</string>
     <string name="verify">Verify</string>
-    <string name="enable_passcode_disclaimer">Private conversations can be password/fingerprint protected, so that only you can access them.\n\n
-        If you would like add this security, set up a passcode from the <i>Advanced Features</i> section.</string>
+    <string name="enable_passcode_disclaimer">Private conversations can be password/fingerprint protected, so that only you can access them.\n\nIf
+      you would like add this security, set up a passcode from the <i>Advanced Features</i> section.</string>
 
     <!-- Other -->
     <string name="updating_database">Finding latest messages…</string>
