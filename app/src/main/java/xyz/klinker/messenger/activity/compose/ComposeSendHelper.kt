@@ -44,6 +44,12 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
         }
     }
 
+    internal fun resetViewsForMultipleImages(data: List<String>, mimeType: String) {
+        fab.setOnClickListener {
+            activity.shareHandler.apply(mimeType, data)
+        }
+    }
+
     private fun dismissKeyboard() {
         val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(fab.windowToken, 0)

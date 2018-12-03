@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.2.4"
+        description="December 4th, 2018">
+        <text>Share multiple images from your gallery, into Pulse</text>
+    </version>
+
+    <version
         name="4.2.3"
         description="November 20th, 2018">
         <text>Translation updates</text>

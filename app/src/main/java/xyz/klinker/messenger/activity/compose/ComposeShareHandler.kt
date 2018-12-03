@@ -14,6 +14,30 @@ class ComposeShareHandler(private val activity: ComposeActivity) {
         apply(mimeType, data, phoneNumbers)
     }
 
+    fun apply(mimeType: String, data: List<String>) {
+        val phoneNumbers = activity.contactsProvider.getPhoneNumberFromContactEntry()
+        var conversationId = DataSource.findConversationId(activity, phoneNumbers)
+
+        if (conversationId == null) {
+            val message = Message()
+            message.type = Message.TYPE_INFO
+            message.data = activity.getString(R.string.no_messages_with_contact)
+            message.timestamp = TimeUtils.now
+            message.mimeType = MimeType.TEXT_PLAIN
+            message.read = true
+            message.seen = true
+            message.sentDeviceId = -1
+
+            conversationId = DataSource.insertMessage(message, phoneNumbers, activity)
+        }
+
+        data.forEach {
+            DataSource.insertDraft(activity, conversationId, it, mimeType)
+        }
+
+        activity.sender.showConversation(conversationId)
+    }
+
     fun apply(mimeType: String, data: String?, phoneNumbers: String) {
         var conversationId = DataSource.findConversationId(activity, phoneNumbers)
 

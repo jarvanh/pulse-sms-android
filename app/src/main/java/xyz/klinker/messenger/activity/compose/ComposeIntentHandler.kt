@@ -7,16 +7,12 @@ import android.os.Handler
 import android.os.Parcelable
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
-import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
-import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.MessengerChooserTargetService
 import xyz.klinker.messenger.shared.util.FileUtils
 import xyz.klinker.messenger.shared.util.NonStandardUriUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
-import xyz.klinker.messenger.shared.util.TimeUtils
 import java.io.File
-import java.net.URLDecoder
 
 @Suppress("DEPRECATION")
 class ComposeIntentHandler(private val activity: ComposeActivity) {
@@ -32,6 +28,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
                 intent.action == Intent.ACTION_SENDTO -> shareDirectlyToSms(intent)
                 intent.action == Intent.ACTION_VIEW && (intent.type == null || intent.type == MimeType.TEXT_PLAIN) -> viewIntent(intent)
                 intent.action == Intent.ACTION_SEND -> shareContent(intent)
+                intent.action == Intent.ACTION_SEND_MULTIPLE -> shareMultipleImages(intent)
             }
         } catch (e: Exception) {
             AnalyticsHelper.caughtForceClose(activity, "caught when sharing to compose activity", e)
@@ -165,8 +162,27 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
             val number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
             activity.shareHandler.apply(intent.type, data, number)
         } else {
-            activity.sender.resetViews(if (data == null) "" else data, intent.type)
+            activity.sender.resetViews(data ?: "", intent.type!!)
         }
+    }
+
+    private fun shareMultipleImages(intent: Intent) {
+        val parcelables = intent.getParcelableArrayListExtra<Parcelable>(Intent.EXTRA_STREAM)
+        val images = parcelables.map {
+            val tempData = it.toString()
+            try {
+                val dst = File(activity.filesDir, (Math.random() * Integer.MAX_VALUE).toInt().toString() + "")
+                val `in` = activity.contentResolver.openInputStream(Uri.parse(tempData))
+
+                FileUtils.copy(`in`, dst)
+                Uri.fromFile(dst).toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                tempData
+            }
+        }
+
+        activity.sender.resetViewsForMultipleImages(images, intent.type!!)
     }
 
     private fun shareVCard(intent: Intent) {

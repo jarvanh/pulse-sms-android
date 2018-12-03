@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.data.DataSource
@@ -23,6 +24,8 @@ class DraftManager(private val fragment: MessageListFragment) {
     private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
     private val editImage: View by lazy { fragment.rootView!!.findViewById<View>(R.id.edit_image) }
     private val sendProgress: View by lazy { fragment.rootView!!.findViewById<View>(R.id.send_progress) }
+    private val selectedImageCount: View by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) }
+    private val selectedImageCountText: TextView by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images_text) as TextView }
 
     var textChanged = false
     var pullDrafts = true
@@ -76,7 +79,17 @@ class DraftManager(private val fragment: MessageListFragment) {
                         messageEntry.setText(draft.data)
                         messageEntry.setSelection(messageEntry.text.length)
                     }
-                    MimeType.isStaticImage(draft.mimeType) -> attachManager.attachImage(Uri.parse(draft.data))
+                    MimeType.isStaticImage(draft.mimeType) -> {
+                        val uri = Uri.parse(draft.data)
+                        attachManager.attachImage(uri)
+                        attachManager.selectedImageUris.add(uri.toString())
+
+                        if (attachManager.selectedImageUris.size > 1) {
+                            selectedImageCount.visibility = View.VISIBLE
+                            selectedImageCountText.text = attachManager.selectedImageUris.size.toString()
+                            editImage.visibility = View.GONE
+                        }
+                    }
                     draft.mimeType == MimeType.IMAGE_GIF -> {
                         attachManager.attachImage(Uri.parse(draft.data))
                         attachManager.attachedMimeType = draft.mimeType
