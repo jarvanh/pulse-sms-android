@@ -12,6 +12,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
+import xyz.klinker.messenger.shared.util.DualSimUtils
 import xyz.klinker.messenger.shared.util.NotificationUtils
 import xyz.klinker.messenger.shared.util.SendUtils
 import xyz.klinker.messenger.shared.util.autoreply.AutoReplyParser
@@ -61,9 +62,12 @@ class AutoReplyParserService : IntentService("AutoReplyParserService") {
         parsers.forEach {
             val parsedMessage = it.parse(message)
             if (parsedMessage != null) {
+                parsedMessage.simPhoneNumber = if (conversation.simSubscriptionId != null)
+                    DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!) else null
+
                 DataSource.insertMessage(this, parsedMessage, conversation.id, true)
                 MessageListUpdatedReceiver.sendBroadcast(this, conversation.id, message.data, message.type)
-                SendUtils().send(this, parsedMessage.data!!, conversation.phoneNumbers!!)
+                SendUtils(conversation.simSubscriptionId).send(this, parsedMessage.data!!, conversation.phoneNumbers!!)
             }
         }
 
