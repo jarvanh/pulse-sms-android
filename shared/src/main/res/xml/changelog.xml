@@ -17,17 +17,23 @@
 <changelog>
 
     <version
-        name="4.2.4"
+        name="4.3.2"
         description="December 10th, 2018">
         <text>Share multiple images from your gallery, into Pulse</text>
         <text>Auto responses will use the SIM card defined for the conversation, if you have a dual SIM phone</text>
     </version>
 
     <version
-        name="4.2.3"
+        name="4.3.1"
         description="November 20th, 2018">
         <text>Translation updates</text>
         <text>Bug fixes</text>
+    </version>
+  
+    <version
+        name="4.3.0"
+        description="November 17th, 2018">
+        <text>Pulse SMS now has an app for Tizen OS (Samsung Smartwatches)</text>
     </version>
 
     <version
