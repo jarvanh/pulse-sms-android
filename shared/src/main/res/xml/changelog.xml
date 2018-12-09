@@ -18,7 +18,7 @@
 
     <version
         name="4.3.2"
-        description="December 10th, 2018">
+        description="December 9th, 2018">
         <text>Share multiple images from your gallery, into Pulse</text>
         <text>Auto responses will use the SIM card defined for the conversation, if you have a dual SIM phone</text>
     </version>
