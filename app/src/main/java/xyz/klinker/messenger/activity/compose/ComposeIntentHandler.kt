@@ -111,7 +111,8 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
 
         val numbers = builder.toString()
 
-        val body = NonStandardUriUtils.getQueryParams(intent.dataString)["body"]
+        val body = NonStandardUriUtils.getQueryParams(intent.dataString)["body"] ?:
+                intent.extras.getString("sms_body")
         if (body != null) {
             activity.shareHandler.apply(MimeType.TEXT_PLAIN, body, numbers)
         } else {
