@@ -33,7 +33,8 @@ import xyz.klinker.messenger.shared.R
  */
 object PermissionsUtils {
 
-    private val REQUEST_MAIN_PERMISSIONS = 1
+    private const val REQUEST_MAIN_PERMISSIONS = 1
+    const val REQUEST_DEFAULT_SMS_APP = 2
 
     fun checkRequestMainPermissions(activity: Activity): Boolean {
         return !checkPermissionGranted(activity, Manifest.permission.READ_CONTACTS) ||
@@ -91,7 +92,11 @@ object PermissionsUtils {
         intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.packageName)
 
         try {
-            context.startActivity(intent)
+            if (context is Activity) {
+                context.startActivityForResult(intent, REQUEST_DEFAULT_SMS_APP)
+            } else {
+                context.startActivity(intent)
+            }
         } catch (e: Exception) {
             // Android TV trying to get set as the default app
             e.printStackTrace()

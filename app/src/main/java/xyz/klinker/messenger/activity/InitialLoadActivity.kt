@@ -17,10 +17,12 @@
 package xyz.klinker.messenger.activity
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -52,6 +54,7 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
     private var handler: Handler? = null
     private var startUploadAfterSync = false
     private var downloadReceiver: BroadcastReceiver? = null
+    private var promptedForDefaultSMS = false
 
     private val name: String
         get() {
@@ -100,7 +103,33 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
     }
 
     private fun requestPermissions() {
-        if (PermissionsUtils.checkRequestMainPermissions(this)) {
+        if (!PermissionsUtils.isDefaultSmsApp(this)) {
+            if (promptedForDefaultSMS) {
+                // display a warning here, before asking for the permission.
+                // The warning lets the user know that this is now required by Google.
+                // After the warning, prompt the user again
+                AlertDialog.Builder(this)
+                        .setMessage(R.string.google_requires_default_sms)
+                        .setNegativeButton(R.string.google_requires_default_sms_policy) { _, _ ->
+                            promptedForDefaultSMS = false
+
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://android-developers.googleblog.com/2018/10/providing-safe-and-secure-experience.html"))
+                            startActivityForResult(intent, PermissionsUtils.REQUEST_DEFAULT_SMS_APP)
+                        }.setPositiveButton(R.string.ok) { _, _ ->
+                            PermissionsUtils.setDefaultSmsApp(this)
+                        }.setCancelable(false)
+                        .show()
+            } else {
+                promptedForDefaultSMS = true
+
+                // interestingly enough, setting the app as the default SMS app, immediately when it is install
+                // automatically provides it all of the main permissions.
+                // Google must know, if there are no permissions granted and the user allows Pulse to be
+                // the default SMS app, the app should automatically receive the required permissions.
+                // This was unexpected, but nicer than requesting the permissions individually
+                PermissionsUtils.setDefaultSmsApp(this)
+            }
+        } else if (PermissionsUtils.checkRequestMainPermissions(this)) {
             PermissionsUtils.startMainPermissionRequest(this)
         } else {
             startLogin()
@@ -121,7 +150,9 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
     }
 
     public override fun onActivityResult(requestCode: Int, responseCode: Int, data: Intent?) {
-        if (requestCode == SETUP_REQUEST) {
+        if (requestCode == PermissionsUtils.REQUEST_DEFAULT_SMS_APP) {
+            requestPermissions()
+        } else  if (requestCode == SETUP_REQUEST) {
             Settings.forceUpdate(this)
 
             when (responseCode) {
@@ -245,7 +276,7 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
     }
 
     companion object {
-        val UPLOAD_AFTER_SYNC = "upload_after_sync"
-        private val SETUP_REQUEST = 54321
+        const val UPLOAD_AFTER_SYNC = "upload_after_sync"
+        private const val SETUP_REQUEST = 54321
     }
 }
