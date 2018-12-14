@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.3.3"
+        description="December 13th, 2018">
+        <text>Google now requires SMS apps to be set as the default SMS app, before accessing message data</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.3.2"
         description="December 9th, 2018">
         <text>Share multiple images from your gallery, into Pulse</text>
