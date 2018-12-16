@@ -103,7 +103,7 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
     }
 
     private fun requestPermissions() {
-        if (!PermissionsUtils.isDefaultSmsApp(this)) {
+        if (!resources.getBoolean(R.bool.is_tablet) && !PermissionsUtils.isDefaultSmsApp(this)) {
             if (promptedForDefaultSMS) {
                 // display a warning here, before asking for the permission.
                 // The warning lets the user know that this is now required by Google.
