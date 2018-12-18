@@ -19,7 +19,7 @@
     <version
         name="4.3.3"
         description="December 13th, 2018">
-        <text>Google now requires SMS apps to be set as the default SMS app, before accessing message data</text>
+        <text>Google now requires SMS apps to be set as the default SMS app, before accessing message data. Pulse complies with this policy.</text>
         <text>Bug fixes</text>
     </version>
 
