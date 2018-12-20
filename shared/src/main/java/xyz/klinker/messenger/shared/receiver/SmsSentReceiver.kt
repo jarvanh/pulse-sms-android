@@ -43,7 +43,7 @@ import java.util.*
  */
 open class SmsSentReceiver : SentReceiver() {
 
-    protected open fun retryFailedMessages() = true
+    protected open fun retryFailedMessages() = false
 
     override fun onMessageStatusUpdated(context: Context, intent: Intent, receiverResultCode: Int) {
         if (Account.exists() && !Account.primary) {
