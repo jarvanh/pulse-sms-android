@@ -1,1 +1,1 @@
-This update just allows you to share multiple images from your gallery app, into Pulse.
+This update allows you to share multiple images from your gallery app, into Pulse.
