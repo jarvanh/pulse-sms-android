@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="api_login">"Tradurre in italiano "</string>
+    <string name="api_login">Accedi</string>
     <string name="api_signup">Registrazione</string>
     <string name="api_signup_failed">Non puoi registrarti su questo dispositivo, devi prima
 iscriverti con un dispositivo principale dotato di numero telefonico!</string>
@@ -38,7 +38,7 @@ iscriverti con un dispositivo principale dotato di numero telefonico!</string>
     <string name="api_password_mismatch">Le password non combaciano</string>
     <string name="api_no_name">Nessun nome inserito</string>
     <string name="api_no_phone_number">Nessun numero di telefono inserito</string>
-    <string name="api_login_error">"Teanslate "</string>
+    <string name="api_login_error">Si è verificato un errore durante il login, email o password errata?</string>
     <string name="api_activate_summary">Effettua il login per visualizzare tutti i tuoi  messaggi su questo dispositivo!</string>
     <string name="api_activate_1_1">Vai a</string>
     <string name="api_activate_1_3">su un dispositivo mobile o computer</string>

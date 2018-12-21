@@ -27,7 +27,7 @@
     <string name="menu_private_conversations">Private samtaler</string>
     <string name="menu_unread_conversations">Uleste samtaler</string>
     <string name="menu_edit_folders">Administrer mapper ...</string>
-    <string name="menu_edit_folders_no_ellipse">Administrer Mapper</string>
+    <string name="menu_edit_folders_no_ellipse">Administrer mapper</string>
     <string name="menu_schedule">Planlagte meldinger</string>
     <string name="menu_mute_contacts">Svarteliste</string>
     <string name="menu_invite">Inviter venner</string>
@@ -52,7 +52,7 @@
     <string name="menu_move_to_inbox">Flytt til innboks</string>
     <string name="menu_conversation_information">Samtale informasjon</string>
     <string name="menu_copy_phone_number">Kopier nummer</string>
-    <string name="menu_view_full_conversation">Se Historikk</string>
+    <string name="menu_view_full_conversation">Se historikk</string>
     <string name="menu_conversation_blacklist">Svartelist kontakt</string>
     <string name="menu_conversation_schedule">Planlegg en melding</string>
     <string name="menu_contact_settings">Samtale innstillinger</string>
@@ -65,9 +65,9 @@
     <string name="menu_snooze_24">24 timer</string>
     <string name="menu_snooze_72">72 timer</string>
     <string name="menu_snooze_custom">Velg en tid</string>
-    <string name="menu_mark_as_unread">Merk som Ulest</string>
+    <string name="menu_mark_as_unread">Merk som ulest</string>
     <string name="menu_pin_conversation">Fest/Løsne samtale</string>
-    <string name="menu_mute_conversation">Slå av/på Samtalevarsel</string>
+    <string name="menu_mute_conversation">Av/På varsellyd</string>
     <!-- Empty Screen -->
     <string name="no_messages">Ingen beskjeder</string>
     <string name="no_messages_summary">Start en ny samtale, eller bare nyt dagen!</string>
@@ -134,7 +134,7 @@ http://messenger.klinkerapps.com</string>
     <string name="attach_location">Legg ved plassering</string>
     <string name="attach_contact">Legg ved kontakt</string>
     <string name="attach_contact_summary">Velg eller skriv inn en kontakt for å legge ved meldingen!</string>
-    <string name="apply_template">Bruk Tema</string>
+    <string name="apply_template">Bruk tema</string>
     <string name="no_location_found">Kunne ikke finne din plassering.</string>
     <string name="camera_permission_needed">Kamera tillatelse må bli gitt for å ta bilder!</string>
     <string name="take_picture">Snap bilde</string>
@@ -143,8 +143,8 @@ http://messenger.klinkerapps.com</string>
     <string name="attached_image">Vedlagt bilde</string>
     <string name="remove_image">Fjern vedlagt bilde</string>
     <string name="edit_image">Redigér vedlagt bilde</string>
-    <string name="edit_recipients">Rediger Mottakere</string>
-    <string name="select_folder">Velg Mappe for Samtale</string>
+    <string name="edit_recipients">Rediger mottakere</string>
+    <string name="select_folder">Velg mappe for samtale</string>
     <string name="permission_needed_for_action">Tillatelser nødvendig for denne handlingen.</string>
     <string name="request_permission">Be om tillatelse</string>
     <string name="no_messages_with_contact">Du har ingen meldinger i denne samtalen ennå. så på tide å begynne!</string>
@@ -183,7 +183,7 @@ http://messenger.klinkerapps.com</string>
     <!-- Compose Screen -->
     <string name="compose_message">Skriv ny melding</string>
     <string name="send_message">Send melding</string>
-    <string name="enter_contact_name">Skriv kontakt navn</string>
+    <string name="enter_contact_name">Skriv kontaktnavn</string>
     <string name="enter_contact_name_or_number">Skriv inn kontaktnavn eller nummer</string>
     <string name="error_processing_vcard">Feil ved behandling av vcard</string>
     <string name="compose_recents">Sist brukte</string>
@@ -197,7 +197,7 @@ http://messenger.klinkerapps.com</string>
 vil ikke ta lang tid!</string>
     <string name="tooltip_got_it">Fikk det!</string>
     <string name="navigation_drawer_conversation_hint">Flere valg for denne samtalen er lagret i navigasjons skuffen.</string>
-    <string name="onboarding_title_1">Meldinger re-forestilt</string>
+    <string name="onboarding_title_1">Forfriske meldinger</string>
     <string name="onboarding_title_2">Tilgjengelig overalt</string>
     <string name="onboarding_title_3">Kraftig tilpasningsmuligheter</string>
     <string name="onboarding_content_1">Fin, flytende layouter med kraftig design og sømløs integrering.</string>
@@ -208,7 +208,7 @@ vil ikke ta lang tid!</string>
     <string name="message_anywhere_onboarding_title_3">En uke lang prøveperiode</string>
     <string name="message_anywhere_onboarding_content_1">Integreres sømløst med hvilken som helst enhet (nettbrett, klokke, TV, web, opprinnelig Google Chrome og Firefox-apper) for å støtte SMS og MMS fra hvor som helst!</string>
     <string name="message_anywhere_onboarding_content_2">Sykt lave prisalternativer å betale når du trenger det: $ 10,99 for livstid, $ 5,99 per år, $ 1,99 for 3 måneder eller $ 0,99 per måned. Mindre enn en kopp kaffe.</string>
-    <string name="message_anywhere_onboarding_content_3">Bruk Android-appen, GRATIS (for alltid!) På telefonen, eller start teksting fra alle enhetene dine med en ukentlig prøveperiode.</string>
+    <string name="message_anywhere_onboarding_content_3">Bruk Android appen, GRATIS (for alltid!) På telefonen, eller start teksting fra alle enhetene dine med en uke gratis prøveperiode.</string>
     <string name="start_trial">Start\nPrøveperiode</string>
     <string name="not_now">Ikke\nNå</string>
     <string name="onboarding_done">Ferdig</string>
@@ -224,7 +224,7 @@ vil ikke ta lang tid!</string>
         <item quantity="other">%1$d nye meldinger</item>
     </plurals>
     <string name="read">Les</string>
-    <string name="mark_as_read">Merk som Lest</string>
+    <string name="mark_as_read">Merk som lest</string>
     <string name="mute">Dempe</string>
     <string name="reply">Svar</string>
     <string name="reply_to">Svar til %1$s</string>
@@ -281,15 +281,15 @@ kan finne!</string>
     <string name="platform_info">Platform Info</string>
     <string name="troubleshooting">Feilsøking</string>
     <string name="get_in_touch">Ta kontakt</string>
-    <string name="faqs">Ofte Stilte Spørsmål</string>
-    <string name="get_help">Få Hjelp</string>
+    <string name="faqs">Ofte stilte spørsmål</string>
+    <string name="get_help">Få hjelp</string>
     <string name="get_help_summary">Har du et spørsmål? For en ene-mann mannskap, får jeg en skikkelig mengde e-postmeldinger hver dag, som graver inn i tiden jeg kommer til å utvikle nye funksjoner. For å hjelpe meg, ville det være bra hvis du kunne søke raskt her for å se om jeg allerede har adressert spørsmålet ditt.</string>
     <string name="get_help_summary_2">Hjelp delen er ganske omfattende, men hvis du ikke finner ditt spesifikke spørsmål, vennligst ta kontakt og jeg vil gjerne komme tilbake til deg!</string>
     <string name="features">Pulse funksjoner</string>
-    <string name="issues">Utgave Baner</string>
+    <string name="issues">Utgave baner</string>
     <string name="issues_summary">Fungerer også som en funksjonsplan</string>
     <string name="google_plus">Google+</string>
-    <string name="google_plus_summary">Pulse Beta Fellesskap</string>
+    <string name="google_plus_summary">Pulse beta fellesskap</string>
     <string name="email">E-post</string>
     <string name="email_summary">luke@klinkerapps.com</string>
     <string name="twitter">Twitter</string>
@@ -311,14 +311,14 @@ kan finne!</string>
     <string name="private_conversation_summary">Skjul innhold på varsler</string>
     <string name="private_conversation_summary_2">Skjul innhold på varsler og flytt denne samtalen til <i>Private samtaler</i></string>
     <string name="primary_color">Hovedfarge</string>
-    <string name="primary_dark_color">Primær Farge Mørk</string>
+    <string name="primary_dark_color">Primær farge mørk</string>
     <string name="accent_color">Aksentfarge</string>
     <string name="led_color">LED farge</string>
     <string name="ringtone">Ringtone</string>
     <string name="group_name">Gruppenavn</string>
     <string name="notification_settings">Varslinger</string>
     <string name="repeat_interval">Gjenta alarm</string>
-    <string name="heads_up">Heads Up</string>
+    <string name="heads_up">Se opp</string>
     <string name="repeat_never">Aldri</string>
     <string name="repeat_one_min">Hvert minutt</string>
     <string name="repeat_two_mins">Hvert to minutter</string>
@@ -352,21 +352,21 @@ kan finne!</string>
     <string name="conversation_list_category">Samtale liste</string>
     <string name="general_category">Generell</string>
     <string name="theme_settings_redirect">Tema</string>
-    <string name="base_theme">Base Tema</string>
-    <string name="global_theme_color">Tema Farge</string>
+    <string name="base_theme">Base tema</string>
+    <string name="global_theme_color">Tema farge</string>
     <string name="font_size">Font Størrelse</string>
-    <string name="rounder_bubbles">Rund Meldingsbobler</string>
+    <string name="rounder_bubbles">Rund meldingsbobler</string>
     <string name="bubble_style">Meldingsbobler Stil</string>
     <string name="bubble_style_round">Avrundet</string>
     <string name="bubble_style_square">I kvadrat</string>
     <string name="bubble_style_circle">Sirkel (Ingen Hale)</string>
-    <string name="adjustable_nav_bar">Fyrstikk Navigasjon Bar til Base Tema</string>
+    <string name="adjustable_nav_bar">Fyrstikk navigasjon bar til base tema</string>
     <string name="adjustable_nav_bar_summary">Lyset temaet vil bruke den hvite navigeringslinjen, mens
 mørkere temaer vil bruke den svarte navigeringslinjen</string>
     <string name="apply_theme_globally">Bruk på alle samtaler</string>
-    <string name="apply_theme_globally_summary">Fjern per-samtale temaer, til fordel for
-av dette globale fiargesettet</string>
-    <string name="apply_primary_theme_toolbar">Bruk Primærfarge til App Bar</string>
+    <string name="apply_theme_globally_summary">Fjern per samtale temaer, til fordel for
+av dette globale fargesettet</string>
+    <string name="apply_primary_theme_toolbar">Bruk primærfarge til App bar</string>
     <string name="apply_primary_theme_toolbar_summary">Hvorvidt applinjen skal farges</string>
     <string name="swipe_delete">Sveip for å slette</string>
     <string name="swipe_actions">Sveip handlinger</string>
@@ -388,7 +388,7 @@ ikke lenger bli lagret når de kommer fra dette nummeret og du vil ikke bli vars
     <string name="signout_time">Logger ut: %1$s</string>
     <string name="lifetime_subscriber">Livstid abonnent</string>
     <string name="trial_period">Prøveperiode</string>
-    <string name="setup_my_account">Oppsett Konto</string>
+    <string name="setup_my_account">Oppsett konto</string>
     <string name="setup_my_account_summary">Registrer deg eller logg inn på kontoen din for å begynne å bruke
 flere funksjoner som meldinger fra nettbrettet eller datamaskinen</string>
     <string name="preparing_new_account">Klargjør konto&#8230;</string>
@@ -398,14 +398,14 @@ enheter og serveren. Dette er ikke vendbar!</string>
     <string name="delete_account_confirmation">Er du sikker på at du vil slette din konto og
 alt annet med det? Du kan alltid registrere deg igjen senere!</string>
     <string name="change_subscription">Endre abonnement</string>
-    <string name="trial_subscription_title">Du har %s dager igjen i prøveperioden</string>
-    <string name="trial_subscription_summary">Trykk her for å oppgradere eller avbryte prøveperioden!</string>
-    <string name="upgrade_or_cancel_title">Ferdig med prøveperioden?</string>
-    <string name="trial_expired">Takk for prøveperioden!</string>
+    <string name="trial_subscription_title">Du har %s dager igjen i prøveversjonen</string>
+    <string name="trial_subscription_summary">Trykk her for å oppgradere eller avbryte prøveversjonen!</string>
+    <string name="upgrade_or_cancel_title">Ferdig med prøveversjonen?</string>
+    <string name="trial_expired">Takk for prøveversjonen!</string>
     <string name="upgrade_or_cancel">Du kan oppgradere kontoen din til et abonnement eller levetids medlemskap for å fortsette å bruke Pulse på tvers av alle enhetene dine!\ n\nNår du avbryte?
 Kontoen din blir fjernet, og du blir ikke belastet. Du kan fortsette å bruke appen på telefonen gratis! Du er velkommen til å komme tilbake når som helst.</string>
     <string name="upgrade">Oppgradering!</string>
-    <string name="cancel_trial">Avbryt prøveperioden</string>
+    <string name="cancel_trial">Avbryt prøveversjonen</string>
     <string name="cancel_on_the_play_store">Trykk her for å oppgradere! Du kan kansellere abonnementet ditt på Play Store.</string>
     <string name="resync_account">Synkronisere meldinger på nytt</string>
     <string name="resync_account_summary">Manglende meldinger? Bruk dette for å bringe denne enheten oppdatert
@@ -434,12 +434,12 @@ baser temaet på:</string>
     <string name="after_four_messages">Etter fire meldinger</string>
     <string name="send_as_mms_summary">Lange meldinger vil bli sent som MMS istedet for individuelle SMS</string>
     <string name="alert_types">Varsling skriver</string>
-    <string name="notification_customization">Varsel Tilpasning</string>
+    <string name="notification_customization">Varsel tilpasning</string>
     <string name="alert_types_summary">Tilpass ringetonen, vibrasjon og mer</string>
-    <string name="strip_unicode">Fjern Unicode</string>
+    <string name="strip_unicode">Fjern unicode</string>
     <string name="strip_unicode_summary">Disse tegnene vil bli fjernet fra sendte meldinger</string>
     <string name="giffgaff_delivery">Giffgaff leveringsrapport</string>
-    <string name="notification_actions">Varsling Handlinger</string>
+    <string name="notification_actions">Varsling handlinger</string>
     <string name="notification_actions_summary">Maksimalt tre handlinger kan brukes på et varsel</string>
     <string name="mms_download_directory">Media nedlastning katalog</string>
     <string name="mms_download_directory_summary">Hvor du vil ha bilder og andre MMS medier som skal lagres</string>
@@ -464,14 +464,14 @@ Etter at det er gjort, må du logge på igjen, på alle dine andre enheter. Øns
     <string name="use_group_mms">Bruk gruppe MMS</string>
     <string name="use_group_mms_summary">Når deaktivert, sendes gruppemeldinger som individuelle SMS til hver av mottakerne</string>
     <string name="use_mms_read_receipts">Les kvitteringer</string>
-    <string name="auto_save_media">Auto-lagre media</string>
+    <string name="auto_save_media">Autolagre media</string>
     <string name="auto_save_media_summary">Lagre alle MMS medier automatisk i mappen/Nedlastinger når
 det er Mottatt</string>
     <string name="apn_configuration">APN konfigurasjon</string>
-    <string name="override_system_apn">Overstyr system APNs</string>
+    <string name="override_system_apn">Overstyr system APN\'s</string>
     <string name="mmsc_url">MMSC URL</string>
-    <string name="mms_proxy">MMS Proxy</string>
-    <string name="mms_port">MMS Port</string>
+    <string name="mms_proxy">MMS proxy</string>
+    <string name="mms_port">MMS port</string>
     <string name="user_agent">Bruker middel</string>
     <string name="user_agent_profile_url">Brukerens funksjonær profil URL</string>
     <string name="user_agent_profile_tag">Bruker funksjonær profil stikkord navn</string>
@@ -485,7 +485,7 @@ vil bare bli vist til mottakeren av meldingen</string>
     <string name="delayed_sending">Forsinket sending</string>
     <string name="delayed_sending_summary">Dette gir deg mulighet til å avbryte og redigere meldinger før de sendes</string>
     <string name="messaging_features">Meldingsfunksjoner</string>
-    <string name="app_features">App Funksjoner</string>
+    <string name="app_features">App funksjoner</string>
     <string name="quick_compose">Rask komponer varslinger</string>
     <string name="quick_compose_notification">Vis varsel</string>
     <string name="quick_compose_notification_summary">Alltid aktiv varsel for å gi deg raskest tilgang til å skrive en ny melding</string>
@@ -496,7 +496,7 @@ vil bare bli vist til mottakeren av meldingen</string>
     <string name="secure_private_conversations_summary">Innstilling av et passord krever at du skriver inn det, før du ser private samtaler</string>
     <string name="use_internal_browser">Bruk intern nettleser</string>
     <string name="internal_browser_summary">Hvis du slår av dette, deaktiveres også forhåndsvisning av koblinger i meldingslister</string>
-    <string name="message_backup">Melding Sikkerhetskopi</string>
+    <string name="message_backup">Melding sikkerhetskopi</string>
     <string name="message_backup_pref_summary">Bekymret for å miste dine meldinger? Pulse gjør deg dekket</string>
     <string name="message_backup_summary">Visste du: Pulse\'s onlinetjeneste er bygget rundt å sikkerhetskopiere din
 meldinger. Når du registrerer deg for en Pulse konto, kan du logge deg på den kontoen på en hvilken som helst enhet eller nettbrett
@@ -590,7 +590,7 @@ prøv det ut i dag!</string>
     <string name="channel_settings_summary">Med Android Oreo kan disse innstillingene på systemnivå tilpasse varsler, for denne samtalen</string>
     <string name="restore_default_channel_settings">Gjenopprett standard varslingsinnstillinger</string>
     <string name="restore_default_channel_settings_popup">Standardinnstillingene er gjenopprettet.</string>
-    <string name="channels">kanaler</string>
+    <string name="channels">Kanaler</string>
     <string name="default_channel">Standard kanal</string>
     <string name="channels_global_warning">Mange globale tilpasninger er nå kun mulig per kanal.</string>
     <string name="channels_global_warning_2">Med Android Oreo blir apper tvunget til å gå gjennom <i>Varsel kanaler</i> for å tilpasse ringetonen, vibrasjonen, LED, og alle andre varslingsalternativer. \n\n
@@ -616,7 +616,7 @@ Dine 5 stjerners anmeldelser varmer opp mitt hjerte :)</string>
     <string name="five_seconds">Fem sekunder</string>
     <string name="ten_seconds">Ti sekunder</string>
     <string name="fifteen_seconds">Femten sekunder</string>
-    <string name="thirty_seconds">Tredve sekunder</string>
+    <string name="thirty_seconds">Tretti sekunder</string>
     <string name="one_minute">Ett minutt</string>
     <string name="one_week">En uke</string>
     <string name="two_weeks">To uker</string>
@@ -630,11 +630,11 @@ Dine 5 stjerners anmeldelser varmer opp mitt hjerte :)</string>
 Hvis du ikke lager et nytt abonnement innen den tiden, logger appen automatisk deg
 ut av kontoen din om 2 dager. Hvis dette er en feil, vennligst kontakt meg via e-post.</string>
     <string name="subscription_found">Abonnement funnet - velkommen tilbake!</string>
-    <string name="trial_finished">Ser ut som om du har gått gjennom gratis prøveperioden allerede.</string>
+    <string name="trial_finished">Ser ut som om du har gått gjennom gratis prøveversjonen allerede.</string>
     <string name="subscription_not_found">Ingen abonnement funnet, la oss starte prøveperioden!</string>
     <string name="checking_for_active_subscriptions">Sjekker for abonnementer&#8230;</string>
     <string name="purchase_error_cancelled">Du avbrutt kjøpet :(</string>
-    <string name="purchase_cancelled_trial_finished">Prøveperioden din er utløpt og kjøpet ble kansellert. Kontoen din vil bli slettet for nå. \n\nGjerne sette det opp igjen,,
+    <string name="purchase_cancelled_trial_finished">Prøvetiden din er utløpt og kjøpet ble kansellert. Kontoen din vil bli slettet for nå. \n\nGjerne sette det opp igjen,,
 når du vil bruke multifunksjons funksjonen igjen!</string>
     <string name="purchase_error_bad_google_play">OBS, Google Play kan ha problemer, de ga oss et dårlig resultat.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230;  Det kjøpet kom ikke overens på vår registrering.</string>
@@ -657,10 +657,10 @@ Send tekster fra nettet, en stasjonær datamaskin, nettbrettet ditt, en klokke o
     <string name="true_imessage_competitor">Den første <b>ekte</b> iMessage konkurrenten for Android.</string>
     <string name="trial_description">Ingen konkurranse kan berøre Pulse <b>uendelig plattformsstøtte</b>, kombinert med <b>lav pris</b>. Meldinger synkroniseres mellom alle enhetene dine, umiddelbart og sømløst.</string>
     <string name="purchase_description">Gi den online versjonen en prøve, for <b>syv dager</b>, så bestemmer du hvordan du vil støtte appen:\n\n<b>$ 10.99</b> for et livstid medlemskap\n<b>$ 5,99</b> per år\n<b>$ 1,99</b> hver tredje måned\n<b>$ 0.99</b> per måned</string>
-    <string name="start_free_trial">Start din gratis prøveperiode!</string>
+    <string name="start_free_trial">Start din gratis prøvetid!</string>
     <string name="create_your_pulse_account">Opprett en Pulse konto!</string>
     <string name="try_it">Prøv det!</string>
-    <string name="select_purchase">Velg Kjøp</string>
+    <string name="select_purchase">Velg kjøp</string>
     <string name="have_an_account">Har en konto?\nLogg inn</string>
     <string name="select_a_purchase">Velg et kjøp</string>
     <string name="select_a_purchase_description">Velg et av de tre abonnementene, eller velg <b>livstidens medlemskap</b> for å gjøre et engangsoppkjøp for appen.</string>
@@ -675,11 +675,11 @@ Send tekster fra nettet, en stasjonær datamaskin, nettbrettet ditt, en klokke o
 Avbryt når som helst.</string>
     <string name="redirect_to_play_store">Takk for oppgraderingen! Vennligst avbryt det gamle abonnementet fra <b>Play Store</b>. Pulse <b>kan ikke</b> gjøre dette automatisk.</string>
     <string name="play_store">Play Store</string>
-    <string name="notification_trial_title">Tekst fra en hvilken som helst enhet - Prøveperiode</string>
-    <string name="notification_days_remaining_in_trial">%s dager gjenværende i prøveperioden. Klikk for å oppgradere!</string>
-    <string name="notification_last_day_of_trial">Dette er den siste dagen i prøveperioden din. Klikk for å oppgradere!</string>
-    <string name="notification_trial_expired">Din sju dagers prøveperiode er over. Klikk for å oppgradere!</string>
+    <string name="notification_trial_title">Tekst fra en hvilken som helst enhet - Prøveversjon</string>
+    <string name="notification_days_remaining_in_trial">%s dager gjenværende i prøveversjonen. Klikk for å oppgradere!</string>
+    <string name="notification_last_day_of_trial">Dette er den siste dagen på din prøveversjon. Klikk for å oppgradere!</string>
+    <string name="notification_trial_expired">Din sju dagers prøveversjon er over. Klikk for å oppgradere!</string>
     <string name="continue_with_phone_app">Du kan fortsette å bruke appen på telefonen, gratis!</string>
-    <string name="thanks_for_trying">Takk for prøven!</string>
+    <string name="thanks_for_trying">Takk for at du prøvd!</string>
     <string name="quick_compose_summary">Alltid aktiv melding for å gi deg raskest tilgang til å skrive en ny melding.</string>
 </resources>

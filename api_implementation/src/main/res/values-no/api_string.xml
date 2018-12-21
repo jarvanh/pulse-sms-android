@@ -25,7 +25,7 @@
     <string name="api_forgot_password">Glemt passord FAQ</string>
     <string name="api_password_confirmation">Passord verifisering</string>
     <string name="api_name">Navn</string>
-    <string name="api_phone_number">Telefon Nummer</string>
+    <string name="api_phone_number">Telefonnummer</string>
     <string name="api_connecting">Kobler til server…</string>
     <string name="api_device_error">En feil oppstod når enheten ble prøvd lagt til. La oss prøve igjen!</string>
     <string name="api_add_second_primary_device">Ser ut som du allerede har en hovedenhet
