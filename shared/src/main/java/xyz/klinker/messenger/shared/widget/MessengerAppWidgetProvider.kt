@@ -111,7 +111,10 @@ class MessengerAppWidgetProvider : AppWidgetProvider() {
                     PendingIntent.FLAG_UPDATE_CURRENT)
             rv.setPendingIntentTemplate(R.id.widget_list, openPendingIntent)
 
-            appWidgetManager.updateAppWidget(appWidgetIds[i], rv)
+            try {
+                appWidgetManager.updateAppWidget(appWidgetIds[i], rv)
+            } catch (e: Exception) {
+            }
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds)

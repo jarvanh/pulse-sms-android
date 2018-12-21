@@ -48,6 +48,7 @@ import xyz.klinker.messenger.shared.util.listener.ProgressUpdateListener
 /**
  * Handles interactions with database models.
  */
+@Suppress("ObjectPropertyName")
 object DataSource {
 
     private val TAG = "DataSource"
@@ -1061,13 +1062,17 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(conversationId)), null, null, null)
         }
 
-        return if (cursor.moveToFirst()) {
-            val conversation = Conversation()
-            conversation.fillFromCursor(cursor)
-            cursor.close()
-            conversation
-        } else {
-            cursor.closeSilent()
+        return try {
+            if (cursor.moveToFirst()) {
+                val conversation = Conversation()
+                conversation.fillFromCursor(cursor)
+                cursor.close()
+                conversation
+            } else {
+                cursor.closeSilent()
+                null
+            }
+        } catch (e: Throwable) {
             null
         }
     }
@@ -1907,7 +1912,7 @@ object DataSource {
         try {
             database(context).update(Message.TABLE, values, Message.COLUMN_ID + "=?",
                     arrayOf(java.lang.Long.toString(messageId)))
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             ensureActionable(context)
             database(context).update(Message.TABLE, values, Message.COLUMN_ID + "=?",
                     arrayOf(java.lang.Long.toString(messageId)))

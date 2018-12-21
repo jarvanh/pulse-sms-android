@@ -84,7 +84,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             fragment.messageLoader.initRecycler()
         }
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1 && FeatureFlags.DISABLE_HARDWARE_ACCEL) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1 || Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
             // is this causing a crash?
             messageEntry.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         }
