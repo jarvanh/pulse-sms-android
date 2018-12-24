@@ -19,7 +19,7 @@ apply plugin: 'java'
 dependencies {
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:${versions.robolectric}"

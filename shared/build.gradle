@@ -26,8 +26,8 @@ dependencies {
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
-    api "androidx.core:core-ktx:${versions.androidX}"
-    api "androidx.appcompat:appcompat:${versions.androidX}"
+    api "androidx.core:core-ktx:1.0.1"
+    api "androidx.appcompat:appcompat:1.0.2"
     api "androidx.emoji:emoji:${versions.androidX}"
     api "androidx.annotation:annotation:${versions.androidX}"
     api "com.google.android.material:material:${versions.androidX}"
