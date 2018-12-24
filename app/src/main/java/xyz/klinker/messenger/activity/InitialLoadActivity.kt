@@ -27,6 +27,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.ContactsContract
+import android.provider.Telephony
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -103,7 +104,13 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
     }
 
     private fun requestPermissions() {
-        if (!resources.getBoolean(R.bool.is_tablet) && !PermissionsUtils.isDefaultSmsApp(this)) {
+        if (!resources.getBoolean(R.bool.is_tablet) && Telephony.Sms.getDefaultSmsPackage(this) != null &&
+                !PermissionsUtils.isDefaultSmsApp(this)) {
+
+            // not a tablet
+            // supports a default SMS app (previous is not null)
+            // Pulse is not currently the default
+
             if (promptedForDefaultSMS) {
                 // display a warning here, before asking for the permission.
                 // The warning lets the user know that this is now required by Google.
