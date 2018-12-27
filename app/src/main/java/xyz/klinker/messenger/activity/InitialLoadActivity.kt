@@ -104,8 +104,8 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
     }
 
     private fun requestPermissions() {
-        if (!resources.getBoolean(R.bool.is_tablet) && Telephony.Sms.getDefaultSmsPackage(this) != null &&
-                !PermissionsUtils.isDefaultSmsApp(this)) {
+        if (!resources.getBoolean(R.bool.is_tablet) && TvUtils.hasTouchscreen(this) &&
+                Telephony.Sms.getDefaultSmsPackage(this) != null && !PermissionsUtils.isDefaultSmsApp(this)) {
 
             // not a tablet
             // supports a default SMS app (previous is not null)
