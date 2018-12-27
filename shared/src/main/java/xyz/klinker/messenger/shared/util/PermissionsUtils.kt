@@ -78,7 +78,6 @@ object PermissionsUtils {
             // thrown by robolectric...
             true
         }
-
     }
 
     /**
