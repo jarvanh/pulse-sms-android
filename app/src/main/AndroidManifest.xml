@@ -258,7 +258,12 @@
             android:launchMode="singleInstance"
             android:theme="@style/api_Theme.MaterialComponents.Translucent"
             android:windowSoftInputMode="adjustPan|stateAlwaysVisible" />
+        <activity android:name=".activity.EnableDrivingModeActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/api_Theme.MaterialComponents.Translucent"/>
         <activity android:name="net.rdrei.android.dirchooser.DirectoryChooserActivity" />
+
 
         <service
             android:name=".service.DrivingModeQuickSettingTile"
