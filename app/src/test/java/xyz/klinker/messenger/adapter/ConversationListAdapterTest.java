@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.RuntimeEnvironment;
@@ -97,7 +96,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         adapter.setConversations(getFakeConversations(RuntimeEnvironment.application));
     }
 
-    @Test @Ignore
+    @Test
     public void sectionCounts() {
         List<SectionType> sectionCounts = adapter.getSectionCounts();
 
@@ -115,7 +114,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         assertEquals(1, sectionCounts.get(5).getCount());
     }
 
-    @Test @Ignore
+    @Test
     public void getSectionCount() {
         assertEquals(6, adapter.getSectionCount());
     }
@@ -135,7 +134,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         assertEquals(2, adapter.getItemCount(2));
     }
 
-    @Test @Ignore
+    @Test
     public void getItemCountOlder() {
         assertEquals(2, adapter.getItemCount(3));
     }
@@ -164,13 +163,13 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         verify(header).setText("This week");
     }
 
-    @Test @Ignore
+    @Test
     public void bindHeaderThisMonth() {
         adapter.onBindHeaderViewHolder(getMockedViewHolder(), 4);
         verify(header).setText("This month");
     }
 
-    @Test @Ignore
+    @Test
     public void bindHeaderOlder() {
         adapter.onBindHeaderViewHolder(getMockedViewHolder(), 5);
         verify(header).setText("Older");
@@ -232,7 +231,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         verify(imageLetter).setText("T");
     }
 
-    @Test @Ignore
+    @Test
     public void removeItems() {
         adapter.deleteItem(1);
 
@@ -292,7 +291,7 @@ public class ConversationListAdapterTest extends MessengerRobolectricSuite {
         assertEquals(0, adapter.getSectionCount());
     }
 
-    @Test @Ignore
+    @Test
     public void findPositionForConversationId() {
         assertEquals(1, adapter.findPositionForConversationId(1));
         assertEquals(2, adapter.findPositionForConversationId(2));
