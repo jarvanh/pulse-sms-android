@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.3.5"
+        description="January 4th, 2019">
+        <text>Fix the Android TV app</text>
+    </version>
+
+    <version
         name="4.3.4"
         description="December 23rd, 2018">
         <!-- disable hardware acceleration on the edit text, to prevent a getBlockIndex crash (?) -->
