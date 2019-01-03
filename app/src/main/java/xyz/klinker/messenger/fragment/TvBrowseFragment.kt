@@ -19,6 +19,7 @@ package xyz.klinker.messenger.fragment
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.HeaderItem
 import androidx.leanback.widget.ListRow
+import com.sgottard.sofa.BrowseFragment
 import com.sgottard.sofa.support.BrowseSupportFragment
 import xyz.klinker.messenger.adapter.TvAdapter
 import xyz.klinker.messenger.shared.data.DataSource
