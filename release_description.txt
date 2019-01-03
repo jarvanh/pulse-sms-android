@@ -1,1 +1,1 @@
-This update contains bug fixes.
+This update contains fixes for the Android TV application.
