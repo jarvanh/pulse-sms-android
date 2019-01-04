@@ -16,7 +16,6 @@
 
 package xyz.klinker.messenger.adapter.view_holder
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -25,10 +24,8 @@ import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.SwappingHolder
-
 import de.hdodenhof.circleimageview.CircleImageView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
@@ -80,7 +77,7 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
 
         itemView.setOnClickListener {
             if (header == null && (adapter?.multiSelector != null &&
-                    !adapter.multiSelector.tapSelection(this@ConversationViewHolder) || adapter == null)) {
+                            !adapter.multiSelector.tapSelection(this@ConversationViewHolder) || adapter == null)) {
                 if (conversation == null) {
                     return@setOnClickListener
                 }
@@ -103,20 +100,12 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
             }
         }
 
-        itemView.setOnLongClickListener {
-            if (header != null) {
-                return@setOnLongClickListener true
+        itemView.setOnLongClickListener { startMultiSelect(adapter) }
+        image?.setOnClickListener {
+            val consumedClick = startMultiSelect(adapter)
+            if (!consumedClick) {
+                itemView.performClick()
             }
-
-            val multiSelect = adapter?.multiSelector
-            if (multiSelect != null && !multiSelect.isSelectable) {
-                multiSelect.startActionMode()
-                multiSelect.isSelectable = true
-                multiSelect.setSelected(this@ConversationViewHolder, true)
-                return@setOnLongClickListener true
-            }
-
-            false
         }
 
         header?.textSize = Settings.smallFont.toFloat() + 1
@@ -185,6 +174,22 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
         expanded = false
         expandedListener?.onConversationContracted(this)
         AnimationUtils.contractConversationListItem(itemView)
+    }
+
+    private fun startMultiSelect(adapter: ConversationListAdapter?): Boolean {
+        if (header != null) {
+            return true
+        }
+
+        val multiSelect = adapter?.multiSelector
+        if (multiSelect != null && !multiSelect.isSelectable) {
+            multiSelect.startActionMode()
+            multiSelect.isSelectable = true
+            multiSelect.setSelected(this@ConversationViewHolder, true)
+            return true
+        }
+
+        return false
     }
 
     fun setContactClickedListener(listener: ContactClickedListener?) {

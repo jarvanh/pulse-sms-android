@@ -17,9 +17,11 @@
 <changelog>
 
     <version
-        name="4.3.6"
+        name="4.4.0"
         description="Unreleased">
+        <text>TODO: Revamp of the UI for the GIF search functionality</text>
         <text>You can now edit templates</text>
+        <text>Tapping a contact icon on the conversation list will now start the multi-select process</text>
     </version>
 
     <version
