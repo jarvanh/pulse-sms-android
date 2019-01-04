@@ -154,6 +154,7 @@
     <string name="attached_image">Attached Image</string>
     <string name="remove_image">Remove Attached Image</string>
     <string name="edit_image">Edit Attached Image</string>
+    <string name="edit">Edit</string>
     <string name="edit_recipients">Edit Recipients</string>
     <string name="select_folder">Select Folder for Conversation</string>
     <string name="permission_needed_for_action">Permissions needed for this action.</string>

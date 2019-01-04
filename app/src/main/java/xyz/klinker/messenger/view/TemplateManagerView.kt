@@ -34,20 +34,28 @@ class TemplateManagerView(context: Context, colorAccent: Int, private val listen
     }
 
     private fun createTemplate() {
+        showTemplateDialog { text ->
+            val template = Template()
+            template.text = text
+            DataSource.insertTemplate(context, template)
+
+            loadTemplates()
+        }
+    }
+
+    private fun showTemplateDialog(currentText: String = "", callback: (value: String) -> Unit) {
         val layout = LayoutInflater.from(context).inflate(R.layout.dialog_edit_text, null, false)
         val editText = layout.findViewById<EditText>(R.id.edit_text)
 
         editText.setHint(R.string.type_template_text)
+        editText.setText(currentText)
 
         AlertDialog.Builder(context)
                 .setView(layout)
                 .setNegativeButton(android.R.string.cancel) { _, _ -> }
                 .setPositiveButton(android.R.string.ok) { _, _ ->
-                    val template = Template()
-                    template.text = editText.text.toString()
-                    DataSource.insertTemplate(context, template)
-
-                    loadTemplates()
+                    val text = editText.text.toString()
+                    callback(text)
                 }.show()
     }
 
@@ -77,10 +85,16 @@ class TemplateManagerView(context: Context, colorAccent: Int, private val listen
     override fun onLongClick(template: Template) {
         AlertDialog.Builder(context)
                 .setMessage(R.string.delete_template)
-                .setNegativeButton(R.string.api_no) { _, _ -> }
-                .setPositiveButton(R.string.api_yes) { _, _ ->
+                .setNegativeButton(R.string.delete) { _, _ ->
                     DataSource.deleteTemplate(context, template.id, true)
                     loadTemplates()
+                }.setPositiveButton(R.string.edit) { _, _ ->
+                    showTemplateDialog(template.text!!) { text ->
+                        template.text = text
+                        DataSource.updateTemplate(context, template)
+
+                        loadTemplates()
+                    }
                 }.show()
     }
 }
