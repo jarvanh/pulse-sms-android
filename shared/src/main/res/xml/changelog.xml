@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.3.6"
+        description="Unreleased">
+        <text>You can now edit templates</text>
+    </version>
+
+    <version
         name="4.3.5"
         description="January 4th, 2019">
         <text>Fix the Android TV app</text>
