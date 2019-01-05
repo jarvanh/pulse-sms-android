@@ -88,6 +88,26 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                         requestPermissionThenSend()
                     }
                 }
+
+                if (sendProgress?.visibility == View.VISIBLE) {
+                    val message = messageEntry.text.toString().trim { it <= ' ' }
+                    val uris = ArrayList<Uri>()
+
+                    if (attachManager.selectedImageUris.size > 0) {
+                        attachManager.selectedImageUris.mapTo(uris) { Uri.parse(it) }
+                    } else if (attachManager.attachedUri != null) {
+                        uris.add(attachManager.attachedUri!!)
+                    }
+
+                    if (message.isEmpty() && uris.isEmpty()) {
+                        // cancel delayed sending for empty message
+                        changeDelayedSendingComponents(false)
+                    } else {
+                        // reset the delayed sending, if the user makes a change to the entered text
+                        changeDelayedSendingComponents(true)
+                        delayedSendingHandler.postDelayed({ sendMessage(uris, false) }, Settings.delayedSendingTimeout)
+                    }
+                }
             }
 
         })
