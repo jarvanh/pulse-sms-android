@@ -23,6 +23,9 @@
         <text>Revamp of the UI for the GIF search functionality</text>
         <text>You can now edit templates</text>
         <text>Tapping a contact icon on the conversation list will now start the multi-select process</text>
+        <text>Improve location sharing</text>
+        <text>Reset the delayed messaging timer, if you change the text of your messages</text>
+        <text>Bug fixes</text>
     </version>
 
     <version

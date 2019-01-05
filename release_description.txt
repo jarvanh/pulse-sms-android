@@ -1,5 +1,6 @@
 This update comes with a few new features:<br/>
 - You can now search and send stickers (GIFs with transparent backgrounds) from the attachment menu<br/>
-- Improvements to searching GIFs
-- Edit templates
-- Tapping a contact icon on the conversation list will now start the multi-select process
+- Improvements to searching GIFs<br/>
+- Edit templates<br/>
+- Tapping a contact icon on the conversation list will now start the multi-select process<br/>
+- Smaller user requests
