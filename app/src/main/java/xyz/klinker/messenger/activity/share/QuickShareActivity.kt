@@ -107,6 +107,8 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
             activity.startActivity(Intent(activity, ComposeActivity::class.java))
             activity.finish()
         }
+
+        contactEntry.post { contactEntry.requestFocus() }
     }
 
     fun setContacts(phoneNumbers: List<String>) {
