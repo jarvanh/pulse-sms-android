@@ -104,7 +104,7 @@ class NotificationActionHelper(private val service: Context) {
         copy.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationCopyOtpReceiver.EXTRA_PASSWORD, otp)
         copy.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversationId)
         val pendingCopy = PendingIntent.getBroadcast(service, conversationId.toInt() + 5,
-                copy, PendingIntent.FLAG_UPDATE_CURRENT)
+                copy, PendingIntent.FLAG_CANCEL_CURRENT)
 
         builder.addAction(NotificationCompat.Action(R.drawable.ic_copy_dark, service.getString(R.string.copy_otp) + " $otp", pendingCopy))
     }
@@ -116,7 +116,7 @@ class NotificationActionHelper(private val service: Context) {
             call.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
             call.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationCallReceiver.EXTRA_PHONE_NUMBER, conversation.phoneNumbers)
             val callPending = PendingIntent.getBroadcast(service, conversation.id.toInt() + 1,
-                    call, PendingIntent.FLAG_UPDATE_CURRENT)
+                    call, PendingIntent.FLAG_CANCEL_CURRENT)
 
             builder.addAction(NotificationCompat.Action(R.drawable.ic_call_dark, service.getString(R.string.call), callPending))
         }
@@ -125,7 +125,7 @@ class NotificationActionHelper(private val service: Context) {
         deleteMessage.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationDeleteReceiver.EXTRA_CONVERSATION_ID, conversation.id)
         deleteMessage.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationDeleteReceiver.EXTRA_MESSAGE_ID, conversation.unseenMessageId)
         val pendingDeleteMessage = PendingIntent.getBroadcast(service, conversation.id.toInt() + 2,
-                deleteMessage, PendingIntent.FLAG_UPDATE_CURRENT)
+                deleteMessage, PendingIntent.FLAG_CANCEL_CURRENT)
 
         if (Settings.notificationActions.contains(NotificationAction.DELETE)) {
             builder.addAction(NotificationCompat.Action(R.drawable.ic_delete_dark, service.getString(R.string.delete), pendingDeleteMessage))
@@ -135,7 +135,7 @@ class NotificationActionHelper(private val service: Context) {
         val read = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver::class.java)
         read.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
         val pendingRead = PendingIntent.getBroadcast(service, conversation.id.toInt() + 3,
-                read, PendingIntent.FLAG_UPDATE_CURRENT)
+                read, PendingIntent.FLAG_CANCEL_CURRENT)
 
         if (Settings.notificationActions.contains(NotificationAction.READ)) {
             builder.addAction(NotificationCompat.Action(R.drawable.ic_done_dark, service.getString(if (AndroidVersionUtil.isAndroidN) R.string.mark_as_read else R.string.read), pendingRead))
@@ -145,7 +145,7 @@ class NotificationActionHelper(private val service: Context) {
         val mute = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationMuteReceiver::class.java)
         mute.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
         val pendingMute = PendingIntent.getBroadcast(service, conversation.id.toInt() + 4,
-                mute, PendingIntent.FLAG_UPDATE_CURRENT)
+                mute, PendingIntent.FLAG_CANCEL_CURRENT)
 
         if (Settings.notificationActions.contains(NotificationAction.MUTE)) {
             builder.addAction(NotificationCompat.Action(R.drawable.ic_mute_dark, service.getString(R.string.mute), pendingMute))
@@ -155,7 +155,7 @@ class NotificationActionHelper(private val service: Context) {
         val archive = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationArchiveReceiver::class.java)
         archive.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
         val pendingArchive = PendingIntent.getBroadcast(service, conversation.id.toInt() + 6,
-                archive, PendingIntent.FLAG_UPDATE_CURRENT)
+                archive, PendingIntent.FLAG_CANCEL_CURRENT)
 
         if (Settings.notificationActions.contains(NotificationAction.ARCHIVE)) {
             builder.addAction(NotificationCompat.Action(R.drawable.ic_archive_dark, service.getString(R.string.menu_archive_conversation), pendingArchive))
@@ -168,7 +168,7 @@ class NotificationActionHelper(private val service: Context) {
         val delete = Intent(service, NotificationDismissedReceiver::class.java)
         delete.putExtra(xyz.klinker.messenger.shared.service.NotificationDismissedReceiver.EXTRA_CONVERSATION_ID, conversation.id)
         val pendingDelete = PendingIntent.getBroadcast(service, conversation.id.toInt(),
-                delete, PendingIntent.FLAG_UPDATE_CURRENT)
+                delete, PendingIntent.FLAG_CANCEL_CURRENT)
 
         val open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY)
         open.putExtra(MessengerActivityExtras.EXTRA_CONVERSATION_ID, conversation.id)
