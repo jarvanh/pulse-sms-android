@@ -19,7 +19,8 @@
     <version
         name="4.4.0"
         description="Unreleased">
-        <text>TODO: Revamp of the UI for the GIF search functionality</text>
+        <text>Add support for searching and sending stickers, within the attachment menu</text>
+        <text>Revamp of the UI for the GIF search functionality</text>
         <text>You can now edit templates</text>
         <text>Tapping a contact icon on the conversation list will now start the multi-select process</text>
     </version>
