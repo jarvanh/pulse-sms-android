@@ -1,1 +1,5 @@
-This update contains fixes for the Android TV application.
+This update comes with a few new features:<br/>
+- You can now search and send stickers (GIFs with transparent backgrounds) from the attachment menu<br/>
+- Improvements to searching GIFs
+- Edit templates
+- Tapping a contact icon on the conversation list will now start the multi-select process

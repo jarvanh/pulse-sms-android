@@ -25,7 +25,7 @@ class GiphySearchView(context: Context, private val listener: ImageSelectedListe
 
         toolbarContainer.setBackgroundColor(context.resources.getColor(R.color.drawerBackground))
         searchInput.setTextColor(context.resources.getColor(R.color.primaryText))
-        searchInput.setHintTextColor(context.resources.getColor(R.color.secondaryText))
+        searchInput.setHintTextColor(context.resources.getColor(R.color.hintText))
 
         val giphy = findViewById<GiphyView>(R.id.giphy)
         giphy.setSelectedCallback { uri ->
