@@ -77,7 +77,13 @@ class AttachmentListener(private val fragment: MessageListFragment)
     }
 
     override fun onTextSelected(text: String) {
-        messageEntry.setText(text)
+        if (text.contains("maps")) {
+            // append the map link to the text
+            messageEntry.setText(messageEntry.text.toString().trim() + " " + text)
+        } else {
+            messageEntry.setText(text)
+        }
+
         messageEntry.setSelection(messageEntry.text.length)
     }
 
