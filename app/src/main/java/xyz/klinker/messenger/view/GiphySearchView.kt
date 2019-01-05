@@ -3,6 +3,8 @@ package xyz.klinker.messenger.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.EditText
 import android.widget.FrameLayout
 import xyz.klinker.giphy.GiphyView
 import xyz.klinker.messenger.BuildConfig
@@ -17,6 +19,13 @@ class GiphySearchView(context: Context, private val listener: ImageSelectedListe
     init {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.view_giphy_search, this, true)
+
+        val toolbarContainer = findViewById<View>(R.id.toolbar_container)
+        val searchInput = findViewById<EditText>(R.id.search_view)
+
+        toolbarContainer.setBackgroundColor(context.resources.getColor(R.color.drawerBackground))
+        searchInput.setTextColor(context.resources.getColor(R.color.primaryText))
+        searchInput.setHintTextColor(context.resources.getColor(R.color.secondaryText))
 
         val giphy = findViewById<GiphyView>(R.id.giphy)
         giphy.setSelectedCallback { uri ->
