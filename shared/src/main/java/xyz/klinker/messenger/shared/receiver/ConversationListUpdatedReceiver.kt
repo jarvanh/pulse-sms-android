@@ -172,8 +172,7 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
         /**
          * Sends a broadcast to anywhere that has registered this receiver to let it know to update.
          */
-        fun sendBroadcast(context: Context?, conversationId: Long, snippet: String?,
-                          read: Boolean) {
+        fun sendBroadcast(context: Context?, conversationId: Long, snippet: String?, read: Boolean) {
             if (context == null) {
                 return
             }

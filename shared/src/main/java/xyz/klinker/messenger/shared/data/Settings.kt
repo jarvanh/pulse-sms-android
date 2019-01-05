@@ -19,6 +19,7 @@ package xyz.klinker.messenger.shared.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import xyz.klinker.messenger.shared.MessengerActivityExtras
 
 import java.util.Date
 import java.util.HashSet
@@ -92,6 +93,8 @@ object Settings {
             baseTheme === BaseTheme.DAY_NIGHT -> TimeUtils.isNight
             else -> true
         }
+
+    var shouldRefreshListOnReenter: Boolean = false
 
     fun init(context: Context) {
         val sharedPrefs = getSharedPrefs(context)
@@ -295,6 +298,8 @@ object Settings {
                 sharedPrefs.getInt(context.getString(R.string.pref_global_primary_dark_color), ColorSet.DEFAULT(context).colorDark),
                 sharedPrefs.getInt(context.getString(R.string.pref_global_accent_color), ColorSet.DEFAULT(context).colorAccent)
         )
+
+        this.shouldRefreshListOnReenter = sharedPrefs.getBoolean(MessengerActivityExtras.EXTRA_SHOULD_REFRESH_LIST, false)
     }
 
     private fun getDefaultNotificationActions(context: Context): Set<String> {

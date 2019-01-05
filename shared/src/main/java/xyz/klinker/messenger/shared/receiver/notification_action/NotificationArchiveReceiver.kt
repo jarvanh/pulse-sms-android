@@ -2,7 +2,9 @@ package xyz.klinker.messenger.shared.receiver.notification_action
 
 import android.content.Context
 import android.content.Intent
+import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.Settings
 
 open class NotificationArchiveReceiver : xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver() {
 
@@ -15,12 +17,10 @@ open class NotificationArchiveReceiver : xyz.klinker.messenger.shared.receiver.n
         }
 
         Thread {
-            val conversationId = intent.getLongExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.Companion.EXTRA_CONVERSATION_ID, -1L)
+            val conversationId = intent.getLongExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, -1L)
             if (conversationId != -1L) {
                 DataSource.archiveConversation(context, conversationId)
-
-                // TODO: if this is going to work, I need to be able to remove the conversation from the conversation list
-                // once that is done, I can uncomment the "archive" option in the "arrays.xml" file for notification_actions and notification_actions_values
+                Settings.setValue(context, MessengerActivityExtras.EXTRA_SHOULD_REFRESH_LIST, true)
             }
         }.start()
 

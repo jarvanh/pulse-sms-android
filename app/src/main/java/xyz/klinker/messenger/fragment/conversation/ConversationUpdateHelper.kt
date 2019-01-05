@@ -2,7 +2,9 @@ package xyz.klinker.messenger.fragment.conversation
 
 import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.MimeType
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
@@ -55,8 +57,8 @@ class ConversationUpdateHelper(private val fragment: ConversationListFragment) {
     }
 
     fun broadcastTitleChange(contractedId: Long) {
-        if (newConversationTitle != null) {
-            ConversationListUpdatedReceiver.sendBroadcast(activity, contractedId, newConversationTitle!!)
+        if (newConversationTitle != null && activity != null) {
+            Settings.setValue(activity!!, MessengerActivityExtras.EXTRA_SHOULD_REFRESH_LIST, true)
             newConversationTitle = null
         }
     }

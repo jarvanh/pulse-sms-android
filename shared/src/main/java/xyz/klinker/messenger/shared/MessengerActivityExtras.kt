@@ -9,6 +9,7 @@ object MessengerActivityExtras {
     const val EXTRA_MESSAGE_ID = "message_id"
     const val EXTRA_CONVERSATION_NAME = "conversation_name"
     const val EXTRA_SHOULD_OPEN_KEYBOARD = "should_open_keyboard"
+    const val EXTRA_SHOULD_REFRESH_LIST = "should_refresh_list"
 
     const val REQUEST_ONBOARDING = 101
     const val REQUEST_CALL_PERMISSION = 104

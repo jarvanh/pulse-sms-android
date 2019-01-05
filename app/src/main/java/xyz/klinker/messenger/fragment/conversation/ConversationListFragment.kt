@@ -35,6 +35,7 @@ import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.SectionType
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo
@@ -102,6 +103,11 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
 
             fragmentActivity?.overridePendingTransition(0, 0)
             fragmentActivity?.startActivity(main)
+        }
+
+        if (Settings.shouldRefreshListOnReenter && fragmentActivity != null) {
+            Settings.setValue(fragmentActivity!!, MessengerActivityExtras.EXTRA_SHOULD_REFRESH_LIST, false)
+            recyclerManager.loadConversations()
         }
     }
 
