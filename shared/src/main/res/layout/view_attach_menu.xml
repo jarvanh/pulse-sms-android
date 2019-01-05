@@ -61,6 +61,17 @@
                 android:tint="@android:color/white" />
 
             <ImageButton
+                android:id="@+id/attach_sticker"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/attach_sticker"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:src="@drawable/ic_sticker"
+                android:tint="@android:color/white" />
+
+            <ImageButton
                 android:id="@+id/record_video"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

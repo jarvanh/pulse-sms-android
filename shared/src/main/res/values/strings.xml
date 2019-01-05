@@ -139,6 +139,7 @@
     <string name="attach_image">Attach Image</string>
     <string name="capture_image">Capture Image</string>
     <string name="attach_gif">Attach GIF</string>
+    <string name="attach_sticker">Attach Sticker</string>
     <string name="record_video">Record Video</string>
     <string name="record_audio">Record Audio</string>
     <string name="attach_location">Attach Location</string>

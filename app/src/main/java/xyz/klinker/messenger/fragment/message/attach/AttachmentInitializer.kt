@@ -98,6 +98,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         val attachImage = fragment.rootView!!.findViewById<View>(R.id.attach_image) as ImageButton
         val captureImage = fragment.rootView!!.findViewById<View>(R.id.capture_image) as ImageButton
         val attachGif = fragment.rootView!!.findViewById<View>(R.id.attach_gif) as ImageButton
+        val attachSticker = fragment.rootView!!.findViewById<View>(R.id.attach_sticker) as ImageButton
         val recordVideo = fragment.rootView!!.findViewById<View>(R.id.record_video) as ImageButton
         val recordAudio = fragment.rootView!!.findViewById<View>(R.id.record_audio) as ImageButton
         val attachLocation = fragment.rootView!!.findViewById<View>(R.id.attach_location) as ImageButton
@@ -107,6 +108,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         attachImage.setOnClickListener { attachImage() }
         captureImage.setOnClickListener { captureImage() }
         attachGif.setOnClickListener { attachGif() }
+        attachSticker.setOnClickListener { attachSticker() }
         recordVideo.setOnClickListener { recordVideo() }
         recordAudio.setOnClickListener { recordAudio() }
         attachLocation.setOnClickListener { attachLocation() }
@@ -140,6 +142,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
             attachImage.imageTintList = list
             captureImage.imageTintList = list
             attachGif.imageTintList = list
+            attachSticker.imageTintList = list
             recordVideo.imageTintList = list
             recordAudio.imageTintList = list
             attachLocation.imageTintList = list
@@ -191,17 +194,24 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         }
 
         prepareAttachHolder(2)
-        Giphy.Builder(activity, BuildConfig.GIPHY_API_KEY)
-                .maxFileSize(MmsSettings.maxImageSize)
-                .start()
+        attachHolder.addView(GiphySearchView(activity!!, attachListener))
     }
 
-    private fun recordVideo() {
-        if (getBoldedAttachHolderPosition() == 3 || activity == null) {
+    private fun attachSticker() {
+        if (getBoldedAttachHolderPosition() == 3) {
             return
         }
 
         prepareAttachHolder(3)
+        attachHolder.addView(GiphySearchView(activity!!, attachListener, true))
+    }
+
+    private fun recordVideo() {
+        if (getBoldedAttachHolderPosition() == 4 || activity == null) {
+            return
+        }
+
+        prepareAttachHolder(4)
 
         val camera = MaterialCamera(activity!!)
                 .saveDir(activity!!.filesDir.path)
@@ -225,11 +235,11 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     }
 
     internal fun recordAudio(alwaysOpen: Boolean) {
-        if (!alwaysOpen && getBoldedAttachHolderPosition() == 4 || activity == null) {
+        if (!alwaysOpen && getBoldedAttachHolderPosition() == 5 || activity == null) {
             return
         }
 
-        prepareAttachHolder(4)
+        prepareAttachHolder(5)
         if (ContextCompat.checkSelfPermission(activity!!,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity!!,
                 Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
@@ -246,11 +256,11 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     }
 
     internal fun attachLocation(alwaysOpen: Boolean) {
-        if (!alwaysOpen && getBoldedAttachHolderPosition() == 5 || activity == null) {
+        if (!alwaysOpen && getBoldedAttachHolderPosition() == 6 || activity == null) {
             return
         }
 
-        prepareAttachHolder(5)
+        prepareAttachHolder(6)
         if (ContextCompat.checkSelfPermission(activity!!,
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity!!,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -264,11 +274,11 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     }
 
     private fun attachContact() {
-        if (getBoldedAttachHolderPosition() == 6 || activity == null) {
+        if (getBoldedAttachHolderPosition() == 7 || activity == null) {
             return
         }
 
-        prepareAttachHolder(6)
+        prepareAttachHolder(7)
         if (ContextCompat.checkSelfPermission(activity!!,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             attachHolder.addView(AttachContactView(activity!!, attachListener,
@@ -280,11 +290,11 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     }
 
     private fun applyTemplate() {
-        if (getBoldedAttachHolderPosition() == 7 || activity == null) {
+        if (getBoldedAttachHolderPosition() == 8 || activity == null) {
             return
         }
 
-        prepareAttachHolder(7)
+        prepareAttachHolder(8)
         attachHolder.addView(TemplateManagerView(activity!!,
                 if (Settings.useGlobalThemeColor) Settings.mainColorSet.colorAccent else argManager.colorAccent,
                 object : TextSelectedListener {
