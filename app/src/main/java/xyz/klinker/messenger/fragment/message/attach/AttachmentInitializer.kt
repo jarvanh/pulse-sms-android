@@ -194,7 +194,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         }
 
         prepareAttachHolder(2)
-        attachHolder.addView(GiphySearchView(activity!!, attachListener))
+        attachHolder.addView(GiphySearchView(activity!!, attachListener, false))
     }
 
     private fun attachSticker() {
