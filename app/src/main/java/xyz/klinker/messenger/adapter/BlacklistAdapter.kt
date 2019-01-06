@@ -45,8 +45,14 @@ class BlacklistAdapter(private val blacklists: List<Blacklist>, private val list
     }
 
     override fun onBindViewHolder(holder: BlacklistViewHolder, position: Int) {
-        val number = getItem(position).phoneNumber
-        holder.text.text = PhoneNumberUtils.format(number)
+        val phoneNumber = getItem(position).phoneNumber
+        val phrase = getItem(position).phrase
+
+        if (!phoneNumber.isNullOrBlank()) {
+            holder.text.text = PhoneNumberUtils.format(phoneNumber)
+        } else {
+            holder.text.text = phrase
+        }
     }
 
     override fun getItemCount(): Int {

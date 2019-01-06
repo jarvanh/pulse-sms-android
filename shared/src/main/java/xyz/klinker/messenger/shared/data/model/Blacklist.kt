@@ -26,11 +26,13 @@ class Blacklist : DatabaseTable {
 
     var id: Long = 0
     var phoneNumber: String? = null
+    var phrase: String? = null
 
     constructor()
     constructor(body: BlacklistBody) {
         this.id = body.deviceId
         this.phoneNumber = body.phoneNumber
+        this.phrase = body.phrase
     }
 
     override fun getCreateStatement() = DATABASE_CREATE
@@ -42,17 +44,20 @@ class Blacklist : DatabaseTable {
             when (cursor.getColumnName(i)) {
                 COLUMN_ID -> this.id = cursor.getLong(i)
                 COLUMN_PHONE_NUMBER -> this.phoneNumber = cursor.getString(i)
+                COLUMN_PHRASE -> this.phrase = cursor.getString(i)
             }
         }
     }
 
     override fun encrypt(utils: EncryptionUtils) {
         this.phoneNumber = utils.encrypt(this.phoneNumber)
+        this.phrase = utils.encrypt(this.phrase)
     }
 
     override fun decrypt(utils: EncryptionUtils) {
         try {
             this.phoneNumber = utils.decrypt(this.phoneNumber)
+            this.phrase = utils.decrypt(this.phrase)
         } catch (e: Exception) {
         }
     }
@@ -62,11 +67,13 @@ class Blacklist : DatabaseTable {
         const val TABLE = "blacklist"
         const val COLUMN_ID = "_id"
         const val COLUMN_PHONE_NUMBER = "phone_number"
+        const val COLUMN_PHRASE = "phrase"
 
         private const val DATABASE_CREATE = "create table if not exists " +
                 TABLE + " (" +
                 COLUMN_ID + " integer primary key, " +
-                COLUMN_PHONE_NUMBER + " text not null" +
+                COLUMN_PHONE_NUMBER + " text, " +
+                COLUMN_PHRASE + " text" +
                 ");"
     }
 

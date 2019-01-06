@@ -2671,8 +2671,13 @@ object DataSource {
             blacklist.id = generateId()
         }
 
+        if (blacklist.phoneNumber == null) {
+            blacklist.phoneNumber = ""
+        }
+
         values.put(Blacklist.COLUMN_ID, blacklist.id)
         values.put(Blacklist.COLUMN_PHONE_NUMBER, blacklist.phoneNumber)
+        values.put(Blacklist.COLUMN_PHRASE, blacklist.phrase)
 
         try {
             database(context).insert(Blacklist.TABLE, null, values)
@@ -2682,7 +2687,7 @@ object DataSource {
         }
 
         if (useApi) {
-            ApiUtils.addBlacklist(accountId(context), blacklist.id, blacklist.phoneNumber, encryptor(context))
+            ApiUtils.addBlacklist(accountId(context), blacklist.id, blacklist.phoneNumber, blacklist.phrase, encryptor(context))
         }
     }
 

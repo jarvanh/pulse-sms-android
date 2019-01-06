@@ -105,13 +105,26 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
 
         AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
-                .setPositiveButton(R.string.add) { _, _ -> addBlacklist(fragmentActivity!!, editText.text.toString(), { loadBlacklists() }) }
+                .setPositiveButton(R.string.add) { _, _ -> addBlacklist(fragmentActivity!!, editText.text.toString()) { loadBlacklists() } }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
     }
 
-    private fun removeBlacklist(id: Long, number: String?) {
+    private fun removePhoneNumber(id: Long, number: String) {
         val message = getString(R.string.remove_blacklist, PhoneNumberUtils.format(number))
+
+        AlertDialog.Builder(fragmentActivity!!)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    DataSource.deleteBlacklist(fragmentActivity!!, id)
+                    loadBlacklists()
+                }
+                .setNegativeButton(android.R.string.no, null)
+                .show()
+    }
+
+    private fun removePhrase(id: Long, phrase: String) {
+        val message = getString(R.string.remove_blacklist, phrase)
 
         AlertDialog.Builder(fragmentActivity!!)
                 .setMessage(message)
@@ -125,7 +138,14 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
 
     override fun onClick(position: Int) {
         val blacklist = adapter!!.getItem(position)
-        removeBlacklist(blacklist.id, blacklist.phoneNumber)
+        val phoneNumber = blacklist.phoneNumber
+        val phrase = blacklist.phrase
+
+        if (!phoneNumber.isNullOrBlank()) {
+            removePhoneNumber(blacklist.id, phoneNumber)
+        } else if (!phrase.isNullOrBlank()) {
+            removePhrase(blacklist.id, phrase)
+        }
     }
 
     companion object {

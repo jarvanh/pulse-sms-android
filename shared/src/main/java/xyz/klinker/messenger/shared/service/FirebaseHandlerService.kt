@@ -685,10 +685,13 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             val id = getLong(json, "id")
             var phoneNumber: String? = json.getString("phone_number")
             phoneNumber = encryptionUtils!!.decrypt(phoneNumber)
+            var phrase: String? = json.getString("phrase")
+            phrase = encryptionUtils.decrypt(phrase)
 
             val blacklist = Blacklist()
             blacklist.id = id
             blacklist.phoneNumber = phoneNumber
+            blacklist.phrase = phrase
             DataSource.insertBlacklist(context, blacklist, false)
             Log.v(TAG, "added blacklist")
         }

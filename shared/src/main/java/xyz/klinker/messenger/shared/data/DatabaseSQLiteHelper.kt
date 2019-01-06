@@ -147,6 +147,14 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
             } catch (e: Exception) {
             }
         }
+
+        if (oldVersion < 16) {
+            try {
+                db.execSQL("ALTER TABLE blacklist ADD COLUMN phrase text")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     fun onDrop(db: SQLiteDatabase) {
@@ -158,7 +166,7 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
     companion object {
 
         private const val DATABASE_NAME = "messenger.db"
-        private const val DATABASE_VERSION = 15
+        private const val DATABASE_VERSION = 16
 
     }
 

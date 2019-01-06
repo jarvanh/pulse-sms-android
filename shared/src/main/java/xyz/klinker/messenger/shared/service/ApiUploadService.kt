@@ -215,7 +215,7 @@ open class ApiUploadService : Service() {
                 val b = Blacklist()
                 b.fillFromCursor(cursor)
                 b.encrypt(encryptionUtils!!)
-                val blacklist = BlacklistBody(b.id, b.phoneNumber)
+                val blacklist = BlacklistBody(b.id, b.phoneNumber, b.phrase)
 
                 blacklists[cursor.position] = blacklist
             } while (cursor.moveToNext())

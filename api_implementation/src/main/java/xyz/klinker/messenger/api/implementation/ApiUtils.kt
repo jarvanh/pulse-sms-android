@@ -609,14 +609,14 @@ object ApiUtils {
     /**
      * Adds a blacklist.
      */
-    fun addBlacklist(accountId: String?, deviceId: Long, phoneNumber: String?,
+    fun addBlacklist(accountId: String?, deviceId: Long, phoneNumber: String?, phrase: String?,
                      encryptionUtils: EncryptionUtils?) {
         if (accountId == null || encryptionUtils == null) {
             return
         }
 
         val body = BlacklistBody(deviceId,
-                encryptionUtils.encrypt(phoneNumber))
+                encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(phrase))
         val request = AddBlacklistRequest(accountId, body)
 
         val message = "add blacklist"

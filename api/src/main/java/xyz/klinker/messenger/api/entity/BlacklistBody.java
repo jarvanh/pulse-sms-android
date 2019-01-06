@@ -20,15 +20,17 @@ public class BlacklistBody {
 
     public long deviceId;
     public String phoneNumber;
+    public String phrase;
 
-    public BlacklistBody(long deviceId, String phoneNumber) {
+    public BlacklistBody(long deviceId, String phoneNumber, String phrase) {
         this.deviceId = deviceId;
         this.phoneNumber = phoneNumber;
+        this.phrase = phrase;
     }
 
     @Override
     public String toString() {
-        return deviceId + ", " + phoneNumber;
+        return deviceId + ", " + phoneNumber + ", " + phrase;
     }
 
 }
