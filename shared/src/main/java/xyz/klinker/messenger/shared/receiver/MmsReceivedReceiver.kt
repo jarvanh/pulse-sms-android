@@ -81,10 +81,6 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
         var snippet: String? = ""
         val from = SmsMmsUtils.getMmsFrom(uri, context)
 
-        if (BlacklistUtils.isBlacklisted(context, from)) {
-            return null
-        }
-
         val to = SmsMmsUtils.getMmsTo(uri, context)
         val phoneNumbers = getPhoneNumbers(from, to,
                 PhoneNumberUtils.getMyPossiblePhoneNumbers(context), context)
@@ -108,6 +104,10 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
             message.from = ContactUtils.findContactNames(from, context)
             message.simPhoneNumber = if (DualSimUtils.availableSims.isEmpty()) null else to
             message.sentDeviceId = -1L
+
+            if (BlacklistUtils.isBlacklisted(context, from, message.data)) {
+                return null
+            }
 
             snippet = if (message.mimeType == MimeType.TEXT_PLAIN) {
                 message.data

@@ -105,7 +105,7 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
 
         AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
-                .setPositiveButton(R.string.add) { _, _ -> addBlacklist(fragmentActivity!!, editText.text.toString()) { loadBlacklists() } }
+                .setPositiveButton(R.string.add) { _, _ -> addBlacklist(fragmentActivity!!, editText.text.toString(), { loadBlacklists() }) }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
     }

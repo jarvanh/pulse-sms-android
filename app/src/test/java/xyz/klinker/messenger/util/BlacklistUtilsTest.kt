@@ -38,4 +38,19 @@ class BlacklistUtilsTest : MessengerRobolectricSuite() {
     fun blacklistsForNonNumericNumbers() {
         assertTrue(BlacklistUtils.numbersMatch("ABCDEF", "ABCD-EF"))
     }
+
+    @Test
+    fun isNullOrBlank() {
+        val value1: String? = null
+        assertTrue(value1.isNullOrBlank())
+
+        val value2: String? = ""
+        assertTrue(value2.isNullOrBlank())
+
+        val value3: String? = " "
+        assertTrue(value3.isNullOrBlank())
+
+        val value4: String? = " a"
+        assertFalse(value4.isNullOrBlank())
+    }
 }

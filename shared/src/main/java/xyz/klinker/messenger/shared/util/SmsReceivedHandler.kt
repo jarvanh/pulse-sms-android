@@ -63,7 +63,7 @@ class SmsReceivedHandler(private val context: Context) {
             date = sms.timestampMillis
         }
 
-        if (BlacklistUtils.isBlacklisted(context, address)) {
+        if (BlacklistUtils.isBlacklisted(context, address, body)) {
             return true
         }
 

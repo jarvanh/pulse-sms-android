@@ -17,7 +17,7 @@
 package xyz.klinker.messenger.shared.util
 
 import android.content.Context
-import android.database.Cursor
+import android.util.Log
 
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Blacklist
@@ -27,17 +27,25 @@ import xyz.klinker.messenger.shared.data.model.Blacklist
  */
 object BlacklistUtils {
 
-    fun isBlacklisted(context: Context, number: String): Boolean {
+    fun isBlacklisted(context: Context, incomingNumber: String, incomingText: String?): Boolean {
         val source = DataSource
         val cursor = source.getBlacklists(context)
 
-        if (cursor.moveToFirst()) {
-            val numberIndex = cursor.getColumnIndex(Blacklist.COLUMN_PHONE_NUMBER)
+        val numberIndex = cursor.getColumnIndex(Blacklist.COLUMN_PHONE_NUMBER)
+        val phraseIndex = cursor.getColumnIndex(Blacklist.COLUMN_PHRASE)
 
+        if (cursor.moveToFirst()) {
             do {
-                val blacklisted = cursor.getString(numberIndex)
-//                if (PhoneNumberUtils.checkEquality(number, blacklisted)) {
-                if (numbersMatch(number, blacklisted)) {
+                val blacklistedNumber = cursor.getString(numberIndex)
+                if (!blacklistedNumber.isNullOrBlank() && numbersMatch(incomingNumber, blacklistedNumber)) {
+                    Log.v("Blacklist", "$incomingNumber matched phone number blacklist: $blacklistedNumber")
+                    CursorUtil.closeSilent(cursor)
+                    return true
+                }
+
+                val blacklistedPhrase = cursor.getString(phraseIndex)
+                if (!blacklistedPhrase.isNullOrBlank() && incomingText?.toLowerCase()?.contains(blacklistedPhrase.toLowerCase()) == true) {
+                    Log.v("Blacklist", "$incomingText matched phrase blacklist: $incomingText")
                     CursorUtil.closeSilent(cursor)
                     return true
                 }
