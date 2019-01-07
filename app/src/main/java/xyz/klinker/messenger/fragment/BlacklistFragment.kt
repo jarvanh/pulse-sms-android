@@ -20,21 +20,21 @@ import android.app.Activity
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
-import androidx.appcompat.app.AlertDialog
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.BlacklistAdapter
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Blacklist
 import xyz.klinker.messenger.shared.util.ColorUtils
@@ -61,7 +61,7 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
         super.onViewCreated(view, savedInstanceState)
 
         list.layoutManager = LinearLayoutManager(fragmentActivity!!)
-        fab.setOnClickListener { addBlacklist() }
+        fab.setOnClickListener { addBlacklistPhone() }
 
         emptyView.setBackgroundColor(Settings.mainColorSet.colorLight)
         fab.backgroundTintList = ColorStateList.valueOf(Settings.mainColorSet.colorAccent)
@@ -70,7 +70,7 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
         loadBlacklists()
 
         if (arguments != null && arguments!!.containsKey(ARG_PHONE_NUMBER)) {
-            addBlacklist(fragmentActivity!!, arguments!!.getString(ARG_PHONE_NUMBER), { loadBlacklists() })
+            addBlacklistPhone(fragmentActivity!!, arguments!!.getString(ARG_PHONE_NUMBER), { loadBlacklists() })
         }
     }
 
@@ -97,16 +97,34 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
         }
     }
 
-    private fun addBlacklist() {
+    private fun addBlacklistPhone() {
         val layout = LayoutInflater.from(fragmentActivity).inflate(R.layout.dialog_edit_text, null, false)
         val editText = layout.findViewById<View>(R.id.edit_text) as EditText
         editText.setHint(R.string.blacklist_hint)
         editText.inputType = InputType.TYPE_CLASS_PHONE
 
+        val dialog = AlertDialog.Builder(fragmentActivity!!)
+                .setView(layout)
+                .setPositiveButton(R.string.add) { _, _ -> addBlacklistPhone(fragmentActivity!!, editText.text.toString(), { loadBlacklists() }) }
+                .setNegativeButton(android.R.string.cancel, null)
+
+        if (FeatureFlags.BLACKLIST_PHRASE) {
+            dialog.setNeutralButton(R.string.enter_phrase) { _, _ -> addBlacklistPhrase() }
+        }
+
+        dialog.show()
+    }
+
+    private fun addBlacklistPhrase() {
+        val layout = LayoutInflater.from(fragmentActivity).inflate(R.layout.dialog_edit_text, null, false)
+        val editText = layout.findViewById<View>(R.id.edit_text) as EditText
+        editText.setHint(R.string.blacklist_phrase_hint)
+
         AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
-                .setPositiveButton(R.string.add) { _, _ -> addBlacklist(fragmentActivity!!, editText.text.toString(), { loadBlacklists() }) }
+                .setPositiveButton(R.string.add) { _, _ -> addBlacklistPhrase(fragmentActivity!!, editText.text.toString()) { loadBlacklists() } }
                 .setNegativeButton(android.R.string.cancel, null)
+                .setNeutralButton(R.string.enter_phone) { _, _ -> addBlacklistPhone() }
                 .show()
     }
 
@@ -168,14 +186,14 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
             return fragment
         }
 
-        fun addBlacklist(fragmentActivity: Activity, phoneNumber: String?, actionFinished: () -> Unit = { }) {
+        fun addBlacklistPhone(fragmentActivity: Activity, phoneNumber: String?, actionFinished: () -> Unit = { }) {
             val cleared = PhoneNumberUtils.clearFormatting(phoneNumber)
             val formatted = PhoneNumberUtils.format(cleared)
 
             if (cleared.isEmpty()) {
                 AlertDialog.Builder(fragmentActivity)
                         .setMessage(R.string.blacklist_need_number)
-                        .setPositiveButton(android.R.string.ok) { _, _ ->  }
+                        .setPositiveButton(android.R.string.ok) { _, _ -> }
                         .show()
             } else {
                 val message = fragmentActivity.getString(R.string.add_blacklist, formatted)
@@ -184,6 +202,28 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             val blacklist = Blacklist()
                             blacklist.phoneNumber = cleared
+                            DataSource.insertBlacklist(fragmentActivity, blacklist)
+
+                            actionFinished()
+                        }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show()
+            }
+        }
+
+        fun addBlacklistPhrase(fragmentActivity: Activity, phrase: String, actionFinished: () -> Unit = { }) {
+            if (phrase.isBlank()) {
+                AlertDialog.Builder(fragmentActivity)
+                        .setMessage(R.string.blacklist_need_phrase)
+                        .setPositiveButton(android.R.string.ok) { _, _ -> }
+                        .show()
+            } else {
+                val message = fragmentActivity.getString(R.string.add_blacklist, phrase)
+                AlertDialog.Builder(fragmentActivity)
+                        .setMessage(message)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            val blacklist = Blacklist()
+                            blacklist.phrase = phrase
                             DataSource.insertBlacklist(fragmentActivity, blacklist)
 
                             actionFinished()

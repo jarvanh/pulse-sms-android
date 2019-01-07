@@ -305,7 +305,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             val fragment = navController.getShownConversationList()
             val conversation = fragment!!.expandedItem!!.conversation
 
-            BlacklistFragment.addBlacklist(activity, conversation!!.phoneNumbers) {
+            BlacklistFragment.addBlacklistPhone(activity, conversation!!.phoneNumbers) {
                 val position = fragment.expandedItem!!.adapterPosition
                 fragment.expandedItem!!.itemView.performClick()
 
