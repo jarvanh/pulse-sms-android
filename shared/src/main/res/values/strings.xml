@@ -405,7 +405,9 @@
     <string name="enter_phone">Enter Phone Number</string>
     <string name="blacklist_phrase_hint">Type phrase to blacklist…</string>
     <string name="add_blacklist">%1$s\n\nAre you sure you want to add this blacklist? Messages will
-        no longer be saved when they come from this number and you will not be notified!</string>
+        no longer be saved when they come from this number, and you will not be notified!</string>
+    <string name="add_blacklist_phrase">%1$s\n\nAre you sure you want to add this blacklist? Messages will
+        no longer be saved when they contain this phrase, and you will not be notified!</string>
     <string name="remove_blacklist">%1$s\n\nDo you want to delete this blacklist?</string>
     <string name="blacklist_need_number">You need to enter a phone number to blacklist!</string>
     <string name="blacklist_need_phrase">You need to enter a phrase to blacklist!</string>

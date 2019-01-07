@@ -218,7 +218,7 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
                         .setPositiveButton(android.R.string.ok) { _, _ -> }
                         .show()
             } else {
-                val message = fragmentActivity.getString(R.string.add_blacklist, phrase)
+                val message = fragmentActivity.getString(R.string.add_blacklist_phrase, phrase)
                 AlertDialog.Builder(fragmentActivity)
                         .setMessage(message)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
