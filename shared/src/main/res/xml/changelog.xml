@@ -25,7 +25,7 @@
     <version
         name="4.4.0"
         description="Unreleased">
-        <!-- All of the background for blacklisting by phrase (everything except adding phrase through the UI) -->
+        <!--Blacklist by phrase (behind feature flag) -->
         <text>Add support for searching and sending stickers, within the attachment menu</text>
         <text>Revamp of the UI for the GIF search functionality</text>
         <text>You can archive conversations from their notification buttons</text>
