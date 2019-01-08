@@ -24,7 +24,7 @@
 
     <version
         name="4.4.0"
-        description="Unreleased">
+        description="January 9th, 2019">
         <!--Blacklist by phrase (behind feature flag) -->
         <text>Add support for searching and sending stickers, within the attachment menu</text>
         <text>Revamp of the UI for the GIF search functionality</text>
