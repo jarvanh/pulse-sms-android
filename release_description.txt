@@ -1,7 +1,7 @@
 This update comes with a few new features:<br/>
+- Blacklist by phrase<br/>
 - You can now search and send stickers (GIFs with transparent backgrounds) from the attachment menu<br/>
 - Improvements to searching GIFs<br/>
 - Edit templates<br/>
 - Archive conversations from their notification buttons<br/>
-- Tapping a contact icon on the conversation list will now start the multi-select process<br/>
-- Smaller user requests
+- Tapping a contact icon on the conversation list will now start the multi-select process
