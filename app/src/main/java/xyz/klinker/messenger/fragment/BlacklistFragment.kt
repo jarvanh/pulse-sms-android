@@ -103,16 +103,12 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
         editText.setHint(R.string.blacklist_hint)
         editText.inputType = InputType.TYPE_CLASS_PHONE
 
-        val dialog = AlertDialog.Builder(fragmentActivity!!)
+        AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
                 .setPositiveButton(R.string.add) { _, _ -> addBlacklistPhone(fragmentActivity!!, editText.text.toString(), { loadBlacklists() }) }
                 .setNegativeButton(android.R.string.cancel, null)
-
-        if (FeatureFlags.BLACKLIST_PHRASE) {
-            dialog.setNeutralButton(R.string.enter_phrase) { _, _ -> addBlacklistPhrase() }
-        }
-
-        dialog.show()
+                .setNeutralButton(R.string.enter_phrase) { _, _ -> addBlacklistPhrase() }
+                .show()
     }
 
     private fun addBlacklistPhrase() {
