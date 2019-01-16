@@ -2638,10 +2638,10 @@ object DataSource {
      */
     fun getBlacklists(context: Context): Cursor =
             try {
-                database(context).query(Blacklist.TABLE, null, null, null, null, null, null)
+                database(context).query(Blacklist.TABLE, null, null, null, null, null, "${Blacklist.COLUMN_PHRASE} asc, ${Blacklist.COLUMN_PHONE_NUMBER} asc")
             } catch (e: Exception) {
                 ensureActionable(context)
-                database(context).query(Blacklist.TABLE, null, null, null, null, null, null)
+                database(context).query(Blacklist.TABLE, null, null, null, null, null, "${Blacklist.COLUMN_PHRASE} asc, ${Blacklist.COLUMN_PHONE_NUMBER} asc")
             }
 
     fun getBlacklistsAsList(context: Context): List<Blacklist> {
