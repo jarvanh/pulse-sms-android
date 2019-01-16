@@ -27,38 +27,27 @@ class DraftManager(private val fragment: MessageListFragment) {
     private val selectedImageCount: View by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images) }
     private val selectedImageCountText: TextView by lazy { fragment.rootView!!.findViewById<View>(R.id.selected_images_text) as TextView }
 
-    var textChanged = false
     var pullDrafts = true
     private var drafts = emptyList<Draft>()
 
     fun applyDrafts() { if (pullDrafts) setDrafts(drafts) else pullDrafts = true }
     fun loadDrafts() {
         if (activity != null) drafts = DataSource.getDrafts(activity!!, argManager.conversationId)
-    }
-
-    fun watchDraftChanges() {
-        textChanged = false
-        messageEntry.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun afterTextChanged(editable: Editable) {
-                textChanged = true
-            }
-        })
+        if (drafts.isNotEmpty()) {
+            Thread {
+                DataSource.deleteDrafts(activity!!, argManager.conversationId)
+            }.start()
+        }
     }
 
     fun createDrafts() {
-        if (sendProgress.visibility != View.VISIBLE && messageEntry.text != null && messageEntry.text.isNotEmpty() && textChanged) {
+        if (sendProgress.visibility != View.VISIBLE && messageEntry.text != null && messageEntry.text.isNotEmpty()) {
             if (drafts.isNotEmpty() && activity != null) {
                 DataSource.deleteDrafts(activity!!, argManager.conversationId)
             }
 
             DataSource.insertDraft(activity, argManager.conversationId,
                     messageEntry.text.toString(), MimeType.TEXT_PLAIN)
-        } else if (messageEntry.text != null && messageEntry.text.isEmpty() && textChanged) {
-            if (drafts.isNotEmpty() && activity != null) {
-                DataSource.deleteDrafts(activity!!, argManager.conversationId)
-            }
         }
 
         attachManager.writeDraftOfAttachment()
@@ -75,7 +64,6 @@ class DraftManager(private val fragment: MessageListFragment) {
             for (draft in drafts) {
                 when {
                     draft.mimeType == MimeType.TEXT_PLAIN -> {
-                        textChanged = true
                         messageEntry.setText(draft.data)
                         messageEntry.setSelection(messageEntry.text.length)
                     }

@@ -128,7 +128,6 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                     handler.post {
                         setMessages(cursor, contactMap!!, contactByNameMap!!)
                         draftManager.applyDrafts()
-                        draftManager.watchDraftChanges()
 
                         if (position != -1) {
                             messageList.scrollToPosition(position)
