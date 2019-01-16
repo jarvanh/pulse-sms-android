@@ -596,7 +596,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void getBlacklists() {
-        when(database.query("blacklist", null, null, null, null, null, null)).thenReturn(cursor);
+        when(database.query("blacklist", null, null, null, null, null, "phrase asc, phone_number asc")).thenReturn(cursor);
         assertEquals(cursor, source.getBlacklists(context));
     }
 
