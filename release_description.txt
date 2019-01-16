@@ -1,4 +1,3 @@
-This update comes with a few new features:<br/>
 - Blacklist by phrase<br/>
 - You can now search and send stickers (GIFs with transparent backgrounds) from the attachment menu<br/>
 - Improvements to searching GIFs<br/>
