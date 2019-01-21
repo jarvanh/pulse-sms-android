@@ -45,7 +45,7 @@
     <version
         name="4.3.4"
         description="December 23rd, 2018">
-        <!-- disable hardware acceleration on the edit text, to prevent a getBlockIndex crash (?) -->
+        <!-- disable hardware acceleration on the edit text, to prevent a getBlockIndex crash -->
         <text>Fixes for using the app on 7 inch tablets</text>
         <text>Bug fixes</text>
     </version>
