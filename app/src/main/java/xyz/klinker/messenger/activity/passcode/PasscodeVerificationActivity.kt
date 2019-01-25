@@ -1,4 +1,4 @@
-package xyz.klinker.messenger.shared.activity
+package xyz.klinker.messenger.activity.passcode
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -20,6 +20,7 @@ import xyz.klinker.messenger.shared.data.Settings
 import android.content.Intent
 import android.net.Uri
 import android.widget.EditText
+import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.util.ColorUtils
@@ -33,6 +34,8 @@ class PasscodeVerificationActivity : FloatingTutorialActivity(), AuthenticationL
         if (Reprint.hasFingerprintRegistered()) {
             Reprint.authenticate(this)
         }
+
+        MainColorController(this).configureNavigationBarColor()
     }
 
     override fun onSuccess(moduleTag: Int) {

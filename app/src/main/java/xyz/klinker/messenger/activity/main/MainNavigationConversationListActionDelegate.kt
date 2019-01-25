@@ -13,7 +13,7 @@ import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.fragment.settings.AboutFragment
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
-import xyz.klinker.messenger.shared.activity.PasscodeVerificationActivity
+import xyz.klinker.messenger.activity.passcode.PasscodeVerificationActivity
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Folder
 import xyz.klinker.messenger.shared.util.AnimationUtils

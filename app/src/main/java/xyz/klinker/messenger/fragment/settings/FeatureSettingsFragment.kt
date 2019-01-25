@@ -11,8 +11,8 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
-import xyz.klinker.messenger.shared.activity.PasscodeSetupActivity
-import xyz.klinker.messenger.shared.activity.PasscodeVerificationActivity
+import xyz.klinker.messenger.activity.passcode.PasscodeSetupActivity
+import xyz.klinker.messenger.activity.passcode.PasscodeVerificationActivity
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 import xyz.klinker.messenger.shared.util.RedirectToMyAccount

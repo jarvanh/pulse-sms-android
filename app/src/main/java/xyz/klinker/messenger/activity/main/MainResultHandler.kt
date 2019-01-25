@@ -8,7 +8,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.fragment.message.attach.AttachmentListener
-import xyz.klinker.messenger.shared.activity.PasscodeVerificationActivity
+import xyz.klinker.messenger.activity.passcode.PasscodeVerificationActivity
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.TimeUtils
 

@@ -1,4 +1,4 @@
-package xyz.klinker.messenger.shared.activity
+package xyz.klinker.messenger.activity.passcode
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -13,6 +13,7 @@ import xyz.klinker.android.floating_tutorial.TutorialPage
 import com.github.ajalt.reprint.core.AuthenticationFailureReason
 import com.github.ajalt.reprint.core.AuthenticationListener
 import com.raycoarana.codeinputview.CodeInputView
+import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.R
@@ -27,6 +28,8 @@ class PasscodeSetupActivity : FloatingTutorialActivity(), AuthenticationListener
         if (Reprint.hasFingerprintRegistered()) {
             Reprint.authenticate(this)
         }
+
+        MainColorController(this).configureNavigationBarColor()
     }
 
     override fun onSuccess(moduleTag: Int) {

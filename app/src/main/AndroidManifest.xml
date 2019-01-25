@@ -263,6 +263,12 @@
             android:launchMode="singleInstance"
             android:theme="@style/api_Theme.MaterialComponents.Translucent"/>
         <activity android:name="net.rdrei.android.dirchooser.DirectoryChooserActivity" />
+        <activity android:name="xyz.klinker.messenger.activity.passcode.PasscodeVerificationActivity"
+            android:theme="@style/PulsePasscode"
+            android:launchMode="singleInstance" />
+        <activity android:name="xyz.klinker.messenger.activity.passcode.PasscodeSetupActivity"
+            android:theme="@style/PulsePasscode"
+            android:launchMode="singleInstance" />
 
 
         <service

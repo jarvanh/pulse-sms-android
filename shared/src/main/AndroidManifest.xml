@@ -87,14 +87,6 @@
             android:theme="@style/tutorial_FloatingTutorialTheme"
             android:launchMode="singleInstance" />
 
-        <activity android:name=".activity.PasscodeVerificationActivity"
-            android:theme="@style/PulsePasscode"
-            android:launchMode="singleInstance" />
-
-        <activity android:name=".activity.PasscodeSetupActivity"
-            android:theme="@style/PulsePasscode"
-            android:launchMode="singleInstance" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

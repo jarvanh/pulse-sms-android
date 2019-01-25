@@ -70,8 +70,8 @@ dependencies {
     api 'com.futuremind.recyclerfastscroll:fastscroll:0.2.5'
     api 'com.miguelcatalan:materialsearchview:1.4.0'
 
-    implementation 'com.raycoarana.codeinputview:codeinputview:1.2.5'
-    implementation 'com.github.ajalt.reprint:core:3.2.1@aar'
+    api 'com.raycoarana.codeinputview:codeinputview:1.2.5'
+    api 'com.github.ajalt.reprint:core:3.2.1@aar'
 
     api project(":api_implementation")
     api project(":encryption")
