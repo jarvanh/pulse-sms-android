@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.5.1"
+        description="Unreleased">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.5.0"
         description="January 17th, 2019">
         <text>Select a phrase to blacklist, instead of just blacklisting by phone number</text>
