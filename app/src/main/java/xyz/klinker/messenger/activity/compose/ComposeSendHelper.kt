@@ -34,20 +34,22 @@ class ComposeSendHelper(private val activity: ComposeActivity) {
         }
     }
 
-    internal fun resetViews(data: String, mimeType: String, isvCard: Boolean = false) {
+    internal fun resetViews(data: ShareData, isvCard: Boolean = false) {
+        resetViews(listOf(data), isvCard)
+    }
+
+    internal fun resetViews(data: List<ShareData>, isvCard: Boolean = false) {
         fab.setOnClickListener {
-            if (activity.contactsProvider.getRecipients().isNotEmpty() && isvCard) {
-                activity.vCardSender.send(mimeType, data)
+            if (activity.contactsProvider.getRecipients().isNotEmpty() && isvCard && data.isNotEmpty()) {
+                activity.vCardSender.send(data[0].mimeType, data[0].data)
             } else if (activity.contactsProvider.hasContacts()) {
-                activity.shareHandler.apply(mimeType, data)
+                activity.shareHandler.apply(data)
             }
         }
     }
 
-    internal fun resetViewsForMultipleImages(data: List<String>, mimeType: String) {
-        fab.setOnClickListener {
-            activity.shareHandler.apply(mimeType, data)
-        }
+    internal fun resetViewsForMultipleImages(data: List<ShareData>) {
+        fab.setOnClickListener { activity.shareHandler.apply(data) }
     }
 
     private fun dismissKeyboard() {

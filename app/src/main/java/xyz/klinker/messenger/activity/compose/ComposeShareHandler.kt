@@ -7,15 +7,24 @@ import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.MessengerChooserTargetService
 import xyz.klinker.messenger.shared.util.TimeUtils
 
+data class ShareData(val mimeType: String, val data: String)
+
 class ComposeShareHandler(private val activity: ComposeActivity) {
 
-    fun apply(mimeType: String, data: String) {
-        val phoneNumbers = activity.contactsProvider.getPhoneNumberFromContactEntry()
-        apply(mimeType, data, phoneNumbers)
+    fun apply(data: ShareData) {
+        apply(listOf(data))
     }
 
-    fun apply(mimeType: String, data: List<String>) {
+    fun apply(data: List<ShareData>) {
         val phoneNumbers = activity.contactsProvider.getPhoneNumberFromContactEntry()
+        apply(data, phoneNumbers)
+    }
+
+    fun apply(data: ShareData, phoneNumbers: String) {
+        apply(listOf(data), phoneNumbers)
+    }
+
+    fun apply(data: List<ShareData>, phoneNumbers: String) {
         var conversationId = DataSource.findConversationId(activity, phoneNumbers)
 
         if (conversationId == null) {
@@ -32,46 +41,27 @@ class ComposeShareHandler(private val activity: ComposeActivity) {
         }
 
         data.forEach {
-            DataSource.insertDraft(activity, conversationId, it, mimeType)
+            DataSource.insertDraft(activity, conversationId, it.data, it.mimeType)
         }
 
         activity.sender.showConversation(conversationId)
     }
 
-    fun apply(mimeType: String, data: String?, phoneNumbers: String) {
-        var conversationId = DataSource.findConversationId(activity, phoneNumbers)
-
-        if (conversationId == null) {
-            val message = Message()
-            message.type = Message.TYPE_INFO
-            message.data = activity.getString(R.string.no_messages_with_contact)
-            message.timestamp = TimeUtils.now
-            message.mimeType = MimeType.TEXT_PLAIN
-            message.read = true
-            message.seen = true
-            message.sentDeviceId = -1
-
-            conversationId = DataSource.insertMessage(message, phoneNumbers, activity)
-        }
-
-        if (data != null) {
-            DataSource.insertDraft(activity, conversationId, data, mimeType)
-        }
-
-        activity.sender.showConversation(conversationId)
+    fun directShare(data: ShareData, isVcard: Boolean = false) {
+        directShare(listOf(data), isVcard)
     }
 
-    fun directShare(data: String?, mimeType: String, isVcard: Boolean = false) {
+    fun directShare(data: List<ShareData>, isVcard: Boolean = false) {
         val conversationId = activity.intent.extras.getLong(MessengerChooserTargetService.EXTRA_CONVO_ID)
-        directShare(data, mimeType, conversationId, isVcard)
+        directShare(data, conversationId, isVcard)
     }
 
-    fun directShare(data: String?, mimeType: String, conversationId: Long, isVcard: Boolean = false) {
-        if (isVcard) {
-            activity.vCardSender.send(mimeType, data!!, conversationId)
+    fun directShare(data: List<ShareData>, conversationId: Long, isVcard: Boolean = false) {
+        if (isVcard && data.isNotEmpty()) {
+            activity.vCardSender.send(data[0].mimeType, data[0].data, conversationId)
         } else {
-            if (data != null) {
-                DataSource.insertDraft(activity, conversationId, data, mimeType)
+            data.forEach {
+                DataSource.insertDraft(activity, conversationId, it.data, it.mimeType)
             }
 
             activity.sender.showConversation(conversationId)

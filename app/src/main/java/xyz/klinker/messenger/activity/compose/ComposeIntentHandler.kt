@@ -62,15 +62,15 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
         if (!numbers.isEmpty()) {
             activity.sender.showConversation(builder.toString(), data)
         } else if (data != null) {
-            activity.sender.resetViews(data, MimeType.TEXT_PLAIN, false)
+            activity.sender.resetViews(ShareData(MimeType.TEXT_PLAIN, data), false)
         }
     }
 
     private fun viewIntent(intent: Intent) {
-        if (intent.extras != null && intent.extras.containsKey("sms_body")) {
-            val body = intent.extras.getString("sms_body")
+        if (intent.extras != null && intent.extras!!.containsKey("sms_body")) {
+            val body = intent.extras!!.getString("sms_body")!!
             if (intent.dataString != null) {
-                val phoneNumbers = if (intent.dataString.contains("?")) {
+                val phoneNumbers = if (intent.dataString!!.contains("?")) {
                     PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString.substring(0, intent.dataString.indexOf("?"))))
                 } else {
                     PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString))
@@ -85,9 +85,9 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
                 }
 
                 val numbers = builder.toString()
-                activity.shareHandler.apply(MimeType.TEXT_PLAIN, body, numbers)
+                activity.shareHandler.apply(ShareData(MimeType.TEXT_PLAIN, body), numbers)
             } else {
-                activity.sender.resetViews(body, MimeType.TEXT_PLAIN, false)
+                activity.sender.resetViews(ShareData(MimeType.TEXT_PLAIN, body), false)
             }
         } else if (intent.dataString != null) {
             initiatedFromWebLink(intent)
@@ -114,56 +114,54 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
         val body = NonStandardUriUtils.getQueryParams(intent.dataString)["body"] ?:
                 intent.extras?.getString("sms_body")
         if (body != null) {
-            activity.shareHandler.apply(MimeType.TEXT_PLAIN, body, numbers)
+            activity.shareHandler.apply(ShareData(MimeType.TEXT_PLAIN, body), numbers)
         } else {
             activity.sender.showConversation(numbers)
         }
     }
 
     private fun shareContent(intent: Intent) {
-        var data: String? = ""
-        var image = false
+        var data = mutableListOf<ShareData>()
 
         if (intent.type == MimeType.TEXT_PLAIN) {
-            data = intent.getStringExtra(Intent.EXTRA_TEXT)
-        } else if (MimeType.isVcard(intent.type)) {
+            data.add(ShareData(MimeType.TEXT_PLAIN, intent.getStringExtra(Intent.EXTRA_TEXT)))
+        } else if (MimeType.isVcard(intent.type!!)) {
             shareVCard(intent)
             return
         } else if (intent.clipData != null) {
-            for (i in 0 until intent.clipData.itemCount) {
-                data += intent.clipData.getItemAt(i).text
+            var text = ""
+            for (i in 0 until intent.clipData!!.itemCount) {
+                text += intent.clipData!!.getItemAt(i).text
             }
 
-            if (data == "null") {
-                image = true
-            } else {
-                intent.type = MimeType.TEXT_PLAIN
+            if (text != "null") {
+                data.add(ShareData(MimeType.TEXT_PLAIN, text))
             }
-        } else {
-            image = true
         }
 
-        if (image) {
-            val tempData = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM).toString()
-            data = try {
+        if (intent.extras?.containsKey(Intent.EXTRA_STREAM) == true) {
+            val imageData = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM).toString()
+            val uri = try {
                 val dst = File(activity.filesDir, (Math.random() * Integer.MAX_VALUE).toInt().toString() + "")
-                val `in` = activity.contentResolver.openInputStream(Uri.parse(tempData))
+                val `in` = activity.contentResolver.openInputStream(Uri.parse(imageData))
 
-                FileUtils.copy(`in`, dst)
+                FileUtils.copy(`in`!!, dst)
                 Uri.fromFile(dst).toString()
             } catch (e: Exception) {
                 e.printStackTrace()
-                tempData
+                imageData
             }
+
+            data.add(ShareData(MimeType.IMAGE_PNG, uri))
         }
 
-        if (intent.extras != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
-            activity.shareHandler.directShare(data, intent.type)
-        } else if (intent.extras.containsKey(Intent.EXTRA_PHONE_NUMBER)) {
+        if (intent.extras != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && intent.extras!!.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
+            activity.shareHandler.directShare(data)
+        } else if (intent.extras != null && intent.extras!!.containsKey(Intent.EXTRA_PHONE_NUMBER)) {
             val number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
-            activity.shareHandler.apply(intent.type, data, number)
+            activity.shareHandler.apply(data, number)
         } else {
-            activity.sender.resetViews(data ?: "", intent.type!!)
+            activity.sender.resetViews(data)
         }
     }
 
@@ -175,15 +173,15 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
                 val dst = File(activity.filesDir, (Math.random() * Integer.MAX_VALUE).toInt().toString() + "")
                 val `in` = activity.contentResolver.openInputStream(Uri.parse(tempData))
 
-                FileUtils.copy(`in`, dst)
-                Uri.fromFile(dst).toString()
+                FileUtils.copy(`in`!!, dst)
+                ShareData(Uri.fromFile(dst).toString(), intent.type!!)
             } catch (e: Exception) {
                 e.printStackTrace()
-                tempData
+                ShareData(tempData, intent.type!!)
             }
         }
 
-        activity.sender.resetViewsForMultipleImages(images, intent.type!!)
+        activity.sender.resetViewsForMultipleImages(images)
     }
 
     private fun shareVCard(intent: Intent) {
@@ -191,14 +189,14 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
 
         try {
             if (intent.extras != null && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
-                activity.shareHandler.directShare(data, intent.type, true)
+                activity.shareHandler.directShare(ShareData(intent.type!!,data), true)
             } else {
                 activity.sender.fab.setImageResource(R.drawable.ic_send)
-                activity.sender.resetViews(data, intent.type, true)
+                activity.sender.resetViews(ShareData(intent.type!!, data), true)
             }
         } catch (e: NoClassDefFoundError) {
             activity.sender.fab.setImageResource(R.drawable.ic_send)
-            activity.sender.resetViews(data, intent.type, true)
+            activity.sender.resetViews(ShareData(intent.type!!, data), true)
         }
     }
 }
