@@ -3,6 +3,7 @@ package xyz.klinker.messenger.activity.share
 import android.content.Intent
 import android.net.Uri
 import android.os.Parcelable
+import xyz.klinker.messenger.activity.compose.ShareData
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
@@ -49,56 +50,51 @@ class ShareIntentHandler(private val page: QuickSharePage) {
         if (!numbers.isEmpty()) {
             page.setContacts(builder.toString().split(",".toRegex()).map { it.trim() })
         } else if (data != null) {
-            page.setData(data, MimeType.TEXT_PLAIN)
+            page.setData(ShareData(MimeType.TEXT_PLAIN, data))
         }
     }
 
     private fun shareContent(intent: Intent) {
-        var data: String? = ""
-        var image = false
+        val data = mutableListOf<ShareData>()
 
         if (intent.type == MimeType.TEXT_PLAIN) {
-            data = intent.getStringExtra(Intent.EXTRA_TEXT)
+            data.add(ShareData(MimeType.TEXT_PLAIN, intent.getStringExtra(Intent.EXTRA_TEXT)))
         } else if (intent.clipData != null) {
-            for (i in 0 until intent.clipData.itemCount) {
-                data += intent.clipData.getItemAt(i).text
+            var text = ""
+            for (i in 0 until intent.clipData!!.itemCount) {
+                text += intent.clipData!!.getItemAt(i).text
             }
 
-            if (data == "null") {
-                image = true
-            } else {
-                intent.type = MimeType.TEXT_PLAIN
+            if (text != "null") {
+                data.add(ShareData(MimeType.TEXT_PLAIN, text))
             }
-        } else {
-            image = true
         }
 
-        val stream = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM)
-        if (image && stream != null) {
-            val tempData = stream.toString()
-            data = try {
+        if (intent.extras?.containsKey(Intent.EXTRA_STREAM) == true) {
+            val imageData = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM).toString()
+            val uri = try {
                 val dst = File(page.activity.filesDir, (Math.random() * Integer.MAX_VALUE).toInt().toString() + "")
-                val `in` = page.activity.contentResolver.openInputStream(Uri.parse(tempData))
+                val `in` = page.activity.contentResolver.openInputStream(Uri.parse(imageData))
 
-                FileUtils.copy(`in`, dst)
+                FileUtils.copy(`in`!!, dst)
                 Uri.fromFile(dst).toString()
             } catch (e: Exception) {
                 e.printStackTrace()
-                tempData
+                imageData
             }
+
+            data.add(ShareData(MimeType.IMAGE_PNG, uri))
         }
 
-        if (intent.extras != null && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
-            val conversationId = intent.extras.getLong(MessengerChooserTargetService.EXTRA_CONVO_ID)
+        if (intent.extras != null && intent.extras!!.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
+            val conversationId = intent.extras!!.getLong(MessengerChooserTargetService.EXTRA_CONVO_ID)
             val conversation = DataSource.getConversation(page.context, conversationId)
             if (conversation != null) {
                 page.setContacts(conversation.phoneNumbers!!.split(",".toRegex()).map { it.trim() })
             }
-
-            page.setData(if (data == null) "" else data, intent.type)
-        } else {
-            page.setData(if (data == null) "" else data, intent.type)
         }
+
+        page.setData(data)
     }
 
 }

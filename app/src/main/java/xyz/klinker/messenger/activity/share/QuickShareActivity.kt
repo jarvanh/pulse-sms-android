@@ -26,8 +26,8 @@ import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper
 import android.util.TypedValue
 import android.widget.*
 import xyz.klinker.android.floating_tutorial.util.DensityConverter
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
+import xyz.klinker.messenger.activity.compose.ShareData
 
 
 class QuickShareActivity : FloatingTutorialActivity() {
@@ -126,31 +126,32 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
         contactEntry.post { messageEntry.requestFocus() }
     }
 
-    fun setData(data: String, mimeType: String?) {
-        if (mimeType == null) {
-            // coming from launcher shortcut
-            return
-        }
+    fun setData(data: ShareData) {
+        setData(listOf(data))
+    }
 
-        when {
-            mimeType == MimeType.TEXT_PLAIN -> messageEntry.setText(data)
-            mimeType == MimeType.IMAGE_GIF -> Glide.with(activity).asGif().apply(RequestOptions().centerCrop()).load(data).into(imagePreview)
-            MimeType.isStaticImage(mimeType) -> Glide.with(activity).asBitmap().apply(RequestOptions().centerCrop()).load(data).into(imagePreview)
-            MimeType.isVideo(mimeType) -> {
-                imagePreview.setImageResource(R.drawable.ic_play_sent)
-                imagePreview.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.primaryText))
+    fun setData(data: List<ShareData>) {
+        data.forEach {
+            when {
+                it.mimeType == MimeType.TEXT_PLAIN -> messageEntry.setText(it.data)
+                it.mimeType == MimeType.IMAGE_GIF -> Glide.with(activity).asGif().apply(RequestOptions().centerCrop()).load(it.data).into(imagePreview)
+                MimeType.isStaticImage(it.mimeType) -> Glide.with(activity).asBitmap().apply(RequestOptions().centerCrop()).load(it.data).into(imagePreview)
+                MimeType.isVideo(it.mimeType) -> {
+                    imagePreview.setImageResource(R.drawable.ic_play_sent)
+                    imagePreview.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.primaryText))
+                }
+                MimeType.isAudio(it.mimeType) -> {
+                    imagePreview.setImageResource(R.drawable.ic_audio_sent)
+                    imagePreview.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.primaryText))
+                }
             }
-            MimeType.isAudio(mimeType) -> {
-                imagePreview.setImageResource(R.drawable.ic_audio_sent)
-                imagePreview.imageTintList = ColorStateList.valueOf(resources.getColor(R.color.primaryText))
+
+            if (it.mimeType != MimeType.TEXT_PLAIN) {
+                imagePreview.visibility = View.VISIBLE
+
+                this.mediaData = it.data
+                this.mimeType = it.mimeType
             }
-        }
-
-        if (mimeType != MimeType.TEXT_PLAIN) {
-            imagePreview.visibility = View.VISIBLE
-
-            this.mediaData = data
-            this.mimeType = mimeType
         }
 
         messageEntry.post { if (contactEntry.text.isNotEmpty()) {
