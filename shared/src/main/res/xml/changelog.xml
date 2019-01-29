@@ -17,8 +17,14 @@
 <changelog>
 
     <version
-        name="4.5.1"
+        name="4.5.2"
         description="Unreleased">
+        <text>Contact management improvements for the web version of the app: https://github.com/klinker-apps/messenger-issues/issues/620</text>
+    </version>
+
+    <version
+        name="4.5.1"
+        description="January 27th, 2019">
         <text>Bug fixes</text>
     </version>
 
