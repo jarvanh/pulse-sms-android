@@ -520,8 +520,13 @@ open class ApiUploadService : Service() {
                     val c = Contact()
                     c.fillFromCursor(cursor)
                     c.encrypt(encryptionUtils)
-                    val contact = ContactBody(c.id, c.phoneNumber, c.idMatcher, c.name, c.colors.color,
-                            c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent)
+
+                    val contact = if (c.type != null) {
+                        ContactBody(c.id, c.phoneNumber, c.idMatcher, c.name, c.type!!, c.colors.color, c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent)
+                    } else {
+                        ContactBody(c.id, c.phoneNumber, c.idMatcher, c.name, c.colors.color, c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent)
+                    }
+
                     contacts.add(contact)
                 } while (cursor.moveToNext())
 

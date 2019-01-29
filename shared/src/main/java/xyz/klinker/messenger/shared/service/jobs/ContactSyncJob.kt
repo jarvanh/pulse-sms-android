@@ -54,8 +54,12 @@ class ContactSyncJob : SimpleJobService() {
         for (i in contactsList.indices) {
             val c = contactsList[i]
             c.encrypt(account.encryptor!!)
-            val contactBody = ContactBody(c.id, c.phoneNumber, c.idMatcher, c.name, c.colors.color,
-                    c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent)
+
+            val contactBody = if (c.type != null) {
+                ContactBody(c.id, c.phoneNumber, c.idMatcher, c.name, c.type!!, c.colors.color, c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent)
+            } else {
+                ContactBody(c.id, c.phoneNumber, c.idMatcher, c.name, c.colors.color, c.colors.colorDark, c.colors.colorLight, c.colors.colorAccent)
+            }
 
             contacts[i] = contactBody
         }

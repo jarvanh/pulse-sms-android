@@ -495,6 +495,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 contact.id = json.getLong("device_id")
                 contact.phoneNumber = encryptionUtils!!.decrypt(json.getString("phone_number"))
                 contact.name = encryptionUtils.decrypt(json.getString("name"))
+                contact.type = if (json.has("type")) json.getInt("type") else 4
                 contact.colors.color = json.getInt("color")
                 contact.colors.colorDark = json.getInt("color_dark")
                 contact.colors.colorLight = json.getInt("color_light")
@@ -530,6 +531,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 val contact = Contact()
                 contact.phoneNumber = encryptionUtils!!.decrypt(json.getString("phone_number"))
                 contact.name = encryptionUtils.decrypt(json.getString("name"))
+                contact.type = if (json.has("type")) json.getInt("type") else 4
                 contact.colors.color = json.getInt("color")
                 contact.colors.colorDark = json.getInt("color_dark")
                 contact.colors.colorLight = json.getInt("color_light")

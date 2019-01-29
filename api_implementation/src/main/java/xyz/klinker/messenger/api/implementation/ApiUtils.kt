@@ -173,16 +173,21 @@ object ApiUtils {
     /**
      * Adds a new contact.
      */
-    fun addContact(accountId: String?, id: Long, phoneNumber: String?, idMatcher: String?, name: String?, color: Int,
-                   colorDark: Int, colorLight: Int, colorAccent: Int,
+    fun addContact(accountId: String?, id: Long, phoneNumber: String?, idMatcher: String?, name: String?, type: Int?,
+                   color: Int, colorDark: Int, colorLight: Int, colorAccent: Int,
                    encryptionUtils: EncryptionUtils?) {
         if (accountId == null || encryptionUtils == null) {
             return
         }
 
-        val body = ContactBody(id,
-                encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(idMatcher),
-                encryptionUtils.encrypt(name), color, colorDark, colorLight, colorAccent)
+        val body = if (type != null) {
+            ContactBody(id, encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(idMatcher),
+                    encryptionUtils.encrypt(name), type, color, colorDark, colorLight, colorAccent)
+        } else {
+            ContactBody(id, encryptionUtils.encrypt(phoneNumber), encryptionUtils.encrypt(idMatcher),
+                    encryptionUtils.encrypt(name), color, colorDark, colorLight, colorAccent)
+        }
+
         val request = AddContactRequest(accountId, body)
 
         addContact(request)

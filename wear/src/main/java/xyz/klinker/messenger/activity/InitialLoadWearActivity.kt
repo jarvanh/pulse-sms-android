@@ -160,7 +160,7 @@ class InitialLoadWearActivity : Activity(), ProgressUpdateListener {
 
             handler!!.post { progress.isIndeterminate = true }
 
-            val contacts = ContactUtils.queryContacts(context, source)
+            val contacts = ContactUtils.queryContacts(context, source, true)
             source.insertContacts(context, contacts, null)
 
             handler!!.postDelayed({ close() }, 5000)

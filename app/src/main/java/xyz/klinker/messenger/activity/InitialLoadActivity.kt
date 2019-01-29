@@ -235,7 +235,7 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
 
             handler!!.post { progress.isIndeterminate = true }
 
-            val contacts = ContactUtils.queryContacts(context, source)
+            val contacts = ContactUtils.queryContacts(context, source, true)
             source.insertContacts(this, contacts, null)
 
             val importTime = TimeUtils.now - startTime

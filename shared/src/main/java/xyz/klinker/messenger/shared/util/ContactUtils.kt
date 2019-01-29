@@ -374,7 +374,7 @@ object ContactUtils {
             val conversations = dataSource.getAllConversationsAsList(context)
 
             val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-            val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.Contacts.PHOTO_THUMBNAIL_URI)
+            val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.Contacts.PHOTO_THUMBNAIL_URI, ContactsContract.CommonDataKinds.Phone.TYPE)
 
             var cursor = try {
                 context.contentResolver.query(
@@ -399,11 +399,12 @@ object ContactUtils {
                     contact.name = cursor.getString(0)
                     contact.phoneNumber = cursor.getString(1)
                     contact.image = cursor.getString(2)
+                    contact.type = cursor.getInt(3)
+                    contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
+
                     if (contact.image != null) {
                         contact.image = contact.image!!.replace("/photo", "") + "/photo"
                     }
-
-                    contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
 
                     val colorSet = getColorsFromConversation(conversations, contact.phoneNumber!!)
                     if (colorSet != null) {
@@ -444,14 +445,13 @@ object ContactUtils {
 
         try {
             val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-            val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP)
+            val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP)
 
             val cursor = context.contentResolver.query(
                     uri,
                     projection,
-                    ContactsContract.CommonDataKinds.Phone.TYPE + "=? AND " +
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP + " >= ?",
-                    arrayOf(Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE), java.lang.Long.toString(since)), null
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP + " >= ?",
+                    arrayOf(since.toString()), null
             )
 
             if (cursor != null && cursor.moveToFirst()) {
@@ -461,6 +461,7 @@ object ContactUtils {
                     contact.id = DataSource.generateId()
                     contact.name = cursor.getString(0)
                     contact.phoneNumber = PhoneNumberUtils.clearFormatting(PhoneNumberUtils.format(cursor.getString(1)))
+                    contact.type = cursor.getInt(3)
                     contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
 
                     val colorSet = getColorsFromConversation(conversations, contact.phoneNumber!!)

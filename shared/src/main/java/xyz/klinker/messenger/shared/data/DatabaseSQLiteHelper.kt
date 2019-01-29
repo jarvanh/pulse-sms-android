@@ -155,6 +155,14 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
                 e.printStackTrace()
             }
         }
+
+        if (oldVersion < 17) {
+            try {
+                db.execSQL("ALTER TABLE contact ADD COLUMN type integer")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     fun onDrop(db: SQLiteDatabase) {
@@ -166,7 +174,7 @@ class DatabaseSQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABAS
     companion object {
 
         private const val DATABASE_NAME = "messenger.db"
-        private const val DATABASE_VERSION = 16
+        private const val DATABASE_VERSION = 17
 
     }
 

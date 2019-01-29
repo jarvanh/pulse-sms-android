@@ -259,6 +259,7 @@ object DataSource {
             values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
             values.put(Contact.COLUMN_ID_MATCHER, SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(contact.phoneNumber!!)).default)
             values.put(Contact.COLUMN_NAME, contact.name)
+            values.put(Contact.COLUMN_TYPE, contact.type)
             values.put(Contact.COLUMN_COLOR, contact.colors.color)
             values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
             values.put(Contact.COLUMN_COLOR_LIGHT, contact.colors.colorLight)
@@ -297,6 +298,7 @@ object DataSource {
         values.put(Contact.COLUMN_PHONE_NUMBER, contact.phoneNumber)
         values.put(Contact.COLUMN_ID_MATCHER, contact.idMatcher)
         values.put(Contact.COLUMN_NAME, contact.name)
+        values.put(Contact.COLUMN_TYPE, contact.type)
         values.put(Contact.COLUMN_COLOR, contact.colors.color)
         values.put(Contact.COLUMN_COLOR_DARK, contact.colors.colorDark)
         values.put(Contact.COLUMN_COLOR_LIGHT, contact.colors.colorLight)
@@ -311,7 +313,7 @@ object DataSource {
         }
 
         if (useApi) {
-            ApiUtils.addContact(accountId(context), contact.id, contact.phoneNumber, contact.idMatcher, contact.name,
+            ApiUtils.addContact(accountId(context), contact.id, contact.phoneNumber, contact.idMatcher, contact.name, contact.type,
                     contact.colors.color, contact.colors.colorDark, contact.colors.colorLight,
                     contact.colors.colorAccent, encryptor(context))
         }
@@ -530,7 +532,7 @@ object DataSource {
      * @param contact the contact with new values
      */
     @JvmOverloads fun updateContact(context: Context, contact: Contact, useApi: Boolean = true) {
-        updateContact(context, contact.id, contact.phoneNumber, contact.name, contact.colors.color, contact.colors.colorDark,
+        updateContact(context, contact.id, contact.phoneNumber, contact.name, contact.type, contact.colors.color, contact.colors.colorDark,
                 contact.colors.colorLight, contact.colors.colorAccent, useApi)
     }
 
@@ -544,12 +546,13 @@ object DataSource {
      * @param colorLight     the new light color (null if we don't want to update it)
      * @param colorAccent    the new accent color (null if we don't want to update it)
      */
-    @JvmOverloads fun updateContact(context: Context, id: Long, phoneNumber: String?, name: String?,
+    @JvmOverloads fun updateContact(context: Context, id: Long, phoneNumber: String?, name: String?, type: Int?,
                                     color: Int?, colorDark: Int?, colorLight: Int?, colorAccent: Int?,
                                     useApi: Boolean = true) {
         val values = ContentValues()
 
         if (name != null) values.put(Contact.COLUMN_NAME, name)
+        if (type != null) values.put(Contact.COLUMN_TYPE, type)
         if (color != null) values.put(Contact.COLUMN_COLOR, color)
         if (colorDark != null) values.put(Contact.COLUMN_COLOR_DARK, colorDark)
         if (colorLight != null) values.put(Contact.COLUMN_COLOR_LIGHT, colorLight)

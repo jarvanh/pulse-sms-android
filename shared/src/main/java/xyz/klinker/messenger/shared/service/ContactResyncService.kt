@@ -13,8 +13,7 @@ import xyz.klinker.messenger.shared.util.TimeUtils
 
 class ContactResyncService : IntentService("ContactResyncService") {
     companion object {
-        val TAG = "ContactResyncService"
-        val EXTRA_FORCE_SYNC_ALL_CONTACTS = "extra_all_contacts"
+        private const val TAG = "ContactResyncService"
 
         fun runIfApplicable(context: Context, sharedPreferences: SharedPreferences, storedAppVersion: Int) {
             if (sharedPreferences.getBoolean("v2.6.6.9", true)) {
@@ -30,11 +29,10 @@ class ContactResyncService : IntentService("ContactResyncService") {
     }
 
     override fun onHandleIntent(intent: Intent?) {
-        val forceAllContacts = intent?.getBooleanExtra(EXTRA_FORCE_SYNC_ALL_CONTACTS, false) ?: false
         val encryptionUtils = Account.encryptor
         val startTime = TimeUtils.now
 
-        val contacts = ContactUtils.queryContacts(this, DataSource, forceAllContacts)
+        val contacts = ContactUtils.queryContacts(this, DataSource, true)
         if (contacts.isEmpty()) {
             return
         }
