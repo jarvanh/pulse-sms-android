@@ -233,7 +233,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void updateContact() {
-        source.updateContact(context, 1, "515", "Test", 1, 2, 3, 4, false);
+        source.updateContact(context, 1, "515", "Test", 1, 1, 2, 3, 4, false);
         verify(database).update(eq("contact"), any(ContentValues.class), eq("phone_number=?"),
                 eq(new String[]{"515"}));
     }

@@ -191,7 +191,7 @@ public class SQLiteQueryTest extends MessengerRealDataSuite {
 
     @Test
     public void updateContact() {
-        source.updateContact(context, 1, "5159911493", "Lucas Klinker", 2, 3, 4, 5, false);
+        source.updateContact(context, 1, "5159911493", "Lucas Klinker", 1, 2, 3, 4, 5, false);
         Contact contact = source.getContact(context, "5159911493");
         assertEquals("5159911493", contact.getPhoneNumber());
         assertEquals("Lucas Klinker", contact.getName());
