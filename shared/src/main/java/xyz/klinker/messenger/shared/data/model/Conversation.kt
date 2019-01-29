@@ -24,6 +24,7 @@ import android.provider.ContactsContract
 import xyz.klinker.messenger.api.entity.ConversationBody
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.encryption.EncryptionUtils
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.util.ColorUtils
 
 /**
@@ -147,6 +148,7 @@ class Conversation : DatabaseTable {
         this.name = this@Conversation.title
         this.type = 0
         this.colors = this@Conversation.colors
+        this.id = DataSource.generateId()
     }
 
     companion object {
