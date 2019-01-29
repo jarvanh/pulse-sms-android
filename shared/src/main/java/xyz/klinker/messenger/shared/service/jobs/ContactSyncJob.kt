@@ -26,7 +26,7 @@ class ContactSyncJob : SimpleJobService() {
         if (since == -1L) {
             writeUpdateTimestamp(sharedPrefs)
             scheduleNextRun(this)
-            return 0
+            return JobService.RESULT_SUCCESS
         }
 
         // otherwise, we should look for the contacts that have changed since the last run and
@@ -34,7 +34,7 @@ class ContactSyncJob : SimpleJobService() {
 
         val account = Account
         if (account.encryptor == null) {
-            return 0
+            return JobService.RESULT_FAIL_NORETRY
         }
 
         val source = DataSource
@@ -43,7 +43,7 @@ class ContactSyncJob : SimpleJobService() {
         if (contactsList.isEmpty()) {
             writeUpdateTimestamp(sharedPrefs)
             scheduleNextRun(this)
-            return 0
+            return JobService.RESULT_SUCCESS
         }
 
         source.insertContacts(this, contactsList, null)
@@ -72,7 +72,7 @@ class ContactSyncJob : SimpleJobService() {
         writeUpdateTimestamp(sharedPrefs)
         scheduleNextRun(this)
 
-        return 0
+        return JobService.RESULT_SUCCESS
     }
 
     private fun writeUpdateTimestamp(sharedPrefs: SharedPreferences) {
@@ -81,7 +81,7 @@ class ContactSyncJob : SimpleJobService() {
 
     companion object {
 
-        private val JOB_ID = "contact-sync-job"
+        private const val JOB_ID = "contact-sync-job"
 
         fun scheduleNextRun(context: Context) {
             val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))

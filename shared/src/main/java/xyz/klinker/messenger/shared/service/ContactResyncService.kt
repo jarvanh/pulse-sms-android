@@ -8,6 +8,7 @@ import android.util.Log
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
 
@@ -33,7 +34,9 @@ class ContactResyncService : IntentService("ContactResyncService") {
         val startTime = TimeUtils.now
 
         val contacts = ContactUtils.queryContacts(this, DataSource, true)
-        if (contacts.isEmpty()) {
+        val groups = ContactUtils.queryContactGroups(this).map { it.toContact() }
+
+        if (contacts.isEmpty() && groups.isEmpty()) {
             return
         }
 
@@ -48,6 +51,9 @@ class ContactResyncService : IntentService("ContactResyncService") {
 
         DataSource.insertContacts(this, contacts, null)
         Log.v(TAG, "queried and inserted new contacts: ${TimeUtils.now - startTime} ms")
+
+        DataSource.insertContacts(this, groups, null)
+        Log.v(TAG, "queried and inserted new groups: ${TimeUtils.now - startTime} ms")
 
         if (Account.exists() && Account.primary) {
             ApiUploadService.uploadContacts(this, encryptionUtils!!)

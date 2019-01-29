@@ -42,6 +42,7 @@ import xyz.klinker.messenger.api.implementation.LoginActivity
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.service.ApiDownloadService
 import xyz.klinker.messenger.shared.service.ApiUploadService
 import xyz.klinker.messenger.shared.util.*
@@ -237,6 +238,9 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
 
             val contacts = ContactUtils.queryContacts(context, source, true)
             source.insertContacts(this, contacts, null)
+
+            val groups = ContactUtils.queryContactGroups(this).map { it.toContact() }
+            source.insertContacts(this, groups, null)
 
             val importTime = TimeUtils.now - startTime
             AnalyticsHelper.importFinished(this, importTime)

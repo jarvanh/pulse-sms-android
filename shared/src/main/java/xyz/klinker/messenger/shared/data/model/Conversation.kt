@@ -141,6 +141,14 @@ class Conversation : DatabaseTable {
         this.idMatcher = utils.decrypt(this.idMatcher)
     }
 
+    fun toContact(): Contact = Contact().apply {
+        this.phoneNumber = this@Conversation.phoneNumbers?.replace(", ", ",")
+        this.idMatcher = this@Conversation.idMatcher
+        this.name = this@Conversation.title
+        this.type = 0
+        this.colors = this@Conversation.colors
+    }
+
     companion object {
 
         const val TABLE = "conversation"
