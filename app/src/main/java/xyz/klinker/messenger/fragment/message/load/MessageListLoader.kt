@@ -6,7 +6,6 @@ import android.view.View
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.futuremind.recyclerviewfastscroll.FastScroller
 import com.l4digital.fastscroll.FastScrollRecyclerView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.message.MessageListAdapter
