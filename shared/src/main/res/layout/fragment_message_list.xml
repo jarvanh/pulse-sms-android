@@ -59,6 +59,7 @@
                 android:layout_marginStart="@dimen/message_list_padding"
                 android:paddingBottom="12dp"
                 android:clipToPadding="false"
+                android:alpha="@integer/message_list_fastscroll_handle_alpha"
                 app:bubbleSize="small"/>
 
         </RelativeLayout>
