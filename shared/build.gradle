@@ -68,6 +68,7 @@ dependencies {
     api 'com.afollestad.material-dialogs:core:0.9.4.5'
     api 'com.roughike:bottom-bar:2.3.1'
     api 'com.futuremind.recyclerfastscroll:fastscroll:0.2.5'
+    api 'com.l4digital.fastscroll:fastscroll:2.0.1'
     api 'com.miguelcatalan:materialsearchview:1.4.0'
 
     api 'com.raycoarana.codeinputview:codeinputview:1.2.5'

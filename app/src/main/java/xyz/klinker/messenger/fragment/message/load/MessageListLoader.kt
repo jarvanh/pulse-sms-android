@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.futuremind.recyclerviewfastscroll.FastScroller
+import com.l4digital.fastscroll.FastScrollRecyclerView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.message.MessageListAdapter
 import xyz.klinker.messenger.fragment.message.MessageListFragment
@@ -28,8 +29,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
     private val draftManager
         get() = fragment.draftManager
 
-    val messageList: RecyclerView by lazy { fragment.rootView!!.findViewById<View>(R.id.message_list) as RecyclerView }
-    private val dragScrollBar: FastScroller by lazy { fragment.rootView!!.findViewById<View>(R.id.drag_scrollbar) as FastScroller }
+    val messageList: FastScrollRecyclerView by lazy { fragment.rootView!!.findViewById<View>(R.id.message_list) as FastScrollRecyclerView }
     private val manager: LinearLayoutManager by lazy { LinearLayoutManager(activity) }
     
     var adapter: MessageListAdapter? = null
@@ -48,9 +48,8 @@ class MessageListLoader(private val fragment: MessageListFragment) {
         messageList.layoutManager = manager
 
         val color = if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else argManager.color
-        dragScrollBar.setBubbleColor(color)
-        dragScrollBar.setHandleColor(color)
-        dragScrollBar.setRecyclerView(messageList)
+        messageList.setBubbleColor(color)
+        messageList.setHandleColor(color)
 
         messageList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -190,7 +189,6 @@ class MessageListLoader(private val fragment: MessageListFragment) {
             adapter?.setFromColorMapper(contactMap, contactMapByName)
 
             messageList.adapter = adapter
-            dragScrollBar.setRecyclerView(messageList)
             messageList.animate().withLayer()
                     .alpha(1f).setDuration(100).setStartDelay(0).setListener(null)
         }

@@ -27,6 +27,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider
 import com.google.android.material.snackbar.Snackbar
+import com.l4digital.fastscroll.FastScroller
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.MessageViewHolder
 import xyz.klinker.messenger.api.implementation.Account
@@ -49,7 +50,7 @@ import java.util.*
  */
 class MessageListAdapter(messages: Cursor, private val receivedColor: Int, private val accentColor: Int, private val isGroup: Boolean,
                          private val fragment: MessageListFragment)
-    : RecyclerView.Adapter<MessageViewHolder>(), MessageDeletedListener, SectionTitleProvider {
+    : RecyclerView.Adapter<MessageViewHolder>(), MessageDeletedListener, SectionTitleProvider, FastScroller.SectionIndexer {
 
     private val activity: FragmentActivity? by lazy { fragment.activity }
 
@@ -250,7 +251,8 @@ class MessageListAdapter(messages: Cursor, private val receivedColor: Int, priva
 
     }
 
-    override fun getSectionTitle(position: Int): String {
+    override fun getSectionTitle(position: Int) = getSectionText(position)
+    override fun getSectionText(position: Int): String {
         if (position < 0) {
             return ""
         }

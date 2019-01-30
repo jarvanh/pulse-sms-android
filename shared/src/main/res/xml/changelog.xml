@@ -20,7 +20,10 @@
         name="4.5.2"
         description="Unreleased">
         <!-- Added new fotoapparat camera view (behind a feature flag, for now) -->
+        <!-- Updated fast scroll library to get rid of a ton of warnings that the scroller was throwing into the log files -->
         <text>Contact management improvements for the web version of the app: https://github.com/klinker-apps/messenger-issues/issues/620</text>
+        <text>Bug fixes</text>
+        <text>Performance improvements</text>
     </version>
 
     <version

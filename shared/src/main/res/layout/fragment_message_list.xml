@@ -49,10 +49,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_weight="1">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.l4digital.fastscroll.FastScrollRecyclerView
                 android:id="@+id/message_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -60,18 +59,7 @@
                 android:layout_marginStart="@dimen/message_list_padding"
                 android:paddingBottom="12dp"
                 android:clipToPadding="false"
-                android:alpha="0"
-                android:scrollbars="none"
-                tools:ignore="NestedWeights" />
-
-            <com.futuremind.recyclerviewfastscroll.FastScroller
-                android:id="@+id/drag_scrollbar"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="-6dp"
-                app:fastscroll__bubbleTextAppearance="@style/StyledFastScrollerTextAppearance"/>
+                app:bubbleSize="small"/>
 
         </RelativeLayout>
 

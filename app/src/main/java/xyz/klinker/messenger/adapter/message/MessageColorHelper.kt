@@ -25,12 +25,11 @@ class MessageColorHelper {
     }
 
     fun getColor(holder: MessageViewHolder?, message: Message?): Int {
-        if (Settings.useGlobalThemeColor || holder == null || message == null) {
+        if (Settings.useGlobalThemeColor || holder == null || message == null || message.from == null) {
             return Integer.MIN_VALUE
         }
 
         try {
-            Log.v("message_from", "from: " + message.from)
             if (message.type == Message.TYPE_RECEIVED && (fromColorMapper.isNotEmpty() || fromColorMapperByName.isNotEmpty())) {
                 when {
                     fromColorMapper.containsKey(message.from!!) -> {
@@ -103,7 +102,7 @@ class MessageColorHelper {
                 }
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+
         }
 
         return Integer.MIN_VALUE
