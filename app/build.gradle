@@ -44,6 +44,8 @@ android {
 dependencies {
     api project(":shared")
 
+    implementation 'io.fotoapparat:fotoapparat:2.6.1'
+
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:${versions.robolectric}"
     testImplementation "org.mockito:mockito-core:${versions.mockito}"

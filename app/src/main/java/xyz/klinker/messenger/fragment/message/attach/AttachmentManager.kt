@@ -161,6 +161,8 @@ class AttachmentManager(private val fragment: MessageListFragment) {
         attach.isSoundEffectsEnabled = false
         attach.performClick()
         attach.isSoundEffectsEnabled = true
+
+        fragment.attachInitializer.onClose()
         true
     } else {
         false

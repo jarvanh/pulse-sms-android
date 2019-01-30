@@ -13,6 +13,7 @@ class PermissionHelper(private val fragment: MessageListFragment) {
                 PERMISSION_STORAGE_REQUEST -> attachManager.attachImage(true)
                 PERMISSION_AUDIO_REQUEST -> attachManager.recordAudio(true)
                 PERMISSION_LOCATION_REQUEST -> attachManager.attachLocation(true)
+                PERMISSION_CAMERA_REQUEST -> attachManager.captureImage(true)
                 else -> return false
             }
         } catch (e: Exception) {
@@ -23,10 +24,10 @@ class PermissionHelper(private val fragment: MessageListFragment) {
     }
 
     companion object {
-        val PERMISSION_STORAGE_REQUEST = 1
-        val PERMISSION_AUDIO_REQUEST = 2
-        val PERMISSION_LOCATION_REQUEST = 5
-
+        const val PERMISSION_STORAGE_REQUEST = 1
+        const val PERMISSION_AUDIO_REQUEST = 2
+        const val PERMISSION_CAMERA_REQUEST = 3
+        const val PERMISSION_LOCATION_REQUEST = 5
     }
 
 }

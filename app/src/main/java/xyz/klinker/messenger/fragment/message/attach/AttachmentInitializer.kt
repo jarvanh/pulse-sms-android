@@ -18,12 +18,12 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.fragment.app.FragmentActivity
 import com.afollestad.materialcamera.MaterialCamera
-import xyz.klinker.giphy.Giphy
-import xyz.klinker.messenger.BuildConfig
 import xyz.klinker.messenger.R
-import xyz.klinker.messenger.fragment.Camera2BasicFragment
+import xyz.klinker.messenger.fragment.camera.Camera2BasicFragment
+import xyz.klinker.messenger.fragment.camera.FotoapparatFragment
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.message.send.PermissionHelper
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
@@ -48,7 +48,8 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     private val attachButtonHolder: LinearLayout by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_button_holder) as LinearLayout }
     private val dragDismissFrameLayout: View by lazy { fragment.rootView!! }
 
-    private var cameraFragment: Camera2BasicFragment? = null
+    private var camera2Fragment: Camera2BasicFragment? = null
+    var fotoapparatFragment: FotoapparatFragment? = null
 
     fun initAttachHolder() {
         if (!TvUtils.hasTouchscreen(activity)) {
@@ -151,11 +152,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         }
     }
 
-    private fun attachImage() {
-        attachImage(false)
-    }
-
-    internal fun attachImage(alwaysOpen: Boolean) {
+    internal fun attachImage(alwaysOpen: Boolean = false) {
         if (!alwaysOpen && getBoldedAttachHolderPosition() == 0 || activity == null) {
             return
         }
@@ -176,16 +173,22 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
 
     }
 
-    private fun captureImage() {
-        if (getBoldedAttachHolderPosition() == 1) {
+    fun captureImage(alwaysOpen: Boolean = false) {
+        if (!alwaysOpen && getBoldedAttachHolderPosition() == 1) {
             return
         }
 
         prepareAttachHolder(1)
 
-        cameraFragment = Camera2BasicFragment.newInstance()
-        activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, cameraFragment!!)?.commit()
-        cameraFragment?.attachImageSelectedListener(attachListener)
+        if (FeatureFlags.INTERNAL_CAMERA_REVAMP) {
+            fotoapparatFragment = FotoapparatFragment.getInstance()
+            activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, fotoapparatFragment!!)?.commit()
+            fotoapparatFragment?.callback = attachListener
+        } else {
+            camera2Fragment = Camera2BasicFragment.newInstance()
+            activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, camera2Fragment!!)?.commit()
+            camera2Fragment?.attachImageSelectedListener(attachListener)
+        }
     }
 
     private fun attachGif() {
@@ -230,11 +233,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         camera.start(AttachmentListener.RESULT_VIDEO_REQUEST)
     }
 
-    private fun recordAudio() {
-        recordAudio(false)
-    }
-
-    internal fun recordAudio(alwaysOpen: Boolean) {
+    internal fun recordAudio(alwaysOpen: Boolean = false) {
         if (!alwaysOpen && getBoldedAttachHolderPosition() == 5 || activity == null) {
             return
         }
@@ -251,11 +250,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         }
     }
 
-    private fun attachLocation() {
-        attachLocation(false)
-    }
-
-    internal fun attachLocation(alwaysOpen: Boolean) {
+    internal fun attachLocation(alwaysOpen: Boolean = false) {
         if (!alwaysOpen && getBoldedAttachHolderPosition() == 6 || activity == null) {
             return
         }
@@ -314,6 +309,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     private fun prepareAttachHolder(positionToBold: Int) {
         fragment.dismissKeyboard()
         attachHolder.removeAllViews()
+        fotoapparatFragment?.stopCamera()
 
         for (i in 0 until attachButtonHolder.childCount) {
             if (positionToBold == i) {
@@ -327,5 +323,9 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     private fun getBoldedAttachHolderPosition(): Int {
         return (0 until attachButtonHolder.childCount).firstOrNull { attachButtonHolder.getChildAt(it).alpha == 1.0f }
                 ?: -1
+    }
+
+    fun onClose() {
+        fotoapparatFragment?.stopCamera()
     }
 }

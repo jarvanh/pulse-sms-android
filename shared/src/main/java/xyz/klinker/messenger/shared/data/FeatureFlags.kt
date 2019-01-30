@@ -84,7 +84,7 @@ object FeatureFlags {
     private val FLAG_TOOLBAR_COLOR = "flag_apply_toolbar_color"
     private val FLAG_CHECK_SUB_STATUS_ON_ACCOUNT_PAGE = "flag_check_sub_status_on_account_page"
     private val FLAG_BLACKLIST_PHRASE = "flag_blacklist_phrase"
-
+    private val FLAG_INTERNAL_CAMERA_REVAMP = "flag_internal_camera_revamp"
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
 
@@ -102,6 +102,7 @@ object FeatureFlags {
     var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false
 
     // disabled for future features
+    var INTERNAL_CAMERA_REVAMP: Boolean = false
 
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
@@ -110,6 +111,8 @@ object FeatureFlags {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
+
+        INTERNAL_CAMERA_REVAMP = getValue(context, sharedPrefs, FLAG_INTERNAL_CAMERA_REVAMP)
 
         QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
     }
@@ -121,6 +124,8 @@ object FeatureFlags {
 
         when (identifier) {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
+
+            FLAG_INTERNAL_CAMERA_REVAMP -> INTERNAL_CAMERA_REVAMP = flag
 
             FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
         }

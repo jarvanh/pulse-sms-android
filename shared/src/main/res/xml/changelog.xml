@@ -19,6 +19,7 @@
     <version
         name="4.5.2"
         description="Unreleased">
+        <!-- Added new fotoapparat camera view (behind a feature flag, for now) -->
         <text>Contact management improvements for the web version of the app: https://github.com/klinker-apps/messenger-issues/issues/620</text>
     </version>
 
