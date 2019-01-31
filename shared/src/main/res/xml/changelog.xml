@@ -18,11 +18,13 @@
 
     <version
         name="4.5.2"
-        description="Unreleased">
+        description="January 31st, 2019">
+        <!-- Display the repeat status in the scheduled message list -->
         <!-- Added prep work behind repeated scheduled messages (database, apis, firebase, sending service, etc) -->
         <!-- Added new fotoapparat camera view (behind a feature flag, for now) -->
         <!-- Updated fast scroll library to get rid of a ton of warnings that the scroller was throwing into the log files -->
-        <text>Contact management improvements for the web version of the app: https://github.com/klinker-apps/messenger-issues/issues/620</text>
+        <!-- Force resync contacts to web -->
+        <text>Contact management improvements for the web version: https://github.com/klinker-apps/messenger-issues/issues/620</text>
         <text>Bug fixes</text>
         <text>Performance improvements</text>
     </version>
@@ -30,6 +32,8 @@
     <version
         name="4.5.1"
         description="January 27th, 2019">
+        <!-- Handle multiple pieces of data during the share process (ex: picture + text) -->
+        <!-- fix the navigation bar color when going to private conversations (fingerprint dialog threw it off) -->
         <text>Bug fixes</text>
     </version>
 
@@ -1482,21 +1486,15 @@
     <version
         name="0.5"
         description="August 3rd, 2016">
-        <text>All of the power features implemented on the phone client now, just need to add server
-            support
-        </text>
+        <text>All of the power features implemented on the phone client now, just need to add server support</text>
         <text>Bug fixes on initial client</text>
     </version>
 
     <version
         name="0.1"
         description="July 27th, 2016">
-        <text>Basically recreate features that I've implemented in EvolveSMS in the past in a better
-            way
-        </text>
-        <text>Use my own database instead of the internal content provider for speed and syncing
-            between devices
-        </text>
+        <text>Basically recreate features that I've implemented in EvolveSMS in the past in a better way</text>
+        <text>Use my own database instead of the internal content provider for speed and syncing between devices</text>
     </version>
 
     <version
