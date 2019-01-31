@@ -19,6 +19,7 @@
     <version
         name="4.5.2"
         description="Unreleased">
+        <!-- Added prep work behind repeated scheduled messages (database, apis, firebase, sending service, etc) -->
         <!-- Added new fotoapparat camera view (behind a feature flag, for now) -->
         <!-- Updated fast scroll library to get rid of a ton of warnings that the scroller was throwing into the log files -->
         <text>Contact management improvements for the web version of the app: https://github.com/klinker-apps/messenger-issues/issues/620</text>
