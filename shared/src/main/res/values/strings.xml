@@ -586,6 +586,7 @@
     <string name="scheduled_repeat_weekly">Repeat weekly</string>
     <string name="scheduled_repeat_monthly">Repeat monthly</string>
     <string name="scheduled_repeat_yearly">Repeat yearly</string>
+    <string name="remove_scheduled_message">Do you want to delete this scheduled message?</string>
 
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Encrypting and uploading…</string>

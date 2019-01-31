@@ -164,10 +164,20 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     }
 
     override fun onClick(message: ScheduledMessage) {
-        val fragment = EditScheduledMessageFragment()
-        fragment.setMessage(message)
-        fragment.setFragment(this)
-        fragment.show(fragmentActivity?.supportFragmentManager, "")
+        if (message.mimeType != MimeType.TEXT_PLAIN && fragmentActivity != null) {
+            AlertDialog.Builder(fragmentActivity!!)
+                    .setMessage(R.string.remove_scheduled_message)
+                    .setPositiveButton(R.string.api_yes) { _, _ ->
+                        DataSource.deleteScheduledMessage(fragmentActivity!!, message.id)
+                        loadMessages()
+                    }.setNegativeButton(R.string.api_no) { _, _ -> }
+                    .show()
+        } else {
+            val fragment = EditScheduledMessageFragment()
+            fragment.setMessage(message)
+            fragment.setFragment(this)
+            fragment.show(fragmentActivity?.supportFragmentManager, "")
+        }
     }
 
     private fun startSchedulingMessage() {
