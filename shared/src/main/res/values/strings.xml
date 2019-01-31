@@ -581,6 +581,11 @@
     <string name="no_scheduled_messages_summary">You can create a new one with the plus button
         below!</string>
     <string name="scheduled_message_in_future">Time must be in the future!</string>
+    <string name="scheduled_repeat_never">Do not repeat</string>
+    <string name="scheduled_repeat_daily">Repeat daily</string>
+    <string name="scheduled_repeat_weekly">Repeat weekly</string>
+    <string name="scheduled_repeat_monthly">Repeat monthly</string>
+    <string name="scheduled_repeat_yearly">Repeat yearly</string>
 
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Encrypting and uploading…</string>

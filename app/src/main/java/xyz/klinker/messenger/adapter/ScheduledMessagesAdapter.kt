@@ -46,10 +46,21 @@ class ScheduledMessagesAdapter(private val scheduledMessages: List<ScheduledMess
     override fun onBindViewHolder(holder: ScheduledMessageViewHolder, position: Int) {
         val message = getItem(position)
 
+        // phone number vs a known contact
         if (message.title == null || message.title!!.isEmpty()) {
             holder.titleDate.text = message.to + " - " + formatter.format(Date(message.timestamp))
         } else {
             holder.titleDate.text = message.title + " - " + formatter.format(Date(message.timestamp))
+        }
+
+        if (message.repeat != ScheduledMessage.REPEAT_NEVER) {
+            val text = holder.titleDate.text.toString()
+            holder.titleDate.text = "$text (" + when (message.repeat) {
+                ScheduledMessage.REPEAT_DAILY -> holder.titleDate.context.getString(R.string.scheduled_repeat_daily)
+                ScheduledMessage.REPEAT_WEEKLY -> holder.titleDate.context.getString(R.string.scheduled_repeat_weekly)
+                ScheduledMessage.REPEAT_MONTHLY -> holder.titleDate.context.getString(R.string.scheduled_repeat_monthly)
+                else -> holder.titleDate.context.getString(R.string.scheduled_repeat_yearly)
+            } + ")"
         }
 
         holder.message.text = message.data
