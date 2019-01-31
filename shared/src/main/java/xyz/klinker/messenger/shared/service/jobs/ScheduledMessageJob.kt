@@ -32,8 +32,10 @@ import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.shared.util.*
 import android.app.AlarmManager
 import android.content.BroadcastReceiver
+import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
+import xyz.klinker.messenger.shared.data.MimeType
 import java.util.*
 
 /**
@@ -70,7 +72,11 @@ class ScheduledMessageJob : BroadcastReceiver() {
                     val conversationId = source.insertSentMessage(message.to!!, message.data!!, message.mimeType!!, context)
                     val conversation = source.getConversation(context, conversationId)
 
-                    SendUtils(conversation?.simSubscriptionId).send(context, message.data!!, message.to!!)
+                    if (message.mimeType == MimeType.TEXT_PLAIN) {
+                        SendUtils(conversation?.simSubscriptionId).send(context, message.data!!, message.to!!)
+                    } else {
+                        SendUtils(conversation?.simSubscriptionId).send(context, "", message.to!!, Uri.parse(message.data!!), message.mimeType!!)
+                    }
 
                     // display a notification
                     val body = "<b>" + message.title + ": </b>" + message.data

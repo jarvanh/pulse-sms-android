@@ -61,6 +61,7 @@ class SendUtils constructor(private val subscriptionId: Int? = null) {
         return this
     }
 
+    // Accepts blank text for no message and just a picture
     fun send(context: Context, text: String, addresses: String, data: Uri? = null, mimeType: String? = null): Uri? {
         return send(context, text, addresses.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray(), data, mimeType)
     }
