@@ -22,7 +22,6 @@ import android.content.*
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
@@ -34,6 +33,7 @@ import android.widget.EditText
 import android.widget.MultiAutoCompleteTextView
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -295,9 +295,13 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                 .setView(layout)
                 .setPositiveButton(R.string.add) { _, _ ->
                     if (editText.text.isNotEmpty()) {
+                        // TODO: this is where I will need to read the repeat status from a spinner or something.
+
                         message.data = editText.text.toString()
                         message.mimeType = MimeType.TEXT_PLAIN
-                        saveMessage(message, editText)
+
+                        // TODO: this will be converted to "saveMessages" when media support is added.
+                        saveMessage(message)
                     } else {
                         displayMessageDialog(message)
                     }
@@ -306,14 +310,19 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                 .show()
     }
 
-    private fun saveMessage(message: ScheduledMessage, editText: EditText? = null) {
-        if (editText != null) {
+    private fun saveMessage(message: ScheduledMessage) {
+        saveMessages(listOf(message))
+    }
+
+    private fun saveMessages(messages: List<ScheduledMessage>) {
+        val content = activity?.findViewById<View>(android.R.id.content)
+        if (content != null) {
             (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
-                    ?.hideSoftInputFromWindow(editText.windowToken, 0)
+                    ?.hideSoftInputFromWindow(content.windowToken, 0)
         }
 
         Thread {
-            DataSource.insertScheduledMessage(fragmentActivity!!, message)
+            messages.forEach { DataSource.insertScheduledMessage(fragmentActivity!!, it) }
             loadMessages()
         }.start()
     }

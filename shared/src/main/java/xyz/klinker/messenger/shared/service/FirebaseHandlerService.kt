@@ -714,6 +714,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"))
             message.timestamp = getLong(json, "timestamp")
             message.title = encryptionUtils.decrypt(json.getString("title"))
+            message.repeat = if (json.has("repeat")) json.getInt("repeat") else ScheduledMessage.REPEAT_NEVER
 
             DataSource.insertScheduledMessage(context, message, false)
             ScheduledMessageJob.scheduleNextRun(context, DataSource)
@@ -729,6 +730,8 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             message.mimeType = encryptionUtils.decrypt(json.getString("mime_type"))
             message.timestamp = getLong(json, "timestamp")
             message.title = encryptionUtils.decrypt(json.getString("title"))
+            message.repeat = if (json.has("repeat")) json.getInt("repeat") else ScheduledMessage.REPEAT_NEVER
+
 
             DataSource.updateScheduledMessage(context, message, false)
             ScheduledMessageJob.scheduleNextRun(context, DataSource)

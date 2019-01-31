@@ -251,7 +251,7 @@ open class ApiUploadService : Service() {
                 m.fillFromCursor(cursor)
                 m.encrypt(encryptionUtils!!)
                 val message = ScheduledMessageBody(m.id, m.to, m.data,
-                        m.mimeType, m.timestamp, m.title)
+                        m.mimeType, m.timestamp, m.title, m.repeat)
 
                 messages[cursor.position] = message
             } while (cursor.moveToNext())

@@ -649,7 +649,7 @@ object ApiUtils {
      */
     fun addScheduledMessage(accountId: String?, deviceId: Long, title: String?,
                             to: String?, data: String?, mimeType: String?,
-                            timestamp: Long, encryptionUtils: EncryptionUtils?) {
+                            timestamp: Long, repeat: Int?, encryptionUtils: EncryptionUtils?) {
         if (accountId == null || encryptionUtils == null) {
             return
         }
@@ -660,7 +660,8 @@ object ApiUtils {
                 encryptionUtils.encrypt(data),
                 encryptionUtils.encrypt(mimeType),
                 timestamp,
-                encryptionUtils.encrypt(title))
+                encryptionUtils.encrypt(title),
+                repeat ?: 0)
 
         val request = AddScheduledMessageRequest(accountId, body)
 
@@ -675,7 +676,7 @@ object ApiUtils {
      */
     fun updateScheduledMessage(accountId: String?, deviceId: Long, title: String?,
                                to: String?, data: String?, mimeType: String?,
-                               timestamp: Long, encryptionUtils: EncryptionUtils?) {
+                               timestamp: Long, repeat: Int?, encryptionUtils: EncryptionUtils?) {
         if (accountId == null || encryptionUtils == null) {
             return
         }
@@ -683,7 +684,8 @@ object ApiUtils {
         val request = UpdateScheduledMessageRequest(
                 encryptionUtils.encrypt(to), encryptionUtils.encrypt(data),
                 encryptionUtils.encrypt(mimeType), timestamp,
-                encryptionUtils.encrypt(title))
+                encryptionUtils.encrypt(title),
+                repeat)
 
         val message = "update scheduled message"
         val call = api.scheduled().update(deviceId, accountId, request)

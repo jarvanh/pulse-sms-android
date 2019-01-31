@@ -23,14 +23,16 @@ public class UpdateScheduledMessageRequest {
     public String mimeType;
     public Long timestamp;
     public String title;
+    public Integer repeat;
 
     public UpdateScheduledMessageRequest(String to, String data, String mimeType, Long timestamp,
-                                         String title) {
+                                         String title, Integer repeat) {
         this.to = to;
         this.data = data;
         this.mimeType = mimeType;
         this.timestamp = timestamp;
         this.title = title;
+        this.repeat = repeat;
     }
 
 }

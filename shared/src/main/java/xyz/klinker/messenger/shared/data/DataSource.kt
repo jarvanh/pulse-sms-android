@@ -2761,10 +2761,11 @@ object DataSource {
         values.put(ScheduledMessage.COLUMN_DATA, message.data)
         values.put(ScheduledMessage.COLUMN_MIME_TYPE, message.mimeType)
         values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp)
+        values.put(ScheduledMessage.COLUMN_REPEAT, message.repeat)
 
         if (useApi) {
             ApiUtils.addScheduledMessage(accountId(context), message.id, message.title, message.to, message.data,
-                    message.mimeType, message.timestamp, encryptor(context))
+                    message.mimeType, message.timestamp, message.repeat, encryptor(context))
         }
 
         return try {
@@ -2789,6 +2790,7 @@ object DataSource {
         values.put(ScheduledMessage.COLUMN_DATA, message.data)
         values.put(ScheduledMessage.COLUMN_MIME_TYPE, message.mimeType)
         values.put(ScheduledMessage.COLUMN_TIMESTAMP, message.timestamp)
+        values.put(ScheduledMessage.COLUMN_REPEAT, message.repeat)
 
         try {
             database(context).update(ScheduledMessage.TABLE, values, ScheduledMessage.COLUMN_ID + "=?",
@@ -2801,7 +2803,7 @@ object DataSource {
 
         if (useApi) {
             ApiUtils.updateScheduledMessage(accountId(context), message.id, message.title, message.to, message.data,
-                    message.mimeType, message.timestamp, encryptor(context))
+                    message.mimeType, message.timestamp, message.repeat, encryptor(context))
         }
     }
 
