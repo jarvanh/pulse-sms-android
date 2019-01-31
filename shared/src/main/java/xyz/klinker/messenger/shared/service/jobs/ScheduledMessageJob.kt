@@ -34,6 +34,7 @@ import android.app.AlarmManager
 import android.content.BroadcastReceiver
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
+import java.util.*
 
 /**
  * Service responsible for sending scheduled message that are coming up, removing that message
@@ -64,11 +65,12 @@ class ScheduledMessageJob : BroadcastReceiver() {
 
                     // delete, insert and send
                     source.deleteScheduledMessage(context, message.id)
+                    handleRepeat(context, message)
+
                     val conversationId = source.insertSentMessage(message.to!!, message.data!!, message.mimeType!!, context)
                     val conversation = source.getConversation(context, conversationId)
 
-                    SendUtils(conversation?.simSubscriptionId)
-                            .send(context, message.data!!, message.to!!)
+                    SendUtils(conversation?.simSubscriptionId).send(context, message.data!!, message.to!!)
 
                     // display a notification
                     val body = "<b>" + message.title + ": </b>" + message.data
@@ -89,6 +91,7 @@ class ScheduledMessageJob : BroadcastReceiver() {
                             .notify(5555 + message.id.toInt(), notification)
 
                     try {
+                        // delete the INFO message, if applicable.
                         val conversationMessages = DataSource.getMessages(context, conversationId)
 
                         if (conversationMessages.moveToFirst()) {
@@ -110,6 +113,7 @@ class ScheduledMessageJob : BroadcastReceiver() {
                     message.fillFromCursor(messages)
 
                     source.deleteScheduledMessage(context, message.id)
+                    handleRepeat(context, message)
                 }
             } while (messages.moveToNext())
         }
@@ -118,6 +122,33 @@ class ScheduledMessageJob : BroadcastReceiver() {
 
         context.sendBroadcast(Intent(BROADCAST_SCHEDULED_SENT))
         ScheduledMessageJob.scheduleNextRun(context)
+    }
+
+    private fun handleRepeat(context: Context, message: ScheduledMessage) {
+        if (message.repeat == ScheduledMessage.REPEAT_NEVER) {
+            return
+        }
+
+        when (message.repeat) {
+            ScheduledMessage.REPEAT_DAILY -> message.timestamp += TimeUtils.DAY
+            ScheduledMessage.REPEAT_WEEKLY -> message.timestamp += TimeUtils.WEEK
+            ScheduledMessage.REPEAT_MONTHLY -> {
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = message.timestamp
+                calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + 1)
+
+                message.timestamp = calendar.timeInMillis
+            }
+            ScheduledMessage.REPEAT_YEARLY -> {
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = message.timestamp
+                calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + 1)
+
+                message.timestamp = calendar.timeInMillis
+            }
+        }
+
+        DataSource.insertScheduledMessage(context, message, true)
     }
 
     companion object {

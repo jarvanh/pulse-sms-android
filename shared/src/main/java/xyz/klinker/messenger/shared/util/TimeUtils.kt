@@ -39,7 +39,8 @@ object TimeUtils {
     val DAY = HOUR * 24
     val YEAR = DAY * 365
 
-    val TWO_WEEKS = DAY * 14
+    val WEEK = DAY * 7
+    val TWO_WEEKS = WEEK * 2
 
     /**
      * Gets whether or not we are currently in the night time. This is defined as before 6 AM or

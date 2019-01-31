@@ -302,6 +302,9 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
                         // TODO: this will be converted to "saveMessages" when media support is added.
                         saveMessage(message)
+
+                        (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
+                                ?.hideSoftInputFromWindow(editText.windowToken, 0)
                     } else {
                         displayMessageDialog(message)
                     }
@@ -315,12 +318,6 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     }
 
     private fun saveMessages(messages: List<ScheduledMessage>) {
-        val content = activity?.findViewById<View>(android.R.id.content)
-        if (content != null) {
-            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
-                    ?.hideSoftInputFromWindow(content.windowToken, 0)
-        }
-
         Thread {
             messages.forEach { DataSource.insertScheduledMessage(fragmentActivity!!, it) }
             loadMessages()
