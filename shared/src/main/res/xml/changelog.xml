@@ -16,9 +16,17 @@
 
 <changelog>
 
+    <!--<version-->
+        <!--name="4.6.0"-->
+        <!--description="Unreleased">-->
+        <!--<text>Add support for repeated scheduled messages (TODO: remove feature flag)</text>-->
+        <!--<text>Add support for attaching images and GIFs to scheduled messages (TODO: remove feature flag)</text>-->
+    <!--</version>-->
+
     <version
         name="4.5.2"
         description="January 31st, 2019">
+        <!-- Add support to the UI for selecting and editing the repeat status on scheduled messages (behind a feature flag) -->
         <!-- Display the repeat status in the scheduled message list -->
         <!-- Added prep work behind repeated scheduled messages (database, apis, firebase, sending service, etc) -->
         <!-- Added new fotoapparat camera view (behind a feature flag, for now) -->

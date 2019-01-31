@@ -2,43 +2,50 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/drawerBackground"
+    android:orientation="vertical"
     android:padding="12dp">
 
     <TextView
         android:id="@+id/contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
         android:maxLines="7"
-        android:textColor="@color/primaryText"/>
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/send_time"
-        android:layout_marginTop="6dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:layout_marginTop="6dp"
+        android:background="?selectableItemBackground"
         android:textColor="@color/secondaryText"
-        android:background="?selectableItemBackground"/>
+        android:textSize="14sp" />
 
     <EditText
-        android:layout_marginTop="12dp"
         android:id="@+id/message"
-        android:hint="@string/type_message"
-        android:maxLines="10"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="@string/type_message"
+        android:maxLines="10" />
+
+    <Spinner
+        android:id="@+id/repeat_interval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start" />
 
     <LinearLayout
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="end"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/send"
@@ -46,7 +53,7 @@
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
             android:text="@string/send"
-            tools:ignore="ButtonStyle"  />
+            tools:ignore="ButtonStyle" />
 
         <View
             android:layout_width="0dp"

@@ -246,4 +246,12 @@
         <item>circle</item>
     </string-array>
 
+    <string-array name="scheduled_message_repeat">
+        <item>@string/scheduled_repeat_never</item>
+        <item>@string/scheduled_repeat_daily</item>
+        <item>@string/scheduled_repeat_weekly</item>
+        <item>@string/scheduled_repeat_monthly</item>
+        <item>@string/scheduled_repeat_yearly</item>
+    </string-array>
+
 </resources>

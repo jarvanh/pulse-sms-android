@@ -29,10 +29,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.MultiAutoCompleteTextView
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -45,6 +42,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter
 import xyz.klinker.messenger.fragment.bottom_sheet.EditScheduledMessageFragment
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
@@ -282,9 +280,15 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
     private fun displayMessageDialog(message: ScheduledMessage) {
 
-        val layout = LayoutInflater.from(fragmentActivity).inflate(R.layout.dialog_edit_text, null, false)
-        val editText = layout.findViewById<View>(R.id.edit_text) as EditText
-        editText.setHint(R.string.scheduled_message_hint)
+        val layout = LayoutInflater.from(fragmentActivity).inflate(R.layout.dialog_scheduled_message_content, null, false)
+        val editText = layout.findViewById<EditText>(R.id.edit_text)
+        val repeat = layout.findViewById<Spinner>(R.id.repeat_interval)
+
+        if (!FeatureFlags.SCHEDULED_MESSAGE_REVAMP) {
+            layout.findViewById<View>(R.id.revamp_content).visibility = View.GONE
+        } else {
+            repeat.adapter = ArrayAdapter.createFromResource(fragmentActivity!!, R.array.scheduled_message_repeat, android.R.layout.simple_spinner_dropdown_item)
+        }
 
         editText.post {
             editText.requestFocus()
@@ -295,12 +299,10 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                 .setView(layout)
                 .setPositiveButton(R.string.add) { _, _ ->
                     if (editText.text.isNotEmpty()) {
-                        // TODO: this is where I will need to read the repeat status from a spinner or something.
-
                         message.data = editText.text.toString()
                         message.mimeType = MimeType.TEXT_PLAIN
+                        message.repeat = if (FeatureFlags.SCHEDULED_MESSAGE_REVAMP) repeat.selectedItemPosition else ScheduledMessage.REPEAT_NEVER
 
-                        // TODO: this will be converted to "saveMessages" when media support is added.
                         saveMessage(message)
 
                         (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)

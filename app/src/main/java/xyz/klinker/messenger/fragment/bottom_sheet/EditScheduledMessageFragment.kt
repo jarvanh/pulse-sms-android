@@ -9,10 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -34,10 +31,11 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
     private var fragment: ScheduledMessagesFragment? = null
     private var scheduledMessage: ScheduledMessage? = null
 
-    private var format: DateFormat? = null
+    private lateinit var format: DateFormat
 
-    private var sendDate: TextView? = null
-    private var messageText: EditText? = null
+    private lateinit var sendDate: TextView
+    private lateinit var messageText: EditText
+    private lateinit var repeat: Spinner
 
     // samsung messed up the date picker in some languages on Lollipop 5.0 and 5.1. Ugh.
     // fixes this issue: http://stackoverflow.com/a/34853067
@@ -72,27 +70,34 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
     override fun createLayout(inflater: LayoutInflater): View {
         val contentView = inflater.inflate(R.layout.bottom_sheet_edit_scheduled_message, null, false)
 
-        format = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT,
-                SimpleDateFormat.SHORT)
+        format = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT, SimpleDateFormat.SHORT)
 
-        sendDate = contentView.findViewById<View>(R.id.send_time) as TextView
-        messageText = contentView.findViewById<View>(R.id.message) as EditText
-        val name = contentView.findViewById<View>(R.id.contact_name) as TextView
-        val delete = contentView.findViewById<View>(R.id.delete) as Button
-        val save = contentView.findViewById<View>(R.id.save) as Button
-        val send = contentView.findViewById<View>(R.id.send) as Button
+        sendDate = contentView.findViewById<TextView>(R.id.send_time)
+        messageText = contentView.findViewById<EditText>(R.id.message)
+        repeat = contentView.findViewById<Spinner>(R.id.repeat_interval)
+        val name = contentView.findViewById<TextView>(R.id.contact_name)
+        val delete = contentView.findViewById<Button>(R.id.delete)
+        val save = contentView.findViewById<Button>(R.id.save)
+        val send = contentView.findViewById<Button>(R.id.send)
 
         if (scheduledMessage != null) {
-            messageText?.setText(scheduledMessage!!.data)
-            sendDate?.text = format!!.format(scheduledMessage!!.timestamp)
+            messageText.setText(scheduledMessage!!.data)
+            sendDate.text = format.format(scheduledMessage!!.timestamp)
             name.text = scheduledMessage!!.title
-            messageText?.setSelection(messageText!!.text.length)
+            messageText.setSelection(messageText.text.length)
+
+            if (!FeatureFlags.SCHEDULED_MESSAGE_REVAMP) {
+                repeat.visibility = View.GONE
+            } else {
+                repeat.adapter = ArrayAdapter.createFromResource(activity!!, R.array.scheduled_message_repeat, android.R.layout.simple_spinner_dropdown_item)
+                repeat.setSelection(scheduledMessage!!.repeat)
+            }
         }
 
         save.setOnClickListener { save() }
         delete.setOnClickListener { delete() }
         send.setOnClickListener { send() }
-        sendDate?.setOnClickListener { displayDateDialog() }
+        sendDate.setOnClickListener { displayDateDialog() }
 
         return contentView
     }
@@ -108,11 +113,12 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
     private fun save() {
         val activity = activity ?: return
 
-        if (scheduledMessage == null || messageText == null) {
+        if (scheduledMessage == null) {
             return
         }
 
-        scheduledMessage!!.data = messageText!!.text.toString()
+        scheduledMessage!!.data = messageText.text.toString()
+        scheduledMessage!!.repeat = repeat.selectedItemPosition
         DataSource.updateScheduledMessage(activity, scheduledMessage!!)
 
         dismiss()
@@ -161,7 +167,7 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
                         Toast.LENGTH_SHORT).show()
                 displayDateDialog()
             } else {
-                sendDate!!.text = format!!.format(scheduledMessage!!.timestamp)
+                sendDate.text = format.format(scheduledMessage!!.timestamp)
             }
         },
                 calendar.get(Calendar.HOUR_OF_DAY),
