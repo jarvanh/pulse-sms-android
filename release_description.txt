@@ -1,6 +1,4 @@
-- Blacklist by phrase<br/>
-- You can now search and send stickers (GIFs with transparent backgrounds) from the attachment menu<br/>
-- Improvements to searching GIFs<br/>
-- Edit templates<br/>
-- Archive conversations from their notification buttons<br/>
-- Tapping a contact icon on the conversation list will now start the multi-select process
+- Contact management improvements for the web version: https://github.com/klinker-apps/messenger-issues/issues/620<br/>
+- Bug fixes<br/>
+- Performance improvements<br/>
+- Prep for future features
