@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.fragment
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.*
@@ -37,10 +38,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.ex.chips.BaseRecipientAdapter
 import com.android.ex.chips.RecipientEditTextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.compose.ShareData
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter
 import xyz.klinker.messenger.fragment.bottom_sheet.EditScheduledMessageFragment
+import xyz.klinker.messenger.fragment.message.attach.AttachmentListener
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
@@ -65,6 +71,9 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
     private val progress: ProgressBar? by lazy { view?.findViewById<View>(R.id.progress) as ProgressBar? }
     private val fab: FloatingActionButton by lazy { view!!.findViewById<View>(R.id.fab) as FloatingActionButton }
     private val emptyView: View by lazy { view!!.findViewById<View>(R.id.empty_view) }
+
+    private var imageData: ShareData? = null
+    private var messageInProcess: ScheduledMessage? = null
 
     private val scheduledMessageSent = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -138,6 +147,32 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         }
 
         ScheduledMessageJob.scheduleNextRun(fragmentActivity!!)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == AttachmentListener.RESULT_GALLERY_PICKER_REQUEST && resultCode == Activity.RESULT_OK
+                && data != null && data.data != null) {
+            val uriString = data.data!!.toString()
+            val mimeType = MimeType.IMAGE_JPEG
+            imageData = ShareData(mimeType, uriString)
+
+            if (messageInProcess != null) {
+                displayMessageDialog(messageInProcess!!)
+            }
+        } else if (requestCode == AttachmentListener.RESULT_GIPHY_REQUEST && resultCode == Activity.RESULT_OK
+                && data != null && data.data != null) {
+            val uriString = data.data!!.toString()
+            val mimeType = MimeType.IMAGE_GIF
+            imageData = ShareData(mimeType, uriString)
+
+            if (messageInProcess != null) {
+                displayMessageDialog(messageInProcess!!)
+            }
+        }
+
+        messageInProcess = null
     }
 
     fun loadMessages() {
@@ -293,11 +328,32 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         val layout = LayoutInflater.from(fragmentActivity).inflate(R.layout.dialog_scheduled_message_content, null, false)
         val editText = layout.findViewById<EditText>(R.id.edit_text)
         val repeat = layout.findViewById<Spinner>(R.id.repeat_interval)
+        val image = layout.findViewById<ImageView>(R.id.image)
 
         if (!FeatureFlags.SCHEDULED_MESSAGE_REVAMP) {
             layout.findViewById<View>(R.id.revamp_content).visibility = View.GONE
         } else {
             repeat.adapter = ArrayAdapter.createFromResource(fragmentActivity!!, R.array.scheduled_message_repeat, android.R.layout.simple_spinner_dropdown_item)
+
+            if (imageData != null) {
+                image.visibility = View.VISIBLE
+                if (imageData!!.mimeType == MimeType.IMAGE_GIF) {
+                    Glide.with(fragmentActivity!!)
+                            .asGif()
+                            .load(imageData!!.data)
+                            .into(image)
+                } else {
+                    Glide.with(fragmentActivity!!)
+                            .load(imageData!!.data)
+                            .apply(RequestOptions().centerCrop())
+                            .into(image)
+                }
+            }
+
+            if (message.data != null && message.data!!.isNotEmpty()) {
+                editText.setText(message.data)
+                editText.setSelection(message.data!!.length)
+            }
         }
 
         editText.post {
@@ -305,28 +361,85 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
             (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
         }
 
-        AlertDialog.Builder(fragmentActivity!!)
+        val builder = AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
-                .setPositiveButton(R.string.add) { _, _ ->
-                    if (editText.text.isNotEmpty()) {
-                        message.data = editText.text.toString()
-                        message.mimeType = MimeType.TEXT_PLAIN
+                .setPositiveButton(R.string.save) { _, _ ->
+                    if (editText.text.isNotEmpty() || image != null) {
                         message.repeat = if (FeatureFlags.SCHEDULED_MESSAGE_REVAMP) repeat.selectedItemPosition else ScheduledMessage.REPEAT_NEVER
 
-                        saveMessage(message)
+                        val messages = mutableListOf<ScheduledMessage>()
+
+                        if (editText.text.isNotEmpty()) {
+                            messages.add(ScheduledMessage().apply {
+                                this.id = DataSource.generateId()
+                                this.repeat = message.repeat
+                                this.timestamp = message.timestamp
+                                this.title = message.title
+                                this.to = message.to
+                                this.data = editText.text.toString()
+                                this.mimeType = MimeType.TEXT_PLAIN
+                            })
+                        }
+
+                        if (image != null) {
+                            messages.add(ScheduledMessage().apply {
+                                this.id = DataSource.generateId()
+                                this.repeat = message.repeat
+                                this.timestamp = message.timestamp
+                                this.title = message.title
+                                this.to = message.to
+                                this.data = imageData!!.data
+                                this.mimeType = imageData!!.mimeType
+                            })
+                        }
+
+                        saveMessages(messages)
+                        imageData = null
 
                         (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
                                 ?.hideSoftInputFromWindow(editText.windowToken, 0)
                     } else {
                         displayMessageDialog(message)
                     }
+                }.setNegativeButton(android.R.string.cancel) { _, _ ->
+                    (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
+                            ?.hideSoftInputFromWindow(editText.windowToken, 0)
                 }
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
-    }
 
-    private fun saveMessage(message: ScheduledMessage) {
-        saveMessages(listOf(message))
+        if (FeatureFlags.SCHEDULED_MESSAGE_REVAMP) {
+            if (imageData == null) {
+                builder.setNeutralButton(R.string.attach_image) { _, _ ->
+                    if (editText.text.isNotEmpty()) {
+                        message.data = editText.text.toString()
+                    } else {
+                        message.data = null
+                    }
+
+                    messageInProcess = message
+
+                    (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
+                            ?.hideSoftInputFromWindow(editText.windowToken, 0)
+
+                    val intent = Intent()
+                    intent.type = "image/*"
+                    intent.action = Intent.ACTION_GET_CONTENT
+                    activity?.startActivityForResult(Intent.createChooser(intent, "Select Picture"), AttachmentListener.RESULT_GALLERY_PICKER_REQUEST)
+                }
+            } else {
+                builder.setNeutralButton(R.string.remove_image_short) { _, _ ->
+                    if (editText.text.isNotEmpty()) {
+                        message.data = editText.text.toString()
+                    } else {
+                        message.data = null
+                    }
+
+                    imageData = null
+                    displayMessageDialog(message)
+                }
+            }
+        }
+
+        builder.show()
     }
 
     private fun saveMessages(messages: List<ScheduledMessage>) {
@@ -350,8 +463,8 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
     companion object {
 
-        private val ARG_TITLE = "title"
-        private val ARG_PHONE_NUMBERS = "phone_numbers"
+        private const val ARG_TITLE = "title"
+        private const val ARG_PHONE_NUMBERS = "phone_numbers"
 
         fun newInstance(): ScheduledMessagesFragment {
             return ScheduledMessagesFragment()
