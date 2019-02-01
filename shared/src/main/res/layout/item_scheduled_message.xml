@@ -49,6 +49,13 @@
             android:textColor="@color/primaryText"
             android:id="@+id/message" />
 
+        <ImageView
+            android:id="@+id/image"
+            android:visibility="gone"
+            android:layout_width="@dimen/max_message_width"
+            android:background="@drawable/rounded_rect_more"
+            android:layout_height="200dp" />
+
     </LinearLayout>
 
     <TextView

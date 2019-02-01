@@ -22,6 +22,7 @@ import android.app.TimePickerDialog
 import android.content.*
 import android.content.res.ColorStateList
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
@@ -53,6 +54,7 @@ import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
 import xyz.klinker.messenger.shared.util.ColorUtils
+import xyz.klinker.messenger.shared.util.ImageUtils
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.util.listener.ScheduledMessageClickListener
@@ -153,9 +155,13 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
         if (requestCode == AttachmentListener.RESULT_GALLERY_PICKER_REQUEST && resultCode == Activity.RESULT_OK
                 && data != null && data.data != null) {
-            val uriString = data.data!!.toString()
+            val uri = data.data!!
             val mimeType = MimeType.IMAGE_JPEG
-            imageData = ShareData(mimeType, uriString)
+            val pulseUri = ImageUtils.scaleToSend(fragmentActivity!!, uri, mimeType)
+
+            if (pulseUri != null) {
+                imageData = ShareData(mimeType, pulseUri.toString())
+            }
 
             if (messageInProcess != null) {
                 displayMessageDialog(messageInProcess!!)
@@ -401,6 +407,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                         displayMessageDialog(message)
                     }
                 }.setNegativeButton(android.R.string.cancel) { _, _ ->
+                    imageData = null
                     (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
                             ?.hideSoftInputFromWindow(editText.windowToken, 0)
                 }
@@ -420,7 +427,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                     AlertDialog.Builder(fragmentActivity!!)
                             .setItems(R.array.scheduled_message_attachment_options) { _, position ->
                                 messageInProcess = message
-                                
+
                                 when (position) {
                                     0 -> {
                                         val intent = Intent()

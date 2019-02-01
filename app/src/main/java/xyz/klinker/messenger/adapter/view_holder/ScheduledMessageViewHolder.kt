@@ -17,6 +17,7 @@
 package xyz.klinker.messenger.adapter.view_holder
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -30,5 +31,10 @@ class ScheduledMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
     val titleDate: TextView = itemView.findViewById<View>(R.id.title_date) as TextView
     val message: TextView = itemView.findViewById<View>(R.id.message) as TextView
     val messageHolder: View = itemView.findViewById(R.id.message_holder)
+    val image: ImageView = itemView.findViewById(R.id.image) as ImageView
+
+    init {
+        image.clipToOutline = true
+    }
 
 }
