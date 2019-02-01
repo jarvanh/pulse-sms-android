@@ -19,8 +19,9 @@
     <!--<version-->
         <!--name="4.6.0"-->
         <!--description="Unreleased">-->
-        <!--<text>Add support for repeated scheduled messages (TODO: remove feature flag)</text>-->
-        <!--<text>Add support for attaching images and GIFs to scheduled messages (TODO: remove feature flag)</text>-->
+        <!--<text>Attach images and GIFs to scheduled messages (TODO: remove feature flag)</text>-->
+        <!--<text>Support for recurring scheduled messages (TODO: remove feature flag)</text>-->
+        <!--<text>Support for entering a hex color when choosing theme colors (TODO: remove feature flag)</text>-->
     <!--</version>-->
 
     <version

@@ -86,6 +86,7 @@ object FeatureFlags {
     private val FLAG_BLACKLIST_PHRASE = "flag_blacklist_phrase"
     private val FLAG_INTERNAL_CAMERA_REVAMP = "flag_internal_camera_revamp"
     private val FLAG_SCHEDULED_MESSAGE_REVAMP = "flag_scheduled_message_revamp"
+    private val FLAG_HEX_COLOR_ENTRY = "flag_hex_color_entry"
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
 
@@ -105,6 +106,7 @@ object FeatureFlags {
     // disabled for future features
     var INTERNAL_CAMERA_REVAMP: Boolean = false
     var SCHEDULED_MESSAGE_REVAMP: Boolean = false
+    var HEX_COLOR_ENTRY: Boolean = false
 
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
@@ -116,6 +118,7 @@ object FeatureFlags {
 
         INTERNAL_CAMERA_REVAMP = getValue(context, sharedPrefs, FLAG_INTERNAL_CAMERA_REVAMP)
         SCHEDULED_MESSAGE_REVAMP = getValue(context, sharedPrefs, FLAG_SCHEDULED_MESSAGE_REVAMP)
+        HEX_COLOR_ENTRY = getValue(context, sharedPrefs, FLAG_HEX_COLOR_ENTRY)
 
         QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
     }
@@ -130,6 +133,7 @@ object FeatureFlags {
 
             FLAG_INTERNAL_CAMERA_REVAMP -> INTERNAL_CAMERA_REVAMP = flag
             FLAG_SCHEDULED_MESSAGE_REVAMP -> SCHEDULED_MESSAGE_REVAMP = flag
+            FLAG_HEX_COLOR_ENTRY -> HEX_COLOR_ENTRY = flag
 
             FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
         }

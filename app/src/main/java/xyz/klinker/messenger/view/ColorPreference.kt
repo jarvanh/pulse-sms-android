@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.view
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -39,6 +40,11 @@ import xyz.klinker.messenger.adapter.ColorPickerAdapter
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener
+import com.pes.androidmaterialcolorpickerdialog.ColorPicker
+import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback
+import xyz.klinker.messenger.shared.data.FeatureFlags
+import xyz.klinker.messenger.shared.view.HexColorPicker
+
 
 /**
  * Preference that supports a color picker.
@@ -111,10 +117,15 @@ class ColorPreference : Preference {
 
         grid.adapter = adapter
 
-        this.dialog = AlertDialog.Builder(context).setView(dialog)
+        val builder = AlertDialog.Builder(context).setView(dialog)
                 .setPositiveButton(android.R.string.ok) { _, _ -> setColor(picker.color) }
                 .setNegativeButton(android.R.string.cancel, null)
-                .show()
+
+        if (FeatureFlags.HEX_COLOR_ENTRY) {
+            builder.setNeutralButton(R.string.hex) { _, _ -> showHex() }
+        }
+
+        this.dialog = builder.show()
 
         if (displayNormalize) {
             dialog.findViewById<View>(R.id.normalize).visibility = View.VISIBLE
@@ -153,6 +164,13 @@ class ColorPreference : Preference {
                 .inflate(R.layout.preference_color, widgetFrameView, true).findViewById<View>(R.id.color) as CircleImageView
         circle.setImageDrawable(ColorDrawable(color))
         summary = ColorUtils.convertToHex(color)
+    }
+
+    private fun showHex() {
+        val hexPicker = HexColorPicker(context)
+        hexPicker.enableAutoClose()
+        hexPicker.setCallback { color -> setColor(color) }
+        hexPicker.show()
     }
 
 }

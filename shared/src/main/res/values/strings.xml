@@ -491,6 +491,7 @@
     <string name="settings_phone_number">Phone Number</string>
     <string name="disable_battery_optimization">Disable Battery Optimization</string>
     <string name="disable_battery_optimization_summary">If messages aren\'t making it from your phone to the web, try disabling the battery optimizations for Pulse.</string>
+    <string name="hex">Hex Color</string>
 
 
     <!-- MMS Configuration Settings -->
