@@ -42,15 +42,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import xyz.klinker.giphy.Giphy
+import xyz.klinker.messenger.BuildConfig
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.compose.ShareData
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter
 import xyz.klinker.messenger.fragment.bottom_sheet.EditScheduledMessageFragment
 import xyz.klinker.messenger.fragment.message.attach.AttachmentListener
-import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.FeatureFlags
-import xyz.klinker.messenger.shared.data.MimeType
-import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
 import xyz.klinker.messenger.shared.util.ColorUtils
@@ -161,7 +160,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
             if (messageInProcess != null) {
                 displayMessageDialog(messageInProcess!!)
             }
-        } else if (requestCode == AttachmentListener.RESULT_GIPHY_REQUEST && resultCode == Activity.RESULT_OK
+        } else if (requestCode == Giphy.REQUEST_GIPHY && resultCode == Activity.RESULT_OK
                 && data != null && data.data != null) {
             val uriString = data.data!!.toString()
             val mimeType = MimeType.IMAGE_GIF
@@ -415,15 +414,27 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                         message.data = null
                     }
 
-                    messageInProcess = message
-
                     (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
                             ?.hideSoftInputFromWindow(editText.windowToken, 0)
 
-                    val intent = Intent()
-                    intent.type = "image/*"
-                    intent.action = Intent.ACTION_GET_CONTENT
-                    activity?.startActivityForResult(Intent.createChooser(intent, "Select Picture"), AttachmentListener.RESULT_GALLERY_PICKER_REQUEST)
+                    AlertDialog.Builder(fragmentActivity!!)
+                            .setItems(R.array.scheduled_message_attachment_options) { _, position ->
+                                messageInProcess = message
+                                
+                                when (position) {
+                                    0 -> {
+                                        val intent = Intent()
+                                        intent.type = "image/*"
+                                        intent.action = Intent.ACTION_GET_CONTENT
+                                        activity?.startActivityForResult(Intent.createChooser(intent, "Select Picture"), AttachmentListener.RESULT_GALLERY_PICKER_REQUEST)
+                                    }
+                                    1 -> {
+                                        Giphy.Builder(activity, BuildConfig.GIPHY_API_KEY)
+                                                .maxFileSize(MmsSettings.maxImageSize)
+                                                .start()
+                                    }
+                                }
+                            }.show()
                 }
             } else {
                 builder.setNeutralButton(R.string.remove_image_short) { _, _ ->

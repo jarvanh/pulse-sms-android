@@ -254,4 +254,9 @@
         <item>@string/scheduled_repeat_yearly</item>
     </string-array>
 
+    <string-array name="scheduled_message_attachment_options">
+        <item>@string/select_image</item>
+        <item>@string/select_gif</item>
+    </string-array>
+
 </resources>
