@@ -330,8 +330,16 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             val conversation = fragment!!.expandedItem!!.conversation
             fragment.expandedItem!!.itemView.performClick()
             activity.clickNavigationItem(R.id.drawer_schedule)
-            conversationActionDelegate.displayFragmentWithBackStack(
-                    ScheduledMessagesFragment.newInstance(conversation!!.title!!, conversation.phoneNumbers!!))
+
+            val messageListFragment = navController.findMessageListFragment()
+            if (messageListFragment != null) {
+                conversationActionDelegate.displayFragmentWithBackStack(
+                        ScheduledMessagesFragment.newInstance(conversation!!.title!!, conversation.phoneNumbers!!,
+                                messageListFragment.sendManager.messageEntry.text.toString()))
+            } else {
+                conversationActionDelegate.displayFragmentWithBackStack(
+                        ScheduledMessagesFragment.newInstance(conversation!!.title!!, conversation.phoneNumbers!!, ""))
+            }
         } else {
             false
         }

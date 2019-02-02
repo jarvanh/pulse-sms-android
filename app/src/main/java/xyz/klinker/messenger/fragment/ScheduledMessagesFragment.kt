@@ -129,6 +129,9 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
             val message = ScheduledMessage()
             message.to = arguments.getString(ARG_PHONE_NUMBERS)
             message.title = arguments.getString(ARG_TITLE)
+            message.data = arguments.getString(ARG_DATA)
+            message.mimeType = MimeType.TEXT_PLAIN
+
             displayDateDialog(message)
         }
     }
@@ -386,7 +389,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                             })
                         }
 
-                        if (image != null) {
+                        if (imageData != null) {
                             messages.add(ScheduledMessage().apply {
                                 this.id = DataSource.generateId()
                                 this.repeat = message.repeat
@@ -483,15 +486,17 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
         private const val ARG_TITLE = "title"
         private const val ARG_PHONE_NUMBERS = "phone_numbers"
+        private const val ARG_DATA = "data"
 
         fun newInstance(): ScheduledMessagesFragment {
             return ScheduledMessagesFragment()
         }
 
-        fun newInstance(title: String, phoneNumbers: String): ScheduledMessagesFragment {
+        fun newInstance(title: String, phoneNumbers: String, text: String): ScheduledMessagesFragment {
             val args = Bundle()
             args.putString(ARG_TITLE, title)
             args.putString(ARG_PHONE_NUMBERS, phoneNumbers)
+            args.putString(ARG_DATA, text)
 
             val fragment = ScheduledMessagesFragment()
             fragment.arguments = args

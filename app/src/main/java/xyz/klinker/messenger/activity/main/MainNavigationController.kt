@@ -15,6 +15,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.ApiDownloadService
@@ -115,8 +116,7 @@ class MainNavigationController(private val activity: MessengerActivity)
 
         when {
             conversationListFragment == null -> {
-                val messageListFragment = activity.supportFragmentManager.findFragmentById(R.id.message_list_container)
-
+                val messageListFragment = findMessageListFragment()
                 if (messageListFragment != null) {
                     try {
                         activity.supportFragmentManager.beginTransaction().remove(messageListFragment).commit()
@@ -136,6 +136,9 @@ class MainNavigationController(private val activity: MessengerActivity)
             else -> return false
         }
     }
+
+    fun findMessageListFragment(): MessageListFragment? =
+            activity.supportFragmentManager.findFragmentById(R.id.message_list_container) as? MessageListFragment
 
     fun drawerItemClicked(id: Int): Boolean {
         conversationListFragment?.swipeHelper?.dismissSnackbars()

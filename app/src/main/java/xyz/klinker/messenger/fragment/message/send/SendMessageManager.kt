@@ -39,7 +39,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
     private val messageLoader
         get() = fragment.messageLoader
     
-    private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
+    internal val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
     private val sendProgress: ProgressBar? by lazy { fragment.rootView?.findViewById<View>(R.id.send_progress) as ProgressBar? }
     private val attach: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attach) }
     private val send: FloatingActionButton by lazy { fragment.rootView!!.findViewById<View>(R.id.send) as FloatingActionButton }
