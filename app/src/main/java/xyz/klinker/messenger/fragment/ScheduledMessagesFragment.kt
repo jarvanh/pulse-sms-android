@@ -48,6 +48,7 @@ import xyz.klinker.messenger.BuildConfig
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.compose.ShareData
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter
+import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.fragment.bottom_sheet.EditScheduledMessageFragment
 import xyz.klinker.messenger.fragment.message.attach.AttachmentListener
 import xyz.klinker.messenger.shared.data.*
@@ -416,46 +417,48 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                 }
 
         if (FeatureFlags.SCHEDULED_MESSAGE_REVAMP) {
-            if (imageData == null) {
-                builder.setNeutralButton(R.string.attach_image) { _, _ ->
-                    if (editText.text.isNotEmpty()) {
-                        message.data = editText.text.toString()
-                    } else {
-                        message.data = null
-                    }
+            if (!Account.exists() || Account.primary) {
+                if (imageData == null) {
+                    builder.setNeutralButton(R.string.attach_image) { _, _ ->
+                        if (editText.text.isNotEmpty()) {
+                            message.data = editText.text.toString()
+                        } else {
+                            message.data = null
+                        }
 
-                    (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
-                            ?.hideSoftInputFromWindow(editText.windowToken, 0)
+                        (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
+                                ?.hideSoftInputFromWindow(editText.windowToken, 0)
 
-                    AlertDialog.Builder(fragmentActivity!!)
-                            .setItems(R.array.scheduled_message_attachment_options) { _, position ->
-                                messageInProcess = message
+                        AlertDialog.Builder(fragmentActivity!!)
+                                .setItems(R.array.scheduled_message_attachment_options) { _, position ->
+                                    messageInProcess = message
 
-                                when (position) {
-                                    0 -> {
-                                        val intent = Intent()
-                                        intent.type = "image/*"
-                                        intent.action = Intent.ACTION_GET_CONTENT
-                                        activity?.startActivityForResult(Intent.createChooser(intent, "Select Picture"), AttachmentListener.RESULT_GALLERY_PICKER_REQUEST)
+                                    when (position) {
+                                        0 -> {
+                                            val intent = Intent()
+                                            intent.type = "image/*"
+                                            intent.action = Intent.ACTION_GET_CONTENT
+                                            activity?.startActivityForResult(Intent.createChooser(intent, "Select Picture"), AttachmentListener.RESULT_GALLERY_PICKER_REQUEST)
+                                        }
+                                        1 -> {
+                                            Giphy.Builder(activity, BuildConfig.GIPHY_API_KEY)
+                                                    .maxFileSize(MmsSettings.maxImageSize)
+                                                    .start()
+                                        }
                                     }
-                                    1 -> {
-                                        Giphy.Builder(activity, BuildConfig.GIPHY_API_KEY)
-                                                .maxFileSize(MmsSettings.maxImageSize)
-                                                .start()
-                                    }
-                                }
-                            }.show()
-                }
-            } else {
-                builder.setNeutralButton(R.string.remove_image_short) { _, _ ->
-                    if (editText.text.isNotEmpty()) {
-                        message.data = editText.text.toString()
-                    } else {
-                        message.data = null
+                                }.show()
                     }
+                } else {
+                    builder.setNeutralButton(R.string.remove_image_short) { _, _ ->
+                        if (editText.text.isNotEmpty()) {
+                            message.data = editText.text.toString()
+                        } else {
+                            message.data = null
+                        }
 
-                    imageData = null
-                    displayMessageDialog(message)
+                        imageData = null
+                        displayMessageDialog(message)
+                    }
                 }
             }
         }
