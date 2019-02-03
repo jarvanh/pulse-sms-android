@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.fragment.message.send
 
+import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.net.Uri
@@ -15,6 +16,7 @@ import android.widget.ProgressBar
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
@@ -119,13 +121,28 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         sendProgress?.progressTintMode = PorterDuff.Mode.SRC_IN
         send.setOnClickListener{ requestPermissionThenSend() }
 
-        val signature = Settings.signature
-        if (signature != null && !signature.isEmpty()) {
-            send.setOnLongClickListener {
-                requestPermissionThenSend(true)
-                false
+        send.setOnLongClickListener {
+            val signature = Settings.signature
+            if (signature != null && !signature.isEmpty()) {
+                AlertDialog.Builder(activity!!)
+                        .setItems(R.array.send_button_long_click_options) { _, position -> when (position) {
+                                0 -> scheduleMessage()
+                                1 -> requestPermissionThenSend(true)
+                        }}.show()
+            } else {
+                AlertDialog.Builder(activity!!)
+                        .setMessage(R.string.send_as_scheduled_message_question)
+                        .setPositiveButton(android.R.string.yes) { _, _ -> scheduleMessage() }
+                        .setNegativeButton(android.R.string.no) { _, _ -> }
+                        .show()
             }
+
+            false
         }
+    }
+
+    private fun scheduleMessage() {
+        (activity as? MessengerActivity)?.navController?.drawerItemClicked(R.id.menu_conversation_schedule)
     }
 
     fun sendDelayedMessage() {

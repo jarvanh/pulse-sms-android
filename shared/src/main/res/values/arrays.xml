@@ -259,4 +259,9 @@
         <item>@string/select_gif</item>
     </string-array>
 
+    <string-array name="send_button_long_click_options">
+        <item>@string/send_as_scheduled_message</item>
+        <item>@string/send_without_signature</item>
+    </string-array>
+
 </resources>
