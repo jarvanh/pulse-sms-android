@@ -122,19 +122,46 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         send.setOnClickListener{ requestPermissionThenSend() }
 
         send.setOnLongClickListener {
-            val signature = Settings.signature
-            if (signature != null && !signature.isEmpty()) {
-                AlertDialog.Builder(activity!!)
-                        .setItems(R.array.send_button_long_click_options) { _, position -> when (position) {
-                                0 -> scheduleMessage()
-                                1 -> requestPermissionThenSend(true)
-                        }}.show()
-            } else {
-                AlertDialog.Builder(activity!!)
-                        .setMessage(R.string.send_as_scheduled_message_question)
-                        .setPositiveButton(android.R.string.yes) { _, _ -> scheduleMessage() }
-                        .setNegativeButton(android.R.string.no) { _, _ -> }
-                        .show()
+            val sig = Settings.signature
+            val signature = sig != null && !sig.isEmpty()
+            val delayedSending = Settings.delayedSendingTimeout != 0L
+
+            when {
+                signature && delayedSending -> {
+                    AlertDialog.Builder(activity!!)
+                            .setItems(R.array.send_button_signature_delay) { _, position ->
+                                when (position) {
+                                    0 -> scheduleMessage()
+                                    1 -> sendMessageOnFragmentClosed()
+                                    2 -> requestPermissionThenSend(true)
+                                }
+                            }.show()
+                }
+                !signature && delayedSending -> {
+                    AlertDialog.Builder(activity!!)
+                            .setItems(R.array.send_button_no_signature_delay) { _, position ->
+                                when (position) {
+                                    0 -> scheduleMessage()
+                                    1 -> sendMessageOnFragmentClosed()
+                                }
+                            }.show()
+                }
+                signature && !delayedSending -> {
+                    AlertDialog.Builder(activity!!)
+                            .setItems(R.array.send_button_signature_no_delay) { _, position ->
+                                when (position) {
+                                    0 -> scheduleMessage()
+                                    1 -> requestPermissionThenSend(true)
+                                }
+                            }.show()
+                }
+                else -> {
+                    AlertDialog.Builder(activity!!)
+                            .setMessage(R.string.send_as_scheduled_message_question)
+                            .setPositiveButton(android.R.string.yes) { _, _ -> scheduleMessage() }
+                            .setNegativeButton(android.R.string.no) { _, _ -> }
+                            .show()
+                }
             }
 
             false
