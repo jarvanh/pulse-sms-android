@@ -105,8 +105,6 @@ object FeatureFlags {
 
     // disabled for future features
     var INTERNAL_CAMERA_REVAMP: Boolean = false
-    var SCHEDULED_MESSAGE_REVAMP: Boolean = false
-    var HEX_COLOR_ENTRY: Boolean = false
 
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
@@ -117,8 +115,6 @@ object FeatureFlags {
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
 
         INTERNAL_CAMERA_REVAMP = getValue(context, sharedPrefs, FLAG_INTERNAL_CAMERA_REVAMP)
-        SCHEDULED_MESSAGE_REVAMP = getValue(context, sharedPrefs, FLAG_SCHEDULED_MESSAGE_REVAMP)
-        HEX_COLOR_ENTRY = getValue(context, sharedPrefs, FLAG_HEX_COLOR_ENTRY)
 
         QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
     }
@@ -132,8 +128,6 @@ object FeatureFlags {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
 
             FLAG_INTERNAL_CAMERA_REVAMP -> INTERNAL_CAMERA_REVAMP = flag
-            FLAG_SCHEDULED_MESSAGE_REVAMP -> SCHEDULED_MESSAGE_REVAMP = flag
-            FLAG_HEX_COLOR_ENTRY -> HEX_COLOR_ENTRY = flag
 
             FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
         }

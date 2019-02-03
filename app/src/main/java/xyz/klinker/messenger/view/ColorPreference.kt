@@ -117,15 +117,11 @@ class ColorPreference : Preference {
 
         grid.adapter = adapter
 
-        val builder = AlertDialog.Builder(context).setView(dialog)
+        this.dialog = AlertDialog.Builder(context).setView(dialog)
                 .setPositiveButton(android.R.string.ok) { _, _ -> setColor(picker.color) }
                 .setNegativeButton(android.R.string.cancel, null)
-
-        if (FeatureFlags.HEX_COLOR_ENTRY) {
-            builder.setNeutralButton(R.string.hex) { _, _ -> showHex() }
-        }
-
-        this.dialog = builder.show()
+                .setNeutralButton(R.string.hex) { _, _ -> showHex() }
+                .show()
 
         if (displayNormalize) {
             dialog.findViewById<View>(R.id.normalize).visibility = View.VISIBLE

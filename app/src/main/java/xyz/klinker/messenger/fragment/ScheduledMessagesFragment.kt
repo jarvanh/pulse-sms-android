@@ -339,30 +339,26 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         val repeat = layout.findViewById<Spinner>(R.id.repeat_interval)
         val image = layout.findViewById<ImageView>(R.id.image)
 
-        if (!FeatureFlags.SCHEDULED_MESSAGE_REVAMP) {
-            layout.findViewById<View>(R.id.revamp_content).visibility = View.GONE
-        } else {
-            repeat.adapter = ArrayAdapter.createFromResource(fragmentActivity!!, R.array.scheduled_message_repeat, android.R.layout.simple_spinner_dropdown_item)
+        repeat.adapter = ArrayAdapter.createFromResource(fragmentActivity!!, R.array.scheduled_message_repeat, android.R.layout.simple_spinner_dropdown_item)
 
-            if (imageData != null) {
-                image.visibility = View.VISIBLE
-                if (imageData!!.mimeType == MimeType.IMAGE_GIF) {
-                    Glide.with(fragmentActivity!!)
-                            .asGif()
-                            .load(imageData!!.data)
-                            .into(image)
-                } else {
-                    Glide.with(fragmentActivity!!)
-                            .load(imageData!!.data)
-                            .apply(RequestOptions().centerCrop())
-                            .into(image)
-                }
+        if (imageData != null) {
+            image.visibility = View.VISIBLE
+            if (imageData!!.mimeType == MimeType.IMAGE_GIF) {
+                Glide.with(fragmentActivity!!)
+                        .asGif()
+                        .load(imageData!!.data)
+                        .into(image)
+            } else {
+                Glide.with(fragmentActivity!!)
+                        .load(imageData!!.data)
+                        .apply(RequestOptions().centerCrop())
+                        .into(image)
             }
+        }
 
-            if (message.data != null && message.data!!.isNotEmpty()) {
-                editText.setText(message.data)
-                editText.setSelection(message.data!!.length)
-            }
+        if (message.data != null && message.data!!.isNotEmpty()) {
+            editText.setText(message.data)
+            editText.setSelection(message.data!!.length)
         }
 
         editText.post {
@@ -374,7 +370,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                 .setView(layout)
                 .setPositiveButton(R.string.save) { _, _ ->
                     if (editText.text.isNotEmpty() || image != null) {
-                        message.repeat = if (FeatureFlags.SCHEDULED_MESSAGE_REVAMP) repeat.selectedItemPosition else ScheduledMessage.REPEAT_NEVER
+                        message.repeat = repeat.selectedItemPosition
 
                         val messages = mutableListOf<ScheduledMessage>()
 
@@ -416,49 +412,47 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
                             ?.hideSoftInputFromWindow(editText.windowToken, 0)
                 }
 
-        if (FeatureFlags.SCHEDULED_MESSAGE_REVAMP) {
-            if (!Account.exists() || Account.primary) {
-                if (imageData == null) {
-                    builder.setNeutralButton(R.string.attach_image) { _, _ ->
-                        if (editText.text.isNotEmpty()) {
-                            message.data = editText.text.toString()
-                        } else {
-                            message.data = null
-                        }
+        if (!Account.exists() || Account.primary) {
+            if (imageData == null) {
+                builder.setNeutralButton(R.string.attach_image) { _, _ ->
+                    if (editText.text.isNotEmpty()) {
+                        message.data = editText.text.toString()
+                    } else {
+                        message.data = null
+                    }
 
-                        (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
-                                ?.hideSoftInputFromWindow(editText.windowToken, 0)
+                    (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
+                            ?.hideSoftInputFromWindow(editText.windowToken, 0)
 
-                        AlertDialog.Builder(fragmentActivity!!)
-                                .setItems(R.array.scheduled_message_attachment_options) { _, position ->
-                                    messageInProcess = message
+                    AlertDialog.Builder(fragmentActivity!!)
+                            .setItems(R.array.scheduled_message_attachment_options) { _, position ->
+                                messageInProcess = message
 
-                                    when (position) {
-                                        0 -> {
-                                            val intent = Intent()
-                                            intent.type = "image/*"
-                                            intent.action = Intent.ACTION_GET_CONTENT
-                                            activity?.startActivityForResult(Intent.createChooser(intent, "Select Picture"), AttachmentListener.RESULT_GALLERY_PICKER_REQUEST)
-                                        }
-                                        1 -> {
-                                            Giphy.Builder(activity, BuildConfig.GIPHY_API_KEY)
-                                                    .maxFileSize(MmsSettings.maxImageSize)
-                                                    .start()
-                                        }
+                                when (position) {
+                                    0 -> {
+                                        val intent = Intent()
+                                        intent.type = "image/*"
+                                        intent.action = Intent.ACTION_GET_CONTENT
+                                        activity?.startActivityForResult(Intent.createChooser(intent, "Select Picture"), AttachmentListener.RESULT_GALLERY_PICKER_REQUEST)
                                     }
-                                }.show()
+                                    1 -> {
+                                        Giphy.Builder(activity, BuildConfig.GIPHY_API_KEY)
+                                                .maxFileSize(MmsSettings.maxImageSize)
+                                                .start()
+                                    }
+                                }
+                            }.show()
+                }
+            } else {
+                builder.setNeutralButton(R.string.remove_image_short) { _, _ ->
+                    if (editText.text.isNotEmpty()) {
+                        message.data = editText.text.toString()
+                    } else {
+                        message.data = null
                     }
-                } else {
-                    builder.setNeutralButton(R.string.remove_image_short) { _, _ ->
-                        if (editText.text.isNotEmpty()) {
-                            message.data = editText.text.toString()
-                        } else {
-                            message.data = null
-                        }
 
-                        imageData = null
-                        displayMessageDialog(message)
-                    }
+                    imageData = null
+                    displayMessageDialog(message)
                 }
             }
         }

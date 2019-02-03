@@ -86,12 +86,8 @@ class EditScheduledMessageFragment : TabletOptimizedBottomSheetDialogFragment() 
             name.text = scheduledMessage!!.title
             messageText.setSelection(messageText.text.length)
 
-            if (!FeatureFlags.SCHEDULED_MESSAGE_REVAMP) {
-                repeat.visibility = View.GONE
-            } else {
-                repeat.adapter = ArrayAdapter.createFromResource(activity!!, R.array.scheduled_message_repeat, android.R.layout.simple_spinner_dropdown_item)
-                repeat.setSelection(scheduledMessage!!.repeat)
-            }
+            repeat.adapter = ArrayAdapter.createFromResource(activity!!, R.array.scheduled_message_repeat, android.R.layout.simple_spinner_dropdown_item)
+            repeat.setSelection(scheduledMessage!!.repeat)
         }
 
         save.setOnClickListener { save() }
