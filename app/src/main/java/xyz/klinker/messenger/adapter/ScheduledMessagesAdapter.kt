@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.ScheduledMessageViewHolder
+import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.shared.util.listener.ScheduledMessageClickListener
@@ -67,27 +68,33 @@ class ScheduledMessagesAdapter(private val scheduledMessages: List<ScheduledMess
             } + ")"
         }
 
-        when {
-            MimeType.isStaticImage(message.mimeType) -> {
-                Glide.with(holder.itemView.context)
-                        .load(message.data!!)
-                        .apply(RequestOptions().centerCrop())
-                        .into(holder.image)
-                holder.image.visibility = View.VISIBLE
-                holder.message.visibility = View.GONE
-            }
-            message.mimeType == MimeType.IMAGE_GIF -> {
-                Glide.with(holder.itemView.context)
-                        .asGif()
-                        .load(message.data!!)
-                        .into(holder.image)
-                holder.image.visibility = View.VISIBLE
-                holder.message.visibility = View.GONE
-            }
-            else -> {
-                holder.message.text = message.data
-                holder.image.visibility = View.GONE
-                holder.message.visibility = View.VISIBLE
+        if (Account.exists() && !Account.primary && message.mimeType != MimeType.TEXT_PLAIN) {
+            holder.message.text = holder.itemView.context.getString(R.string.media_on_primary_device)
+            holder.image.visibility = View.GONE
+            holder.message.visibility = View.VISIBLE
+        } else {
+            when {
+                MimeType.isStaticImage(message.mimeType) -> {
+                    Glide.with(holder.itemView.context)
+                            .load(message.data!!)
+                            .apply(RequestOptions().centerCrop())
+                            .into(holder.image)
+                    holder.image.visibility = View.VISIBLE
+                    holder.message.visibility = View.GONE
+                }
+                message.mimeType == MimeType.IMAGE_GIF -> {
+                    Glide.with(holder.itemView.context)
+                            .asGif()
+                            .load(message.data!!)
+                            .into(holder.image)
+                    holder.image.visibility = View.VISIBLE
+                    holder.message.visibility = View.GONE
+                }
+                else -> {
+                    holder.message.text = message.data
+                    holder.image.visibility = View.GONE
+                    holder.message.visibility = View.VISIBLE
+                }
             }
         }
 
