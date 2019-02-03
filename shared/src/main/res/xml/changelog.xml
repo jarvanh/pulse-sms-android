@@ -16,14 +16,14 @@
 
 <changelog>
 
-    <!--<version-->
-        <!--name="4.6.0"-->
-        <!--description="Unreleased">-->
-        <!-- Tapping the "Schedule a message" button within a conversation will apply the currently entered text, to the message. -->
-        <!--<text>Attach images and GIFs to scheduled messages (TODO: remove feature flag)</text>-->
-        <!--<text>Support for recurring scheduled messages (TODO: remove feature flag)</text>-->
-        <!--<text>Support for entering a hex color when choosing theme colors (TODO: remove feature flag)</text>-->
-    <!--</version>-->
+    <version
+        name="4.6.0"
+        description="February 3rd, 2019">
+         <!--Tapping the "Schedule a message" button within a conversation will apply the currently entered text, to the message. -->
+        <text>Attach images and GIFs to scheduled messages</text>
+        <text>Support for recurring scheduled messages</text>
+        <text>Support for entering a hex color when choosing theme colors</text>
+    </version>
 
     <version
         name="4.5.2"

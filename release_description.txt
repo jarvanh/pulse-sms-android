@@ -1,4 +1,4 @@
+- Attach images and GIFs to scheduled messages<br/>
+- Support for recurring scheduled messages<br/>
+- Support for entering a hex color when choosing theme colors<br/>
 - Contact management improvements for the web version: https://github.com/klinker-apps/messenger-issues/issues/620<br/>
-- Bug fixes<br/>
-- Performance improvements<br/>
-- Prep for future features
