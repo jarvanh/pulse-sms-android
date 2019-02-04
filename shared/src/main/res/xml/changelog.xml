@@ -22,6 +22,7 @@
          <!--Tapping the "Schedule a message" button within a conversation will apply the currently entered text, to the message. -->
         <text>Attach images and GIFs to scheduled messages</text>
         <text>Support for recurring scheduled messages</text>
+        <text>Expose currently scheduled messages, within their conversation</text>
         <text>Support for entering a hex color when choosing theme colors</text>
         <text>Long clicking the send button provides new functionality and options, depending on what you have enabled in settings: send without the applied signature, send without the applied delay, schedule the message.</text>
     </version>
