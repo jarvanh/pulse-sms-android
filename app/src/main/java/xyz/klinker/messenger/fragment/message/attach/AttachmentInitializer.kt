@@ -73,7 +73,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
 
             val animator: ValueAnimator
             if (attachLayout.visibility == View.VISIBLE) {
-                if (getBoldedAttachHolderPosition() == -1) {
+                if (getBoldedAttachHolderPosition() == -1 && attach.isSoundEffectsEnabled) {
                     attachImage(true)
                     return@setOnClickListener
                 }
