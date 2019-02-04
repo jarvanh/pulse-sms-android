@@ -137,6 +137,10 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
         if (arguments?.containsKey(ARG_CONVERSATION_MATCHER) == true) {
             conversationMatcher = arguments.getString(ARG_CONVERSATION_MATCHER)
+
+            // NOTE: I am not disabling the FAB because it doesn't work. It does in fact allow creating a scheduled message,
+            // but it doesn't have the right colors, the position covers messages, and it creates the message for any conversation,
+            // not just the current conversation.
             fab.visibility = View.GONE
         }
     }
