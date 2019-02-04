@@ -73,6 +73,11 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
 
             val animator: ValueAnimator
             if (attachLayout.visibility == View.VISIBLE) {
+                if (getBoldedAttachHolderPosition() == -1) {
+                    attachImage(true)
+                    return@setOnClickListener
+                }
+
                 dragDismissFrameLayout.isEnabled = true
                 animator = ValueAnimator.ofInt(attachLayout.height, 0)
                 animator.addListener(object : AnimatorListenerAdapter() {
@@ -121,7 +126,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
                 return@postDelayed
             }
 
-            Thread {
+            Thread { try {
                 val thisMatcher = SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(fragment.argManager.phoneNumbers)).default
                 val scheduledMessages = DataSource.getScheduledMessagesAsList(activity!!).filter {
                     SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(it.to!!)).default == thisMatcher
@@ -145,8 +150,8 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
                         animator.start()
                     }
                 }
-            }.start()
-        }, 1000)
+            } catch (e: Throwable) {} }.start()
+        }, 500)
     }
 
     private fun initAttachStub() {
