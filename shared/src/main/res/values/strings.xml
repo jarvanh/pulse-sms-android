@@ -129,6 +129,7 @@
     <string name="type_message_to">Type message to %1$s</string>
     <string name="attach">Attach</string>
     <string name="select_sim">Select SIM</string>
+    <string name="view_scheduled_messages">View scheduled messages for conversation</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s  •</string>
     <string name="mms_image">MMS Image</string>

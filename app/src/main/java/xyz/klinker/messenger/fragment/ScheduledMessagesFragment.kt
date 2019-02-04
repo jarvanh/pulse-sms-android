@@ -54,10 +54,7 @@ import xyz.klinker.messenger.fragment.message.attach.AttachmentListener
 import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.ScheduledMessage
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
-import xyz.klinker.messenger.shared.util.ColorUtils
-import xyz.klinker.messenger.shared.util.ImageUtils
-import xyz.klinker.messenger.shared.util.PhoneNumberUtils
-import xyz.klinker.messenger.shared.util.TimeUtils
+import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.listener.ScheduledMessageClickListener
 import java.util.*
 
@@ -68,6 +65,8 @@ import java.util.*
 class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
     private val fragmentActivity: FragmentActivity? by lazy { activity }
+
+    private var conversationMatcher: String? = null
 
     private val list: RecyclerView by lazy { view!!.findViewById<View>(R.id.list) as RecyclerView }
     private val progress: ProgressBar? by lazy { view?.findViewById<View>(R.id.progress) as ProgressBar? }
@@ -135,6 +134,11 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
             displayDateDialog(message)
         }
+
+        if (arguments?.containsKey(ARG_CONVERSATION_MATCHER) == true) {
+            conversationMatcher = arguments.getString(ARG_CONVERSATION_MATCHER)
+            fab.visibility = View.GONE
+        }
     }
 
     override fun onStart() {
@@ -188,7 +192,9 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         Thread {
             try {
                 if (fragmentActivity != null) {
-                    val messages = DataSource.getScheduledMessagesAsList(fragmentActivity!!)
+                    val messages = DataSource.getScheduledMessagesAsList(fragmentActivity!!).filter {
+                        if (conversationMatcher == null) true else conversationMatcher == SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(it.to!!)).default
+                    }
                     fragmentActivity!!.runOnUiThread { setMessages(messages) }
                 }
             } catch (e: Exception) {
@@ -484,9 +490,20 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         private const val ARG_TITLE = "title"
         private const val ARG_PHONE_NUMBERS = "phone_numbers"
         private const val ARG_DATA = "data"
+        private const val ARG_CONVERSATION_MATCHER = "conversation_phone_matcher"
 
         fun newInstance(): ScheduledMessagesFragment {
             return ScheduledMessagesFragment()
+        }
+
+        fun newInstance(conversationMatcher: String): ScheduledMessagesFragment {
+            val args = Bundle()
+            args.putString(ARG_CONVERSATION_MATCHER, conversationMatcher)
+
+            val fragment = ScheduledMessagesFragment()
+            fragment.arguments = args
+
+            return fragment
         }
 
         fun newInstance(title: String, phoneNumbers: String, text: String): ScheduledMessagesFragment {
@@ -497,6 +514,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
             val fragment = ScheduledMessagesFragment()
             fragment.arguments = args
+
             return fragment
         }
     }

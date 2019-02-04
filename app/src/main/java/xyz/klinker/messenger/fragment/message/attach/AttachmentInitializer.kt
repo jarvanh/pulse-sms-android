@@ -7,6 +7,7 @@ import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Handler
 import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -19,17 +20,23 @@ import android.widget.LinearLayout
 import androidx.fragment.app.FragmentActivity
 import com.afollestad.materialcamera.MaterialCamera
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
 import xyz.klinker.messenger.fragment.camera.Camera2BasicFragment
 import xyz.klinker.messenger.fragment.camera.FotoapparatFragment
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.message.send.PermissionHelper
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
+import xyz.klinker.messenger.shared.util.DensityUtil
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils
+import xyz.klinker.messenger.shared.util.SmsMmsUtils
 import xyz.klinker.messenger.shared.util.TvUtils
 import xyz.klinker.messenger.shared.util.listener.TextSelectedListener
 import xyz.klinker.messenger.view.*
+import java.lang.Exception
 
 @Suppress("DEPRECATION")
 class AttachmentInitializer(private val fragment: MessageListFragment) {
@@ -43,6 +50,8 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     private val attachLayoutStub: ViewStub by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_stub) as ViewStub }
     private val send: View by lazy { fragment.rootView!!.findViewById<View>(R.id.send) }
     private val attach: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attach) }
+    private val scheduledMessages: View by lazy { fragment.rootView!!.findViewById<View>(R.id.view_scheduled_messages) }
+    private val selectSim: View by lazy { fragment.rootView!!.findViewById<View>(R.id.select_sim) }
     private val attachLayout: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_layout) }
     private val attachHolder: FrameLayout by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_holder) as FrameLayout }
     private val attachButtonHolder: LinearLayout by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_button_holder) as LinearLayout }
@@ -91,6 +100,53 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
             animator.duration = 200
             animator.start()
         }
+
+        scheduledMessages.setOnClickListener {
+            val visible = attachLayoutStub.parent == null && attachLayout.visibility == View.VISIBLE
+            val showingScheduled = try { getBoldedAttachHolderPosition() == -1 } catch (e: Exception) { false }
+
+            if (visible && showingScheduled) {
+                attach.performClick() // dismiss
+            } else if (visible && !showingScheduled) {
+                viewScheduledMessages() // show scheduled
+            } else {
+                // animate visible and show scheduled
+                attach.performClick()
+                viewScheduledMessages()
+            }
+        }
+
+        Handler().postDelayed({
+            if (selectSim.visibility == View.VISIBLE) {
+                return@postDelayed
+            }
+
+            Thread {
+                val thisMatcher = SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(fragment.argManager.phoneNumbers)).default
+                val scheduledMessages = DataSource.getScheduledMessagesAsList(activity!!).filter {
+                    SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(it.to!!)).default == thisMatcher
+                }
+
+                if (scheduledMessages.isNotEmpty()) {
+                    activity?.runOnUiThread {
+                        val animator = ValueAnimator.ofInt(0, DensityUtil.toDp(activity!!, 32))
+                        val params = this.scheduledMessages.layoutParams as ViewGroup.MarginLayoutParams
+
+                        params.width = 0
+                        this.scheduledMessages.requestLayout()
+                        this.scheduledMessages.visibility = View.VISIBLE
+
+                        animator.addUpdateListener { valueAnimator ->
+                            params.width = valueAnimator.animatedValue as Int
+                            this.scheduledMessages.requestLayout()
+                        }
+
+                        animator.duration = 200
+                        animator.start()
+                    }
+                }
+            }.start()
+        }, 1000)
     }
 
     private fun initAttachStub() {
@@ -152,6 +208,15 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         }
     }
 
+    private fun viewScheduledMessages() {
+        prepareAttachHolder(-1)
+
+        val thisMatcher = SmsMmsUtils.createIdMatcher(PhoneNumberUtils.clearFormattingAndStripStandardReplacements(fragment.argManager.phoneNumbers)).default
+        val fragment = ScheduledMessagesFragment.newInstance(thisMatcher)
+        activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, fragment)?.commit()
+        attachHolder.backgroundTintList = ColorStateList.valueOf(this.fragment.resources.getColor(R.color.background))
+    }
+
     internal fun attachImage(alwaysOpen: Boolean = false) {
         if (!alwaysOpen && getBoldedAttachHolderPosition() == 0 || activity == null) {
             return
@@ -170,7 +235,6 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         } catch (e: NullPointerException) {
 
         }
-
     }
 
     fun captureImage(alwaysOpen: Boolean = false) {
@@ -310,6 +374,8 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
         fragment.dismissKeyboard()
         attachHolder.removeAllViews()
         fotoapparatFragment?.stopCamera()
+
+        attachHolder.backgroundTintList = null
 
         for (i in 0 until attachButtonHolder.childCount) {
             if (positionToBold == i) {
