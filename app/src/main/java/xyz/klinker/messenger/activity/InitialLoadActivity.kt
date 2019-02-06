@@ -236,7 +236,7 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
 
             handler!!.post { progress.isIndeterminate = true }
 
-            val contacts = ContactUtils.queryContacts(context, source, true)
+            val contacts = ContactUtils.queryContacts(context, source)
             source.insertContacts(this, contacts, null)
 
             val groups = ContactUtils.queryContactGroups(this).map { it.toContact() }

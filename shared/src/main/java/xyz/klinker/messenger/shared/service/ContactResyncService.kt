@@ -33,10 +33,10 @@ class ContactResyncService : IntentService("ContactResyncService") {
         val encryptionUtils = Account.encryptor
         val startTime = TimeUtils.now
 
-        val contacts = ContactUtils.queryContacts(this, DataSource, true)
+        val contacts = ContactUtils.queryContacts(this, DataSource)
         val groups = ContactUtils.queryContactGroups(this).map { it.toContact() }
 
-        if (contacts.isEmpty() && groups.isEmpty()) {
+        if (contacts.isEmpty()) {
             return
         }
 

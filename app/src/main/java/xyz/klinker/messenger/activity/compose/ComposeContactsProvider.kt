@@ -168,7 +168,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
 
         Thread {
             if (allContacts == null) {
-                val contacts = ContactUtils.queryContacts(activity, DataSource, false)
+                val contacts = ContactUtils.queryContacts(activity, DataSource)
                 allContacts = contacts
                         .sortedBy { it.name }
                         .map { it as ImageContact}

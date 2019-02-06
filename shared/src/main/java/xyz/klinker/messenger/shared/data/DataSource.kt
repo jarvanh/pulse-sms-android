@@ -251,7 +251,7 @@ object DataSource {
                 continue
             }
 
-            val values = ContentValues(8)
+            val values = ContentValues(9)
 
             // here we are loading the id from the internal database into the conversation object
             // but we don't want to use that so we'll just generate a new one.

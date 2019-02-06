@@ -368,27 +368,18 @@ object ContactUtils {
     /**
      * Get a list of contact objects from Android's database.
      */
-    fun queryContacts(context: Context, dataSource: DataSource, forceAllContacts: Boolean = false): List<Contact> {
+    fun queryContacts(context: Context, dataSource: DataSource): List<Contact> {
         try {
             val contacts = ArrayList<ImageContact>()
             val conversations = dataSource.getAllConversationsAsList(context)
 
             val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-            val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.Contacts.PHOTO_THUMBNAIL_URI, ContactsContract.CommonDataKinds.Phone.TYPE)
+            val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.Contacts.PHOTO_THUMBNAIL_URI, ContactsContract.CommonDataKinds.Phone.TYPE)
 
-            var cursor = try {
-                context.contentResolver.query(
-                        uri, projection, null, null, null)
+            val cursor = try {
+                context.contentResolver.query(uri, projection, null, null, null)
             } catch (e: Exception) {
                 null
-            }
-
-            if (cursor != null && cursor.count > 500 && !forceAllContacts) {
-                cursor.closeSilent()
-                cursor = context.contentResolver.query(uri, projection,
-                        ContactsContract.CommonDataKinds.Phone.TYPE + "=?",
-                        arrayOf(Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)), null
-                )
             }
 
             if (cursor != null && cursor.moveToFirst()) {
@@ -400,6 +391,54 @@ object ContactUtils {
                     contact.phoneNumber = cursor.getString(1)
                     contact.image = cursor.getString(2)
                     contact.type = cursor.getInt(3)
+                    contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
+
+                    if (contact.image != null) {
+                        contact.image = contact.image!!.replace("/photo", "") + "/photo"
+                    }
+
+                    val colorSet = getColorsFromConversation(conversations, contact.phoneNumber!!)
+                    if (colorSet != null) {
+                        contact.colors = colorSet
+                    } else {
+                        ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context)
+                    }
+
+                    contacts.add(contact)
+                } while (cursor.moveToNext())
+            }
+
+            cursor.closeSilent()
+            return contacts
+        } catch (e: Exception) {
+            return queryNoTypeContacts(context, dataSource)
+        }
+
+    }
+
+    private fun queryNoTypeContacts(context: Context, dataSource: DataSource): List<Contact> {
+        try {
+            val contacts = ArrayList<ImageContact>()
+            val conversations = dataSource.getAllConversationsAsList(context)
+
+            val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+            val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.Contacts.PHOTO_THUMBNAIL_URI)
+
+            val cursor = try {
+                context.contentResolver.query(uri, projection, null, null, null)
+            } catch (e: Exception) {
+                null
+            }
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    val contact = ImageContact()
+
+                    contact.id = DataSource.generateId()
+                    contact.name = cursor.getString(0)
+                    contact.phoneNumber = cursor.getString(1)
+                    contact.image = cursor.getString(2)
+                    contact.type = -1
                     contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
 
                     if (contact.image != null) {
