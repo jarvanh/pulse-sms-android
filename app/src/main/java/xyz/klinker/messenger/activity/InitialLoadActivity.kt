@@ -236,11 +236,10 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
 
             handler!!.post { progress.isIndeterminate = true }
 
-            val contacts = ContactUtils.queryContacts(context, source)
-            source.insertContacts(this, contacts, null)
+            val contacts = ContactUtils.queryContacts(context, source).toMutableList()
+            contacts.addAll(ContactUtils.queryContactGroups(this).map { it.toContact() })
 
-            val groups = ContactUtils.queryContactGroups(this).map { it.toContact() }
-            source.insertContacts(this, groups, null)
+            source.insertContacts(this, contacts, null)
 
             val importTime = TimeUtils.now - startTime
             AnalyticsHelper.importFinished(this, importTime)

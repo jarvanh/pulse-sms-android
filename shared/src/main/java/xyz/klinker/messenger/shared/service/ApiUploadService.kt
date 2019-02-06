@@ -503,11 +503,11 @@ open class ApiUploadService : Service() {
             }
         }
 
-        private val TAG = "ApiUploadService"
-        private val MESSAGE_UPLOAD_ID = 7235
-        val NUM_MEDIA_TO_UPLOAD = 20
+        private const val TAG = "ApiUploadService"
+        private const val MESSAGE_UPLOAD_ID = 7235
+        const val NUM_MEDIA_TO_UPLOAD = 20
 
-        val MESSAGE_UPLOAD_PAGE_SIZE = 300
+        const val MESSAGE_UPLOAD_PAGE_SIZE = 300
 
         public fun uploadContacts(context: Context, encryptionUtils: EncryptionUtils) {
             val startTime = TimeUtils.now

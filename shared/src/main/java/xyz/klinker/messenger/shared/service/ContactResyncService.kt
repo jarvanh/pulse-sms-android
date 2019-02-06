@@ -8,7 +8,6 @@ import android.util.Log
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
 import java.lang.Exception
@@ -34,21 +33,21 @@ class ContactResyncService : IntentService("ContactResyncService") {
         val encryptionUtils = Account.encryptor
         val startTime = TimeUtils.now
 
-        val contacts = ContactUtils.queryContacts(this, DataSource)
-        val groups = ContactUtils.queryContactGroups(this).map { it.toContact() }
+        val contacts = ContactUtils.queryContacts(this, DataSource).toMutableList()
+        Log.v(TAG, "queried ${contacts.size} contacts: ${TimeUtils.now - startTime} ms")
+
+        contacts.addAll(ContactUtils.queryContactGroups(this).map { it.toContact() })
+        Log.v(TAG, "queried ${contacts.size} contacts + groups: ${TimeUtils.now - startTime} ms")
 
         if (contacts.isEmpty()) {
             return
         }
 
-        val removed = DataSource.deleteAllContacts(this)
+        DataSource.deleteAllContacts(this)
+        Log.v(TAG, "deleted old contacts: ${TimeUtils.now - startTime} ms")
 
-        Log.v(TAG, "deleted all contacts: ${TimeUtils.now - startTime} ms")
-
-        if (removed > 0 && Account.exists() && Account.primary) {
-            ApiUtils.clearContacts(Account.accountId)
-            Log.v(TAG, "deleting all contacts on web: ${TimeUtils.now - startTime} ms")
-        }
+        ApiUtils.clearContacts(Account.accountId)
+        Log.v(TAG, "deleting all contacts on web: ${TimeUtils.now - startTime} ms")
 
         Thread {
             try {
@@ -56,10 +55,7 @@ class ContactResyncService : IntentService("ContactResyncService") {
             } catch (e: Exception) { }
 
             DataSource.insertContacts(this, contacts, null)
-            Log.v(TAG, "queried and inserted new contacts: ${TimeUtils.now - startTime} ms")
-
-            DataSource.insertContacts(this, groups, null)
-            Log.v(TAG, "queried and inserted new groups: ${TimeUtils.now - startTime} ms")
+            Log.v(TAG, "inserted contacts and groups: ${TimeUtils.now - startTime} ms")
 
             if (Account.exists() && Account.primary) {
                 ApiUploadService.uploadContacts(this, encryptionUtils!!)
