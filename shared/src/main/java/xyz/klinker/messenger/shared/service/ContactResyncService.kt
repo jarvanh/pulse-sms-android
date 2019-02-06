@@ -11,6 +11,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
+import java.lang.Exception
 
 class ContactResyncService : IntentService("ContactResyncService") {
     companion object {
@@ -49,15 +50,21 @@ class ContactResyncService : IntentService("ContactResyncService") {
             Log.v(TAG, "deleting all contacts on web: ${TimeUtils.now - startTime} ms")
         }
 
-        DataSource.insertContacts(this, contacts, null)
-        Log.v(TAG, "queried and inserted new contacts: ${TimeUtils.now - startTime} ms")
+        Thread {
+            try {
+                Thread.sleep(TimeUtils.SECOND * 10)
+            } catch (e: Exception) { }
 
-        DataSource.insertContacts(this, groups, null)
-        Log.v(TAG, "queried and inserted new groups: ${TimeUtils.now - startTime} ms")
+            DataSource.insertContacts(this, contacts, null)
+            Log.v(TAG, "queried and inserted new contacts: ${TimeUtils.now - startTime} ms")
 
-        if (Account.exists() && Account.primary) {
-            ApiUploadService.uploadContacts(this, encryptionUtils!!)
-            Log.v(TAG, "uploaded contact changes: ${TimeUtils.now - startTime} ms")
-        }
+            DataSource.insertContacts(this, groups, null)
+            Log.v(TAG, "queried and inserted new groups: ${TimeUtils.now - startTime} ms")
+
+            if (Account.exists() && Account.primary) {
+                ApiUploadService.uploadContacts(this, encryptionUtils!!)
+                Log.v(TAG, "uploaded contact changes: ${TimeUtils.now - startTime} ms")
+            }
+        }.start()
     }
 }
