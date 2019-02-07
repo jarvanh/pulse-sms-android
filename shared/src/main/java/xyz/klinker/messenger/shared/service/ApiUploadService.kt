@@ -510,7 +510,6 @@ open class ApiUploadService : Service() {
         const val MESSAGE_UPLOAD_PAGE_SIZE = 300
 
         public fun uploadContacts(context: Context, encryptionUtils: EncryptionUtils) {
-            val startTime = TimeUtils.now
             val cursor = DataSource.getContacts(context)
 
             if (cursor.moveToFirst()) {
@@ -530,35 +529,42 @@ open class ApiUploadService : Service() {
                     contacts.add(contact)
                 } while (cursor.moveToNext())
 
-                var successPages = 0
-                var expectedPages = 0
-                val pages = PaginationUtils.getPages(contacts, MESSAGE_UPLOAD_PAGE_SIZE)
-
-                for (page in pages) {
-                    val request = AddContactRequest(Account.accountId, page.toTypedArray())
-                    try {
-                        val response = ApiUtils.api.contact().add(request).execute()
-                        expectedPages++
-                        if (ApiUtils.isCallSuccessful(response)) {
-                            successPages++
-                        }
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-
-                    Log.v(TAG, "uploaded " + page.size + " contacts for page " + expectedPages)
-                }
-
-                if (successPages != expectedPages) {
-                    Log.v(TAG, "failed to upload contacts in " +
-                            (TimeUtils.now - startTime) + " ms")
-                } else {
-                    Log.v(TAG, "contacts upload successful in " +
-                            (TimeUtils.now - startTime) + " ms")
-                }
+                uploadContacts(contacts)
             }
 
             cursor.closeSilent()
+        }
+
+        fun uploadContacts(contacts: List<ContactBody>) {
+            val startTime = TimeUtils.now
+
+            var successPages = 0
+            var expectedPages = 0
+            val pages = PaginationUtils.getPages(contacts, MESSAGE_UPLOAD_PAGE_SIZE)
+
+            for (page in pages) {
+                val request = AddContactRequest(Account.accountId, page.toTypedArray())
+                try {
+                    val response = ApiUtils.api.contact().add(request).execute()
+                    expectedPages++
+
+                    if (ApiUtils.isCallSuccessful(response)) {
+                        successPages++
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+                Log.v(TAG, "uploaded " + page.size + " contacts for page " + expectedPages)
+            }
+
+            if (successPages != expectedPages) {
+                Log.v(TAG, "failed to upload contacts in " +
+                        (TimeUtils.now - startTime) + " ms")
+            } else {
+                Log.v(TAG, "contacts upload successful in " +
+                        (TimeUtils.now - startTime) + " ms")
+            }
         }
     }
 }

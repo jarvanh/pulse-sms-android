@@ -409,7 +409,12 @@ object ContactUtils {
             }
 
             cursor.closeSilent()
-            return contacts
+
+            return if (contacts.size == 0) {
+                queryNoTypeContacts(context, dataSource)
+            } else {
+                contacts
+            }
         } catch (e: Exception) {
             return queryNoTypeContacts(context, dataSource)
         }
@@ -424,8 +429,9 @@ object ContactUtils {
             val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
             val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.Contacts.PHOTO_THUMBNAIL_URI)
 
-            val cursor = try {
-                context.contentResolver.query(uri, projection, null, null, null)
+            var cursor = try {
+                context.contentResolver.query(
+                        uri, projection, null, null, null)
             } catch (e: Exception) {
                 null
             }
@@ -435,15 +441,15 @@ object ContactUtils {
                     val contact = ImageContact()
 
                     contact.id = DataSource.generateId()
+                    contact.type = -1
                     contact.name = cursor.getString(0)
                     contact.phoneNumber = cursor.getString(1)
                     contact.image = cursor.getString(2)
-                    contact.type = -1
-                    contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
-
                     if (contact.image != null) {
                         contact.image = contact.image!!.replace("/photo", "") + "/photo"
                     }
+
+                    contact.idMatcher = SmsMmsUtils.createIdMatcher(contact.phoneNumber!!).default
 
                     val colorSet = getColorsFromConversation(conversations, contact.phoneNumber!!)
                     if (colorSet != null) {
@@ -461,7 +467,6 @@ object ContactUtils {
         } catch (e: Exception) {
             return emptyList()
         }
-
     }
 
     /**
