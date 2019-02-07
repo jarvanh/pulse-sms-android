@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.6.1"
+        description="February 8th, 2019">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.6.0"
         description="February 3rd, 2019">
          <!--Tapping the "Schedule a message" button within a conversation will apply the currently entered text, to the message. -->
