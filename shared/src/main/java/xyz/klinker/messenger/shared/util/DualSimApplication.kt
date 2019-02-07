@@ -44,7 +44,7 @@ class DualSimApplication(private val switchSim: View) {
                     badger.text = ""
                 }
 
-                switchSim.setOnClickListener { _ -> showSimSelection(subscriptions, conversation, badger) }
+                switchSim.setOnClickListener { showSimSelection(subscriptions, conversation, badger) }
             }
         }
 
@@ -76,7 +76,7 @@ class DualSimApplication(private val switchSim: View) {
                         badger.text = ""
                     } else {
                         conversation!!.simSubscriptionId = subscriptions[i - 1].subscriptionId
-                        badger.text = i.toString()
+                        badger.text = (subscriptions[i - 1].simSlotIndex + 1).toString()
                     }
 
                     DataSource.updateConversationSettings(context, conversation)
