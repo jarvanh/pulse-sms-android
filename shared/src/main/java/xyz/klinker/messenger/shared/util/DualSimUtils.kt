@@ -30,7 +30,7 @@ object DualSimUtils {
 
             try {
                 this.availableSims.clear()
-                this.availableSims.addAll(manager!!.activeSubscriptionInfoList)
+                this.availableSims.addAll(manager!!.activeSubscriptionInfoList.sortedBy { it.simSlotIndex })
                 if (availableSims.size <= 1) {
                     // not a dual sim phone, ignore this.
                     this.availableSims.clear()
