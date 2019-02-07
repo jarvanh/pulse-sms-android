@@ -1016,15 +1016,16 @@ object DataSource {
         return if (query == null || query.isEmpty()) {
             null
         } else {
+            val q = query.replace("'", "''")
             try {
-                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_TITLE + " LIKE '%" +
-                        query.replace("'", "''") + "%' AND " + Conversation.COLUMN_PRIVATE + "=0", null, null, null,
-                        Conversation.COLUMN_TIMESTAMP + " desc")
+                database(context).query(Conversation.TABLE, null,
+                        "(${Conversation.COLUMN_TITLE} LIKE '%$q%' OR ${Conversation.COLUMN_PHONE_NUMBERS} LIKE '%$q%') AND ${Conversation.COLUMN_PRIVATE}=0",
+                        null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
             } catch (e: Exception) {
                 ensureActionable(context)
-                database(context).query(Conversation.TABLE, null, Conversation.COLUMN_TITLE + " LIKE '%" +
-                        query.replace("'", "''") + "%' AND " + Conversation.COLUMN_PRIVATE + "=0", null, null, null,
-                        Conversation.COLUMN_TIMESTAMP + " desc")
+                database(context).query(Conversation.TABLE, null,
+                        "(${Conversation.COLUMN_TITLE} LIKE '%$q%' OR ${Conversation.COLUMN_PHONE_NUMBERS} LIKE '%$q%') AND ${Conversation.COLUMN_PRIVATE}=0",
+                        null, null, null, Conversation.COLUMN_TIMESTAMP + " desc")
             }
         }
     }

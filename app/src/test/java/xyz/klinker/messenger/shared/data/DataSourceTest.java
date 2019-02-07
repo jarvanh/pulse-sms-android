@@ -279,7 +279,7 @@ public class DataSourceTest extends MessengerRobolectricSuite {
 
     @Test
     public void searchConversations() {
-        when(database.query("conversation", null, "title LIKE '%swimmer''s%' AND private_notifications=0", null, null, null,
+        when(database.query("conversation", null, "(title LIKE '%swimmer''s%' OR phone_numbers LIKE '%swimmer''s%') AND private_notifications=0", null, null, null,
                 "timestamp desc")).thenReturn(cursor);
         assertEquals(cursor, source.searchConversations(context, "swimmer's"));
     }
