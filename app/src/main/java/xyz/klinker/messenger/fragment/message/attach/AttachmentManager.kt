@@ -158,6 +158,7 @@ class AttachmentManager(private val fragment: MessageListFragment) {
     }
 
     fun backPressed() = if (attachLayout?.visibility == View.VISIBLE) {
+
         attach.isSoundEffectsEnabled = false
         attach.performClick()
         attach.isSoundEffectsEnabled = true

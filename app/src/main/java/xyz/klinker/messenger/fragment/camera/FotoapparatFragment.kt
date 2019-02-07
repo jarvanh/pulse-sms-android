@@ -77,7 +77,9 @@ class FotoapparatFragment : Fragment(), View.OnClickListener {
                         .saveToFile(file)
                         .whenAvailable {
                             val uri = ImageUtils.createContentUri(activity, file)
-                            callback.onImageSelected(uri, MimeType.IMAGE_JPEG, true)
+                            activity.runOnUiThread {
+                                callback.onImageSelected(uri, MimeType.IMAGE_JPEG, true)
+                            }
                         }
             }
             R.id.flip_picture -> {

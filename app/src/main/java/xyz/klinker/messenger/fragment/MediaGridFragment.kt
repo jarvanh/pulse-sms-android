@@ -21,6 +21,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.listener.MediaSelectedListener
+import java.lang.Exception
 
 class MediaGridFragment : Fragment(), MediaSelectedListener {
 
@@ -36,7 +37,10 @@ class MediaGridFragment : Fragment(), MediaSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setUpToolbar()
+        try {
+            setUpToolbar()
+        } catch (e: Exception) {
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
