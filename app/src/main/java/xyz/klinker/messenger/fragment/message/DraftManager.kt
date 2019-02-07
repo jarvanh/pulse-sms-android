@@ -84,7 +84,7 @@ class DraftManager(private val fragment: MessageListFragment) {
                         editImage.visibility = View.GONE
                     }
                     draft.mimeType!!.contains("audio/") -> {
-                        attachManager.attachImage(Uri.parse(draft.data))
+                        attachManager.attachAudio(Uri.parse(draft.data))
                         attachManager.attachedMimeType = draft.mimeType
                         editImage.visibility = View.GONE
                     }
@@ -94,7 +94,7 @@ class DraftManager(private val fragment: MessageListFragment) {
                         editImage.visibility = View.GONE
                     }
                     draft.mimeType == MimeType.TEXT_VCARD -> {
-                        attachManager.attachImage(Uri.parse(draft.data))
+                        attachManager.attachContact(Uri.parse(draft.data))
                         attachManager.attachedMimeType = draft.mimeType
                         editImage.visibility = View.GONE
                     }

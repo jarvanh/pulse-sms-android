@@ -50,7 +50,7 @@ class AudioWrapper {
 
             if (tone != null) {
                 mediaPlayer = MediaPlayer.create(context, tone, null, AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_UNKNOWN)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                         .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
                         .build(), 1)
             }
@@ -69,7 +69,7 @@ class AudioWrapper {
 
        try {
            mediaPlayer = MediaPlayer.create(context, resourceId, AudioAttributes.Builder()
-                   .setContentType(AudioAttributes.CONTENT_TYPE_UNKNOWN)
+                   .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                    .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
                    .build(), 1)
        } catch (ex: Exception) {

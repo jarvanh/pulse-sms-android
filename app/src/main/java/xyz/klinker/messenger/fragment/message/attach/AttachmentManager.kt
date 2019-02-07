@@ -144,7 +144,7 @@ class AttachmentManager(private val fragment: MessageListFragment) {
         attachedImage.setImageResource(R.drawable.ic_audio_sent)
         fragment.counterCalculator.updateCounterText()
     }
-
+    
     fun attachContact(uri: Uri) {
         clearAttachedData()
         attachedUri = uri

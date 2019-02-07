@@ -83,7 +83,7 @@ class ShareIntentHandler(private val page: QuickSharePage) {
                 imageData
             }
 
-            data.add(ShareData(MimeType.IMAGE_PNG, uri))
+            data.add(ShareData(intent.type ?: MimeType.IMAGE_PNG, uri))
         }
 
         if (intent.extras != null && intent.extras!!.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {

@@ -152,7 +152,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
                 imageData
             }
 
-            data.add(ShareData(MimeType.IMAGE_PNG, uri))
+            data.add(ShareData(intent.type ?: MimeType.IMAGE_PNG, uri))
         }
 
         if (intent.extras != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && intent.extras!!.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
