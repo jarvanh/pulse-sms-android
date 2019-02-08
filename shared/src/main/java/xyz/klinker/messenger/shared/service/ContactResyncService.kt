@@ -41,12 +41,12 @@ class ContactResyncService : IntentService("ContactResyncService") {
         val contacts = ContactUtils.queryContacts(this, DataSource).toMutableList()
         Log.v(TAG, "queried ${contacts.size} contacts: ${TimeUtils.now - startTime} ms")
 
-        contacts.addAll(ContactUtils.queryContactGroups(this).map { it.toContact() })
-        Log.v(TAG, "queried ${contacts.size} contacts + groups: ${TimeUtils.now - startTime} ms")
-
         if (contacts.isEmpty()) {
             return
         }
+
+        contacts.addAll(ContactUtils.queryContactGroups(this).map { it.toContact() })
+        Log.v(TAG, "queried ${contacts.size} contacts + groups: ${TimeUtils.now - startTime} ms")
 
         DataSource.deleteAllContacts(this)
         Log.v(TAG, "deleted old contacts: ${TimeUtils.now - startTime} ms")

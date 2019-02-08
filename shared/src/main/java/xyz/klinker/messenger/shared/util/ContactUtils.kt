@@ -28,7 +28,6 @@ import java.util.regex.Pattern
 
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.IdMatcher
 import xyz.klinker.messenger.shared.data.model.Contact
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.ImageContact
@@ -411,17 +410,17 @@ object ContactUtils {
             cursor.closeSilent()
 
             return if (contacts.size == 0) {
-                queryNoTypeContacts(context, dataSource)
+                queryContactsLegacy(context, dataSource)
             } else {
                 contacts
             }
         } catch (e: Exception) {
-            return queryNoTypeContacts(context, dataSource)
+            return queryContactsLegacy(context, dataSource)
         }
 
     }
 
-    private fun queryNoTypeContacts(context: Context, dataSource: DataSource): List<Contact> {
+    private fun queryContactsLegacy(context: Context, dataSource: DataSource): List<Contact> {
         try {
             val contacts = ArrayList<ImageContact>()
             val conversations = dataSource.getAllConversationsAsList(context)
@@ -430,8 +429,10 @@ object ContactUtils {
             val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.Contacts.PHOTO_THUMBNAIL_URI)
 
             var cursor = try {
-                context.contentResolver.query(
-                        uri, projection, null, null, null)
+                context.contentResolver.query(uri, projection,
+                        ContactsContract.CommonDataKinds.Phone.TYPE + "=?",
+                        arrayOf(Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)), null
+                )
             } catch (e: Exception) {
                 null
             }
