@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.6.2"
+        description="Unreleased">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.6.1"
         description="February 8th, 2019">
         <text>Bug fixes</text>
