@@ -333,9 +333,11 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
 
             val messageListFragment = navController.findMessageListFragment()
             if (messageListFragment != null) {
+                val messageText = messageListFragment.sendManager.messageEntry.text.toString()
+                messageListFragment.sendManager.messageEntry.setText("")
+
                 conversationActionDelegate.displayFragmentWithBackStack(
-                        ScheduledMessagesFragment.newInstance(conversation!!.title!!, conversation.phoneNumbers!!,
-                                messageListFragment.sendManager.messageEntry.text.toString()))
+                        ScheduledMessagesFragment.newInstance(conversation!!.title!!, conversation.phoneNumbers!!, messageText))
             } else {
                 conversationActionDelegate.displayFragmentWithBackStack(
                         ScheduledMessagesFragment.newInstance(conversation!!.title!!, conversation.phoneNumbers!!, ""))

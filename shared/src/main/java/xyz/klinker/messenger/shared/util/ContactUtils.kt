@@ -428,7 +428,7 @@ object ContactUtils {
             val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
             val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.Contacts.PHOTO_THUMBNAIL_URI)
 
-            var cursor = try {
+            val cursor = try {
                 context.contentResolver.query(uri, projection,
                         ContactsContract.CommonDataKinds.Phone.TYPE + "=?",
                         arrayOf(Integer.toString(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)), null
