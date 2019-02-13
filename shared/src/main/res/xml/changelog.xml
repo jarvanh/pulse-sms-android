@@ -19,6 +19,7 @@
     <version
         name="4.6.2"
         description="Unreleased">
+        <!-- clear text entry after applying it to the scheduled message -->
         <text>Bug fixes</text>
     </version>
 
