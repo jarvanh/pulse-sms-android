@@ -20,6 +20,7 @@
         name="4.6.2"
         description="Unreleased">
         <!-- clear text entry after applying it to the scheduled message -->
+        <!-- fully rollout new in-app camera -->
         <text>Bug fixes</text>
     </version>
 

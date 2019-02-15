@@ -104,7 +104,6 @@ object FeatureFlags {
     var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false
 
     // disabled for future features
-    var INTERNAL_CAMERA_REVAMP: Boolean = false
 
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
@@ -113,8 +112,6 @@ object FeatureFlags {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
-
-        INTERNAL_CAMERA_REVAMP = getValue(context, sharedPrefs, FLAG_INTERNAL_CAMERA_REVAMP)
 
         QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
     }
@@ -126,8 +123,6 @@ object FeatureFlags {
 
         when (identifier) {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
-
-            FLAG_INTERNAL_CAMERA_REVAMP -> INTERNAL_CAMERA_REVAMP = flag
 
             FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
         }

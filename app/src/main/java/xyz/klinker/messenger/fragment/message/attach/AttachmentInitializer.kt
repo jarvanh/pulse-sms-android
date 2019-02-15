@@ -57,7 +57,6 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
     private val attachButtonHolder: LinearLayout by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_button_holder) as LinearLayout }
     private val dragDismissFrameLayout: View by lazy { fragment.rootView!! }
 
-    private var camera2Fragment: Camera2BasicFragment? = null
     var fotoapparatFragment: FotoapparatFragment? = null
 
     fun initAttachHolder() {
@@ -249,15 +248,9 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
 
         prepareAttachHolder(1)
 
-        if (FeatureFlags.INTERNAL_CAMERA_REVAMP) {
-            fotoapparatFragment = FotoapparatFragment.getInstance()
-            activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, fotoapparatFragment!!)?.commit()
-            fotoapparatFragment?.callback = attachListener
-        } else {
-            camera2Fragment = Camera2BasicFragment.newInstance()
-            activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, camera2Fragment!!)?.commit()
-            camera2Fragment?.attachImageSelectedListener(attachListener)
-        }
+        fotoapparatFragment = FotoapparatFragment.getInstance()
+        activity?.supportFragmentManager?.beginTransaction()?.add(R.id.attach_holder, fotoapparatFragment!!)?.commit()
+        fotoapparatFragment?.callback = attachListener
     }
 
     private fun attachGif() {
