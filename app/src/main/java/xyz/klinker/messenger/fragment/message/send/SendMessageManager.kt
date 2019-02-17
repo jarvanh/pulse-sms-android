@@ -56,12 +56,10 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         KeyboardLayoutHelper.applyLayout(messageEntry)
         messageEntry.textSize = Settings.largeFont.toFloat()
 
-        messageEntry.setOnEditorActionListener { _, actionId, keyEvent ->
+        messageEntry.setOnEditorActionListener { _, actionId, _ ->
             var handled = false
 
-            if (keyEvent != null && keyEvent.action == KeyEvent.ACTION_DOWN &&
-                    Settings.keyboardLayout !== KeyboardLayout.ENTER &&
-                    keyEvent.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_SEND) {
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
                 requestPermissionThenSend()
                 handled = true
             }

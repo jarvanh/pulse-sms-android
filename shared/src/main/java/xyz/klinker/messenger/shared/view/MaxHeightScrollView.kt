@@ -40,6 +40,6 @@ class MaxHeightScrollView : FrameLayout {
     }
 
     companion object {
-        private val DEFAULT_MAX_DP = 100
+        private const val DEFAULT_MAX_DP = 100
     }
 }
