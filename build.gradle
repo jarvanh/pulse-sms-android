@@ -26,12 +26,12 @@ buildscript {
 
     ext.buildInfo = [
             'id'                : 'xyz.klinker.messenger',
-            'name'              : '4.6.2',
+            'name'              : '4.6.3',
             'number'            : System.getenv("BUILD_NUMBER") as Integer ?: 135,
     ]
 
     ext.versions = [
-            'gradlePlugin'      : '3.2.1',
+            'gradlePlugin'      : '3.3.1',
             'targetSdk'         : 28,
             'minSdk'            : 21,
 

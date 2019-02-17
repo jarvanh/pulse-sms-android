@@ -17,8 +17,15 @@
 <changelog>
 
     <version
-        name="4.6.2"
+        name="4.6.3"
         description="Unreleased">
+        <!-- changes around the keyboard layout implementation (default will no longer be enter to send) -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
+        name="4.6.2"
+        description="February 13th, 2019">
         <!-- clear text entry after applying it to the scheduled message -->
         <!-- fully rollout new in-app camera -->
         <text>Bug fixes</text>
