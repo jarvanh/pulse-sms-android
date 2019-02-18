@@ -54,8 +54,8 @@ object SmsMmsUtils {
 
     private val TAG = "SmsMmsUtils"
 
-    private const val INITIAL_CONVERSATION_LIMIT = 1000
-    const val INITIAL_MESSAGE_LIMIT = 50000
+    private const val INITIAL_CONVERSATION_LIMIT = 250
+    const val INITIAL_MESSAGE_LIMIT = 500
 
     /**
      * Gets a list of conversations from the internal sms database that is ready to be inserted
