@@ -18,8 +18,9 @@
 
     <version
         name="4.6.3"
-        description="Unreleased">
+        description="February 18th, 2019">
         <!-- changes around the keyboard layout implementation (default will no longer be enter to send) -->
+        <!-- change the strings for the "keyboard layout" preference, to be more explicit -->
         <text>Bug fixes</text>
     </version>
 
