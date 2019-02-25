@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>pulse/ic_launcher</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="2" y="2" width="44" height="44" rx="22"></rect>
+        <rect id="path-3" x="0" y="0" width="48" height="48"></rect>
+        <linearGradient x1="4.035102%" y1="10.5441241%" x2="63.8139205%" y2="66.4743134%" id="linearGradient-5">
+            <stop stop-color="#EEEEEE" offset="0%"></stop>
+            <stop stop-color="#D8D8D8" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-6" x="0" y="0" width="37" height="36"></rect>
+        <path d="M5.05208437,13.9505129 L1.18518519,17.8533532 L1.18518519,12.9505129 L1.18518519,1.20977216 C1.18518519,0.657487409 1.63290044,0.209772159 2.18518519,0.209772159 L17.8148148,0.209772159 C18.3670996,0.209772159 18.8148148,0.657487409 18.8148148,1.20977216 L18.8148148,12.9505129 C18.8148148,13.5027976 18.3670996,13.9505129 17.8148148,13.9505129 L5.05208437,13.9505129 Z" id="path-8"></path>
+        <filter x="-5.7%" y="-5.7%" width="122.7%" height="122.7%" filterUnits="objectBoundingBox" id="filter-9">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-10" x="2" y="2" width="44" height="44" rx="22"></rect>
+    </defs>
+    <g id="ic_launcher" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        <g id="ic_launcher_background" mask="url(#mask-2)">
+            <mask id="mask-4" fill="white">
+                <use xlink:href="#path-3"></use>
+            </mask>
+            <use id="dark-background" fill="#3778ED" fill-rule="evenodd" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " xlink:href="#path-3"></use>
+            <polygon id="light-background" fill="#428AFF" fill-rule="evenodd" mask="url(#mask-4)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 48 0"></polygon>
+            <polygon id="light-line" fill="#5E9BFF" fill-rule="evenodd" mask="url(#mask-4)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 48 47.5624457 0.444777406 0"></polygon>
+            <polygon id="dark-line" fill="#2C6BDC" fill-rule="evenodd" mask="url(#mask-4)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 47.5608046 48 0 0.442226531"></polygon>
+        </g>
+        <g id="ic_launcher_foreground" mask="url(#mask-2)">
+            <g transform="translate(14.000000, 15.000000)">
+                <g id="shadow" stroke-width="1" fill-rule="evenodd">
+                    <mask id="mask-7" fill="white">
+                        <use xlink:href="#path-6"></use>
+                    </mask>
+                    <use id="Mask" fill="url(#linearGradient-5)" xlink:href="#path-6"></use>
+                    <polygon fill-opacity="0.1" fill="#000000" mask="url(#mask-7)" points="1 17.1988978 19.7451551 36 37 36 37 19.5972464 17.6982222 0 5.16089176 8.0714916"></polygon>
+                </g>
+                <g id="message-bubble">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-9)" xlink:href="#path-8"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-8"></use>
+                </g>
+                <g id="lines" stroke-width="1" fill-rule="evenodd" transform="translate(3.777778, 1.742647)">
+                    <rect id="bottom" fill="#B7B7B7" x="0" y="7.68140267" width="12.4444444" height="1.94444444"></rect>
+                    <rect id="middle" fill="#B7B7B7" x="0" y="4.38474106" width="12.4444444" height="1.94444444"></rect>
+                    <rect id="top" fill="#B7B7B7" x="0" y="1.0618139" width="12.4444444" height="1.94444444"></rect>
+                    <polygon id="line-clip" fill="#FFFFFF" points="2.67272364 10.7430053 13.2705996 0.226552407 13.2705996 10.4193384"></polygon>
+                </g>
+            </g>
+        </g>
+        <mask id="mask-11" fill="white">
+            <use xlink:href="#path-10"></use>
+        </mask>
+        <rect stroke-opacity="0.1" stroke="#FFFFFF" stroke-width="0.3" x="2.15" y="2.15" width="43.7" height="43.7" rx="21.85"></rect>
+    </g>
+</svg>
