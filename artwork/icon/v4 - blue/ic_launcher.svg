@@ -6,16 +6,16 @@
     <defs>
         <rect id="path-1" x="2" y="2" width="44" height="44" rx="22"></rect>
         <rect id="path-3" x="0" y="0" width="48" height="48"></rect>
-        <linearGradient x1="4.035102%" y1="10.5441241%" x2="63.8139205%" y2="66.4743134%" id="linearGradient-5">
+        <linearGradient x1="4.89336993%" y1="1.92464193%" x2="63.8139205%" y2="66.4743134%" id="linearGradient-5">
             <stop stop-color="#EEEEEE" offset="0%"></stop>
             <stop stop-color="#D8D8D8" stop-opacity="0" offset="100%"></stop>
         </linearGradient>
-        <rect id="path-6" x="0" y="0" width="37" height="36"></rect>
-        <path d="M5.05208437,13.9505129 L1.18518519,17.8533532 L1.18518519,12.9505129 L1.18518519,1.20977216 C1.18518519,0.657487409 1.63290044,0.209772159 2.18518519,0.209772159 L17.8148148,0.209772159 C18.3670996,0.209772159 18.8148148,0.657487409 18.8148148,1.20977216 L18.8148148,12.9505129 C18.8148148,13.5027976 18.3670996,13.9505129 17.8148148,13.9505129 L5.05208437,13.9505129 Z" id="path-8"></path>
-        <filter x="-5.7%" y="-5.7%" width="122.7%" height="122.7%" filterUnits="objectBoundingBox" id="filter-9">
+        <rect id="path-6" x="0" y="0" width="42.8421053" height="41.6842105"></rect>
+        <path d="M4.9787356,17.0323678 L1.37231969,20.6723037 L1.37231969,15.0323678 L1.37231969,2.24289408 C1.37231969,1.13832458 2.26775019,0.242894078 3.37231969,0.242894078 L19.785575,0.242894078 C20.8901445,0.242894078 21.785575,1.13832458 21.785575,2.24289408 L21.785575,15.0323678 C21.785575,16.1369373 20.8901445,17.0323678 19.785575,17.0323678 L4.9787356,17.0323678 Z" id="path-8"></path>
+        <filter x="-34.3%" y="-34.3%" width="178.4%" height="178.3%" filterUnits="objectBoundingBox" id="filter-9">
             <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.00784313725   0 0 0 0 0.141176471   0 0 0 0 0.384313725  0 0 0 0.75 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
         <rect id="path-10" x="2" y="2" width="44" height="44" rx="22"></rect>
     </defs>
@@ -34,23 +34,23 @@
             <polygon id="dark-line" fill="#2C6BDC" fill-rule="evenodd" mask="url(#mask-4)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 47.5608046 48 0 0.442226531"></polygon>
         </g>
         <g id="ic_launcher_foreground" mask="url(#mask-2)">
-            <g transform="translate(14.000000, 15.000000)">
+            <g transform="translate(12.500000, 13.500000)">
                 <g id="shadow" stroke-width="1" fill-rule="evenodd">
                     <mask id="mask-7" fill="white">
                         <use xlink:href="#path-6"></use>
                     </mask>
                     <use id="Mask" fill="url(#linearGradient-5)" xlink:href="#path-6"></use>
-                    <polygon fill-opacity="0.1" fill="#000000" mask="url(#mask-7)" points="1 17.1988978 19.7451551 36 37 36 37 19.5972464 17.6982222 0 5.16089176 8.0714916"></polygon>
+                    <polygon fill-opacity="0.1" fill="#000000" mask="url(#mask-7)" points="1.15789474 19.9145133 22.8628112 41.6842105 42.8421053 41.6842105 42.8421053 22.6915484 20.4926783 0 5.9757694 9.34593764"></polygon>
                 </g>
                 <g id="message-bubble">
                     <use fill="black" fill-opacity="1" filter="url(#filter-9)" xlink:href="#path-8"></use>
                     <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-8"></use>
                 </g>
-                <g id="lines" stroke-width="1" fill-rule="evenodd" transform="translate(3.777778, 1.742647)">
-                    <rect id="bottom" fill="#B7B7B7" x="0" y="7.68140267" width="12.4444444" height="1.94444444"></rect>
-                    <rect id="middle" fill="#B7B7B7" x="0" y="4.38474106" width="12.4444444" height="1.94444444"></rect>
-                    <rect id="top" fill="#B7B7B7" x="0" y="1.0618139" width="12.4444444" height="1.94444444"></rect>
-                    <polygon id="line-clip" fill="#FFFFFF" points="2.67272364 10.7430053 13.2705996 0.226552407 13.2705996 10.4193384"></polygon>
+                <g id="lines" stroke-width="1" fill-rule="evenodd" transform="translate(5.532164, 2.017802)">
+                    <rect id="bottom" fill="#B7B7B7" x="0" y="8.72638397" width="14.4093567" height="2.14883711"></rect>
+                    <rect id="middle" fill="#B7B7B7" x="0.00257389448" y="5.65661653" width="14.4093567" height="2.14883711"></rect>
+                    <rect id="top" fill="#B7B7B7" x="0" y="2.58684909" width="14.4093567" height="2.14883711"></rect>
+                    <polygon id="line-clip" fill="#FFFFFF" points="0 13.8947368 15.0526316 0 15.0526316 13.4670958"></polygon>
                 </g>
             </g>
         </g>

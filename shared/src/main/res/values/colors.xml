@@ -17,10 +17,10 @@
 <resources>
 
     <!-- Main App Colors -->
-    <color name="colorPrimary">@color/materialTeal</color>
-    <color name="colorPrimaryDark">@color/materialTealDark</color>
-    <color name="colorPrimaryLight">@color/materialTealLight</color>
-    <color name="colorAccent">@color/materialOrangeAccent</color>
+    <color name="colorPrimary">#428AFF</color>
+    <color name="colorPrimaryDark">#3778ED</color>
+    <color name="colorPrimaryLight">#82B9FF</color>
+    <color name="colorAccent">#FF6E40</color>
 
     <!-- Material Design Colors -->
     <color name="materialRed">#F44336</color>
