@@ -121,7 +121,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
     }
 
     private fun shareContent(intent: Intent) {
-        var data = mutableListOf<ShareData>()
+        val data = mutableListOf<ShareData>()
 
         if (intent.type == MimeType.TEXT_PLAIN) {
             data.add(ShareData(MimeType.TEXT_PLAIN, intent.getStringExtra(Intent.EXTRA_TEXT)))
@@ -166,20 +166,41 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
     }
 
     private fun shareMultipleImages(intent: Intent) {
+        val images = mutableListOf<ShareData>()
+
         val parcelables = intent.getParcelableArrayListExtra<Parcelable>(Intent.EXTRA_STREAM)
-        val images = parcelables.map {
+        images.addAll(parcelables.map {
             val tempData = it.toString()
             try {
                 val dst = File(activity.filesDir, (Math.random() * Integer.MAX_VALUE).toInt().toString() + "")
                 val `in` = activity.contentResolver.openInputStream(Uri.parse(tempData))
 
                 FileUtils.copy(`in`!!, dst)
-                ShareData(Uri.fromFile(dst).toString(), intent.type!!)
+                ShareData(intent.type!!, Uri.fromFile(dst).toString())
             } catch (e: Exception) {
                 e.printStackTrace()
-                ShareData(tempData, intent.type!!)
+                ShareData(intent.type!!, tempData)
             }
-        }
+        })
+
+//        val clipData = intent.clipData
+//        if (clipData != null && clipData.itemCount > 0) {
+//            for (i in 0..clipData.itemCount) {
+//                val tempData = clipData.getItemAt(i).uri?.toString()
+//                if (tempData != null) {
+//                    try {
+//                        val dst = File(activity.filesDir, (Math.random() * Integer.MAX_VALUE).toInt().toString() + "")
+//                        val `in` = activity.contentResolver.openInputStream(Uri.parse(tempData))
+//
+//                        FileUtils.copy(`in`!!, dst)
+//                        images.add(ShareData(intent.type!!, Uri.fromFile(dst).toString()))
+//                    } catch (e: Exception) {
+//                        e.printStackTrace()
+//                        images.add(ShareData(intent.type!!, tempData))
+//                    }
+//                }
+//            }
+//        }
 
         activity.sender.resetViewsForMultipleImages(images)
     }
