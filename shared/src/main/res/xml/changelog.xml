@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.6.4"
+        description="Unreleased">
+        <!-- Fixes for sharing multiple images from Google Photos -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.6.3"
         description="February 18th, 2019">
         <!-- changes around the keyboard layout implementation (default will no longer be enter to send) -->
