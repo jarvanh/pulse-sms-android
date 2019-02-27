@@ -18,7 +18,7 @@
 
     <version
         name="4.6.4"
-        description="Unreleased">
+        description="March 1st, 2019">
         <!-- Fixes for sharing multiple images from Google Photos -->
         <text>Bug fixes</text>
     </version>
