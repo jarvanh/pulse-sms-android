@@ -17,9 +17,12 @@
 <resources>
 
     <!-- Main App Colors -->
-    <color name="colorPrimary">#428AFF</color>
-    <color name="colorPrimaryDark">#3778ED</color>
-    <color name="colorPrimaryLight">#82B9FF</color>
+    <!--<color name="colorPrimary">#428AFF</color>-->
+    <!--<color name="colorPrimaryDark">#3778ED</color>-->
+    <!--<color name="colorPrimaryLight">#82B9FF</color>-->
+    <color name="colorPrimary">#1775D2</color>
+    <color name="colorPrimaryDark">#1665C0</color>
+    <color name="colorPrimaryLight">#63A3FF</color>
     <color name="colorAccent">#FF6E40</color>
 
     <!-- Material Design Colors -->

@@ -16,11 +16,6 @@
 
 <resources>
 
-    <color name="colorPrimary">@color/materialTeal</color>
-    <color name="colorPrimaryDark">@color/materialTealDark</color>
-    <color name="colorPrimaryLight">@color/materialTealLight</color>
-    <color name="colorAccent">@color/materialOrangeAccent</color>
-
     <color name="background">#2E3133</color>
     <color name="quickReplyBackground">@color/background</color>
     <color name="replyBarCard">@color/drawerBackground</color>

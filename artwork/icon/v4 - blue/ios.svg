@@ -35,10 +35,10 @@
             <mask id="mask-5" fill="white">
                 <use xlink:href="#path-4"></use>
             </mask>
-            <use id="dark-background" fill="#3778ED" fill-rule="evenodd" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " xlink:href="#path-4"></use>
-            <polygon id="light-background" fill="#428AFF" fill-rule="evenodd" mask="url(#mask-5)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 48 0"></polygon>
-            <polygon id="light-line" fill="#5E9BFF" fill-rule="evenodd" mask="url(#mask-5)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 48 47.5624457 0.444777406 0"></polygon>
-            <polygon id="dark-line" fill="#2C6BDC" fill-rule="evenodd" mask="url(#mask-5)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 47.5608046 48 0 0.442226531"></polygon>
+            <use id="dark-background" fill="#1665C0" fill-rule="evenodd" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " xlink:href="#path-4"></use>
+            <polygon id="light-background" fill="#1775D2" fill-rule="evenodd" mask="url(#mask-5)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 48 0"></polygon>
+            <polygon id="light-line" fill="#247FDA" fill-rule="evenodd" mask="url(#mask-5)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 48 47.5624457 0.444777406 0"></polygon>
+            <polygon id="dark-line" fill="#135EB3" fill-rule="evenodd" mask="url(#mask-5)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 47.5608046 48 0 0.442226531"></polygon>
         </g>
         <g id="ic_launcher_foreground" mask="url(#mask-2)">
             <g transform="translate(9.000000, 11.000000)">
