@@ -17,9 +17,9 @@
 <resources>
 
     <style name="PulseTheme.NoActionBar" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/pulseColorPrimary</item>
+        <item name="colorPrimaryDark">@color/pulseColorPrimaryDark</item>
+        <item name="colorAccent">@color/pulseColorAccent</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
@@ -39,27 +39,27 @@
     </style>
 
     <style name="PulseTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/pulseColorPrimary</item>
+        <item name="colorPrimaryDark">@color/pulseColorPrimaryDark</item>
+        <item name="colorAccent">@color/pulseColorAccent</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
     <style name="PulseThemeWearable" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/pulseColorPrimary</item>
+        <item name="colorPrimaryDark">@color/pulseColorPrimaryDark</item>
+        <item name="colorAccent">@color/pulseColorAccent</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
     </style>
 
     <style name="PulsePasscode" parent="@style/tutorial_FloatingTutorialTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/pulseColorPrimary</item>
+        <item name="colorPrimaryDark">@color/pulseColorPrimaryDark</item>
+        <item name="colorAccent">@color/pulseColorAccent</item>
     </style>
 
     <style name="PulseTheme.NoColors" parent="@style/Theme.AppCompat.DayNight.NoActionBar">

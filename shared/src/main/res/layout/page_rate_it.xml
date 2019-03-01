@@ -27,7 +27,7 @@
         android:padding="24dp"
         android:text="@string/rate_it_title"
         android:textColor="@android:color/white"
-        android:background="@color/colorPrimary"
+        android:background="@color/pulseColorPrimary"
         android:textSize="19sp" />
 
     <LinearLayout

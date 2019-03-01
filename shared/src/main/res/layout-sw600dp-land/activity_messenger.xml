@@ -28,7 +28,7 @@
         android:fitsSystemWindows="true"
         android:id="@+id/status_bar"
         android:orientation="horizontal"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/pulseColorPrimaryDark"
         android:backgroundTintMode="multiply"
         tools:ignore="InconsistentLayout" />
 

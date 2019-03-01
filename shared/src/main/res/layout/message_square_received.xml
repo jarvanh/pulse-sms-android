@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/message_square_received_background"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/pulseColorPrimary"
         android:maxWidth="@dimen/max_message_width"
         android:paddingStart="20dp"
         android:paddingEnd="8dp"
