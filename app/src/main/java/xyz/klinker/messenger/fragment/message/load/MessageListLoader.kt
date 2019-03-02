@@ -87,6 +87,12 @@ class MessageListLoader(private val fragment: MessageListFragment) {
 
                     cursor = DataSource.getMessageCursorWithLimit(activity!!, argManager.conversationId,
                             when {
+                                // group conversations seem to have issues with this logic...
+                                // Let's just always reload based on the message limit? Don't know if that will change anything.
+                                // The downside here is that all the elements on the list will flash when the new cursor is loaded.
+                                argManager.phoneNumbers.contains(",") -> MESSAGE_LIMIT
+
+                                // For individual conversations, this logic seems to work fine
                                 messageLoadedCount == -1 -> MESSAGE_LIMIT
                                 addedNewMessage -> messageLoadedCount + 1
                                 else -> messageLoadedCount
@@ -194,6 +200,6 @@ class MessageListLoader(private val fragment: MessageListFragment) {
     }
     
     companion object {
-        const val MESSAGE_LIMIT = 8000
+        const val MESSAGE_LIMIT = 30
     }
 }
