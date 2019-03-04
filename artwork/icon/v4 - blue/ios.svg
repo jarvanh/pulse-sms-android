@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>pulse/ios</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="48" height="48"></rect>
+        <filter x="-4.2%" y="-2.1%" width="108.3%" height="108.3%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-4" x="0" y="0" width="48" height="48"></rect>
+        <linearGradient x1="4.89336993%" y1="1.92464193%" x2="63.8139205%" y2="66.4743134%" id="linearGradient-6">
+            <stop stop-color="#EEEEEE" offset="0%"></stop>
+            <stop stop-color="#D8D8D8" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-7" x="0" y="0" width="53.5526316" height="52.1052632"></rect>
+        <path d="M6.2234195,21.2904597 L1.71539961,25.8403797 L1.71539961,19.2904597 L1.71539961,2.3036176 C1.71539961,1.1990481 2.61083011,0.303617598 3.71539961,0.303617598 L25.2319688,0.303617598 C26.3365383,0.303617598 27.2319688,1.1990481 27.2319688,2.3036176 L27.2319688,19.2904597 C27.2319688,20.3950292 26.3365383,21.2904597 25.2319688,21.2904597 L6.2234195,21.2904597 Z" id="path-9"></path>
+        <filter x="-27.4%" y="-27.4%" width="162.7%" height="162.7%" filterUnits="objectBoundingBox" id="filter-10">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.00784313725   0 0 0 0 0.141176471   0 0 0 0 0.384313725  0 0 0 0.75 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="ios" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <g id="mask">
+            <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+        </g>
+        <g id="ic_launcher_background" mask="url(#mask-2)">
+            <mask id="mask-5" fill="white">
+                <use xlink:href="#path-4"></use>
+            </mask>
+            <use id="dark-background" fill="#1665C0" fill-rule="evenodd" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " xlink:href="#path-4"></use>
+            <polygon id="light-background" fill="#1775D2" fill-rule="evenodd" mask="url(#mask-5)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 48 0"></polygon>
+            <polygon id="light-line" fill="#247FDA" fill-rule="evenodd" mask="url(#mask-5)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 48 47.5624457 0.444777406 0"></polygon>
+            <polygon id="dark-line" fill="#135EB3" fill-rule="evenodd" mask="url(#mask-5)" transform="translate(24.000000, 24.000000) scale(1, -1) translate(-24.000000, -24.000000) " points="0 0 48 48 47.5608046 48 0 0.442226531"></polygon>
+        </g>
+        <g id="ic_launcher_foreground" mask="url(#mask-2)">
+            <g transform="translate(9.000000, 11.000000)">
+                <g id="shadow" stroke-width="1" fill-rule="evenodd">
+                    <mask id="mask-8" fill="white">
+                        <use xlink:href="#path-7"></use>
+                    </mask>
+                    <use id="Mask" fill="url(#linearGradient-6)" xlink:href="#path-7"></use>
+                    <polygon fill-opacity="0.1" fill="#000000" mask="url(#mask-8)" points="1.44736842 24.8931416 28.5785139 52.1052632 53.5526316 52.1052632 53.5526316 28.3644355 25.6158479 0 7.46971175 11.6824221"></polygon>
+                </g>
+                <g id="message-bubble">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-10)" xlink:href="#path-9"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-9"></use>
+                </g>
+                <g id="lines" stroke-width="1" fill-rule="evenodd" transform="translate(7.000000, 2.000000)">
+                    <rect id="bottom" fill="#B7B7B7" x="0" y="11" width="18" height="3"></rect>
+                    <rect id="middle" fill="#B7B7B7" x="0" y="7" width="18" height="3"></rect>
+                    <rect id="top" fill="#B7B7B7" x="0" y="3" width="18" height="3"></rect>
+                    <polygon id="line-clip" fill="#FFFFFF" points="0 17 19 0 19 16.4767876"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

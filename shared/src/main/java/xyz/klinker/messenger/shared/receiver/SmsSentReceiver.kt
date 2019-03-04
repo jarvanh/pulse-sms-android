@@ -57,7 +57,7 @@ open class SmsSentReceiver : SentReceiver() {
                 else -> try {
                     markMessageSent(context, uri)
                 } catch (e: Exception) {
-                    fallbackToLatestMessages(context)
+                    e.printStackTrace()
                 }
             }
         } catch (e: Exception) {
@@ -66,7 +66,8 @@ open class SmsSentReceiver : SentReceiver() {
     }
 
     private fun markMessageSent(context: Context, uri: Uri) {
-        markMessage(context, uri, false)
+//        markMessage(context, uri, false)
+        markLatestAsRead(context)
     }
 
     private fun markMessageError(context: Context, uri: Uri) {
@@ -177,25 +178,25 @@ open class SmsSentReceiver : SentReceiver() {
         }
     }
 
-    private fun fallbackToLatestMessages(context: Context) {
-        try {
+    companion object {
+        fun markLatestAsRead(context: Context) {
+            // if we get dropped into this, we are just going to mark the latest messages as sent, instead of
+            // trying to query them from the shared database and mark them as sent like we previously did.
+            // this is a hack, since we are not storing the id of the messages in the shared database.
+
             val messageList = DataSource.getNumberOfMessages(context, 10)
+            val conversationIds = mutableSetOf<Long>()
 
-            val conversationIds = HashSet<Long>()
-
-            for (m in messageList) {
-                if (m.type == Message.TYPE_SENDING) {
-                    DataSource.updateMessageType(context, m.id, Message.TYPE_SENT)
-                    conversationIds.add(m.conversationId)
+            messageList.forEach {
+                if (it.type == Message.TYPE_SENDING) {
+                    DataSource.updateMessageType(context, it.id, Message.TYPE_SENT)
+                    conversationIds.add(it.conversationId)
                 }
             }
 
-            for (id in conversationIds) {
-                MessageListUpdatedReceiver.sendBroadcast(context, id)
+            conversationIds.forEach {
+                MessageListUpdatedReceiver.sendBroadcast(context, it)
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
-
     }
 }

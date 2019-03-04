@@ -40,7 +40,8 @@ class MmsSentReceiver : com.klinker.android.send_message.MmsSentReceiver() {
             return
         }
 
-        handle(context, intent)
+//        handle(context, intent)
+        SmsSentReceiver.markLatestAsRead(context)
     }
 
     private fun handle(context: Context, intent: Intent) {

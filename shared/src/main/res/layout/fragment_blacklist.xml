@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:id="@+id/empty_view"
         android:orientation="vertical"
-        android:background="@color/colorPrimaryLight"
+        android:background="@color/pulseColorPrimaryLight"
         android:gravity="center"
         android:visibility="gone">
 

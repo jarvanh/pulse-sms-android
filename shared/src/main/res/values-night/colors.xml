@@ -16,17 +16,12 @@
 
 <resources>
 
-    <color name="colorPrimary">@color/materialTeal</color>
-    <color name="colorPrimaryDark">@color/materialTealDark</color>
-    <color name="colorPrimaryLight">@color/materialTealLight</color>
-    <color name="colorAccent">@color/materialOrangeAccent</color>
-
-    <color name="background">#374248</color>
+    <color name="background">#2E3133</color>
     <color name="quickReplyBackground">@color/background</color>
     <color name="replyBarCard">@color/drawerBackground</color>
     <color name="swipeBackground">#2c353a</color>
-    <color name="drawerBackground">#202B30</color>
-    <color name="selectedBackground">#33444d</color>
+    <color name="drawerBackground">#202024</color>
+    <color name="selectedBackground">#393E41</color>
     <color name="primaryText">#FFFFFFFF</color>
     <color name="secondaryText">#B2FFFFFF</color>
     <color name="hintText">#8FFFFFFF</color>
