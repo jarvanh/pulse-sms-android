@@ -200,6 +200,6 @@ class MessageListLoader(private val fragment: MessageListFragment) {
     }
     
     companion object {
-        const val MESSAGE_LIMIT = 30
+        const val MESSAGE_LIMIT = 8000
     }
 }
