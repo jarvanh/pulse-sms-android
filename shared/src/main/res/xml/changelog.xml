@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.7.1"
+        description="March 4th, 2019">
+        <!-- Change how the message loading works, with large conversations (notify all messages of the change, when a message is added) -->
+        <text>Bug fixes and performance improvements</text>
+    </version>
+
+    <version
         name="4.7.0"
         description="March 4th, 2019">
         <!-- Update the color palletes - dark variant is not as dark when compared to primary (also fixed the status bar icon color being the same as title in the app bar -->

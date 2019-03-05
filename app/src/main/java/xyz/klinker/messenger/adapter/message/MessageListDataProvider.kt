@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.fragment.message.MessageListFragment
+import xyz.klinker.messenger.fragment.message.load.MessageListLoader
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.CursorUtil
@@ -31,11 +32,16 @@ class MessageListDataProvider(private val adapter: MessageListAdapter, private v
         val finalCount = adapter.itemCount
 
         if (initialCount == finalCount) {
+            // message was probably marked as sent
             adapter.notifyItemChanged(finalCount - 1)
         } else if (initialCount > finalCount) {
+            // deleted a message
             adapter.notifyDataSetChanged()
         } else {
-            if (finalCount - 2 >= 0) {
+            if (finalCount >= MessageListLoader.MESSAGE_LIMIT) {
+                // just update all of the messages... https://github.com/klinker-apps/messenger-issues/issues/517
+                adapter.notifyItemRangeChanged(0, finalCount)
+            } else if (finalCount - 2 >= 0) {
                 // with the new paddings, we need to notify the second to last item too
                 adapter.notifyItemChanged(finalCount - 2)
             }
