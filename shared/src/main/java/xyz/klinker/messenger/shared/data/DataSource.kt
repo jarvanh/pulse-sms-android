@@ -2611,7 +2611,7 @@ object DataSource {
      * Deletes all drafts for a given conversation. This should be used after a message has been
      * sent to the conversation.
      */
-    @JvmOverloads fun deleteDrafts(context: Context, conversationId: Long, useApi: Boolean = true) {
+    @JvmOverloads fun deleteDrafts(context: Context, conversationId: Long, useApi: Boolean = true): String? {
         val deleted = try {
             database(context).delete(Draft.TABLE, Draft.COLUMN_CONVERSATION_ID + "=?",
                     arrayOf(java.lang.Long.toString(conversationId)))
@@ -2621,13 +2621,16 @@ object DataSource {
                     arrayOf(java.lang.Long.toString(conversationId)))
         }
 
+        var updatedSnippet: String? = null
         if (deleted > 0) {
             val message = getMessages(context, conversationId, 1)
             if (message.isNotEmpty()) {
-                if (message[0].mimeType == MimeType.TEXT_PLAIN) {
+                updatedSnippet = if (message[0].mimeType == MimeType.TEXT_PLAIN) {
                     updateConversationSnippet(context, conversationId, message[0].timestamp, message[0].data!!)
+                    message[0].data!!
                 } else {
                     updateConversationSnippet(context, conversationId, message[0].timestamp, MimeType.getTextDescription(context, message[0].mimeType!!))
+                    MimeType.getTextDescription(context, message[0].mimeType!!)
                 }
             }
 
@@ -2635,6 +2638,8 @@ object DataSource {
                 ApiUtils.deleteDrafts(accountId(context), androidDeviceId(context), conversationId)
             }
         }
+
+        return updatedSnippet
     }
 
     /**

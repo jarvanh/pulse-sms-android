@@ -9,9 +9,12 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Draft
+import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo
+import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 
 class DraftManager(private val fragment: MessageListFragment) {
 
@@ -34,8 +37,17 @@ class DraftManager(private val fragment: MessageListFragment) {
     fun loadDrafts() {
         if (activity != null) drafts = DataSource.getDrafts(activity!!, argManager.conversationId)
         if (drafts.isNotEmpty()) {
+            val activity = this.activity!!
             Thread {
-                DataSource.deleteDrafts(activity!!, argManager.conversationId)
+                val updatedSnippet = DataSource.deleteDrafts(activity, argManager.conversationId)
+                if (updatedSnippet != null) {
+                    activity.runOnUiThread {
+                        val fragment = activity.supportFragmentManager.findFragmentById(R.id.conversation_list_container)
+                        if (fragment != null && fragment is ConversationListFragment) {
+                            fragment.setConversationUpdateInfo(ConversationUpdateInfo(argManager.conversationId, updatedSnippet, true))
+                        }
+                    }
+                }
             }.start()
         }
     }
