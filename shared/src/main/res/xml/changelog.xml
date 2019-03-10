@@ -18,8 +18,9 @@
 
     <version
         name="4.7.1"
-        description="March 4th, 2019">
+        description="March 11th, 2019">
         <!-- Change how the message loading works, with large conversations (notify all messages of the change, when a message is added) -->
+        <!-- fix draft snippets not being removed https://github.com/klinker-apps/messenger-issues/issues/844 -->
         <text>Bug fixes and performance improvements</text>
     </version>
 
