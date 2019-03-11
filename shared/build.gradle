@@ -19,7 +19,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    
+
 }
 
 dependencies {
@@ -52,7 +52,7 @@ dependencies {
     api 'com.klinkerapps:android-transcoder:1.0.1'
     api 'com.klinkerapps:article_viewer:0.25.4'
     api 'com.klinkerapps:giphy:2.1.4'
-    api 'com.klinkerapps:floating-tutorial:1.0.4'
+    api 'com.klinkerapps:floating-tutorial:1.1.0'
 
     api 'com.firebase:firebase-jobdispatcher:0.8.5'
     api 'com.github.apl-devs:appintro:v4.2.0'

@@ -664,6 +664,7 @@
 
     <!-- Rate it -->
     <string name="rate_it">Rate It!</string>
+    <string name="no_thanks">No thanks</string>
     <string name="rate_it_title">Top ratings go a long way</string>
     <string name="rate_it_summary"><b>5-star ratings</b> are extremely helpful to the app\'s growth
         and visibility on the Play Store. If you want to see the app <i>continue to soar</i>, help me out!</string>
