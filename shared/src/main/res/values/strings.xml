@@ -301,7 +301,7 @@
     <string name="account_information">Account Information</string>
     <string name="account_actions">Account Actions</string>
     <string name="danger_zone">Danger Zone</string>
-    <string name="be_careful_using_these_settings">Follow the instructions and be careful when using these actions.</string>
+    <string name="be_careful_using_these_settings">These options can be dangerous. Please see their descriptions on my help page, for usage notes.</string>
     <string name="device_id">Device ID</string>
     <string name="device_info">Device Info</string>
     <string name="website">Website</string>
