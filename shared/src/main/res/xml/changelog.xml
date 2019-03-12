@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="4.7.2"
+        description="March xxth, 2019">
+        <!-- Update text description warning on the danger zone toggle -->
+        <!-- Update floating tutorial library and add a button for 'no thanks' on the rating request -->
+        <text>Bug fixes and performance improvements</text>
+    </version>
+
+    <version
         name="4.7.1"
         description="March 11th, 2019">
         <!-- Change how the message loading works, with large conversations (notify all messages of the change, when a message is added) -->
