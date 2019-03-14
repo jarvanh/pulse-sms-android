@@ -2139,13 +2139,7 @@ object DataSource {
             try {
                 database(context).insert(Message.TABLE, null, values)
             } catch (x: Exception) {
-                try {
-                    Thread.sleep(2000)
-                } catch (y: InterruptedException) {
-                }
-
-                ensureActionable(context)
-                database(context).insert(Message.TABLE, null, values)
+                return -1
             }
         }
 

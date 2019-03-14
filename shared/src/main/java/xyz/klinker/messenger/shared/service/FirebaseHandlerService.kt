@@ -200,7 +200,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 message.timestamp = getLong(json, "timestamp")
                 message.read = json.getBoolean("read")
                 message.seen = json.getBoolean("seen")
-                message.simPhoneNumber = if (conversation == null || conversation.simSubscriptionId == null)
+                message.simPhoneNumber = if (conversation?.simSubscriptionId == null)
                     null
                 else DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
 
@@ -246,6 +246,10 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
 
                 val messageId = DataSource.insertMessage(context, message, message.conversationId, true, false)
                 Log.v(TAG, "added message")
+
+                if (messageId == -1L) {
+                    return;
+                }
 
                 if (!Utils.isDefaultSmsApp(context) && Account.primary && message.type == Message.TYPE_SENDING) {
                     Thread {
