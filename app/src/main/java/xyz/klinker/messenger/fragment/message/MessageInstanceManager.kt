@@ -24,7 +24,7 @@ class MessageInstanceManager(private val fragment: MessageListFragment) {
     val isArchived: Boolean by lazy { arguments!!.getBoolean(ARG_IS_ARCHIVED) }
 
     val messageToOpen: Long by lazy { arguments!!.getLong(ARG_MESSAGE_TO_OPEN_ID, -1L) }
-    val limitMessages: Boolean by lazy { arguments!!.getBoolean(ARG_LIMIT_MESSAGES) }
+    val limitMessages: Boolean by lazy { arguments!!.getBoolean(ARG_LIMIT_MESSAGES) && !phoneNumbers.contains(",") }
     val shouldOpenKeyboard: Boolean by lazy { fragment.activity?.intent?.getBooleanExtra(MessengerActivityExtras.EXTRA_SHOULD_OPEN_KEYBOARD, false) ?: false }
     val notificationInputDraft: String?
         get() {
