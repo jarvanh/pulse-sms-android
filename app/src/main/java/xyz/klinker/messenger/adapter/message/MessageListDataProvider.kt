@@ -38,10 +38,7 @@ class MessageListDataProvider(private val adapter: MessageListAdapter, private v
             // deleted a message
             adapter.notifyDataSetChanged()
         } else {
-            if (finalCount >= MessageListLoader.MESSAGE_LIMIT) {
-                // just update all of the messages... https://github.com/klinker-apps/messenger-issues/issues/517
-                adapter.notifyItemRangeChanged(0, finalCount)
-            } else if (finalCount - 2 >= 0) {
+            if (finalCount - 2 >= 0) {
                 // with the new paddings, we need to notify the second to last item too
                 adapter.notifyItemChanged(finalCount - 2)
             }
