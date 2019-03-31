@@ -16,7 +16,7 @@ import java.util.*
 
 class ContactSyncJob : SimpleJobService() {
 
-    override fun onRunJob(job: JobParameters?): Int {
+    override fun onRunJob(job: JobParameters): Int {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         val since = sharedPrefs.getLong("last_contact_update_timestamp", -1L)
 

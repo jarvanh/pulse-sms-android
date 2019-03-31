@@ -17,6 +17,14 @@
 <changelog>
 
     <version
+        name="4.7.3"
+        description="April 1st, 2019">
+        <!-- If the user disabled group MMS and sent an image to the group, it was still sent as a group MMS. This is now fixed -->
+        <!-- Fixes for scrolling long lists of contacts, on the compose screen -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.7.2"
         description="March 18th, 2019">
         <!-- Update text description warning on the danger zone toggle -->

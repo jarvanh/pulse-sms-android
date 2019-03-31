@@ -18,7 +18,7 @@ import xyz.klinker.messenger.shared.util.TimeUtils
 
 class RepostQuickComposeNotification : SimpleJobService() {
 
-    override fun onRunJob(job: JobParameters?): Int {
+    override fun onRunJob(job: JobParameters): Int {
         if (Settings.quickCompose) {
             QuickComposeNotificationService.start(this)
         } else {
@@ -26,7 +26,7 @@ class RepostQuickComposeNotification : SimpleJobService() {
         }
 
         scheduleNextRun(this)
-        return 0
+        return JobService.RESULT_SUCCESS
     }
 
     companion object {
@@ -36,6 +36,10 @@ class RepostQuickComposeNotification : SimpleJobService() {
         private const val THIRTY_MINS = 60 * 30 // seconds
 
         fun scheduleNextRun(context: Context?) {
+            if (context == null) {
+                return
+            }
+
             val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
 
             if (!Settings.quickCompose) {

@@ -20,7 +20,7 @@ import xyz.klinker.messenger.shared.data.model.RetryableRequest
  */
 class SyncRetryableRequestsJob : SimpleJobService() {
 
-    override fun onRunJob(job: JobParameters?): Int {
+    override fun onRunJob(job: JobParameters): Int {
         val retryables = DataSource.getRetryableRequestsAsList(this)
         DataSource.deleteAllRetryableRequest(this)
 
@@ -32,7 +32,7 @@ class SyncRetryableRequestsJob : SimpleJobService() {
         }
 
         scheduleNextRun(this)
-        return 0
+        return JobService.RESULT_SUCCESS
     }
 
     private fun pushMessage(message: Message?) {

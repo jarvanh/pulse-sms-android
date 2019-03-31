@@ -16,7 +16,7 @@ import xyz.klinker.messenger.shared.util.TimeUtils
  */
 class MarkAsSentJob : SimpleJobService() {
 
-    override fun onRunJob(job: JobParameters?): Int {
+    override fun onRunJob(job: JobParameters): Int {
         if (Account.exists() && !Account.primary) {
             return 0
         }
@@ -31,7 +31,7 @@ class MarkAsSentJob : SimpleJobService() {
             MessageListUpdatedReceiver.sendBroadcast(this, message.conversationId)
         }
 
-        return 0
+        return JobService.RESULT_SUCCESS
     }
 
     companion object {
