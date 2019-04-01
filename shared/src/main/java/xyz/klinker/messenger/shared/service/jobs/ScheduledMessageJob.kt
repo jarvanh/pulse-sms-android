@@ -114,7 +114,7 @@ class ScheduledMessageJob : BroadcastReceiver() {
                     }
 
                     Log.v("scheduled message", "message was sent and notification given")
-                } else if (timestamp < TimeUtils.now - TimeUtils.HOUR) {
+                } else if (timestamp < TimeUtils.now) {
                     val message = ScheduledMessage()
                     message.fillFromCursor(messages)
 
@@ -154,6 +154,7 @@ class ScheduledMessageJob : BroadcastReceiver() {
             }
         }
 
+        message.id = DataSource.generateId()
         DataSource.insertScheduledMessage(context, message, true)
     }
 
