@@ -127,7 +127,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
         val deferredTime = if (activity is MessengerTvActivity) 0L
         else (AnimationUtils.EXPAND_CONVERSATION_DURATION + 25).toLong()
         Handler().postDelayed({
-            if (argManager.limitMessages) {
+            if (activity is MessengerActivity) {
                 toolbar.inflateMenu(if (argManager.isGroup) R.menu.fragment_messages_group else R.menu.fragment_messages)
             }
 
