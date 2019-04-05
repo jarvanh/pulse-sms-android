@@ -21,6 +21,7 @@
         description="April 1st, 2019">
         <!-- If the user disabled group MMS and sent an image to the group, it was still sent as a group MMS. This is now fixed -->
         <!-- Fixes for scrolling long lists of contacts, on the compose screen -->
+        <!-- Fix issue with the overflow menu not showing up for group conversations -->
         <text>Bug fixes</text>
     </version>
 
