@@ -83,13 +83,17 @@ class Notifier(private val context: Context) {
                 for (i in 0 until if (numberToNotify < conversations.size) numberToNotify else conversations.size ) {
                     val conversation = conversations[i]
 
-                    val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
-                    smartReply.suggestReplies(conversation.getFirebaseSmartReplyConversation().asReversed())
-                            .addOnSuccessListener { result ->
-                                conversationNotifier.giveConversationNotification(conversation, i, conversations.size, result.suggestions)
-                            }.addOnFailureListener {
-                                conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
-                            }
+                    try {
+                        val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
+                        smartReply.suggestReplies(conversation.getFirebaseSmartReplyConversation().asReversed())
+                                .addOnSuccessListener { result ->
+                                    conversationNotifier.giveConversationNotification(conversation, i, conversations.size, result.suggestions)
+                                }.addOnFailureListener {
+                                    conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
+                                }
+                    } catch (e: Throwable) {
+                        conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
+                    }
                 }
 
                 if (conversations.size == 1) {
