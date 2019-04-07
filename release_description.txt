@@ -1,1 +1,5 @@
-You can now re-order the buttons that appear on your notifications. To try it out, head to "Customization Settings" and select the option for "Notification Actions".
+Pulse can now suggest "Smart Replies" based on the context of your conversation!<br/>
+- Smart Reply suggestions show up within any conversation, if there are relevant suggestions.<br/>
+- You can set up Smart Replies to show up within your notifications, as actions, to quickly send replies to your contacts.<br/><br/>
+
+Please note: currently, smart replies are limited to English only.
