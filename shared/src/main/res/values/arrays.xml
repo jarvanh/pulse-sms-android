@@ -179,6 +179,7 @@
 
     <string-array name="notification_actions">
         <item>@string/notification_action_reply</item>
+        <item>@string/notification_action_smart_reply</item>
         <item>@string/notification_action_call</item>
         <item>@string/notification_action_delete</item>
         <item>@string/mark_as_read</item>
@@ -188,6 +189,7 @@
 
     <string-array name="notification_actions_values">
         <item>reply</item>
+        <item>smart_reply</item>
         <item>call</item>
         <item>delete</item>
         <item>read</item>

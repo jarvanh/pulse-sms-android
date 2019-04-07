@@ -77,6 +77,14 @@ class NotificationConversationProvider(private val service: Context, private val
             if (otp != null) {
                 actionHelper.addOtpAction(builder, otp, conversation.id)
             } else {
+                val smartReplies = mutableListOf<String>()
+                var smarReplyIndex = 0
+                if (Settings.notificationActions.contains(NotificationAction.SMART_REPLY)) {
+                    smartReplies.add("one")
+                    smartReplies.add("two")
+                    smartReplies.add("three")
+                }
+
                 Settings.notificationActions.forEach {
                     when (it) {
                         NotificationAction.REPLY -> actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)
@@ -85,6 +93,10 @@ class NotificationConversationProvider(private val service: Context, private val
                         NotificationAction.MUTE -> actionHelper.addMuteAction(builder, wearableExtender, conversation)
                         NotificationAction.READ -> actionHelper.addMarkReadAction(builder, wearableExtender, conversation)
                         NotificationAction.DELETE -> actionHelper.addDeleteAction(builder, wearableExtender, conversation)
+                        NotificationAction.SMART_REPLY -> {
+                            actionHelper.addSmartReplyAction(builder, wearableExtender, conversation, smartReplies, smarReplyIndex)
+                            smarReplyIndex++
+                        }
                     }
                 }
             }

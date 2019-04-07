@@ -74,11 +74,12 @@ class NotificationActionsPreference : Preference, Preference.OnPreferenceClickLi
 
         fun mapActionToArrayIndex(action: NotificationAction) = when (action) {
             NotificationAction.REPLY -> 0
-            NotificationAction.CALL -> 1
-            NotificationAction.DELETE -> 2
-            NotificationAction.READ -> 3
-            NotificationAction.MUTE -> 4
-            NotificationAction.ARCHIVE -> 5
+            NotificationAction.SMART_REPLY -> 1
+            NotificationAction.CALL -> 2
+            NotificationAction.DELETE -> 3
+            NotificationAction.READ -> 4
+            NotificationAction.MUTE -> 5
+            NotificationAction.ARCHIVE -> 6
         }
     }
 }

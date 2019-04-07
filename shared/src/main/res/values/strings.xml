@@ -264,6 +264,7 @@
     <string name="notification_action_call">Call Contact</string>
     <string name="notification_action_delete">Delete Message</string>
     <string name="notification_action_archive">Archive Conversation</string>
+    <string name="notification_action_smart_reply">Suggest Smart Reply</string>
     <string-array name="reply_choices">
         <item>Yes</item>
         <item>No</item>
