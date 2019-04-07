@@ -260,6 +260,10 @@
     <string name="reply">Reply</string>
     <string name="reply_to">Reply to %1$s</string>
     <string name="call">Call</string>
+    <string name="notification_action_reply">Reply to Conversation</string>
+    <string name="notification_action_call">Call Contact</string>
+    <string name="notification_action_delete">Delete Message</string>
+    <string name="notification_action_archive">Archive Conversation</string>
     <string-array name="reply_choices">
         <item>Yes</item>
         <item>No</item>
@@ -301,7 +305,7 @@
     <string name="account_information">Account Information</string>
     <string name="account_actions">Account Actions</string>
     <string name="danger_zone">Danger Zone</string>
-    <string name="be_careful_using_these_settings">These options can be dangerous. Please see their descriptions on my help page, for usage notes.</string>
+    <string name="be_careful_using_these_settings">These options can be dangerous. Please see their descriptions on my help page, for usage instructions and notes.</string>
     <string name="device_id">Device ID</string>
     <string name="device_info">Device Info</string>
     <string name="website">Website</string>

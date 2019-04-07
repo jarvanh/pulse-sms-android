@@ -178,12 +178,12 @@
     </string-array>
 
     <string-array name="notification_actions">
-        <item>@string/reply</item>
-        <item>@string/call</item>
-        <item>@string/delete</item>
+        <item>@string/notification_action_reply</item>
+        <item>@string/notification_action_call</item>
+        <item>@string/notification_action_delete</item>
         <item>@string/mark_as_read</item>
         <item>@string/mute_conversation</item>
-        <item>@string/menu_archive_conversation</item>
+        <item>@string/notification_action_archive</item>
     </string-array>
 
     <string-array name="notification_actions_values">
