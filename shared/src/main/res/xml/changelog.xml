@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.7.4"
+        description="April 7th, 2019">
+        <text>Re-order the buttons that appear on a notification</text>
+    </version>
+
+    <version
         name="4.7.3"
         description="April 1st, 2019">
         <!-- If the user disabled group MMS and sent an image to the group, it was still sent as a group MMS. This is now fixed -->

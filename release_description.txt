@@ -1,3 +1,1 @@
-With this update, Pulse gets a new icon, and an improved default color scheme to match! The blue should fit in great on your homescreen, and it goes well with any wallpaper.<br/><br/>
-
-Look for the new icon and color across all of your favorite Pulse platforms, in the coming days!
+You can now re-order the buttons that appear on your notifications. To try it out, head to "Customization Settings" and select the option for "Notification Actions".

@@ -19,6 +19,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
+import xyz.klinker.messenger.shared.data.pojo.NotificationAction
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.data.pojo.NotificationMessage
 import xyz.klinker.messenger.shared.data.pojo.VibratePattern
@@ -76,13 +77,16 @@ class NotificationConversationProvider(private val service: Context, private val
             if (otp != null) {
                 actionHelper.addOtpAction(builder, otp, conversation.id)
             } else {
-                // TODO: switch these, based on the user's preferences
-                actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)
-                actionHelper.addCallAction(builder, wearableExtender, conversation)
-                actionHelper.addDeleteAction(builder, wearableExtender, conversation)
-                actionHelper.addMarkReadAction(builder, wearableExtender, conversation)
-                actionHelper.addMuteAction(builder, wearableExtender, conversation)
-                actionHelper.addArchiveAction(builder, wearableExtender, conversation)
+                Settings.notificationActions.forEach {
+                    when (it) {
+                        NotificationAction.REPLY -> actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)
+                        NotificationAction.CALL -> actionHelper.addCallAction(builder, wearableExtender, conversation)
+                        NotificationAction.ARCHIVE -> actionHelper.addArchiveAction(builder, wearableExtender, conversation)
+                        NotificationAction.MUTE -> actionHelper.addMuteAction(builder, wearableExtender, conversation)
+                        NotificationAction.READ -> actionHelper.addMarkReadAction(builder, wearableExtender, conversation)
+                        NotificationAction.DELETE -> actionHelper.addDeleteAction(builder, wearableExtender, conversation)
+                    }
+                }
             }
 
             // apply the extenders to the notification

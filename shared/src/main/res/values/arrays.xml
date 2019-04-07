@@ -181,7 +181,7 @@
         <item>@string/reply</item>
         <item>@string/call</item>
         <item>@string/delete</item>
-        <item>@string/read</item>
+        <item>@string/mark_as_read</item>
         <item>@string/mute_conversation</item>
         <item>@string/menu_archive_conversation</item>
     </string-array>
