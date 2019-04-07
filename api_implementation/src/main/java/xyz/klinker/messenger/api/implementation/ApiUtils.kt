@@ -1415,6 +1415,15 @@ object ApiUtils {
     }
 
     /**
+     * Update the actions for the notifications. Actions should be a comma separated list
+     */
+    fun updateNotificationActionsSelectable(accountId: String?, actionsString: String?) {
+        if (accountId != null) {
+            updateSetting(accountId, "notification_actions_selection", "string", actionsString)
+        }
+    }
+
+    /**
      * Enable or disable driving mode
      */
     fun enableDrivingMode(accountId: String?, enableDriving: Boolean) {

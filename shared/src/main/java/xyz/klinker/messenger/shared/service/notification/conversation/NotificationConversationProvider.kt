@@ -76,6 +76,7 @@ class NotificationConversationProvider(private val service: Context, private val
             if (otp != null) {
                 actionHelper.addOtpAction(builder, otp, conversation.id)
             } else {
+                // TODO: switch these, based on the user's preferences
                 actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)
                 actionHelper.addCallAction(builder, wearableExtender, conversation)
                 actionHelper.addDeleteAction(builder, wearableExtender, conversation)

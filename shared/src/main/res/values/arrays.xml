@@ -195,12 +195,6 @@
         <item>archive</item>
     </string-array>
 
-    <string-array name="notification_actions_default">
-        <item>reply</item>
-        <item>call</item>
-        <item>read</item>
-    </string-array>
-
     <string-array name="convert_to_mms">
         <item>@string/repeat_never</item>
         <item>@string/after_one_message</item>

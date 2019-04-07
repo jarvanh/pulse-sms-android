@@ -63,13 +63,10 @@
             android:title="@string/notification_customization"
             android:summary="@string/alert_types_summary" />
 
-        <MultiSelectListPreference
+        <xyz.klinker.messenger.view.preference.NotificationActionsPreference
             android:key="@string/pref_notification_actions"
             android:title="@string/notification_actions"
-            android:summary="@string/notification_actions_summary"
-            android:defaultValue="@array/notification_actions_default"
-            android:entries="@array/notification_actions"
-            android:entryValues="@array/notification_actions_values" />
+            android:summary="@string/notification_actions_summary" />
 
         <SwitchPreference
             android:key="@string/pref_history_in_notifications"

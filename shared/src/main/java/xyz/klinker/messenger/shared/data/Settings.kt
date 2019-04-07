@@ -22,7 +22,6 @@ import android.preference.PreferenceManager
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 
 import java.util.Date
-import java.util.HashSet
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.pojo.*
@@ -46,7 +45,6 @@ object Settings {
 
     // Global Settings
     var vibrate: VibratePattern = VibratePattern.DEFAULT
-    var notificationActions: MutableSet<NotificationAction> = mutableSetOf()
     var useGlobalThemeColor: Boolean = false
     var deliveryReports: Boolean = false
     var giffgaffDeliveryReports: Boolean = false
@@ -77,6 +75,7 @@ object Settings {
     var drivingMode: Boolean = false
     var vacationMode: Boolean = false
     var applyPrimaryColorToToolbar = true
+    lateinit var notificationActions: List<NotificationAction>
 
     // configuration
     var smallFont: Int = 0
@@ -256,7 +255,7 @@ object Settings {
             "enter" -> this.keyboardLayout = KeyboardLayout.ENTER
         }
 
-        baseThemeString = sharedPrefs.getString(context.getString(R.string.pref_base_theme), "day_night")
+        this.baseThemeString = sharedPrefs.getString(context.getString(R.string.pref_base_theme), "day_night")
         when (baseThemeString) {
             "day_night" -> this.baseTheme = BaseTheme.DAY_NIGHT
             "light" -> this.baseTheme = BaseTheme.ALWAYS_LIGHT
@@ -265,33 +264,9 @@ object Settings {
             else -> this.baseTheme = BaseTheme.DAY_NIGHT
         }
 
-        notificationActions = HashSet()
-        val actions = sharedPrefs.getStringSet(context.getString(R.string.pref_notification_actions),
-                getDefaultNotificationActions(context))
-
-        if (actions!!.contains("reply")) {
-            notificationActions.add(NotificationAction.REPLY)
-        }
-
-        if (actions.contains("call")) {
-            notificationActions.add(NotificationAction.CALL)
-        }
-
-        if (actions.contains("read")) {
-            notificationActions.add(NotificationAction.READ)
-        }
-
-        if (actions.contains("delete")) {
-            notificationActions.add(NotificationAction.DELETE)
-        }
-
-        if (actions.contains("mute")) {
-            notificationActions.add(NotificationAction.MUTE)
-        }
-
-        if (actions.contains("archive")) {
-            notificationActions.add(NotificationAction.ARCHIVE)
-        }
+        this.notificationActions = sharedPrefs.getString(context.getString(R.string.pref_notification_actions_selection), "reply,call,read")!!
+                .split(",".toRegex())
+                .map { NotificationActionMapper.map(it) }
 
         this.mainColorSet = ColorSet.create(
                 sharedPrefs.getInt(context.getString(R.string.pref_global_primary_color), ColorSet.DEFAULT(context).color),
@@ -300,10 +275,6 @@ object Settings {
         )
 
         this.shouldRefreshListOnReenter = sharedPrefs.getBoolean(MessengerActivityExtras.EXTRA_SHOULD_REFRESH_LIST, false)
-    }
-
-    private fun getDefaultNotificationActions(context: Context): Set<String> {
-        return context.resources.getStringArray(R.array.notification_actions_default).toSet()
     }
 
     fun getSharedPrefs(context: Context): SharedPreferences {
