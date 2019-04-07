@@ -166,6 +166,10 @@ subprojects {
                     }
                 }
 
+                aaptOptions {
+                    noCompress "tflite"
+                }
+
                 dexOptions {
                     jumboMode = true
                     javaMaxHeapSize "4g"

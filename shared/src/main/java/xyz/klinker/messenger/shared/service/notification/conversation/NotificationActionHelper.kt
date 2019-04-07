@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
+import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestion
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.R
@@ -107,12 +108,12 @@ class NotificationActionHelper(private val service: Context) {
         builder.addAction(NotificationCompat.Action(R.drawable.ic_copy_dark, service.getString(R.string.copy_otp) + " $otp", pendingCopy))
     }
 
-    fun addSmartReplyAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation, smartReplies: List<String>, smartReplyIndex: Int) {
+    fun addSmartReplyAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation, smartReplies: List<SmartReplySuggestion>, smartReplyIndex: Int) {
         if (smartReplies.size <= smartReplyIndex) {
             return
         }
 
-        val reply = smartReplies[smartReplyIndex]
+        val reply = smartReplies[smartReplyIndex].text
         val send = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.SendSmartReplyReceiver::class.java)
         send.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id)
         send.putExtra(ReplyService.EXTRA_REPLY, reply)

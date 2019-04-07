@@ -3,6 +3,7 @@ package xyz.klinker.messenger.shared.service.notification
 import android.content.Context
 import android.graphics.Color
 import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
@@ -49,6 +50,7 @@ class NotificationUnreadConversationQuery(private val context: Context) {
                             conversation.mute = c.mute
                             conversation.phoneNumbers = c.phoneNumbers
                             conversation.groupConversation = c.phoneNumbers!!.contains(",")
+                            conversation.realMessages = DataSource.getMessages(context, conversation.id, 4)
 
                             if (c.private) {
                                 conversation.title = context.getString(R.string.new_message)
@@ -68,9 +70,7 @@ class NotificationUnreadConversationQuery(private val context: Context) {
                         conversation = conversations[conversationIndex]
                     }
 
-                    if (conversation != null) {
-                        conversation.messages.add(NotificationMessage(id, data, mimeType, timestamp, from))
-                    }
+                    conversation?.messages?.add(NotificationMessage(id, data, mimeType, timestamp, from))
                 }
             } while (unseenMessages.moveToNext())
         }

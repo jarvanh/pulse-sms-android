@@ -14,6 +14,7 @@ import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.graphics.drawable.IconCompat
 import android.text.Html
+import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestion
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
@@ -38,7 +39,7 @@ class NotificationConversationProvider(private val service: Context, private val
     private val carHelper = NotificationCarHelper(service)
     private val wearableHelper = NotificationWearableHelper(service, this)
 
-    fun giveConversationNotification(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int): Notification {
+    fun giveConversationNotification(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int, smartReplies: List<SmartReplySuggestion> = emptyList()): Notification {
         val publicVersion = preparePublicBuilder(conversation, conversationIndex)
                 .setDefaults(buildNotificationDefaults(conversation, conversationIndex))
                 .setGroupSummary(numConversations == 1 && Build.MANUFACTURER.toLowerCase().contains("moto"))
@@ -77,14 +78,7 @@ class NotificationConversationProvider(private val service: Context, private val
             if (otp != null) {
                 actionHelper.addOtpAction(builder, otp, conversation.id)
             } else {
-                val smartReplies = mutableListOf<String>()
                 var smarReplyIndex = 0
-                if (Settings.notificationActions.contains(NotificationAction.SMART_REPLY)) {
-                    smartReplies.add("one")
-                    smartReplies.add("two")
-                    smartReplies.add("three")
-                }
-
                 Settings.notificationActions.forEach {
                     when (it) {
                         NotificationAction.REPLY -> actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)
@@ -187,10 +181,8 @@ class NotificationConversationProvider(private val service: Context, private val
             messagingStyle.isGroupConversation = true
         }
 
-        val messages = DataSource.getMessages(service, conversation.id, 4)
+        val messages = conversation.realMessages
         val imageCache = mutableMapOf<String, Bitmap?>()
-
-
 
         for (i in messages.indices.reversed()) {
             val message = messages[i]
