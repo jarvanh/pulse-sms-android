@@ -545,7 +545,7 @@
     <string name="use_internal_browser">Use Internal Web Browser</string>
     <string name="internal_browser_summary">Turning this off will also disable link previews within message lists</string>
     <string name="use_smart_replies">Suggest Smart Replies</string>
-    <string name="use_smart_replies_summary">Pulse will attempt to suggest relevant replies, within your conversations</string>
+    <string name="use_smart_replies_summary">Pulse will suggest relevant replies, when available</string>
     <string name="message_backup">Message Backup</string>
     <string name="message_backup_pref_summary">Worried about losing your messages? Pulse has you covered</string>
     <string name="message_backup_summary">Did you know: Pulse\'s online service is built around backing up your
