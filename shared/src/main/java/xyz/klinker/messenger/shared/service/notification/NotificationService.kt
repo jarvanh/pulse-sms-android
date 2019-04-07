@@ -84,7 +84,7 @@ class Notifier(private val context: Context) {
                     val conversation = conversations[i]
 
                     val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
-                    smartReply.suggestReplies(conversation.getFirebaseSmartReplyConversation())
+                    smartReply.suggestReplies(conversation.getFirebaseSmartReplyConversation().asReversed())
                             .addOnSuccessListener { result ->
                                 conversationNotifier.giveConversationNotification(conversation, i, conversations.size, result.suggestions)
                             }.addOnFailureListener {
