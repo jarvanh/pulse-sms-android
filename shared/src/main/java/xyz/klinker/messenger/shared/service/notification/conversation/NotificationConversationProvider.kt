@@ -77,9 +77,12 @@ class NotificationConversationProvider(private val service: Context, private val
                 actionHelper.addOtpAction(builder, otp, conversation.id)
             } else {
                 actionHelper.addReplyAction(builder, wearableExtender, remoteInput, conversation)
+                actionHelper.addCallAction(builder, wearableExtender, conversation)
+                actionHelper.addDeleteAction(builder, wearableExtender, conversation)
+                actionHelper.addMarkReadAction(builder, wearableExtender, conversation)
+                actionHelper.addMuteAction(builder, wearableExtender, conversation)
+                actionHelper.addArchiveAction(builder, wearableExtender, conversation)
             }
-
-            actionHelper.addNonReplyActions(builder, wearableExtender, conversation)
 
             // apply the extenders to the notification
             builder.extend(carHelper.buildExtender(conversation, remoteInput))
@@ -121,7 +124,7 @@ class NotificationConversationProvider(private val service: Context, private val
             prepareCommonBuilder(conversation, conversationIndex)
                     .setContentTitle(service.resources.getQuantityString(R.plurals.new_conversations, 1, 1))
                     .setContentText(service.resources.getQuantityString(R.plurals.new_messages, conversation.messages.size, conversation.messages.size))
-                    .setVisibility(Notification.VISIBILITY_PUBLIC)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
     private fun buildContactImage(conversation: NotificationConversation): Bitmap? {
         var contactImage = ImageUtils.clipToCircle(ImageUtils.getBitmap(service, conversation.imageUri))

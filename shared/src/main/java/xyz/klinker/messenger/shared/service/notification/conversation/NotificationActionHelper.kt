@@ -109,7 +109,7 @@ class NotificationActionHelper(private val service: Context) {
         builder.addAction(NotificationCompat.Action(R.drawable.ic_copy_dark, service.getString(R.string.copy_otp) + " $otp", pendingCopy))
     }
 
-    fun addNonReplyActions(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {
+    fun addCallAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {
         if (!conversation.groupConversation && Settings.notificationActions.contains(NotificationAction.CALL)
                 && (!Account.exists() || Account.primary)) {
             val call = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationCallReceiver::class.java)
@@ -120,48 +120,55 @@ class NotificationActionHelper(private val service: Context) {
 
             builder.addAction(NotificationCompat.Action(R.drawable.ic_call_dark, service.getString(R.string.call), callPending))
         }
+    }
 
-        val deleteMessage = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationDeleteReceiver::class.java)
-        deleteMessage.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationDeleteReceiver.EXTRA_CONVERSATION_ID, conversation.id)
-        deleteMessage.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationDeleteReceiver.EXTRA_MESSAGE_ID, conversation.unseenMessageId)
-        val pendingDeleteMessage = PendingIntent.getBroadcast(service, conversation.id.toInt() + 2,
-                deleteMessage, PendingIntent.FLAG_CANCEL_CURRENT)
-
+    fun addDeleteAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {
         if (Settings.notificationActions.contains(NotificationAction.DELETE)) {
+            val deleteMessage = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationDeleteReceiver::class.java)
+            deleteMessage.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationDeleteReceiver.EXTRA_CONVERSATION_ID, conversation.id)
+            deleteMessage.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationDeleteReceiver.EXTRA_MESSAGE_ID, conversation.unseenMessageId)
+            val pendingDeleteMessage = PendingIntent.getBroadcast(service, conversation.id.toInt() + 2,
+                    deleteMessage, PendingIntent.FLAG_CANCEL_CURRENT)
+
             builder.addAction(NotificationCompat.Action(R.drawable.ic_delete_dark, service.getString(R.string.delete), pendingDeleteMessage))
             wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_delete_white, service.getString(R.string.delete), pendingDeleteMessage))
         }
+    }
 
-        val read = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver::class.java)
-        read.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
-        val pendingRead = PendingIntent.getBroadcast(service, conversation.id.toInt() + 3,
-                read, PendingIntent.FLAG_CANCEL_CURRENT)
-
+    fun addMarkReadAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {
         if (Settings.notificationActions.contains(NotificationAction.READ)) {
+            val read = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver::class.java)
+            read.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
+            val pendingRead = PendingIntent.getBroadcast(service, conversation.id.toInt() + 3,
+                    read, PendingIntent.FLAG_CANCEL_CURRENT)
+
             builder.addAction(NotificationCompat.Action(R.drawable.ic_done_dark, service.getString(if (AndroidVersionUtil.isAndroidN) R.string.mark_as_read else R.string.read), pendingRead))
             wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_done_white, service.getString(if (AndroidVersionUtil.isAndroidN) R.string.mark_as_read else R.string.read), pendingRead))
         }
+    }
 
-        val mute = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationMuteReceiver::class.java)
-        mute.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
-        val pendingMute = PendingIntent.getBroadcast(service, conversation.id.toInt() + 4,
-                mute, PendingIntent.FLAG_CANCEL_CURRENT)
-
+    fun addMuteAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {
         if (Settings.notificationActions.contains(NotificationAction.MUTE)) {
+            val mute = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationMuteReceiver::class.java)
+            mute.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
+            val pendingMute = PendingIntent.getBroadcast(service, conversation.id.toInt() + 4,
+                    mute, PendingIntent.FLAG_CANCEL_CURRENT)
+
             builder.addAction(NotificationCompat.Action(R.drawable.ic_mute_dark, service.getString(R.string.mute), pendingMute))
             wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_mute_white, service.getString(R.string.mute), pendingMute))
         }
+    }
 
-        val archive = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationArchiveReceiver::class.java)
-        archive.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
-        val pendingArchive = PendingIntent.getBroadcast(service, conversation.id.toInt() + 6,
-                archive, PendingIntent.FLAG_CANCEL_CURRENT)
-
+    fun addArchiveAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {
         if (Settings.notificationActions.contains(NotificationAction.ARCHIVE)) {
+            val archive = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationArchiveReceiver::class.java)
+            archive.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
+            val pendingArchive = PendingIntent.getBroadcast(service, conversation.id.toInt() + 6,
+                    archive, PendingIntent.FLAG_CANCEL_CURRENT)
+
             builder.addAction(NotificationCompat.Action(R.drawable.ic_archive_dark, service.getString(R.string.menu_archive_conversation), pendingArchive))
             wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_archive_light, service.getString(R.string.menu_archive_conversation), pendingArchive))
         }
-
     }
 
     fun addContentIntents(builder: NotificationCompat.Builder, conversation: NotificationConversation) {
