@@ -484,7 +484,7 @@
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notification Actions</string>
     <string name="notification_actions_summary">A max of three actions can be applied to a notification</string>
-    <string name="notification_actions_summary_2">Note: smart replies are only available in English, at this time</string>
+    <string name="notification_actions_summary_2">Note that Smart Replies are only available in English, at this time</string>
     <string name="mms_download_directory">Media Download Directory</string>
     <string name="mms_download_directory_summary">Where you want images and other MMS media to be saved</string>
     <string name="refresh_firebase">Refresh Account</string>
