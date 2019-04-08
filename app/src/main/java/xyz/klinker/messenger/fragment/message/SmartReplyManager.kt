@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
@@ -161,8 +162,8 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
     }
 
     companion object {
-        private val ANIMATION_INTERPOLATOR = AccelerateInterpolator()
-        private const val ANIMATION_DURATION = 300L
+        private val ANIMATION_INTERPOLATOR = DecelerateInterpolator()
+        private const val ANIMATION_DURATION = 200L
         private const val ANIMATION_START_DELAY = 0L
     }
 }
