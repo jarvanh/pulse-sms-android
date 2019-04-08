@@ -11,6 +11,7 @@ import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.data.pojo.NotificationMessage
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper
 import xyz.klinker.messenger.shared.util.closeSilent
+import java.lang.Exception
 import java.util.*
 
 class NotificationUnreadConversationQuery(private val context: Context) {
@@ -50,7 +51,11 @@ class NotificationUnreadConversationQuery(private val context: Context) {
                             conversation.mute = c.mute
                             conversation.phoneNumbers = c.phoneNumbers
                             conversation.groupConversation = c.phoneNumbers!!.contains(",")
-                            conversation.realMessages = DataSource.getMessages(context, conversation.id, 4)
+                            try {
+                                conversation.realMessages = DataSource.getMessages(context, conversation.id, 4)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
 
                             if (c.private) {
                                 conversation.title = context.getString(R.string.new_message)
