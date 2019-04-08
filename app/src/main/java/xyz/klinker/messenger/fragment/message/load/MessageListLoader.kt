@@ -152,9 +152,9 @@ class MessageListLoader(private val fragment: MessageListFragment) {
 
                                 if (MimeType.TEXT_PLAIN == message.mimeType) {
                                     if (message.type == Message.TYPE_RECEIVED) {
-                                        list.add(FirebaseTextMessage.createForLocalUser(message.data, message.timestamp))
-                                    } else {
                                         list.add(FirebaseTextMessage.createForRemoteUser(message.data, message.timestamp, message.from ?: fragment.argManager.title))
+                                    } else {
+                                        list.add(FirebaseTextMessage.createForLocalUser(message.data, message.timestamp))
                                     }
                                 }
                             } while (cursor.moveToPrevious() && list.size < 10)
