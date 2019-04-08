@@ -35,6 +35,8 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
             showContainer {
                 suggestions.map { suggestion ->
                     val layout = LayoutInflater.from(activity!!).inflate(R.layout.item_smart_reply_suggestion, smartReplyContainer, false)
+                            ?: return@map null
+
                     val tv = layout.findViewById<TextView>(R.id.suggestion)
                     tv.text = suggestion.text
 
@@ -48,7 +50,9 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
 
                     layout
                 }.forEach { view ->
-                    smartReplyContainer.addView(view)
+                    if (view != null) {
+                        smartReplyContainer.addView(view)
+                    }
                 }
             }
         }, 1000)
