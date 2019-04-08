@@ -1260,6 +1260,15 @@ object ApiUtils {
     }
 
     /**
+     * Update the smart replies setting.
+     */
+    fun updateSmartReplies(accountId: String?, useSmartReplies: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "smart_reply", "boolean", useSmartReplies)
+        }
+    }
+
+    /**
      * Update the internal browser setting.
      */
     fun updateInternalBrowser(accountId: String?, useBrowser: Boolean) {

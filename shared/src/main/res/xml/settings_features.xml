@@ -36,6 +36,12 @@
         android:key="@string/pref_messaging_category"
         android:title="@string/messaging_features">
 
+        <SwitchPreference
+            android:key="@string/pref_smart_reply"
+            android:title="@string/use_smart_replies"
+            android:summary="@string/use_smart_replies_summary"
+            android:defaultValue="true" />
+
         <Preference
             android:key="@string/pref_auto_reply"
             android:title="@string/auto_reply_configuration"

@@ -24,6 +24,7 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
 
         addPreferencesFromResource(R.xml.settings_features)
         initSecurePrivateConversations()
+        initSmartReplies()
         initInternalBrowser()
         initQuickCompose()
         initDelayedSending()
@@ -47,6 +48,15 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
             } else {
                 startActivityForResult(Intent(activity, PasscodeVerificationActivity::class.java), PasscodeVerificationActivity.REQUEST_CODE)
             }
+            true
+        }
+    }
+
+    private fun initSmartReplies() {
+        val preference = findPreference(getString(R.string.pref_smart_reply))
+        preference.setOnPreferenceChangeListener { _, o ->
+            val useSmartReplies = o as Boolean
+            ApiUtils.updateSmartReplies(Account.accountId, useSmartReplies)
             true
         }
     }

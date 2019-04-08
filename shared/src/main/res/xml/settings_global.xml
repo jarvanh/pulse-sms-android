@@ -66,7 +66,7 @@
         <xyz.klinker.messenger.view.preference.NotificationActionsPreference
             android:key="@string/pref_notification_actions"
             android:title="@string/notification_actions"
-            android:summary="@string/notification_actions_summary" />
+            android:summary="@string/notification_actions_summary_2" />
 
         <SwitchPreference
             android:key="@string/pref_history_in_notifications"

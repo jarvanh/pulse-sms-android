@@ -264,6 +264,7 @@
     <string name="notification_action_call">Call Contact</string>
     <string name="notification_action_delete">Delete Message</string>
     <string name="notification_action_archive">Archive Conversation</string>
+    <string name="notification_action_smart_reply">Suggest Smart Reply</string>
     <string-array name="reply_choices">
         <item>Yes</item>
         <item>No</item>
@@ -483,6 +484,7 @@
     <string name="giffgaff_delivery">Giffgaff Delivery Reports</string>
     <string name="notification_actions">Notification Actions</string>
     <string name="notification_actions_summary">A max of three actions can be applied to a notification</string>
+    <string name="notification_actions_summary_2">Note that Smart Replies are only available in English, at this time</string>
     <string name="mms_download_directory">Media Download Directory</string>
     <string name="mms_download_directory_summary">Where you want images and other MMS media to be saved</string>
     <string name="refresh_firebase">Refresh Account</string>
@@ -542,6 +544,10 @@
     <string name="secure_private_conversations_summary">Setting a password will require you to enter it, before viewing private conversations</string>
     <string name="use_internal_browser">Use Internal Web Browser</string>
     <string name="internal_browser_summary">Turning this off will also disable link previews within message lists</string>
+    <string name="use_smart_replies">Suggest Smart Replies</string>
+    <string name="use_smart_replies_summary">Pulse will suggest relevant replies, when available. These are generated directly on the device, not a remote server</string>
+    <string name="use_smart_replies_dialog">Pulse will suggest relevant replies, when available. These are generated directly on the device, not a remote server.\n\nIf you would rather not use this feature, it can be disabled, from settings.</string>
+    <string name="use_smart_reply_settings">Settings</string>
     <string name="message_backup">Message Backup</string>
     <string name="message_backup_pref_summary">Worried about losing your messages? Pulse has you covered</string>
     <string name="message_backup_summary">Did you know: Pulse\'s online service is built around backing up your

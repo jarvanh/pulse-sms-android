@@ -21,6 +21,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
 import androidx.core.app.NotificationManagerCompat
+import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
+import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestionResult
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
@@ -80,7 +82,19 @@ class Notifier(private val context: Context) {
                 val numberToNotify = NotificationServiceHelper.calculateNumberOfNotificationsToProvide(context, conversations)
                 for (i in 0 until if (numberToNotify < conversations.size) numberToNotify else conversations.size ) {
                     val conversation = conversations[i]
-                    conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
+
+                    try {
+                        val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
+                        smartReply.suggestReplies(conversation.getFirebaseSmartReplyConversation().asReversed())
+                                .addOnSuccessListener { result ->
+                                    val suggestions = result.suggestions/*.filter { it.confidence > 0.2 }*/
+                                    conversationNotifier.giveConversationNotification(conversation, i, conversations.size, suggestions)
+                                }.addOnFailureListener {
+                                    conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
+                                }
+                    } catch (e: Throwable) {
+                        conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
+                    }
                 }
 
                 if (conversations.size == 1) {

@@ -227,6 +227,10 @@
             android:exported="false" />
 
         <receiver
+            android:name=".receiver.notification_action.SendSmartReplyReceiver"
+            android:exported="false" />
+
+        <receiver
             android:name=".receiver.notification_action.NotificationDeleteReceiver"
             android:exported="false" />
 

@@ -3,7 +3,7 @@ package xyz.klinker.messenger.shared.data.pojo
 import java.lang.RuntimeException
 
 enum class NotificationAction {
-    REPLY, CALL, READ, DELETE, MUTE, ARCHIVE
+    REPLY, CALL, READ, DELETE, MUTE, ARCHIVE, SMART_REPLY
 }
 
 object NotificationActionMapper {
@@ -15,6 +15,7 @@ object NotificationActionMapper {
             "delete" -> NotificationAction.DELETE
             "mute" -> NotificationAction.MUTE
             "archive" -> NotificationAction.ARCHIVE
+            "smart_reply" -> NotificationAction.SMART_REPLY
             else -> throw RuntimeException("no notification action for $string")
         }
     }
