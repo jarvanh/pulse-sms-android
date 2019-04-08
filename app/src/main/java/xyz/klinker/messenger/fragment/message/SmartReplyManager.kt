@@ -29,7 +29,7 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
     private val smartReplySuggestionsContainer: ViewGroup by lazy { smartReplyContainer.findViewById(R.id.smart_reply_suggestions_container) as ViewGroup }
     private val closeSmartReply: ImageButton by lazy { smartReplyContainer.findViewById(R.id.close_smart_replies) as ImageButton }
 
-    fun applySuggestions(suggestions: List<SmartReplySuggestion>) {
+    fun applySuggestions(suggestions: List<SmartReplySuggestion>, firstLoad: Boolean = false) {
         Log.v("SmartReplyManager", "Suggestions size: ${suggestions.size}")
 
         closeSmartReply.imageTintList = ColorStateList.valueOf(fragment.argManager.colorAccent)
@@ -67,7 +67,7 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
                     }
                 }
             }
-        }, 1000)
+        }, if (firstLoad) 0L else 1000L)
     }
 
     private fun hideContainer() {

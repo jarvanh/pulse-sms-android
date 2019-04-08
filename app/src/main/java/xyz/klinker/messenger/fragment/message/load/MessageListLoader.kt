@@ -130,6 +130,9 @@ class MessageListLoader(private val fragment: MessageListFragment) {
 
                 PerformanceProfiler.logEvent("finished loading messages")
 
+                val firstLoad = adapter == null
+                val justUpdatingSendingStatus = !firstLoad && !addedNewMessage
+
                 handler.post {
                     setMessages(cursor, contactMap!!, contactByNameMap!!)
                     draftManager.applyDrafts()
@@ -139,7 +142,6 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                     }
                 }
 
-                val justUpdatingSendingStatus = adapter != null && !addedNewMessage
                 if (Settings.smartReplies && !justUpdatingSendingStatus) {
                     try {
                         val list = mutableListOf<FirebaseTextMessage>()
@@ -161,7 +163,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                         val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
                         smartReply.suggestReplies(list)
                                 .addOnSuccessListener { result ->
-                                    handler.post { smartReplyManager.applySuggestions(result.suggestions) }
+                                    handler.post { smartReplyManager.applySuggestions(result.suggestions, firstLoad) }
                                 }
                     } catch (e: Throwable) {
 
