@@ -135,7 +135,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
 //                    listRefreshMonitor.resetRunningThreadCount()
 
                     handler.post {
-                        val justUpdatingSendingStatus = adapter?.itemCount == cursor.count
+                        val justUpdatingSendingStatus = adapter != null && !addedNewMessage
                         val applyMessages: () -> Unit = {
                             setMessages(cursor, contactMap!!, contactByNameMap!!)
                             draftManager.applyDrafts()
