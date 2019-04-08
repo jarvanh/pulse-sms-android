@@ -145,7 +145,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                 if (Settings.smartReplies && !justUpdatingSendingStatus) {
                     try {
                         val list = mutableListOf<FirebaseTextMessage>()
-                        if (cursor.moveToFirst()) {
+                        if (cursor.moveToLast()) {
                             do {
                                 val message = Message()
                                 message.fillFromCursor(cursor)
@@ -157,16 +157,16 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                                         list.add(FirebaseTextMessage.createForRemoteUser(message.data, message.timestamp, message.from ?: fragment.argManager.title))
                                     }
                                 }
-                            } while (cursor.moveToNext() && list.size < 10)
+                            } while (cursor.moveToPrevious() && list.size < 10)
                         }
 
                         val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
-                        smartReply.suggestReplies(list)
+                        smartReply.suggestReplies(list.asReversed())
                                 .addOnSuccessListener { result ->
                                     handler.post { smartReplyManager.applySuggestions(result.suggestions, firstLoad) }
                                 }
                     } catch (e: Throwable) {
-
+                        e.printStackTrace()
                     }
                 }
 
