@@ -154,6 +154,11 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                                     if (message.type == Message.TYPE_RECEIVED) {
                                         list.add(FirebaseTextMessage.createForRemoteUser(message.data, message.timestamp, message.from ?: fragment.argManager.title))
                                     } else {
+                                        if (list.size == 0) {
+                                            // only provide suggestions when the latest message is received
+                                            break
+                                        }
+
                                         list.add(FirebaseTextMessage.createForLocalUser(message.data, message.timestamp))
                                     }
                                 }
