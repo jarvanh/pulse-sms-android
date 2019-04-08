@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity
 import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestion
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.util.DensityUtil
 
 class SmartReplyManager(private val fragment: MessageListFragment) {
@@ -50,6 +51,8 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
                     tv.text = suggestion.text
 
                     layout.setOnClickListener {
+                        AnalyticsHelper.sendSmartReply(activity)
+
                         messageEntry.setText(suggestion.text)
                         messageEntry.setSelection(suggestion.text.length)
                         messageEntry.requestFocus()

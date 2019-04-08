@@ -174,10 +174,15 @@ public class AnalyticsHelper {
 
 
     // Other Events
+    private static final String SENT_SMART_REPLY = "SENT_SMART_REPLY";
     private static final String FAILED_TO_SAVE_SMS = "FAILED_TO_SAVE_SMS";
     private static final String RECEIVED_DUPLICATE_SMS = "RECEIVED_DUPLICATE_SMS";
     private static final String UPDATING_FCM_TOKEN = "UPDATING_FCM_TOKEN";
     private static final String CAUGHT_EXCEPTION = "CAUGHT_EXCEPTION";
+
+    public static void sendSmartReply(Context context) {
+        logEvent(context, SENT_SMART_REPLY);
+    }
 
     public static void failedToSaveSms(Context context, String error) {
         Bundle bundle = new Bundle();

@@ -10,6 +10,7 @@ import android.util.Log
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
+import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
@@ -80,6 +81,8 @@ class SendSmartReplyReceiver : BroadcastReceiver() {
         ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, context.getString(R.string.you) + ": " + reply, true)
         MessageListUpdatedReceiver.sendBroadcast(context, conversationId)
         MessengerAppWidgetProvider.refreshWidget(context)
+
+        AnalyticsHelper.sendSmartReply(context)
     }
 
     companion object {
