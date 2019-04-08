@@ -30,7 +30,7 @@ class NotificationConversation {
                 if (message.type == Message.TYPE_RECEIVED) {
                     list.add(FirebaseTextMessage.createForLocalUser(message.data, message.timestamp))
                 } else {
-                    list.add(FirebaseTextMessage.createForRemoteUser(message.data, message.timestamp, message.from ?: "friend"))
+                    list.add(FirebaseTextMessage.createForRemoteUser(message.data, message.timestamp, message.from ?: title))
                 }
             }
         }

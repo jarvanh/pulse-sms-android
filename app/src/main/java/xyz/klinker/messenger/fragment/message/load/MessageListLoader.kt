@@ -130,55 +130,45 @@ class MessageListLoader(private val fragment: MessageListFragment) {
 
                 PerformanceProfiler.logEvent("finished loading messages")
 
-//                listRefreshMonitor.decrementRefreshThreadsCount()
-//                if (listRefreshMonitor.shouldLoadMessagesToTheUi()) {
-//                    listRefreshMonitor.resetRunningThreadCount()
+                handler.post {
+                    setMessages(cursor, contactMap!!, contactByNameMap!!)
+                    draftManager.applyDrafts()
 
-                    handler.post {
-                        val justUpdatingSendingStatus = adapter != null && !addedNewMessage
-                        val applyMessages: () -> Unit = {
-                            setMessages(cursor, contactMap!!, contactByNameMap!!)
-                            draftManager.applyDrafts()
-
-                            if (position != -1) {
-                                messageList.scrollToPosition(position)
-                            }
-                        }
-
-                        if (Settings.smartReplies && !justUpdatingSendingStatus) {
-                            try {
-                                val list = mutableListOf<FirebaseTextMessage>()
-                                if (cursor.moveToFirst()) {
-                                    do {
-                                        val message = Message()
-                                        message.fillFromCursor(cursor)
-
-                                        if (MimeType.TEXT_PLAIN == message.mimeType) {
-                                            if (message.type == Message.TYPE_RECEIVED) {
-                                                list.add(FirebaseTextMessage.createForLocalUser(message.data, message.timestamp))
-                                            } else {
-                                                list.add(FirebaseTextMessage.createForRemoteUser(message.data, message.timestamp, message.from ?: "friend"))
-                                            }
-                                        }
-                                    } while (cursor.moveToNext() && list.size < 10)
-                                }
-
-                                val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
-                                smartReply.suggestReplies(list)
-                                        .addOnSuccessListener { result ->
-                                            applyMessages()
-                                            smartReplyManager.applySuggestions(result.suggestions)
-                                        }.addOnFailureListener {
-                                            applyMessages()
-                                        }
-                            } catch (e: Throwable) {
-                                applyMessages()
-                            }
-                        } else {
-                            applyMessages()
-                        }
+                    if (position != -1) {
+                        messageList.scrollToPosition(position)
                     }
-//                }
+                }
+
+                val justUpdatingSendingStatus = adapter != null && !addedNewMessage
+                if (Settings.smartReplies && !justUpdatingSendingStatus) {
+                    try {
+                        val list = mutableListOf<FirebaseTextMessage>()
+                        if (cursor.moveToFirst()) {
+                            do {
+                                val message = Message()
+                                message.fillFromCursor(cursor)
+
+                                if (MimeType.TEXT_PLAIN == message.mimeType) {
+                                    if (message.type == Message.TYPE_RECEIVED) {
+                                        list.add(FirebaseTextMessage.createForLocalUser(message.data, message.timestamp))
+                                    } else {
+                                        list.add(FirebaseTextMessage.createForRemoteUser(message.data, message.timestamp, message.from ?: fragment.argManager.title))
+                                    }
+                                }
+                            } while (cursor.moveToNext() && list.size < 10)
+                        }
+
+                        val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
+                        smartReply.suggestReplies(list)
+                                .addOnSuccessListener { result ->
+                                    handler.post { smartReplyManager.applySuggestions(result.suggestions) }
+                                }
+                    } catch (e: Throwable) {
+
+                    }
+                }
+
+                PerformanceProfiler.logEvent("finished prepping smart replies")
 
                 if (!argManager.isGroup) {
                     informationUpdater.update()
