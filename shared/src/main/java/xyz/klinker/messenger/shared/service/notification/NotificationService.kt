@@ -25,6 +25,7 @@ import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
 import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestionResult
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.data.pojo.NotificationAction
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
 import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper
@@ -84,14 +85,18 @@ class Notifier(private val context: Context) {
                     val conversation = conversations[i]
 
                     try {
-                        val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
-                        smartReply.suggestReplies(conversation.getFirebaseSmartReplyConversation().asReversed())
-                                .addOnSuccessListener { result ->
-                                    val suggestions = result.suggestions/*.filter { it.confidence > 0.2 }*/
-                                    conversationNotifier.giveConversationNotification(conversation, i, conversations.size, suggestions)
-                                }.addOnFailureListener {
-                                    conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
-                                }
+                        if (Settings.notificationActions.contains(NotificationAction.SMART_REPLY)) {
+                            val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
+                            smartReply.suggestReplies(conversation.getFirebaseSmartReplyConversation().asReversed())
+                                    .addOnSuccessListener { result ->
+                                        val suggestions = result.suggestions/*.filter { it.confidence > 0.2 }*/
+                                        conversationNotifier.giveConversationNotification(conversation, i, conversations.size, suggestions)
+                                    }.addOnFailureListener {
+                                        conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
+                                    }
+                        } else {
+                            conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
+                        }
                     } catch (e: Throwable) {
                         conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
                     }

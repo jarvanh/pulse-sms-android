@@ -151,8 +151,8 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
         hideContainer()
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
-        if (prefs.getBoolean("cancelled_smart_reply", true)) {
-            prefs.edit().putBoolean("cancelled_smart_reply", false).commit()
+        if (prefs.getBoolean(CANCELLED_SMART_REPLY_PREF, true)) {
+            prefs.edit().putBoolean(CANCELLED_SMART_REPLY_PREF, false).commit()
             AlertDialog.Builder(activity!!)
                     .setMessage(R.string.use_smart_replies_dialog)
                     .setPositiveButton(android.R.string.ok) { _, _ -> }
@@ -165,5 +165,6 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
         private val ANIMATION_INTERPOLATOR = DecelerateInterpolator()
         private const val ANIMATION_DURATION = 200L
         private const val ANIMATION_START_DELAY = 0L
+        private const val CANCELLED_SMART_REPLY_PREF = "cancelled_smart_reply"
     }
 }
