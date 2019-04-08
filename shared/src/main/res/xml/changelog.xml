@@ -18,10 +18,10 @@
 
     <version
         name="4.8.0"
-        description="April 7th, 2019">
+        description="April 9th, 2019">
         <text>Pulse can now suggest "Smart Replies" based on the context of your conversation!</text>
         <text>Smart Reply suggestions show up within any conversation, if there are relevant suggestions.</text>
-        <text>You can set up Smart Replies to show up within your notifications, as actions, to quickly send replies to your contacts.</text>
+        <text>You can set up Smart Replies to show up within your notifications, through the "Notification Actions" setting, to quickly send replies to your contacts.</text>
         <text>Please note: currently, smart replies are limited to English only.</text>
     </version>
 
