@@ -65,6 +65,7 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
     val sendManager: SendMessageManager by lazy { SendMessageManager(this) }
     val messageLoader: MessageListLoader by lazy { MessageListLoader(this) }
     val notificationManager: MessageListNotificationManager by lazy { MessageListNotificationManager(this) }
+    val smartReplyManager: SmartReplyManager by lazy { SmartReplyManager(this) }
     private val permissionHelper = PermissionHelper(this)
     private val nonDeferredInitializer: ViewInitializerNonDeferred by lazy { ViewInitializerNonDeferred(this) }
     private val deferredInitializer: ViewInitializerDeferred by lazy { ViewInitializerDeferred(this) }

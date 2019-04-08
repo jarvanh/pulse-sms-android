@@ -25,12 +25,6 @@
             android:summary="@string/cleanup_old_messages_summary"/>
 
         <SwitchPreference
-            android:key="@string/pref_smart_reply"
-            android:title="@string/use_smart_replies"
-            android:summary="@string/use_smart_replies_summary"
-            android:defaultValue="true" />
-
-        <SwitchPreference
             android:key="@string/pref_internal_browser"
             android:title="@string/use_internal_browser"
             android:summary="@string/internal_browser_summary"
@@ -41,6 +35,12 @@
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_messaging_category"
         android:title="@string/messaging_features">
+
+        <SwitchPreference
+            android:key="@string/pref_smart_reply"
+            android:title="@string/use_smart_replies"
+            android:summary="@string/use_smart_replies_summary"
+            android:defaultValue="true" />
 
         <Preference
             android:key="@string/pref_auto_reply"

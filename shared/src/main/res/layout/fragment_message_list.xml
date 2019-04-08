@@ -16,18 +16,17 @@
 
 <xyz.klinker.messenger.view.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:clickable="true"
         android:focusable="true"
-        android:orientation="vertical"
-        android:background="@color/background">
+        android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar_layout"
@@ -55,12 +54,12 @@
                 android:id="@+id/message_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/message_list_padding"
                 android:layout_marginStart="@dimen/message_list_padding"
-                android:paddingBottom="12dp"
-                android:clipToPadding="false"
+                android:layout_marginEnd="@dimen/message_list_padding"
                 android:alpha="@integer/message_list_fastscroll_handle_alpha"
-                app:bubbleSize="small"/>
+                android:clipToPadding="false"
+                android:paddingBottom="12dp"
+                app:bubbleSize="small" />
 
         </RelativeLayout>
 
@@ -69,8 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/message_list_padding"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/message_list_padding"
             android:layout_weight=".33"
             android:visibility="gone">
 
@@ -78,9 +77,9 @@
                 android:id="@+id/attached_image"
                 android:layout_width="@dimen/attached_image_size"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="48dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginEnd="48dp"
                 android:background="@drawable/rounded_rect"
                 android:contentDescription="@string/attached_image"
                 android:scaleType="centerCrop" />
@@ -159,14 +158,27 @@
 
         </FrameLayout>
 
+        <LinearLayout
+            android:id="@+id/smart_reply_container"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="end"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+
+        </LinearLayout>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/reply_bar_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="-24dp"
-            app:cardElevation="5dp"
+            app:cardBackgroundColor="@color/replyBarCard"
             app:cardCornerRadius="24dp"
-            app:cardBackgroundColor="@color/replyBarCard" >
+            app:cardElevation="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -186,8 +198,8 @@
                     android:id="@+id/send_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/message_list_padding"
                     android:layout_marginStart="@dimen/message_list_padding"
+                    android:layout_marginEnd="@dimen/message_list_padding"
                     android:alpha="0"
                     android:clipToPadding="false"
                     android:gravity="center_vertical|start"
@@ -258,8 +270,8 @@
                         android:maxLines="@integer/message_list_fragment_line_entry_count"
                         android:minHeight="40dp"
                         android:padding="8dp"
-                        android:paddingEnd="18dp"
                         android:paddingStart="8dp"
+                        android:paddingEnd="18dp"
                         android:scrollHorizontally="false"
                         android:textSize="16sp" />
 
@@ -267,8 +279,8 @@
                         android:id="@+id/send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:contentDescription="@string/send_message"
                         android:src="@drawable/ic_send"
                         app:elevation="0dp"

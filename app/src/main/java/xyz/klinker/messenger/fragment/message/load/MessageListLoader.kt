@@ -2,18 +2,27 @@ package xyz.klinker.messenger.fragment.message.load
 
 import android.database.Cursor
 import android.os.Handler
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
+import com.google.firebase.ml.naturallanguage.smartreply.FirebaseTextMessage
+import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestion
 import com.l4digital.fastscroll.FastScrollRecyclerView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.message.MessageListAdapter
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.message.ConversationInformationUpdater
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Contact
+import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.util.*
 import java.util.*
@@ -27,9 +36,11 @@ class MessageListLoader(private val fragment: MessageListFragment) {
         get() = fragment.argManager
     private val draftManager
         get() = fragment.draftManager
+    private val smartReplyManager
+        get() = fragment.smartReplyManager
 
-    val messageList: FastScrollRecyclerView by lazy { fragment.rootView!!.findViewById<View>(R.id.message_list) as FastScrollRecyclerView }
     private val manager: LinearLayoutManager by lazy { LinearLayoutManager(activity) }
+    val messageList: FastScrollRecyclerView by lazy { fragment.rootView!!.findViewById<View>(R.id.message_list) as FastScrollRecyclerView }
     
     var adapter: MessageListAdapter? = null
 
@@ -124,11 +135,47 @@ class MessageListLoader(private val fragment: MessageListFragment) {
 //                    listRefreshMonitor.resetRunningThreadCount()
 
                     handler.post {
-                        setMessages(cursor, contactMap!!, contactByNameMap!!)
-                        draftManager.applyDrafts()
+                        val justUpdatingSendingStatus = adapter?.itemCount == cursor.count
+                        val applyMessages: () -> Unit = {
+                            setMessages(cursor, contactMap!!, contactByNameMap!!)
+                            draftManager.applyDrafts()
 
-                        if (position != -1) {
-                            messageList.scrollToPosition(position)
+                            if (position != -1) {
+                                messageList.scrollToPosition(position)
+                            }
+                        }
+
+                        if (Settings.smartReplies && !justUpdatingSendingStatus) {
+                            try {
+                                val list = mutableListOf<FirebaseTextMessage>()
+                                if (cursor.moveToFirst()) {
+                                    do {
+                                        val message = Message()
+                                        message.fillFromCursor(cursor)
+
+                                        if (MimeType.TEXT_PLAIN == message.mimeType) {
+                                            if (message.type == Message.TYPE_RECEIVED) {
+                                                list.add(FirebaseTextMessage.createForLocalUser(message.data, message.timestamp))
+                                            } else {
+                                                list.add(FirebaseTextMessage.createForRemoteUser(message.data, message.timestamp, message.from ?: "friend"))
+                                            }
+                                        }
+                                    } while (cursor.moveToNext() && list.size < 10)
+                                }
+
+                                val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
+                                smartReply.suggestReplies(list)
+                                        .addOnSuccessListener { result ->
+                                            applyMessages()
+                                            smartReplyManager.applySuggestions(result.suggestions)
+                                        }.addOnFailureListener {
+                                            applyMessages()
+                                        }
+                            } catch (e: Throwable) {
+                                applyMessages()
+                            }
+                        } else {
+                            applyMessages()
                         }
                     }
 //                }
