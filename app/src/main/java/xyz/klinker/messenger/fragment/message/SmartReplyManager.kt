@@ -1,17 +1,20 @@
 package xyz.klinker.messenger.fragment.message
 
 import android.animation.ValueAnimator
+import android.content.res.ColorStateList
 import android.os.Handler
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestion
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.shared.util.DensityUtil
 
 class SmartReplyManager(private val fragment: MessageListFragment) {
@@ -19,11 +22,16 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
     private val activity: FragmentActivity? by lazy { fragment.activity }
     private val handler: Handler by lazy { Handler() }
 
-    private val smartReplyContainer: LinearLayout by lazy { fragment.rootView!!.findViewById(R.id.smart_reply_container) as LinearLayout }
     private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
+    private val smartReplyContainer: ViewGroup by lazy { fragment.rootView!!.findViewById(R.id.smart_reply_container) as ViewGroup }
+    private val smartReplySuggestionsContainer: ViewGroup by lazy { smartReplyContainer.findViewById(R.id.smart_reply_suggestions_container) as ViewGroup }
+    private val closeSmartReply: ImageButton by lazy { smartReplyContainer.findViewById(R.id.close_smart_replies) as ImageButton }
 
     fun applySuggestions(suggestions: List<SmartReplySuggestion>) {
         Log.v("SmartReplyManager", "Suggestions size: ${suggestions.size}")
+
+        closeSmartReply.imageTintList = ColorStateList.valueOf(fragment.argManager.colorAccent)
+        closeSmartReply.setOnClickListener { closeSmartReply() }
 
         handler.removeCallbacksAndMessages(null)
         handler.postDelayed({
@@ -51,7 +59,7 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
                     layout
                 }.forEach { view ->
                     if (view != null) {
-                        smartReplyContainer.addView(view)
+                        smartReplySuggestionsContainer.addView(view)
                     }
                 }
             }
@@ -60,7 +68,7 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
 
     private fun hideContainer() {
         if (smartReplyContainer.visibility == View.GONE) {
-            smartReplyContainer.removeAllViews()
+            smartReplySuggestionsContainer.removeAllViews()
             return
         }
 
@@ -73,7 +81,7 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
 
             if (value == 0) {
                 smartReplyContainer.visibility = View.GONE
-                smartReplyContainer.removeAllViews()
+                smartReplySuggestionsContainer.removeAllViews()
             }
         }
         animator.interpolator = ANIMATION_INTERPOLATOR
@@ -90,7 +98,7 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
     }
 
     private fun showContainer(loadViewsIntoContainer: () -> Unit) {
-        smartReplyContainer.removeAllViews()
+        smartReplySuggestionsContainer.removeAllViews()
 
         if (smartReplyContainer.visibility == View.VISIBLE) {
             // animate it out, to remove the view, then back in, since we will be filling it with new views
@@ -101,7 +109,7 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
                     .start()
 
             Handler().postDelayed({
-                smartReplyContainer.removeAllViews()
+                smartReplySuggestionsContainer.removeAllViews()
                 loadViewsIntoContainer()
 
                 smartReplyContainer.animate()
@@ -136,6 +144,20 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
                 .setStartDelay(ANIMATION_DURATION)
                 .setDuration(ANIMATION_DURATION)
                 .start()
+    }
+
+    private fun closeSmartReply() {
+        hideContainer()
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
+        if (prefs.getBoolean("cancelled_smart_reply", true)) {
+            prefs.edit().putBoolean("cancelled_smart_reply", false).commit()
+            AlertDialog.Builder(activity!!)
+                    .setMessage(R.string.use_smart_replies_dialog)
+                    .setPositiveButton(android.R.string.ok) { _, _ -> }
+                    .setNegativeButton(R.string.use_smart_reply_settings) { _, _ -> SettingsActivity.startFeatureSettings(activity!!) }
+                    .show()
+        }
     }
 
     companion object {

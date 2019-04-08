@@ -158,19 +158,6 @@
 
         </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/smart_reply_container"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:gravity="end"
-            android:layout_marginEnd="12dp"
-            android:layout_marginStart="12dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-
-        </LinearLayout>
-
         <androidx.cardview.widget.CardView
             android:id="@+id/reply_bar_card"
             android:layout_width="match_parent"
@@ -193,6 +180,37 @@
                     android:layout_height="3dp"
                     android:indeterminate="true"
                     android:visibility="invisible" />
+
+                <LinearLayout
+                    android:id="@+id/smart_reply_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="end"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="8dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageButton
+                        android:id="@+id/close_smart_replies"
+                        android:layout_width="32dp"
+                        android:layout_height="48dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="true"
+                        android:contentDescription="@string/use_smart_replies"
+                        android:src="@drawable/ic_cancel"
+                        android:tint="@color/secondaryText" />
+
+                    <LinearLayout
+                        android:id="@+id/smart_reply_suggestions_container"
+                        android:orientation="horizontal"
+                        android:gravity="end"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/send_bar"
