@@ -80,6 +80,7 @@ class NotificationActionsPreference : Preference, Preference.OnPreferenceClickLi
             NotificationAction.READ -> 4
             NotificationAction.MUTE -> 5
             NotificationAction.ARCHIVE -> 6
+            NotificationAction.EMPTY -> 7
         }
     }
 }

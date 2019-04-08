@@ -177,6 +177,7 @@
         <item>send</item>
     </string-array>
 
+    <!-- Add notification actions here, in NotificationActions.kt, NotificationActionsPreference.kt, and NotificationConversationProvider.kt -->
     <string-array name="notification_actions">
         <item>@string/notification_action_reply</item>
         <item>@string/notification_action_smart_reply</item>
@@ -185,6 +186,7 @@
         <item>@string/mark_as_read</item>
         <item>@string/mute_conversation</item>
         <item>@string/notification_action_archive</item>
+        <item>@string/notification_action_no_action</item>
     </string-array>
 
     <string-array name="notification_actions_values">
@@ -195,6 +197,7 @@
         <item>read</item>
         <item>mute</item>
         <item>archive</item>
+        <item>empty</item>
     </string-array>
 
     <string-array name="convert_to_mms">
