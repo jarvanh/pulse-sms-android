@@ -16,8 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1."
-            android:textSize="18sp"
-            android:textColor="#E2000000"/>
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/action_one"
@@ -39,8 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2."
-            android:textSize="18sp"
-            android:textColor="#E2000000" />
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/action_two"
@@ -62,8 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3."
-            android:textSize="18sp"
-            android:textColor="#E2000000" />
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/action_three"

@@ -37,7 +37,7 @@ class NotificationActionsPreference : Preference, Preference.OnPreferenceClickLi
         prepareContactEntry(actionTwo, prefActions[1])
         prepareContactEntry(actionThree, prefActions[2])
 
-        AlertDialog.Builder(context, R.style.SubscriptionPicker)
+        AlertDialog.Builder(context)
                 .setTitle(R.string.notification_actions)
                 .setView(layout)
                 .setNegativeButton(R.string.cancel) { _, _ -> }
