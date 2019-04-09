@@ -132,16 +132,6 @@ class MessageListLoader(private val fragment: MessageListFragment) {
 
                 val firstLoad = adapter == null
                 val justUpdatingSendingStatus = !firstLoad && !addedNewMessage
-
-                handler.post {
-                    setMessages(cursor, contactMap!!, contactByNameMap!!)
-                    draftManager.applyDrafts()
-
-                    if (position != -1) {
-                        messageList.scrollToPosition(position)
-                    }
-                }
-
                 if (Settings.smartReplies && !justUpdatingSendingStatus) {
                     try {
                         val list = mutableListOf<FirebaseTextMessage>()
@@ -176,6 +166,15 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                 }
 
                 PerformanceProfiler.logEvent("finished prepping smart replies")
+
+                handler.post {
+                    setMessages(cursor, contactMap!!, contactByNameMap!!)
+                    draftManager.applyDrafts()
+
+                    if (position != -1) {
+                        messageList.scrollToPosition(position)
+                    }
+                }
 
                 if (!argManager.isGroup) {
                     informationUpdater.update()
