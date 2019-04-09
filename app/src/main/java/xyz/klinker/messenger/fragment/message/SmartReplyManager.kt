@@ -18,6 +18,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.util.DensityUtil
+import java.lang.Exception
 
 class SmartReplyManager(private val fragment: MessageListFragment) {
 
@@ -43,28 +44,32 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
             }
 
             showContainer {
-                suggestions.map { suggestion ->
-                    val layout = LayoutInflater.from(activity!!).inflate(R.layout.item_smart_reply_suggestion, smartReplyContainer, false)
-                            ?: return@map null
+                try {
+                    suggestions.map { suggestion ->
+                        val layout = LayoutInflater.from(activity!!).inflate(R.layout.item_smart_reply_suggestion, smartReplyContainer, false)
+                                ?: return@map null
 
-                    val tv = layout.findViewById<TextView>(R.id.suggestion)
-                    tv.text = suggestion.text
+                        val tv = layout.findViewById<TextView>(R.id.suggestion)
+                        tv.text = suggestion.text
 
-                    layout.setOnClickListener {
-                        AnalyticsHelper.sendSmartReply(activity)
+                        layout.setOnClickListener {
+                            AnalyticsHelper.sendSmartReply(activity)
 
-                        messageEntry.setText(suggestion.text)
-                        messageEntry.setSelection(suggestion.text.length)
-                        messageEntry.requestFocus()
+                            messageEntry.setText(suggestion.text)
+                            messageEntry.setSelection(suggestion.text.length)
+                            messageEntry.requestFocus()
 
-                        hideContainer()
+                            hideContainer()
+                        }
+
+                        layout
+                    }.forEach { view ->
+                        if (view != null) {
+                            smartReplySuggestionsContainer.addView(view)
+                        }
                     }
-
-                    layout
-                }.forEach { view ->
-                    if (view != null) {
-                        smartReplySuggestionsContainer.addView(view)
-                    }
+                } catch (e: Exception) {
+                    // the activity was destroyed
                 }
             }
         }, if (firstLoad) 0L else 1000L)
