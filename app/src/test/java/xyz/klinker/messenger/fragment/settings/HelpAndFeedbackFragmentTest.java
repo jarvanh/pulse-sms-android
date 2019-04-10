@@ -60,12 +60,6 @@ public class HelpAndFeedbackFragmentTest extends MessengerRobolectricSuite {
     }
 
     @Test
-    public void googlePlus() {
-        fragment.findPreference(fragment.getString(R.string.pref_help_google_plus)).performClick();
-        assertNotNull(shadowOf(fragment.getActivity()).getNextStartedActivity());
-    }
-
-    @Test
     public void email() {
         fragment.findPreference(fragment.getString(R.string.pref_help_email)).performClick();
         assertNotNull(shadowOf(fragment.getActivity()).getNextStartedActivity());
