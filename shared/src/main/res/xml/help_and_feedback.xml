@@ -48,12 +48,6 @@
         android:title="@string/get_in_touch" >
 
         <Preference
-            android:key="@string/pref_help_google_plus"
-            android:title="@string/google_plus"
-            android:summary="@string/google_plus_summary"
-            app:iconSpaceReserved="false" />
-
-        <Preference
             android:key="@string/pref_help_email"
             android:title="@string/email"
             android:summary="@string/email_summary"

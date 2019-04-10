@@ -47,12 +47,6 @@ class HelpAndFeedbackFragment : MaterialPreferenceFragmentCompat() {
                     true
                 }
 
-        findPreference(getString(R.string.pref_help_google_plus))
-                .setOnPreferenceClickListener {
-                    openWeb("https://plus.google.com/u/0/communities/110320018522684513593")
-                    true
-                }
-
         findPreference(getString(R.string.pref_help_email))
                 .setOnPreferenceClickListener {
                     displayEmail()
