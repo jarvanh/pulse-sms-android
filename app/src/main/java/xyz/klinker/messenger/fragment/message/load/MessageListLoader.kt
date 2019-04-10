@@ -146,6 +146,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                                     } else {
                                         if (list.size == 0) {
                                             // only provide suggestions when the latest message is received
+                                            handler.post { smartReplyManager.hideContainer() }
                                             break
                                         }
 

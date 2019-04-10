@@ -75,9 +75,12 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
         }, if (firstLoad) 0L else 1000L)
     }
 
-    private fun hideContainer() {
+    fun hideContainer() {
         if (smartReplyContainer.visibility == View.GONE) {
-            smartReplySuggestionsContainer.removeAllViews()
+            if (smartReplySuggestionsContainer.childCount > 0) {
+                smartReplySuggestionsContainer.removeAllViews()
+            }
+
             return
         }
 
