@@ -322,7 +322,6 @@ object ImageUtils {
             } catch (e: IOException) {
                 Log.e("Scale to Send", "failed to close output stream", e)
             }
-
         }
 
         return file

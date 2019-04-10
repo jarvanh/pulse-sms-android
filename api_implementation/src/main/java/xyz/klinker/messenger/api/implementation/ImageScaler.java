@@ -81,24 +81,6 @@ public class ImageScaler {
         return BitmapFactory.decodeByteArray(byteArr, 0, arraySize, options);
     }
 
-    private static int calculateInSampleSize(int currentHeight, int currentWidth, int maxSize) {
-        int inSampleSize = 1;
-
-        if (currentHeight > maxSize || currentWidth > maxSize) {
-            // Calculate ratios of height and width to requested height and width
-            final int heightRatio = Math.round((float) currentHeight / (float) maxSize);
-            final int widthRatio = Math.round((float) currentWidth / (float) maxSize);
-
-            // Choose the smallest ratio as inSampleSize value, this will guarantee
-            // a final image with both dimensions larger than or equal to the
-            // requested height and width.
-            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-        }
-
-        return inSampleSize;
-    }
-
-
     public static Bitmap rotateBasedOnExifData(Context context, Uri uri, Bitmap bitmap) {
         try {
             InputStream in = context.getContentResolver().openInputStream(uri);
