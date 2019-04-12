@@ -77,6 +77,7 @@ class NotificationConversationProvider(private val service: Context, private val
 
             if (otp != null) {
                 actionHelper.addOtpAction(builder, otp, conversation.id)
+                actionHelper.addDeleteAction(builder, wearableExtender, conversation)
             } else {
                 var smartReplyIndex = 0
                 Settings.notificationActions.forEach {
