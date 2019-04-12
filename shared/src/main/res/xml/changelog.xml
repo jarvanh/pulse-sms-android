@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.8.1"
+        description="Unknown">
+        <text>Delete one-time passwords, from the notification actions</text>
+    </version>
+
+    <version
         name="4.8.0"
         description="April 9th, 2019">
         <text>Pulse can now suggest "Smart Replies" based on the context of your conversation!</text>
