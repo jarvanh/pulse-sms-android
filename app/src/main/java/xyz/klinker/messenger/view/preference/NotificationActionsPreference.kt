@@ -61,9 +61,7 @@ class NotificationActionsPreference : Preference, Preference.OnPreferenceClickLi
         val actions = actionEntries.map { valuesArray[it.selectedItemPosition] }
         val string = buildActionsString(actions[0], actions[1], actions[2])
 
-        Settings.getSharedPrefs(context).edit()
-                .putString(context.getString(R.string.pref_notification_actions_selection), string)
-                .apply()
+        Settings.setValue(context, context.getString(R.string.pref_notification_actions_selection), string)
 
         return string
     }
