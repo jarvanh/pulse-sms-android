@@ -131,10 +131,6 @@ class ScheduledMessageJob : BroadcastReceiver() {
     }
 
     private fun handleRepeat(context: Context, message: ScheduledMessage) {
-        if (message.repeat == ScheduledMessage.REPEAT_NEVER) {
-            return
-        }
-
         when (message.repeat) {
             ScheduledMessage.REPEAT_DAILY -> message.timestamp += TimeUtils.DAY
             ScheduledMessage.REPEAT_WEEKLY -> message.timestamp += TimeUtils.WEEK
@@ -151,6 +147,9 @@ class ScheduledMessageJob : BroadcastReceiver() {
                 calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + 1)
 
                 message.timestamp = calendar.timeInMillis
+            }
+            else -> {
+                return
             }
         }
 
