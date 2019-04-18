@@ -30,7 +30,7 @@ class PromotionUtils(private val context: Context) {
 
         if (installTime == -1L) {
             // write the install time to now
-            sharedPreferences.edit().putLong(pref, currentTime).apply()
+            sharedPreferences.edit().putLong(pref, currentTime).commit()
         } else {
             if (currentTime - installTime > TimeUtils.TWO_WEEKS) {
                 return sharedPreferences.getBoolean("show_rate_it", true)

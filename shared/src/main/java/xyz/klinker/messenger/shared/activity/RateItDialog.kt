@@ -37,7 +37,6 @@ class RateItDialog : FloatingTutorialActivity(), TutorialFinishedListener {
             override fun initPage() {
                 setContentView(R.layout.page_rate_it)
                 setNextButtonText(R.string.rate_it)
-                setBackButtonText(R.string.no_thanks)
 
                 val topText = findViewById<View>(R.id.top_text) as TextView
                 val primaryColor = Settings.mainColorSet.color
@@ -52,6 +51,7 @@ class RateItDialog : FloatingTutorialActivity(), TutorialFinishedListener {
                 val startTime: Long = 300
 
                 quickViewReveal(findViewById<View>(R.id.bottom_text_1), startTime)
+                quickViewReveal(findViewById<View>(R.id.bottom_text_2), startTime + 75)
 
                 quickViewReveal(findViewById<View>(R.id.star_1), startTime)
                 quickViewReveal(findViewById<View>(R.id.star_2), startTime + 50)
