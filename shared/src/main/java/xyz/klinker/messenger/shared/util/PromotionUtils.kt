@@ -42,7 +42,6 @@ class PromotionUtils(private val context: Context) {
 
     private fun askForRating() {
         sharedPreferences.edit().putBoolean("show_rate_it", false).commit()
-        Handler().postDelayed({ context.startActivity(Intent(context, RateItDialog::class.java)) },
-                500)
+        Handler().postDelayed({ context.startActivity(Intent(context, RateItDialog::class.java)) }, 500)
     }
 }
