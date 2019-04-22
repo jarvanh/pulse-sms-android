@@ -38,6 +38,10 @@ class FotoapparatFragment : Fragment(), View.OnClickListener {
     private lateinit var cameraView: CameraView
     private lateinit var fotoapparat: Fotoapparat
 
+    private var takePicture: View? = null
+    private var flipPicture: View? = null
+    private var fullscreen: View? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_fotoapparat, container, false)
 
@@ -51,9 +55,13 @@ class FotoapparatFragment : Fragment(), View.OnClickListener {
                 view = cameraView
         )
 
-        view.findViewById<View>(R.id.picture).setOnClickListener(this)
-        view.findViewById<View>(R.id.flip_picture).setOnClickListener(this)
-        view.findViewById<View>(R.id.fullscreen).setOnClickListener(this)
+        takePicture = view.findViewById(R.id.picture)
+        flipPicture = view.findViewById(R.id.flip_picture)
+        fullscreen = view.findViewById(R.id.fullscreen)
+
+        takePicture?.setOnClickListener(this)
+        flipPicture?.setOnClickListener(this)
+        fullscreen?.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -70,6 +78,10 @@ class FotoapparatFragment : Fragment(), View.OnClickListener {
         when (view.id) {
             R.id.picture -> {
                 loading.visibility = View.VISIBLE
+
+                takePicture?.isEnabled = false
+                flipPicture?.isEnabled = false
+                fullscreen?.isEnabled = false
 
                 val activity = activity!!
                 val file = File(activity.filesDir, "${TimeUtils.now}")

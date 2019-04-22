@@ -46,8 +46,6 @@ class AttachmentListener(private val fragment: MessageListFragment)
     private val attachHolder: FrameLayout by lazy { fragment.rootView!!.findViewById<View>(R.id.attach_holder) as FrameLayout }
     private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
 
-    var attachingFromCamera = false
-
     @SuppressLint("SetTextI18n")
     override fun onContactAttached(firstName: String, lastName: String, phone: String) {
         if (activity == null) {
