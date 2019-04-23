@@ -302,7 +302,7 @@
 
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>
-    <string name="copyright">© 2018 Luke &amp; Jake Klinker</string>
+    <string name="copyright">© 2019 Luke &amp; Jake Klinker</string>
     <string name="copyright_summary">View open source license information</string>
     <string name="app_version">App Version</string>
     <string name="account_information">Account Information</string>
