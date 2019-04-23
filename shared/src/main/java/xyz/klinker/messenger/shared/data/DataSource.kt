@@ -1818,7 +1818,7 @@ object DataSource {
                 }
             }
 
-    fun searchMessagesAsList(context: Context, query: String?, amount: Int, recievedOnly: Boolean = false): List<Message> {
+    fun searchMessagesAsList(context: Context, query: String?, amount: Int, receivedOnly: Boolean = false): List<Message> {
         val cursor = searchMessages(context, query)
         val messages = ArrayList<Message>()
 
@@ -1827,9 +1827,54 @@ object DataSource {
                 val message = Message()
                 message.fillFromCursor(cursor)
 
-                if (!recievedOnly || message.type == Message.TYPE_RECEIVED) {
+                if (!receivedOnly || message.type == Message.TYPE_RECEIVED) {
                     messages.add(message)
                 }
+            } while (cursor.moveToNext() && messages.size < amount)
+        }
+
+        cursor?.closeSilent()
+        return messages
+    }
+
+    /**
+     * Gets all messages that contain the query text, within a given conversation
+     *
+     * @param query the text to look for.
+     * @return a cursor with all messages matching that query.
+     */
+    fun searchConversationMessages(context: Context, query: String?, conversationId: Long): Cursor? =
+            if (query == null || query.isEmpty()) {
+                null
+            } else {
+                try {
+                    database(context).query(Message.TABLE + " m left outer join " + Conversation.TABLE + " c on m.conversation_id = c._id",
+                            arrayOf("m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title", "c.private_notifications as private_notifications"),
+                            Message.COLUMN_DATA + " LIKE '%" + query.replace("'", "''") + "%' AND " +
+                                    Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "' AND c._id=" + conversationId, null, null, null, Message.COLUMN_TIMESTAMP + " desc")
+                } catch (e: Exception) {
+                    ensureActionable(context)
+                    try {
+                        database(context).query(Message.TABLE + " m left outer join " + Conversation.TABLE + " c on m.conversation_id = c._id",
+                                arrayOf("m._id as _id", "c._id as conversation_id", "m.type as type", "m.data as data", "m.timestamp as timestamp", "m.mime_type as mime_type", "m.read as read", "m.message_from as message_from", "m.color as color", "c.title as convo_title", "c.private_notifications as private_notifications"),
+                                Message.COLUMN_DATA + " LIKE '%" + query.replace("'", "''") + "%' AND " +
+                                        Message.COLUMN_MIME_TYPE + "='" + MimeType.TEXT_PLAIN + "' AND c._id=" + conversationId, null, null, null, Message.COLUMN_TIMESTAMP + " desc")
+                    } catch (x: Exception) {
+                        x.printStackTrace()
+                        null
+                    }
+                }
+            }
+
+    fun searchConversationMessagesAsList(context: Context, query: String?, conversationId: Long, amount: Int): List<Message> {
+        val cursor = searchConversationMessages(context, query, conversationId)
+        val messages = ArrayList<Message>()
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                val message = Message()
+                message.fillFromCursor(cursor)
+                messages.add(message)
             } while (cursor.moveToNext() && messages.size < amount)
         }
 

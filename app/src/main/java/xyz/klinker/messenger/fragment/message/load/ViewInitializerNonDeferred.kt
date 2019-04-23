@@ -135,7 +135,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
 
                 val item = toolbar.menu?.findItem(R.id.menu_search_conversation)
                 if (item != null && searchView != null) {
-                    fragment.searchHelper.setup(item, searchView!!, argManager.conversationId)
+                    fragment.searchHelper.setup(item, searchView!!)
                 }
             }
 

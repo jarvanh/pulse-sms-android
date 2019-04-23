@@ -36,7 +36,7 @@ import java.util.regex.Pattern
 
 @SuppressLint("Range")
 class SearchAdapter(search: String?, private var conversations: MutableList<Conversation>?, private var messages: MutableList<Message>?,
-                    listener: SearchListener) : SectionedRecyclerViewAdapter<RecyclerView.ViewHolder>() {
+                    listener: SearchListener, private val color: Int? = null) : SectionedRecyclerViewAdapter<RecyclerView.ViewHolder>() {
 
     private var search = search ?: ""
     private val headerBinder = SearchListHeaderBinder(this)
@@ -112,7 +112,7 @@ class SearchAdapter(search: String?, private var conversations: MutableList<Conv
                         BubbleTheme.CIRCLE -> R.layout.message_circle_received
                         BubbleTheme.SQUARE -> R.layout.message_square_received
                     }
-                    color = Settings.mainColorSet.color
+                    color = this.color ?: Settings.mainColorSet.color
                 } else {
                     color = Integer.MIN_VALUE
                     layoutId = when (Settings.bubbleTheme) {

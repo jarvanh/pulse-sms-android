@@ -18,7 +18,7 @@ class MessageSearchHelper(private val fragment: MessageListFragment) : MaterialS
     private var searchFragment: SearchFragment? = null
     private val conversationSearchListHolder: View? by lazy { activity?.findViewById<View>(R.id.conversation_search_list) }
 
-    fun setup(item: MenuItem, searchView: MaterialSearchView, conversationId: Long) {
+    fun setup(item: MenuItem, searchView: MaterialSearchView) {
         this.searchView = searchView
 
         if (activity != null) {
@@ -87,7 +87,7 @@ class MessageSearchHelper(private val fragment: MessageListFragment) : MaterialS
 
     private fun ensureSearchFragment() {
         if (searchFragment == null) {
-            searchFragment = SearchFragment.newInstance()
+            searchFragment = SearchFragment.newInstance(fragment.argManager.conversationId, fragment.argManager.color)
         }
     }
 

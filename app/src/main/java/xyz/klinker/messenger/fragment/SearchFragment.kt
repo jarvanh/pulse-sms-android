@@ -42,10 +42,12 @@ import xyz.klinker.messenger.shared.util.listener.SearchListener
  */
 class SearchFragment : Fragment(), SearchListener {
 
+    private var conversationId: Long? = null
+    private var conversationColor: Int? = null
     private var query: String? = null
 
     private var list: RecyclerView? = null
-    private val adapter: SearchAdapter by lazy { SearchAdapter(query, null, null, this) }
+    private val adapter: SearchAdapter by lazy { SearchAdapter(query, null, null, this, conversationColor) }
 
     private val searchView: MaterialSearchView? by lazy { activity?.findViewById<View>(R.id.search_view) as MaterialSearchView? }
 
@@ -54,6 +56,9 @@ class SearchFragment : Fragment(), SearchListener {
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
         list = inflater.inflate(R.layout.fragment_search, parent, false) as RecyclerView
+
+        if (arguments?.containsKey(ARG_CONVERSATION_ID) == true) conversationId = arguments!!.getLong(ARG_CONVERSATION_ID)
+        if (arguments?.containsKey(ARG_CONVERSATION_COLOR) == true) conversationColor = arguments!!.getInt(ARG_CONVERSATION_COLOR)
 
         list?.layoutManager = LinearLayoutManager(activity)
         list?.adapter = adapter
@@ -72,12 +77,13 @@ class SearchFragment : Fragment(), SearchListener {
         Thread {
             val activity = activity
 
-            val conversations = if (activity != null) {
+            val conversations = if (activity != null && conversationColor == null) {
                 DataSource.searchConversationsAsList(activity, query, 60).toMutableList()
             } else mutableListOf()
 
             val messages = if (activity != null) {
-                DataSource.searchMessagesAsList(activity, query, 60).toMutableList()
+                if (conversationId == null) DataSource.searchMessagesAsList(activity, query, 60).toMutableList()
+                else DataSource.searchConversationMessagesAsList(activity, query, conversationId!!, 60).toMutableList()
             } else mutableListOf()
 
             handler.post { setSearchResults(conversations, messages) }
@@ -125,8 +131,23 @@ class SearchFragment : Fragment(), SearchListener {
     }
 
     companion object {
-        fun newInstance(): SearchFragment {
-            return SearchFragment()
+        private const val ARG_CONVERSATION_ID = "conversation_id"
+        private const val ARG_CONVERSATION_COLOR = "conversation_color"
+
+        fun newInstance(conversationId: Long? = null, conversationColor: Int? = null): SearchFragment {
+            val fragment = SearchFragment()
+            val bundle = Bundle()
+
+            if (conversationId != null) {
+                bundle.putLong(ARG_CONVERSATION_ID, conversationId)
+            }
+
+            if (conversationColor != null) {
+                bundle.putInt(ARG_CONVERSATION_COLOR, conversationColor)
+            }
+
+            fragment.arguments = bundle
+            return fragment
         }
     }
 }
