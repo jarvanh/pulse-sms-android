@@ -133,26 +133,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <com.miguelcatalan.materialsearchview.MaterialSearchView
-            android:id="@+id/conversation_search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/enter_search"
-            android:textColor="@color/primaryText"
-            android:textColorHint="@color/secondaryText"
-            app:searchBackIcon="@drawable/ic_search_back"
-            app:searchBackground="@color/drawerBackground"
-            app:searchCloseIcon="@drawable/ic_search_close" />
+        <View
+            android:layout_width="292dp"
+            android:layout_height="match_parent"/>
 
-        <FrameLayout
-            android:id="@+id/conversation_search_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/background"
-            android:visibility="gone" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
+
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/conversation_search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_search"
+                android:textColor="@color/primaryText"
+                android:textColorHint="@color/secondaryText"
+                app:searchBackIcon="@drawable/ic_search_back"
+                app:searchBackground="@color/drawerBackground"
+                app:searchCloseIcon="@drawable/ic_search_close" />
+
+            <FrameLayout
+                android:id="@+id/conversation_search_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/background"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
