@@ -1,5 +1,1 @@
-Pulse can now suggest "Smart Replies" based on the context of your conversation!<br/>
-- Smart Reply suggestions show up within any conversation, if there are relevant suggestions.<br/>
-- You can set up Smart Replies to show up within your notifications, through the "Notification Actions" setting, to quickly send replies to your contacts.<br/><br/>
-
-Please note: currently, smart replies are limited to English only.
+With this update, you can now search within a conversation, rather than digging through the results of all of the conversations on the device.
