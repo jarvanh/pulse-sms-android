@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.miguelcatalan.materialsearchview.MaterialSearchView
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.activity.MessengerTvActivity
@@ -41,6 +42,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
     private val appBarLayout: View by lazy { fragment.rootView!!.findViewById<View>(R.id.app_bar_layout) }
     private val replyBarCard: CardView by lazy { fragment.rootView!!.findViewById<CardView>(R.id.reply_bar_card) }
     private val background: View by lazy { fragment.rootView!!.findViewById<View>(R.id.background) }
+    private val searchView: MaterialSearchView? by lazy { activity?.findViewById<MaterialSearchView>(R.id.conversation_search_view) }
 
     fun init(bundle: Bundle?) {
         initToolbar()
@@ -127,8 +129,14 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
         val deferredTime = if (activity is MessengerTvActivity) 0L
         else (AnimationUtils.EXPAND_CONVERSATION_DURATION + 25).toLong()
         Handler().postDelayed({
-            if (activity is MessengerActivity) {
+            val thisActivity = activity
+            if (thisActivity is MessengerActivity) {
                 toolbar.inflateMenu(if (argManager.isGroup) R.menu.fragment_messages_group else R.menu.fragment_messages)
+
+                val item = toolbar.menu?.findItem(R.id.menu_search_conversation)
+                if (item != null && searchView != null) {
+                    fragment.searchHelper.setup(item, searchView!!, argManager.conversationId)
+                }
             }
 
             toolbar.setOnMenuItemClickListener { item ->

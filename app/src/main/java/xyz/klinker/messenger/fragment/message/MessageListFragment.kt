@@ -20,10 +20,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.*
 import androidx.appcompat.app.AlertDialog
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -31,7 +29,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sgottard.sofa.ContentFragment
 
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.activity.MessengerTvActivity
+import xyz.klinker.messenger.activity.main.MainSearchHelper
 import xyz.klinker.messenger.fragment.message.attach.AttachmentInitializer
 import xyz.klinker.messenger.fragment.message.attach.AttachmentListener
 import xyz.klinker.messenger.fragment.message.attach.AttachmentManager
@@ -70,6 +70,7 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
     private val nonDeferredInitializer: ViewInitializerNonDeferred by lazy { ViewInitializerNonDeferred(this) }
     private val deferredInitializer: ViewInitializerDeferred by lazy { ViewInitializerDeferred(this) }
     val multiSelect: MessageMultiSelectDelegate by lazy { MessageMultiSelectDelegate(this) }
+    val searchHelper: MessageSearchHelper by lazy { MessageSearchHelper(this) }
 
     var rootView: View? = null
 
@@ -213,6 +214,10 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
 
     fun onBackPressed(): Boolean {
         dismissDetailsChoiceDialog()
+
+        if (searchHelper.closeSearch()) {
+            return true
+        }
 
         if (attachManager.backPressed()) {
             return true

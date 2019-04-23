@@ -31,6 +31,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/menu_search_conversation"
+        android:icon="@drawable/ic_search"
+        android:title="@string/menu_search_conversation"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_view_media"
         android:icon="@drawable/ic_media"
         android:title="@string/menu_view_media"
