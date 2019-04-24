@@ -153,6 +153,7 @@ class AttachmentListener(private val fragment: MessageListFragment)
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         activity?.startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_GALLERY_PICKER_REQUEST)
     }
 
@@ -234,6 +235,22 @@ class AttachmentListener(private val fragment: MessageListFragment)
 
             attachManager.selectedImageUris.clear()
             selectedImageCount.visibility = View.GONE
+        } else if (requestCode == RESULT_GALLERY_PICKER_REQUEST && resultCode == RESULT_OK
+                && data != null && data.clipData != null) {
+            fragment.onBackPressed()
+
+            val clipData = data.clipData!!
+            for (i in 0..clipData.itemCount) {
+                val clip = clipData.getItemAt(i)
+                val uri = clip.uri
+                val uriString = uri.toString()
+                var mimeType: String? = MimeType.IMAGE_JPEG
+                if (uriString.contains("content://")) {
+                    mimeType = activity?.contentResolver?.getType(uri)
+                }
+
+                onImageSelected(uri, mimeType!!)
+            }
         } else if (requestCode == RESULT_CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK && activity != null) {
             val uri = ImageUtils.getUriForLatestPhoto(activity!!)
             fragment.onBackPressed()
