@@ -1,1 +1,1 @@
-With this update, you can now search within a conversation, rather than digging through the results of all of the conversations on the device.
+With this update, you can now search within a specific conversation, rather than digging through the search results of all of your conversations.
