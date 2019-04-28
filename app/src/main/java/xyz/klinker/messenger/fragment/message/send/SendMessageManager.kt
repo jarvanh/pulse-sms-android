@@ -219,7 +219,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         requestPermissionThenSend(false)
     }
 
-    private fun requestPermissionThenSend(forceNoSignature: Boolean) {
+    fun requestPermissionThenSend(forceNoSignature: Boolean, delayedSendingTimeout: Long = Settings.delayedSendingTimeout) {
         if (activity == null) {
             return
         }
@@ -239,15 +239,15 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         } else if (Account.primary && !PermissionsUtils.isDefaultSmsApp(activity!!)) {
             PermissionsUtils.setDefaultSmsApp(activity!!)
         } else if (message.isNotEmpty() || uris.size > 0) {
-            if (Settings.delayedSendingTimeout != 0L) {
-                changeDelayedSendingComponents(true)
+            if (delayedSendingTimeout != 0L) {
+                changeDelayedSendingComponents(true, delayedSendingTimeout)
             }
 
-            delayedSendingHandler.postDelayed({ sendMessage(uris, forceNoSignature) }, Settings.delayedSendingTimeout)
+            delayedSendingHandler.postDelayed({ sendMessage(uris, forceNoSignature) }, delayedSendingTimeout)
         }
     }
 
-    private fun changeDelayedSendingComponents(start: Boolean) {
+    private fun changeDelayedSendingComponents(start: Boolean, delayedSendingTimeout: Long = Settings.delayedSendingTimeout) {
         delayedSendingHandler.removeCallbacksAndMessages(null)
         delayedTimer?.cancel()
 
@@ -262,7 +262,6 @@ class SendMessageManager(private val fragment: MessageListFragment) {
             send.setImageResource(R.drawable.ic_close)
             send.setOnClickListener { changeDelayedSendingComponents(false) }
 
-            val delayedSendingTimeout = Settings.delayedSendingTimeout
             sendProgress?.max = delayedSendingTimeout.toInt() / 10
 
             delayedTimer = object : CountDownTimer(delayedSendingTimeout, 10) {

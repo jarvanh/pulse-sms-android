@@ -17,6 +17,7 @@ import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestion
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
+import xyz.klinker.messenger.fragment.message.send.SendMessageManager
 import xyz.klinker.messenger.shared.util.DensityUtil
 import java.lang.Exception
 
@@ -24,6 +25,7 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
 
     private val activity: FragmentActivity? by lazy { fragment.activity }
     private val handler: Handler by lazy { Handler() }
+    private val sendManager: SendMessageManager by lazy { fragment.sendManager }
 
     private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
     private val smartReplyContainer: ViewGroup by lazy { fragment.rootView!!.findViewById(R.id.smart_reply_container) as ViewGroup }
@@ -60,6 +62,7 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
                             messageEntry.requestFocus()
 
                             hideContainer()
+                            sendManager.requestPermissionThenSend(false, 2000)
                         }
 
                         layout
