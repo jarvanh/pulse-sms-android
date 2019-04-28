@@ -18,6 +18,12 @@
 
     <version
         name="4.9.0"
+        description="April 29th, 2019">
+        <text>Smart replies are automatically sent (after a short timeout period), instead of having to press the "send" button.</text>
+    </version>
+
+    <version
+        name="4.9.0"
         description="April 26th, 2019">
         <!-- Accept multiple images from the gallery picker intent, on the grid of images in the attach menu -->
         <text>You can now search within a conversation, rather than being forced to search throughout the entire app</text>
