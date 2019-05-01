@@ -17,7 +17,7 @@
 <changelog>
 
     <version
-        name="4.9.0"
+        name="4.9.1"
         description="April 29th, 2019">
         <text>Smart replies are automatically sent (after a short timeout period), instead of having to press the "send" button.</text>
     </version>
