@@ -182,7 +182,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
 
                     tts = TextToSpeech(activity, TextToSpeech.OnInitListener { status ->
                         if (status != TextToSpeech.ERROR) {
-                            tts?.language = Locale.ENGLISH
+//                            tts?.language = Locale.ENGLISH
                             tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, message!!.id.toString())
                         }
                     })
