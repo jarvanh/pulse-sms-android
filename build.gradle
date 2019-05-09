@@ -31,7 +31,7 @@ buildscript {
     ]
 
     ext.versions = [
-            'gradlePlugin'      : '3.4.0',
+            'gradlePlugin'      : '3.5.0-beta01',
             'targetSdk'         : 28,
             'minSdk'            : 21,
 
@@ -51,7 +51,7 @@ buildscript {
             'firebaseAuth'      : '16.2.0',
 
             'mockito'           : '2.18.3',
-            'robolectric'       : '3.8',
+            'robolectric'       : '4.2',
             'testEspresso'      : '3.0.1',
             'testRunner'        : '1.0.1',
     ]
@@ -111,6 +111,7 @@ subprojects {
 
                 defaultConfig {
                     targetSdkVersion versions.targetSdk
+                    minSdkVersion versions.minSdk
 
                     buildConfigField("String", "GIPHY_API_KEY", "\"${apiKeys['GIPHY']}\"")
                     buildConfigField("String", "ARTICLE_API_KEY", "\"${apiKeys['ARTICLE']}\"")
