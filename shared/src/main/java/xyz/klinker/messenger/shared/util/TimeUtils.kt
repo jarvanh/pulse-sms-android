@@ -198,7 +198,9 @@ object TimeUtils {
     fun setupNightTheme(activity: AppCompatActivity) {
         val base = Settings.baseTheme
 
-        if (!base.isDark) {
+        if (AndroidVersionUtil.isAndroidQ && base == BaseTheme.DAY_NIGHT) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        } else if (!base.isDark) {
             val isNight = TimeUtils.isNight && base !== BaseTheme.ALWAYS_LIGHT
             activity.delegate.setLocalNightMode(if (isNight)
                 AppCompatDelegate.MODE_NIGHT_YES
