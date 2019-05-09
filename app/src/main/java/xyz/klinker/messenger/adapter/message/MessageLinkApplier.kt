@@ -96,7 +96,7 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
                 }
             } else {
                 val intent = ArticleIntent.Builder(holder.itemView.context, ArticleParser.ARTICLE_API_KEY)
-                        .setTheme(if (Settings.isCurrentlyDarkTheme) ArticleIntent.THEME_DARK else ArticleIntent.THEME_LIGHT)
+                        .setTheme(if (Settings.isCurrentlyDarkTheme(holder.itemView.context)) ArticleIntent.THEME_DARK else ArticleIntent.THEME_LIGHT)
                         .setToolbarColor(receivedColor)
                         .setAccentColor(accentColor)
                         .setTextSize(Settings.mediumFont + 1)

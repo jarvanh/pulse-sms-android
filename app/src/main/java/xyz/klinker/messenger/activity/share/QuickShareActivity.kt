@@ -66,7 +66,7 @@ class QuickSharePage(val activity: QuickShareActivity) : TutorialPage(activity) 
         card.layoutParams = layoutParams
         card.invalidate()
 
-        if (Settings.isCurrentlyDarkTheme) {
+        if (Settings.isCurrentlyDarkTheme(activity)) {
             Handler().post { setProgressIndicatorColorResource(R.color.tutorial_dark_background_indicator) }
         }
 

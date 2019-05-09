@@ -18,6 +18,7 @@ package xyz.klinker.messenger.shared.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.preference.PreferenceManager
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 
@@ -25,6 +26,7 @@ import java.util.Date
 
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.pojo.*
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.EmojiInitializer
 import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -87,12 +89,22 @@ object Settings {
     var keyboardLayout: KeyboardLayout = KeyboardLayout.DEFAULT
     var emojiStyle: EmojiStyle = EmojiStyle.DEFAULT
 
-    val isCurrentlyDarkTheme: Boolean
-        get() = when {
-            baseTheme === BaseTheme.ALWAYS_LIGHT -> false
-            baseTheme === BaseTheme.DAY_NIGHT -> TimeUtils.isNight
-            else -> true
+    fun isCurrentlyDarkTheme(context: Context): Boolean = when {
+        baseTheme === BaseTheme.ALWAYS_LIGHT -> false
+        baseTheme === BaseTheme.DAY_NIGHT -> {
+            if (AndroidVersionUtil.isAndroidQ) {
+                val currentNightMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                when (currentNightMode) {
+                    Configuration.UI_MODE_NIGHT_NO -> false
+                    Configuration.UI_MODE_NIGHT_YES -> true
+                    else -> false
+                }
+            } else {
+                TimeUtils.isNight
+            }
         }
+        else -> true
+    }
 
     var shouldRefreshListOnReenter: Boolean = false
 

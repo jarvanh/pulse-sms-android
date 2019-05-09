@@ -194,7 +194,7 @@ class AttachmentInitializer(private val fragment: MessageListFragment) {
             attachButtonHolder.setBackgroundColor(fragment.resources.getColor(R.color.drawerBackground))
         }
 
-        if (!Settings.isCurrentlyDarkTheme) {
+        if (!Settings.isCurrentlyDarkTheme(fragment.rootView!!.context)) {
             colorButtonsDark = true
         }
 

@@ -32,7 +32,7 @@ class MainColorController(private val activity: AppCompatActivity) {
     }
 
     fun configureGlobalColors() {
-        if (Settings.isCurrentlyDarkTheme) {
+        if (Settings.isCurrentlyDarkTheme(activity)) {
             activity.window.navigationBarColor = Color.BLACK
         }
 
@@ -62,7 +62,7 @@ class MainColorController(private val activity: AppCompatActivity) {
     fun configureNavigationBarColor() {
         when {
             Settings.baseTheme == BaseTheme.BLACK -> ActivityUtils.setUpNavigationBarColor(activity, Color.BLACK)
-            Settings.isCurrentlyDarkTheme -> ActivityUtils.setUpNavigationBarColor(activity, -1223) // random. the activity utils will handle the dark color
+            Settings.isCurrentlyDarkTheme(activity) -> ActivityUtils.setUpNavigationBarColor(activity, -1223) // random. the activity utils will handle the dark color
             else -> ActivityUtils.setUpNavigationBarColor(activity, Color.WHITE)
         }
     }

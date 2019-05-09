@@ -151,7 +151,7 @@ object ActivityUtils {
 
         return when {
             Settings.baseTheme == BaseTheme.BLACK -> Color.BLACK
-            Settings.isCurrentlyDarkTheme -> context.resources.getColor(R.color.drawerBackground)
+            Settings.isCurrentlyDarkTheme(context) -> context.resources.getColor(R.color.drawerBackground)
             else -> Color.WHITE
         }
     }

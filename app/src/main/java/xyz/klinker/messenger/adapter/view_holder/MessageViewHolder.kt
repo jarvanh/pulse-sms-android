@@ -244,7 +244,7 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
         val intent = ArticleIntent.Builder(itemView.context, ArticleParser.ARTICLE_API_KEY)
                 .setToolbarColor(primaryColor)
                 .setAccentColor(accentColor)
-                .setTheme(if (Settings.isCurrentlyDarkTheme)
+                .setTheme(if (Settings.isCurrentlyDarkTheme(itemView.context))
                     ArticleIntent.THEME_DARK
                 else
                     ArticleIntent.THEME_LIGHT)

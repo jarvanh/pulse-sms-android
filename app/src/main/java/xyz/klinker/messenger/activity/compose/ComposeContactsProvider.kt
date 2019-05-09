@@ -58,7 +58,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
             false
         }
 
-        if (Settings.isCurrentlyDarkTheme && Settings.mainColorSet.colorAccent == Color.BLACK) {
+        if (Settings.isCurrentlyDarkTheme(activity) && Settings.mainColorSet.colorAccent == Color.BLACK) {
             bottomNavigation.setActiveTabColor(Color.WHITE)
         } else {
             bottomNavigation.setActiveTabColor(Settings.mainColorSet.colorAccent)
@@ -142,6 +142,8 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
                             .filter { conversations!![it].phoneNumbers!!.contains(", ") }
                             .forEach { groups!!.add(conversations!![it]) }
                 }
+
+                groups!!.sortBy { it.title }
             }
 
             handler.post {
