@@ -48,7 +48,9 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
         enableSecurity()
 
         val theme = Settings.baseTheme
-        if (theme === BaseTheme.ALWAYS_LIGHT) {
+        if (AndroidVersionUtil.isAndroidQ && theme == BaseTheme.DAY_NIGHT) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        } else if (theme === BaseTheme.ALWAYS_LIGHT) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         } else if (theme.isDark || TimeUtils.isNight) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -132,7 +134,11 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
          * Enable night mode and set it to auto. It will switch depending on time of day.
          */
         init {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO)
+            if (AndroidVersionUtil.isAndroidQ && Settings.baseTheme == BaseTheme.DAY_NIGHT) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO)
+            }
         }
 
         /**
