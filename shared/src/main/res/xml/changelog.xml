@@ -20,7 +20,9 @@
         name="4.9.2"
         description="May 11th, 2019">
         <!-- Follow system dark theme on Android Q -->
+        <!-- New article viewer with Android Q improvements (edge to edge) -->
         <!-- Sort groups alphabetically on the compose page -->
+        <!-- Try stripping out duplicate uris before sending image -->
         <text>UI Updates</text>
     </version>
 
