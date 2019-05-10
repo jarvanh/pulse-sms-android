@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="base_theme">
+        <item>@string/system_default</item>
+        <item>@string/always_light</item>
+        <item>@string/always_dark</item>
+        <item>@string/always_black</item>
+    </string-array>
+
+</resources>

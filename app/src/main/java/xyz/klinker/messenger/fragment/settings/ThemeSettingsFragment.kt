@@ -9,6 +9,7 @@ import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.ColorUtils
 import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener
 import xyz.klinker.messenger.view.ColorPreference
@@ -39,7 +40,7 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
         findPreference(getString(R.string.pref_base_theme))
                 .setOnPreferenceChangeListener { _, o ->
                     val newValue = o as String
-                    if (Settings.baseTheme == BaseTheme.DAY_NIGHT && newValue == "day_night") {
+                    if (AndroidVersionUtil.isAndroidQ && newValue == "day_night") {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                     } else if (newValue != "day_night" && newValue != "light") {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
