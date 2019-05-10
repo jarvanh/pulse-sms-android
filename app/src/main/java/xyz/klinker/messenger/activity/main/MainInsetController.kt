@@ -7,12 +7,15 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import xyz.klinker.messenger.activity.MessengerActivity
+import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
+import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.DensityUtil
 
 class MainInsetController(private val activity: MessengerActivity) {
 
-    var bottomInsetValue: Int = 0
+    private val sixteenDp: Int by lazy { DensityUtil.toDp(activity, 16) }
+    private var bottomInsetValue: Int = 0
 
     fun applyWindowStatusFlags() {
         if (!AndroidVersionUtil.isAndroidQ) {
@@ -43,13 +46,16 @@ class MainInsetController(private val activity: MessengerActivity) {
         }
     }
 
-    fun modifyConversationListElements() {
+    fun modifyConversationListElements(fragment: ConversationListFragment) {
 
     }
 
-    private fun modifyMessengerActivityElements() {
-        val sixteenDp = DensityUtil.toDp(activity, 16)
+    fun modifyMessageListElements(fragment: MessageListFragment) {
+        val sendbar = fragment.nonDeferredInitializer.replyBarCard.getChildAt(0)
+        sendbar.setPadding(sendbar.paddingLeft, sendbar.paddingTop, sendbar.paddingRight, sendbar.paddingBottom + bottomInsetValue)
+    }
 
+    private fun modifyMessengerActivityElements() {
         // move fab above the nav bar
         val params = activity.fab.layoutParams as CoordinatorLayout.LayoutParams
         params.bottomMargin = sixteenDp + bottomInsetValue

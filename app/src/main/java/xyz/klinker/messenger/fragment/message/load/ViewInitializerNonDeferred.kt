@@ -35,12 +35,12 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
     private val argManager
         get() = fragment.argManager
 
+    val replyBarCard: CardView by lazy { fragment.rootView!!.findViewById<CardView>(R.id.reply_bar_card) }
     private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
     private val sendProgress: ProgressBar by lazy { fragment.rootView!!.findViewById<View>(R.id.send_progress) as ProgressBar }
     private val send: FloatingActionButton by lazy { fragment.rootView!!.findViewById<View>(R.id.send) as FloatingActionButton }
     private val toolbar: Toolbar by lazy { fragment.rootView!!.findViewById<View>(R.id.toolbar) as Toolbar }
     private val appBarLayout: View by lazy { fragment.rootView!!.findViewById<View>(R.id.app_bar_layout) }
-    private val replyBarCard: CardView by lazy { fragment.rootView!!.findViewById<CardView>(R.id.reply_bar_card) }
     private val background: View by lazy { fragment.rootView!!.findViewById<View>(R.id.background) }
     private val searchView: MaterialSearchView? by lazy { activity?.findViewById<MaterialSearchView>(R.id.conversation_search_view) }
 
@@ -89,6 +89,11 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1 || Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
             // is this causing a crash?
             messageEntry.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        }
+
+        val messengerActivity = fragment.activity
+        if (messengerActivity is MessengerActivity) {
+            messengerActivity.insetController.modifyMessageListElements(fragment)
         }
     }
 
