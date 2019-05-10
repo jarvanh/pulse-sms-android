@@ -9,6 +9,7 @@ import android.view.View
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.util.ActivityUtils
@@ -60,10 +61,11 @@ class MainColorController(private val activity: AppCompatActivity) {
     }
 
     fun configureNavigationBarColor() {
+        val isMessengerActivity = activity is MessengerActivity
         when {
-            Settings.baseTheme == BaseTheme.BLACK -> ActivityUtils.setUpNavigationBarColor(activity, Color.BLACK)
-            Settings.isCurrentlyDarkTheme(activity) -> ActivityUtils.setUpNavigationBarColor(activity, -1223) // random. the activity utils will handle the dark color
-            else -> ActivityUtils.setUpNavigationBarColor(activity, Color.WHITE)
+            Settings.baseTheme == BaseTheme.BLACK -> ActivityUtils.setUpNavigationBarColor(activity, Color.BLACK, isMessengerActivity)
+            Settings.isCurrentlyDarkTheme(activity) -> ActivityUtils.setUpNavigationBarColor(activity, -1223, isMessengerActivity) // random. the activity utils will handle the dark color
+            else -> ActivityUtils.setUpNavigationBarColor(activity, Color.WHITE, isMessengerActivity)
         }
     }
 }

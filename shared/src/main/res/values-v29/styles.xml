@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="PulseTheme.MessengerActivity" parent="@style/PulseTheme.NoActionBar">
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:actionOverflowButtonStyle">@style/Overflow</item>
+
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowSharedElementExitTransition">@transition/transition_change_image</item>
+    </style>
+
+</resources>
