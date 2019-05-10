@@ -8,6 +8,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import xyz.klinker.messenger.activity.MessengerActivity
+import xyz.klinker.messenger.fragment.BlacklistFragment
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.fragment.message.MessageListFragment
@@ -61,6 +62,20 @@ class MainInsetController(private val activity: MessengerActivity) {
     }
 
     fun modifyScheduledMessageElements(fragment: ScheduledMessagesFragment) {
+        if (!AndroidVersionUtil.isAndroidQ) {
+            return
+        }
+
+        val recycler = fragment.list
+        recycler.clipToPadding = false
+        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, recycler.paddingBottom + bottomInsetValue)
+
+        // move fab above the nav bar
+        val params = fragment.fab.layoutParams as FrameLayout.LayoutParams
+        params.bottomMargin = sixteenDp + bottomInsetValue
+    }
+
+    fun modifyBlacklistElements(fragment: BlacklistFragment) {
         if (!AndroidVersionUtil.isAndroidQ) {
             return
         }
