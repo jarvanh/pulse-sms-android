@@ -34,7 +34,7 @@ class MainInsetController(private val activity: MessengerActivity) {
         }
 
         activity.navController.drawerLayout?.setOnApplyWindowInsetsListener { _, insets ->
-            if (insets.systemWindowInsetBottom != 0) {
+            if (insets.systemWindowInsetBottom != 0 && bottomInsetValue == 0) {
                 bottomInsetValue = insets.systemWindowInsetBottom
             }
 
@@ -42,15 +42,27 @@ class MainInsetController(private val activity: MessengerActivity) {
             activity.navController.drawerLayout?.setChildInsets(modifiedInsets, insets.systemWindowInsetTop > 0)
 
             modifyMessengerActivityElements()
+            modifyConversationListElements(activity.navController.conversationListFragment)
+
             modifiedInsets
         }
     }
 
-    fun modifyConversationListElements(fragment: ConversationListFragment) {
+    fun modifyConversationListElements(fragment: ConversationListFragment?) {
+        if (!AndroidVersionUtil.isAndroidQ || fragment == null) {
+            return
+        }
 
+        val recycler = fragment.recyclerView
+        recycler.clipToPadding = false
+        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, recycler.paddingBottom + bottomInsetValue)
     }
 
     fun modifyMessageListElements(fragment: MessageListFragment) {
+        if (!AndroidVersionUtil.isAndroidQ) {
+            return
+        }
+
         val sendbar = fragment.nonDeferredInitializer.replyBarCard.getChildAt(0)
         sendbar.setPadding(sendbar.paddingLeft, sendbar.paddingTop, sendbar.paddingRight, sendbar.paddingBottom + bottomInsetValue)
     }

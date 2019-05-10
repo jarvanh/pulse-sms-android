@@ -78,6 +78,11 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
             description?.text = noConversationsText()
         }
 
+        val messengerActivity = fragmentActivity
+        if (messengerActivity is MessengerActivity) {
+            messengerActivity.insetController.modifyConversationListElements(this)
+        }
+
         return rootView
     }
 
