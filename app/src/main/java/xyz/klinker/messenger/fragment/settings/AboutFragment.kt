@@ -24,9 +24,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.adapter.ChangelogAdapter
 import xyz.klinker.messenger.adapter.OpenSourceAdapter
 import xyz.klinker.messenger.shared.util.xml.ChangelogParser
@@ -111,6 +113,15 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
                         return true;
                     }
                 });*/
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val messengerActivity = activity
+        if (messengerActivity is MessengerActivity) {
+            messengerActivity.insetController.modifyPreferenceFragmentElements(this)
+        }
     }
 
     /**

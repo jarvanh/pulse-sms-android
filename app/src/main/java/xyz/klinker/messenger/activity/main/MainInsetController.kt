@@ -12,6 +12,8 @@ import xyz.klinker.messenger.fragment.BlacklistFragment
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.fragment.message.MessageListFragment
+import xyz.klinker.messenger.fragment.settings.MaterialPreferenceFragmentCompat
+import xyz.klinker.messenger.fragment.settings.MyAccountFragment
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.DensityUtil
 
@@ -96,6 +98,16 @@ class MainInsetController(private val activity: MessengerActivity) {
 
         val sendbar = fragment.nonDeferredInitializer.replyBarCard.getChildAt(0)
         sendbar.setPadding(sendbar.paddingLeft, sendbar.paddingTop, sendbar.paddingRight, sendbar.paddingBottom + bottomInsetValue)
+    }
+
+    fun modifyPreferenceFragmentElements(fragment: MaterialPreferenceFragmentCompat) {
+        if (!AndroidVersionUtil.isAndroidQ) {
+            return
+        }
+
+        val recycler = fragment.listView
+        recycler.clipToPadding = false
+        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, recycler.paddingBottom + bottomInsetValue)
     }
 
     private fun modifyMessengerActivityElements() {

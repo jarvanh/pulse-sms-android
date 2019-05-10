@@ -22,9 +22,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
+import android.view.View
 import androidx.preference.PreferenceCategory
 
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.MessengerActivity
 
 /**
  * Fragment for allowing the user to get some help from the devs or submit feedback. This will
@@ -76,6 +78,15 @@ class HelpAndFeedbackFragment : MaterialPreferenceFragmentCompat() {
         } else {
             (findPreference(getString(R.string.pref_help_troubleshooting_category)) as PreferenceCategory)
                     .removePreference(findPreference(getString(R.string.pref_help_battery_optimization)))
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val messengerActivity = activity
+        if (messengerActivity is MessengerActivity) {
+            messengerActivity.insetController.modifyPreferenceFragmentElements(this)
         }
     }
 
