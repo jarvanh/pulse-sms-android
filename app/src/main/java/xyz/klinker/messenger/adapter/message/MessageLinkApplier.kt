@@ -73,7 +73,7 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
             val bottomSheet = LinkLongClickFragment()
             bottomSheet.setColors(receivedColor, accentColor)
             bottomSheet.setLink(link)
-            bottomSheet.show(activity?.supportFragmentManager, "")
+            bottomSheet.show(activity?.supportFragmentManager!!, "")
         }
 
         urls.setOnClickListener { clickedText ->

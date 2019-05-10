@@ -230,7 +230,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
             val fragment = EditScheduledMessageFragment()
             fragment.setMessage(message)
             fragment.setFragment(this)
-            fragment.show(fragmentActivity?.supportFragmentManager, "")
+            fragment.show(fragmentActivity?.supportFragmentManager!!, "")
         }
     }
 

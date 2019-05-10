@@ -153,7 +153,7 @@ class MessengerActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(content.windowToken, 0)
     }
 
-    public override fun onSaveInstanceState(outState: Bundle?) {
+    public override fun onSaveInstanceState(outState: Bundle) {
         var outState = intentHandler.saveInstanceState(outState)
         super.onSaveInstanceState(outState)
     }

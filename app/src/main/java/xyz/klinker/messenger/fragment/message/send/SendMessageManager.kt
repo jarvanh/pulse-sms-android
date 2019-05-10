@@ -229,7 +229,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         val uris = ArrayList<Uri>()
 
         if (attachManager.selectedImageUris.size > 0) {
-            attachManager.selectedImageUris.mapTo(uris) { Uri.parse(it) }
+            attachManager.selectedImageUris.distinctBy { it }.mapTo(uris) { Uri.parse(it) }
         } else if (attachManager.attachedUri != null) {
             uris.add(attachManager.attachedUri!!)
         }
