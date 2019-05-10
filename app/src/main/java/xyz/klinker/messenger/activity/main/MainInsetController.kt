@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.fragment.BlacklistFragment
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
+import xyz.klinker.messenger.fragment.SearchFragment
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.settings.MaterialPreferenceFragmentCompat
@@ -89,6 +90,16 @@ class MainInsetController(private val activity: MessengerActivity) {
         // move fab above the nav bar
         val params = fragment.fab.layoutParams as FrameLayout.LayoutParams
         params.bottomMargin = sixteenDp + bottomInsetValue
+    }
+
+    fun modifySearchListElements(fragment: SearchFragment?) {
+        val recycler = fragment?.list
+        if (!AndroidVersionUtil.isAndroidQ || recycler == null) {
+            return
+        }
+
+        recycler.clipToPadding = false
+        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, recycler.paddingBottom + bottomInsetValue)
     }
 
     fun modifyMessageListElements(fragment: MessageListFragment) {
