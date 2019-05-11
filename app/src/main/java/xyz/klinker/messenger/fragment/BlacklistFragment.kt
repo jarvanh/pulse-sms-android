@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.adapter.BlacklistAdapter
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.FeatureFlags
@@ -48,8 +49,8 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
 
     private val fragmentActivity: FragmentActivity? by lazy { activity }
 
-    private val list: RecyclerView by lazy { view!!.findViewById<View>(R.id.list) as RecyclerView }
-    private val fab: FloatingActionButton by lazy { view!!.findViewById<View>(R.id.fab) as FloatingActionButton }
+    val list: RecyclerView by lazy { view!!.findViewById<View>(R.id.list) as RecyclerView }
+    val fab: FloatingActionButton by lazy { view!!.findViewById<View>(R.id.fab) as FloatingActionButton }
     private val emptyView: View by lazy { view!!.findViewById<View>(R.id.empty_view) }
 
     private var adapter: BlacklistAdapter? = null
@@ -59,6 +60,11 @@ class BlacklistFragment : Fragment(), BlacklistClickedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val messengerActivity = fragmentActivity
+        if (messengerActivity is MessengerActivity) {
+            messengerActivity.insetController.modifyBlacklistElements(this)
+        }
 
         list.layoutManager = LinearLayoutManager(fragmentActivity!!)
         fab.setOnClickListener { addBlacklistPhone() }

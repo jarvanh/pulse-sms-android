@@ -108,6 +108,15 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val messengerActivity = activity
+        if (messengerActivity is MessengerActivity) {
+            messengerActivity.insetController.modifyPreferenceFragmentElements(this)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         billing?.destroy()

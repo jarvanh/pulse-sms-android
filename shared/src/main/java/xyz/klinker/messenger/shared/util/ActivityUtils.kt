@@ -86,9 +86,11 @@ object ActivityUtils {
         }
     }
 
-    fun setUpNavigationBarColor(activity: Activity?, color: Int) {
-//        if (!AndroidVersionUtil.isAndroidO || activity == null || !Settings.adjustableNavBar) {
+    fun setUpNavigationBarColor(activity: Activity?, color: Int, isMessengerActivity: Boolean = false) {
         if (!AndroidVersionUtil.isAndroidO_MR1 || activity == null) {
+            return
+        } else if (AndroidVersionUtil.isAndroidQ && isMessengerActivity) {
+            activity.window?.navigationBarColor = Color.TRANSPARENT
             return
         }
 

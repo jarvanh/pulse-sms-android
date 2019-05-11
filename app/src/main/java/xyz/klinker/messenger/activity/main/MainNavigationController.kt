@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowInsets
 import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -31,8 +32,8 @@ class MainNavigationController(private val activity: MessengerActivity)
     val conversationActionDelegate = MainNavigationConversationListActionDelegate(activity)
     val messageActionDelegate = MainNavigationMessageListActionDelegate(activity)
 
-    private val navigationView: NavigationView by lazy { activity.findViewById<View>(R.id.navigation_view) as NavigationView }
-    private val drawerLayout: DrawerLayout? by lazy { activity.findViewById<View>(R.id.drawer_layout) as DrawerLayout? }
+    val navigationView: NavigationView by lazy { activity.findViewById<View>(R.id.navigation_view) as NavigationView }
+    val drawerLayout: DrawerLayout? by lazy { activity.findViewById<View>(R.id.drawer_layout) as DrawerLayout? }
 
     var conversationListFragment: ConversationListFragment? = null
     var otherFragment: Fragment? = null
@@ -47,6 +48,7 @@ class MainNavigationController(private val activity: MessengerActivity)
     }
 
     fun initDrawer() {
+        activity.insetController.overrideDrawerInsets()
         navigationView.setNavigationItemSelectedListener(this)
         navigationView.postDelayed({
             try {

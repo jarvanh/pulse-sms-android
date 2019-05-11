@@ -46,6 +46,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import xyz.klinker.giphy.Giphy
 import xyz.klinker.messenger.BuildConfig
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.activity.compose.ShareData
 import xyz.klinker.messenger.adapter.ScheduledMessagesAdapter
 import xyz.klinker.messenger.api.implementation.Account
@@ -68,9 +69,9 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
     private var conversationMatcher: String? = null
 
-    private val list: RecyclerView by lazy { view!!.findViewById<View>(R.id.list) as RecyclerView }
+    val list: RecyclerView by lazy { view!!.findViewById<View>(R.id.list) as RecyclerView }
+    val fab: FloatingActionButton by lazy { view!!.findViewById<View>(R.id.fab) as FloatingActionButton }
     private val progress: ProgressBar? by lazy { view?.findViewById<View>(R.id.progress) as ProgressBar? }
-    private val fab: FloatingActionButton by lazy { view!!.findViewById<View>(R.id.fab) as FloatingActionButton }
     private val emptyView: View by lazy { view!!.findViewById<View>(R.id.empty_view) }
 
     private var imageData: ShareData? = null
@@ -117,6 +118,11 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
         super.onViewCreated(view, savedInstanceState)
         list.layoutManager = LinearLayoutManager(fragmentActivity)
         fab.setOnClickListener { startSchedulingMessage() }
+
+        val messengerActivity = fragmentActivity
+        if (messengerActivity is MessengerActivity) {
+            messengerActivity.insetController.modifyScheduledMessageElements(this)
+        }
 
         emptyView.setBackgroundColor(Settings.mainColorSet.colorLight)
         fab.backgroundTintList = ColorStateList.valueOf(Settings.mainColorSet.colorAccent)

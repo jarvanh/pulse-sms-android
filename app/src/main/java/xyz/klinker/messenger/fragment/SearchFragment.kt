@@ -46,7 +46,7 @@ class SearchFragment : Fragment(), SearchListener {
     private var conversationColor: Int? = null
     private var query: String? = null
 
-    private var list: RecyclerView? = null
+    var list: RecyclerView? = null
     private val adapter: SearchAdapter by lazy { SearchAdapter(query, null, null, this, conversationColor) }
 
     private val searchView: MaterialSearchView? by lazy { activity?.findViewById<View>(R.id.search_view) as MaterialSearchView? }
@@ -62,6 +62,11 @@ class SearchFragment : Fragment(), SearchListener {
 
         list?.layoutManager = LinearLayoutManager(activity)
         list?.adapter = adapter
+
+        val messengerActivity = activity
+        if (messengerActivity is MessengerActivity) {
+            messengerActivity.insetController.modifySearchListElements(this)
+        }
 
         return list
     }

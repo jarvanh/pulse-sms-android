@@ -54,6 +54,7 @@ class MessengerActivity : AppCompatActivity() {
     val intentHandler = MainIntentHandler(this)
     val searchHelper = MainSearchHelper(this)
     val snoozeController = SnoozeController(this)
+    val insetController = MainInsetController(this)
     private val colorController = MainColorController(this)
     private val startDelegate = MainOnStartDelegate(this)
     private val permissionHelper = MainPermissionHelper(this)
@@ -84,6 +85,7 @@ class MessengerActivity : AppCompatActivity() {
         navController.initToolbarTitleClick()
         accountController.startIntroOrLogin(savedInstanceState)
         permissionHelper.requestDefaultSmsApp()
+        insetController.applyWindowStatusFlags()
 
         val content = findViewById<View>(R.id.content)
         content.post {
@@ -135,12 +137,19 @@ class MessengerActivity : AppCompatActivity() {
         intentHandler.newIntent(intent)
     }
 
+    public override fun onResume() {
+        super.onResume()
+        insetController.onResume()
+    }
+
     public override fun onPause() {
         super.onPause()
 
         if (navController.conversationListFragment != null) {
             navController.conversationListFragment!!.swipeHelper.dismissSnackbars()
         }
+
+        insetController.onPause()
     }
 
     public override fun onStop() {
