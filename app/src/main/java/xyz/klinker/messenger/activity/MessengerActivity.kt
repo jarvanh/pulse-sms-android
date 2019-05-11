@@ -137,12 +137,19 @@ class MessengerActivity : AppCompatActivity() {
         intentHandler.newIntent(intent)
     }
 
+    public override fun onResume() {
+        super.onResume()
+        insetController.onResume()
+    }
+
     public override fun onPause() {
         super.onPause()
 
         if (navController.conversationListFragment != null) {
             navController.conversationListFragment!!.swipeHelper.dismissSnackbars()
         }
+
+        insetController.onPause()
     }
 
     public override fun onStop() {

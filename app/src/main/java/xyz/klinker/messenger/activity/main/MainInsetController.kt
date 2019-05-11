@@ -12,6 +12,7 @@ import xyz.klinker.messenger.fragment.BlacklistFragment
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
 import xyz.klinker.messenger.fragment.SearchFragment
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
+import xyz.klinker.messenger.fragment.message.EdgeToEdgeKeyboardWorkaround
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.settings.MaterialPreferenceFragmentCompat
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
@@ -20,8 +21,25 @@ import xyz.klinker.messenger.shared.util.DensityUtil
 
 class MainInsetController(private val activity: MessengerActivity) {
 
+    private val keyboardWorkaround: EdgeToEdgeKeyboardWorkaround by lazy { EdgeToEdgeKeyboardWorkaround(activity) }
     private val sixteenDp: Int by lazy { DensityUtil.toDp(activity, 16) }
-    private var bottomInsetValue: Int = 0
+    var bottomInsetValue: Int = 0
+
+    fun onResume() {
+        if (!AndroidVersionUtil.isAndroidQ) {
+            return
+        }
+
+        keyboardWorkaround.addListener()
+    }
+
+    fun onPause() {
+        if (!AndroidVersionUtil.isAndroidQ) {
+            return
+        }
+
+        keyboardWorkaround.removeListener()
+    }
 
     fun applyWindowStatusFlags() {
         if (!AndroidVersionUtil.isAndroidQ) {
@@ -61,7 +79,7 @@ class MainInsetController(private val activity: MessengerActivity) {
 
         val recycler = fragment.recyclerView
         recycler.clipToPadding = false
-        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, recycler.paddingBottom + bottomInsetValue)
+        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, bottomInsetValue)
     }
 
     fun modifyScheduledMessageElements(fragment: ScheduledMessagesFragment) {
@@ -71,7 +89,7 @@ class MainInsetController(private val activity: MessengerActivity) {
 
         val recycler = fragment.list
         recycler.clipToPadding = false
-        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, recycler.paddingBottom + bottomInsetValue)
+        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, bottomInsetValue)
 
         // move fab above the nav bar
         val params = fragment.fab.layoutParams as FrameLayout.LayoutParams
@@ -85,7 +103,7 @@ class MainInsetController(private val activity: MessengerActivity) {
 
         val recycler = fragment.list
         recycler.clipToPadding = false
-        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, recycler.paddingBottom + bottomInsetValue)
+        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, bottomInsetValue)
 
         // move fab above the nav bar
         val params = fragment.fab.layoutParams as FrameLayout.LayoutParams
@@ -99,7 +117,7 @@ class MainInsetController(private val activity: MessengerActivity) {
         }
 
         recycler.clipToPadding = false
-        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, recycler.paddingBottom + bottomInsetValue)
+        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, bottomInsetValue)
     }
 
     fun modifyMessageListElements(fragment: MessageListFragment) {
@@ -108,7 +126,7 @@ class MainInsetController(private val activity: MessengerActivity) {
         }
 
         val sendbar = fragment.nonDeferredInitializer.replyBarCard.getChildAt(0)
-        sendbar.setPadding(sendbar.paddingLeft, sendbar.paddingTop, sendbar.paddingRight, sendbar.paddingBottom + bottomInsetValue)
+        sendbar.setPadding(sendbar.paddingLeft, sendbar.paddingTop, sendbar.paddingRight, DensityUtil.toDp(activity, 24) + bottomInsetValue) // 24 dp from initial layout...
     }
 
     fun modifyPreferenceFragmentElements(fragment: MaterialPreferenceFragmentCompat) {
@@ -118,7 +136,7 @@ class MainInsetController(private val activity: MessengerActivity) {
 
         val recycler = fragment.listView
         recycler.clipToPadding = false
-        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, recycler.paddingBottom + bottomInsetValue)
+        recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, bottomInsetValue)
     }
 
     private fun modifyMessengerActivityElements() {
