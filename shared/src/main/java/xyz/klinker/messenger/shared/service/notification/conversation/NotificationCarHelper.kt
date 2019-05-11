@@ -23,22 +23,24 @@ class NotificationCarHelper(private val service: Context) {
 
         val carRead = Intent().addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
                 .setAction("xyz.klinker.messenger.CAR_READ")
-                .putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
+                .putExtra(NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
                 .setPackage("xyz.klinker.messenger")
         val pendingCarRead = PendingIntent.getBroadcast(service, conversation.id.toInt(),
                 carRead, PendingIntent.FLAG_UPDATE_CURRENT)
 
         // Android Auto extender
-        val car = NotificationCompat.CarExtender.UnreadConversation.Builder(conversation.title)
+        val car = NotificationCompat.CarExtender.UnreadConversation.Builder(if (conversation.privateNotification) service.getString(R.string.new_message) else conversation.title)
                 .setReadPendingIntent(pendingCarRead)
                 .setReplyAction(pendingCarReply, remoteInput)
                 .setLatestTimestamp(conversation.timestamp)
 
-        for ((_, data, mimeType) in conversation.messages) {
-            if (mimeType == MimeType.TEXT_PLAIN) {
-                car.addMessage(data)
-            } else {
-                car.addMessage(service.getString(R.string.new_mms_message))
+        if (!conversation.privateNotification) {
+            for ((_, data, mimeType) in conversation.messages) {
+                if (mimeType == MimeType.TEXT_PLAIN) {
+                    car.addMessage(data)
+                } else {
+                    car.addMessage(service.getString(R.string.new_mms_message))
+                }
             }
         }
 
