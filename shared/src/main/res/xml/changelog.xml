@@ -20,10 +20,13 @@
         name="4.9.2"
         description="May 11th, 2019">
         <!-- Follow system dark theme on Android Q -->
+        <!-- Use edge-to-edge layouts on Android Q -->
         <!-- New article viewer with Android Q improvements (edge to edge) -->
         <!-- Sort groups alphabetically on the compose page -->
         <!-- Try stripping out duplicate uris before sending image -->
+        <!-- Don't expose new messages through Wear OS or Android Auto -->
         <text>UI Updates</text>
+        <text>Bug fixes</text>
     </version>
 
     <version
