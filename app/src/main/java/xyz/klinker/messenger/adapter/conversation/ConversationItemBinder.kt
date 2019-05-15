@@ -7,12 +7,15 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.adapter.view_holder.ConversationViewHolder
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.util.ColorUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 
 @Suppress("DEPRECATION")
 class ConversationItemBinder(private val activity: Activity) {
@@ -51,7 +54,10 @@ class ConversationItemBinder(private val activity: Activity) {
             holder.groupIcon?.visibility = View.GONE
         }
 
-        Glide.with(holder.itemView.context).load(Uri.parse(conversation.imageUri)).into(holder.image!!)
+        Glide.with(holder.itemView.context)
+                .load(Uri.parse(conversation.imageUri))
+                .signature(ObjectKey(TimeUtils.today()))
+                .into(holder.image!!)
     }
 
     fun showImageColor(holder: ConversationViewHolder, conversation: Conversation) {

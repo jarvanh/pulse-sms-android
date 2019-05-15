@@ -144,6 +144,12 @@ object TimeUtils {
         return timestamp > lastMonth.timeInMillis && timestamp < currentTime
     }
 
+    fun today(): Long {
+        val now = Calendar.getInstance()
+        zeroCalendarDay(now)
+        return now.timeInMillis
+    }
+
     private fun zeroCalendarDay(calendar: Calendar) {
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
