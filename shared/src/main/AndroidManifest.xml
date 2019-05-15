@@ -285,6 +285,7 @@
         <service
             android:exported="false"
             android:name=".service.jobs.CleanupOldMessagesJob">
+        <!--            android:foregroundServiceType="dataSync">-->
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
@@ -301,6 +302,7 @@
         <service
             android:exported="false"
             android:name=".service.jobs.ContactSyncJob">
+<!--            android:foregroundServiceType="dataSync">-->
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
@@ -309,6 +311,7 @@
         <service
             android:exported="false"
             android:name=".service.jobs.MarkAsSentJob">
+<!--            android:foregroundServiceType="dataSync">-->
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
@@ -317,6 +320,7 @@
         <service
             android:exported="false"
             android:name=".service.jobs.SyncRetryableRequestsJob">
+<!--            android:foregroundServiceType="dataSync">-->
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
@@ -325,10 +329,26 @@
         <service
             android:exported="false"
             android:name=".service.jobs.RepostQuickComposeNotification">
+<!--            android:foregroundServiceType="dataSync">-->
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
         </service>
+
+        <service android:name=".service.ApiUploadService" />
+<!--            android:foregroundServiceType="dataSync">-->
+        <service android:name=".service.ApiDownloadService" />
+<!--            android:foregroundServiceType="dataSync">-->
+        <service android:name=".service.message_parser.MediaParserService" />
+<!--            android:foregroundServiceType="dataSync">-->
+        <service android:name=".service.message_parser.AutoReplyParserService" />
+<!--            android:foregroundServiceType="dataSync">-->
+        <service android:name=".service.message_parser.VcardParserService" />
+<!--            android:foregroundServiceType="dataSync">-->
+        <service android:name=".service.ResendFailedMessage" />
+<!--            android:foregroundServiceType="dataSync">-->
+        <service android:name=".service.QuickComposeNotificationService" />
+<!--            android:foregroundServiceType="dataSync">-->
 
         <service
             android:name=".service.jobs.SubscriptionExpirationCheckJob"
@@ -342,19 +362,12 @@
         <service android:name=".service.notification.NotificationService" />
         <service android:name=".receiver.notification_action.NotificationMuteReceiver" />
         <service android:name=".service.ReplyService" />
-        <service android:name=".service.ApiUploadService" />
-        <service android:name=".service.ApiDownloadService" />
         <service android:name=".service.SimpleSubscriptionCheckService" />
         <service android:name=".service.SimpleLifetimeSubscriptionCheckService" />
-        <service android:name=".service.message_parser.MediaParserService" />
-        <service android:name=".service.message_parser.AutoReplyParserService" />
-        <service android:name=".service.message_parser.VcardParserService" />
         <service android:name=".service.NewMessagesCheckService" />
         <service android:name=".service.FirebaseResetService" />
-        <service android:name=".service.ResendFailedMessage" />
         <service android:name=".service.CreateNotificationChannelService" />
         <service android:name=".service.ContactResyncService" />
-        <service android:name=".service.QuickComposeNotificationService" />
         <service android:name=".service.SmsReceivedService" />
 
         <service
