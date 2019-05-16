@@ -384,6 +384,7 @@ class ScheduledMessagesFragment : Fragment(), ScheduledMessageClickListener {
 
         val builder = AlertDialog.Builder(fragmentActivity!!)
                 .setView(layout)
+                .setCancelable(false)
                 .setPositiveButton(R.string.save) { _, _ ->
                     if (editText.text.isNotEmpty() || image != null) {
                         message.repeat = repeat.selectedItemPosition
