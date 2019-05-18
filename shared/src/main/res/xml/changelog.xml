@@ -24,7 +24,7 @@
         <!-- New article viewer with Android Q improvements (edge to edge) -->
         <!-- Sort groups alphabetically on the compose page -->
         <!-- Try stripping out duplicate uris before sending image -->
-        <!-- Don't expose new messages through Wear OS or Android Auto -->
+        <!-- Don't expose new private messages through Wear OS or Android Auto -->
         <text>UI Updates</text>
         <text>Bug fixes</text>
     </version>
