@@ -73,7 +73,7 @@ class SmsReceivedHandler(private val context: Context) {
         }
 
         if (conversationId != -1L && conversationId != -2L) {
-            Thread { Notifier(context).notify() }.start()
+            Notifier(context).notify()
         }
 
         return false

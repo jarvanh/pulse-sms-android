@@ -22,7 +22,6 @@ import android.content.Intent
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.service.SmsReceivedService
 import xyz.klinker.messenger.shared.util.*
 
 class SmsReceivedReceiver : BroadcastReceiver() {
@@ -34,7 +33,7 @@ class SmsReceivedReceiver : BroadcastReceiver() {
 
         val result = goAsync()
         Thread {
-            SmsReceivedReceiver.lastReceived = TimeUtils.now
+            lastReceived = TimeUtils.now
             SmsReceivedHandler(context).newSmsRecieved(intent)
             result.finish()
         }.start()
