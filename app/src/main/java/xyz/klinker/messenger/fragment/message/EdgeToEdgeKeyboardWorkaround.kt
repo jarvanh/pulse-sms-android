@@ -6,7 +6,6 @@ import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import xyz.klinker.android.drag_dismiss.util.StatusBarHelper
 import xyz.klinker.messenger.activity.MessengerActivity
-import java.lang.Exception
 import java.lang.IllegalStateException
 
 class EdgeToEdgeKeyboardWorkaround(private val activity: MessengerActivity) {
@@ -17,7 +16,7 @@ class EdgeToEdgeKeyboardWorkaround(private val activity: MessengerActivity) {
     private val listener = ViewTreeObserver.OnGlobalLayoutListener { possiblyResizeChildOfContent() }
 
     private val contentAreaOfWindowBounds = Rect()
-    private var usableHeighPrevious = 0
+    private var usableHeightPrevious = 0
 
     fun addListener() {
         try {
@@ -42,11 +41,11 @@ class EdgeToEdgeKeyboardWorkaround(private val activity: MessengerActivity) {
     private fun possiblyResizeChildOfContent() {
         contentContainer.getWindowVisibleDisplayFrame(contentAreaOfWindowBounds)
         val usableHeightNow = contentAreaOfWindowBounds.height() + StatusBarHelper.getStatusBarHeight(activity) + activity.insetController.bottomInsetValue
-        if (usableHeightNow != usableHeighPrevious) {
+        if (usableHeightNow != usableHeightPrevious) {
             rootViewLayout.height = usableHeightNow
             rootView.layout(contentAreaOfWindowBounds.left, contentAreaOfWindowBounds.top, contentAreaOfWindowBounds.right, contentAreaOfWindowBounds.bottom)
             rootView.requestLayout()
-            usableHeighPrevious = usableHeightNow
+            usableHeightPrevious = usableHeightNow
         }
     }
 }

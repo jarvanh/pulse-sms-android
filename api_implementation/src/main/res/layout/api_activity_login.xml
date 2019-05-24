@@ -40,6 +40,7 @@
             android:layout_height="wrap_content"
             android:text="@string/api_signup"
             style="?attr/borderlessButtonStyle"
+            android:textColor="@android:color/white"
             android:id="@+id/signup" />
 
         <Button
@@ -47,6 +48,7 @@
             android:layout_height="wrap_content"
             android:text="@string/api_login"
             style="?attr/borderlessButtonStyle"
+            android:textColor="@android:color/white"
             android:id="@+id/login" />
 
         <TextView
