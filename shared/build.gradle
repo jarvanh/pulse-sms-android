@@ -31,10 +31,10 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
     api "androidx.core:core-ktx:1.0.2"
-    api "androidx.appcompat:appcompat:1.1.0-alpha05"
+    api "androidx.appcompat:appcompat:1.0.2"
     api "androidx.emoji:emoji:${versions.androidX}"
     api "androidx.annotation:annotation:${versions.androidX}"
-    api "com.google.android.material:material:1.1.0-alpha06"
+    api "com.google.android.material:material:1.0.0"
     api "androidx.palette:palette:${versions.androidX}"
     api "androidx.legacy:legacy-preference-v14:${versions.androidX}"
     api "androidx.leanback:leanback:${versions.androidX}"

@@ -204,13 +204,13 @@ object TimeUtils {
     fun setupNightTheme(activity: AppCompatActivity? = null, base: BaseTheme = Settings.baseTheme) {
         if (AndroidVersionUtil.isAndroidQ && base == BaseTheme.DAY_NIGHT) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            activity?.delegate?.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            activity?.delegate?.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         } else if (base == BaseTheme.ALWAYS_LIGHT || (base == BaseTheme.DAY_NIGHT && !isNight)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            activity?.delegate?.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+            activity?.delegate?.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            activity?.delegate?.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+            activity?.delegate?.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
     }
 
