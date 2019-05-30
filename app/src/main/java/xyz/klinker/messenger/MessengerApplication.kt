@@ -48,11 +48,7 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
         enableSecurity()
 
         TimeUtils.setupNightTheme()
-
-//        if (CreateNotificationChannelService.shouldRun(this)) {
-            NotificationUtils.createNotificationChannels(this)
-//            startForegroundService(Intent(this, CreateNotificationChannelService::class.java))
-//        }
+        NotificationUtils.createNotificationChannels(this)
 
         if (Settings.quickCompose) {
             QuickComposeNotificationService.start(this)
@@ -60,7 +56,7 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
     }
 
     fun refreshDynamicShortcuts() {
-        if ("robolectric" != Build.FINGERPRINT && AndroidVersionUtil.isAndroidN_MR1 && !Settings.firstStart) {
+        if ("robolectric" != Build.FINGERPRINT && !Settings.firstStart) {
             Thread {
                 try {
                     Thread.sleep(10 * TimeUtils.SECOND)

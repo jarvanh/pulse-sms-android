@@ -9,6 +9,10 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
+import androidx.core.app.Person
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 
 import java.util.ArrayList
 import java.util.HashSet
@@ -16,9 +20,6 @@ import java.util.HashSet
 import xyz.klinker.messenger.shared.data.model.Conversation
 
 class DynamicShortcutUtils(private val context: Context) {
-    val manager: ShortcutManager by lazy {
-        context.getSystemService(Context.SHORTCUT_SERVICE) as ShortcutManager
-    }
 
     fun buildDynamicShortcuts(conversations: List<Conversation>) {
         var conversations = conversations
@@ -27,7 +28,7 @@ class DynamicShortcutUtils(private val context: Context) {
                 conversations = conversations.subList(0, 3)
             }
 
-            val infos = ArrayList<ShortcutInfo>()
+            val infos = ArrayList<ShortcutInfoCompat>()
 
             for (conversation in conversations) {
                 val messenger = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY)
@@ -37,27 +38,28 @@ class DynamicShortcutUtils(private val context: Context) {
                 val category = HashSet<String>()
                 category.add("android.shortcut.conversation")
 
-                val id = if (conversation.title == null || conversation.title!!.isEmpty())
-                    conversation.id.toString() + ""
-                else conversation.title
-
-                val info = ShortcutInfo.Builder(context, id)
+                val icon = getIcon(conversation)
+                val info = ShortcutInfoCompat.Builder(context, conversation.id.toString())
                         .setIntent(messenger)
-                        .setRank(infos.size)
-                        .setShortLabel(if (conversation.title?.isEmpty() == true) "No title" else conversation.title)
+                        .setShortLabel(conversation.title ?: "No title")
                         .setCategories(category)
-                        .setIcon(getIcon(conversation))
-                        .build()
+                        .setLongLived()
+                        .setIcon(icon)
+                        .setPerson(Person.Builder()
+                                .setName(conversation.title)
+                                .setUri(messenger.dataString)
+                                .setIcon(icon)
+                                .build()
+                        ).build()
 
                 infos.add(info)
             }
 
-            manager.removeAllDynamicShortcuts()
-            manager.dynamicShortcuts = infos
+            ShortcutManagerCompat.addDynamicShortcuts(context, infos)
         }
     }
 
-    private fun getIcon(conversation: Conversation): Icon? {
+    private fun getIcon(conversation: Conversation): IconCompat? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val image = ImageUtils.getBitmap(context, conversation.imageUri)
 
@@ -73,12 +75,12 @@ class DynamicShortcutUtils(private val context: Context) {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private fun createIcon(bitmap: Bitmap?): Icon {
+    private fun createIcon(bitmap: Bitmap?): IconCompat {
         return if (AndroidVersionUtil.isAndroidO) {
-            Icon.createWithAdaptiveBitmap(bitmap)
+            IconCompat.createWithAdaptiveBitmap(bitmap)
         } else {
             val circleBitmap = ImageUtils.clipToCircle(bitmap)
-            Icon.createWithBitmap(circleBitmap)
+            IconCompat.createWithBitmap(circleBitmap)
         }
     }
 }
