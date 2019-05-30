@@ -17,6 +17,19 @@
 <changelog>
 
     <version
+        name="4.9.3"
+        description="May 30th, 2019">
+        <!-- Don't let the scheduled messages dialog be cancellable -->
+        <!-- Only create one thread when receiving messages -->
+        <!-- Invalidate conversation image cache after one day -->
+        <!-- Improve how the app compat theme gets set and centralize it in TimeUtils -->
+        <!-- People had said that the font size didn't follow the preference? I don't know why. I revented a few dependency changes -->
+        <!-- Implemented new ShareShortcuts androidx library -->
+        <text>UI Updates</text>
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.9.2"
         description="May 12th, 2019">
         <!-- Follow system dark theme on Android Q -->
