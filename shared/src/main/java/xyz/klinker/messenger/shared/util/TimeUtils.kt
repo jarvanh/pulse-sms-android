@@ -201,21 +201,16 @@ object TimeUtils {
         return hour <= 5 || hour >= 20
     }
 
-    fun setupNightTheme(activity: AppCompatActivity) {
-        val base = Settings.baseTheme
-
+    fun setupNightTheme(activity: AppCompatActivity? = null, base: BaseTheme = Settings.baseTheme) {
         if (AndroidVersionUtil.isAndroidQ && base == BaseTheme.DAY_NIGHT) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        } else if (!base.isDark) {
-            val isNight = TimeUtils.isNight && base !== BaseTheme.ALWAYS_LIGHT
-            activity.delegate.setLocalNightMode(if (isNight)
-                AppCompatDelegate.MODE_NIGHT_YES
-            else
-                AppCompatDelegate.MODE_NIGHT_NO)
-            AppCompatDelegate.setDefaultNightMode(if (isNight)
-                AppCompatDelegate.MODE_NIGHT_YES
-            else
-                AppCompatDelegate.MODE_NIGHT_NO)
+            activity?.delegate?.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        } else if (base == BaseTheme.ALWAYS_LIGHT || (base == BaseTheme.DAY_NIGHT && !isNight)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            activity?.delegate?.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            activity?.delegate?.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
         }
     }
 

@@ -47,14 +47,7 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
 
         enableSecurity()
 
-        val theme = Settings.baseTheme
-        if (AndroidVersionUtil.isAndroidQ && theme == BaseTheme.DAY_NIGHT) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        } else if (theme === BaseTheme.ALWAYS_LIGHT) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        } else if (theme.isDark || TimeUtils.isNight) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
+        TimeUtils.setupNightTheme()
 
 //        if (CreateNotificationChannelService.shouldRun(this)) {
             NotificationUtils.createNotificationChannels(this)
@@ -129,17 +122,6 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
     }
 
     companion object {
-
-        /**
-         * Enable night mode and set it to auto. It will switch depending on time of day.
-         */
-        init {
-            if (AndroidVersionUtil.isAndroidQ && Settings.baseTheme == BaseTheme.DAY_NIGHT) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO)
-            }
-        }
 
         /**
          * By default, java does not allow for strong security schemes due to export laws in other

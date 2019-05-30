@@ -29,9 +29,6 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.activity.main.*
 import xyz.klinker.messenger.shared.data.Settings
-import xyz.klinker.messenger.shared.util.AnimationUtils
-import xyz.klinker.messenger.shared.util.PromotionUtils
-import xyz.klinker.messenger.shared.util.UnreadBadger
 import xyz.klinker.messenger.shared.view.WhitableToolbar
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import xyz.klinker.messenger.utils.UpdateUtils
@@ -39,8 +36,9 @@ import android.view.inputmethod.InputMethodManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
+import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
-import xyz.klinker.messenger.shared.util.DrawerItemHelper
+import xyz.klinker.messenger.shared.util.*
 
 
 /**

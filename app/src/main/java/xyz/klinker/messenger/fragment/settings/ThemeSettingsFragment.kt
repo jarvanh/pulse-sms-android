@@ -11,6 +11,7 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.ColorUtils
+import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.util.listener.ColorSelectedListener
 import xyz.klinker.messenger.view.ColorPreference
 
@@ -40,17 +41,18 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
         findPreference(getString(R.string.pref_base_theme))
                 .setOnPreferenceChangeListener { _, o ->
                     val newValue = o as String
-                    if (AndroidVersionUtil.isAndroidQ && newValue == "day_night") {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    } else if (newValue != "day_night" && newValue != "light") {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    }
+
+                    TimeUtils.setupNightTheme(null, when (newValue) {
+                        "day_night" -> BaseTheme.DAY_NIGHT
+                        "light" -> BaseTheme.ALWAYS_LIGHT
+                        "dark" -> BaseTheme.ALWAYS_DARK
+                        "black" -> BaseTheme.BLACK
+                        else -> BaseTheme.DAY_NIGHT
+                    })
 
                     ApiUtils.updateBaseTheme(Account.accountId, newValue)
                     activity.recreate()
-
+                    
                     true
                 }
     }

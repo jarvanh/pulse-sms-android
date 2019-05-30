@@ -25,6 +25,7 @@ import android.view.MenuItem
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.fragment.settings.*
+import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
@@ -126,7 +127,8 @@ class SettingsActivity : AbstractSettingsActivity() {
 
         if (mmsFragment == null && themeFragment == null && autoReplyFragment == null) {
             val intent = Intent(this, MessengerActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         } else {
             MmsSettings.forceUpdate(this)

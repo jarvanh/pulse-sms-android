@@ -18,15 +18,12 @@ package xyz.klinker.messenger
 
 import android.app.Application
 import android.content.Intent
-import androidx.appcompat.app.AppCompatDelegate
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.AccountInvalidator
 
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.data.Settings
-import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
 import xyz.klinker.messenger.shared.service.FirebaseResetService
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
@@ -47,15 +44,7 @@ class MessengerApplication : FirebaseApplication(), AccountInvalidator {
 
         enableSecurity()
 
-        val theme = Settings.baseTheme
-        if (AndroidVersionUtil.isAndroidQ && theme == BaseTheme.DAY_NIGHT) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        } else if (theme === BaseTheme.ALWAYS_LIGHT) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        } else if (theme.isDark || TimeUtils.isNight) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
-
+        TimeUtils.setupNightTheme()
         NotificationUtils.createNotificationChannels(this)
     }
 
@@ -81,13 +70,6 @@ class MessengerApplication : FirebaseApplication(), AccountInvalidator {
     }
 
     companion object {
-
-        /**
-         * Enable night mode and set it to auto. It will switch depending on time of day.
-         */
-        init {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO)
-        }
 
         /**
          * By default, java does not allow for strong security schemes due to export laws in other
