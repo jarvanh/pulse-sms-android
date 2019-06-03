@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Puls (SMS/Tablet zprávy)</string>
     <string name="app_title">Pulse</string>
@@ -125,6 +125,7 @@ http://messenger.klinkerapps.com</string>
     <string name="type_message_to">Napište zprávu pro %1$s</string>
     <string name="attach">Připojit</string>
     <string name="select_sim">Vyberte SIM kartu</string>
+    <string name="view_scheduled_messages">Zobrazit naplánované zprávy pro konverzaci</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">MMS obrázek</string>
@@ -135,6 +136,7 @@ http://messenger.klinkerapps.com</string>
     <string name="attach_image">Připojit obrázek</string>
     <string name="capture_image">Vyfotit obrázek</string>
     <string name="attach_gif">Připojit GIF</string>
+    <string name="attach_sticker">Připojit nálepku</string>
     <string name="record_video">Nahrát video</string>
     <string name="record_audio">Nahrát zvuk</string>
     <string name="attach_location">Připojit polohu</string>
@@ -148,6 +150,7 @@ http://messenger.klinkerapps.com</string>
     <string name="fullscreen">Na celou obrazovku</string>
     <string name="attached_image">Připojený obrázek</string>
     <string name="remove_image">Odstranit připojený obrázek</string>
+    <string name="remove_image_short">Odstranit obrázek</string>
     <string name="edit_image">Upravit připojený obrázek</string>
     <string name="edit_recipients">Upravit příjemce</string>
     <string name="select_folder">Vyberte složku pro konverzaci</string>
@@ -164,6 +167,9 @@ je čas začít!</string>
     <string name="audio_recording_error">Chyba při nahrávání :(</string>
     <string name="message_copied_to_clipboard">Zkopírováno do schránky</string>
     <string name="view_details">Zobrazit detaily</string>
+    <string name="speak_message">Přečíst zprávu nahlas</string>
+    <string name="select_all_messages">Vybrat všechny zprávy</string>
+    <string name="select_all_conversations">Vybrat všechny konverzace</string>
     <string name="delete">Smazat</string>
     <string name="copy_message">Kopírovat text</string>
     <string name="resend">Poslat znovu</string>
@@ -183,10 +189,16 @@ je čas začít!</string>
     <string name="copy_link">Kopírovat odkaz</string>
     <string name="attach_vcard">Připojit kontakt jako vCard</string>
     <string name="attach_plain_text">Připojit kontakt jako prostý text</string>
+    <string name="send_as_scheduled_message_question">Chcete tuto zprávu naplánovat na později?</string>
+    <string name="send_as_scheduled_message">Poslat jako naplánovanou zprávu</string>
+    <string name="send_without_signature">Odeslat bez podpisu</string>
+    <string name="send_without_delay">Odeslat bez prodlení</string>
     <!-- Templates -->
     <string name="type_template_text">Napište text šablony...</string>
     <string name="delete_template">Opravdu chcete smazat tuto šablonu?</string>
+    <string name="edit_or_delete_template">Chcete upravit nebo smazat tuto šablonu?</string>
     <string name="no_templates">Tlačítkem <b>+</b> vytvoříte šablonu</string>
+    <string name="edit">Upravit</string>
     <!-- Compose Screen -->
     <string name="compose_message">Napsat novou zprávu</string>
     <string name="send_message">Odeslat zprávu</string>
@@ -198,6 +210,8 @@ je čas začít!</string>
     <string name="compose_all_contacts">Všechny kontakty</string>
     <string name="private_conversation_disclaimer">Toto je <b>soukromá konverzace</b> a nemůže být otevřena z obrazovky pro psaní zpráv.</string>
     <!-- Onboarding Screen -->
+    <string name="google_requires_default_sms">Google nyní vyžaduje, aby jakákoliv SMS aplikace, která přijímá nebo odesílá zprávy, byla nastavena jako výchozí. Toto oprávnění je vyžadováno.</string>
+    <string name="google_requires_default_sms_policy">Zobrazit pravidlo</string>
     <string name="permissions_needed">Tato aplikace nemůže pracovat bez těchto povolení! Musíte je
 přijmout, než můžeme pokračovat.</string>
     <string name="loading_messages">Optimalizuji...</string>
@@ -390,10 +404,15 @@ globální sadu barev</string>
     <string name="right_to_left_swipe">Přejetí zprava doleva</string>
     <string name="no_swipe">Vypnout přejetí</string>
     <string name="blacklist_hint">Napište číslo pro přidání na černou listinu...</string>
+    <string name="enter_phrase">Zadejte frázi</string>
+    <string name="enter_phone">Zadejte telefonní číslo</string>
+    <string name="blacklist_phrase_hint">Zadejte frázi pro přidání na černou listinu</string>
     <string name="add_blacklist">%1$s\n\nJste si jisti, že chcete toto číslo přidat na černou listinu? Zprávy od tohoto
 čísla se nebudou ukládat a vy nebudete upozorněni, že přišly.</string>
+    <string name="add_blacklist_phrase">%1$s\n\nOpravdu chcete přidat tuto frázi na černou listinu? Zprávy, které ji obsahují se nebudou ukládat a vy nedostanete upozornění, že přišly!</string>
     <string name="remove_blacklist">%1$s\n\nChcete smazat tuto černou listinu?</string>
     <string name="blacklist_need_number">Musíte vyplnit číslo, které chcete přidat na černou listinu!</string>
+    <string name="blacklist_need_phrase">Musíte vyplnit frázi, kterou chcete přidat na černou listinu!</string>
     <string name="no_blacklists">Žádné černé listiny</string>
     <string name="no_blacklists_summary">Můžete jednu vytvořit pomocí tlačítka plus níže</string>
     <string name="add">Přidat</string>
@@ -404,7 +423,7 @@ globální sadu barev</string>
     <string name="lifetime_subscriber">Doživotní účet</string>
     <string name="trial_period">Zkušební období</string>
     <string name="setup_my_account">Nastavit účet</string>
-    <string name="setup_my_account_summary">Vytvořte si účet, nebo se přihlašte pro započetí používání
+    <string name="setup_my_account_summary">Vytvořte si účet, nebo se přihlaste, abyste mohli začít používat 
 více funkcí jako psaní zpráv z tabletu či počítače.</string>
     <string name="preparing_new_account">Připravuji účet&#8230;</string>
     <string name="delete_account">Smazat účet</string>
@@ -472,6 +491,7 @@ Jakmile bude hotov, pak se můžete přihlásit na Vašich ostatních zařízen�
     <string name="settings_phone_number">Telefonní číslo</string>
     <string name="disable_battery_optimization">Vypnout úsporu baterie</string>
     <string name="disable_battery_optimization_summary">Pokud se zprávy nezobrazují na webu, tak zkuste vypnout úsporu baterie v Pulse.</string>
+    <string name="hex">Hex barva</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maximální velikost obrázku</string>
     <string name="max_mms_size_summary">Nenastavujte na vyšší, než umožňuje Váš operátor</string>
@@ -557,6 +577,15 @@ pro %1$s?</string>
     <string name="no_scheduled_messages">Žádné naplánované zprávy</string>
     <string name="no_scheduled_messages_summary">Můžete vytvořit novou pomocí tlačítka plus níže</string>
     <string name="scheduled_message_in_future">Čas musí být v budoucnu</string>
+    <string name="scheduled_repeat_never">Neopakovat</string>
+    <string name="scheduled_repeat_daily">Opakovat denně</string>
+    <string name="scheduled_repeat_weekly">Opakovat týdně</string>
+    <string name="scheduled_repeat_monthly">Opakovat měsíčně</string>
+    <string name="scheduled_repeat_yearly">Opakovat ročně</string>
+    <string name="remove_scheduled_message">Chcete smazat tuto naplánovanou zprávu?</string>
+    <string name="select_image">Vybrat obrázek z telefonu</string>
+    <string name="select_gif">Hledat GIF</string>
+    <string name="media_on_primary_device">Média z naplánované zprávy lze prohlížet pouze v aplikaci pro telefon.</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Šifruji a nahrávám...</string>
     <string name="encrypting_and_uploading_media">Šifruji a komprimuji mediální zprávy...</string>
@@ -583,8 +612,8 @@ pro %1$s?</string>
     <string name="type_passcode">Vytvořit kód.</string>
     <string name="incorrect_passcode">Nesprávný kód.</string>
     <string name="verify">Ověřit</string>
-    <string name="enable_passcode_disclaimer">Soukromé konverzace mohou být chráněny kódem nebo otiskem prstu, takže se k nim dostanete jenom Vy.\n\n
-Pokud chcete toto zabezpečení tak si nastavte kód v <i>Pokročilých nastaveních</i>.</string>
+    <string name="enable_passcode_disclaimer">Soukromé konverzace mohou být chráněny kódem nebo otiskem prstu, takže se k nim dostanete jenom vy.\n\n
+Pokud chcete přidat toto zabezpečení, nastavte si kód v sekci <i>Pokročilá nastavení</i>.</string>
     <!-- Other -->
     <string name="updating_database">Hledám poslední zprávy...</string>
     <string name="dashclock_description">Informace o nepřečtených SMS/MMS</string>
@@ -601,7 +630,7 @@ Vyzkoušejte to dnes!</string>
     <string name="hours">Hodiny</string>
     <string name="minutes">Minuty</string>
     <string name="test">Otestovat</string>
-    <string name="channel_settings">Nastavení kanálu oznámení</string>
+    <string name="channel_settings">Přizpůsobení oznámení konverzací</string>
     <string name="channel_settings_summary">S Androidem Oreo toto systémové nastavení Vám umožní nastavit vyzvánění, vybrace, LED a další pro tuto konverzaci.</string>
     <string name="restore_default_channel_settings">Obnovit výchozí nastavení oznámení</string>
     <string name="restore_default_channel_settings_popup">Bylo obnoveno výchozí nastavení</string>
@@ -621,7 +650,7 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="rate_it_title">Dobrá hodnocení velmi pomohou</string>
     <string name="rate_it_summary"><b>pěti hvězdičkové</b> hodnocení velmi pomohou růstu aplikace
 a její viditelnosti v Obchodě Play. Pokud chcete této vidět tuto aplikaci <i>pokračovat stoupat</i>, tak mi pomožte!</string>
-    <string name="rate_it_not_ready">Nejste připraveni hodnotit? Není problém. Opustě toto okno a už se nezeptám.</string>
+    <string name="rate_it_not_ready">Nejste připraveni hodnotit? Není problém. Opusťte toto okno a už se nezeptám.</string>
     <string name="love_pulse_question">Milujete Pulse?</string>
     <string name="give_a_rating">Zvažte ohodnocení nebo sdílení s přáteli!\n\n
 Pětihvězdičková ohodnocení mě zahřejí z srdce :)</string>
@@ -672,15 +701,14 @@ Posílejte zprávy z webu, z počítače, z tabletu, hodinek a dokonce i z telev
     <string name="purchase_description">Vyzkoušejte online verzi po dobu <b>sedmi dní</b>, pak se rozhodněte, jak chcete aplikaci podpořit:\n\n<b>$10.99</b> za doživotní členství\n<b>$5.99</b> za rok\n<b>$1.99</b> čtvrtletně\n<b>$0.99</b> za měsíc</string>
     <string name="start_free_trial">Začněte používat bezplatnou zkušební verzi!</string>
     <string name="create_your_pulse_account">Vytvořte si účet Pulse!</string>
-    <string name="try_it">Vyzkoušet nyní!</string>
+    <string name="try_it">Vyzkoušejte!</string>
     <string name="select_purchase">Vyberte nákup</string>
     <string name="have_an_account">Máte účet?\nPřihlašte se</string>
     <string name="select_a_purchase">Vyberte nákup</string>
     <string name="select_a_purchase_description">Vyberte si jeden ze tří druhů předplatného, nebo zvolte <b>doživotní členství</b> a zaplaťte za aplikaci jednorázově.</string>
     <string name="seven_days_free">7 dní zdarma!</string>
-    <string name="competition_cant_beat">Konkurence se nemůže dotknout našich cen, rychlosti či služeb -
-<b>vyzkoušejte 7 dní</b> a zjistěte sami!</string>
-    <string name="select_a_trial_below">Vyberte jednu ze tří možností odběru níže pro spuštění Vaší <b>zkušební verze zdarma</b>.</string>
+    <string name="competition_cant_beat">Konkurence se nemůže dotknout našich cen, rychlosti či služeb - <b>vyzkoušejte 7 dní ZDARMA</b> a zjistěte sami!</string>
+    <string name="select_a_trial_below">Vyberte jednu ze tří možností předplatného pro spuštění vaší <b>bezplatné zkušební verze</b>.</string>
     <string name="charged_after_trial">Účtováno po zkušebním období:</string>
     <string name="monthly_purchase_improved">$0.99 za měsíc</string>
     <string name="three_month_purchase_improved">$1.99 za měsíc</string>

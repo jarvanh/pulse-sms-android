@@ -27,6 +27,7 @@ iscriverti con un dispositivo principale dotato di numero telefonico!</string>
     <string name="api_password_confirmation">Conferma Password</string>
     <string name="api_name">Nome</string>
     <string name="api_phone_number">Numero di Telefono</string>
+    <string name="api_connecting">Connessione al server...</string>
     <string name="api_device_error">Si è verificato un errore nell\'aggiungere questo dispositivo. Riprova!</string>
     <string name="api_add_second_primary_device">Sembra che tu disponga già di un dispositivo principale (%1$s) per il tuo account ed è permesso averne solo uno! Vuoi rimuovere il corrente dispositivo ed impostare questo come nuovo principale?</string>
     <string name="api_yes">Si</string>
@@ -40,7 +41,11 @@ iscriverti con un dispositivo principale dotato di numero telefonico!</string>
     <string name="api_no_phone_number">Nessun numero di telefono inserito</string>
     <string name="api_login_error">Si è verificato un errore durante il login, email o password errata?</string>
     <string name="api_activate_summary">Effettua il login per visualizzare tutti i tuoi  messaggi su questo dispositivo!</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
     <string name="api_activate_1_1">Vai a</string>
+    <string name="api_activate_wear">wear.klinkerapps.com</string>
+    <string name="api_activate_tv">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">su un dispositivo mobile o computer</string>
     <string name="api_activate_2_1">Sul sito web</string>
     <string name="api_activate_2_2">Inserisci il codice sulla destra</string>

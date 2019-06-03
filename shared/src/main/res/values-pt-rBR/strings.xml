@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
     <string name="app_title">Pulse</string>
@@ -29,7 +29,7 @@
     <string name="menu_edit_folders">Gerenciar pastas</string>
     <string name="menu_edit_folders_no_ellipse">Gerenciar pastas</string>
     <string name="menu_schedule">Mensagens agendadas</string>
-    <string name="menu_mute_contacts">Contatos bloqueados</string>
+    <string name="menu_mute_contacts">Bloquear mensagens</string>
     <string name="menu_invite">Convidar amigos</string>
     <string name="menu_feature_settings">Recursos avançados</string>
     <string name="menu_settings">Configurações globais</string>
@@ -53,7 +53,7 @@
     <string name="menu_conversation_information">Informação da conversa</string>
     <string name="menu_copy_phone_number">Copiar Número</string>
     <string name="menu_view_full_conversation">Ver histórico</string>
-    <string name="menu_conversation_blacklist">Bloquear Contato</string>
+    <string name="menu_conversation_blacklist">Bloquear contato</string>
     <string name="menu_conversation_schedule">Agendar uma mensagem</string>
     <string name="menu_contact_settings">Configuração de contato</string>
     <string name="menu_group_settings">Configurações de grupo</string>
@@ -114,6 +114,7 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <string name="type_message_to">Digite mensagem para %1$s</string>
     <string name="attach">Anexe</string>
     <string name="select_sim">Selecione o cartão SIM</string>
+    <string name="view_scheduled_messages">Ver mensagens agendadas para conversas</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">Imagem MMS</string>
@@ -124,6 +125,7 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <string name="attach_image">Anexar imagem</string>
     <string name="capture_image">Capturar imagem</string>
     <string name="attach_gif">Anexar GIF</string>
+    <string name="attach_sticker">Anexar Figurinha</string>
     <string name="record_video">Gravar vídeo</string>
     <string name="record_audio">Gravar áudio</string>
     <string name="attach_location">Anexar localização</string>
@@ -137,6 +139,7 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <string name="fullscreen">Tela cheia</string>
     <string name="attached_image">Imagem anexada</string>
     <string name="remove_image">Remover imagem anexada</string>
+    <string name="remove_image_short">Remover imagem</string>
     <string name="edit_image">Editar imagem anexada</string>
     <string name="edit_recipients">Editar Destinatários</string>
     <string name="select_folder">Selecione a pasta para a Conversa</string>
@@ -152,6 +155,9 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <string name="audio_recording_error">Erro com a gravação :(</string>
     <string name="message_copied_to_clipboard">Copiado para área de transferência</string>
     <string name="view_details">Ver detalhes</string>
+    <string name="speak_message">Ler mensagem em voz alta</string>
+    <string name="select_all_messages">Selecionar todas mensagens</string>
+    <string name="select_all_conversations">Selecionar todas conversas</string>
     <string name="delete">Apagar</string>
     <string name="copy_message">Copiar texto</string>
     <string name="resend">Reenviar</string>
@@ -171,10 +177,16 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <string name="copy_link">Copiar link internamente</string>
     <string name="attach_vcard">Anexar Contato como vCard</string>
     <string name="attach_plain_text">Anexar Contato como Texto Simples</string>
+    <string name="send_as_scheduled_message_question">Você gostaria de agendar o envio desta mensagem para mais tarde?</string>
+    <string name="send_as_scheduled_message">Enviar como mensagem agendada</string>
+    <string name="send_without_signature">Enviar sem assinatura</string>
+    <string name="send_without_delay">Enviar sem atraso</string>
     <!-- Templates -->
     <string name="type_template_text">Digite texto modelo...</string>
     <string name="delete_template">Você tem certeza que deseja apagar este modelo?</string>
+    <string name="edit_or_delete_template">Você quer editar ou excluir este modelo?</string>
     <string name="no_templates">Use o botão <b>+</b> para criar um modelo</string>
+    <string name="edit">Editar</string>
     <!-- Compose Screen -->
     <string name="compose_message">Escrever nova mensagem</string>
     <string name="send_message">Enviar mensagens</string>
@@ -186,6 +198,8 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <string name="compose_all_contacts">Todos os Contatos</string>
     <string name="private_conversation_disclaimer">Esta é uma <b>conversa privada</b> e não pode ser aberta aqui.</string>
     <!-- Onboarding Screen -->
+    <string name="google_requires_default_sms">A Google exige que os aplicativos de SMS sejam configurados como padrão, para que eles possam acessar ou enviar mensagens. Esta permissão obrigatória.</string>
+    <string name="google_requires_default_sms_policy">Ver política</string>
     <string name="permissions_needed">O app não pode funcionar sem estas permissões! você precisa aceita-las para poder continuar.</string>
     <string name="loading_messages">Otimizando...</string>
     <string name="loading_messages_summary">Apenas trabalhando em obter suas mensagens no aplicativo. Não vai demorar muito!</string>
@@ -368,12 +382,18 @@ este conjunto de cores global</string>
     <string name="left_to_right_swipe">Esquerda &gt;&gt;&gt; Direita</string>
     <string name="right_to_left_swipe">Direita &lt;&lt;&lt; Esquerda</string>
     <string name="no_swipe">Não fazer nada</string>
-    <string name="blacklist_hint">Adicionar número a Contatos Bloqueados...</string>
+    <string name="blacklist_hint">Adicionar número...</string>
+    <string name="enter_phrase">Adicionar frase</string>
+    <string name="enter_phone">Informe o número de telefone</string>
+    <string name="blacklist_phrase_hint">Adicionar frase...</string>
     <string name="add_blacklist">%1$s\n\nVocê tem certeza que deseja bloquear este contato? As mensagens 
 desse número não serão mais salvas e você não será notificado!</string>
-    <string name="remove_blacklist">%1$s\n\nDeseja desbloquear este contato?</string>
+    <string name="add_blacklist_phrase">%1$s\n\nVocê tem certeza que quer adicionar este bloqueio? As mensagens não
+serão salvas quando contiverem esta frase, e você não será notificado!</string>
+    <string name="remove_blacklist">%1$s\n\nDeseja remover este bloqueio?</string>
     <string name="blacklist_need_number">Nenhum número informado!</string>
-    <string name="no_blacklists">Sem listas negras</string>
+    <string name="blacklist_need_phrase">Frase não informada!</string>
+    <string name="no_blacklists">Nada a bloquear</string>
     <string name="no_blacklists_summary">Você pode adicionar uma com o botão \'mais\' abaixo!</string>
     <string name="add">Adicionar</string>
     <string name="privacy_policy">Politica de privacidade</string>
@@ -446,6 +466,7 @@ Uma vez concluído, você precisará acessar novamente, em todos os dispositivos
     <string name="settings_phone_number">Número do Telefone</string>
     <string name="disable_battery_optimization">Desabilitar Otimização de Bateria</string>
     <string name="disable_battery_optimization_summary">Se as mensagens não estiverem chegando na web, tente desabilitar a otimização de bateria para o Pulse.</string>
+    <string name="hex">Cor Hex</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Tamanho Máximo da Imagem</string>
     <string name="max_mms_size_summary">Não configure com um valor maior do que o permitido pela operadora</string>
@@ -475,7 +496,7 @@ ao recebê-la</string>
     <string name="app_features">Aplicativo</string>
     <string name="quick_compose">Conversa rápida</string>
     <string name="quick_compose_notification">Exibir notificação</string>
-    <string name="quick_compose_notification_summary">Notificação persistente para de dar acesso rápido a criar novas mensagens</string>
+    <string name="quick_compose_notification_summary">Notificação persistente para te dar acesso rápido a criar novas mensagens</string>
     <string name="quick_compose_favorites">Contatos favoritos</string>
     <string name="quick_compose_favorites_summary">Estes contatos ficarão disponíveis nas ações de notificação</string>
     <string name="quick_compose_favorites_title">Selecione até 3 contatos:</string>
@@ -529,6 +550,15 @@ mensagens em um novo dispositivo, tudo que você tem que fazer é acessar a sua 
     <string name="no_scheduled_messages">Nenhuma mensagem agendada</string>
     <string name="no_scheduled_messages_summary">Clique em \' + \' para criar uma nova mensagem!</string>
     <string name="scheduled_message_in_future">O tempo deve ser no futuro!</string>
+    <string name="scheduled_repeat_never">Não repetir</string>
+    <string name="scheduled_repeat_daily">Repetir diariamente</string>
+    <string name="scheduled_repeat_weekly">Repetir semanalmente</string>
+    <string name="scheduled_repeat_monthly">Repetir mensalmente</string>
+    <string name="scheduled_repeat_yearly">Repetir anualmente</string>
+    <string name="remove_scheduled_message">Você gostaria de apagar esta mensagem agendada?</string>
+    <string name="select_image">Selecionar imagem do telefone</string>
+    <string name="select_gif">Procurar GIF</string>
+    <string name="media_on_primary_device">Mídia, associada a mensagem agendada, só pode ser vista no aplicativo de telefone.</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Criptografando e enviando...</string>
     <string name="encrypting_and_uploading_media">Criptografando e comprimindo mensagens de mídia...</string>

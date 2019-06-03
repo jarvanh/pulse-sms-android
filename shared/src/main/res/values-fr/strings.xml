@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse (SMS/Messagerie tablette)</string>
     <string name="app_title">Pulse</string>
@@ -49,7 +49,7 @@
     <string name="menu_view_media">Afficher les médias</string>
     <string name="menu_delete_conversation">Supprimer la conversation</string>
     <string name="menu_archive_conversation">Archiver la conversation</string>
-    <string name="menu_move_to_inbox">Déplacer dans la boîte de réception</string>
+    <string name="menu_move_to_inbox">Déplacer vers la boîte de réception</string>
     <string name="menu_conversation_information">Informations de la conversation</string>
     <string name="menu_copy_phone_number">Numéro de copie</string>
     <string name="menu_view_full_conversation">Voir l\'historique</string>
@@ -114,6 +114,7 @@ Vous pouvez utiliser Pulse pour échanger des messages depuis <b>tout</b> appare
     <string name="type_message_to">Composez votre message à %1$s</string>
     <string name="attach">Joindre</string>
     <string name="select_sim">Sélectionner la carte SIM</string>
+    <string name="view_scheduled_messages">Voir les messages planifiés de la conversation</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">Message Image</string>
@@ -124,6 +125,7 @@ Vous pouvez utiliser Pulse pour échanger des messages depuis <b>tout</b> appare
     <string name="attach_image">Attacher une image</string>
     <string name="capture_image">Prendre une photo</string>
     <string name="attach_gif">Attacher un GIF</string>
+    <string name="attach_sticker">Joindre un sticker</string>
     <string name="record_video">Enregistrer la vidéo</string>
     <string name="record_audio">Enregistrer l\'audio</string>
     <string name="attach_location">Partager votre localisation</string>
@@ -138,6 +140,7 @@ des photos !</string>
     <string name="fullscreen">Plein écran</string>
     <string name="attached_image">Image en pièce jointe</string>
     <string name="remove_image">Supprimer l\'image en pièce jointe</string>
+    <string name="remove_image_short">Retirer l\'image</string>
     <string name="edit_image">Éditer l\'image en pièce jointe</string>
     <string name="edit_recipients">Editer la liste des destinataires</string>
     <string name="select_folder">Sélectionnez un dossier pour cette conversation.</string>
@@ -149,12 +152,15 @@ commencez !
     <string name="save">Sauvegarder</string>
     <string name="share">Partager</string>
     <string name="share_content">Partager le contenu...</string>
-    <string name="saved">Sauvegardé dans le dossier de téléchargements</string>
+    <string name="saved">Sauvegardé dans le dossier de téléchargements !</string>
     <string name="failed_to_save">La sauvegarde a échouée</string>
     <string name="start_recording_audio">Appuyer pour commencer à enregistrer</string>
     <string name="audio_recording_error">Erreur d\'enregistrement :(</string>
     <string name="message_copied_to_clipboard">Copié dans le presse-papier</string>
     <string name="view_details">Voir les détails</string>
+    <string name="speak_message">Lire le message à voix haute</string>
+    <string name="select_all_messages">Sélectionner tous les messages</string>
+    <string name="select_all_conversations">Sélectionner toutes les conversations</string>
     <string name="delete">Supprimer</string>
     <string name="copy_message">Copier le texte</string>
     <string name="resend">Renvoyer</string>
@@ -174,10 +180,16 @@ commencez !
     <string name="copy_link">Copier le lien</string>
     <string name="attach_vcard">Joindre le contact comme vCard</string>
     <string name="attach_plain_text">Joindre le contact en texte</string>
+    <string name="send_as_scheduled_message_question">Planifier ce message pour plus tard ?</string>
+    <string name="send_as_scheduled_message">Envoyer un message planifié</string>
+    <string name="send_without_signature">Envoyer sans signature</string>
+    <string name="send_without_delay">Envoyer sans délai</string>
     <!-- Templates -->
     <string name="type_template_text">Écrivez le texte du modèle...</string>
     <string name="delete_template">Êtes-vous sûre de vous vouloir supprimer ce modèle ?</string>
+    <string name="edit_or_delete_template">Corriger ou supprimer ce modèle ?</string>
     <string name="no_templates">Utilisez le bouton <b>+</b> pour créer un modèle.</string>
+    <string name="edit">Corriger</string>
     <!-- Compose Screen -->
     <string name="compose_message">Écrire un nouveau message</string>
     <string name="send_message">Envoyer un message</string>
@@ -189,6 +201,8 @@ commencez !
     <string name="compose_all_contacts">Tous les contacts</string>
     <string name="private_conversation_disclaimer">Ceci est une <b>conversation privée</b> qui ne peut être ouverte depuis l\'écran de rédaction.</string>
     <!-- Onboarding Screen -->
+    <string name="google_requires_default_sms">Google demande maintenant à toutes les applications SMS d\'être réglée comme application SMS par défaut avant de pouvoir accéder aux ou envoyer les messages. Cette autorisation est obligatoire.</string>
+    <string name="google_requires_default_sms_policy">Voir Protection de la Vie Privée</string>
     <string name="permissions_needed">L\'application ne peut fonctionner sans ces permissions ! Vous devez les accepter avant de pouvoir continuer.</string>
     <string name="loading_messages">Optimisation en cours...</string>
     <string name="loading_messages_summary">Juste un instant, nous téléchargeons vos messages dans l\'application.</string>
@@ -197,7 +211,7 @@ commencez !
     <string name="onboarding_title_1">Messagerie réinventée</string>
     <string name="onboarding_title_2">Disponible Partout</string>
     <string name="onboarding_title_3">Forte Personalisation</string>
-    <string name="onboarding_content_1">Lisse, avec une disposition fluide, un design puissant et une intégration transparente. Pulse place vos conversations au centre de tout.</string>
+    <string name="onboarding_content_1">Une disposition fluide et harmonieuse avec un design efficace et une intégration transparente.</string>
     <string name="onboarding_content_2">Envoyez des messages depuis votre tablette, ordinateur, montre connectée, ou tout autre appareil connecté.</string>
     <string name="onboarding_content_3">Épinglez, désactivez ou personnalisez les notifications pour chacun de vos contacts. Faites de Pulse votre application.</string>
     <string name="message_anywhere_onboarding_title_1">Envoyez des messages de partout</string>
@@ -325,7 +339,7 @@ pourriez rencontrer !</string>
     <string name="repeat_half_hour">Toutes les 30 minutes</string>
     <string name="repeat_hour">Toutes les heures</string>
     <string name="wake_screen">Allumer l\'écran</string>
-    <string name="vibrate">Personnaliser la vibration</string>
+    <string name="vibrate">Vibration</string>
     <string name="vibrate_off">Pas de vibration</string>
     <string name="vibrate_default">Vibration par défaut</string>
     <string name="vibrate_two_long">Deux vibrations longues</string>
@@ -344,7 +358,7 @@ pourriez rencontrer !</string>
     <string name="keyboard_enter_key">Touche \"Entrée\"</string>
     <string name="sound_effects">Effets sonores</string>
     <string name="delivery_reports">Accusés de réception</string>
-    <string name="delivery_reports_summary">La plupart des opérateurs ne supportent pas cette option</string>
+    <string name="delivery_reports_summary">La plupart des opérateurs ne supportent pas cette option. Ce n\'est pas du RCS (Rich Communications Services)</string>
     <string name="theme_settings">Personnalisation</string>
     <string name="theme_settings_category">Apparence</string>
     <string name="conversation_list_category">Liste des conversations</string>
@@ -371,10 +385,15 @@ pourriez rencontrer !</string>
     <string name="right_to_left_swipe">Balayer à gauche</string>
     <string name="no_swipe">Désactiver le balayage</string>
     <string name="blacklist_hint">Tapez le numéro à mettre en liste noire</string>
+    <string name="enter_phrase">Entrer le texte</string>
+    <string name="enter_phone">Entrer un numéro de téléphone</string>
+    <string name="blacklist_phrase_hint">Entrer le texte pour la liste noire</string>
     <string name="add_blacklist">%1$s\n\nÊtes-vous sûr de vouloir l\'ajouter en liste noire ? Les messages 
-provenant de ce numéro ne seront plus sauvegardés et vous ne serez plus notifié.</string>
+provenant de ce numéro ne seront plus sauvegardés, et vous ne serez plus notifié.</string>
+    <string name="add_blacklist_phrase">%1$s\n\nÊtes-vous sûr de vouloir ajouter cette liste noire ? Les messages ne seront plus sauvegardés s\'ils contiennent ce texte, et vous ne recevrez pas de notification !</string>
     <string name="remove_blacklist">%1$s\n\nVoulez-vous retirer ce numéro de la liste noire ?</string>
     <string name="blacklist_need_number">Vous devez entrer un numéro dans la liste noire!</string>
+    <string name="blacklist_need_phrase">Il faut entrer du texte pour la liste noire !</string>
     <string name="no_blacklists">Pas de liste noire</string>
     <string name="no_blacklists_summary">"Vous pouvez en ajouter avec le bouton '+' ci-dessous! "</string>
     <string name="add">Ajouter</string>
@@ -389,7 +408,7 @@ provenant de ce numéro ne seront plus sauvegardés et vous ne serez plus notifi
     <string name="preparing_new_account">Préparation du compte&#8230;</string>
     <string name="delete_account">Supprimer le compte</string>
     <string name="delete_account_summary">Supprime le compte de cet appareil, de vos autres appareils connectés et du serveur. Cette opération est irréversible !</string>
-    <string name="delete_account_confirmation">Êtes vous sur de vouloir supprimer ce compte et tout ce qui va avec ? Vous pourrez toujours vous réinscrire plus tard !</string>
+    <string name="delete_account_confirmation">Êtes vous sûr(e) de vouloir supprimer ce compte et tout ce qui va avec ? Vous pourrez toujours vous réinscrire plus tard !</string>
     <string name="change_subscription">Changer d\'abonnement</string>
     <string name="trial_subscription_title">Il vous reste %s jours d\'essai</string>
     <string name="trial_subscription_summary">Appuyer ici pour vous abonner ou pour annuler la période d\'essai !</string>
@@ -448,16 +467,17 @@ Une fois cela fait, vous devrez vous connecter à nouveau, sur tous vos autres a
     <string name="settings_phone_number">Numéro de téléphone</string>
     <string name="disable_battery_optimization">Désactiver les optimisations de la batterie</string>
     <string name="disable_battery_optimization_summary">Si les messages mettent du temps à se synchroniser en ligne, essayez de désactiver les règles d\'optimisation de la batterie pour Pulse.</string>
+    <string name="hex">Couleur hexadécimale</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Taille maximale de l\'image</string>
     <string name="max_mms_size_summary">Ne définissez pas une valeur plus élevée que ce que votre opérateur vous permet.</string>
-    <string name="use_group_mms">Utiliser les MMS groupés</string>
+    <string name="use_group_mms">Utiliser les MMS de groupe</string>
     <string name="use_group_mms_summary">Si désactivé, les messages groupés seront envoyés comme SMS individuels, à chaque contact de la conversation.</string>
     <string name="use_mms_read_receipts">Accusés de lecture</string>
     <string name="auto_save_media">Sauvegarde auto des médias</string>
-    <string name="auto_save_media_summary">Sauvegarder automatiquement tous les médias MMS dans le dossier /Téléchargements quand ils sont reçus.</string>
+    <string name="auto_save_media_summary">Sauvegarder automatiquement tout média MMS dans le dossier /Téléchargements quand il est reçu.</string>
     <string name="apn_configuration">Configuration des APN</string>
-    <string name="override_system_apn">Remplacer les APN du système</string>
+    <string name="override_system_apn">Remplacer les APNs du système</string>
     <string name="mmsc_url">URL du MMSC</string>
     <string name="mms_proxy">Proxy MMS</string>
     <string name="mms_port">Port MMS</string>
@@ -528,6 +548,15 @@ Avec votre compte, Pulse sauvegarde automatiquement tous les messages que vous e
     <string name="no_scheduled_messages">Pas de message programmé</string>
     <string name="no_scheduled_messages_summary">Vous pouvez en créer un avec le bouton \'+\' ci-dessous!</string>
     <string name="scheduled_message_in_future">La date ne doit pas être déjà dépassée !</string>
+    <string name="scheduled_repeat_never">Ne pas répéter</string>
+    <string name="scheduled_repeat_daily">Répéter tous les jours</string>
+    <string name="scheduled_repeat_weekly">Répéter une fois par semaine</string>
+    <string name="scheduled_repeat_monthly">Répéter une fois par mois</string>
+    <string name="scheduled_repeat_yearly">Répéter une fois par an</string>
+    <string name="remove_scheduled_message">Effacer ce message planifié ?</string>
+    <string name="select_image">Sélectionner une image dans le téléphone</string>
+    <string name="select_gif">Chercher un GIF</string>
+    <string name="media_on_primary_device">Tout média, dans un message planifié, ne peut être visionné que dans l\'application sur le téléphone.</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Cryptage et upload...</string>
     <string name="encrypting_and_uploading_media">Cryptage et compression des messages médias...</string>
@@ -554,8 +583,8 @@ Avec votre compte, Pulse sauvegarde automatiquement tous les messages que vous e
     <string name="type_passcode">Créer un mot de passe.</string>
     <string name="incorrect_passcode">Mot de passe erroné.</string>
     <string name="verify">Vérifier</string>
-    <string name="enable_passcode_disclaimer">Les conversations privées peuvent être protégées par un mot de passe ou l\'empreinte digitale, afin que vous soyez seul(e) à pouvoir y accéder.\n\n
-Si vous voulez ajouter cette sécurité, configurez un mot de passe depuis les <i>Fonctionnalités Avancées</i>.</string>
+    <string name="enable_passcode_disclaimer">Les conversations privées peuvent être protégées par un mot de passe ou l\'empreinte digitale, afin que vous soyez seul(e) à pouvoir y accéder.\n\nIf
+Si vous voulez ajouter cette sécurité, configurez un mot de passe depuis la section des <i>Fonctionnalités Avancées</i>.</string>
     <!-- Other -->
     <string name="updating_database">Recherche des derniers messages...</string>
     <string name="dashclock_description">Information sur les SMS/MMS non lus</string>
@@ -572,8 +601,8 @@ Essayez aujourd\'hui !</string>
     <string name="hours">Heures</string>
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
-    <string name="channel_settings">Paramètres du canal de notification</string>
-    <string name="channel_settings_summary">Avec Android Oréo, ce paramètre système vous permet de personnaliser la sonnerie, les vibrations, la LED de notification, et d\'autres choses encore, pour cette conversation.</string>
+    <string name="channel_settings">Personnalisation des notifications de la conversation</string>
+    <string name="channel_settings_summary">Avec Android Oréo, ces paramètres système vous permettent de personnaliser les notifications, pour cette conversation.</string>
     <string name="restore_default_channel_settings">Restaurer les paramètres de notifications par défaut</string>
     <string name="restore_default_channel_settings_popup">Les paramètres par défaut ont été restaurés.</string>
     <string name="channels">Canaux</string>
@@ -589,9 +618,9 @@ Utilisez le canal par défaut pour personnaliser les conversations auxquelles vo
     <string name="verifying_password">Vérification du mot de passe...</string>
     <!-- Rate it -->
     <string name="rate_it">Noter l\'application !</string>
-    <string name="rate_it_title">Sur la route du succès</string>
+    <string name="rate_it_title">Les commentaires positifs aident beaucoup</string>
     <string name="rate_it_summary">Noter <b>5 étoiles</b> aide beaucoup à faire connaître cette application sur le Play Store. Si vous voulez <i>la voir grandir</i>, n\'hésitez pas a contribuer !</string>
-    <string name="rate_it_not_ready">Pas prêt à noter ? Pas de soucis. Quittez la fenêtre et je ne vous le demanderai plus jamais.</string>
+    <string name="rate_it_not_ready"><b>Pas prêt à nous noter ?</b> Pas de soucis. Quittez la fenêtre et je ne vous le demanderai plus jamais.</string>
     <string name="love_pulse_question">Vous aimez Pulse ?</string>
     <string name="give_a_rating">Merci de noter l\'application ou de la partager avec vos amis !\n\n
 Votre avis à 5 étoiles me fera le plus grand plaisir :)</string>
@@ -633,7 +662,7 @@ Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous
     <string name="monthly_purchase_summary">Vous voulez juste essayer ? Aucun problème.</string>
     <string name="change_subscription_message">Vous voulez améliorer ? Super ! Après avoir fait votre choix sur l\'écran suivant, vous <b>devez</b> aller sur le Play Store afin d\'annuler l\'essai ou le précédent abonnement.
 Je <b>ne peux pas</b> le faire automatiquement.</string>
-    <string name="beautiful_powerful_instant">Beau, puissant, instantané.</string>
+    <string name="beautiful_powerful_instant">Bienvenu(e) dans l\'ère moderne.</string>
     <string name="optimized_for_all_your_devices">Pulse est optimisé pour <b>tous</b> vos appareils.
 Envoyez des messages depuis internet, un ordinateur de bureau, votre tablette, et même votre TV.</string>
     <string name="true_imessage_competitor">Le premier <b>vrai</b> concurrent de iMessage pour Android.</string>
@@ -641,7 +670,7 @@ Envoyez des messages depuis internet, un ordinateur de bureau, votre tablette, e
     <string name="purchase_description">Essayez la version en ligne, pour <b>sept jours</b>, puis choisissez comment vous souhaitez supporter l\'application :\n\n<b>10.99€</b> pour une adhésion à vie\n<b>5.99€</b> par an\n<b>1.99€</b> par trimestre\n<b>0.99€</b> par mois</string>
     <string name="start_free_trial">Commencer votre période d\'essai !</string>
     <string name="create_your_pulse_account">Créer un compte Pulse !</string>
-    <string name="try_it">Essayez-le maintenant!</string>
+    <string name="try_it">Essayez-le !</string>
     <string name="select_purchase">Sélectionner l\'achat</string>
     <string name="have_an_account">Déjà un compte ?\nSe connecter</string>
     <string name="select_a_purchase">Sélectionner un achat</string>
@@ -649,7 +678,7 @@ Envoyez des messages depuis internet, un ordinateur de bureau, votre tablette, e
     <string name="seven_days_free">Gratuit pendant 7 jours !</string>
     <string name="competition_cant_beat">La concurrence ne peut rivaliser avec nos prix, notre vitesse ou notre service -
 <b>Prenez 7 jours</b> pour le constater par vous-même !</string>
-    <string name="select_a_trial_below">Sélectionnez une des 3 options d\'abonnement ci-dessous pour commencer votre <b>essai gratuit</b>.</string>
+    <string name="select_a_trial_below">Sélectionnez une des 3 options d\'abonnement pour commencer votre <b>essai gratuit</b>.</string>
     <string name="charged_after_trial">Facturé après l\'essai :</string>
     <string name="monthly_purchase_improved">$0.99 /\nmois</string>
     <string name="three_month_purchase_improved">$1.99 /\n3 mois</string>

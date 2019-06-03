@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
     <string name="app_title">Pulse</string>
@@ -24,11 +24,15 @@
     <!-- Drawer Items -->
     <string name="menu_conversations">Lista conversazioni</string>
     <string name="menu_archived_conversations">Conversazioni archiviate</string>
+    <string name="menu_private_conversations">Conversazioni private</string>
+    <string name="menu_unread_conversations">Conversazioni da leggere</string>
+    <string name="menu_edit_folders">Gestisci cartelle...</string>
+    <string name="menu_edit_folders_no_ellipse">Gestisci cartelle</string>
     <string name="menu_schedule">Messaggi programmati</string>
     <string name="menu_mute_contacts">Blacklist</string>
     <string name="menu_invite">Invita gli amici</string>
-    <string name="menu_feature_settings">Avanzate</string>
-    <string name="menu_settings">Impostazioni generali</string>
+    <string name="menu_feature_settings">Opzioni avanzate</string>
+    <string name="menu_settings">Preferenze</string>
     <string name="menu_account">Il mio account</string>
     <string name="menu_device_texting">Il mio Account</string>
     <string name="menu_help">Help &amp; feedback</string>
@@ -41,13 +45,13 @@
     <string name="menu_view_contacts">Visualizza contatti</string>
     <string name="menu_view_media">Visualizza media</string>
     <string name="menu_delete_conversation">Elimina la conversazione</string>
-    <string name="menu_archive_conversation">Archivia la conversazione</string>
+    <string name="menu_archive_conversation">Archivia conversazione</string>
     <string name="menu_move_to_inbox">Sposta in messaggi in arrivo</string>
     <string name="menu_conversation_information">Info conversazione</string>
     <string name="menu_conversation_blacklist">Aggiungi contatto in blacklist</string>
     <string name="menu_conversation_schedule">Programma un messaggio</string>
-    <string name="menu_contact_settings">Impostazioni contatto</string>
-    <string name="menu_group_settings">Impostazioni di gruppo</string>
+    <string name="menu_contact_settings">Impostazioni conversazione</string>
+    <string name="menu_group_settings">Impostazioni gruppo</string>
     <string name="menu_snooze_off">Off</string>
     <string name="menu_snooze_1">1 ora</string>
     <string name="menu_snooze_2">2 ore</string>
@@ -66,16 +70,16 @@
     <string name="yesterday">Ieri</string>
     <string name="last_week">Questa settimana</string>
     <string name="last_month">Questo mese</string>
-    <string name="older">Passate</string>
-    <string name="mark_section_as_read">Contrassegna tutta  %1$s come letta</string>
+    <string name="older">Meno recenti</string>
+    <string name="mark_section_as_read">Segna tutta %1$s come letta</string>
     <string name="marking_section_as_read">Tutte le conversazioni in  %1$s contrassegnate come lette</string>
     <plurals name="conversations_deleted">
-        <item quantity="one">%1$d conversazione  cancellata</item>
-        <item quantity="other">%1$d conversazioni  cancellata</item>
+        <item quantity="one">Conversazione  %1$d cancellata</item>
+        <item quantity="other">Conversazioni in %1$d cancellate</item>
     </plurals>
     <plurals name="conversations_archived">
         <item quantity="one">%1$d conversazione archiviata</item>
-        <item quantity="other">%1$d conversazioni archiviate</item>
+        <item quantity="other">Conversazioni in %1$d archiviate</item>
     </plurals>
     <plurals name="conversations_unarchived">
         <item quantity="one">%1$d conversazione spostata in arrivo</item>
@@ -91,7 +95,7 @@
     <string name="invite_friends_summary">So do we and so will others! We\'re trying to get it in
 as many hands as we can to continue making it the best product that it can be and by
 inviting your friends to try, you\'re helping with this! \n\nseleziona gli amici ai quali ti piacerebbe inviare l\'app ed a loro sarà inviato un sms con una breve descrizione ed il link per il download!</string>
-    <string name="invite_friends_sms">Sto usando una nuova app di messaggistica che penso potrebbe piacerti! Plus è gratuita e puoi scaricarla da qui:
+    <string name="invite_friends_sms">Sto usando una nuova app di messaggistica che penso potrebbe piacerti! Inoltre è gratuita, puoi scaricarla da qui:
 http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">Scrivi un messaggio</string>
@@ -117,7 +121,7 @@ http://messenger.klinkerapps.com</string>
     <string name="flip_picture">Cambia camera</string>
     <string name="fullscreen">Fullscreen</string>
     <string name="attached_image">Immagine allegata</string>
-    <string name="remove_image">Immagine allegata rimossa</string>
+    <string name="remove_image">Rimuovi immagine allegata</string>
     <string name="edit_image">Modifica immagine allegata</string>
     <string name="permission_needed_for_action">Permessi necessari per questa azione.</string>
     <string name="request_permission">Richiesta Permesso</string>
@@ -201,7 +205,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="received_new_message">Hai ricevuto un nuovo messaggio!</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>
-    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright">© 2018 Luke &amp; Jake Klinker</string>
     <string name="copyright_summary">Guarda info sulla licenza open source</string>
     <string name="app_version">Versione App</string>
     <string name="device_id">ID dispositivo</string>
@@ -229,7 +233,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
         <item quantity="other">in %1$d conversazioni</item>
     </plurals>
     <string name="pin_conversation">Fissa Conversazione</string>
-    <string name="pin_conversation_summary">Mantieni questa conversazioni in cima alla lista</string>
+    <string name="pin_conversation_summary">Mantieni questa conversazione in cima alla lista</string>
     <string name="mute_conversation">Silenzia Conversazione</string>
     <string name="mute_conversation_summary">Nascondi notifiche per questa conversazione</string>
     <string name="private_conversation">Conversazione Privata</string>
@@ -283,7 +287,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="delete_account_confirmation">Sei sicuro di voler eliminare il tuo account ed ogni altra cosa connessa ad esso? Puoi sempre decidere di registrarti nuovamente!</string>
     <string name="change_subscription">Cambia Abbonamento</string>
     <string name="cancel_on_the_play_store">Elimina e visualizza il tuo abbonamento sul Play Store</string>
-    <string name="resync_account">Resincronizza l\' Account</string>
+    <string name="resync_account">Risincronizza messaggi</string>
     <string name="resync_account_summary">Mancano alcuni messaggi? Usa questo per aggiornare questo dispositivo
 con ciò che è sul dispositivo principale.</string>
     <string name="resync_account_confirmation">L\' operazione cancellerà tutti i messaggi dal dispositivo iniziando con una copia pulita di ciò che attualmente c\'è sul dispositivo principale. Sei sicuro di volere questo?</string>
