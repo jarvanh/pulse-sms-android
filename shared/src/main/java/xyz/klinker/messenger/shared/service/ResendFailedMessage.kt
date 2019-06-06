@@ -35,7 +35,7 @@ class ResendFailedMessage : IntentService("ResendFailedMessage") {
             m.seen = true
             m.from = null
             m.color = null
-            m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
+            m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
             m.simPhoneNumber = if (conversation!!.simSubscriptionId != null)
                 DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
             else null

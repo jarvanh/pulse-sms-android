@@ -57,7 +57,7 @@ class CarReplyReceiver : BroadcastReceiver() {
             DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
         else
             null
-        m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
+        m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
 
         val messageId = DataSource.insertMessage(context, m, conversationId, true)
         DataSource.readConversation(context, conversationId)

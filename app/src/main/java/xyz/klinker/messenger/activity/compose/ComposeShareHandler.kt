@@ -52,7 +52,7 @@ class ComposeShareHandler(private val activity: ComposeActivity) {
     }
 
     fun directShare(data: List<ShareData>, isVcard: Boolean = false) {
-        val conversationId = activity.intent.extras.getLong(MessengerChooserTargetService.EXTRA_CONVO_ID)
+        val conversationId = activity.intent.extras!!.getLong(MessengerChooserTargetService.EXTRA_CONVO_ID)
         directShare(data, conversationId, isVcard)
     }
 

@@ -305,7 +305,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                 DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
             else
                 null
-            m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
+            m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
 
             if (messageLoader.adapter != null && messageLoader.adapter!!.getItemViewType(0) == Message.TYPE_INFO) {
                 DataSource.deleteMessage(activity, messageLoader.adapter!!.getItemId(0))
@@ -382,7 +382,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                     imageMessage.simPhoneNumber = if (conversation?.simSubscriptionId != null)
                         DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
                     else null
-                    imageMessage.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
+                    imageMessage.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
 
                     Thread {
                         val newId = DataSource.insertMessage(activity, imageMessage, imageMessage.conversationId, true)

@@ -73,7 +73,7 @@ class SmsReceivedNonDefaultReceiver : BroadcastReceiver() {
             }
 
             body += sms.messageBody
-            address = sms.originatingAddress
+            address = sms.originatingAddress!!
         }
 
         if (BlacklistUtils.isBlacklisted(context, address, body)) {

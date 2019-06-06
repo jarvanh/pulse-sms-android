@@ -67,7 +67,7 @@ object MmsSettings {
             this.numberOfMessagesBeforeMms = -1
         } else {
             this.convertLongMessagesToMMS = true
-            this.numberOfMessagesBeforeMms = Integer.parseInt(convertToMmsAfterXMessages)
+            this.numberOfMessagesBeforeMms = Integer.parseInt(convertToMmsAfterXMessages!!)
         }
     }
 

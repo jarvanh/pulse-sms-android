@@ -89,7 +89,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
 
         return try {
             val intent = activity.packageManager.getLaunchIntentForPackage("com.google.android.apps.tachyon")
-            intent.data = Uri.parse("tel:${conversation.phoneNumbers!!}")
+            intent!!.data = Uri.parse("tel:${conversation.phoneNumbers!!}")
             activity.startActivity(intent)
             true
         } catch (e: Exception) {
@@ -281,7 +281,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
                     .setNegativeButton(R.string.menu_copy_phone_number) { _, _ ->
                         val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
                         val clip = ClipData.newPlainText("phone_number", conversation.phoneNumbers)
-                        clipboard!!.primaryClip = clip
+                        clipboard!!.setPrimaryClip(clip)
                     }
 
             val messages = source.getMessages(activity, conversation.id)

@@ -71,7 +71,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
             val body = intent.extras!!.getString("sms_body")!!
             if (intent.dataString != null) {
                 val phoneNumbers = if (intent.dataString!!.contains("?")) {
-                    PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString.substring(0, intent.dataString.indexOf("?"))))
+                    PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString!!.substring(0, intent.dataString!!.indexOf("?"))))
                 } else {
                     PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString))
                 }
@@ -95,8 +95,8 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
     }
 
     private fun initiatedFromWebLink(intent: Intent) {
-        val phoneNumbers = if (intent.dataString.contains("?")) {
-            PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString.substring(0, intent.dataString.indexOf("?"))))
+        val phoneNumbers = if (intent.dataString?.contains("?") == true) {
+            PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString!!.substring(0, intent.dataString!!.indexOf("?"))))
         } else {
             PhoneNumberUtils.parseAddress(Uri.decode(intent.dataString))
         }
@@ -111,7 +111,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
 
         val numbers = builder.toString()
 
-        val body = NonStandardUriUtils.getQueryParams(intent.dataString)["body"] ?:
+        val body = NonStandardUriUtils.getQueryParams(intent.dataString!!)["body"] ?:
                 intent.extras?.getString("sms_body")
         if (body != null) {
             activity.shareHandler.apply(ShareData(MimeType.TEXT_PLAIN, body), numbers)
@@ -209,7 +209,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
         val data = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM).toString()
 
         try {
-            if (intent.extras != null && intent.extras.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
+            if (intent.extras != null && intent.extras!!.containsKey(MessengerChooserTargetService.EXTRA_CONVO_ID)) {
                 activity.shareHandler.directShare(ShareData(intent.type!!,data), true)
             } else {
                 activity.sender.fab.setImageResource(R.drawable.ic_send)

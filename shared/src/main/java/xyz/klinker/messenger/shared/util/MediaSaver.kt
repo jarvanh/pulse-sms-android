@@ -109,7 +109,7 @@ class MediaSaver {
         } else {
             try {
                 val `in` = context!!.contentResolver.openInputStream(Uri.parse(message.data))
-                FileUtils.copy(`in`, dst)
+                FileUtils.copy(`in`!!, dst)
                 makeToast(R.string.saved)
             } catch (e: IOException) {
                 e.printStackTrace()

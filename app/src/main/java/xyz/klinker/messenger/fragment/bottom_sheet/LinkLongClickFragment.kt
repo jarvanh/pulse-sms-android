@@ -75,7 +75,7 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
 
             val clipboard = activity.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("messenger", link)
-            clipboard.primaryClip = clip
+            clipboard.setPrimaryClip(clip)
             Toast.makeText(activity, R.string.message_copied_to_clipboard,
                     Toast.LENGTH_SHORT).show()
 

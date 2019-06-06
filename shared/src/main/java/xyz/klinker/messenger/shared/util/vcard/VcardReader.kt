@@ -18,7 +18,7 @@ object VcardReader {
     fun readCotactCard(context: Context, uri: Uri): String {
         return try {
             val inputStream = context.contentResolver.openInputStream(uri)
-            inputStream.bufferedReader().use { it.readText() }
+            inputStream!!.bufferedReader().use { it.readText() }
         } catch (e: Throwable) {
             ""
         }

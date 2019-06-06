@@ -15,9 +15,9 @@ open class NotificationCopyOtpReceiver : xyz.klinker.messenger.shared.receiver.n
             return
         }
 
-        val otp = intent.getStringExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationCopyOtpReceiver.Companion.EXTRA_PASSWORD) ?: return
+        val otp = intent.getStringExtra(EXTRA_PASSWORD) ?: return
         val clip = ClipData.newPlainText("one_time_password", otp)
-        (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?)?.primaryClip = clip
+        (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?)?.setPrimaryClip(clip)
     }
 
     companion object {

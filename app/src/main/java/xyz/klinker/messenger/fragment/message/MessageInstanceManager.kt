@@ -12,8 +12,8 @@ class MessageInstanceManager(private val fragment: MessageListFragment) {
         get() = fragment.arguments
 
     val conversationId: Long by lazy { arguments!!.getLong(ARG_CONVERSATION_ID) }
-    val title: String by lazy { arguments!!.getString(ARG_TITLE) }
-    val phoneNumbers: String by lazy { arguments!!.getString(ARG_PHONE_NUMBERS) }
+    val title: String by lazy { arguments!!.getString(ARG_TITLE)!! }
+    val phoneNumbers: String by lazy { arguments!!.getString(ARG_PHONE_NUMBERS)!! }
     val imageUri: String? by lazy { arguments!!.getString(ARG_IMAGE_URI) }
     val color: Int by lazy { arguments!!.getInt(ARG_COLOR) }
     val colorDark: Int by lazy { arguments!!.getInt(ARG_COLOR_DARKER) }

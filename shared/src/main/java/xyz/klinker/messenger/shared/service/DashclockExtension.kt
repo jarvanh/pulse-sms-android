@@ -65,7 +65,7 @@ class DashclockExtension : DashClockExtension() {
     private fun getBody(conversations: List<Conversation>) = when {
         conversations.size == 1 -> conversations[0].snippet
         conversations.size > 1 -> {
-            val builder = StringBuilder(conversations[0].title)
+            val builder = StringBuilder(conversations[0].title!!)
             for (i in 1 until conversations.size) {
                 builder.append(", ").append(conversations[i].title)
             }

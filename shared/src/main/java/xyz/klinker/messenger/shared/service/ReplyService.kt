@@ -77,7 +77,7 @@ class ReplyService : IntentService("Reply Service") {
                     .getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
         else
             null
-        m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
+        m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
 
         val messageId = DataSource.insertMessage(this, m, conversationId, true)
         DataSource.readConversation(this, conversationId)

@@ -97,7 +97,7 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
 
                 // the message timestamp should be more than the last time this service ran, but more than 5 seconds old,
                 // and it shouldn't already be in the database
-                if (messageTimestamp in (lastRun + 1)..(fiveSecondsBefore - 1)) {
+                if (messageTimestamp in (lastRun + 1) until fiveSecondsBefore) {
                     if (!alreadyInDatabase(pulseMessages, messageBody, messageType)) {
                         val message = Message()
 
@@ -108,7 +108,7 @@ class NewMessagesCheckService : IntentService("NewMessageCheckService") {
                         message.read = true
                         message.seen = true
                         if (messageType != Message.TYPE_RECEIVED) {
-                            message.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
+                            message.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
                         } else {
                             message.sentDeviceId = -1L
                         }

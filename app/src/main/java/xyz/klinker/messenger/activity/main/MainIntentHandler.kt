@@ -37,7 +37,7 @@ class MainIntentHandler(private val activity: MessengerActivity) {
                     activity.onBackPressed()
                 }
 
-                displayShortcutConversation(java.lang.Long.parseLong(intent.data!!.lastPathSegment))
+                displayShortcutConversation(java.lang.Long.parseLong(intent.data!!.lastPathSegment!!))
                 activityIntent.data = null
 
                 return true

@@ -130,7 +130,7 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
     private fun copyToClipboard(text: String?) {
         val clipboard = fragmentActivity?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         val clip = ClipData.newPlainText("app_version", text)
-        clipboard?.primaryClip = clip
+        clipboard?.setPrimaryClip(clip)
         Toast.makeText(fragmentActivity, R.string.message_copied_to_clipboard,
                 Toast.LENGTH_SHORT).show()
     }

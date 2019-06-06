@@ -27,7 +27,7 @@ class ProductPurchased(val type: ProductType?, val productId: String) {
 
             // BILLING_RESPONSE_OK
             if (response == 0) {
-                bundle.getStringArrayList("INAPP_PURCHASE_ITEM_LIST").mapTo(list) { ProductPurchased(type, it) }
+                bundle.getStringArrayList("INAPP_PURCHASE_ITEM_LIST")?.mapTo(list) { ProductPurchased(type, it) }
             }
 
             return list

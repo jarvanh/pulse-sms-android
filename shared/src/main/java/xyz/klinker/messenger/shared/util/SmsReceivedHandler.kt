@@ -59,7 +59,7 @@ class SmsReceivedHandler(private val context: Context) {
             }
 
             body += sms.messageBody
-            address = sms.originatingAddress
+            address = sms.originatingAddress!!
             date = sms.timestampMillis
         }
 

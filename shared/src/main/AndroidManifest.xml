@@ -284,8 +284,8 @@
 
         <service
             android:exported="false"
-            android:name=".service.jobs.CleanupOldMessagesJob">
-        <!--            android:foregroundServiceType="dataSync">-->
+            android:name=".service.jobs.CleanupOldMessagesJob"
+            android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
@@ -301,8 +301,8 @@
 
         <service
             android:exported="false"
-            android:name=".service.jobs.ContactSyncJob">
-<!--            android:foregroundServiceType="dataSync">-->
+            android:name=".service.jobs.ContactSyncJob"
+            android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
@@ -310,8 +310,8 @@
 
         <service
             android:exported="false"
-            android:name=".service.jobs.MarkAsSentJob">
-<!--            android:foregroundServiceType="dataSync">-->
+            android:name=".service.jobs.MarkAsSentJob"
+            android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
@@ -319,8 +319,8 @@
 
         <service
             android:exported="false"
-            android:name=".service.jobs.SyncRetryableRequestsJob">
-<!--            android:foregroundServiceType="dataSync">-->
+            android:name=".service.jobs.SyncRetryableRequestsJob"
+            android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
@@ -328,27 +328,27 @@
 
         <service
             android:exported="false"
-            android:name=".service.jobs.RepostQuickComposeNotification">
-<!--            android:foregroundServiceType="dataSync">-->
+            android:name=".service.jobs.RepostQuickComposeNotification"
+            android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
         </service>
 
-        <service android:name=".service.ApiUploadService" />
-<!--            android:foregroundServiceType="dataSync">-->
-        <service android:name=".service.ApiDownloadService" />
-<!--            android:foregroundServiceType="dataSync">-->
-        <service android:name=".service.message_parser.MediaParserService" />
-<!--            android:foregroundServiceType="dataSync">-->
-        <service android:name=".service.message_parser.AutoReplyParserService" />
-<!--            android:foregroundServiceType="dataSync">-->
-        <service android:name=".service.message_parser.VcardParserService" />
-<!--            android:foregroundServiceType="dataSync">-->
-        <service android:name=".service.ResendFailedMessage" />
-<!--            android:foregroundServiceType="dataSync">-->
-        <service android:name=".service.QuickComposeNotificationService" />
-<!--            android:foregroundServiceType="dataSync">-->
+        <service android:name=".service.ApiUploadService"
+            android:foregroundServiceType="dataSync"/>
+        <service android:name=".service.ApiDownloadService"
+            android:foregroundServiceType="dataSync"/>
+        <service android:name=".service.message_parser.MediaParserService"
+            android:foregroundServiceType="dataSync"/>
+        <service android:name=".service.message_parser.AutoReplyParserService"
+            android:foregroundServiceType="dataSync"/>
+        <service android:name=".service.message_parser.VcardParserService"
+            android:foregroundServiceType="dataSync"/>
+        <service android:name=".service.ResendFailedMessage"
+            android:foregroundServiceType="dataSync"/>
+        <service android:name=".service.QuickComposeNotificationService"
+            android:foregroundServiceType="dataSync"/>
 
         <service
             android:name=".service.jobs.SubscriptionExpirationCheckJob"

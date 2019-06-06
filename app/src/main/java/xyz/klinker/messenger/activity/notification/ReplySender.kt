@@ -109,7 +109,7 @@ class ReplySender(private val activity: MarshmallowReplyActivity, private val da
     }
 
     private fun sendMessage() {
-        val message = messageInput.text.toString().trim({ it <= ' ' })
+        val message = messageInput.text.toString().trim { it <= ' ' }
 
         val m = Message()
         m.conversationId = dataProvider.conversationId
@@ -121,7 +121,7 @@ class ReplySender(private val activity: MarshmallowReplyActivity, private val da
         m.seen = true
         m.from = null
         m.color = null
-        m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId) else -1L
+        m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
         m.simPhoneNumber = if (dataProvider.conversation?.simSubscriptionId != null)
             DualSimUtils.getPhoneNumberFromSimSubscription(dataProvider.conversation?.simSubscriptionId!!)
         else null

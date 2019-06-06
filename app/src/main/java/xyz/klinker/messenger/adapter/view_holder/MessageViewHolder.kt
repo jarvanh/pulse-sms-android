@@ -195,7 +195,7 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
     private fun copyMessageText() {
         val clipboard = itemView.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("messenger", message?.text.toString())
-        clipboard.primaryClip = clip
+        clipboard.setPrimaryClip(clip)
         Toast.makeText(itemView.context, R.string.message_copied_to_clipboard,
                 Toast.LENGTH_SHORT).show()
     }

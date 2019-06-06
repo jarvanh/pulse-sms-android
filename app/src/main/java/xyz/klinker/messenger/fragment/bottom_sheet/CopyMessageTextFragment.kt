@@ -21,7 +21,7 @@ class CopyMessageTextFragment(val message: String) : TabletOptimizedBottomSheetD
         val copyText = contentView.findViewById<View>(R.id.copy_all)
         copyText.setOnClickListener {
             val clip = ClipData.newPlainText("message", message)
-            (activity?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?)?.primaryClip = clip
+            (activity?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?)?.setPrimaryClip(clip)
             Toast.makeText(activity, R.string.message_copied_to_clipboard, Toast.LENGTH_SHORT).show()
 
             dismiss()
