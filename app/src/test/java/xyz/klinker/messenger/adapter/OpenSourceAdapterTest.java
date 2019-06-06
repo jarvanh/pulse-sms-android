@@ -18,11 +18,13 @@ package xyz.klinker.messenger.adapter;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.R;
@@ -48,7 +50,7 @@ public class OpenSourceAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getView() {
-        View view = adapter.getView(1, null, null);
+        View view = adapter.getView(1, null, new FrameLayout(RuntimeEnvironment.application));
         TextView title = (TextView) view.findViewById(R.id.title);
         TextView license = (TextView) view.findViewById(R.id.license);
 

@@ -17,11 +17,13 @@
 package xyz.klinker.messenger.adapter;
 
 import android.app.Activity;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.shared.util.xml.ChangelogParser;
@@ -46,7 +48,7 @@ public class ChangelogAdapterTest extends MessengerRobolectricSuite {
 
     @Test
     public void getView() {
-        TextView textView = (TextView) adapter.getView(0, null, null);
+        TextView textView = (TextView) adapter.getView(0, null, new FrameLayout(RuntimeEnvironment.application));
         assertNotNull(textView.getText());
     }
 
