@@ -379,6 +379,7 @@ class NotificationConversationProvider(private val service: Context, private val
     }
 
     private fun NotificationCompat.Builder.addPerson(conversation: NotificationConversation): NotificationCompat.Builder {
+        // TODO: use a "person" object here, so that bubbles work?
         if (!conversation.groupConversation) {
             this.addPerson("tel:" + conversation.phoneNumbers!!)
         } else {
@@ -400,7 +401,7 @@ class NotificationConversationProvider(private val service: Context, private val
         val intent = PendingIntent.getActivity(
                 service,
                 conversation.id.toInt(),
-                ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY)
+                ActivityUtils.buildForComponent(ActivityUtils.BUBBLE_ACTIVITY)
                         .setAction(Intent.ACTION_VIEW)
                         .setData(uri),
                 PendingIntent.FLAG_UPDATE_CURRENT

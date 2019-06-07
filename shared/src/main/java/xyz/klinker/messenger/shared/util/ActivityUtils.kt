@@ -37,6 +37,8 @@ object ActivityUtils {
 
     val MESSENGER_ACTIVITY = ComponentName("xyz.klinker.messenger",
             "xyz.klinker.messenger" + ".activity.MessengerActivity")
+    val BUBBLE_ACTIVITY = ComponentName("xyz.klinker.messenger",
+            "xyz.klinker.messenger" + ".activity.BubbleActivity")
     val COMPOSE_ACTIVITY = ComponentName("xyz.klinker.messenger",
             "xyz.klinker.messenger" + ".activity.compose.ComposeActivity")
     val QUICK_SHARE_ACTIVITY = ComponentName("xyz.klinker.messenger",

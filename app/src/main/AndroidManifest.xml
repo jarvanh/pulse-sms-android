@@ -118,6 +118,14 @@
         </activity>
 
         <activity
+            android:name=".activity.BubbleActivity"
+            android:theme="@style/PulseTheme.MessengerActivity"
+            android:allowEmbedded="true"
+            android:documentLaunchMode="always"
+            android:resizeableActivity="true"
+            />
+
+        <activity
             android:name=".activity.MessengerTvActivity"
             android:theme="@style/AppTheme.Leanback"
             android:windowSoftInputMode="adjustPan">

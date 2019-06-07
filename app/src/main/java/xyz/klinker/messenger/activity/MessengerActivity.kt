@@ -45,7 +45,7 @@ import xyz.klinker.messenger.shared.util.*
  * Main entry point to the app. This will serve for setting up the drawer view, finding
  * conversations and displaying things on the screen to get the user started.
  */
-class MessengerActivity : AppCompatActivity() {
+open class MessengerActivity : AppCompatActivity() {
 
     val navController = MainNavigationController(this)
     val accountController = MainAccountController(this)
