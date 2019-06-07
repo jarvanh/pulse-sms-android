@@ -3,8 +3,11 @@ package xyz.klinker.messenger.shared.service.notification.conversation
 import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -46,6 +49,7 @@ class NotificationConversationProvider(private val service: Context, private val
                 .setGroup(if (numConversations > 1) NotificationConstants.GROUP_KEY_MESSAGES else null)
                 .applyLightsSoundAndVibrate(conversation, conversationIndex)
                 .addPerson(conversation)
+                .bubble(conversation)
 
         val builder = prepareBuilder(conversation, conversationIndex)
                 .setDefaults(buildNotificationDefaults(conversation, conversationIndex))
@@ -382,6 +386,31 @@ class NotificationConversationProvider(private val service: Context, private val
                 this.addPerson("tel:$number")
             }
         }
+
+        return this
+    }
+
+    private fun NotificationCompat.Builder.bubble(conversation: NotificationConversation): NotificationCompat.Builder {
+        if (!AndroidVersionUtil.isAndroidQ) {
+            return this
+        }
+
+        val icon = IconCompat.createWithAdaptiveBitmap(buildContactImage(conversation))
+        val uri = Uri.parse("https://messenger.klinkerapps.com/" + conversation.id)
+        val intent = PendingIntent.getActivity(
+                service,
+                conversation.id.toInt(),
+                ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY)
+                        .setAction(Intent.ACTION_VIEW)
+                        .setData(uri),
+                PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        this.bubbleMetadata = NotificationCompat.BubbleMetadata.Builder()
+                .setDesiredHeight(DensityUtil.toDp(service, 400))
+                .setIcon(icon)
+                .setIntent(intent)
+                .build()
 
         return this
     }
