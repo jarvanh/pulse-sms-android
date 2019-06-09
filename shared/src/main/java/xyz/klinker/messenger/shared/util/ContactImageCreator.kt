@@ -50,7 +50,7 @@ object ContactImageCreator {
             context.resources.getColor(R.color.lightToolbarTextColor)
         textPaint.textAlign = Paint.Align.CENTER
         textPaint.isAntiAlias = true
-        textPaint.textSize = (size / 1.5).toInt().toFloat()
+        textPaint.textSize = (size / 2).toInt().toFloat()
 
         try {
             canvas.drawText(conversation.title!!.substring(0, 1).toUpperCase(), (canvas.width / 2).toFloat(),
