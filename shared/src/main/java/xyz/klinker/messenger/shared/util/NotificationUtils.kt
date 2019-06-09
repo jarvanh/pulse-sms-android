@@ -16,6 +16,7 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 object NotificationUtils {
 
     const val DEFAULT_CONVERSATION_CHANNEL_ID = "default-conversation-channel"
+    const val BUBBLE_CHANNEL_ID = "bubble-notification-channel"
     const val SILENT_CONVERSATION_CHANNEL_ID = "silent-conversation-channel"
     const val QUICK_TEXT_CHANNEL_ID = "quick-text"
     const val SILENT_BACKGROUND_CHANNEL_ID = "silent-background-services"
@@ -74,6 +75,22 @@ object NotificationUtils {
         defaultChannel.setShowBadge(true)
         defaultChannel.enableVibration(true)
         manager.createNotificationChannel(defaultChannel)
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private fun createBubbleChannel(context: Context) {
+        if (!AndroidVersionUtil.isAndroidQ) {
+            return
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val bubbleChannel = NotificationChannel(BUBBLE_CHANNEL_ID,
+                context.getString(R.string.bubble_channel), NotificationManager.IMPORTANCE_HIGH)
+        bubbleChannel.enableLights(false)
+        bubbleChannel.setBypassDnd(false)
+        bubbleChannel.setShowBadge(false)
+        bubbleChannel.enableVibration(false)
+        manager.createNotificationChannel(bubbleChannel)
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -157,6 +174,7 @@ object NotificationUtils {
         createSilentConversationChannel(context)
         createSilentBackgroundChannel(context)
         createAccountActivityChannel(context)
+        createBubbleChannel(context)
     }
 
     @TargetApi(Build.VERSION_CODES.O)

@@ -299,6 +299,7 @@
     <string name="creating_channels_text">Creating notification channels…</string>
     <string name="write_new_message">Write a new message…</string>
     <string name="receiving_a_message">Receiving a message…</string>
+    <string name="bubble_channel">Notification Bubbles</string>
 
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>
