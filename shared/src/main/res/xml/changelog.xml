@@ -17,6 +17,16 @@
 <changelog>
 
     <version
+        name="4.10.0"
+        description="June 11th, 2019">
+        <text>Built for Android Q</text>
+        <text>Android Q: option to "Pop-out to Bubble" within any conversation</text>
+        <text>Android Q: these notification bubbles have obvious system level bugs with the beta version of Android. Once they are improved at the system level, Pulse's support for them will expand into other areas.</text>
+        <text>Some UI improvements</text>
+        <text>Update translations</text>
+    </version>
+
+    <version
         name="4.9.3"
         description="June 1st, 2019">
         <!-- Only create one thread when receiving messages -->

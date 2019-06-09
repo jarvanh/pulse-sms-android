@@ -1,1 +1,1 @@
-This update contains various UI tweaks, performance improvements, and fixes for bugs that have been reported over the past few weeks.
+If you are on the Android Q beta, this update starts to support some of it's latest features! Check out the changelog in the app, for more information.
