@@ -25,6 +25,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_show_bubble"
+        android:icon="@drawable/ic_bubble"
+        android:title="@string/menu_show_bubble"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_conversation_information"
         android:icon="@drawable/ic_about"
         android:title="@string/menu_conversation_information"

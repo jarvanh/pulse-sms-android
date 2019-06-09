@@ -9,15 +9,25 @@ import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.fragment.message.MessageInstanceManager
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.util.ActivityUtils
+import java.lang.Exception
 
-class NoLimitMessageListActivity : AppCompatActivity() {
+open class NoLimitMessageListActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_full_conversation)
 
-        val conversation = DataSource.getConversation(this, intent.getLongExtra(EXTRA_CONVERSATION_ID, -1))
+        var conversationId = intent.getLongExtra(EXTRA_CONVERSATION_ID, -1)
+        if (conversationId == -1L) {
+            conversationId = try {
+                intent.data!!.lastPathSegment!!.toLong()
+            } catch (e: Exception) {
+                -1L
+            }
+        }
+
+        val conversation = DataSource.getConversation(this, conversationId)
         if (conversation == null) {
             finish()
             return

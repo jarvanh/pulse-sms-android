@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.BubbleActivity
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.MessengerActivityExtras
@@ -29,6 +30,10 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
         fragment.sendManager.initSendbar()
         fragment.attachManager.setupHelperViews()
         fragment.attachInitializer.initAttachHolder()
+
+        if (activity is BubbleActivity) {
+            dragDismissFrameLayout.isEnabled = false
+        }
 
         dragDismissFrameLayout.addListener(object : ElasticDragDismissFrameLayout.ElasticDragDismissCallback() {
             override fun onDrag(elasticOffset: Float, elasticOffsetPixels: Float, rawOffset: Float, rawOffsetPixels: Float) {}

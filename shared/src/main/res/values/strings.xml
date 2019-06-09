@@ -48,6 +48,7 @@
     <string name="menu_snooze">Snooze notifications</string>
     <string name="menu_call">Call contact</string>
     <string name="menu_video_call">Video call with Duo</string>
+    <string name="menu_show_bubble">Pop-out to Bubble</string>
     <string name="menu_view_contact">View contact</string>
     <string name="menu_view_contacts">View contacts</string>
     <string name="menu_view_media">View media</string>

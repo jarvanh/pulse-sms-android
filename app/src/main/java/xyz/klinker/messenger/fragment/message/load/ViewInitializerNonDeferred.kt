@@ -219,5 +219,11 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
                 toolbar.menu.findItem(R.id.menu_call_with_duo)?.isVisible = false
             } catch (e: Exception) { }
         }
+
+        if (!AndroidVersionUtil.isAndroidQ) {
+            try {
+                toolbar.menu.findItem(R.id.menu_show_bubble)?.isVisible = false
+            } catch (e: Exception) { }
+        }
     }
 }

@@ -30,6 +30,7 @@ import java.util.NoSuchElementException
 import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import xyz.klinker.messenger.shared.service.notification.NotificationBubbleHelper
 
 class MainNavigationMessageListActionDelegate(private val activity: MessengerActivity) {
 
@@ -74,6 +75,20 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             Toast.makeText(activity, R.string.no_apps_found, Toast.LENGTH_SHORT).show()
         }
 
+        return true
+    }
+
+    fun showBubble(): Boolean {
+        val otherFrag = navController.otherFragment
+        val conversation = if (navController.isConversationListExpanded()) {
+            navController.conversationListFragment!!.expandedItem!!.conversation!!
+        } else if (otherFrag is ConversationListFragment && otherFrag.isExpanded) {
+            otherFrag.expandedItem!!.conversation!!
+        } else {
+            return false
+        }
+
+        NotificationBubbleHelper.showBubble(activity, conversation)
         return true
     }
 
