@@ -49,7 +49,7 @@ class NotificationConversationProvider(private val service: Context, private val
                 .setGroup(if (numConversations > 1) NotificationConstants.GROUP_KEY_MESSAGES else null)
                 .applyLightsSoundAndVibrate(conversation, conversationIndex)
                 .addPerson(conversation)
-                .bubble(conversation)
+//                .bubble(conversation)
 
         val builder = prepareBuilder(conversation, conversationIndex)
                 .setDefaults(buildNotificationDefaults(conversation, conversationIndex))
