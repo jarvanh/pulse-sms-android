@@ -321,16 +321,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             val conversation = fragment!!.expandedItem!!.conversation
 
             BlacklistFragment.addBlacklistPhone(activity, conversation!!.phoneNumbers) {
-                val position = fragment.expandedItem!!.adapterPosition
-                fragment.expandedItem!!.itemView.performClick()
-
-                try {
-                    val adapter = fragment.recyclerView.adapter as ConversationListAdapter
-                    adapter.archiveItem(position)
-                    adapter.notifyItemRemoved(position)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                archiveConversation()
             }
 
             true
