@@ -39,6 +39,10 @@ import xyz.klinker.messenger.shared.util.TimeUtils
  */
 class SmsDeliveredReceiver : DeliveredReceiver() {
 
+    override fun updateInInternalDatabase(context: Context, intent: Intent, resultCode: Int) {
+        Thread { super.updateInInternalDatabase(context, intent, resultCode) }.start()
+    }
+
     override fun onMessageStatusUpdated(context: Context, intent: Intent, receiverResultCode: Int) {
         if (Account.exists() && !Account.primary) {
             return
