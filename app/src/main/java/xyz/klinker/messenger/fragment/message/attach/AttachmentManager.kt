@@ -83,9 +83,11 @@ class AttachmentManager(private val fragment: MessageListFragment) {
     }
 
     fun clearAttachedData() {
-        if (activity != null) {
-            DataSource.deleteDrafts(activity!!, argManager.conversationId)
-        }
+        Thread {
+            if (activity != null) {
+                DataSource.deleteDrafts(activity!!, argManager.conversationId)
+            }
+        }.start()
 
         attachedImage.setImageDrawable(null)
         attachedImageHolder.visibility = View.GONE

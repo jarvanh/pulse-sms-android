@@ -63,8 +63,16 @@ class MessageListUpdatedReceiver(private val fragment: IMessageListFragment) : B
                 fragment.loadMessages(true)
 
                 if (NotificationConstants.CONVERSATION_ID_OPEN == conversationId) {
-                    DataSource.readConversation(context, conversationId, true)
-                    Handler().postDelayed({ ApiUtils.dismissNotification(Account.accountId, Account.deviceId, conversationId) }, 1000)
+                    Thread {
+                        DataSource.readConversation(context, conversationId, true)
+
+                        try {
+                            Thread.sleep(1000)
+                        } catch (e: Exception) {
+                        }
+
+                        ApiUtils.dismissNotification(Account.accountId, Account.deviceId, conversationId)
+                    }.start()
                 }
             } else {
                 fragment.loadMessages(false)
