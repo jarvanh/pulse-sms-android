@@ -46,10 +46,10 @@ class SmsReceivedReceiver : BroadcastReceiver() {
 
         fun shouldSaveMessage(context: Context, message: Message, phoneNumbers: String): Boolean {
             val conversationId = DataSource.findConversationId(context, phoneNumbers) ?: return true
-            val databaseMessage = DataSource.getMessages(context, conversationId, 1).firstOrNull() ?: return true
+            val databaseMessage = DataSource.getLatestMessage(context, conversationId) ?: return true
             val isSameMessage = databaseMessage.data == message.data
             val isSameType = databaseMessage.type == message.type
-            val areTimestampsClose = Math.abs(message.timestamp - databaseMessage.timestamp) < TimeUtils.MINUTE * 1
+            val areTimestampsClose = Math.abs(message.timestamp - databaseMessage.timestamp) < TimeUtils.MINUTE * 3
 
             return !isSameMessage || !isSameType || !areTimestampsClose
         }

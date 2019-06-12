@@ -1563,7 +1563,6 @@ object DataSource {
         } else {
             getMessages(context, conversationId)
         }
-
     }
 
     /**
@@ -1599,6 +1598,35 @@ object DataSource {
         } catch (e: Exception) {
             ensureActionable(context)
             database(context).query(Message.TABLE, null, null, null, null, null, Message.COLUMN_TIMESTAMP + " desc", "1")
+        }
+
+        return if (cursor.moveToFirst()) {
+            val message = Message()
+            message.fillFromCursor(cursor)
+            cursor.closeSilent()
+            message
+        } else {
+            cursor.closeSilent()
+            null
+        }
+    }
+
+    /**
+     * Get the last message in a conversation
+     *
+     * @param conversationId the conversation id to find messages for.
+     * @return a cursor with all messages.
+     */
+    fun getLatestMessage(context: Context, conversationId: Long): Message? {
+        val cursor = try {
+            database(context).query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
+                    arrayOf(java.lang.Long.toString(conversationId)), null, null,
+                    Message.COLUMN_TIMESTAMP + " desc", "1")
+        } catch (e: Exception) {
+            ensureActionable(context)
+            database(context).query(Message.TABLE, null, Message.COLUMN_CONVERSATION_ID + "=?",
+                    arrayOf(java.lang.Long.toString(conversationId)), null, null,
+                    Message.COLUMN_TIMESTAMP + " desc", "1")
         }
 
         return if (cursor.moveToFirst()) {
