@@ -32,13 +32,13 @@ class SmsReceivedReceiver : BroadcastReceiver() {
             return
         }
 
-        SmsReceivedService.start(context, intent)
+//        SmsReceivedService.start(context, intent)
 //        val result = goAsync()
-//        Thread {
-//            lastReceived = TimeUtils.now
-//            SmsReceivedHandler(context).newSmsRecieved(intent)
+        Thread {
+            lastReceived = TimeUtils.now
+            SmsReceivedHandler(context).newSmsRecieved(intent)
 //            result.finish()
-//        }.start()
+        }.start()
     }
 
     companion object {
