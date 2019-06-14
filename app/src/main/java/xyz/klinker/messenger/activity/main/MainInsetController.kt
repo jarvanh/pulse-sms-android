@@ -65,8 +65,11 @@ class MainInsetController(private val activity: MessengerActivity) {
             val modifiedInsets = insets.replaceSystemWindowInsets(insets.systemWindowInsetLeft, insets.systemWindowInsetTop, insets.systemWindowInsetRight, 0)
             activity.navController.drawerLayout?.setChildInsets(modifiedInsets, insets.systemWindowInsetTop > 0)
 
-            modifyMessengerActivityElements()
-            modifyConversationListElements(activity.navController.conversationListFragment)
+            try {
+                modifyMessengerActivityElements()
+                modifyConversationListElements(activity.navController.conversationListFragment)
+            } catch (e: Exception) {
+            }
 
             modifiedInsets
         }

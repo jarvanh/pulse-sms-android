@@ -134,5 +134,5 @@ class ConversationListAdapter(context: MessengerActivity, initialConversations: 
     fun findConversationForPosition(position: Int) = dataProvider.findConversationForPosition(position)
     fun showHeaderAboutTextingOnline() = Build.FINGERPRINT != "robolectric" && !Account.exists() &&
             Settings.showTextOnlineOnConversationList &&
-            Math.abs(Settings.installTime - Date().time) > TimeUtils.MINUTE * 15
+            Math.abs(Settings.installTime - Date().time) > TimeUtils.MINUTE * 0
 }
