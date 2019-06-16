@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.10.1"
+        description="June 18th, 2019">
+<!--        <text>Remove all of the "goAsync" from the SMS/MMS library receivers</text>-->
+    </version>
+
+    <version
         name="4.10.0"
         description="June 11th, 2019">
         <text>Built for Android Q</text>

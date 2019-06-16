@@ -51,83 +51,85 @@ class ScheduledMessageJob : BroadcastReceiver() {
             ScheduledMessageJob.lastRun = TimeUtils.now
         }
 
-        val source = DataSource
-        val messages = source.getScheduledMessages(context)
+        Thread {
+            val source = DataSource
+            val messages = source.getScheduledMessages(context)
 
-        if (messages.moveToFirst()) {
-            do {
-                val timestamp = messages.getLong(
-                        messages.getColumnIndex(ScheduledMessage.COLUMN_TIMESTAMP))
+            if (messages.moveToFirst()) {
+                do {
+                    val timestamp = messages.getLong(
+                            messages.getColumnIndex(ScheduledMessage.COLUMN_TIMESTAMP))
 
-                // if message scheduled to be sent in less than a half hour in the future,
-                // or more than 60 in the past
-                if (timestamp > TimeUtils.now - TimeUtils.DAY && timestamp < TimeUtils.now + TimeUtils.MINUTE * 15) {
-                    val message = ScheduledMessage()
-                    message.fillFromCursor(messages)
+                    // if message scheduled to be sent in less than a half hour in the future,
+                    // or more than 60 in the past
+                    if (timestamp > TimeUtils.now - TimeUtils.DAY && timestamp < TimeUtils.now + TimeUtils.MINUTE * 15) {
+                        val message = ScheduledMessage()
+                        message.fillFromCursor(messages)
 
-                    // delete, insert and send
-                    source.deleteScheduledMessage(context, message.id)
-                    handleRepeat(context, message)
+                        // delete, insert and send
+                        source.deleteScheduledMessage(context, message.id)
+                        handleRepeat(context, message)
 
-                    val conversationId = source.insertSentMessage(message.to!!, message.data!!, message.mimeType!!, context)
-                    val conversation = source.getConversation(context, conversationId)
+                        val conversationId = source.insertSentMessage(message.to!!, message.data!!, message.mimeType!!, context)
+                        val conversation = source.getConversation(context, conversationId)
 
-                    if (message.mimeType == MimeType.TEXT_PLAIN) {
-                        SendUtils(conversation?.simSubscriptionId).send(context, message.data!!, message.to!!)
-                    } else {
-                        SendUtils(conversation?.simSubscriptionId).send(context, "", message.to!!, Uri.parse(message.data!!), message.mimeType!!)
-                    }
-
-                    // display a notification
-                    val body = "<b>" + message.title + ": </b>" + message.data
-                    val open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY)
-                    open.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    val pendingOpen = PendingIntent.getActivity(context, 0, open,
-                            PendingIntent.FLAG_UPDATE_CURRENT)
-
-                    val notification = NotificationCompat.Builder(context)
-                            .setSmallIcon(R.drawable.ic_stat_notify)
-                            .setContentTitle(context.getString(R.string.scheduled_message_sent))
-                            .setContentText(Html.fromHtml(body))
-                            .setColor(ColorSet.DEFAULT(context).color)
-                            .setAutoCancel(true)
-                            .setContentIntent(pendingOpen)
-                            .build()
-                    NotificationManagerCompat.from(context)
-                            .notify(5555 + message.id.toInt(), notification)
-
-                    try {
-                        // delete the INFO message, if applicable.
-                        val conversationMessages = DataSource.getMessages(context, conversationId)
-
-                        if (conversationMessages.moveToFirst()) {
-                            val mess = Message()
-                            mess.fillFromCursor(conversationMessages)
-                            if (mess.type == Message.TYPE_INFO) {
-                                DataSource.deleteMessage(context, mess.id)
-                            }
+                        if (message.mimeType == MimeType.TEXT_PLAIN) {
+                            SendUtils(conversation?.simSubscriptionId).send(context, message.data!!, message.to!!)
+                        } else {
+                            SendUtils(conversation?.simSubscriptionId).send(context, "", message.to!!, Uri.parse(message.data!!), message.mimeType!!)
                         }
 
-                        CursorUtil.closeSilent(conversationMessages)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                        // display a notification
+                        val body = "<b>" + message.title + ": </b>" + message.data
+                        val open = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY)
+                        open.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        val pendingOpen = PendingIntent.getActivity(context, 0, open,
+                                PendingIntent.FLAG_UPDATE_CURRENT)
+
+                        val notification = NotificationCompat.Builder(context)
+                                .setSmallIcon(R.drawable.ic_stat_notify)
+                                .setContentTitle(context.getString(R.string.scheduled_message_sent))
+                                .setContentText(Html.fromHtml(body))
+                                .setColor(ColorSet.DEFAULT(context).color)
+                                .setAutoCancel(true)
+                                .setContentIntent(pendingOpen)
+                                .build()
+                        NotificationManagerCompat.from(context)
+                                .notify(5555 + message.id.toInt(), notification)
+
+                        try {
+                            // delete the INFO message, if applicable.
+                            val conversationMessages = DataSource.getMessages(context, conversationId)
+
+                            if (conversationMessages.moveToFirst()) {
+                                val mess = Message()
+                                mess.fillFromCursor(conversationMessages)
+                                if (mess.type == Message.TYPE_INFO) {
+                                    DataSource.deleteMessage(context, mess.id)
+                                }
+                            }
+
+                            CursorUtil.closeSilent(conversationMessages)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+                        Log.v("scheduled message", "message was sent and notification given")
+                    } else if (timestamp < TimeUtils.now) {
+                        val message = ScheduledMessage()
+                        message.fillFromCursor(messages)
+
+                        source.deleteScheduledMessage(context, message.id)
+                        handleRepeat(context, message)
                     }
+                } while (messages.moveToNext())
+            }
 
-                    Log.v("scheduled message", "message was sent and notification given")
-                } else if (timestamp < TimeUtils.now) {
-                    val message = ScheduledMessage()
-                    message.fillFromCursor(messages)
+            messages.closeSilent()
 
-                    source.deleteScheduledMessage(context, message.id)
-                    handleRepeat(context, message)
-                }
-            } while (messages.moveToNext())
-        }
-
-        messages.closeSilent()
-
-        context.sendBroadcast(Intent(BROADCAST_SCHEDULED_SENT))
-        ScheduledMessageJob.scheduleNextRun(context)
+            context.sendBroadcast(Intent(BROADCAST_SCHEDULED_SENT))
+            ScheduledMessageJob.scheduleNextRun(context)
+        }.start()
     }
 
     private fun handleRepeat(context: Context, message: ScheduledMessage) {
