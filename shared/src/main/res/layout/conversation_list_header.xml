@@ -23,34 +23,42 @@
     android:paddingTop="4dp"
     android:paddingBottom="4dp">
 
-    <TextView
-        android:id="@+id/header"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
-        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="@dimen/conversation_list_header_padding"
         android:layout_marginStart="@dimen/conversation_list_header_padding"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:paddingEnd="@dimen/conversation_list_padding"
-        android:paddingStart="@dimen/conversation_list_padding"
-        android:textColor="@color/secondaryText"
-        android:textStyle="bold"
-        android:textSize="13sp" />
+        android:paddingStart="@dimen/conversation_list_padding">
 
-    <ImageButton
-        android:id="@+id/section_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginEnd="@dimen/conversation_list_header_padding"
-        android:layout_marginStart="@dimen/conversation_list_header_padding"
-        android:background="?selectableItemBackgroundBorderless"
-        android:contentDescription="@string/mark_section_as_read"
-        android:paddingEnd="@dimen/conversation_list_padding"
-        android:paddingStart="@dimen/conversation_list_padding"
-        android:src="@drawable/ic_done_all"
-        android:tint="@color/secondaryText" />
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondaryText"
+            android:textStyle="bold"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
+
+        <ImageButton
+            android:id="@+id/section_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/mark_section_as_read"
+            android:src="@drawable/ic_done_all"
+            android:tint="@color/secondaryText" />
+
+    </LinearLayout>
+
 
     <FrameLayout
         android:id="@+id/header_card"
