@@ -19,21 +19,19 @@
     android:id="@+id/header_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp">
+    android:background="@color/background">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:gravity="center_vertical"
-        android:layout_marginBottom="4dp"
         android:layout_marginEnd="@dimen/conversation_list_header_padding"
         android:layout_marginStart="@dimen/conversation_list_header_padding"
-        android:layout_marginTop="4dp"
         android:paddingEnd="@dimen/conversation_list_padding"
-        android:paddingStart="@dimen/conversation_list_padding">
+        android:paddingStart="@dimen/conversation_list_padding"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/header"
@@ -59,7 +57,6 @@
 
     </LinearLayout>
 
-
     <FrameLayout
         android:id="@+id/header_card"
         android:layout_width="match_parent"
@@ -68,7 +65,9 @@
         android:layout_marginStart="@dimen/conversation_list_header_padding"
         android:paddingEnd="@dimen/conversation_list_padding"
         android:paddingStart="@dimen/conversation_list_padding"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
