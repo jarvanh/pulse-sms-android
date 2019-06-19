@@ -407,11 +407,11 @@ class NotificationConversationProvider(private val service: Context, private val
                 PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        this.bubbleMetadata = NotificationCompat.BubbleMetadata.Builder()
-                .setDesiredHeight(DensityUtil.toDp(service, 400))
-                .setIcon(icon)
-                .setIntent(intent)
-                .build()
+//        this.bubbleMetadata = NotificationCompat.BubbleMetadata.Builder()
+//                .setDesiredHeight(DensityUtil.toDp(service, 400))
+//                .setIcon(icon)
+//                .setIntent(intent)
+//                .build()
 
         return this
     }
