@@ -1,1 +1,1 @@
-If you are on the Android Q beta, this update starts to support some of it's latest features! Check out the changelog in the app, for more information. For other versions of Android, this update contains bug fixes and stability improvements.
+Optimized download size on the Play Store.
