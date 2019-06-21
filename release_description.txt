@@ -1,1 +1,1 @@
-Optimized download size on the Play Store.
+This update contains some UI improvements, as well as a few bug fixes.
