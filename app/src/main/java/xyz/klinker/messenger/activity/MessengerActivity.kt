@@ -33,6 +33,7 @@ import xyz.klinker.messenger.shared.view.WhitableToolbar
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 import xyz.klinker.messenger.utils.UpdateUtils
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
@@ -62,6 +63,7 @@ class MessengerActivity : AppCompatActivity() {
 
     val toolbar: WhitableToolbar by lazy { findViewById<View>(R.id.toolbar) as WhitableToolbar }
     val fab: FloatingActionButton by lazy { findViewById<View>(R.id.fab) as FloatingActionButton }
+    val snackbarContainer: FrameLayout by lazy { findViewById<FrameLayout>(R.id.snackbar_container) }
     private val content: View by lazy { findViewById<View>(android.R.id.content) }
 
     public override fun onCreate(savedInstanceState: Bundle?) {

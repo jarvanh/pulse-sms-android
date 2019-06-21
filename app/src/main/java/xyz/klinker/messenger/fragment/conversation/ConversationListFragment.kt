@@ -140,8 +140,11 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
 
     override fun onMarkSectionAsRead(sectionText: String, sectionType: Int) {
         val snackbar = Snackbar.make(recyclerView, getString(R.string.marking_section_as_read, sectionText.toLowerCase(Locale.US)), Snackbar.LENGTH_LONG)
-        SnackbarAnimationFix.apply(snackbar)
-        snackbar.show()
+        if (fragmentActivity is MessengerActivity) {
+            (fragmentActivity as MessengerActivity).insetController.adjustSnackbar(snackbar).show()
+        } else {
+            snackbar.show()
+        }
 
         val allConversations = adapter?.conversations
         val markAsRead = ArrayList<Conversation>()

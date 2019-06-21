@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.snackbar.Snackbar
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.fragment.ArchivedConversationListFragment
 import xyz.klinker.messenger.shared.data.DataSource
@@ -65,7 +66,11 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
                 .setAction(R.string.undo) { fragment.recyclerManager.loadConversations() }
                 .addCallback(deleteSnackbarCallback)
         SnackbarAnimationFix.apply(deleteSnackbar!!)
-        deleteSnackbar?.show()
+        if (activity is MessengerActivity) {
+            activity.insetController.adjustSnackbar(deleteSnackbar!!).show()
+        } else {
+            deleteSnackbar?.show()
+        }
 
         NotificationManagerCompat.from(activity!!).cancel(conversation.id.toInt())
 
@@ -88,24 +93,17 @@ class ConversationSwipeHelper(private val fragment: ConversationListFragment) {
                 .setAction(R.string.undo) { fragment.recyclerManager.loadConversations() }
                 .addCallback(archiveSnackbarCallback)
         SnackbarAnimationFix.apply(archiveSnackbar!!)
-        archiveSnackbar?.show()
+        if (activity is MessengerActivity) {
+            activity.insetController.adjustSnackbar(archiveSnackbar!!).show()
+        } else {
+            archiveSnackbar?.show()
+        }
 
         NotificationManagerCompat.from(activity!!).cancel(conversation.id.toInt())
 
         // for some reason, if this is done immediately then the final snackbar will not be
         // displayed
         Handler().postDelayed({ fragment.checkEmptyViewDisplay() }, 500)
-    }
-
-    fun makeSnackbar(text: String, duration: Int, actionLabel: String?, listener: View.OnClickListener?) {
-        val s = Snackbar.make(fragment.recyclerView, text, duration)
-
-        if (actionLabel != null && listener != null) {
-            s.setAction(actionLabel, listener)
-        }
-
-        SnackbarAnimationFix.apply(s)
-        s.show()
     }
 
     fun dismissSnackbars() {

@@ -5,8 +5,9 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.fragment.BlacklistFragment
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
@@ -83,6 +84,11 @@ class MainInsetController(private val activity: MessengerActivity) {
         val recycler = fragment.recyclerView
         recycler.clipToPadding = false
         recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, bottomInsetValue)
+
+        val snackbar = activity.snackbarContainer
+        val layoutParams = snackbar.layoutParams as CoordinatorLayout.LayoutParams
+        layoutParams.bottomMargin = bottomInsetValue
+        snackbar.layoutParams = layoutParams
     }
 
     fun modifyScheduledMessageElements(fragment: ScheduledMessagesFragment) {
@@ -140,6 +146,19 @@ class MainInsetController(private val activity: MessengerActivity) {
         val recycler = fragment.listView
         recycler.clipToPadding = false
         recycler.setPadding(recycler.paddingLeft, recycler.paddingTop, recycler.paddingRight, bottomInsetValue)
+    }
+
+    fun adjustSnackbar(snackbar: Snackbar): Snackbar {
+        if (!AndroidVersionUtil.isAndroidQ) {
+            return snackbar
+        }
+
+        val view = snackbar.view
+        val layoutParams = view.layoutParams as CoordinatorLayout.LayoutParams
+        layoutParams.bottomMargin = bottomInsetValue
+        view.layoutParams = layoutParams
+
+        return snackbar
     }
 
     private fun modifyMessengerActivityElements() {

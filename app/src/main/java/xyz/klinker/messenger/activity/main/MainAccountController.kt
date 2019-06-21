@@ -111,9 +111,11 @@ class MainAccountController(private val activity: MessengerActivity) {
                     IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED))
 
             ApiDownloadService.start(activity)
-            Snackbar.make(activity.findViewById<View>(android.R.id.content),
+            val snackbar = Snackbar.make(activity.snackbarContainer,
                     activity.getString(R.string.downloading_and_decrypting),
-                    Snackbar.LENGTH_LONG).show()
+                    Snackbar.LENGTH_LONG)
+            activity.insetController.adjustSnackbar(snackbar)
+            snackbar.show()
         }, 1000)
     }
 
