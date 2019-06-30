@@ -18,7 +18,7 @@
 
     <version
         name="4.10.2"
-        description="June 21st, 2019">
+        description="June 22nd, 2019">
         <!-- Make the conversation items just a bit smaller, to fit more on the screen -->
         <!-- Android Q: Snackbar should be above the gesture zone -->
         <text>This update contains UI improvements</text>
