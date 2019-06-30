@@ -26,10 +26,11 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
         initBubbleStyle()
         initFontSize()
         initApplyToolbarTheme()
+        initConversationCategories()
+        initMessageTimestamp()
 
         initUseGlobalTheme()
         setUpColors()
-
     }
 
     override fun onStop() {
@@ -81,6 +82,28 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                 .setOnPreferenceChangeListener { _, o ->
                     val colorToolbar = o as Boolean
                     ApiUtils.updateApplyToolbarColor(Account.accountId, colorToolbar)
+
+                    activity?.recreate()
+                    true
+                }
+    }
+
+    private fun initConversationCategories() {
+        findPreference(getString(R.string.pref_conversation_categories))
+                .setOnPreferenceChangeListener { _, o ->
+                    val showCategories = o as Boolean
+                    ApiUtils.updateConversationCategories(Account.accountId, showCategories)
+
+                    activity?.recreate()
+                    true
+                }
+    }
+
+    private fun initMessageTimestamp() {
+        findPreference(getString(R.string.pref_message_timestamp))
+                .setOnPreferenceChangeListener { _, o ->
+                    val showTimestamp = o as Boolean
+                    ApiUtils.updateMessageTimestamp(Account.accountId, showTimestamp)
 
                     activity?.recreate()
                     true

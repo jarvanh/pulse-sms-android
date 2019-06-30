@@ -1406,6 +1406,24 @@ object ApiUtils {
     }
 
     /**
+     * Update whether or not to display the date categories in the conversation list
+     */
+    fun updateConversationCategories(accountId: String?, conversationCategories: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "conversation_categories", "boolean", conversationCategories)
+        }
+    }
+
+    /**
+     * Update whether or not to display the timestamp on every single message
+     */
+    fun updateMessageTimestamp(accountId: String?, messageTimestamp: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "message_timestamp", "boolean", messageTimestamp)
+        }
+    }
+
+    /**
      * Update the base theme (day/night, always dark, always black)
      */
     fun updateBaseTheme(accountId: String?, themeString: String?) {

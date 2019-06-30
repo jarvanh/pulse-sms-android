@@ -391,6 +391,7 @@
     <string name="theme_settings">Customization</string>
     <string name="theme_settings_category">Look and Feel</string>
     <string name="conversation_list_category">Conversation List</string>
+    <string name="message_list_category">Message List</string>
     <string name="general_category">General</string>
     <string name="theme_settings_redirect">Theme</string>
     <string name="base_theme">Base Theme</string>
@@ -407,6 +408,11 @@
     <string name="apply_theme_globally">Apply to all Conversations</string>
     <string name="apply_theme_globally_summary">Remove the per-conversation themes, in favor
         of this global color set</string>
+    <string name="conversation_categories">Display Date Categories</string>
+    <string name="conversation_categories_summary">Categorize conversations by date (Today, Yesterday, etc)
+        instead of displaying a timestamp on each individual conversation</string>
+    <string name="message_timestamp">Timestamp Every Message</string>
+    <string name="message_timestamp_summary">When disabled, you can simply tap any message to see the timestamp.</string>
     <string name="apply_primary_theme_toolbar">Apply Primary Color to App Bar</string>
     <string name="apply_primary_theme_toolbar_summary">Whether or not the app bar should be colorized</string>
     <string name="swipe_delete">Swipe to Delete</string>

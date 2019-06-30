@@ -54,7 +54,6 @@ class AudioWrapper {
                         .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
                         .build(), 1)
             }
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
