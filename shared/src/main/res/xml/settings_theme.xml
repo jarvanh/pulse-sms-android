@@ -56,7 +56,7 @@
         <SwitchPreference
             android:key="@string/pref_conversation_categories"
             android:title="@string/conversation_categories"
-            android:summary="@string/conversation_categories"
+            android:summary="@string/conversation_categories_summary"
             android:defaultValue="true" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
@@ -65,18 +65,18 @@
         android:key="@string/pref_message_list"
         android:title="@string/message_list_category">
 
-        <SwitchPreference
-            android:key="@string/pref_message_timestamp"
-            android:title="@string/message_timestamp"
-            android:summary="@string/message_timestamp_summary"
-            android:defaultValue="false" />
-
         <xyz.klinker.messenger.view.AutoSummaryListPreference
             android:key="@string/pref_bubble_style"
             android:title="@string/bubble_style"
             android:entries="@array/bubble_style"
             android:entryValues="@array/bubble_style_values"
             android:defaultValue="round" />
+
+        <SwitchPreference
+            android:key="@string/pref_message_timestamp"
+            android:title="@string/message_timestamp"
+            android:summary="@string/message_timestamp_summary"
+            android:defaultValue="false" />
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 

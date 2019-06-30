@@ -118,7 +118,7 @@ class MessageListStylingHelper(context: Context?) {
     }
 
     fun applyTimestampHeight(timestamp: TextView, timestampHeight: Int): MessageListStylingHelper {
-        if (TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp)) {
+        if (Settings.timestampEveryMessage || TimeUtils.shouldDisplayTimestamp(currentTimestamp, nextTimestamp)) {
             timestamp.layoutParams.height = timestampHeight
         } else {
             timestamp.layoutParams.height = 0

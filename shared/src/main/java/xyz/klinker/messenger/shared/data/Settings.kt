@@ -78,6 +78,8 @@ object Settings {
     var drivingMode: Boolean = false
     var vacationMode: Boolean = false
     var applyPrimaryColorToToolbar = true
+    var showConversationCategories = true
+    var timestampEveryMessage = false
     lateinit var notificationActions: List<NotificationAction>
 
     // configuration
@@ -162,6 +164,8 @@ object Settings {
         this.drivingMode = sharedPrefs.getBoolean(context.getString(R.string.pref_driving_mode), false)
         this.vacationMode = sharedPrefs.getBoolean(context.getString(R.string.pref_vacation_mode), false)
         this.applyPrimaryColorToToolbar = sharedPrefs.getBoolean(context.getString(R.string.pref_apply_primary_color_toolbar), true)
+        this.showConversationCategories = sharedPrefs.getBoolean(context.getString(R.string.pref_conversation_categories), true)
+        this.timestampEveryMessage = sharedPrefs.getBoolean(context.getString(R.string.pref_message_timestamp), false)
 
         val leftToRightSwipeRep = sharedPrefs.getString(context.getString(R.string.pref_left_to_right_swipe), SwipeOption.ARCHIVE.rep)
         val rightToLeftSwipeRep = sharedPrefs.getString(context.getString(R.string.pref_right_to_left_swipe), SwipeOption.ARCHIVE.rep)

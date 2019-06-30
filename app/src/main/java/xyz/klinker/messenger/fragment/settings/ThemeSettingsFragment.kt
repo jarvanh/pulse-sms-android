@@ -93,8 +93,6 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                 .setOnPreferenceChangeListener { _, o ->
                     val showCategories = o as Boolean
                     ApiUtils.updateConversationCategories(Account.accountId, showCategories)
-
-                    activity?.recreate()
                     true
                 }
     }
@@ -104,8 +102,6 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
                 .setOnPreferenceChangeListener { _, o ->
                     val showTimestamp = o as Boolean
                     ApiUtils.updateMessageTimestamp(Account.accountId, showTimestamp)
-
-                    activity?.recreate()
                     true
                 }
     }
