@@ -38,6 +38,10 @@ class ConversationSectionHeaderBinder(private val adapter: ConversationListAdapt
                 adapter.swipeToDeleteListener.onMarkSectionAsRead(text, dataProvider.sectionCounts[section].type)
             }
         }
+
+        if (!Settings.showConversationCategories) {
+            holder.headerContainer?.visibility = View.GONE
+        }
     }
 
     fun bindOnlinePromotion(holder: ConversationViewHolder) {

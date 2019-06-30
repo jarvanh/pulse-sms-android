@@ -176,13 +176,36 @@ object TimeUtils {
 
         formatted = when {
             timestamp > currentTime - 2 * MINUTE -> context.getString(R.string.now)
-            timestamp > currentTime - DAY -> formatTime(context, date)
+            timestamp > today() -> formatTime(context, date)
             timestamp > currentTime - 7 * DAY -> SimpleDateFormat("E", Locale.getDefault()).format(date) + ", " +
                     formatTime(context, date)
             timestamp > currentTime - YEAR -> SimpleDateFormat("MMM d", Locale.getDefault()).format(date) + ", " +
                     formatTime(context, date)
             else -> SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date) + ", " +
                     formatTime(context, date)
+        }
+
+        return formatted ?: ""
+    }
+
+    /**
+     * Formats the timestamp in a different way depending upon how long ago it was. Times within
+     * 1 day will be just the timestamp (eg 7:30 PM). Times within 7 days will be the day and
+     * the timestamp (eg Sun, 8:22 AM). Times older than that will be the date and the time
+     * (eg 7/4/2016 12:25 PM). These will be formatted according to the device's default locale.
+     *
+     * @param timestamp the timestamp to format.
+     * @return the formatted string.
+     */
+    fun formatConversationTimestamp(context: Context, timestamp: Long, currentTime: Long = now): String {
+        val date = Date(timestamp)
+        val formatted: String?
+
+        formatted = when {
+            timestamp > today() -> formatTime(context, date)
+            timestamp > currentTime - 7 * DAY -> SimpleDateFormat("E", Locale.getDefault()).format(date)
+            timestamp > currentTime - YEAR -> SimpleDateFormat("MMM d", Locale.getDefault()).format(date)
+            else -> SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date)
         }
 
         return formatted ?: ""

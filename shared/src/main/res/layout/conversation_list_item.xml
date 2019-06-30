@@ -16,24 +16,24 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:layout_marginStart="@dimen/conversation_list_padding"
     android:layout_marginEnd="@dimen/conversation_list_padding"
     android:background="@drawable/conversation_list_item_background"
+    android:clickable="true"
     android:elevation="2dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:id="@+id/card"
     android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
 
     <FrameLayout
         android:id="@+id/image_holder"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="16dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image"
@@ -42,65 +42,85 @@
             app:civ_border_width="0dp" />
 
         <TextView
+            android:id="@+id/image_letter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:id="@+id/image_letter"
-            android:textSize="30sp"
             android:layout_gravity="center"
             android:layout_marginTop="-1dp"
-            android:textColor="@android:color/white"/>
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="30sp" />
 
         <ImageView
             android:id="@+id/group_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_group"
-            android:layout_marginTop="-1dp"
             android:layout_gravity="center"
-            android:visibility="gone"/>
+            android:layout_marginTop="-1dp"
+            android:src="@drawable/ic_group"
+            android:visibility="gone" />
 
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/pinned_indicator"
+                android:scaleType="centerCrop"
+                android:layout_width="16dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_pin"
+                android:rotation="-90"
+                android:tint="@color/primaryText"
+                android:visibility="gone"
+                android:layout_marginEnd="8dp"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/unread_indicator"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:id="@+id/unread_indicator"
-                android:src="@android:color/black"
                 android:layout_marginEnd="8dp"
-                android:visibility="gone"/>
+                android:src="@android:color/black"
+                android:visibility="gone" />
 
             <xyz.klinker.messenger.shared.view.emoji.EmojiableTextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp" />
+
+            <xyz.klinker.messenger.shared.view.emoji.EmojiableTextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/primaryText"
-                android:id="@+id/name"
-                android:maxLines="1"
-                android:ellipsize="end" />
-            
+                android:textColor="@color/secondaryText"
+                android:textSize="13sp"
+                android:layout_marginStart="12dp" />
+
         </LinearLayout>
 
         <xyz.klinker.messenger.shared.view.emoji.EmojiableTextView
+            android:id="@+id/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/secondaryText"
-            android:id="@+id/summary"
+            android:ellipsize="end"
             android:maxLines="1"
-            android:ellipsize="end" />
+            android:textColor="@color/secondaryText"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

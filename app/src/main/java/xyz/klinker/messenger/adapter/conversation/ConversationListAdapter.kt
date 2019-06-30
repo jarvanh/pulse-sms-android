@@ -112,6 +112,8 @@ class ConversationListAdapter(context: MessengerActivity, initialConversations: 
 
         itemBinder.showText(holder, conversation)
         itemBinder.showTextStyle(holder, conversation)
+        itemBinder.indicatePinned(holder, conversation)
+        itemBinder.showDate(holder, conversation)
 
         if (conversation.imageUri == null || conversation.imageUri!!.isEmpty()) {
             itemBinder.showImageColor(holder, conversation)

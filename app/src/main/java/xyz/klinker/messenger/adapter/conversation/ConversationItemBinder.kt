@@ -48,6 +48,22 @@ class ConversationItemBinder(private val activity: Activity) {
         }
     }
 
+    fun indicatePinned(holder: ConversationViewHolder, conversation: Conversation) {
+        if (!Settings.showConversationCategories && conversation.pinned) {
+            holder.pinnedIcon?.visibility = View.VISIBLE
+        } else if (holder.pinnedIcon?.visibility != View.GONE) {
+            holder.pinnedIcon?.visibility = View.GONE
+        }
+    }
+
+    fun showDate(holder: ConversationViewHolder, conversation: Conversation) {
+        if (Settings.showConversationCategories) {
+            return
+        }
+
+        holder.date?.text = TimeUtils.formatConversationTimestamp(holder.itemView.context, conversation.timestamp)
+    }
+
     fun showImage(holder: ConversationViewHolder, conversation: Conversation) {
         holder.imageLetter?.text = null
         if (holder.groupIcon?.visibility != View.GONE) {

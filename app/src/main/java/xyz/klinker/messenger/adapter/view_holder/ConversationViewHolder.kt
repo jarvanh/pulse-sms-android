@@ -48,14 +48,17 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
     private val headerBackground: View? by lazy { itemView.findViewById<View>(R.id.header_background) }
 
     val unreadIndicator: View? by lazy { itemView.findViewById<View>(R.id.unread_indicator) }
+    val headerContainer: View? by lazy { itemView.findViewById<View>(R.id.header_container) as View? }
     val header: TextView? by lazy { itemView.findViewById<View>(R.id.header) as TextView? }
     val headerDone: ImageButton? by lazy { itemView.findViewById<View>(R.id.section_done) as ImageButton? }
     val headerCardForTextOnline: View? by lazy { itemView.findViewById<View>(R.id.header_card) }
     val image: CircleImageView? by lazy { itemView.findViewById<View>(R.id.image) as CircleImageView? }
     val name: TextView? by lazy { itemView.findViewById<View>(R.id.name) as TextView? }
     val summary: TextView? by lazy { itemView.findViewById<View>(R.id.summary) as TextView? }
+    val date: TextView? by lazy { itemView.findViewById<View>(R.id.date) as TextView? }
     val imageLetter: TextView? by lazy { itemView.findViewById<View>(R.id.image_letter) as TextView? }
     val groupIcon: ImageView? by lazy { itemView.findViewById<View>(R.id.group_icon) as ImageView? }
+    val pinnedIcon: ImageView? by lazy { itemView.findViewById<View>(R.id.pinned_indicator) as ImageView? }
     val checkBox: CheckBox? by lazy { itemView.findViewById<View>(R.id.checkbox) as CheckBox? }
 
     var conversation: Conversation? = null
@@ -111,6 +114,7 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
         header?.textSize = Settings.smallFont.toFloat() + 1
         name?.textSize = Settings.largeFont.toFloat()
         summary?.textSize = Settings.mediumFont.toFloat()
+        date?.textSize = Settings.smallFont.toFloat()
 
         if (Settings.smallFont == 10 && conversationImageHolder != null) {
             // user selected small font from the settings
