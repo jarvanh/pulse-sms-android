@@ -111,11 +111,16 @@ class MainAccountController(private val activity: MessengerActivity) {
                     IntentFilter(ApiDownloadService.ACTION_DOWNLOAD_FINISHED))
 
             ApiDownloadService.start(activity)
-            val snackbar = Snackbar.make(activity.snackbarContainer,
-                    activity.getString(R.string.downloading_and_decrypting),
-                    Snackbar.LENGTH_LONG)
-            activity.insetController.adjustSnackbar(snackbar)
-            snackbar.show()
+
+            try {
+                val snackbar = Snackbar.make(activity.snackbarContainer,
+                        activity.getString(R.string.downloading_and_decrypting),
+                        Snackbar.LENGTH_LONG)
+                activity.insetController.adjustSnackbar(snackbar)
+                snackbar.show()
+            } catch (e: Exception) {
+
+            }
         }, 1000)
     }
 

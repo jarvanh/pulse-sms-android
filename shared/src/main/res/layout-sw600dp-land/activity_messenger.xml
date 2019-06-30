@@ -17,27 +17,27 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
     <View
+        android:id="@+id/status_bar"
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:background="@drawable/status_bar"
-        android:fitsSystemWindows="true"
-        android:id="@+id/status_bar"
-        android:orientation="horizontal"
         android:backgroundTint="@color/pulseColorPrimaryDark"
         android:backgroundTintMode="multiply"
+        android:fitsSystemWindows="true"
+        android:orientation="horizontal"
         tools:ignore="InconsistentLayout" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         tools:context=".activity.MessengerActivity"
-        tools:ignore="InconsistentLayout"
-        android:orientation="horizontal">
+        tools:ignore="InconsistentLayout">
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigation_view"
@@ -47,9 +47,9 @@
             android:background="@color/drawerBackground"
             android:elevation="8dp"
             app:headerLayout="@layout/drawer_header"
-            app:menu="@menu/navigation_drawer_conversations"
-            app:itemTextColor="@drawable/drawer_text_selector"
             app:itemIconTint="@drawable/drawer_icon_selector"
+            app:itemTextColor="@drawable/drawer_text_selector"
+            app:menu="@menu/navigation_drawer_conversations"
             app:theme="@style/EllipsizeText" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -63,10 +63,10 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/app_bar_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    android:id="@+id/app_bar_layout">
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -83,21 +83,21 @@
                             android:id="@+id/search_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:searchBackground="@color/drawerBackground"
-                            app:searchBackIcon="@drawable/ic_search_back"
-                            app:searchCloseIcon="@drawable/ic_search_close"
+                            android:hint="@string/enter_search"
                             android:textColor="@color/primaryText"
                             android:textColorHint="@color/secondaryText"
-                            android:hint="@string/enter_search" />
+                            app:searchBackIcon="@drawable/ic_search_back"
+                            app:searchBackground="@color/drawerBackground"
+                            app:searchCloseIcon="@drawable/ic_search_close" />
 
                     </FrameLayout>
 
                 </com.google.android.material.appbar.AppBarLayout>
 
                 <FrameLayout
+                    android:id="@+id/conversation_list_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/conversation_list_container" />
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
@@ -105,26 +105,31 @@
                 android:id="@+id/nav_bar_divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/navigationBarDivider"
-                android:layout_gravity="bottom"/>
+                android:layout_gravity="bottom"
+                android:background="@color/navigationBarDivider" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                android:id="@+id/fab"
                 android:layout_gravity="bottom|end"
-                android:contentDescription="@string/compose_message"
                 android:layout_margin="@dimen/fab_margin"
+                android:contentDescription="@string/compose_message"
+                android:src="@drawable/ic_add"
+                app:borderWidth="0dp"
                 app:elevation="6dp"
-                app:pressedTranslationZ="12dp"
                 app:fabSize="normal"
-                app:borderWidth="0dp" />
+                app:pressedTranslationZ="12dp" />
 
             <FrameLayout
+                android:id="@+id/message_list_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/message_list_container" />
+                android:layout_height="match_parent" />
+
+            <FrameLayout
+                android:id="@+id/snackbar_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -137,12 +142,12 @@
 
         <View
             android:layout_width="292dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <com.miguelcatalan.materialsearchview.MaterialSearchView
                 android:id="@+id/conversation_search_view"
