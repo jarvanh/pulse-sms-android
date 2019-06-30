@@ -83,6 +83,15 @@ class ColorPreference : Preference {
         }
 
         color = PreferenceManager.getDefaultSharedPreferences(context).getInt(key, 0)
+        if (color == 0 && key == context.getString(R.string.pref_global_primary_color)) {
+            color = ColorSet.DEFAULT(context).color
+        } else if (color == 0 && key == context.getString(R.string.pref_global_primary_dark_color)) {
+            color = ColorSet.DEFAULT(context).colorDark
+        } else if (color == 0 && key == context.getString(R.string.pref_global_primary_light_color)) {
+            color = ColorSet.DEFAULT(context).colorLight
+        } else if (color == 0 && key == context.getString(R.string.pref_global_accent_color)) {
+            color = ColorSet.DEFAULT(context).colorAccent
+        }
 
         summary = ColorUtils.convertToHex(color)
         setOnPreferenceClickListener {
