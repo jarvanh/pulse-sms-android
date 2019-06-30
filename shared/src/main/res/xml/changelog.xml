@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.11.0"
+        description="June 22nd, 2019">
+        <text>NEW: Option to hide the date-categories on the conversation list, in favor of a traditional list of items</text>
+        <text>NEW: Option to always show the timestamp on messages. When disabled, you can simply tap the message to see the timestamp</text>
+    </version>
+
+    <version
         name="4.10.2"
         description="June 22nd, 2019">
         <!-- Make the conversation items just a bit smaller, to fit more on the screen -->
