@@ -28,6 +28,8 @@ public class LoginResponse {
     public boolean rounderBubbles;
     public boolean useGlobalTheme;
     public boolean applyPrimaryColorToToolbar;
+    public boolean conversationCategories;
+    public boolean messageTimestamp;
     public int color;
     public int colorDark;
     public int colorLight;
