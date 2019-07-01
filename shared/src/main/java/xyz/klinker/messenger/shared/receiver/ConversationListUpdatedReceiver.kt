@@ -25,9 +25,11 @@ import android.util.Log
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.SectionType
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo
 import xyz.klinker.messenger.shared.data.pojo.ReorderType
 import xyz.klinker.messenger.shared.shared_interfaces.IConversationListFragment
+import xyz.klinker.messenger.shared.util.TimeUtils
 
 /**
  * Receiver that handles changing the conversation list when a new message is received. The logic
@@ -96,6 +98,10 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
 
                 if (snippet != null) {
                     adapter.conversations[position].snippet = snippet
+                    
+                    if (!Settings.showConversationCategories) {
+                        adapter.conversations[position].timestamp = TimeUtils.now
+                    }
                 }
 
                 if (intent.hasExtra(EXTRA_READ)) {
@@ -115,6 +121,10 @@ class ConversationListUpdatedReceiver(private val fragment: IConversationListFra
 
                 if (snippet != null) {
                     conversation.snippet = snippet
+
+                    if (!Settings.showConversationCategories) {
+                        conversation.timestamp = TimeUtils.now
+                    }
                 }
 
                 if (intent.hasExtra(EXTRA_READ)) {
