@@ -200,6 +200,8 @@
     <string name="send_as_scheduled_message">Send as scheduled message</string>
     <string name="send_without_signature">Send without signature</string>
     <string name="send_without_delay">Send without delay</string>
+    <string name="confirm_delete">Are you sure you want to delete this conversation?</string>
+    <string name="confirm_archive">Are you sure you want to archive this conversation?</string>
 
     <!-- Templates -->
     <string name="type_template_text">Type template text…</string>

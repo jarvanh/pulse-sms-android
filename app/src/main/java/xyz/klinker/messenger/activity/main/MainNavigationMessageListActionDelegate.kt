@@ -246,18 +246,22 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
 
     internal fun deleteConversation(): Boolean {
         if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
-            val fragment = navController.getShownConversationList()
-            val conversationId = fragment!!.expandedId
-            fragment.onBackPressed()
+            AlertDialog.Builder(activity)
+                    .setMessage(R.string.confirm_delete)
+                    .setPositiveButton(R.string.api_yes) { _, _ ->
+                        val fragment = navController.getShownConversationList()
+                        val conversationId = fragment!!.expandedId
+                        fragment.onBackPressed()
 
-            Handler().postDelayed({
-                val adapter = fragment.adapter ?: return@postDelayed
-                val position = adapter.findPositionForConversationId(conversationId)
-                if (position != -1) {
-                    adapter.deleteItem(position)
-                }
-            }, 250)
-
+                        Handler().postDelayed({
+                            val adapter = fragment.adapter ?: return@postDelayed
+                            val position = adapter.findPositionForConversationId(conversationId)
+                            if (position != -1) {
+                                adapter.deleteItem(position)
+                            }
+                        }, 250)
+                    }.setNegativeButton(android.R.string.cancel) {_, _ -> }
+                    .show()
             return true
         } else {
             return false
@@ -266,17 +270,22 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
 
     internal fun archiveConversation(): Boolean {
         if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
-            val fragment = navController.getShownConversationList()
-            val conversationId = fragment!!.expandedId
-            fragment.onBackPressed()
+            AlertDialog.Builder(activity)
+                    .setMessage(R.string.confirm_archive)
+                    .setPositiveButton(R.string.api_yes) { _, _ ->
+                        val fragment = navController.getShownConversationList()
+                        val conversationId = fragment!!.expandedId
+                        fragment.onBackPressed()
 
-            Handler().postDelayed({
-                val adapter = fragment.adapter ?: return@postDelayed
-                val position = adapter.findPositionForConversationId(conversationId)
-                if (position != -1) {
-                    adapter.archiveItem(position)
-                }
-            }, 250)
+                        Handler().postDelayed({
+                            val adapter = fragment.adapter ?: return@postDelayed
+                            val position = adapter.findPositionForConversationId(conversationId)
+                            if (position != -1) {
+                                adapter.archiveItem(position)
+                            }
+                        }, 250)
+                    }.setNegativeButton(android.R.string.cancel) {_, _ -> }
+                    .show()
 
             return true
         } else {
