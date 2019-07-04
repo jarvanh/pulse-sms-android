@@ -443,46 +443,50 @@ class ApiDownloadService : Service() {
             finishMediaDownload(manager)
         }.start()
 
+        try {
+            val media = DataSource.getFirebaseMediaMessages(this)
+            if (media.moveToFirst()) {
+                val mediaCount = if (media.count > MAX_MEDIA_DOWNLOADS)
+                    MAX_MEDIA_DOWNLOADS
+                else
+                    media.count
+                var processing = 0
+                do {
+                    val message = Message()
+                    message.fillFromCursor(media)
+                    processing++
 
-        val media = DataSource.getFirebaseMediaMessages(this)
-        if (media.moveToFirst()) {
-            val mediaCount = if (media.count > MAX_MEDIA_DOWNLOADS)
-                MAX_MEDIA_DOWNLOADS
-            else
-                media.count
-            var processing = 0
-            do {
-                val message = Message()
-                message.fillFromCursor(media)
-                processing++
+                    val file = File(filesDir,
+                            message.id.toString() + MimeType.getExtension(message.mimeType!!))
 
-                val file = File(filesDir,
-                        message.id.toString() + MimeType.getExtension(message.mimeType!!))
+                    Log.v(TAG, "started downloading " + message.id)
 
-                Log.v(TAG, "started downloading " + message.id)
+                    ApiUtils.downloadFileFromFirebase(Account.accountId, file, message.id, encryptionUtils, FirebaseDownloadCallback {
+                        completedMediaDownloads++
 
-                ApiUtils.downloadFileFromFirebase(Account.accountId, file, message.id, encryptionUtils, FirebaseDownloadCallback {
-                    completedMediaDownloads++
+                        DataSource.updateMessageData(this@ApiDownloadService, message.id, Uri.fromFile(file).toString())
+                        builder.setProgress(mediaCount, completedMediaDownloads, false)
 
-                    DataSource.updateMessageData(this@ApiDownloadService, message.id, Uri.fromFile(file).toString())
-                    builder.setProgress(mediaCount, completedMediaDownloads, false)
+                        if (completedMediaDownloads >= mediaCount) {
+                            finishMediaDownload(manager)
+                        } else if (showNotification) {
+                            startForeground(MESSAGE_DOWNLOAD_ID, builder.build())
+                        }
+                    }, 0)
+                } while (media.moveToNext() && processing < MAX_MEDIA_DOWNLOADS)
 
-                    if (completedMediaDownloads >= mediaCount) {
-                        finishMediaDownload(manager)
-                    } else if (showNotification) {
-                        startForeground(MESSAGE_DOWNLOAD_ID, builder.build())
-                    }
-                }, 0)
-            } while (media.moveToNext() && processing < MAX_MEDIA_DOWNLOADS)
-
-            if (mediaCount == 0) {
+                if (mediaCount == 0) {
+                    finishMediaDownload(manager)
+                }
+            } else {
                 finishMediaDownload(manager)
             }
-        } else {
+
+            media.closeSilent()
+        } catch (e: Exception) {
             finishMediaDownload(manager)
         }
 
-        media.closeSilent()
     }
 
     private fun finishMediaDownload(manager: NotificationManagerCompat) {
