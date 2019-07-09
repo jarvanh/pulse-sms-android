@@ -105,7 +105,7 @@ object FeatureFlags {
     var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false
 
     // disabled for future features
-    var NOTIFICATION_CHANNEL_CHANGE: Boolean: false
+    var NOTIFICATION_CHANNEL_CHANGE: Boolean = false
 
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false

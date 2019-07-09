@@ -20,6 +20,7 @@ import android.text.Html
 import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestion
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
@@ -121,7 +122,8 @@ class NotificationConversationProvider(private val service: Context, private val
     }
 
     private fun prepareCommonBuilder(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int) = NotificationCompat.Builder(service,
-            if (numConversations == 1) getNotificationChannel(service, conversation.id) else NotificationUtils.SILENT_CONVERSATION_CHANNEL_ID)
+            if (if (FeatureFlags.NOTIFICATION_CHANNEL_CHANGE) numConversations == 1 else conversationIndex == 0)
+                getNotificationChannel(service, conversation.id) else NotificationUtils.SILENT_CONVERSATION_CHANNEL_ID)
             .setSmallIcon(if (!conversation.groupConversation) R.drawable.ic_stat_notify else R.drawable.ic_stat_notify_group)
             .setAutoCancel(true)
             .setColor(if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.color)

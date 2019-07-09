@@ -9,6 +9,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import android.text.Html
 import xyz.klinker.messenger.shared.R
+import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.service.NotificationDismissedReceiver
@@ -95,7 +96,7 @@ class NotificationSummaryProvider(private val service: Context) {
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
     private fun buildCommonNotification(firstConversationId: Long, title: String) = NotificationCompat.Builder(service,
-                NotificationConversationProvider.getNotificationChannel(service, firstConversationId))
+                if (FeatureFlags.NOTIFICATION_CHANNEL_CHANGE) NotificationConversationProvider.getNotificationChannel(service, firstConversationId) else NotificationUtils.SILENT_BACKGROUND_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_stat_notify_group)
             .setContentTitle(title)
             .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
