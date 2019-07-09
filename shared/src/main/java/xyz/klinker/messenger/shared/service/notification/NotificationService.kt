@@ -81,7 +81,7 @@ class Notifier(private val context: Context) {
                 }
 
                 val numberToNotify = NotificationServiceHelper.calculateNumberOfNotificationsToProvide(context, conversations)
-                for (i in 0 until if (numberToNotify < conversations.size) numberToNotify else conversations.size ) {
+                for (i in 0 until if (numberToNotify < conversations.size) numberToNotify else conversations.size) {
                     val conversation = conversations[i]
 
                     try {
@@ -117,7 +117,7 @@ class Notifier(private val context: Context) {
                     }
 
                     val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-                    val wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, "NEW_NOTIFICATION")
+                    val wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, "pulse:new-notification")
                     wl.acquire(5000)
                 }
             }

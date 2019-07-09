@@ -12,11 +12,11 @@ import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.util.NotificationUtils
 
-class NotificationWearableHelper(private val service: Context, private val conversationNotificationProvider: NotificationConversationProvider) {
+class NotificationWearableHelper(private val service: Context) {
 
     fun buildExtender(conversation: NotificationConversation): NotificationCompat.WearableExtender {
         val wear = if (!conversation.privateNotification) {
-            NotificationCompat.Builder(service, conversationNotificationProvider.getNotificationChannel(conversation.id))
+            NotificationCompat.Builder(service, NotificationConversationProvider.getNotificationChannel(service, conversation.id))
                     .setStyle(NotificationCompat.BigTextStyle()
                             .setBigContentTitle(conversation.title)
                             .bigText(getWearableSecondPageConversation(conversation)))

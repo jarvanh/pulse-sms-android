@@ -40,10 +40,10 @@ class NotificationConversationProvider(private val service: Context, private val
 
     private val actionHelper = NotificationActionHelper(service)
     private val carHelper = NotificationCarHelper(service)
-    private val wearableHelper = NotificationWearableHelper(service, this)
+    private val wearableHelper = NotificationWearableHelper(service)
 
     fun giveConversationNotification(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int, smartReplies: List<SmartReplySuggestion> = emptyList()): Notification {
-        val publicVersion = preparePublicBuilder(conversation, conversationIndex)
+        val publicVersion = preparePublicBuilder(conversation, conversationIndex, numConversations)
                 .setDefaults(buildNotificationDefaults(conversation, conversationIndex))
                 .setGroupSummary(numConversations == 1 && Build.MANUFACTURER.toLowerCase().contains("moto"))
                 .setGroup(if (numConversations > 1) NotificationConstants.GROUP_KEY_MESSAGES else null)
@@ -51,7 +51,7 @@ class NotificationConversationProvider(private val service: Context, private val
                 .addPerson(conversation)
 //                .bubble(conversation)
 
-        val builder = prepareBuilder(conversation, conversationIndex)
+        val builder = prepareBuilder(conversation, conversationIndex, numConversations)
                 .setDefaults(buildNotificationDefaults(conversation, conversationIndex))
                 .setLargeIcon(buildContactImage(conversation))
                 .setGroupSummary(numConversations == 1 && Build.MANUFACTURER.toLowerCase().contains("moto"))
@@ -120,8 +120,8 @@ class NotificationConversationProvider(private val service: Context, private val
         return notification
     }
 
-    private fun prepareCommonBuilder(conversation: NotificationConversation, conversationIndex: Int) = NotificationCompat.Builder(service,
-            if (conversationIndex == 0) getNotificationChannel(conversation.id) else NotificationUtils.SILENT_CONVERSATION_CHANNEL_ID)
+    private fun prepareCommonBuilder(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int) = NotificationCompat.Builder(service,
+            if (numConversations == 1) getNotificationChannel(service, conversation.id) else NotificationUtils.SILENT_CONVERSATION_CHANNEL_ID)
             .setSmallIcon(if (!conversation.groupConversation) R.drawable.ic_stat_notify else R.drawable.ic_stat_notify_group)
             .setAutoCancel(true)
             .setColor(if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.color)
@@ -129,16 +129,16 @@ class NotificationConversationProvider(private val service: Context, private val
             .setCategory(Notification.CATEGORY_MESSAGE)
             .addPerson(conversation)
 
-    private fun prepareBuilder(conversation: NotificationConversation, conversationIndex: Int) =
-            prepareCommonBuilder(conversation, conversationIndex)
+    private fun prepareBuilder(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int) =
+            prepareCommonBuilder(conversation, conversationIndex, numConversations)
                     .setContentTitle(conversation.title)
                     .setShowWhen(true)
                     .setTicker(service.getString(R.string.notification_ticker, conversation.title))
-                    .setVisibility(Notification.VISIBILITY_PRIVATE)
+                    .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                     .setWhen(if (AndroidVersionUtil.isAndroidO) TimeUtils.now else conversation.timestamp)
 
-    private fun preparePublicBuilder(conversation: NotificationConversation, conversationIndex: Int) =
-            prepareCommonBuilder(conversation, conversationIndex)
+    private fun preparePublicBuilder(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int) =
+            prepareCommonBuilder(conversation, conversationIndex, numConversations)
                     .setContentTitle(service.resources.getQuantityString(R.plurals.new_conversations, 1, 1))
                     .setContentText(service.resources.getQuantityString(R.plurals.new_messages, conversation.messages.size, conversation.messages.size))
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -416,16 +416,19 @@ class NotificationConversationProvider(private val service: Context, private val
         return this
     }
 
-    internal fun getNotificationChannel(conversationId: Long): String {
-        if (!AndroidVersionUtil.isAndroidO) {
-            return NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID
-        }
+    companion object {
+        internal fun getNotificationChannel(service: Context, conversationId: Long): String {
+            if (!AndroidVersionUtil.isAndroidO) {
+                return NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID
+            }
 
-        val manager = service.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        return if (manager.getNotificationChannel(conversationId.toString() + "") != null) {
-            conversationId.toString() + ""
-        } else {
-            NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID
+            val manager = service.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            return if (manager.getNotificationChannel(conversationId.toString() + "") != null) {
+                conversationId.toString() + ""
+            } else {
+                NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID
+            }
         }
     }
+
 }

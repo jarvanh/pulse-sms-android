@@ -87,6 +87,7 @@ object FeatureFlags {
     private val FLAG_INTERNAL_CAMERA_REVAMP = "flag_internal_camera_revamp"
     private val FLAG_SCHEDULED_MESSAGE_REVAMP = "flag_scheduled_message_revamp"
     private val FLAG_HEX_COLOR_ENTRY = "flag_hex_color_entry"
+    private val FLAG_NOTIFICATION_CHANNEL_CHANGE = "flag_notification_channel_change"
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
 
@@ -104,6 +105,7 @@ object FeatureFlags {
     var REENABLE_SENDING_STATUS_ON_NON_PRIMARY: Boolean = false
 
     // disabled for future features
+    var NOTIFICATION_CHANNEL_CHANGE: Boolean: false
 
     // in testing
     var QUERY_DAILY_CONTACT_CHANGES: Boolean = false
@@ -112,6 +114,8 @@ object FeatureFlags {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         REENABLE_SENDING_STATUS_ON_NON_PRIMARY = getValue(context, sharedPrefs, FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
+
+        NOTIFICATION_CHANNEL_CHANGE = getValue(context, sharedPrefs, FLAG_NOTIFICATION_CHANNEL_CHANGE)
 
 //        QUERY_DAILY_CONTACT_CHANGES = getValue(context, sharedPrefs, FLAG_QUERY_DAILY_CONTACT_CHANGES)
     }
@@ -123,6 +127,8 @@ object FeatureFlags {
 
         when (identifier) {
             FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY -> REENABLE_SENDING_STATUS_ON_NON_PRIMARY = flag
+
+            FLAG_NOTIFICATION_CHANNEL_CHANGE -> NOTIFICATION_CHANNEL_CHANGE = flag
 
             FLAG_QUERY_DAILY_CONTACT_CHANGES -> QUERY_DAILY_CONTACT_CHANGES = flag
         }

@@ -12,6 +12,7 @@ import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.service.NotificationDismissedReceiver
+import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
 import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.NotificationUtils
 
@@ -87,14 +88,14 @@ class NotificationSummaryProvider(private val service: Context) {
                     .setContentText(summary)
                     .setShowWhen(true)
                     .setTicker(title)
-                    .setVisibility(Notification.VISIBILITY_PRIVATE)
+                    .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
 
     private fun buildPublicNotification(firstConversationId: Long, title: String) =
             buildCommonNotification(firstConversationId, title)
-                    .setVisibility(Notification.VISIBILITY_PUBLIC)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
     private fun buildCommonNotification(firstConversationId: Long, title: String) = NotificationCompat.Builder(service,
-                NotificationUtils.SILENT_CONVERSATION_CHANNEL_ID)
+                NotificationConversationProvider.getNotificationChannel(service, firstConversationId))
             .setSmallIcon(R.drawable.ic_stat_notify_group)
             .setContentTitle(title)
             .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
