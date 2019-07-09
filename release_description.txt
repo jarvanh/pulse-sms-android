@@ -1,2 +1,1 @@
-- NEW: Option to hide the date-categories on the conversation list, in favor of a more traditional list of conversations.<br/>
-- NEW: Option to always show the timestamp on messages. When disabled, you can simply tap the message to see the timestamp, like always.
+This update just contains a few bug fixes. More exciting things to come!
