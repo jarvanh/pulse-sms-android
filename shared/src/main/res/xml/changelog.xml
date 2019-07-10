@@ -20,6 +20,7 @@
         name="4.11.1"
         description="July 9th, 2019">
         <!-- FEATURE FLAG: update how the notification channels work with the summary notification -->
+        <!-- Add the various display densities for the rounded message bubbles -->
         <text>Bug fixes</text>
     </version>
 
