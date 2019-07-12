@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo
@@ -33,12 +34,14 @@ class ConversationInformationUpdater(private val fragment: MessageListFragment) 
         }
 
         if (name != argManager.title && !PhoneNumberUtils.checkEquality(name, number)) {
-            DataSource.updateConversationTitle(activity!!, argManager.conversationId, name)
+            if (!Account.exists() || Account.primary) {
+                DataSource.updateConversationTitle(activity!!, argManager.conversationId, name)
 
-            val fragment = activity?.supportFragmentManager?.findFragmentById(R.id.conversation_list_container) as ConversationListFragment?
-            fragment?.setNewConversationTitle(name)
+                val fragment = activity?.supportFragmentManager?.findFragmentById(R.id.conversation_list_container) as ConversationListFragment?
+                fragment?.setNewConversationTitle(name)
 
-            handler.post { toolbar.title = name }
+                handler.post { toolbar.title = name }
+            }
         }
 
         val originalImage = argManager.imageUri
