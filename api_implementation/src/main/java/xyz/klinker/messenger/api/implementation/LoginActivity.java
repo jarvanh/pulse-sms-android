@@ -315,6 +315,7 @@ public class LoginActivity extends AppCompatActivity {
                         name.getText().toString(), phoneNumber.getText().toString(),
                         response);
 
+                // TODO: we should probably be uploading a ton of their preferences here, not just the passcode...
                 SharedPreferences sharedPrefs = encryptionCreator.getSharedPrefs(LoginActivity.this);
                 String passcode = sharedPrefs.getString("private_conversations_passcode", null);
                 if (passcode != null && !passcode.isEmpty()) {
