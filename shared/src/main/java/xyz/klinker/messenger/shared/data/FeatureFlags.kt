@@ -87,7 +87,7 @@ object FeatureFlags {
     private val FLAG_INTERNAL_CAMERA_REVAMP = "flag_internal_camera_revamp"
     private val FLAG_SCHEDULED_MESSAGE_REVAMP = "flag_scheduled_message_revamp"
     private val FLAG_HEX_COLOR_ENTRY = "flag_hex_color_entry"
-    private val FLAG_NOTIFICATION_CHANNEL_CHANGE = "flag_notification_channel_change"
+    private val FLAG_NOTIFICATION_CHANNEL_CHANGE = "flag_notification_channel_change_2"
 
     private val ALWAYS_ON_FLAGS = listOf(FLAG_REENABLE_SENDING_STATUS_ON_NON_PRIMARY)
 

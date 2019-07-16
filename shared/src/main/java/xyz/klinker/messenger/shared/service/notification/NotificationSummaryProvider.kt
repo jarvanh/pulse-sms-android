@@ -96,7 +96,7 @@ class NotificationSummaryProvider(private val service: Context) {
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
     private fun buildCommonNotification(firstConversationId: Long, title: String) = NotificationCompat.Builder(service,
-                if (FeatureFlags.NOTIFICATION_CHANNEL_CHANGE) NotificationConversationProvider.getNotificationChannel(service, firstConversationId) else NotificationUtils.SILENT_BACKGROUND_CHANNEL_ID)
+                NotificationConversationProvider.getNotificationChannel(service, firstConversationId))
             .setSmallIcon(R.drawable.ic_stat_notify_group)
             .setContentTitle(title)
             .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
