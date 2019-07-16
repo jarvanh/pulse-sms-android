@@ -143,7 +143,6 @@ class MessageListFragment : Fragment(), ContentFragment, IMessageListFragment {
     override fun onResume() {
         super.onResume()
         NotificationConstants.CONVERSATION_ID_OPEN = conversationId
-
     }
 
     override fun onPause() {

@@ -39,6 +39,7 @@ import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
 import xyz.klinker.messenger.shared.MessengerActivityExtras
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
+import xyz.klinker.messenger.shared.service.notification.NotificationConstants
 import xyz.klinker.messenger.shared.util.*
 
 
@@ -140,6 +141,11 @@ class MessengerActivity : AppCompatActivity() {
     public override fun onResume() {
         super.onResume()
         insetController.onResume()
+
+        val messageListFragment = navController.findMessageListFragment()
+        if (messageListFragment != null) {
+            NotificationConstants.CONVERSATION_ID_OPEN = messageListFragment.conversationId
+        }
     }
 
     public override fun onPause() {
@@ -150,6 +156,7 @@ class MessengerActivity : AppCompatActivity() {
         }
 
         insetController.onPause()
+        NotificationConstants.CONVERSATION_ID_OPEN = 0L
     }
 
     public override fun onStop() {
