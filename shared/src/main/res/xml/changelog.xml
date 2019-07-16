@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.11.3"
+        description="July 16th, 2019">
+        <!-- Manage the "NotificationConstants.OPEN_CONVERSATION_ID from the MessengerActivity's pause and resume functions -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.11.2"
         description="July 16th, 2019">
         <!-- Define the exclusion rectangles for the drawer layout on Android Q -->
