@@ -315,15 +315,10 @@ public class LoginActivity extends AppCompatActivity {
                         name.getText().toString(), phoneNumber.getText().toString(),
                         response);
 
-                // TODO: we should probably be uploading a ton of their preferences here, not just the passcode...
-                SharedPreferences sharedPrefs = encryptionCreator.getSharedPrefs(LoginActivity.this);
-                String passcode = sharedPrefs.getString("private_conversations_passcode", null);
-                if (passcode != null && !passcode.isEmpty()) {
-                    ApiUtils.INSTANCE.updatePrivateConversationsPasscode(Account.INSTANCE.getAccountId(), passcode);
-                }
-
                 addDevice(utils, response.accountId, true, true);
                 AnalyticsHelper.accountSignedUp(LoginActivity.this);
+
+                applyAccountSettings(encryptionCreator);
             }
         }).start();
     }
@@ -418,6 +413,26 @@ public class LoginActivity extends AppCompatActivity {
 
             recreate();
         });
+    }
+
+    private void applyAccountSettings(AccountEncryptionCreator encryptionCreator) {
+        SharedPreferences sharedPrefs = encryptionCreator.getSharedPrefs(LoginActivity.this);
+        String accountId = Account.INSTANCE.getAccountId();
+        ApiUtils api = ApiUtils.INSTANCE;
+
+        String passcode = sharedPrefs.getString("private_conversations_passcode", null);
+        if (passcode != null && !passcode.isEmpty()) {
+            api.updatePrivateConversationsPasscode(accountId, passcode);
+        }
+
+        api.updateBaseTheme(accountId, sharedPrefs.getString("base_theme", "day_night"));
+        api.updateApplyToolbarColor(accountId, sharedPrefs.getBoolean("apply_primary_color_toolbar", true));
+        api.updateUseGlobalTheme(accountId, sharedPrefs.getBoolean("apply_theme_globally", false));
+        api.updateMessageTimestamp(accountId, sharedPrefs.getBoolean("message_timestamp", false));
+        api.updateConversationCategories(accountId, sharedPrefs.getBoolean("conversation_categories", true));
+        api.updatePrimaryThemeColor(accountId, sharedPrefs.getInt("global_primary_color", Color.parseColor("#1775D2")));
+        api.updatePrimaryDarkThemeColor(accountId, sharedPrefs.getInt("global_primary_dark_color", Color.parseColor("#1665C0")));
+        api.updateAccentThemeColor(accountId, sharedPrefs.getInt("global_accent_color", Color.parseColor("#FF6E40")));
     }
 
     private void attachLoginTextWatcher(EditText editText) {
