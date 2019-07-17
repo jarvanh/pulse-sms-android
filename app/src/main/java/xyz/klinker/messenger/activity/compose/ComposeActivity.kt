@@ -50,6 +50,9 @@ class ComposeActivity : AppCompatActivity() {
 
         val toolbar = findViewById<View>(R.id.toolbar) as WhitableToolbar
         toolbar.setBackgroundColor(Settings.mainColorSet.color)
+        findViewById<View>(R.id.toolbar_holder).setBackgroundColor(
+                ActivityUtils.possiblyOverrideColorSelection(this, Settings.mainColorSet.color)
+        )
 
         contactsProvider.contactEntry.setTextColor(toolbar.textColor)
 
@@ -57,7 +60,6 @@ class ComposeActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         title = " "
 
-        findViewById<View>(R.id.toolbar_holder).setBackgroundColor(Settings.mainColorSet.color)
         ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark)
         ActivityUtils.setTaskDescription(this)
         ColorUtils.checkBlackBackground(this)
