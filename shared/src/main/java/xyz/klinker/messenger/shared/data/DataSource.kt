@@ -630,19 +630,23 @@ object DataSource {
             }
 
             var latestTimestamp = 0L
+            var latestSnippet: String? = null;
             if (messages.moveToFirst()) {
                 do {
                     val valuesList = SmsMmsUtils.processMessage(messages, conversationId, context)
                     for (value in valuesList) {
                         database(context).insert(Message.TABLE, null, value)
 
-                        if (value.getAsLong(Message.COLUMN_TIMESTAMP) > latestTimestamp)
+                        if (value.getAsLong(Message.COLUMN_TIMESTAMP) > latestTimestamp) {
                             latestTimestamp = value.getAsLong(Message.COLUMN_TIMESTAMP)
+                            latestSnippet = value.getAsString(Message.COLUMN_DATA)
+                        }
                     }
                 } while (messages.moveToNext() && messages.position < SmsMmsUtils.INITIAL_MESSAGE_LIMIT)
             }
 
             values.put(Conversation.COLUMN_TIMESTAMP, if (latestTimestamp == 0L) conversation.timestamp else latestTimestamp)
+            values.put(Conversation.COLUMN_SNIPPET, latestSnippet ?: conversation.snippet)
 
             try {
                 database(context).insert(Conversation.TABLE, null, values)
