@@ -53,6 +53,7 @@ class ConversationViewHolder(itemView: View, private val expandedListener: Conve
     val headerDone: ImageButton? by lazy { itemView.findViewById<View>(R.id.section_done) as ImageButton? }
     val headerCardForTextOnline: View? by lazy { itemView.findViewById<View>(R.id.header_card) }
     val image: CircleImageView? by lazy { itemView.findViewById<View>(R.id.image) as CircleImageView? }
+    val color: CircleImageView? by lazy { itemView.findViewById<View>(R.id.color) as CircleImageView? }
     val name: TextView? by lazy { itemView.findViewById<View>(R.id.name) as TextView? }
     val summary: TextView? by lazy { itemView.findViewById<View>(R.id.summary) as TextView? }
     val date: TextView? by lazy { itemView.findViewById<View>(R.id.date) as TextView? }

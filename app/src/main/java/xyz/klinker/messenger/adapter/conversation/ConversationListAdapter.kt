@@ -18,6 +18,7 @@ package xyz.klinker.messenger.adapter.conversation
 
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter
 import com.bumptech.glide.Glide

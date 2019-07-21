@@ -65,11 +65,6 @@ class ConversationItemBinder(private val activity: Activity) {
     }
 
     fun showImage(holder: ConversationViewHolder, conversation: Conversation) {
-        holder.imageLetter?.text = null
-        if (holder.groupIcon?.visibility != View.GONE) {
-            holder.groupIcon?.visibility = View.GONE
-        }
-
         Glide.with(holder.itemView.context)
                 .load(Uri.parse(conversation.imageUri))
                 .signature(ObjectKey(TimeUtils.today()))
@@ -79,14 +74,14 @@ class ConversationItemBinder(private val activity: Activity) {
     fun showImageColor(holder: ConversationViewHolder, conversation: Conversation) {
         if (Settings.useGlobalThemeColor) {
             if (Settings.mainColorSet.colorLight == Color.WHITE) {
-                holder.image?.setImageDrawable(ColorDrawable(Settings.mainColorSet.colorDark))
+                holder.color?.setImageDrawable(ColorDrawable(Settings.mainColorSet.colorDark))
             } else {
-                holder.image?.setImageDrawable(ColorDrawable(Settings.mainColorSet.colorLight))
+                holder.color?.setImageDrawable(ColorDrawable(Settings.mainColorSet.colorLight))
             }
         } else if (conversation.colors.color == Color.WHITE) {
-            holder.image?.setImageDrawable(ColorDrawable(conversation.colors.colorDark))
+            holder.color?.setImageDrawable(ColorDrawable(conversation.colors.colorDark))
         } else {
-            holder.image?.setImageDrawable(ColorDrawable(conversation.colors.color))
+            holder.color?.setImageDrawable(ColorDrawable(conversation.colors.color))
         }
     }
 
