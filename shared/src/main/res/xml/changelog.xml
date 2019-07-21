@@ -21,6 +21,7 @@
         description="July 22nd, 2019">
         <!-- Upload some of the user's preferences to the web, when they sign up for an account -->
         <!-- Always use the latest message as the snippet for the conversation, instead of relying on the internal SMS database for the snippet -->
+        <!-- On the ConversationListAdapter, always load the color and text/group icon before loading the contact image -->
         <text>Bug fixes</text>
     </version>
 
