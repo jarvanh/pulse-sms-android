@@ -100,14 +100,6 @@ class ConversationListAdapter(context: MessengerActivity, initialConversations: 
 
         val conversation = dataProvider.conversations[absolutePosition]
 
-        // somehow a null conversation is being inserted in here sometimes after a new
-        // conversation is created on the phone and the tablet gets a broadcast for it. Don't know
-        // why this happens, but the situation is marked by a blank holder in the conversation list.
-        //        if (conversation == null) {
-        //            itemBinder.nullItem(holder);
-        //            return;
-        //        }
-
         holder.conversation = conversation
         holder.absolutePosition = absolutePosition
 
