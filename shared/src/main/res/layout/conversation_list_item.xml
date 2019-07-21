@@ -35,12 +35,6 @@
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="16dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:civ_border_width="0dp" />
-
         <TextView
             android:id="@+id/image_letter"
             android:layout_width="wrap_content"
@@ -59,6 +53,12 @@
             android:layout_marginTop="-1dp"
             android:src="@drawable/ic_group"
             android:visibility="gone" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:civ_border_width="0dp" />
 
     </FrameLayout>
 

@@ -114,16 +114,15 @@ class ConversationListAdapter(context: MessengerActivity, initialConversations: 
         itemBinder.showTextStyle(holder, conversation)
         itemBinder.indicatePinned(holder, conversation)
         itemBinder.showDate(holder, conversation)
+        itemBinder.showImageColor(holder, conversation)
 
-        if (conversation.imageUri == null || conversation.imageUri!!.isEmpty()) {
-            itemBinder.showImageColor(holder, conversation)
-
-            if (ContactUtils.shouldDisplayContactLetter(conversation)) {
-                itemBinder.showContactLetter(holder, conversation)
-            } else {
-                itemBinder.showContactPlaceholderIcon(holder, conversation)
-            }
+        if (ContactUtils.shouldDisplayContactLetter(conversation)) {
+            itemBinder.showContactLetter(holder, conversation)
         } else {
+            itemBinder.showContactPlaceholderIcon(holder, conversation)
+        }
+
+        if (conversation.imageUri != null && conversation.imageUri!!.isNotEmpty()) {
             itemBinder.showImage(holder, conversation)
         }
     }
