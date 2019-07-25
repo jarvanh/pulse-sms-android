@@ -16,8 +16,6 @@
 
 package xyz.klinker.messenger.api.implementation.firebase;
 
-import android.content.ComponentName;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -68,6 +66,12 @@ public class MessengerFirebaseMessagingService extends FirebaseMessagingService 
             ((FirebaseApplication) getApplication()).getFirebaseMessageHandler()
                     .handleDelete(getApplication());
         }
+    }
+
+    @Override
+    public void onNewToken(String token) {
+        super.onNewToken(token);
+        TokenUtil.updateToken(token);
     }
 
 }

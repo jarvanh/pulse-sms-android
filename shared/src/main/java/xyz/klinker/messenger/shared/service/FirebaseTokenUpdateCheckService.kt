@@ -3,6 +3,7 @@ package xyz.klinker.messenger.shared.service
 import android.app.IntentService
 import android.content.Intent
 import android.os.Build
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.iid.FirebaseInstanceId
 import xyz.klinker.messenger.api.implementation.Account
@@ -14,7 +15,7 @@ import xyz.klinker.messenger.shared.data.Settings
 class FirebaseTokenUpdateCheckService : IntentService("FirebaseTokenRefresh") {
 
     companion object {
-        private val TOKEN_PREF_KEY = "stored-firebase-token"
+        private const val TOKEN_PREF_KEY = "stored-firebase-token"
     }
 
     override fun onHandleIntent(intent: Intent?) {
@@ -23,18 +24,28 @@ class FirebaseTokenUpdateCheckService : IntentService("FirebaseTokenRefresh") {
         }
 
         val sharedPrefs = Settings.getSharedPrefs(this)
-        val currentToken = FirebaseInstanceId.getInstance().token
         val storedToken = sharedPrefs.getString(TOKEN_PREF_KEY, null)
 
-        if (currentToken != null && currentToken != storedToken) {
-            AnalyticsHelper.updatingFcmToken(this)
-            sharedPrefs.edit().putString(TOKEN_PREF_KEY, currentToken).apply()
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        return@OnCompleteListener
+                    }
 
-            Thread {
-                ApiUtils.updateDevice(Account.accountId, Integer.parseInt(Account.deviceId!!).toLong(), Build.MODEL,
-                        currentToken)
-            }.start()
-        }
+                    // Get new Instance ID token
+                    val currentToken = task.result?.token
+
+                    // upload to server
+                    if (currentToken != null && currentToken != storedToken) {
+                        AnalyticsHelper.updatingFcmToken(this)
+                        sharedPrefs.edit().putString(TOKEN_PREF_KEY, currentToken).apply()
+
+                        Thread {
+                            ApiUtils.updateDevice(Account.accountId, Integer.parseInt(Account.deviceId!!).toLong(), Build.MODEL,
+                                    currentToken)
+                        }.start()
+                    }
+                })
 
     }
 }

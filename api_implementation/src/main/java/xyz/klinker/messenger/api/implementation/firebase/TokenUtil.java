@@ -31,4 +31,20 @@ public class TokenUtil {
 
         FirebaseMessaging.getInstance().subscribeToTopic("feature_flag");
     }
+
+    public static void updateToken(String token) {
+        final Account account = Account.INSTANCE;
+
+        Log.v(TAG, "token: " + token);
+        if (account.exists() && token != null) {
+            Log.v(TAG, "refreshing on server");
+            new Thread(() -> {
+                ApiUtils api = ApiUtils.INSTANCE;
+                api.updateDevice(account.getAccountId(), Integer.parseInt(account.getDeviceId()), Build.MODEL,
+                        FirebaseInstanceId.getInstance().getToken());
+            }).start();
+        }
+
+        FirebaseMessaging.getInstance().subscribeToTopic("feature_flag");
+    }
 }

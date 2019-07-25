@@ -43,9 +43,7 @@ dependencies {
     implementation "com.google.firebase:firebase-core:${versions.firebaseCore}"
     implementation "com.google.firebase:firebase-storage:${versions.firebaseStorage}"
     implementation "com.google.firebase:firebase-auth:${versions.firebaseAuth}"
-    api ("com.google.firebase:firebase-messaging:${versions.firebaseMessaging}") {
-        exclude group: 'com.google.firebase', module: 'firebase-iid'
-    }
+    api "com.google.firebase:firebase-messaging:${versions.firebaseMessaging}"
 
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:${versions.robolectric}"
