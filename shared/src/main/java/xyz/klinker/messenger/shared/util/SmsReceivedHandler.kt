@@ -123,11 +123,28 @@ class SmsReceivedHandler(private val context: Context) {
         val source = DataSource
 
         if (SmsReceivedReceiver.shouldSaveMessage(context, message, address)) {
-            val conversationId = try {
-                source.insertMessage(message, address, context)
-            } catch (e: Exception) {
-                source.ensureActionable(context)
-                source.insertMessage(message, address, context)
+            // if the conversation doesn't exist, create it, then insert the message
+            // if the conversation exists, just insert the message and update the snippet
+
+            // I used to only use the insertMessage function with the address, which is smart enough to update or create
+            // the conversation all on it's own. However, if something goes wrong with saving the message (?),
+            // it would leave the user with the conversation snippet updated, but no message inserted...
+
+            var conversationId = source.findConversationId(context, address)
+            if (conversationId == null) {
+                conversationId = try {
+                    source.insertMessage(message, address, context)
+                } catch (e: Exception) {
+                    source.ensureActionable(context)
+                    source.insertMessage(message, address, context)
+                }
+            } else {
+                try {
+                    source.insertMessage(context, message, conversationId)
+                } catch (e: Exception) {
+                    source.ensureActionable(context)
+                    source.insertMessage(context, message, conversationId)
+                }
             }
 
             val conversation = source.getConversation(context, conversationId)

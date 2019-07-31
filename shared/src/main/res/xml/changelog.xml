@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.11.5"
+        description="Unreleased">
+        <text>Translation updates</text>
+    </version>
+
+    <version
         name="4.11.4"
         description="July 22nd, 2019">
         <!-- Upload some of the user's preferences to the web, when they sign up for an account -->
