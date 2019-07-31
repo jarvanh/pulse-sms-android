@@ -16,7 +16,7 @@
   -->
 <resources>
     <string name="api_login">Se connecter</string>
-    <string name="api_signup">S\'inscrire</string>
+    <string name="api_signup">Joseph</string>
     <string name="api_signup_failed">Impossible de s\'inscrire sur cet appareil, vous devez vous enregistrer d\'abord sur votre appareil principal possédant un numéro de téléphone !</string>
     <string name="api_skip_signup">Ou, si vous voulez juste utiliser l\'application sur cet appareil sans les fonctionnalités réseaux, telles que la rédaction de texto à partir d\'une tablette ou d\'un ordinateur, vous pouvez ignorer cette étape.</string>
     <string name="api_skip">Ignorer</string>

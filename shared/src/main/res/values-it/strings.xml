@@ -33,6 +33,7 @@
     <string name="menu_invite">Invita gli amici</string>
     <string name="menu_feature_settings">Opzioni avanzate</string>
     <string name="menu_settings">Preferenze</string>
+    <string name="menu_customization_settings">Preferenze</string>
     <string name="menu_account">Il mio account</string>
     <string name="menu_device_texting">Il mio Account</string>
     <string name="menu_help">Help &amp; feedback</string>
@@ -60,6 +61,9 @@
     <string name="menu_snooze_24">24 ore</string>
     <string name="menu_snooze_72">72 ore</string>
     <string name="menu_snooze_custom">Manuale</string>
+    <string name="menu_mark_as_unread">Segna come non letta</string>
+    <string name="menu_pin_conversation">Fissa/Sblocca conversazione</string>
+    <string name="menu_mute_conversation">Silenzia/Riattiva conversazione</string>
     <!-- Empty Screen -->
     <string name="no_messages">Nessun messaggio</string>
     <string name="no_messages_summary">Inizia una nuova conversazione o semplicemente goditi la giornata!</string>
@@ -87,6 +91,7 @@
     </plurals>
     <string name="undo">Annulla</string>
     <string name="enter_search">Cerca...</string>
+    <string name="no_private_messages_description">Imposta una conversazione come privata dalle sue impostazioni</string>
     <!-- Search Screen -->
     <string name="conversations">Conversazioni</string>
     <string name="messages">Messaggi</string>
@@ -123,6 +128,7 @@ http://messenger.klinkerapps.com</string>
     <string name="attached_image">Immagine allegata</string>
     <string name="remove_image">Rimuovi immagine allegata</string>
     <string name="edit_image">Modifica immagine allegata</string>
+    <string name="select_folder">Seleziona cartella per la conversazione</string>
     <string name="permission_needed_for_action">Permessi necessari per questa azione.</string>
     <string name="request_permission">Richiesta Permesso</string>
     <string name="no_messages_with_contact">Non hai ancora messaggi in questa conversazione, è tempo di iniziare!</string>
@@ -135,6 +141,9 @@ http://messenger.klinkerapps.com</string>
     <string name="audio_recording_error">Errore di registrazione :(</string>
     <string name="message_copied_to_clipboard">Copiato negli appunti</string>
     <string name="view_details">Guarda dettagli</string>
+    <string name="speak_message">Leggi a voce alta</string>
+    <string name="select_all_messages">Seleziona tutti i messaggi</string>
+    <string name="select_all_conversations">Seleziona tutte le conversazioni</string>
     <string name="delete">Elimina</string>
     <string name="copy_message">Copia Testo</string>
     <string name="resend">Invia nuovamente</string>
@@ -154,7 +163,11 @@ http://messenger.klinkerapps.com</string>
     <string name="compose_message">Componi un nuovo messaggio</string>
     <string name="send_message">Invia messaggio</string>
     <string name="enter_contact_name">Inserisci il nome del contatto</string>
+    <string name="enter_contact_name_or_number">Inserisci il nome del contatto o il numero</string>
     <string name="error_processing_vcard">Errore durante l\'elaborazione vcard</string>
+    <string name="compose_recents">Recenti</string>
+    <string name="compose_groups">Gruppi</string>
+    <string name="compose_all_contacts">Tutti i contatti</string>
     <!-- Onboarding Screen -->
     <string name="permissions_needed">L\'app non può funzionare senza quei permessi! Prima di continuare devi accettarli.</string>
     <string name="loading_messages">Ottimizzazione...</string>
@@ -189,6 +202,8 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
         <item quantity="other">%1$d nuovi messaggi</item>
     </plurals>
     <string name="read">Letto</string>
+    <string name="mark_as_read">Segna come letta</string>
+    <string name="mute">Silenzia</string>
     <string name="reply">Rispondi</string>
     <string name="reply_to">Rispondi a  %1$s</string>
     <string name="call">Chiama</string>
@@ -201,6 +216,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     </string-array>
     <string name="new_mms_message">Nuovo messaggio MMS</string>
     <string name="you">Tu</string>
+    <string name="draft">Bozze</string>
     <string name="new_message">Nuovo Messaggio</string>
     <string name="received_new_message">Hai ricevuto un nuovo messaggio!</string>
     <!-- About, Help and Feedback and Settings -->
@@ -208,6 +224,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="copyright">© 2018 Luke &amp; Jake Klinker</string>
     <string name="copyright_summary">Guarda info sulla licenza open source</string>
     <string name="app_version">Versione App</string>
+    <string name="account_information">Info Account</string>
     <string name="device_id">ID dispositivo</string>
     <string name="device_info">Info Dispositivo</string>
     <string name="website">Sito web</string>
@@ -238,6 +255,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="mute_conversation_summary">Nascondi notifiche per questa conversazione</string>
     <string name="private_conversation">Conversazione Privata</string>
     <string name="private_conversation_summary">Nascondi il contenuto della conversazione nelle notifiche</string>
+    <string name="private_conversation_summary_2">Nascondi il contenuto nelle notifiche e sposta le conversazione nella sezione <i>Conversazioni private</i></string>
     <string name="primary_color">Colore Primario</string>
     <string name="primary_dark_color">Colore Primario Scuro</string>
     <string name="accent_color">Colore Accento</string>
@@ -263,13 +281,20 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="sound_effects">Effetti sonori</string>
     <string name="delivery_reports">Rapporti di consegna</string>
     <string name="theme_settings">Personalizzazione</string>
+    <string name="theme_settings_redirect">Tema</string>
     <string name="base_theme">Tema Base</string>
     <string name="global_theme_color">Colore del tema</string>
     <string name="font_size">Dimensione del font</string>
+    <string name="apply_theme_globally">Applica a tutte le conversazioni</string>
     <string name="blacklist_hint">Inserisci numero nella blacklist...</string>
+    <string name="enter_phrase">Inserisci frase</string>
+    <string name="enter_phone">Inserisci numero di telefono</string>
+    <string name="blacklist_phrase_hint">Inserisci frase da bloccare</string>
     <string name="add_blacklist">%1$s\n\nSei sicuro di voler aggiungere questo numero nella blacklist? I messaggi in arrivo non saranno più salvati e notificati!</string>
+    <string name="add_blacklist_phrase">%1$s\n\nSei sicuro di voler aggiungere questa frase in blacklist? Se i messaggi contengono questa frase non verranno più salvati e non riceverai notifiche!</string>
     <string name="remove_blacklist">%1$s\n\nVuoi eliminarlo dalla blacklist?</string>
     <string name="blacklist_need_number">Devi inserire un numero nella blacklist!</string>
+    <string name="blacklist_need_phrase">Devi inserire una frase da bloccare!</string>
     <string name="no_blacklists">Nessuna blacklist</string>
     <string name="no_blacklists_summary">Se vuoi puoi aggiungere un numero dal tasto + sotto!</string>
     <string name="add">Aggiungi</string>
@@ -305,15 +330,26 @@ con ciò che è sul dispositivo principale.</string>
     <string name="send_as_mms_summary">I messaggi lunghi saranno inviati come MMS invece che singoli SMS</string>
     <string name="alert_types">Tipo di Avviso</string>
     <string name="alert_types_summary">Personalizzazioni per le notifiche</string>
+    <string name="settings_phone_number">Numero di Telefono</string>
     <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <string name="signature">Firma</string>
     <string name="signature_summary">NOTA: le firme verranno mostrate solo al destinatario del messaggio e non nella lista conversazioni.</string>
     <string name="cleanup_old_messages">Elimina i vecchi messaggi</string>
+    <string name="cleanup_old_messages_now_summary">Cancella tutti i messaggi in questa conversazione più vecchi del periodo selezionato</string>
     <string name="delayed_sending">Invio ritardato</string>
     <string name="quick_compose">Composizione Veloce</string>
     <string name="secure_private_conversations">Conversazioni Private</string>
     <string name="secure_private_conversations_summary">E\' neccessario un PIN per sbloccare le conversazioni private.</string>
+    <string name="message_backup">Backup messaggi</string>
+    <string name="message_backup_pref_summary">Preoccupato di perdere i tuoi messaggi? Ci pensa Pulse</string>
+    <string name="folders_title">Cartelle</string>
+    <string name="create">Crea</string>
+    <string name="create_folder">Crea una nuova cartella</string>
+    <string name="create_folder_summary">Sposta le conversazioni in una cartella per organizzarle meglio e ritrovarle velocemente</string>
+    <string name="no_folders">Nessuna cartella creata - clicca in alto per creare una nuova cartella</string>
+    <string name="folder_name">Nome cartella...</string>
+    <string name="no_folder">Nessuna cartella</string>
     <!-- Theming Options -->
     <string name="day_night">Default (Giorno/Notte)</string>
     <string name="always_light">Sempre Chiaro</string>
@@ -359,6 +395,8 @@ provalo oggi!</string>
     <string name="hours">Ore</string>
     <string name="minutes">Minuti</string>
     <string name="test">Test</string>
+    <string name="channel_settings">Personalizzazione notifiche conversazioni</string>
+    <string name="restore_default_channel_settings">Ripristina impostazioni di default</string>
     <string name="off">Off</string>
     <!-- Rate it -->
     <!-- Times -->
