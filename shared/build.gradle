@@ -36,7 +36,7 @@ dependencies {
     api "androidx.annotation:annotation:${versions.androidX}"
     api "com.google.android.material:material:1.0.0"
     api "androidx.palette:palette:${versions.androidX}"
-    api "androidx.legacy:legacy-preference-v14:${versions.androidX}"
+    api "androidx.preference:preference:1.1.0-rc01"
     api "androidx.leanback:leanback:${versions.androidX}"
     api "androidx.percentlayout:percentlayout:${versions.androidX}"
     api "androidx.browser:browser:${versions.androidX}"

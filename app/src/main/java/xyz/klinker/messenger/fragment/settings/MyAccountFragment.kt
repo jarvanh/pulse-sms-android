@@ -31,6 +31,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import com.google.android.material.navigation.NavigationView
 
@@ -344,7 +345,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         val preference = findPreference(getString(R.string.pref_refresh_firebase))
         if (!Account.primary) {
             (preferenceScreen
-                    .findPreference(getString(R.string.pref_category_account_actions)) as PreferenceCategory)
+                    .findPreference<Preference>(getString(R.string.pref_category_account_actions)) as PreferenceCategory)
                     .removePreference(preference)
             return
         }
@@ -368,7 +369,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         val preference = findPreference(getString(R.string.pref_resync_contacts))
         if (!Account.primary) {
             (preferenceScreen
-                    .findPreference(getString(R.string.pref_category_account_actions)) as PreferenceCategory)
+                    .findPreference<Preference>(getString(R.string.pref_category_account_actions)) as PreferenceCategory)
                     .removePreference(preference)
             return
         }
@@ -520,7 +521,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
                     returnToConversationsAfterLogin()
                 } else if (responseCode == RESPONSE_START_TRIAL) {
                     val preference = preferenceScreen
-                            .findPreference(getString(R.string.pref_my_account_setup))
+                            .findPreference<Preference>(getString(R.string.pref_my_account_setup))!!
 
                     if (preference.onPreferenceClickListener != null) {
                         preference.onPreferenceClickListener.onPreferenceClick(preference)
