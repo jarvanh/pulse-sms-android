@@ -90,6 +90,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/PulseTheme"
+        android:requestLegacyExternalStorage="true"
         tools:replace="android:allowBackup">
 
         <meta-data

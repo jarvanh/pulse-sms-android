@@ -103,7 +103,6 @@ class MediaSaver {
                 } catch (x: Exception) {
                     // background thread
                 }
-
             }
 
         } else {
@@ -125,7 +124,6 @@ class MediaSaver {
                     makeToast(R.string.failed_to_save)
                 } catch (x: Exception) {
                 }
-
             }
 
         }
