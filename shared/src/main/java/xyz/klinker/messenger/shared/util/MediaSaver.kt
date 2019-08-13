@@ -71,7 +71,7 @@ class MediaSaver(val context: Context) {
             directoryFile.mkdirs()
         }
 
-        val dst = File(directoryFile, fileName + extension)
+        val dst = File(directory, fileName + extension)
 
         try {
             dst.createNewFile()
@@ -87,14 +87,6 @@ class MediaSaver(val context: Context) {
                 stream.close()
 
                 bmp.recycle()
-
-                val values = ContentValues(3)
-
-                values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-                values.put(MediaStore.Images.Media.MIME_TYPE, message.mimeType)
-                values.put(MediaStore.MediaColumns.DATA, dst.path)
-
-                context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
 
                 makeToast(R.string.saved)
             } catch (e: Exception) {
@@ -161,7 +153,7 @@ class MediaSaver(val context: Context) {
             val `in` = context.contentResolver.openInputStream(Uri.parse(message.data))
 
             `in`!!.writeToOutputAndCleanup(outputStream as FileOutputStream)
-            
+
             makeToast(R.string.saved)
         } catch (e: java.lang.Exception) {
             makeToast(R.string.failed_to_save)

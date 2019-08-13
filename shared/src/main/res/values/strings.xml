@@ -168,7 +168,7 @@
     <string name="save">Save</string>
     <string name="share">Share</string>
     <string name="share_content">Share content…</string>
-    <string name="saved">Saved to downloads folder!</string>
+    <string name="saved">The file has been saved!</string>
     <string name="failed_to_save">Failed to save</string>
     <string name="start_recording_audio">Press the button to start recording audio!</string>
     <string name="audio_recording_error">Error with recording :(</string>
@@ -524,8 +524,7 @@
     <string name="use_group_mms_summary">When disabled, group messages will be sent out as individual SMS, to each of the recipients</string>
     <string name="use_mms_read_receipts">Read Receipts</string>
     <string name="auto_save_media">Auto-save Media</string>
-    <string name="auto_save_media_summary">Automatically save any MMS media in the /Downloads folder when
-        it is received</string>
+    <string name="auto_save_media_summary">Automatically save any MMS media when it is received</string>
     <string name="apn_configuration">APN Configuration</string>
     <string name="override_system_apn">Override System APNs</string>
     <string name="mmsc_url">MMSC URL</string>

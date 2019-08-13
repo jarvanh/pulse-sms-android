@@ -18,6 +18,7 @@ import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 
 class MmsConfigurationFragment : MaterialPreferenceFragment() {
 
@@ -87,21 +88,24 @@ class MmsConfigurationFragment : MaterialPreferenceFragment() {
     }
 
     private fun initDownloadLocation() {
-        findPreference(getString(R.string.pref_mms_save_location))
-                .setOnPreferenceClickListener { _ ->
-
-                    if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        showStorageChooser()
+        val pref = findPreference(getString(R.string.pref_mms_save_location))
+        if (AndroidVersionUtil.isAndroidQ) {
+            preferenceScreen.removePreference(pref)
+        } else {
+            pref.setOnPreferenceClickListener { _ ->
+                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    showStorageChooser()
+                } else {
+                    if (activity != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        activity.requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 10)
                     } else {
-                        if (activity != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            activity.requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 10)
-                        } else {
-                            showStorageChooser()
-                        }
+                        showStorageChooser()
                     }
-
-                    false
                 }
+
+                false
+            }
+        }
     }
 
     private fun showStorageChooser() {
