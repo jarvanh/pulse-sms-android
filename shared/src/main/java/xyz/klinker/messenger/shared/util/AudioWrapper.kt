@@ -50,8 +50,7 @@ class AudioWrapper {
 
             if (tone != null) {
                 mediaPlayer = MediaPlayer.create(context, tone, null, AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                         .build(), 1)
             }
         } catch (e: Exception) {
@@ -68,8 +67,7 @@ class AudioWrapper {
 
        try {
            mediaPlayer = MediaPlayer.create(context, resourceId, AudioAttributes.Builder()
-                   .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                   .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                   .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                    .build(), 1)
        } catch (ex: Exception) {
        }
@@ -89,7 +87,7 @@ class AudioWrapper {
     }
 
     companion object {
-        private val TAG = "AudioWrapper"
+        private const val TAG = "AudioWrapper"
 
         @SuppressLint("NewApi")
         fun shouldPlaySound(context: Context, androidVersion: Int = Build.VERSION.SDK_INT): Boolean {
