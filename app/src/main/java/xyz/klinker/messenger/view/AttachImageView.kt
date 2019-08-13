@@ -47,17 +47,12 @@ class AttachImageView(context: Context, private val callback: ImageSelectedListe
         val handler = Handler()
 
         Thread {
-            val select = arrayOf(BaseColumns._ID, MediaStore.Files.FileColumns.DATA, MediaStore.Files.FileColumns.MEDIA_TYPE, MediaStore.Files.FileColumns.MIME_TYPE)
-
-            val where = arrayOf("" + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE, "" + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
-
+            val select = arrayOf(BaseColumns._ID, Images.ImageColumns.DATA, Images.ImageColumns.MIME_TYPE)
             val cr = context.contentResolver
+            
             images = try {
-                Images.Media.query(cr, MediaStore.Files.getContentUri("external"),
-                        select, "(" + MediaStore.Files.FileColumns.MEDIA_TYPE + "=? OR " +
-                        MediaStore.Files.FileColumns.MEDIA_TYPE + "=?) AND " +
-                        MediaStore.Files.FileColumns.DATA + " NOT LIKE '%http%'",
-                        where, MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC")
+                cr.query(Images.Media.EXTERNAL_CONTENT_URI,
+                        select, null, null, MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC")
             } catch (e: SQLException) {
                 MatrixCursor(emptyArray())
             }
