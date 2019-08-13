@@ -25,6 +25,7 @@ object NotificationBubbleHelper {
         val person = Person.Builder()
                 .setName(conversation.title)
                 .setIcon(icon)
+                .setImportant(true)
                 .build()
         val contentUri = Uri.parse("https://messenger.klinkerapps.com/${conversation.id}")
 
@@ -44,24 +45,22 @@ object NotificationBubbleHelper {
         val pendingOpen = PendingIntent.getActivity(context, conversation.id.toInt(), open, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder = Notification.Builder(context, NotificationUtils.BUBBLE_CHANNEL_ID)
+                .setContentIntent(pendingOpen)
                 .setBubbleMetadata(
                         Notification.BubbleMetadata.Builder()
                                 .setDesiredHeight(DensityUtil.toDp(context, 400))
                                 .setIcon(icon)
-                                .apply {
-                                    setAutoExpandBubble(true)
-                                    setSuppressNotification(true)
-                                }
                                 .setIntent(intent)
+                                .setAutoExpandBubble(true)
+                                .setSuppressNotification(true)
                                 .build()
                 )
                 .setContentTitle(conversation.title)
                 .setContentText(conversation.title)
                 .setSmallIcon(R.drawable.ic_stat_notify)
                 .setCategory(Notification.CATEGORY_MESSAGE)
+                .setShowWhen(false)
                 .addPerson(person)
-                .setShowWhen(true)
-                .setContentIntent(pendingOpen)
 
         val notificationManager = context.getSystemService(NotificationManager::class.java)
         notificationManager.notify(conversation.id.toInt() * 3, builder.build())

@@ -99,6 +99,7 @@ object FeatureFlags {
 
     val SKIP_INTRO_PAGER = true
     val DISPLAY_DUO_BUTTON = false
+    val DISPLAY_NOTIFICATION_BUBBLES = false
     val QUICK_SIGN_UP_SYSTEM = Account.QUICK_SIGN_UP_SYSTEM
 
     // always on

@@ -174,7 +174,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
                 } catch (e: Exception) { }
             }
 
-            if (!AndroidVersionUtil.isAndroidQ) {
+            if (!FeatureFlags.DISPLAY_NOTIFICATION_BUBBLES || !AndroidVersionUtil.isAndroidQ) {
                 try {
                     toolbar.menu.findItem(R.id.menu_show_bubble)?.isVisible = false
                 } catch (e: Exception) { }
@@ -241,7 +241,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             } catch (e: Exception) { }
         }
 
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!FeatureFlags.DISPLAY_NOTIFICATION_BUBBLES || !AndroidVersionUtil.isAndroidQ) {
             try {
                 toolbar.menu.findItem(R.id.menu_show_bubble)?.isVisible = false
             } catch (e: Exception) { }
