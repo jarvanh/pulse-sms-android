@@ -126,7 +126,7 @@ class ImageViewerActivity : AppCompatActivity() {
             item.itemId == android.R.id.home -> finish()
             item.itemId == R.id.save -> {
                 val message = messages[viewPager.currentItem]
-                MediaSaver(this as Activity?).saveMedia(message)
+                MediaSaver(this as Activity).saveMedia(message)
             }
             item.itemId == R.id.share -> {
                 val message = messages[viewPager.currentItem]
@@ -145,7 +145,7 @@ class ImageViewerActivity : AppCompatActivity() {
         }
 
         if (requestCode == PERMISSION_STORAGE_REQUEST && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            MediaSaver(this as Activity?).saveMedia(messages[viewPager.currentItem])
+            MediaSaver(this as Activity).saveMedia(messages[viewPager.currentItem])
         } else {
             requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                     PERMISSION_STORAGE_REQUEST)

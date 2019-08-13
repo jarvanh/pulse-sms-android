@@ -353,7 +353,7 @@ class MessageViewHolder(private val fragment: MessageListFragment?, itemView: Vi
                             which == 1 -> deleteMessage()
                             which == 2 && image?.visibility == View.VISIBLE -> shareImage(messageId)
                             which == 2 -> copyMessageText()
-                            which == 3 && image?.visibility == View.VISIBLE -> MediaSaver(activity).saveMedia(messageId)
+                            which == 3 && image?.visibility == View.VISIBLE -> MediaSaver(activity!!).saveMedia(messageId)
                             which == 3 -> shareText(messageId)
                             which == 4 -> resendMessage()
                         }

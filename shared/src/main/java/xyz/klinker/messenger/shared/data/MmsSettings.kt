@@ -47,8 +47,7 @@ object MmsSettings {
         this.userAgentProfileUrl = sharedPrefs.getString(context.getString(R.string.pref_user_agent_profile_url), "")
         this.userAgentProfileTagName = sharedPrefs.getString(context.getString(R.string.pref_user_agent_profile_tag), "x-wap-profile")
 
-        val sizeString = sharedPrefs.getString(context.getString(R.string.pref_mms_size), "500_kb")
-        when (sizeString) {
+        when (sharedPrefs.getString(context.getString(R.string.pref_mms_size), "500_kb")) {
             "100_kb" -> this.maxImageSize = (100 * 1024).toLong()
             "300_kb" -> this.maxImageSize = (300 * 1024).toLong()
             "500_kb" -> this.maxImageSize = (500 * 1024).toLong()
