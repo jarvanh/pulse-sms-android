@@ -53,14 +53,14 @@ object MessageCountHelper {
             }
         }
 
-        return if (numberOfMessages in 2..convertAfterXMessages) {
-            formatCount(numberOfMessages, charRemaining)
-        } else {
-            null
+        return when {
+            numberOfMessages <= 1 -> ""
+            numberOfMessages in 2..convertAfterXMessages -> formatCount(numberOfMessages, charRemaining)
+            else -> "MMS"
         }
     }
 
     private fun formatCount(numberOfMessages: Int, charRemaining: Int): String {
-        return numberOfMessages.toString() + "/" + charRemaining
+        return "$numberOfMessages/$charRemaining"
     }
 }

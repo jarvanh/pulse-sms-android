@@ -19,6 +19,7 @@
     <version
         name="4.11.6"
         description="August 13th, 2019">
+        <!-- change the message counter text to display "MMS" in the relevant situations -->
         <text>Improvements for Android Q</text>
     </version>
 

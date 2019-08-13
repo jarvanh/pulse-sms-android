@@ -14,11 +14,14 @@ class MessageCounterCalculator(private val fragment: MessageListFragment) {
     private val counter: TextView by lazy { fragment.rootView!!.findViewById<View>(R.id.text_counter) as TextView }
 
     fun updateCounterText() {
-        if (fragment.attachManager.attachedUri == null && !fragment.argManager.isGroup && !ignoreCounterText()) {
-            val text = messageEntry.text.toString()
-            counter.text = MessageCountHelper.getMessageCounterText(text)
-        } else {
-            counter.text = null
+        val text = messageEntry.text.toString()
+        counter.text = when {
+            ignoreCounterText() || text.isEmpty() -> null
+            fragment.attachManager.attachedUri != null -> null
+            fragment.argManager.isGroup -> null
+            else -> {
+                MessageCountHelper.getMessageCounterText(text)
+            }
         }
     }
 

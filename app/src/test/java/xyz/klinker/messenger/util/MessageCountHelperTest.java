@@ -41,8 +41,8 @@ public class MessageCountHelperTest extends MessengerRobolectricSuite {
 
         assertEquals(null, MessageCountHelper.INSTANCE.getMessageCounterText(ONE_MESSAGE));
         assertEquals("1/28", MessageCountHelper.INSTANCE.getMessageCounterText(ONE_LONGER_MESSAGE));
-        assertEquals(null, MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES));
-        assertEquals(null, MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES + TWO_MESSAGES));
+        assertEquals("MMS", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES));
+        assertEquals("MMS", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES + TWO_MESSAGES));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class MessageCountHelperTest extends MessengerRobolectricSuite {
         assertEquals(null, MessageCountHelper.INSTANCE.getMessageCounterText(ONE_MESSAGE));
         assertEquals("1/28", MessageCountHelper.INSTANCE.getMessageCounterText(ONE_LONGER_MESSAGE));
         assertEquals("2/41", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES));
-        assertEquals(null, MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES + ONE_LONGER_MESSAGE));
+        assertEquals("MMS", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES + ONE_LONGER_MESSAGE));
     }
 
     @Test
@@ -65,6 +65,6 @@ public class MessageCountHelperTest extends MessengerRobolectricSuite {
         assertEquals("1/28", MessageCountHelper.INSTANCE.getMessageCounterText(ONE_LONGER_MESSAGE));
         assertEquals("2/41", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES));
         assertEquals("3/62", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES + ONE_LONGER_MESSAGE));
-        assertEquals(null, MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES + TWO_MESSAGES));
+        assertEquals("MMS", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES + TWO_MESSAGES));
     }
 }
