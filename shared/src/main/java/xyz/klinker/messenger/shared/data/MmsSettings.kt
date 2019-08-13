@@ -38,7 +38,7 @@ object MmsSettings {
         this.autoSaveMedia = sharedPrefs.getBoolean(context.getString(R.string.pref_auto_save_media), false)
         this.overrideSystemAPN = sharedPrefs.getBoolean(context.getString(R.string.pref_override_system_apn), false)
         this.saveDirectory = sharedPrefs.getString(DiskUtil.SC_PREFERENCE_KEY,
-                File(Environment.getExternalStorageDirectory(), "Download").path)
+                File(Environment.getExternalStorageDirectory(), "Pictures/Pulse").path)
 
         this.mmscUrl = sharedPrefs.getString(context.getString(R.string.pref_mmsc_url), "")
         this.mmsProxy = sharedPrefs.getString(context.getString(R.string.pref_mms_proxy), "")
