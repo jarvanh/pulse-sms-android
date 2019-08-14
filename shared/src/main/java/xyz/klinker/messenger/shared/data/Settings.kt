@@ -212,8 +212,7 @@ object Settings {
             }
         }
 
-        val vibrateString = sharedPrefs.getString(context.getString(R.string.pref_vibrate), "vibrate_default")
-        when (vibrateString) {
+        when (sharedPrefs.getString(context.getString(R.string.pref_vibrate), "vibrate_default")) {
             "vibrate_off" -> this.vibrate = VibratePattern.OFF
             "vibrate_default" -> this.vibrate = VibratePattern.DEFAULT
             "vibrate_two_short" -> this.vibrate = VibratePattern.TWO_SHORT
@@ -229,8 +228,7 @@ object Settings {
             else -> this.vibrate = VibratePattern.DEFAULT
         }
 
-        val repeatNotifications = sharedPrefs.getString(context.getString(R.string.pref_repeat_notifications), "never")
-        when (repeatNotifications) {
+        when (sharedPrefs.getString(context.getString(R.string.pref_repeat_notifications), "never")) {
             "never" -> this.repeatNotifications = -1
             "one_min" -> this.repeatNotifications = TimeUtils.MINUTE
             "two_min" -> this.repeatNotifications = TimeUtils.MINUTE * 2
@@ -241,8 +239,7 @@ object Settings {
             else -> this.repeatNotifications = -1
         }
 
-        val delayedSending = sharedPrefs.getString(context.getString(R.string.pref_delayed_sending), "off")
-        when (delayedSending) {
+        when (sharedPrefs.getString(context.getString(R.string.pref_delayed_sending), "off")) {
             "off" -> this.delayedSendingTimeout = 0
             "one_second" -> this.delayedSendingTimeout = TimeUtils.SECOND * 1
             "three_seconds" -> this.delayedSendingTimeout = TimeUtils.SECOND * 3
@@ -254,8 +251,7 @@ object Settings {
             else -> this.delayedSendingTimeout = 0
         }
 
-        val cleanupOldMessages = sharedPrefs.getString(context.getString(R.string.pref_cleanup_messages), "never")
-        when (cleanupOldMessages) {
+        when (sharedPrefs.getString(context.getString(R.string.pref_cleanup_messages), "never")) {
             "never" -> this.cleanupMessagesTimeout = -1
             "one_week" -> this.cleanupMessagesTimeout = TimeUtils.DAY * 7
             "two_weeks" -> this.cleanupMessagesTimeout = TimeUtils.DAY * 17
@@ -266,8 +262,7 @@ object Settings {
             else -> this.cleanupMessagesTimeout = -1
         }
 
-        val keyboardLayoutString = sharedPrefs.getString(context.getString(R.string.pref_keyboard_layout), "default")
-        when (keyboardLayoutString) {
+        when (sharedPrefs.getString(context.getString(R.string.pref_keyboard_layout), "default")) {
             "default" -> this.keyboardLayout = KeyboardLayout.DEFAULT
             "send" -> this.keyboardLayout = KeyboardLayout.SEND
             "enter" -> this.keyboardLayout = KeyboardLayout.ENTER

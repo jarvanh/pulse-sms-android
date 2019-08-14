@@ -44,6 +44,7 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
         super.onCreate()
 
         KotlinObjectInitializers.initializeObjects(this)
+        FirstRunInitializer.applyDefaultSettings(this)
 
         enableSecurity()
 
