@@ -18,7 +18,7 @@
 
     <version
         name="4.11.7"
-        description="August 20th, 2019">
+        description="August 21st, 2019">
         <!-- Change the default theme for the first run (no conversation categories, no toolbar coloring, dark theme) -->
         <!-- change the message counter text to display "MMS" in the relevant situations -->
         <!-- AudioWrapper uses the notification volume for it's sound effects -->
