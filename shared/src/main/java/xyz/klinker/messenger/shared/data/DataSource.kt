@@ -2131,15 +2131,14 @@ object DataSource {
         }
 
         val conversationId: Long
+        message.data = message.data.replace("[Web발신]\n", "")
 
         if (cursor.moveToFirst()) {
             conversationId = cursor.getLong(0)
-            updateConversation(context, conversationId, message.read, message.timestamp,
-                    if (message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING)
-                        context.getString(R.string.you) + ": " + message.data
-                    else
-                        message.data,
-                    message.mimeType, false, useApi)
+            val snippet = if (message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING)
+                context.getString(R.string.you) + ": " + message.data else message.data
+
+            updateConversation(context, conversationId, message.read, message.timestamp, snippet, message.mimeType, false, useApi)
             cursor.closeSilent()
         } else {
             cursor.closeSilent()
