@@ -2131,7 +2131,7 @@ object DataSource {
         }
 
         val conversationId: Long
-        message.data = message.data.replace("[Web발신]\n", "")
+        message.data = message.data?.replace("[Web발신]\n", "")
 
         if (cursor.moveToFirst()) {
             conversationId = cursor.getLong(0)
