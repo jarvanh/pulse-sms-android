@@ -30,13 +30,13 @@ dependencies {
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
-    api "androidx.core:core-ktx:1.0.2"
-    api "androidx.appcompat:appcompat:1.0.2"
+    api "androidx.core:core-ktx:1.1.0"
+    api "androidx.appcompat:appcompat:1.1.0"
     api "androidx.emoji:emoji:${versions.androidX}"
     api "androidx.annotation:annotation:${versions.androidX}"
     api "com.google.android.material:material:1.0.0"
     api "androidx.palette:palette:${versions.androidX}"
-    api "androidx.preference:preference:1.1.0-rc01"
+    api "androidx.preference:preference:1.1.0"
     api "androidx.leanback:leanback:${versions.androidX}"
     api "androidx.percentlayout:percentlayout:${versions.androidX}"
     api "androidx.browser:browser:${versions.androidX}"
@@ -48,8 +48,8 @@ dependencies {
     api "com.google.firebase:firebase-auth:${versions.firebaseAuth}"
     api "com.google.android.gms:play-services-maps:${versions.playServices}"
     
-    api "com.google.firebase:firebase-ml-natural-language:${versions.smartReply}"
-    api "com.google.firebase:firebase-ml-natural-language-smart-reply-model:${versions.smartReply}"
+    api "com.google.firebase:firebase-ml-natural-language:21.0.2"
+    api "com.google.firebase:firebase-ml-natural-language-smart-reply-model:20.0.5"
 
     annotationProcessor "com.github.bumptech.glide:compiler:${versions.glide}"
     api "com.github.bumptech.glide:glide:${versions.glide}"

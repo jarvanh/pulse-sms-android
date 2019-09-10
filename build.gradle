@@ -45,11 +45,10 @@ buildscript {
             'androidXTester'    : '1.1.0',
             'androidXEspresso'  : '3.1.0',
 
-            'firebaseCore'      : '17.0.1',
+            'firebaseCore'      : '17.2.0',
             'firebaseMessaging' : '19.0.1',
             'firebaseStorage'   : '18.1.1',
-            'firebaseAuth'      : '18.1.0',
-            'smartReply'        : '20.0.2',
+            'firebaseAuth'      : '19.0.0',
 
             'mockito'           : '2.18.3',
             'robolectric'       : '4.2',
