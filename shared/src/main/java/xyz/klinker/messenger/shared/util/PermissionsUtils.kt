@@ -22,6 +22,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.provider.Telephony
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -87,21 +88,35 @@ object PermissionsUtils {
      * @param context the current application context.
      */
     fun setDefaultSmsApp(context: Context) {
-        val intent = Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT)
-        intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.packageName)
-
-        try {
-            if (context is Activity) {
-                context.startActivityForResult(intent, REQUEST_DEFAULT_SMS_APP)
-            } else {
-                context.startActivity(intent)
+        val startDefaultApp = { intent: Intent ->
+            try {
+                if (context is Activity) {
+                    context.startActivityForResult(intent, REQUEST_DEFAULT_SMS_APP)
+                } else {
+                    context.startActivity(intent)
+                }
+            } catch (e: Exception) {
+                // Android TV trying to get set as the default app
+                e.printStackTrace()
             }
-        } catch (e: Exception) {
-            // Android TV trying to get set as the default app
-            e.printStackTrace()
         }
 
+        if (AndroidVersionUtil.isAndroidQ) {
+            // Android Q has not been working with the normal ACTION_CHANGE_DEFAULT prompt, and I have no clue why....
+            AlertDialog.Builder(context)
+                    .setMessage(R.string.google_requires_default_sms)
+                    .setNegativeButton(R.string.google_requires_default_sms_policy) { _, _ ->
+                        val policy = Intent(Intent.ACTION_VIEW, Uri.parse("https://android-developers.googleblog.com/2018/10/providing-safe-and-secure-experience.html"))
+                        startDefaultApp(policy)
+                    }.setPositiveButton(R.string.ok) { _, _ ->
+                        startDefaultApp(Intent(android.provider.Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
+                    }.setCancelable(false)
+                    .show()
+        } else {
+            val intent = Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT)
+            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.applicationContext.packageName)
+            startDefaultApp(intent)
+        }
     }
-
 
 }

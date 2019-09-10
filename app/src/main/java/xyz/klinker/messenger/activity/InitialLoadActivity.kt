@@ -114,7 +114,7 @@ open class InitialLoadActivity : AppCompatActivity(), ProgressUpdateListener {
             // supports a default SMS app (previous is not null)
             // Pulse is not currently the default
 
-            if (promptedForDefaultSMS) {
+            if (promptedForDefaultSMS && !AndroidVersionUtil.isAndroidQ) {
                 // display a warning here, before asking for the permission.
                 // The warning lets the user know that this is now required by Google.
                 // After the warning, prompt the user again
