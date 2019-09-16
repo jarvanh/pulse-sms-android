@@ -1,6 +1,7 @@
 package xyz.klinker.messenger.activity.main
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -27,7 +28,7 @@ class MainInsetController(private val activity: MessengerActivity) {
     var bottomInsetValue: Int = 0
 
     fun onResume() {
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!useEdgeToEdge()) {
             return
         }
 
@@ -35,7 +36,7 @@ class MainInsetController(private val activity: MessengerActivity) {
     }
 
     fun onPause() {
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!useEdgeToEdge()) {
             return
         }
 
@@ -43,7 +44,7 @@ class MainInsetController(private val activity: MessengerActivity) {
     }
 
     fun applyWindowStatusFlags() {
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!useEdgeToEdge()) {
             return
         }
 
@@ -54,7 +55,7 @@ class MainInsetController(private val activity: MessengerActivity) {
 
     @SuppressLint("RestrictedApi")
     fun overrideDrawerInsets() {
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!useEdgeToEdge()) {
             return
         }
 
@@ -77,7 +78,7 @@ class MainInsetController(private val activity: MessengerActivity) {
     }
 
     fun modifyConversationListElements(fragment: ConversationListFragment?) {
-        if (!AndroidVersionUtil.isAndroidQ || fragment == null) {
+        if (!useEdgeToEdge() || fragment == null) {
             return
         }
 
@@ -92,7 +93,7 @@ class MainInsetController(private val activity: MessengerActivity) {
     }
 
     fun modifyScheduledMessageElements(fragment: ScheduledMessagesFragment) {
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!useEdgeToEdge()) {
             return
         }
 
@@ -106,7 +107,7 @@ class MainInsetController(private val activity: MessengerActivity) {
     }
 
     fun modifyBlacklistElements(fragment: BlacklistFragment) {
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!useEdgeToEdge()) {
             return
         }
 
@@ -121,7 +122,7 @@ class MainInsetController(private val activity: MessengerActivity) {
 
     fun modifySearchListElements(fragment: SearchFragment?) {
         val recycler = fragment?.list
-        if (!AndroidVersionUtil.isAndroidQ || recycler == null) {
+        if (!useEdgeToEdge() || recycler == null) {
             return
         }
 
@@ -130,7 +131,7 @@ class MainInsetController(private val activity: MessengerActivity) {
     }
 
     fun modifyMessageListElements(fragment: MessageListFragment) {
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!useEdgeToEdge()) {
             return
         }
 
@@ -139,7 +140,7 @@ class MainInsetController(private val activity: MessengerActivity) {
     }
 
     fun modifyPreferenceFragmentElements(fragment: MaterialPreferenceFragmentCompat) {
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!useEdgeToEdge()) {
             return
         }
 
@@ -149,7 +150,7 @@ class MainInsetController(private val activity: MessengerActivity) {
     }
 
     fun adjustSnackbar(snackbar: Snackbar): Snackbar {
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!useEdgeToEdge()) {
             return snackbar
         }
 
@@ -171,5 +172,10 @@ class MainInsetController(private val activity: MessengerActivity) {
         val navRecycler = navView.getChildAt(0) as RecyclerView
         navRecycler.clipToPadding = false
         navRecycler.setPadding(navView.paddingLeft, navView.paddingTop, navView.paddingRight, bottomInsetValue)
+    }
+
+    private fun useEdgeToEdge(): Boolean {
+        val ignoredDevices = arrayListOf("one plus", "oneplus")
+        return AndroidVersionUtil.isAndroidQ && !ignoredDevices.contains(Build.MANUFACTURER.toLowerCase())
     }
 }
