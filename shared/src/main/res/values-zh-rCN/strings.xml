@@ -166,7 +166,7 @@
     <string name="message_anywhere_onboarding_title_2">订阅购买</string>
     <string name="message_anywhere_onboarding_title_3">长达一周的免费试用</string>
     <string name="message_anywhere_onboarding_content_1">与任何设备（平板电脑，手表，电视，网页，Chrome和Firefox应用）无缝连接，随时随地支持短信和彩信！</string>
-    <string name="message_anywhere_onboarding_content_2">疯狂的廉价选择：$10.99永久，$5.99每年，$1.99三个月或者$0.99每月。不到一杯Java的价格。</string>
+    <string name="message_anywhere_onboarding_content_2">疯狂的廉价选择：$19.99永久，$5.99每年，$1.99三个月或者$0.99每月。不到一杯Java的价格。</string>
     <string name="message_anywhere_onboarding_content_3">你可以在这一台设备上永久免费此Android应用！你也可以获取一个星期的免费试用机会，在你所有设备上使用同步服务。</string>
     <string name="start_trial">开始试用</string>
     <string name="not_now">暂不</string>
@@ -451,7 +451,7 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="purchase_error_bad_sku">&#8230; 购买与我们的记录不符</string>
     <string name="subscriptions">订阅将从7天试用后开始计算，你可以时刻修改订阅，或者取消订阅。</string>
     <string name="billed_immediately">即刻开始计费。</string>
-    <string name="lifetime_purchase">$10.99 终生使用</string>
+    <string name="lifetime_purchase">$19.99 终生使用</string>
     <string name="lifetime_purchase_summary">一次付费，终生使用</string>
     <string name="yearly_purchase">$5.99 每年</string>
     <string name="yearly_purchase_summary">超值方案</string>

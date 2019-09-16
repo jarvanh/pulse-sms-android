@@ -175,7 +175,7 @@ Pulse ставить ваші розмови на попередній план.
     <string name="message_anywhere_onboarding_title_2">Підписка або разовий платіж</string>
     <string name="message_anywhere_onboarding_title_3">"Тиждень пробної версії "</string>
     <string name="message_anywhere_onboarding_content_1">Легко інтегрується з будь-яким пристроєм (планшет, годинник, телевізор, веб-браузери, і рідний Google Chrome і Firefox) для підтримки SMS та MMS, звідки завгодно!</string>
-    <string name="message_anywhere_onboarding_content_2">Шалено низькі цінові пропозиції: $10.99 на все життя, $5.99 за рік, $1.99 за 3 місяці, або $0.99 за місяць. Дешевше ніж чашка кави.</string>
+    <string name="message_anywhere_onboarding_content_2">Шалено низькі цінові пропозиції: $19.99 на все життя, $5.99 за рік, $1.99 за 3 місяці, або $0.99 за місяць. Дешевше ніж чашка кави.</string>
     <string name="message_anywhere_onboarding_content_3">Використовуйте додаток для Android БЕЗКОШТОВНО (назавжди!) на вашому телефоні, або почніть користуватися текстовими повідомленнями з усіх своїх пристроїв з безкоштовною пробною версією протягом ОДНОГО ТИЖНЯ.</string>
     <string name="start_trial">Почати використовувати пробну версію</string>
     <string name="not_now">Не зараз</string>
@@ -423,7 +423,7 @@ Pulse ставить ваші розмови на попередній план.
     <string name="purchase_error_bad_sku">Хм &amp; # 8230; ця покупка не відповідає ні одному з  наших записів.</string>
     <string name="subscriptions">Рахунок за підписку виставляється після 7-ми денного пробного періоду і може бути змінена / скасована в будь-який момент:</string>
     <string name="billed_immediately">Рахунок буде виставлено негайною</string>
-    <string name="lifetime_purchase">$ 10.99 - довічне членство</string>
+    <string name="lifetime_purchase">$ 19.99 - довічне членство</string>
     <string name="lifetime_purchase_summary">Заплатити лише один раз!</string>
     <string name="yearly_purchase">$ 5.99 щороку</string>
     <string name="yearly_purchase_summary">Найкраща угода</string>

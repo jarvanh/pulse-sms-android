@@ -12,11 +12,11 @@ class ProductPurchased(val type: ProductType?, val productId: String) {
         get() = getExpiration(this.productId)
 
     fun isBetterThan(other: ProductPurchased) = when {
-        productId == "lifetime" -> true
-        other.productId == "lifetime" -> false
-        productId.contains("one_year") -> other.productId != "lifetime"
-        productId.contains("three_months") -> !(other.productId == "lifetime" || other.productId.contains("one_year"))
-        else -> !(other.productId == "lifetime" || other.productId.contains("one_year") || other.productId.contains("three_months"))
+        productId.contains("lifetime") -> true
+        other.productId.contains("lifetime") -> false
+        productId.contains("one_year") -> !other.productId.contains("lifetime")
+        productId.contains("three_months") -> !(other.productId.contains("lifetime") || other.productId.contains("one_year"))
+        else -> !(other.productId.contains("lifetime") || other.productId.contains("one_year") || other.productId.contains("three_months"))
     }
 
     companion object {

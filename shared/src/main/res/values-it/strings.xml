@@ -186,7 +186,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="message_anywhere_onboarding_title_2">Sottoscrizione o Pagamento Unico</string>
     <string name="message_anywhere_onboarding_title_3">Periodo di prova di una settimana</string>
     <string name="message_anywhere_onboarding_content_1">Perfetta integrazione con i dispositivi (tablet, orologio, TV, web, app nativa di Google Chrome e Firefox) per l\'invio di SMS e MMS da qualsiasi luogo!</string>
-    <string name="message_anywhere_onboarding_content_2">Opzioni di pagamento solo se ne hai necessità: $10.99 a vita, $5.99 per un anno, $1.99 per 3 mesi, o $0.99 per un mese. Meno di un caffè.</string>
+    <string name="message_anywhere_onboarding_content_2">Opzioni di pagamento solo se ne hai necessità: $19.99 a vita, $5.99 per un anno, $1.99 per 3 mesi, o $0.99 per un mese. Meno di un caffè.</string>
     <string name="message_anywhere_onboarding_content_3">Usa l\'app Android, GRATIS (per sempre!) sul tuo telefono, o inizia a messaggiare da tutti i tuoi dispositivi con un periodo di prova di una settimana.</string>
     <string name="start_trial">Inizia\nTrial</string>
     <string name="not_now">Non\nOra</string>
@@ -423,7 +423,7 @@ Se non fai una nuova sottoscrizione entro il termine di 2 giorni  l\'app automat
     <string name="purchase_error_bad_sku">Hmm&#8230; Questo acquisto non risulta nel nostro registro.</string>
     <string name="subscriptions">L\'abbonamento viene fatturato dopo la prova di sette giorni e può essere modificato / cancellato in qualsiasi momento:</string>
     <string name="billed_immediately">Questo si fattura immediatamente.</string>
-    <string name="lifetime_purchase">$10.99 - Sottoscrizione a Vita</string>
+    <string name="lifetime_purchase">$19.99 - Sottoscrizione a Vita</string>
     <string name="lifetime_purchase_summary">Paga una volta e mai più!</string>
     <string name="yearly_purchase">$5.99 ogni anno</string>
     <string name="yearly_purchase_summary">Il miglior affare.</string>

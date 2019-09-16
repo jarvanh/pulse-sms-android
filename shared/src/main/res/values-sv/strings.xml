@@ -615,7 +615,7 @@ dig i 2 dagar. Om detta är ett fel kontakta mig via epost.
     <string name="purchase_error_bad_sku">Hmm&#8230; Den betalningen matchade inte våra uppgifter.</string>
     <string name="subscriptions">Prenumerationen faktureras 7 dagar efter att prövotiden startas och kan ändras/avbrytas när som helst</string>
     <string name="billed_immediately">Den här faktureras direkt.</string>
-    <string name="lifetime_purchase">$10.99 - Livstidsmedlemskap</string>
+    <string name="lifetime_purchase">$19.99 - Livstidsmedlemskap</string>
     <string name="lifetime_purchase_summary">Betala en gång och aldrig igen!</string>
     <string name="yearly_purchase">$5.99 per år</string>
     <string name="yearly_purchase_summary">Det bästa erbjudandet.</string>
@@ -628,7 +628,7 @@ dig i 2 dagar. Om detta är ett fel kontakta mig via epost.
     <string name="optimized_for_all_your_devices">Pulse är optimerad för <b>alla</b> dina enheter. Skicka SMS från webben, datorn, surfplattan, smartklockan och t.o.m din TV.</string>
     <string name="true_imessage_competitor">Den första <b>riktiga</b> iMessage-konkurrenten för Android.</string>
     <string name="trial_description">Inga av konkurrenterna kan mäta sig med Pulse <b>oändliga plattformsstöd</b> ihop med dess <b>låga pris</b>. Meddelanden synkroniseras mellan alla dina enheter, omedelbart och sömlöst.</string>
-    <string name="purchase_description">Prova online-versionen i <b>sju dagar</b> innan du avgör hur du vill stödja appen:\n\n<b>$10.99</b> för livstidsmedlemskap\n<b>$5.99</b> per år\n<b>$1.99</b> var tredje månad\n<b>$0.99</b> per månad</string>
+    <string name="purchase_description">Prova online-versionen i <b>sju dagar</b> innan du avgör hur du vill stödja appen:\n\n<b>$19.99</b> för livstidsmedlemskap\n<b>$5.99</b> per år\n<b>$1.99</b> var tredje månad\n<b>$0.99</b> per månad</string>
     <string name="start_free_trial">Påbörja din gratis prövotid!</string>
     <string name="create_your_pulse_account">Skapa ett Pulse-konto!</string>
     <string name="try_it">Prova nu!</string>

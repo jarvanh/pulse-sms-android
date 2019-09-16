@@ -201,7 +201,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="message_anywhere_onboarding_title_2">Abonnement of eenmalige betaling</string>
     <string name="message_anywhere_onboarding_title_3">1 week trial</string>
     <string name="message_anywhere_onboarding_content_1">Naadloze integratie met elk toestel (tablet, smartwatch, web, Google Chrome en Firefox) om SMS en MMS van overal te versturen!</string>
-    <string name="message_anywhere_onboarding_content_2">Ongelooflijke lage prijs wanneer jij het nodig hebt: $10.99 voor het leven, $5.99 per jaar, $1.99 voor 3 maand of $0.99 per maand. Minder dan een kop koffie!</string>
+    <string name="message_anywhere_onboarding_content_2">Ongelooflijke lage prijs wanneer jij het nodig hebt: $19.99 voor het leven, $5.99 per jaar, $1.99 voor 3 maand of $0.99 per maand. Minder dan een kop koffie!</string>
     <string name="message_anywhere_onboarding_content_3">Gebruik de Android app GRATIS (voor altijd!) op je smartphone of start met SMS\'en vanop al jouw toestellen met EEN WEEK gratis trial.</string>
     <string name="start_trial">Start\nProefperiode</string>
     <string name="not_now">Niet \nNu</string>
@@ -613,7 +613,7 @@ Indien je geen nieuw abonnement afsluit binnen de 2 dagen, zal je automatisch wo
     <string name="purchase_error_bad_sku">Hmmm&#8230; Deze betaling kon niet worden goedgekeurd.</string>
     <string name="subscriptions">Abonnementen worden aangerekend na de trial en kunnen ten allen tijde geannuleerd worden.</string>
     <string name="billed_immediately">Dit wordt direct afgerekend.</string>
-    <string name="lifetime_purchase">$10.99 - Levenslang abonnement</string>
+    <string name="lifetime_purchase">$19.99 - Levenslang abonnement</string>
     <string name="lifetime_purchase_summary">Betaal eenmalig, geniet voor altijd!</string>
     <string name="yearly_purchase">$5.99 elk jaar</string>
     <string name="yearly_purchase_summary">De beste deal.</string>
@@ -627,7 +627,7 @@ Indien je geen nieuw abonnement afsluit binnen de 2 dagen, zal je automatisch wo
 Verstuur berichten via het web, desktop pc, je tablet, je smartwatch en zelfs je televisie.</string>
     <string name="true_imessage_competitor">Het eerste <b>echte</b> iMessage alternatief voor Android.</string>
     <string name="trial_description">Geen enkele andere app kan tippen aan de <b>eindeloze functies</b> van Pulse. Synchroniseer berichten tussen al jouw toestellen.</string>
-    <string name="purchase_description">Geef de online versie een kans. Gedurende <b>7 dagen</b> kan je alles uittesten. Daarna kan je beslissen om te app vrij te schakelen:\n\n<b>$10.99</b> voor een levenslange toegang\n<b>$5.99</b> per jaar\n<b>$1.99</b> per 3 maand\n<b>$0.99</b> per maand</string>
+    <string name="purchase_description">Geef de online versie een kans. Gedurende <b>7 dagen</b> kan je alles uittesten. Daarna kan je beslissen om te app vrij te schakelen:\n\n<b>$19.99</b> voor een levenslange toegang\n<b>$5.99</b> per jaar\n<b>$1.99</b> per 3 maand\n<b>$0.99</b> per maand</string>
     <string name="start_free_trial">Start jouw trial!</string>
     <string name="create_your_pulse_account">Creëer een Pulse account!</string>
     <string name="try_it">Probeer nu!</string>

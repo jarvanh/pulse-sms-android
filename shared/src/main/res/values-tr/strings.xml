@@ -218,7 +218,7 @@ hadi başlatın!</string>
     <string name="message_anywhere_onboarding_title_2">Abonelik veya Tek Ödeme</string>
     <string name="message_anywhere_onboarding_title_3">Hafta Uzun Deneme</string>
     <string name="message_anywhere_onboarding_content_1">SMS ve MMS\'yi her yerden desteklemek için herhangi bir cihazla (tablet, saat, TV, web, yerli Google Chrome ve Firefox uygulamaları) sorunsuz bir şekilde entegre olun!</string>
-    <string name="message_anywhere_onboarding_content_2">İhtiyacınız olduğunda ödemek zorunda olduğunuz düşük fiyat seçenekleri: hayat için 10.99 dolar, yılda 5.99 dolar, 3 ay için 1.99 dolar veya ayda 0.99 dolar. Bir fincan daha kahve.</string>
+    <string name="message_anywhere_onboarding_content_2">İhtiyacınız olduğunda ödemek zorunda olduğunuz düşük fiyat seçenekleri: hayat için 19.99 dolar, yılda 5.99 dolar, 3 ay için 1.99 dolar veya ayda 0.99 dolar. Bir fincan daha kahve.</string>
     <string name="message_anywhere_onboarding_content_3">Android uygulamasını, telefonunuzda ÜCRETSİZ (sonsuza dek ÜCRETSİZ!) Kullanın veya bir WEEK ücretsiz deneme süresince tüm cihazlarınızdan mesaj göndermeye başlayın.</string>
     <string name="start_trial">Başlama\nDeneme</string>
     <string name="not_now">Değil\nşimdi</string>
@@ -646,7 +646,7 @@ Bu süre içinde yeni bir abonelik oluşturmazsanız, uygulama otomatik olarak 2
     <string name="purchase_error_bad_sku">Hmm&#8230; Bu satın alma işlemi, kayıtlarımızla eşleşmedi.</string>
     <string name="subscriptions">Abonelik, yedi günlük denemeden sonra faturalandırılır ve istenildiği zaman değiştirilebilir/iptal edilebilir</string>
     <string name="billed_immediately">Hemen fatura edilir.</string>
-    <string name="lifetime_purchase">$10.99 - Ömür Boyu Üyelik</string>
+    <string name="lifetime_purchase">$19.99 - Ömür Boyu Üyelik</string>
     <string name="lifetime_purchase_summary">Bir kez ödeyin, bir daha asla!</string>
     <string name="yearly_purchase">Her yıl $5.99</string>
     <string name="yearly_purchase_summary">En iyi anlaşma.</string>
@@ -661,7 +661,7 @@ Ben, bunu otomatik <b>yapamam</b>.</string>
 Web\'den, masaüstü bilgisayardan, tabletinizden, saatinizden ve hatta TV\'nizden metin gönderin.</string>
     <string name="true_imessage_competitor">Android için ilk <b>gerçek</b> iMessage rakibi.</string>
     <string name="trial_description">Hiçbir rakip, Pulse\'un <b>düşük fiyatı</b> ve <b>sonsuz platform desteği</b> ile rekabet edemez. Mesajlar, tüm cihazlarınız arasında anında ve sorunsuz bir şekilde senkronize edilir.</string>
-    <string name="purchase_description">Çevrimiçi sürümü <b>yedi gün</b> süresince deneyin, ardından uygulamayı nasıl desteklemek istediğinize karar verin:\n\n<b>$10.99</b> ömür boyu üyelik\n<b>$5.99</b> yıllık\n<b>$1.99</b> üç aylık\n<b>$0.99</b> aylık</string>
+    <string name="purchase_description">Çevrimiçi sürümü <b>yedi gün</b> süresince deneyin, ardından uygulamayı nasıl desteklemek istediğinize karar verin:\n\n<b>$19.99</b> ömür boyu üyelik\n<b>$5.99</b> yıllık\n<b>$1.99</b> üç aylık\n<b>$0.99</b> aylık</string>
     <string name="start_free_trial">Ücretsiz deneme sürümünü başlat!</string>
     <string name="create_your_pulse_account">Bir Pulse hesabı oluştur!</string>
     <string name="try_it">Deneyin!</string>

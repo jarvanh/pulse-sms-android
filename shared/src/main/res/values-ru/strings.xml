@@ -205,7 +205,7 @@
     <string name="message_anywhere_onboarding_title_2">Подписка или единоразовый платёж</string>
     <string name="message_anywhere_onboarding_title_3">Пробный период 7 дней</string>
     <string name="message_anywhere_onboarding_content_1">Бесшовная интеграция между устройствами (планшет, умные часы, ТВ, web-интерфейс, приложение для Google Chrome и Firefox) позволяет обмениваться SMS и MMS где угодно!</string>
-    <string name="message_anywhere_onboarding_content_2">Крайне выгодные варианты оплаты: $10.99 - пожизненно, $5.99 за год, $1.99 за 3 месяца или $0.99 в месяц. Дешевле, чем чашечка кофе.</string>
+    <string name="message_anywhere_onboarding_content_2">Крайне выгодные варианты оплаты: $19.99 - пожизненно, $5.99 за год, $1.99 за 3 месяца или $0.99 в месяц. Дешевле, чем чашечка кофе.</string>
     <string name="message_anywhere_onboarding_content_3">"Используйте андроид приложение БЕСПЛАТНО (всегда!) на своём телефоне или начните переписку со всех доступных вам устройств в течении 7-дневного пробного периода. "</string>
     <string name="start_trial">Попробовать</string>
     <string name="not_now">Не сейчас</string>
@@ -542,7 +542,7 @@
     <string name="purchase_error_bad_sku">Хмм&#8230; Данная покупка не соответствует ни одной в наших записях.</string>
     <string name="subscriptions">Подписка включается после 7 дней пробного периода и может быть изменена или отменена в любое время</string>
     <string name="billed_immediately">Оплата происходит сразу.</string>
-    <string name="lifetime_purchase">$10.99 - Пожизненная лицензия</string>
+    <string name="lifetime_purchase">$19.99 - Пожизненная лицензия</string>
     <string name="lifetime_purchase_summary">Один платёж - пользуешься всегда!</string>
     <string name="yearly_purchase">$5.99 - ежегодно</string>
     <string name="yearly_purchase_summary">Лучшее предложение.</string>
