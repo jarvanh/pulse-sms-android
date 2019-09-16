@@ -752,7 +752,7 @@
     <string name="select_a_purchase_description">Choose any of the three subscriptions, or select the <b>lifetime membership</b> to make a one-time purchase for the app.</string>
     <string name="seven_days_free">7 days free!</string>
     <string name="competition_cant_beat"><b>Take 7 days FREE</b> to find out for yourself why no one can touch our <b>speed, pricing, or service</b>.</string>
-    <string name="select_a_trial_below">Select any of the <b>three subscription options</b> to start your <b>free trial</b>.</string>
+    <string name="select_a_trial_below">Select any of the <b>three subscription options</b> to start your <b>free trial</b>. You can change or upgrade at any time.</string>
     <string name="charged_after_trial">Charged after the trial:</string>
     <string name="monthly_purchase_improved">$0.99 /\nmonth</string>
     <string name="three_month_purchase_improved">$1.99 /\n3 month</string>
