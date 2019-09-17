@@ -93,7 +93,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
         initWebsitePreference()
 
-        startInitialPurchase()
+//        startInitialPurchase()
 //        startTrial()
 //        upgradeTrial()
 //        pickSubscription(true)
