@@ -33,7 +33,7 @@ class ProductAvailable(val type: ProductType, val productId: String, val price: 
         }
 
         fun createLifetime(): ProductAvailable {
-            return ProductAvailable(ProductType.SINGLE_PURCHASE, "lifetime2", "$19.99")
+            return ProductAvailable(ProductType.SINGLE_PURCHASE, "lifetime", "$10.99")
         }
 
         fun createYearlyNoTrial(): ProductAvailable {

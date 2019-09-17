@@ -207,7 +207,7 @@ czas ją rozpocząć!</string>
     <string name="message_anywhere_onboarding_title_2">Abonament lub pojedynczy zakup</string>
     <string name="message_anywhere_onboarding_title_3">Tygodniowa wersja próbna</string>
     <string name="message_anywhere_onboarding_content_1">Bezproblemowa integracja z każdym urządzeniem (tablet, zegarek, TV, aplikacja web oraz aplikacja natywna w Google Chrome i Firefox) wspierająca wiadomości SMS i MMS z każdego miejsca!</string>
-    <string name="message_anywhere_onboarding_content_2">Niemożliwie niskie ceny dopasowane do Ciebie: $19.99 dożywotnio, $5.99 rocznie, $1.99 co 3 miesiące lub $0.99 co miesiąc. Taniej niż kawa.</string>
+    <string name="message_anywhere_onboarding_content_2">Niemożliwie niskie ceny dopasowane do Ciebie: $10.99 dożywotnio, $5.99 rocznie, $1.99 co 3 miesiące lub $0.99 co miesiąc. Taniej niż kawa.</string>
     <string name="message_anywhere_onboarding_content_3">Używaj aplikacji BEZPŁATNIE (na zawsze!) na swoim telefonie z systemem Android lub pisz z każdego swojego urządzenia rozpoczynając TYGODNIOWY okres próbny.</string>
     <string name="start_trial">Rozpocznij\nokres próbny</string>
     <string name="not_now">Nie\nteraz</string>
@@ -628,7 +628,7 @@ Jeżeli nie odnowisz go na czas, aplikacja wyloguje Cię automatycznie z Twojego
     <string name="purchase_error_bad_sku">Hmm&#8230; Nie zarejestrowaliśmy tej transakcji.</string>
     <string name="subscriptions">Subskrypcje są rozliczane po 7-dniowym okresie próbnym i mogą być zmienione/anulowane w każdym momencie</string>
     <string name="billed_immediately">Rozliczenie następuje bezzwłocznie.</string>
-    <string name="lifetime_purchase">$19.99 - subskrypcja dożywotnia</string>
+    <string name="lifetime_purchase">$10.99 - subskrypcja dożywotnia</string>
     <string name="lifetime_purchase_summary">Płacisz raz i nigdy więcej!</string>
     <string name="yearly_purchase">$5.99 - co rok</string>
     <string name="yearly_purchase_summary">Najlepsza oferta.</string>

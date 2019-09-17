@@ -229,7 +229,7 @@ Nebude to trvat dlouho!</string>
     <string name="message_anywhere_onboarding_title_2">Předplatné, nebo jednorázová platba</string>
     <string name="message_anywhere_onboarding_title_3">Týdenní zkušební období</string>
     <string name="message_anywhere_onboarding_content_1">Snadno integruje s jakýmkoli zařízením (tablet, hodinky, televize, web, Google Chrome rozšíření, a firefox aplikace) pro podporu SMS a MMS odkudkoli!</string>
-    <string name="message_anywhere_onboarding_content_2">Šíleně nízké možnosti platby: $19.99 celoživotně, $5.99 za rok, $1.99 na 3 měsíce, nebo $0.99 za měsíc. Levnější než šálek kávy.</string>
+    <string name="message_anywhere_onboarding_content_2">Šíleně nízké možnosti platby: $10.99 celoživotně, $5.99 za rok, $1.99 na 3 měsíce, nebo $0.99 za měsíc. Levnější než šálek kávy.</string>
     <string name="message_anywhere_onboarding_content_3">Používejte Android aplikaci, ZDARMA (navždy!) na vašem telefonu, nebo začněte psát zprávy ze všech zařízení s jednotýdenní zkušebním obdobím.</string>
     <string name="start_trial">Spustit\ntrial</string>
     <string name="not_now">Teď\nne</string>
@@ -682,7 +682,7 @@ Pokud nevytvoříte nové tak vás aplikace automaticky odhlásí z vašeho úč
     <string name="purchase_error_bad_sku">Hmm&#8230; Tento nákup nesouhlasí s našimi záznamy.</string>
     <string name="subscriptions">Předplatné se platí po sedmidenním zkušebním období a může být kdykoliv změněno/zrušeno</string>
     <string name="billed_immediately">Toto se platí ihned.</string>
-    <string name="lifetime_purchase">$19.99 - Celoživotní členství</string>
+    <string name="lifetime_purchase">$10.99 - Celoživotní členství</string>
     <string name="lifetime_purchase_summary">Zaplaťte jednou a nikdy víc!</string>
     <string name="yearly_purchase">$5.99 každý rok</string>
     <string name="yearly_purchase_summary">Nejlepší nabídka.</string>
@@ -698,7 +698,7 @@ vyberete, <b>musíte</b> otevřít aplikaci Obchod Play a zrušit své staré p�
 Posílejte zprávy z webu, z počítače, z tabletu, hodinek a dokonce i z televize.</string>
     <string name="true_imessage_competitor">První opravdový iMessage konkurent pro Android.</string>
     <string name="trial_description">Žádná konkurence nemůže nabídnout <b>doživotní podporu platformy</b> a <b>nízkou cenu</b> tak, jako Pulse. Zprávy se mezi všemi zařízeními synchronizují okamžitě a bez námahy.</string>
-    <string name="purchase_description">Vyzkoušejte online verzi po dobu <b>sedmi dní</b>, pak se rozhodněte, jak chcete aplikaci podpořit:\n\n<b>$19.99</b> za doživotní členství\n<b>$5.99</b> za rok\n<b>$1.99</b> čtvrtletně\n<b>$0.99</b> za měsíc</string>
+    <string name="purchase_description">Vyzkoušejte online verzi po dobu <b>sedmi dní</b>, pak se rozhodněte, jak chcete aplikaci podpořit:\n\n<b>$10.99</b> za doživotní členství\n<b>$5.99</b> za rok\n<b>$1.99</b> čtvrtletně\n<b>$0.99</b> za měsíc</string>
     <string name="start_free_trial">Začněte používat bezplatnou zkušební verzi!</string>
     <string name="create_your_pulse_account">Vytvořte si účet Pulse!</string>
     <string name="try_it">Vyzkoušejte!</string>

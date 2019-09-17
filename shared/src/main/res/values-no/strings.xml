@@ -640,7 +640,7 @@ når du vil bruke multifunksjons funksjonen igjen!</string>
     <string name="purchase_error_bad_sku">Hmm&#8230;  Det kjøpet kom ikke overens på vår registrering.</string>
     <string name="subscriptions">Abonnementet faktureres etter sju dagers prøveperioden og kan endres/kanselleres når som helst</string>
     <string name="billed_immediately">Dette faktureres umiddelbart.</string>
-    <string name="lifetime_purchase">$ 19.99 - Livstid Medlemskap</string>
+    <string name="lifetime_purchase">$ 10.99 - Livstid Medlemskap</string>
     <string name="lifetime_purchase_summary">Betal en gang, og aldri igjen!</string>
     <string name="yearly_purchase">$5,99 hvert år</string>
     <string name="yearly_purchase_summary">Den beste avtalen.</string>
@@ -656,7 +656,7 @@ Jeg <b>kan ikke</b> gjøre dette automatisk.</string>
 Send tekster fra nettet, en stasjonær datamaskin, nettbrettet ditt, en klokke og til og med TVen din.</string>
     <string name="true_imessage_competitor">Den første <b>ekte</b> iMessage konkurrenten for Android.</string>
     <string name="trial_description">Ingen konkurranse kan berøre Pulse <b>uendelig plattformsstøtte</b>, kombinert med <b>lav pris</b>. Meldinger synkroniseres mellom alle enhetene dine, umiddelbart og sømløst.</string>
-    <string name="purchase_description">Gi den online versjonen en prøve, for <b>syv dager</b>, så bestemmer du hvordan du vil støtte appen:\n\n<b>$ 19.99</b> for et livstid medlemskap\n<b>$ 5,99</b> per år\n<b>$ 1,99</b> hver tredje måned\n<b>$ 0.99</b> per måned</string>
+    <string name="purchase_description">Gi den online versjonen en prøve, for <b>syv dager</b>, så bestemmer du hvordan du vil støtte appen:\n\n<b>$ 10.99</b> for et livstid medlemskap\n<b>$ 5,99</b> per år\n<b>$ 1,99</b> hver tredje måned\n<b>$ 0.99</b> per måned</string>
     <string name="start_free_trial">Start din gratis prøvetid!</string>
     <string name="create_your_pulse_account">Opprett en Pulse konto!</string>
     <string name="try_it">Prøv det!</string>

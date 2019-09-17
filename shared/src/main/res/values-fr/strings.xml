@@ -652,7 +652,7 @@ Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous
     <string name="purchase_error_bad_sku">Hmm&#8230; Cet achat ne correspond pas à nos registres.</string>
     <string name="subscriptions">Les abonnements sont facturés après le septième jour d\'essai et peuvent être modifiés/annulés à tout moment :</string>
     <string name="billed_immediately">Ceci est facturé immédiatement.</string>
-    <string name="lifetime_purchase">$19.99 - Souscription à vie</string>
+    <string name="lifetime_purchase">$10.99 - Souscription à vie</string>
     <string name="lifetime_purchase_summary">Payez une fois, et c\'est tout!</string>
     <string name="yearly_purchase">$5.99 par an</string>
     <string name="yearly_purchase_summary">La meilleure offre.</string>
@@ -667,7 +667,7 @@ Je <b>ne peux pas</b> le faire automatiquement.</string>
 Envoyez des messages depuis internet, un ordinateur de bureau, votre tablette, et même votre TV.</string>
     <string name="true_imessage_competitor">Le premier <b>vrai</b> concurrent de iMessage pour Android.</string>
     <string name="trial_description">Aucune concurrence ne peut atteindre le <b>support d\'un nombre illimité de plateforme</b> de Pulse associé à son <b>prix bas</b>. Vos messages sont synchronisés entre tous vos appareils, instantanément et en toute transparence.</string>
-    <string name="purchase_description">Essayez la version en ligne, pour <b>sept jours</b>, puis choisissez comment vous souhaitez supporter l\'application :\n\n<b>19.99€</b> pour une adhésion à vie\n<b>5.99€</b> par an\n<b>1.99€</b> par trimestre\n<b>0.99€</b> par mois</string>
+    <string name="purchase_description">Essayez la version en ligne, pour <b>sept jours</b>, puis choisissez comment vous souhaitez supporter l\'application :\n\n<b>10.99€</b> pour une adhésion à vie\n<b>5.99€</b> par an\n<b>1.99€</b> par trimestre\n<b>0.99€</b> par mois</string>
     <string name="start_free_trial">Commencer votre période d\'essai !</string>
     <string name="create_your_pulse_account">Créer un compte Pulse !</string>
     <string name="try_it">Essayez-le !</string>

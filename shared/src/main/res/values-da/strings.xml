@@ -471,7 +471,7 @@ Din 5-stjernede bedømmelse vil varme mit hjerte :)</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Det køb stemmer ikke med vores optegnelse.</string>
     <string name="subscriptions">Abonnementet opkræves efter syv dages prøveperiode og kan ændres eller annulleres når som helst</string>
     <string name="billed_immediately">Dette opkræves med det samme.</string>
-    <string name="lifetime_purchase">$19.99 - Livstidsabonnement</string>
+    <string name="lifetime_purchase">$10.99 - Livstidsabonnement</string>
     <string name="lifetime_purchase_summary">Betal én gang og aldrig mere!</string>
     <string name="yearly_purchase">$5.99 om året</string>
     <string name="yearly_purchase_summary">Den bedste aftale.</string>
