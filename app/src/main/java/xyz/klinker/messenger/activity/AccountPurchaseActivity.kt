@@ -67,19 +67,23 @@ class AccountPurchaseActivity : AppCompatActivity() {
         val monthly = findViewById<View>(R.id.monthly)
         val threeMonth = findViewById<View>(R.id.three_month)
         val yearly = findViewById<View>(R.id.yearly)
+        val subscription = findViewById<View>(R.id.subscription)
         val lifetime = findViewById<View>(R.id.lifetime)
         val signIn = findViewById<View>(R.id.sign_in)
 
         if (!revealedPurchaseOptions) {
             val startTime: Long = 300
-            quickViewReveal(yearly, startTime)
-            quickViewReveal(threeMonth, startTime + 75)
-            quickViewReveal(monthly, startTime + 150)
-            quickViewReveal(lifetime, startTime + 225)
+//            quickViewReveal(yearly, startTime)
+//            quickViewReveal(threeMonth, startTime + 75)
+//            quickViewReveal(monthly, startTime + 150)
+//            quickViewReveal(lifetime, startTime + 225)
+            quickViewReveal(subscription, startTime)
+            quickViewReveal(lifetime, startTime + 75)
 
             revealedPurchaseOptions = true
         }
 
+        subscription.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createMonthlyTrial()) }
         monthly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createMonthlyTrial()) }
         threeMonth.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonthTrial()) }
         yearly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearlyTrial()) }

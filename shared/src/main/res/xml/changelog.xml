@@ -19,7 +19,7 @@
     <version
         name="4.11.9"
         description="September 16th, 2019">
-        <!-- Lifetime purchase is now $10.99, to test -->
+        <!-- Lifetime purchase is now $10.99, again -->
         <text>Bug fixes for OnePlus devices</text>
     </version>
 
