@@ -154,6 +154,7 @@ class AttachmentListener(private val fragment: MessageListFragment)
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
         activity?.startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_GALLERY_PICKER_REQUEST)
     }
 
@@ -230,6 +231,10 @@ class AttachmentListener(private val fragment: MessageListFragment)
             attachManager.attachImage(uri)
             if (mimeType != null && mimeType == MimeType.IMAGE_GIF) {
                 attachManager.attachedMimeType = MimeType.IMAGE_GIF
+                editImage?.visibility = View.GONE
+            } else if (mimeType != null && MimeType.isVideo(mimeType)) {
+                videoEncoder.startVideoEncoding(uri!!)
+                attachManager.attachedMimeType = MimeType.VIDEO_MP4
                 editImage?.visibility = View.GONE
             }
 
