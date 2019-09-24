@@ -215,6 +215,10 @@
             android:exported="false" />
 
         <receiver
+            android:name=".receiver.notification_action.NotificationMuteReceiver"
+            android:exported="false" />
+
+        <receiver
             android:name=".receiver.notification_action.NotificationCallReceiver"
             android:exported="false" />
 
