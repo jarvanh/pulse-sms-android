@@ -158,7 +158,7 @@
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:padding="9dp"
-                android:src="@drawable/ic_payment_monthly"
+                android:src="@drawable/ic_payment_yearly"
                 android:tint="@color/primaryText" />
 
             <LinearLayout
@@ -172,7 +172,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:text="@string/monthly_purchase"
+                    android:text="@string/yearly_purchase_2"
                     android:textColor="@color/primaryText"
                     android:textSize="16sp" />
 

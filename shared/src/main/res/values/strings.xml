@@ -734,6 +734,7 @@
     <string name="yearly_purchase_summary">The best deal.</string>
     <string name="three_month_purchase">$1.99 every three months</string>
     <string name="three_month_purchase_summary">Can\'t go wrong with this one.</string>
+    <string name="yearly_purchase_2">$5.99 - Yearly Subscription</string>
     <string name="monthly_purchase">$0.99 - Monthly Subscription</string>
     <string name="monthly_purchase_summary">Just want to try? No problem.</string>
     <string name="change_subscription_message">Want to upgrade? Great! After you have made your

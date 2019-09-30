@@ -83,7 +83,7 @@ class AccountPurchaseActivity : AppCompatActivity() {
             revealedPurchaseOptions = true
         }
 
-        subscription.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createMonthlyTrial()) }
+        subscription.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createYearlyTrial()) }
         monthly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createMonthlyTrial()) }
         threeMonth.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonthTrial()) }
         yearly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearlyTrial()) }
