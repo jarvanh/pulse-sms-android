@@ -17,9 +17,20 @@
 <changelog>
 
     <version
+        name="4.12.0"
+        description="October 11th, 2019">
+        <text>Revamp attachments and drafts for media:</text>
+        <text>   Allow for viewing all of the images that are currently attached (instead of just providing a counter for the number attached)</text>
+        <text>   Allow for drafts of all the different media attached (instead of only creating a draft from the most recent image selected)</text>
+        <text>   Allow for different types of media being selected together (send a video along with an image, audio, whatever, during the same message)</text>
+        <text>   Allow editing/cropping any of the still images that are selected (instead of just the most recent)</text>
+        <text>   UI improvements for attachments</text>
+    </version>
+
+    <version
         name="4.11.11"
         description="October 4th, 2019">
-        <!-- MMS changes for librsry -->
+        <!-- MMS changes for library -->
         <text>Improvements to MMS</text>
     </version>
 
