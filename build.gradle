@@ -48,7 +48,7 @@ buildscript {
             'firebaseCore'      : '17.2.0',
             'firebaseMessaging' : '19.0.1',
             'firebaseStorage'   : '18.1.1',
-            'firebaseAuth'      : '19.0.0',
+            'firebaseAuth'      : '19.1.0',
 
             'mockito'           : '2.18.3',
             'robolectric'       : '4.2',

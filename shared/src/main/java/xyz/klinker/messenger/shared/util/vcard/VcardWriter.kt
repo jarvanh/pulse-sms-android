@@ -13,7 +13,7 @@ object VcardWriter {
 
     @Throws(IOException::class)
     fun writeContactCard(context: Context, firstName: String, lastName: String, phoneNumber: String): Uri {
-        val pulseDir = File(Environment.getExternalStorageDirectory(), "Pulse")
+        val pulseDir = File(context.filesDir, "Pulse")
         val contactCard = File(pulseDir, "contact.vcf")
         if (!pulseDir.exists()) {
             pulseDir.mkdir()
@@ -24,7 +24,7 @@ object VcardWriter {
         fw.write("VERSION:3.0\r\n")
         fw.write("N:$lastName;$firstName\r\n")
         fw.write("FN:$firstName $lastName\r\n")
-        fw.write("TEL;TYPE=CELL,VOICE:" + phoneNumber + "\r\n")
+        fw.write("TEL;TYPE=CELL,VOICE:$phoneNumber\r\n")
         fw.write("END:VCARD\r\n")
         fw.close()
 

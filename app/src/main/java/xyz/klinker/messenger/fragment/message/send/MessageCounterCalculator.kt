@@ -17,7 +17,7 @@ class MessageCounterCalculator(private val fragment: MessageListFragment) {
         val text = messageEntry.text.toString()
         counter.text = when {
             ignoreCounterText() || text.isEmpty() -> null
-            fragment.attachManager.attachedUri != null -> null
+            fragment.attachManager.currentlyAttached.isNotEmpty() -> null
             fragment.argManager.isGroup -> null
             else -> {
                 MessageCountHelper.getMessageCounterText(text)
