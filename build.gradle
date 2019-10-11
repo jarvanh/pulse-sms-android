@@ -26,7 +26,7 @@ buildscript {
 
     ext.buildInfo = [
             'id'                : 'xyz.klinker.messenger',
-            'name'              : '4.11.11',
+            'name'              : '4.12.0',
             'number'            : System.getenv("BUILD_NUMBER") as Integer ?: 135,
     ]
 
@@ -48,7 +48,7 @@ buildscript {
             'firebaseCore'      : '17.2.0',
             'firebaseMessaging' : '19.0.1',
             'firebaseStorage'   : '18.1.1',
-            'firebaseAuth'      : '19.0.0',
+            'firebaseAuth'      : '19.1.0',
 
             'mockito'           : '2.18.3',
             'robolectric'       : '4.2',

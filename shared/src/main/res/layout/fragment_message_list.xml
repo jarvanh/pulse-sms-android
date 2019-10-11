@@ -51,12 +51,12 @@
                     android:id="@+id/search_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:searchBackground="@color/drawerBackground"
-                    app:searchBackIcon="@drawable/ic_search_back"
-                    app:searchCloseIcon="@drawable/ic_search_close"
+                    android:hint="@string/enter_search"
                     android:textColor="@color/primaryText"
                     android:textColorHint="@color/secondaryText"
-                    android:hint="@string/enter_search" />
+                    app:searchBackIcon="@drawable/ic_search_back"
+                    app:searchBackground="@color/drawerBackground"
+                    app:searchCloseIcon="@drawable/ic_search_close" />
 
             </FrameLayout>
 
@@ -80,101 +80,6 @@
 
         </RelativeLayout>
 
-        <FrameLayout
-            android:id="@+id/attached_image_holder"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/message_list_padding"
-            android:layout_weight=".33"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/attached_image"
-                android:layout_width="@dimen/attached_image_size"
-                android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="48dp"
-                android:background="@drawable/rounded_rect"
-                android:contentDescription="@string/attached_image"
-                android:scaleType="centerCrop" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="48dp">
-
-                <FrameLayout
-                    android:id="@+id/remove_image"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="@string/remove_image"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/remove_image_background"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="2dp"
-                        android:src="@drawable/ic_close" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/edit_image"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="@string/edit_image"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/edit_image_background"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:src="@drawable/ic_edit" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/selected_images"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="12dp"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                    android:visibility="gone">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/selected_images_background"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <TextView
-                        android:id="@+id/selected_images_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="15sp" />
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-        </FrameLayout>
-
         <androidx.cardview.widget.CardView
             android:id="@+id/reply_bar_card"
             android:layout_width="match_parent"
@@ -197,6 +102,27 @@
                     android:layout_height="3dp"
                     android:indeterminate="true"
                     android:visibility="invisible" />
+
+                <HorizontalScrollView
+                    android:id="@+id/attached_image_scroller"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/message_list_padding"
+                    android:layout_marginEnd="@dimen/message_list_padding"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:scrollbars="none"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:id="@+id/attached_image_holder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="horizontal"/>
+
+                </HorizontalScrollView>
 
                 <LinearLayout
                     android:id="@+id/smart_reply_container"

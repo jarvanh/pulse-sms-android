@@ -95,7 +95,7 @@ class AttachImageListAdapter(private val images: Cursor, private val callback: I
                     holder.playButton.visibility = View.GONE
                 }
 
-                if (holder.selectedCheckmarkLayout.visibility != View.VISIBLE && callback!!.isCurrentlySelected(holder.uri!!, holder.mimeType!!)) {
+                if (holder.selectedCheckmarkLayout.visibility != View.VISIBLE && callback!!.isCurrentlySelected(holder.uri!!)) {
                     holder.selectedCheckmarkLayout.visibility = View.VISIBLE
                 } else if (holder.selectedCheckmarkLayout.visibility != View.GONE) {
                     holder.selectedCheckmarkLayout.visibility = View.GONE

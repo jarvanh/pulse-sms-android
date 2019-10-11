@@ -5,7 +5,6 @@ package xyz.klinker.messenger.fragment.message.attach
 import android.app.ProgressDialog
 import android.net.Uri
 import android.os.ParcelFileDescriptor
-import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import net.ypresto.androidtranscoder.MediaTranscoder
@@ -14,7 +13,6 @@ import net.ypresto.androidtranscoder.format.MediaFormatStrategyPresets
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.shared.data.MimeType
-import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.util.ImageUtils
 import java.io.File
 import java.io.FileNotFoundException
@@ -26,8 +24,6 @@ class MessageVideoEncoder(private val fragment: MessageListFragment) {
 
     private val attachManager
         get() = fragment.attachManager
-
-    private val editImage: View by lazy { fragment.rootView!!.findViewById<View>(R.id.edit_image) }
 
     fun startVideoEncoding(uri: Uri) {
         startVideoEncoding(uri, AndroidStandardFormatStrategy.Encoding.SD_LOW)
@@ -82,9 +78,7 @@ class MessageVideoEncoder(private val fragment: MessageListFragment) {
             }
 
             override fun onTranscodeCompleted() {
-                attachManager.attachImage(ImageUtils.createContentUri(activity, file))
-                attachManager.attachedMimeType = MimeType.VIDEO_MP4
-                editImage.visibility = View.GONE
+                attachManager.attachMedia(ImageUtils.createContentUri(activity, file), MimeType.VIDEO_MP4)
 
                 try {
                     progressDialog.cancel()
