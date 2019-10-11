@@ -154,8 +154,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         val preference = findPreference(getString(R.string.pref_contact_group_name)) as EditTextPreference
 
         if (!conversation.isGroup) {
-            preferenceScreen.removePreference(preference)
-            return
+            preference.title = getString(R.string.conversation_name)
         }
 
         preference.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS or InputType.TYPE_TEXT_FLAG_MULTI_LINE
@@ -163,6 +162,10 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         preference.setOnPreferenceChangeListener { preference1, o ->
             conversation.title = o as String
             preference1.summary = conversation.title
+
+            ActivityUtils.setTaskDescription(activity, conversation.title!!, conversation.colors.color)
+            activity.title = conversation.title
+
             true
         }
     }
@@ -355,7 +358,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         val source = DataSource
         source.updateConversationSettings(activity, conversation)
 
-        val contactList = if (conversation.phoneNumbers!!.contains(", ")) {
+        val contactList = if (conversation.isGroup) {
             source.getContactsByNames(activity, conversation.title)
         } else {
             source.getContacts(activity, conversation.phoneNumbers)

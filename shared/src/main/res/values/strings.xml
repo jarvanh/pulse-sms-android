@@ -359,6 +359,7 @@
     <string name="led_color">LED Color</string>
     <string name="ringtone">Ringtone</string>
     <string name="group_name">Group Name</string>
+    <string name="conversation_name">Conversation Name</string>
     <string name="notification_settings">Notifications</string>
     <string name="repeat_interval">Repeat Alert</string>
     <string name="heads_up">Heads Up</string>

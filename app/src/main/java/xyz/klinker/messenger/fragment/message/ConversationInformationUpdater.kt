@@ -22,7 +22,13 @@ class ConversationInformationUpdater(private val fragment: MessageListFragment) 
     private val toolbar: Toolbar by lazy { fragment.rootView!!.findViewById<View>(R.id.toolbar) as Toolbar }
 
     fun update() {
-        if (activity == null) {
+        if (activity == null || argManager.isGroup) {
+            return
+        }
+
+        // if the title has a letter in it, don't update it
+        // the user can update conversation titles, from settings
+        if (argManager.title.matches(".*[a-zA-Z].*".toRegex())) {
             return
         }
 

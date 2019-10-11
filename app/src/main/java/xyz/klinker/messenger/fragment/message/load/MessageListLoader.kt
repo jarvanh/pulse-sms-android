@@ -177,9 +177,7 @@ class MessageListLoader(private val fragment: MessageListFragment) {
                     }
                 }
 
-                if (!argManager.isGroup) {
-                    informationUpdater.update()
-                }
+                informationUpdater.update()
 
                 if (NotificationConstants.CONVERSATION_ID_OPEN == argManager.conversationId) {
                     Thread.sleep(1000)
