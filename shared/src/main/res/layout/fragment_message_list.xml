@@ -109,8 +109,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/message_list_padding"
                     android:layout_marginEnd="@dimen/message_list_padding"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:scrollbars="none"
                     android:visibility="gone">
 
