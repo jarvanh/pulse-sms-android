@@ -318,6 +318,10 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                 if (m.id != 0L) {
                     m.id = 0
                 }
+                
+                if (fragment != null && fragment is ConversationListFragment) {
+                    fragment.notifyOfSentMessage(m)
+                }
 
                 val messageId = DataSource.insertMessage(activity, m, m.conversationId, true)
                 Thread {
