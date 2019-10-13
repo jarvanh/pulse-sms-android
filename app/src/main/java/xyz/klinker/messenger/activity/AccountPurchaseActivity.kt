@@ -3,7 +3,6 @@ package xyz.klinker.messenger.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
@@ -73,20 +73,23 @@ class AccountPurchaseActivity : AppCompatActivity() {
 
         if (!revealedPurchaseOptions) {
             val startTime: Long = 300
-//            quickViewReveal(yearly, startTime)
+            quickViewReveal(yearly, startTime)
 //            quickViewReveal(threeMonth, startTime + 75)
-//            quickViewReveal(monthly, startTime + 150)
+            quickViewReveal(monthly, startTime + 75)
 //            quickViewReveal(lifetime, startTime + 225)
-            quickViewReveal(subscription, startTime)
-            quickViewReveal(lifetime, startTime + 75)
+//            quickViewReveal(subscription, startTime)
+            quickViewReveal(lifetime, startTime + 150)
 
             revealedPurchaseOptions = true
         }
 
         subscription.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createYearlyTrial()) }
-        monthly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createMonthlyTrial()) }
-        threeMonth.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonthTrial()) }
-        yearly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearlyTrial()) }
+        monthly.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createMonthlyTrial()) }
+        threeMonth.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createThreeMonthTrial()) }
+        yearly.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createYearlyTrial()) }
+//        monthly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createMonthlyTrial()) }
+//        threeMonth.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createThreeMonthTrial()) }
+//        yearly.setOnClickListener { warnOfPlayStoreSubscriptionProcess(ProductAvailable.createYearlyTrial()) }
         lifetime.setOnClickListener { finishWithPurchaseResult(ProductAvailable.createLifetime()) }
         signIn.setOnClickListener { startSignIn() }
 

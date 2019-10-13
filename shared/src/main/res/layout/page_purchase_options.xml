@@ -40,10 +40,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/drawerBackground"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -59,8 +58,8 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="6dp"
-                android:paddingTop="6dp">
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -88,8 +87,9 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:paddingTop="6dp"
                 android:paddingBottom="6dp"
-                android:paddingTop="6dp">
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -117,8 +117,8 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="6dp"
-                android:paddingTop="6dp">
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -148,10 +148,11 @@
             android:clickable="true"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingBottom="16dp"
-            android:paddingEnd="16dp"
             android:paddingStart="16dp"
-            android:paddingTop="16dp">
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="48dp"
@@ -204,10 +205,10 @@
             android:clickable="true"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingBottom="16dp"
-            android:paddingEnd="16dp"
             android:paddingStart="16dp"
-            android:paddingTop="16dp">
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp">
 
             <ImageView
                 android:layout_width="48dp"
@@ -286,14 +287,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginEnd="6dp"
             android:background="@drawable/pulse_ripple"
-            android:padding="12dp"
-            android:text="@string/have_an_account"
-            android:textColor="@color/secondaryText"
             android:fontFamily="sans-serif-light"
             android:gravity="end"
-            android:layout_marginEnd="6dp"
+            android:padding="12dp"
             android:paddingEnd="10dp"
+            android:text="@string/have_an_account"
+            android:textColor="@color/secondaryText"
             android:textSize="12sp"
             android:textStyle="bold" />
 
