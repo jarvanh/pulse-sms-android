@@ -19,6 +19,7 @@ import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.Settings
+import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.DensityUtil
 import xyz.klinker.messenger.shared.util.billing.ProductAvailable
 import xyz.klinker.messenger.shared.util.billing.ProductType
@@ -38,11 +39,13 @@ class AccountPurchaseActivity : AppCompatActivity() {
         setUpInitialLayout()
 
         if (Settings.mainColorSet.color == Color.WHITE) {
-            findViewById<View>(R.id.initial_layout).setBackgroundColor(ColorSet.TEAL(this).color)
-            findViewById<View>(R.id.purchase_layout).setBackgroundColor(ColorSet.TEAL(this).color)
+            findViewById<View>(R.id.initial_layout).setBackgroundColor(ColorSet.DEFAULT(this).color)
+            findViewById<View>(R.id.purchase_layout).setBackgroundColor(ColorSet.DEFAULT(this).color)
+            ActivityUtils.setStatusBarColor(this, ColorSet.DEFAULT(this).color)
         } else {
             findViewById<View>(R.id.initial_layout).setBackgroundColor(Settings.mainColorSet.color)
             findViewById<View>(R.id.purchase_layout).setBackgroundColor(Settings.mainColorSet.color)
+            ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.color)
         }
 
         Handler().postDelayed({ this.circularRevealIn() }, 100)
