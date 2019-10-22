@@ -1,7 +1,6 @@
 package xyz.klinker.messenger.shared.util
 
 import android.content.Context
-import com.github.ajalt.reprint.core.Reprint
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.R
@@ -24,10 +23,5 @@ object KotlinObjectInitializers {
         MmsSettings.init(context)
         DualSimUtils.init(context)
         EmojiInitializer.initializeEmojiCompat(context)
-
-        try {
-            Reprint.initialize(context)
-        } catch (t: Throwable) {
-        }
     }
 }

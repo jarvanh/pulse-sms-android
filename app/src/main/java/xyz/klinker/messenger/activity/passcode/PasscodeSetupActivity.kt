@@ -6,12 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import com.github.ajalt.reprint.core.Reprint
 import xyz.klinker.android.floating_tutorial.FloatingTutorialActivity
 import xyz.klinker.android.floating_tutorial.TutorialPage
-import com.github.ajalt.reprint.core.AuthenticationFailureReason
-import com.github.ajalt.reprint.core.AuthenticationListener
 import com.raycoarana.codeinputview.CodeInputView
 import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.api.implementation.Account
@@ -19,27 +15,12 @@ import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
 
-class PasscodeSetupActivity : FloatingTutorialActivity(), AuthenticationListener {
+class PasscodeSetupActivity : FloatingTutorialActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setResult(Activity.RESULT_CANCELED)
-        if (Reprint.hasFingerprintRegistered()) {
-            Reprint.authenticate(this)
-        }
-
         MainColorController(this).configureNavigationBarColor()
-    }
-
-    override fun onSuccess(moduleTag: Int) {
-        setResult(Activity.RESULT_OK)
-        finishAnimated()
-    }
-
-    override fun onFailure(failureReason: AuthenticationFailureReason, fatal: Boolean,
-                           errorMessage: CharSequence, moduleTag: Int, errorCode: Int) {
-        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
     }
 
     override fun getPages(): List<TutorialPage> = listOf(PasscodeSetupPage(this))

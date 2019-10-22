@@ -45,6 +45,7 @@ dependencies {
     api project(":shared")
 
     implementation 'io.fotoapparat:fotoapparat:2.6.1'
+    implementation 'androidx.biometric:biometric:1.0.0-rc01'
 
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:${versions.robolectric}"

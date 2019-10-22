@@ -48,8 +48,8 @@ dependencies {
     api "com.google.firebase:firebase-auth:${versions.firebaseAuth}"
     api "com.google.android.gms:play-services-maps:${versions.playServices}"
     
-    api "com.google.firebase:firebase-ml-natural-language:21.0.3"
-    api "com.google.firebase:firebase-ml-natural-language-smart-reply-model:20.0.6"
+    api "com.google.firebase:firebase-ml-natural-language:22.0.0"
+    api "com.google.firebase:firebase-ml-natural-language-smart-reply-model:20.0.7"
 
     annotationProcessor "com.github.bumptech.glide:compiler:${versions.glide}"
     api "com.github.bumptech.glide:glide:${versions.glide}"
@@ -80,7 +80,6 @@ dependencies {
     api 'com.pes.materialcolorpicker:library:1.2.5'
 
     api 'com.raycoarana.codeinputview:codeinputview:1.2.5'
-    api 'com.github.ajalt.reprint:core:3.2.1@aar'
 
     api project(":api_implementation")
     api project(":encryption")

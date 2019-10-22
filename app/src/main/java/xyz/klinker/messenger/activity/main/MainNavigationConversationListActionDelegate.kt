@@ -3,21 +3,29 @@ package xyz.klinker.messenger.activity.main
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.Fragment
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.activity.SettingsActivity
+import xyz.klinker.messenger.activity.passcode.PasscodeVerificationActivity
 import xyz.klinker.messenger.fragment.*
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
 import xyz.klinker.messenger.fragment.settings.AboutFragment
 import xyz.klinker.messenger.fragment.settings.HelpAndFeedbackFragment
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
-import xyz.klinker.messenger.activity.passcode.PasscodeVerificationActivity
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Folder
 import xyz.klinker.messenger.shared.util.AnimationUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
+import java.util.concurrent.Executor
+import android.os.Looper
+
+
 
 class MainNavigationConversationListActionDelegate(private val activity: MessengerActivity) {
 
@@ -84,12 +92,17 @@ class MainNavigationConversationListActionDelegate(private val activity: Messeng
     }
 
     internal fun displayPrivate(): Boolean {
+        val showPrivateConversations: () -> Unit = {
+            displayFragmentWithBackStack(PrivateConversationListFragment())
+        }
+
         val lastEntry = Settings.privateConversationsLastPasscodeEntry
         return if (Settings.privateConversationsPasscode.isNullOrEmpty() || TimeUtils.now - lastEntry < TimeUtils.MINUTE) {
-            displayFragmentWithBackStack(PrivateConversationListFragment())
+            showPrivateConversations()
+            true
         } else {
-            activity.startActivityForResult(Intent(activity, PasscodeVerificationActivity::class.java), PasscodeVerificationActivity.REQUEST_CODE)
-            return false
+            PasscodeVerificationActivity.show(activity, showPrivateConversations)
+            false
         }
     }
 

@@ -7,12 +7,14 @@ import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
+import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.activity.passcode.PasscodeSetupActivity
 import xyz.klinker.messenger.activity.passcode.PasscodeVerificationActivity
+import xyz.klinker.messenger.fragment.PrivateConversationListFragment
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 import xyz.klinker.messenger.shared.util.RedirectToMyAccount
@@ -43,11 +45,16 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         val preference = findPreference(getString(R.string.pref_secure_private_conversations))
 
         preference.setOnPreferenceClickListener {
-            if (Settings.privateConversationsPasscode.isNullOrBlank()) {
+            val showPasscodeSetup: () -> Unit = {
                 startActivity(Intent(activity, PasscodeSetupActivity::class.java))
-            } else {
-                startActivityForResult(Intent(activity, PasscodeVerificationActivity::class.java), PasscodeVerificationActivity.REQUEST_CODE)
             }
+            
+            if (Settings.privateConversationsPasscode.isNullOrBlank()) {
+                showPasscodeSetup()
+            } else {
+                PasscodeVerificationActivity.show(activity as FragmentActivity, showPasscodeSetup)
+            }
+
             true
         }
     }

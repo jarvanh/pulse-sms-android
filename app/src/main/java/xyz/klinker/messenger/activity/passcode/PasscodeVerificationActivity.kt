@@ -3,92 +3,99 @@ package xyz.klinker.messenger.activity.passcode
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import com.github.ajalt.reprint.core.Reprint
 import xyz.klinker.android.floating_tutorial.FloatingTutorialActivity
 import xyz.klinker.android.floating_tutorial.TutorialPage
-import com.github.ajalt.reprint.core.AuthenticationFailureReason
-import com.github.ajalt.reprint.core.AuthenticationListener
 import com.raycoarana.codeinputview.CodeInputView
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
 import android.content.Intent
 import android.net.Uri
+import android.os.Looper
 import android.widget.EditText
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.fragment.app.FragmentActivity
 import xyz.klinker.messenger.activity.main.MainColorController
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
-import xyz.klinker.messenger.shared.util.ColorUtils
+import java.util.concurrent.Executor
 
-class PasscodeVerificationActivity : FloatingTutorialActivity(), AuthenticationListener {
+class PasscodeVerificationActivity : FloatingTutorialActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setResult(Activity.RESULT_CANCELED)
-        if (Reprint.hasFingerprintRegistered()) {
-            Reprint.authenticate(this)
-        }
 
         MainColorController(this).configureNavigationBarColor()
     }
 
-    override fun onSuccess(moduleTag: Int) {
-        setResult(Activity.RESULT_OK)
-        finishAnimated()
-
-
-    }
-
-    override fun onFailure(failureReason: AuthenticationFailureReason, fatal: Boolean,
-                           errorMessage: CharSequence, moduleTag: Int, errorCode: Int) {
-        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-    }
-
     override fun getPages(): List<TutorialPage> {
-        val hasFingerprint = Reprint.hasFingerprintRegistered()
         val hasAccount = Account.exists()
 
         return when {
-            hasFingerprint && hasAccount -> listOf(FingerprintPage(this), PasscodePage(this), AccountPasswordPage(this))
-            hasFingerprint -> listOf(FingerprintPage(this), PasscodePage(this))
             hasAccount -> listOf(PasscodePage(this), AccountPasswordPage(this))
-            else -> listOf(FingerprintPage(this), PasscodePage(this))
+            else -> listOf(PasscodePage(this))
         }
     }
 
     companion object {
         const val REQUEST_CODE = 185
-    }
-}
 
-@SuppressLint("ViewConstructor")
-class FingerprintPage(context: FloatingTutorialActivity) : TutorialPage(context) {
-    override fun initPage() {
-        setContentView(R.layout.page_fingerprint)
-
-        setNextButtonText(R.string.passcode)
-
-        when {
-            ColorUtils.isColorDark(Settings.mainColorSet.color) -> {
-                setBackgroundColor(Settings.mainColorSet.color)
-                setNextButtonTextColor(Color.WHITE)
-                setProgressIndicatorColor(Color.WHITE)
+        fun show(activity: FragmentActivity, onAuthenticated: () -> Unit) {
+            val startPasscodePrompt: () -> Unit = {
+                activity.startActivityForResult(Intent(activity, PasscodeVerificationActivity::class.java), REQUEST_CODE)
             }
-            ColorUtils.isColorDark(Settings.mainColorSet.colorAccent) -> {
-                setBackgroundColor(Settings.mainColorSet.colorAccent)
-                setNextButtonTextColor(Color.WHITE)
-                setProgressIndicatorColor(Color.WHITE)
+
+            val biometricManager = BiometricManager.from(activity)
+            if (biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS) {
+                val promptInfo = BiometricPrompt.PromptInfo.Builder()
+                        .setTitle("Biometric login for my app")
+                        .setSubtitle("Log in using your biometric credential")
+                        .setNegativeButtonText("Use Passcode")
+                        .setConfirmationRequired(true)
+                        .build()
+
+                val biometricPrompt = BiometricPrompt(activity, getMainThreadExecutor(),
+                        object : BiometricPrompt.AuthenticationCallback() {
+                            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                                super.onAuthenticationSucceeded(result)
+                                onAuthenticated()
+                            }
+
+                            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                                super.onAuthenticationError(errorCode, errString)
+                                Toast.makeText(activity, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                                startPasscodePrompt()
+                            }
+
+                            override fun onAuthenticationFailed() {
+                                super.onAuthenticationFailed()
+                                Toast.makeText(activity, "Authentication failed", Toast.LENGTH_SHORT).show()
+                                startPasscodePrompt()
+                            }
+                        })
+
+                biometricPrompt.authenticate(promptInfo)
+            } else {
+                startPasscodePrompt()
             }
-            else -> {
-                setBackgroundColor(resources.getColor(R.color.dark_background))
-                setNextButtonTextColor(Color.WHITE)
-                setProgressIndicatorColor(Color.WHITE)
+        }
+
+        private fun getMainThreadExecutor(): Executor {
+            return MainThreadExecutor()
+        }
+
+        private class MainThreadExecutor : Executor {
+            private val handler = Handler(Looper.getMainLooper())
+
+            override fun execute(r: Runnable) {
+                handler.post(r)
             }
         }
     }

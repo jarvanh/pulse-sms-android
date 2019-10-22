@@ -2,12 +2,7 @@ package xyz.klinker.messenger.shared.util
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.github.ajalt.reprint.core.Reprint
-import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.R
-import xyz.klinker.messenger.shared.data.FeatureFlags
-import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.data.Settings
 
 object FirstRunInitializer {
