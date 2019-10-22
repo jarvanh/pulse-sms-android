@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.13.0"
+        description="October 22nd, 2019">
+        <!-- Remove reprint for fingerprint auth, in favor of Android's BiometricPrompt AndroidX APIs -->
+        <text>Revamp access to private conversations to allow for face unlock, fingerprint, or any other types authentication that your device supports</text>
+    </version>
+
+    <version
         name="4.12.0"
         description="October 11th, 2019">
         <!-- allow editing the title of individual conversations -->

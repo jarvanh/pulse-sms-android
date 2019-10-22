@@ -48,7 +48,7 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
             val showPasscodeSetup: () -> Unit = {
                 startActivity(Intent(activity, PasscodeSetupActivity::class.java))
             }
-            
+
             if (Settings.privateConversationsPasscode.isNullOrBlank()) {
                 showPasscodeSetup()
             } else {
