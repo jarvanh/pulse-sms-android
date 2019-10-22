@@ -70,13 +70,16 @@ class PasscodeVerificationActivity : FloatingTutorialActivity() {
 
                             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                                 super.onAuthenticationError(errorCode, errString)
-                                Toast.makeText(activity, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                                if (errorCode != BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
+                                    Toast.makeText(activity, errString, Toast.LENGTH_SHORT).show()
+                                }
+
                                 startPasscodePrompt()
                             }
 
                             override fun onAuthenticationFailed() {
                                 super.onAuthenticationFailed()
-                                Toast.makeText(activity, "Authentication failed", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(activity, activity.getString(R.string.biometric_prompt_failed), Toast.LENGTH_SHORT).show()
                                 startPasscodePrompt()
                             }
                         })
