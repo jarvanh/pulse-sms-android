@@ -58,7 +58,7 @@ class PasscodeVerificationActivity : FloatingTutorialActivity() {
                         .setTitle(activity.getString(R.string.biometric_prompt_title))
                         .setSubtitle(activity.getString(R.string.biometric_prompt_summary))
                         .setNegativeButtonText(activity.getString(R.string.passcode))
-                        .setConfirmationRequired(true)
+                        .setConfirmationRequired(false)
                         .build()
 
                 val biometricPrompt = BiometricPrompt(activity, getMainThreadExecutor(),

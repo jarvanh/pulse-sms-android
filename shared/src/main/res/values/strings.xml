@@ -641,7 +641,7 @@
 
     <!-- Passcode Entry -->
     <string name="biometric_prompt_title">Access your private conversations</string>
-    <string name="biometric_prompt_summary">Log in using your biometric credentials</string>
+    <string name="biometric_prompt_summary">Authenticate with your biometric credentials</string>
     <string name="biometric_prompt_failed">Biometric authentication failed</string>
     <string name="passcode">Use Passcode</string>
     <string name="forgot_passcode">Forgot Passcode?</string>
