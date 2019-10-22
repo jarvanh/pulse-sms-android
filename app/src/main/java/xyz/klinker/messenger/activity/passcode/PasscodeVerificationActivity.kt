@@ -55,9 +55,9 @@ class PasscodeVerificationActivity : FloatingTutorialActivity() {
             val biometricManager = BiometricManager.from(activity)
             if (biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS) {
                 val promptInfo = BiometricPrompt.PromptInfo.Builder()
-                        .setTitle("Biometric login for my app")
-                        .setSubtitle("Log in using your biometric credential")
-                        .setNegativeButtonText("Use Passcode")
+                        .setTitle(activity.getString(R.string.biometric_prompt_title))
+                        .setSubtitle(activity.getString(R.string.biometric_prompt_summary))
+                        .setNegativeButtonText(activity.getString(R.string.passcode))
                         .setConfirmationRequired(true)
                         .build()
 
