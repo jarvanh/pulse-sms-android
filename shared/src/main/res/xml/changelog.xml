@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.13.2"
+        description="Unreleased">
+        <!-- change the max lines for the message text entry, if an image is attached, so that it does not overflow the text entry -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.13.1"
         description="October 24th, 2019">
         <text>Bug fixes</text>

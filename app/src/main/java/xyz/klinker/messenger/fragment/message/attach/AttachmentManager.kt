@@ -1,9 +1,11 @@
 package xyz.klinker.messenger.fragment.message.attach
 
 import android.animation.ValueAnimator
+import android.content.res.Configuration
 import android.net.Uri
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.EditText
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import androidx.fragment.app.FragmentActivity
@@ -27,6 +29,7 @@ class AttachmentManager(private val fragment: MessageListFragment) {
     private val attachedImageScroller: HorizontalScrollView by lazy { fragment.rootView!!.findViewById<HorizontalScrollView>(R.id.attached_image_scroller) }
     private val attachedImageHolder: LinearLayout by lazy { fragment.rootView!!.findViewById<LinearLayout>(R.id.attached_image_holder) }
     private val attach: View by lazy { fragment.rootView!!.findViewById<View>(R.id.attach) }
+    private val messageEntry: EditText by lazy { fragment.rootView!!.findViewById<View>(R.id.message_entry) as EditText }
 
     fun setupHelperViews() {
 
@@ -119,6 +122,8 @@ class AttachmentManager(private val fragment: MessageListFragment) {
                 .setStartDelay(ANIMATION_DURATION)
                 .setDuration(ANIMATION_DURATION)
                 .start()
+
+        setMaxLines(3)
     }
 
     private fun hideAttachments() {
@@ -144,6 +149,15 @@ class AttachmentManager(private val fragment: MessageListFragment) {
                 .setStartDelay(ANIMATION_START_DELAY)
                 .setDuration(ANIMATION_DURATION)
                 .start()
+
+        setMaxLines(activity?.resources?.getInteger(R.integer.message_list_fragment_line_entry_count) ?: 6)
+    }
+
+    private fun setMaxLines(value: Int) {
+        val orientation = activity?.resources?.configuration?.orientation
+        if (activity?.resources?.getBoolean(R.bool.is_tablet) == false && orientation == Configuration.ORIENTATION_PORTRAIT) {
+            messageEntry.maxLines = value
+        }
     }
 
     companion object {
