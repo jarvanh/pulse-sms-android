@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.13.1"
+        description="October 24th, 2019">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.13.0"
         description="October 22nd, 2019">
         <!-- Remove reprint for fingerprint auth, in favor of Android's BiometricPrompt AndroidX APIs -->
