@@ -9,6 +9,7 @@ import xyz.klinker.messenger.activity.MessengerActivity
 import java.lang.IllegalStateException
 
 class EdgeToEdgeKeyboardWorkaround(private val activity: MessengerActivity) {
+
     private val contentContainer = activity.findViewById<ViewGroup>(android.R.id.content)
     private val rootView = contentContainer.getChildAt(0)
     private val rootViewLayout = rootView.layoutParams as FrameLayout.LayoutParams
@@ -40,7 +41,8 @@ class EdgeToEdgeKeyboardWorkaround(private val activity: MessengerActivity) {
 
     private fun possiblyResizeChildOfContent() {
         contentContainer.getWindowVisibleDisplayFrame(contentAreaOfWindowBounds)
-        val usableHeightNow = contentAreaOfWindowBounds.height() + StatusBarHelper.getStatusBarHeight(activity) + activity.insetController.bottomInsetValue
+        val statusbarSize = StatusBarHelper.getStatusBarHeight(activity)
+        val usableHeightNow = contentAreaOfWindowBounds.height() + statusbarSize + activity.insetController.bottomInsetValue
         if (usableHeightNow != usableHeightPrevious) {
             rootViewLayout.height = usableHeightNow
             rootView.layout(contentAreaOfWindowBounds.left, contentAreaOfWindowBounds.top, contentAreaOfWindowBounds.right, contentAreaOfWindowBounds.bottom)
@@ -48,4 +50,5 @@ class EdgeToEdgeKeyboardWorkaround(private val activity: MessengerActivity) {
             usableHeightPrevious = usableHeightNow
         }
     }
+
 }

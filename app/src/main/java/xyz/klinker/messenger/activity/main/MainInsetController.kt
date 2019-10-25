@@ -18,6 +18,7 @@ import xyz.klinker.messenger.fragment.message.EdgeToEdgeKeyboardWorkaround
 import xyz.klinker.messenger.fragment.message.MessageListFragment
 import xyz.klinker.messenger.fragment.settings.MaterialPreferenceFragmentCompat
 import xyz.klinker.messenger.fragment.settings.MyAccountFragment
+import xyz.klinker.messenger.shared.util.ActivityUtils
 import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.DensityUtil
 
@@ -175,7 +176,6 @@ class MainInsetController(private val activity: MessengerActivity) {
     }
 
     private fun useEdgeToEdge(): Boolean {
-        val ignoredDevices = arrayListOf("one plus", "oneplus")
-        return AndroidVersionUtil.isAndroidQ && !ignoredDevices.contains(Build.MANUFACTURER.toLowerCase())
+        return ActivityUtils.useEdgeToEdge()
     }
 }

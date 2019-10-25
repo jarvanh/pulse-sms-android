@@ -91,7 +91,7 @@ object ActivityUtils {
     fun setUpNavigationBarColor(activity: Activity?, color: Int, isMessengerActivity: Boolean = false) {
         if (!AndroidVersionUtil.isAndroidO_MR1 || activity == null) {
             return
-        } else if (AndroidVersionUtil.isAndroidQ && isMessengerActivity) {
+        } else if (isMessengerActivity && useEdgeToEdge()) {
             activity.window?.navigationBarColor = Color.TRANSPARENT
             return
         }
@@ -158,5 +158,13 @@ object ActivityUtils {
             Settings.isCurrentlyDarkTheme(context) -> context.resources.getColor(R.color.drawerBackground)
             else -> Color.WHITE
         }
+    }
+
+    fun useEdgeToEdge(): Boolean {
+//        val ignoredDevices = arrayListOf("one plus", "oneplus")
+//        return AndroidVersionUtil.isAndroidQ && !ignoredDevices.contains(Build.MANUFACTURER.toLowerCase())
+
+        val acceptedDevices = arrayListOf("google")
+        return AndroidVersionUtil.isAndroidQ && acceptedDevices.contains(Build.MANUFACTURER.toLowerCase())
     }
 }
