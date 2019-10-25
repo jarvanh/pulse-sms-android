@@ -168,9 +168,6 @@ object ActivityUtils {
     }
 
     fun useEdgeToEdge(): Boolean {
-//        val ignoredDevices = arrayListOf("one plus", "oneplus")
-//        return AndroidVersionUtil.isAndroidQ && !ignoredDevices.contains(Build.MANUFACTURER.toLowerCase())
-
         val acceptedDevices = arrayListOf("google", "samsung")
         return AndroidVersionUtil.isAndroidQ && acceptedDevices.contains(Build.MANUFACTURER.toLowerCase())
     }
