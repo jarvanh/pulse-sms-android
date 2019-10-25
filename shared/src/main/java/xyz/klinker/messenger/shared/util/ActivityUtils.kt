@@ -92,7 +92,14 @@ object ActivityUtils {
         if (!AndroidVersionUtil.isAndroidO_MR1 || activity == null) {
             return
         } else if (isMessengerActivity && useEdgeToEdge()) {
-            activity.window?.navigationBarColor = Color.TRANSPARENT
+            activity.window?.navigationBarColor = Color.parseColor("#01000000")
+
+            if (Settings.isCurrentlyDarkTheme(activity)) {
+                activateLightNavigationBar(activity, false)
+            } else {
+                activateLightNavigationBar(activity, true)
+            }
+
             return
         }
 
@@ -164,7 +171,7 @@ object ActivityUtils {
 //        val ignoredDevices = arrayListOf("one plus", "oneplus")
 //        return AndroidVersionUtil.isAndroidQ && !ignoredDevices.contains(Build.MANUFACTURER.toLowerCase())
 
-        val acceptedDevices = arrayListOf("google")
+        val acceptedDevices = arrayListOf("google", "samsung")
         return AndroidVersionUtil.isAndroidQ && acceptedDevices.contains(Build.MANUFACTURER.toLowerCase())
     }
 }
