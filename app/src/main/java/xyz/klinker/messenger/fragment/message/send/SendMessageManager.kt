@@ -273,11 +273,12 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         val message = messageEntry.text.toString().trim { it <= ' ' }
 
         if ((message.isNotEmpty() || uris.isNotEmpty())) {
+            attachManager.clearAttachedData()
+            
             val fragment = activity.supportFragmentManager.findFragmentById(R.id.conversation_list_container)
             val conversation = DataSource.getConversation(activity, argManager.conversationId)
             val sendUtils = SendUtils(conversation?.simSubscriptionId).setForceNoSignature(forceNoSignature)
             DataSource.deleteDrafts(activity, argManager.conversationId)
-            attachManager.clearAttachedData()
             messageEntry.text = null
 
             if (messageLoader.adapter != null && messageLoader.adapter!!.getItemViewType(0) == Message.TYPE_INFO) {
