@@ -36,6 +36,9 @@ class AttachmentManager(private val fragment: MessageListFragment) {
     }
 
     fun clearAttachedData() {
+        currentlyAttached.clear()
+        fragment.counterCalculator.updateCounterText()
+
         Thread {
             if (activity != null) {
                 DataSource.deleteDrafts(activity!!, argManager.conversationId)
@@ -43,10 +46,7 @@ class AttachmentManager(private val fragment: MessageListFragment) {
         }.start()
 
         hideAttachments()
-        currentlyAttached.clear()
         attachedImageHolder.removeAllViews()
-
-        fragment.counterCalculator.updateCounterText()
     }
 
     fun writeDraftOfAttachment() {
