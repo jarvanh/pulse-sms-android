@@ -274,7 +274,7 @@ class SendMessageManager(private val fragment: MessageListFragment) {
 
         if ((message.isNotEmpty() || uris.isNotEmpty())) {
             attachManager.clearAttachedData()
-            
+
             val fragment = activity.supportFragmentManager.findFragmentById(R.id.conversation_list_container)
             val conversation = DataSource.getConversation(activity, argManager.conversationId)
             val sendUtils = SendUtils(conversation?.simSubscriptionId).setForceNoSignature(forceNoSignature)

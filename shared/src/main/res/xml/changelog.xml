@@ -18,7 +18,7 @@
 
     <version
         name="4.13.2"
-        description="Unreleased">
+        description="October 28th, 2019">
         <!-- change the max lines for the message text entry, if an image is attached, so that it does not overflow the text entry -->
         <text>Bug fixes</text>
     </version>
