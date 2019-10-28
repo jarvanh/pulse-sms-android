@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.13.3"
+        description="Unreleased">
+        <!-- Fix issue with contact images not showing in the notification, on Android Q -->
+        <text>Improvements for Android Q</text>
+    </version>
+
+    <version
         name="4.13.2"
         description="October 28th, 2019">
         <!-- Always hide the keyboard when the app is first shown and specify that edge to edge should only be used on Samsung and Google devices right now (since I have tested those) -->

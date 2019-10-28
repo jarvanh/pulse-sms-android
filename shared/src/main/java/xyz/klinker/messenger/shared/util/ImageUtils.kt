@@ -16,12 +16,9 @@
 
 package xyz.klinker.messenger.shared.util
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Matrix
-import android.graphics.Path
+import android.graphics.*
 import android.media.ExifInterface
 import android.net.Uri
 import android.provider.ContactsContract
@@ -51,10 +48,18 @@ object ImageUtils {
     /**
      * Gets a bitmap from the provided uri. Returns null if the bitmap cannot be found.
      */
-    fun getBitmap(context: Context?, uri: String?) = try {
-        MediaStore.Images.Media.getBitmap(context?.contentResolver, Uri.parse(uri))
-    } catch (e: Exception) {
-        null
+    @SuppressLint("NewApi")
+    fun getBitmap(context: Context?, uri: String?): Bitmap? {
+        return try {
+            if (AndroidVersionUtil.isAndroidP) {
+                val source = ImageDecoder.createSource(context!!.contentResolver, Uri.parse(uri))
+                ImageDecoder.decodeBitmap(source)
+            } else {
+                MediaStore.Images.Media.getBitmap(context?.contentResolver, Uri.parse(uri))
+            }
+        } catch (e: Exception) {
+            getContactImage(uri, context)
+        }
     }
 
     /**
