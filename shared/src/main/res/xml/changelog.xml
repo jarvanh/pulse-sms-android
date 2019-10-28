@@ -19,6 +19,7 @@
     <version
         name="4.13.2"
         description="October 28th, 2019">
+        <!-- Always hide the keyboard when the app is first shown and specify that edge to edge should only be used on Samsung and Google devices right now (since I have tested those) -->
         <!-- change the max lines for the message text entry, if an image is attached, so that it does not overflow the text entry -->
         <!-- clear attachments more quickly, after sending a message -->
         <text>Bug fixes</text>
@@ -27,6 +28,7 @@
     <version
         name="4.13.1"
         description="October 24th, 2019">
+        <!-- Update MMS library -->
         <text>Bug fixes</text>
     </version>
 
