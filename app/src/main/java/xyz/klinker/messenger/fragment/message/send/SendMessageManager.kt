@@ -277,12 +277,13 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         if ((message.isNotEmpty() || uris.isNotEmpty())) {
             attachManager.clearAttachedData()
         }
+        
+        messageEntry.text = null
 
         Thread {
             if ((message.isNotEmpty() || uris.isNotEmpty())) {
                 val conversation = DataSource.getConversation(activity, argManager.conversationId)
                 val sendUtils = SendUtils(conversation?.simSubscriptionId).setForceNoSignature(forceNoSignature)
-                messageEntry.text = null
 
                 if (messageLoader.adapter != null && messageLoader.adapter!!.getItemViewType(0) == Message.TYPE_INFO) {
                     DataSource.deleteMessage(activity, messageLoader.adapter!!.getItemId(0))
