@@ -21,6 +21,7 @@
         description="November 1st, 2019">
         <!-- Fix issue with contact images not showing in the notification, on Android Q -->
         <text>Improvements for Android Q</text>
+        <text>Performance improvements</text>
     </version>
 
     <version
