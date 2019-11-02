@@ -37,6 +37,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
+import kotlin.math.min
 
 /**
  * Helper for working with images.
@@ -66,24 +67,28 @@ object ImageUtils {
             return null
         }
 
-        val width = bitmap.width
-        val height = bitmap.height
-        val outputBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        return try {
+            val width = bitmap.width
+            val height = bitmap.height
+            val outputBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
 
-        val path = Path()
-        path.addCircle(
-                (width / 2).toFloat(),
-                (height / 2).toFloat(),
-                Math.min(width, height / 2).toFloat(),
-                Path.Direction.CCW)
+            val path = Path()
+            path.addCircle(
+                    (width / 2).toFloat(),
+                    (height / 2).toFloat(),
+                    min(width, height / 2).toFloat(),
+                    Path.Direction.CCW)
 
-        val canvas = Canvas(outputBitmap)
-        canvas.clipPath(path)
-        canvas.drawBitmap(bitmap, 0f, 0f, null)
+            val canvas = Canvas(outputBitmap)
+            canvas.clipPath(path)
+            canvas.drawBitmap(bitmap, 0f, 0f, null)
 
-        bitmap.recycle()
+            bitmap.recycle()
 
-        return outputBitmap
+            outputBitmap
+        } catch (e: Throwable) {
+            null
+        }
     }
 
     /**
