@@ -6,7 +6,6 @@ import android.os.Handler
 import android.provider.ContactsContract
 import androidx.appcompat.app.AlertDialog
 import android.widget.Toast
-import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.ContactSettingsActivity
 import xyz.klinker.messenger.activity.MediaGridActivity
 import xyz.klinker.messenger.activity.MessengerActivity
@@ -14,7 +13,6 @@ import xyz.klinker.messenger.activity.NoLimitMessageListActivity
 import xyz.klinker.messenger.activity.compose.ComposeActivity
 import xyz.klinker.messenger.activity.compose.ComposeConstants
 import xyz.klinker.messenger.adapter.ContactAdapter
-import xyz.klinker.messenger.adapter.conversation.ConversationListAdapter
 import xyz.klinker.messenger.fragment.BlacklistFragment
 import xyz.klinker.messenger.fragment.ScheduledMessagesFragment
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment
@@ -30,7 +28,9 @@ import java.util.NoSuchElementException
 import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import xyz.klinker.messenger.R
 import xyz.klinker.messenger.shared.service.notification.NotificationBubbleHelper
+
 
 class MainNavigationMessageListActionDelegate(private val activity: MessengerActivity) {
 
@@ -103,9 +103,11 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
         }
 
         return try {
-            val intent = activity.packageManager.getLaunchIntentForPackage("com.google.android.apps.tachyon")
-            intent!!.data = Uri.parse("tel:${conversation.phoneNumbers!!}")
-            activity.startActivity(intent)
+            val duo = Intent()
+            duo.setPackage("com.google.android.apps.tachyon")
+            duo.action = "com.google.android.apps.tachyon.action.CALL"
+            duo.data = Uri.parse("tel:${conversation.phoneNumbers!!}")
+            activity.startActivity(duo)
             true
         } catch (e: Exception) {
             activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.apps.tachyon")))

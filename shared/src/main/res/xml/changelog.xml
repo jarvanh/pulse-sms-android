@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.14.0"
+        description="Unreleased">
+        <text>Added an option to start a video call through Google Duo, within any conversation</text>
+    </version>
+
+    <version
         name="4.13.3"
         description="November 2nd, 2019">
         <!-- Fix issue with contact images not showing in the notification, on Android Q -->

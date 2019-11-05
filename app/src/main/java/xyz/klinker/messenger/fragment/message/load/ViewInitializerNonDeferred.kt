@@ -168,12 +168,6 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
                 toolbarItem?.setTitle(R.string.menu_move_to_inbox)
             }
 
-            if (!FeatureFlags.DISPLAY_DUO_BUTTON) {
-                try {
-                    toolbar.menu.findItem(R.id.menu_call_with_duo)?.isVisible = false
-                } catch (e: Exception) { }
-            }
-
             if (!FeatureFlags.DISPLAY_NOTIFICATION_BUBBLES || !AndroidVersionUtil.isAndroidQ) {
                 try {
                     toolbar.menu.findItem(R.id.menu_show_bubble)?.isVisible = false
@@ -233,12 +227,6 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
 
             navItem?.setTitle(R.string.menu_move_to_inbox)
             toolbarItem?.setTitle(R.string.menu_move_to_inbox)
-        }
-
-        if (!FeatureFlags.DISPLAY_DUO_BUTTON) {
-            try {
-                toolbar.menu.findItem(R.id.menu_call_with_duo)?.isVisible = false
-            } catch (e: Exception) { }
         }
 
         if (!FeatureFlags.DISPLAY_NOTIFICATION_BUBBLES || !AndroidVersionUtil.isAndroidQ) {
