@@ -8,6 +8,7 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.pojo.ConversationUpdateInfo
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
+import java.lang.IllegalStateException
 
 class ConversationUpdateHelper(private val fragment: ConversationListFragment) {
 
@@ -40,9 +41,14 @@ class ConversationUpdateHelper(private val fragment: ConversationListFragment) {
         }
 
         if (fragment.messageListManager.expandedConversation != null && fragment.messageListManager.expandedConversation!!.conversation != null) {
-            updateInfo = ConversationUpdateInfo(
-                    fragment.messageListManager.expandedConversation!!.conversation!!.id,
-                    fragment.getString(R.string.you) + ": " + snippet, true)
+            updateInfo = try {
+                ConversationUpdateInfo(
+                        fragment.messageListManager.expandedConversation!!.conversation!!.id,
+                        fragment.getString(R.string.you) + ": " + snippet, true)
+            } catch (e: IllegalStateException) {
+                ConversationUpdateInfo(
+                        fragment.messageListManager.expandedConversation!!.conversation!!.id, "" + snippet, true)
+            }
         }
     }
 
