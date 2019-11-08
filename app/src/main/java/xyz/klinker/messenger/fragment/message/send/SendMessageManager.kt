@@ -269,7 +269,6 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         NewMessagesCheckService.writeLastRun(activity)
         changeDelayedSendingComponents(false)
         attachManager.backPressed()
-        this.fragment.notificationManager.dismissOnMessageSent()
 
         val message = messageEntry.text.toString().trim { it <= ' ' }
         val fragment = activity.supportFragmentManager.findFragmentById(R.id.conversation_list_container)
@@ -277,75 +276,71 @@ class SendMessageManager(private val fragment: MessageListFragment) {
         if ((message.isNotEmpty() || uris.isNotEmpty())) {
             attachManager.clearAttachedData()
         }
-        
+
         messageEntry.text = null
 
-        Thread {
-            if ((message.isNotEmpty() || uris.isNotEmpty())) {
-                val conversation = DataSource.getConversation(activity, argManager.conversationId)
-                val sendUtils = SendUtils(conversation?.simSubscriptionId).setForceNoSignature(forceNoSignature)
+        if ((message.isNotEmpty() || uris.isNotEmpty())) {
+            val conversation = DataSource.getConversation(activity, argManager.conversationId)
+            val sendUtils = SendUtils(conversation?.simSubscriptionId).setForceNoSignature(forceNoSignature)
 
-                if (messageLoader.adapter != null && messageLoader.adapter!!.getItemViewType(0) == Message.TYPE_INFO) {
-                    DataSource.deleteMessage(activity, messageLoader.adapter!!.getItemId(0))
-                }
-
-                val m = Message()
-                m.conversationId = argManager.conversationId
-                m.type = Message.TYPE_SENDING
-                m.read = true
-                m.seen = true
-                m.from = null
-                m.color = null
-                m.simPhoneNumber = if (conversation?.simSubscriptionId != null)
-                    DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
-                else
-                    null
-                m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
-
-                if (message.isNotEmpty()) {
-                    m.timestamp = TimeUtils.now
-                    m.data = message
-                    m.mimeType = MimeType.TEXT_PLAIN
-
-                    if (fragment != null && fragment is ConversationListFragment) {
-                        activity.runOnUiThread { fragment.notifyOfSentMessage(m) }
-                    }
-
-                    DataSource.insertMessage(activity, m, m.conversationId)
-                    sendUtils.send(activity, message, argManager.phoneNumbers)
-                }
-
-                uris.forEach {
-                    m.timestamp = TimeUtils.now
-                    m.data = it.uri.toString()
-                    m.mimeType = it.mimeType
-
-                    if (m.id != 0L) {
-                        m.id = 0
-                    }
-
-                    if (fragment != null && fragment is ConversationListFragment) {
-                        activity.runOnUiThread { fragment.notifyOfSentMessage(m) }
-                    }
-
-                    val messageId = DataSource.insertMessage(activity, m, m.conversationId, true)
-                    Thread {
-                        val imageUri = sendUtils.send(activity, "", argManager.phoneNumbers, it.uri, it.mimeType)
-                        MarkAsSentJob.scheduleNextRun(activity, messageId)
-
-                        if (imageUri != null) {
-                            DataSource.updateMessageData(activity, messageId, imageUri.toString())
-                        }
-                    }.start()
-                }
-
-                activity.runOnUiThread {
-                    AudioWrapper(activity, R.raw.message_ping).play()
-                    this.fragment.loadMessages(true)
-                }
-
+            if (messageLoader.adapter != null && messageLoader.adapter!!.getItemViewType(0) == Message.TYPE_INFO) {
+                DataSource.deleteMessage(activity, messageLoader.adapter!!.getItemId(0))
             }
-        }.start()
+
+            val m = Message()
+            m.conversationId = argManager.conversationId
+            m.type = Message.TYPE_SENDING
+            m.read = true
+            m.seen = true
+            m.from = null
+            m.color = null
+            m.simPhoneNumber = if (conversation?.simSubscriptionId != null)
+                DualSimUtils.getPhoneNumberFromSimSubscription(conversation.simSubscriptionId!!)
+            else
+                null
+            m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
+
+            if (message.isNotEmpty()) {
+                m.timestamp = TimeUtils.now
+                m.data = message
+                m.mimeType = MimeType.TEXT_PLAIN
+
+                if (fragment != null && fragment is ConversationListFragment) {
+                    fragment.notifyOfSentMessage(m)
+                }
+
+                DataSource.insertMessage(activity, m, m.conversationId)
+                sendUtils.send(activity, message, argManager.phoneNumbers)
+            }
+
+            uris.forEach {
+                m.timestamp = TimeUtils.now
+                m.data = it.uri.toString()
+                m.mimeType = it.mimeType
+
+                if (m.id != 0L) {
+                    m.id = 0
+                }
+
+                if (fragment != null && fragment is ConversationListFragment) {
+                    fragment.notifyOfSentMessage(m)
+                }
+
+                val messageId = DataSource.insertMessage(activity, m, m.conversationId, true)
+                Thread {
+                    val imageUri = sendUtils.send(activity, "", argManager.phoneNumbers, it.uri, it.mimeType)
+                    MarkAsSentJob.scheduleNextRun(activity, messageId)
+
+                    if (imageUri != null) {
+                        DataSource.updateMessageData(activity, messageId, imageUri.toString())
+                    }
+                }.start()
+            }
+
+            AudioWrapper(activity, R.raw.message_ping).play()
+            this.fragment.loadMessages(true)
+            this.fragment.notificationManager.dismissOnMessageSent()
+        }
     }
 
     private data class MediaMessage(val uri: Uri, val mimeType: String)
