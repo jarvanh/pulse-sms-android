@@ -17,8 +17,14 @@
 <changelog>
 
     <version
+        name="4.14.1"
+        description="November 8th, 2019">
+        <text>Performance improvements</text>
+    </version>
+
+    <version
         name="4.14.0"
-        description="Unreleased">
+        description="November 6th, 2019">
         <text>Added an option to start a video call through Google Duo, within any conversation</text>
     </version>
 
