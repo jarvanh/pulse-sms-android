@@ -47,6 +47,9 @@ dependencies {
     api "com.google.firebase:firebase-core:${versions.firebaseCore}"
     api "com.google.firebase:firebase-auth:${versions.firebaseAuth}"
     api "com.google.android.gms:play-services-maps:${versions.playServices}"
+
+    api "androidx.arch.core:core-runtime:2.1.0"
+    api "android.arch.work:work-runtime:1.0.1"
     
     api "com.google.firebase:firebase-ml-natural-language:22.0.0"
     api "com.google.firebase:firebase-ml-natural-language-smart-reply-model:20.0.7"

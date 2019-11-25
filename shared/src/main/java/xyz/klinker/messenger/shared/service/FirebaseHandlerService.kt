@@ -41,7 +41,6 @@ import xyz.klinker.messenger.shared.data.*
 import xyz.klinker.messenger.shared.data.model.*
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
-import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
 import xyz.klinker.messenger.shared.service.jobs.SignoutJob
 import xyz.klinker.messenger.shared.service.jobs.SubscriptionExpirationCheckJob
@@ -285,12 +284,10 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                         if (message.mimeType == MimeType.TEXT_PLAIN) {
                             SendUtils(conversation.simSubscriptionId)
                                     .send(context, message.data!!, conversation.phoneNumbers!!)
-                            MarkAsSentJob.scheduleNextRun(context, messageId)
                         } else {
                             SendUtils(conversation.simSubscriptionId)
                                     .send(context, "", conversation.phoneNumbers!!,
                                             Uri.parse(message.data), message.mimeType)
-                            MarkAsSentJob.scheduleNextRun(context, messageId)
                         }
                     } else {
                         Log.e(TAG, "trying to send message without the conversation, so can't find phone numbers")

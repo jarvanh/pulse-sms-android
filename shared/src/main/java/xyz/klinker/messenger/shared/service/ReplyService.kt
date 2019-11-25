@@ -29,7 +29,6 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
-import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.util.DualSimUtils
 import xyz.klinker.messenger.shared.util.SendUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -86,7 +85,6 @@ class ReplyService : IntentService("Reply Service") {
 
         SendUtils(conversation.simSubscriptionId)
                 .send(this, reply, conversation.phoneNumbers!!)
-        MarkAsSentJob.scheduleNextRun(this, messageId)
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well

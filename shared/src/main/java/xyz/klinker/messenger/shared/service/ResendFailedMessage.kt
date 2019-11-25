@@ -7,7 +7,6 @@ import androidx.core.app.NotificationManagerCompat
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Message
-import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.util.DualSimUtils
 import xyz.klinker.messenger.shared.util.SendUtils
 
@@ -46,7 +45,6 @@ class ResendFailedMessage : IntentService("ResendFailedMessage") {
             SendUtils(conversation.simSubscriptionId).setForceSplitMessage(true)
                     .setRetryFailedMessages(false)
                     .send(this, m.data!!, conversation.phoneNumbers!!)
-            MarkAsSentJob.scheduleNextRun(this, messageId)
         } catch (e: Exception) {
         }
     }

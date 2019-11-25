@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.RemoteInput
 import android.util.Log
 
 import xyz.klinker.messenger.shared.R
@@ -17,7 +16,6 @@ import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.service.ReplyService
-import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.util.DualSimUtils
 import xyz.klinker.messenger.shared.util.SendUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -54,13 +52,12 @@ class SendSmartReplyReceiver : BroadcastReceiver() {
             null
         m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
 
-        val messageId = DataSource.insertMessage(context, m, conversationId, true)
+        DataSource.insertMessage(context, m, conversationId)
         DataSource.readConversation(context, conversationId)
 
         Log.v(TAG, "sending message $reply to ${conversation.phoneNumbers}")
 
         SendUtils(conversation.simSubscriptionId).send(context, reply, conversation.phoneNumbers!!)
-        MarkAsSentJob.scheduleNextRun(context, messageId)
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well

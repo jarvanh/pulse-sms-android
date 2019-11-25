@@ -26,16 +26,15 @@ import com.klinker.android.send_message.Message
 import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.Transaction
 import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.MmsSettings
 import xyz.klinker.messenger.shared.receiver.MmsSentReceiver
 import xyz.klinker.messenger.shared.receiver.SmsDeliveredReceiver
 import xyz.klinker.messenger.shared.receiver.SmsSentReceiver
 import xyz.klinker.messenger.shared.receiver.SmsSentReceiverNoRetry
+import xyz.klinker.messenger.shared.service.jobs.MarkAsSentWork
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.sql.SQLException
 import java.util.*
 
 /**
@@ -162,8 +161,9 @@ class SendUtils constructor(private val subscriptionId: Int? = null) {
             } catch (e: OutOfMemoryError) {
                 e.printStackTrace()
             }
-
         }
+
+        MarkAsSentWork.scheduleNextRun(context)
 
         return data
     }

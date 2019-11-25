@@ -17,7 +17,6 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
-import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.util.DualSimUtils
 import xyz.klinker.messenger.shared.util.KeyboardLayoutHelper
 import xyz.klinker.messenger.shared.util.SendUtils
@@ -133,7 +132,6 @@ class ReplySender(private val activity: MarshmallowReplyActivity, private val da
         Thread {
             SendUtils(dataProvider.conversation?.simSubscriptionId)
                     .send(activity, message, dataProvider.conversation!!.phoneNumbers!!)
-            MarkAsSentJob.scheduleNextRun(activity, messageId)
         }.start()
 
         ConversationListUpdatedReceiver.sendBroadcast(activity, dataProvider.conversationId, activity.getString(R.string.you) + ": " + message, true)

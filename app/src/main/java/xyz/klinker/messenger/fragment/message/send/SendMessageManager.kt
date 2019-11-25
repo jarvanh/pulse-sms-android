@@ -25,7 +25,6 @@ import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.pojo.KeyboardLayout
 import xyz.klinker.messenger.shared.service.NewMessagesCheckService
-import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.util.*
 import java.util.*
 
@@ -329,8 +328,6 @@ class SendMessageManager(private val fragment: MessageListFragment) {
                 val messageId = DataSource.insertMessage(activity, m, m.conversationId, true)
                 Thread {
                     val imageUri = sendUtils.send(activity, "", argManager.phoneNumbers, it.uri, it.mimeType)
-                    MarkAsSentJob.scheduleNextRun(activity, messageId)
-
                     if (imageUri != null) {
                         DataSource.updateMessageData(activity, messageId, imageUri.toString())
                     }

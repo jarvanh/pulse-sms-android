@@ -14,7 +14,6 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.ReplyService
-import xyz.klinker.messenger.shared.service.jobs.MarkAsSentJob
 import xyz.klinker.messenger.shared.util.DualSimUtils
 import xyz.klinker.messenger.shared.util.SendUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -59,11 +58,10 @@ class CarReplyReceiver : BroadcastReceiver() {
             null
         m.sentDeviceId = if (Account.exists()) java.lang.Long.parseLong(Account.deviceId!!) else -1L
 
-        val messageId = DataSource.insertMessage(context, m, conversationId, true)
+        DataSource.insertMessage(context, m, conversationId)
         DataSource.readConversation(context, conversationId)
 
         SendUtils(conversation.simSubscriptionId).send(context, reply, conversation.phoneNumbers!!)
-        MarkAsSentJob.scheduleNextRun(context, messageId)
 
         // cancel the notification we just replied to or
         // if there are no more notifications, cancel the summary as well
