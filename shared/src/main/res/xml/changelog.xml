@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.14.2"
+        description="December 2nd, 2019">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.14.1"
         description="November 10th, 2019">
         <text>Performance improvements</text>
