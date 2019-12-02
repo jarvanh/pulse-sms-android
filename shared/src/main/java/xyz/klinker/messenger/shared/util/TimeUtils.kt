@@ -243,11 +243,11 @@ object TimeUtils {
      * @param hour 24 hour format
      * @return seconds until that hour
      */
-    fun millisUntilHourInTheNextDay(hour: Int): Int {
+    fun millisUntilHourInTheNextDay(hour: Int): Long {
         return millisUntilHourInTheNextDay(hour, Calendar.getInstance().timeInMillis)
     }
 
-    fun millisUntilHourInTheNextDay(hour: Int, currentTime: Long): Int {
+    fun millisUntilHourInTheNextDay(hour: Int, currentTime: Long): Long {
         val calendar = Calendar.getInstance()
         calendar.time = Date(currentTime)
 
@@ -259,6 +259,6 @@ object TimeUtils {
 
         val lookingFor = calendar.timeInMillis
 
-        return (lookingFor - currentTime).toInt()
+        return lookingFor - currentTime
     }
 }

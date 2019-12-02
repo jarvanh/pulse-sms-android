@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
  * FirebaseJobDispatcher works, this should force it to run whenever the user goes from a loss in connectivity
  * to regaining connectivity, or shortly after.
  */
-class SyncRetryableRequestsJob(private val context: Context, params: WorkerParameters) : Worker(context, params) {
+class SyncRetryableRequestsWork(private val context: Context, params: WorkerParameters) : Worker(context, params) {
 
     override fun doWork(): Result {
         val retryables = DataSource.getRetryableRequestsAsList(context)
@@ -68,7 +68,7 @@ class SyncRetryableRequestsJob(private val context: Context, params: WorkerParam
                 return
             }
 
-            val work = PeriodicWorkRequest.Builder(SyncRetryableRequestsJob::class.java, 30L, TimeUnit.MINUTES)
+            val work = PeriodicWorkRequest.Builder(SyncRetryableRequestsWork::class.java, 30L, TimeUnit.MINUTES)
                     .build()
             WorkManager.getInstance().enqueueUniquePeriodicWork(JOB_ID, ExistingPeriodicWorkPolicy.KEEP, work)
         }

@@ -27,5 +27,5 @@ class RepeatNotificationWork(private val context: Context, params: WorkerParamet
             WorkManager.getInstance().enqueue(work)
         }
     }
-    
+
 }

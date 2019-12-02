@@ -55,14 +55,14 @@ class UpdateUtils(private val context: Activity) {
         private const val TAG = "UpdateUtil"
 
         fun rescheduleWork(context: Context) {
-            CleanupOldMessagesJob.scheduleNextRun(context)
-            FreeTrialNotifierJob.scheduleNextRun(context)
+            CleanupOldMessagesWork.scheduleNextRun(context)
+            FreeTrialNotifierWork.scheduleNextRun(context)
             ScheduledMessageJob.scheduleNextRun(context)
-            ContactSyncJob.scheduleNextRun(context)
+            ContactSyncWork.scheduleNextRun(context)
             SubscriptionExpirationCheckJob.scheduleNextRun(context)
             SignoutJob.scheduleNextRun(context)
             ScheduledTokenRefreshService.scheduleNextRun(context)
-            SyncRetryableRequestsJob.scheduleNextRun(context)
+            SyncRetryableRequestsWork.scheduleNextRun(context)
             RepostQuickComposeNotificationWork.scheduleNextRun(context)
         }
 

@@ -35,13 +35,13 @@ class BootCompletedReceiver : BroadcastReceiver() {
         try {
             if (intent.action == Intent.ACTION_BOOT_COMPLETED || intent.action == Intent.ACTION_MY_PACKAGE_REPLACED) {
                 ScheduledMessageJob.scheduleNextRun(context)
-                CleanupOldMessagesJob.scheduleNextRun(context)
-                FreeTrialNotifierJob.scheduleNextRun(context)
-                ContactSyncJob.scheduleNextRun(context)
+                CleanupOldMessagesWork.scheduleNextRun(context)
+                FreeTrialNotifierWork.scheduleNextRun(context)
+                ContactSyncWork.scheduleNextRun(context)
                 SubscriptionExpirationCheckJob.scheduleNextRun(context)
                 SignoutJob.scheduleNextRun(context)
                 ScheduledTokenRefreshService.scheduleNextRun(context)
-                SyncRetryableRequestsJob.scheduleNextRun(context)
+                SyncRetryableRequestsWork.scheduleNextRun(context)
                 RepostQuickComposeNotificationWork.scheduleNextRun(context)
 
                 if (Settings.quickCompose) QuickComposeNotificationService.start(context)

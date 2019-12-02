@@ -284,7 +284,7 @@
 
         <service
             android:exported="false"
-            android:name=".service.jobs.CleanupOldMessagesJob"
+            android:name=".service.jobs.CleanupOldMessagesWork"
             android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
@@ -293,7 +293,7 @@
 
         <service
             android:exported="false"
-            android:name=".service.jobs.FreeTrialNotifierJob">
+            android:name=".service.jobs.FreeTrialNotifierWork">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
@@ -301,7 +301,7 @@
 
         <service
             android:exported="false"
-            android:name=".service.jobs.ContactSyncJob"
+            android:name=".service.jobs.ContactSyncWork"
             android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
@@ -310,7 +310,7 @@
 
         <service
             android:exported="false"
-            android:name=".service.jobs.SyncRetryableRequestsJob"
+            android:name=".service.jobs.SyncRetryableRequestsWork"
             android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>

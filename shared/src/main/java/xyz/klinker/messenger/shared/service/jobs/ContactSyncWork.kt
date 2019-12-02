@@ -3,7 +3,10 @@ package xyz.klinker.messenger.shared.service.jobs
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.firebase.jobdispatcher.*
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import xyz.klinker.messenger.api.entity.AddContactRequest
 import xyz.klinker.messenger.api.entity.ContactBody
 import xyz.klinker.messenger.api.implementation.Account
@@ -13,10 +16,11 @@ import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.util.ContactUtils
 import xyz.klinker.messenger.shared.util.TimeUtils
 import java.util.*
+import java.util.concurrent.TimeUnit
 
-class ContactSyncJob : SimpleJobService() {
+class ContactSyncWork(private val context: Context, params: WorkerParameters) : Worker(context, params) {
 
-    override fun onRunJob(job: JobParameters): Int {
+    override fun doWork(): Result {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         val since = sharedPrefs.getLong("last_contact_update_timestamp", -1L)
 
@@ -25,8 +29,8 @@ class ContactSyncJob : SimpleJobService() {
 
         if (since == -1L) {
             writeUpdateTimestamp(sharedPrefs)
-            scheduleNextRun(this)
-            return JobService.RESULT_SUCCESS
+            scheduleNextRun(context)
+            return Result.success()
         }
 
         // otherwise, we should look for the contacts that have changed since the last run and
@@ -34,19 +38,19 @@ class ContactSyncJob : SimpleJobService() {
 
         val account = Account
         if (account.encryptor == null) {
-            return JobService.RESULT_FAIL_NORETRY
+            return Result.success()
         }
 
         val source = DataSource
 
-        val contactsList = ContactUtils.queryNewContacts(this, source, since)
+        val contactsList = ContactUtils.queryNewContacts(context, source, since)
         if (contactsList.isEmpty()) {
             writeUpdateTimestamp(sharedPrefs)
-            scheduleNextRun(this)
-            return JobService.RESULT_SUCCESS
+            scheduleNextRun(context)
+            return Result.success()
         }
 
-        source.insertContacts(this, contactsList, null)
+        source.insertContacts(context, contactsList, null)
 
         val contacts = arrayOfNulls<ContactBody>(contactsList.size)
 
@@ -70,9 +74,9 @@ class ContactSyncJob : SimpleJobService() {
 
         // set the "since" time for our change listener
         writeUpdateTimestamp(sharedPrefs)
-        scheduleNextRun(this)
+        scheduleNextRun(context)
 
-        return JobService.RESULT_SUCCESS
+        return Result.success()
     }
 
     private fun writeUpdateTimestamp(sharedPrefs: SharedPreferences) {
@@ -81,22 +85,13 @@ class ContactSyncJob : SimpleJobService() {
 
     companion object {
 
-        private const val JOB_ID = "contact-sync-job"
-
         fun scheduleNextRun(context: Context) {
-            val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
-            val time = (TimeUtils.millisUntilHourInTheNextDay(2).toLong() / 1000).toInt()
-            val myJob = dispatcher.newJobBuilder()
-                    .setService(ContactSyncJob::class.java)
-                    .setTag(JOB_ID)
-                    .setRecurring(false)
-                    .setLifetime(Lifetime.FOREVER)
-                    .setTrigger(Trigger.executionWindow(time, time + (5 * TimeUtils.MINUTE.toInt() / 1000)))
-                    .setReplaceCurrent(true)
+            val time = TimeUtils.millisUntilHourInTheNextDay(2)
+            val work = OneTimeWorkRequest.Builder(ContactSyncWork::class.java)
+                    .setInitialDelay(time, TimeUnit.MILLISECONDS)
                     .build()
-
             if (FeatureFlags.QUERY_DAILY_CONTACT_CHANGES) {
-                dispatcher.mustSchedule(myJob)
+                WorkManager.getInstance().enqueue(work)
             }
         }
     }
