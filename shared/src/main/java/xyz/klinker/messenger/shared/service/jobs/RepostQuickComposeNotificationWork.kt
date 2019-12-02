@@ -2,7 +2,6 @@ package xyz.klinker.messenger.shared.service.jobs
 
 import android.content.Context
 import androidx.work.*
-
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 import java.util.concurrent.TimeUnit

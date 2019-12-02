@@ -1,7 +1,7 @@
 package xyz.klinker.messenger.shared.service.jobs
 
 import android.content.Context
-import com.firebase.jobdispatcher.*
+import androidx.work.*
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 
@@ -9,6 +9,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.model.Conversation
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.data.model.RetryableRequest
+import java.util.concurrent.TimeUnit
 
 /**
  * If some requests fail, they get written in to the retryable_requests table to get retried when the
@@ -18,21 +19,20 @@ import xyz.klinker.messenger.shared.data.model.RetryableRequest
  * FirebaseJobDispatcher works, this should force it to run whenever the user goes from a loss in connectivity
  * to regaining connectivity, or shortly after.
  */
-class SyncRetryableRequestsJob : SimpleJobService() {
+class SyncRetryableRequestsJob(private val context: Context, params: WorkerParameters) : Worker(context, params) {
 
-    override fun onRunJob(job: JobParameters): Int {
-        val retryables = DataSource.getRetryableRequestsAsList(this)
-        DataSource.deleteAllRetryableRequest(this)
+    override fun doWork(): Result {
+        val retryables = DataSource.getRetryableRequestsAsList(context)
+        DataSource.deleteAllRetryableRequest(context)
 
         for (retryable in retryables) {
             when (retryable.type) {
-                RetryableRequest.TYPE_ADD_MESSAGE -> pushMessage(DataSource.getMessage(this, retryable.dataId))
-                RetryableRequest.TYPE_ADD_CONVERSATION -> pushConversation(DataSource.getConversation(this, retryable.dataId))
+                RetryableRequest.TYPE_ADD_MESSAGE -> pushMessage(DataSource.getMessage(context, retryable.dataId))
+                RetryableRequest.TYPE_ADD_CONVERSATION -> pushConversation(DataSource.getConversation(context, retryable.dataId))
             }
         }
 
-        scheduleNextRun(this)
-        return JobService.RESULT_SUCCESS
+        return Result.success()
     }
 
     private fun pushMessage(message: Message?) {
@@ -40,7 +40,7 @@ class SyncRetryableRequestsJob : SimpleJobService() {
             return
         }
 
-        ApiUtils.addMessage(this, Account.accountId, message.id, message.conversationId, message.type, message.data,
+        ApiUtils.addMessage(context, Account.accountId, message.id, message.conversationId, message.type, message.data,
                 message.timestamp, message.mimeType, message.read, message.seen, message.from,
                 message.color, message.sentDeviceId.toString(), message.simPhoneNumber, Account.encryptor)
     }
@@ -50,7 +50,7 @@ class SyncRetryableRequestsJob : SimpleJobService() {
             return
         }
 
-        ApiUtils.addConversation(this, Account.accountId, conversation.id, conversation.colors.color,
+        ApiUtils.addConversation(context, Account.accountId, conversation.id, conversation.colors.color,
                 conversation.colors.colorDark, conversation.colors.colorLight, conversation.colors.colorAccent,
                 conversation.ledColor, conversation.pinned, conversation.read,
                 conversation.timestamp, conversation.title, conversation.phoneNumbers,
@@ -62,26 +62,15 @@ class SyncRetryableRequestsJob : SimpleJobService() {
     companion object {
 
         private const val JOB_ID = "retryable-request-sender"
-        private const val TWENTY_MINS = 60 * 20 // seconds
-        private const val THIRTY_MINS = 60 * 30 // seconds
 
         fun scheduleNextRun(context: Context?) {
             if (context == null || !Account.exists() || !Account.primary) {
                 return
             }
 
-            val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))
-            val myJob = dispatcher.newJobBuilder()
-                    .setService(SyncRetryableRequestsJob::class.java)
-                    .setTag(JOB_ID)
-                    .setRecurring(true)
-                    .setLifetime(Lifetime.FOREVER)
-                    .setTrigger(Trigger.executionWindow(TWENTY_MINS, THIRTY_MINS))
-                    .setConstraints(Constraint.ON_ANY_NETWORK)
-                    .setReplaceCurrent(true)
+            val work = PeriodicWorkRequest.Builder(SyncRetryableRequestsJob::class.java, 30L, TimeUnit.MINUTES)
                     .build()
-
-            dispatcher.mustSchedule(myJob)
+            WorkManager.getInstance().enqueueUniquePeriodicWork(JOB_ID, ExistingPeriodicWorkPolicy.KEEP, work)
         }
     }
 }
