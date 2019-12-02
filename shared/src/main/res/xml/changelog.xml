@@ -19,6 +19,7 @@
     <version
         name="4.14.2"
         description="December 2nd, 2019">
+        <!-- Convert from Firebase JobDispatcher to WorkManager -->
         <text>Bug fixes</text>
     </version>
 
