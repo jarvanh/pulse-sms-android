@@ -33,6 +33,7 @@ import xyz.klinker.messenger.shared.service.FirebaseHandlerService
 import xyz.klinker.messenger.shared.service.FirebaseResetService
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 import xyz.klinker.messenger.shared.util.*
+import xyz.klinker.messenger.utils.UpdateUtils
 
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main
@@ -45,6 +46,7 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
 
         KotlinObjectInitializers.initializeObjects(this)
         FirstRunInitializer.applyDefaultSettings(this)
+        UpdateUtils.rescheduleWork(this)
 
         enableSecurity()
 

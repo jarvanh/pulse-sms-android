@@ -22,11 +22,10 @@ import android.content.Intent
 import android.os.PowerManager
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
-import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestionResult
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.NotificationAction
-import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
+import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationWork
 import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -50,7 +49,7 @@ class NotificationService : IntentService("NotificationService") {
 
     companion object {
         fun cancelRepeats(context: Context) {
-            RepeatNotificationJob.scheduleNextRun(context, 0)
+            RepeatNotificationWork.scheduleNextRun(context, 0)
         }
     }
 }
@@ -107,7 +106,7 @@ class Notifier(private val context: Context) {
                 }
 
                 if (Settings.repeatNotifications != -1L) {
-                    RepeatNotificationJob.scheduleNextRun(context, TimeUtils.now + Settings.repeatNotifications)
+                    RepeatNotificationWork.scheduleNextRun(context, Settings.repeatNotifications)
                 }
 
                 if (Settings.wakeScreen) {

@@ -199,10 +199,6 @@
             android:exported="false" />
 
         <receiver
-            android:name=".service.jobs.RepeatNotificationJob"
-            android:exported="false" />
-
-        <receiver
             android:name=".receiver.notification_action.NotificationDismissedReceiver"
             android:exported="false" />
 
@@ -315,15 +311,6 @@
         <service
             android:exported="false"
             android:name=".service.jobs.SyncRetryableRequestsJob"
-            android:foregroundServiceType="dataSync">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
-
-        <service
-            android:exported="false"
-            android:name=".service.jobs.RepostQuickComposeNotification"
             android:foregroundServiceType="dataSync">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
