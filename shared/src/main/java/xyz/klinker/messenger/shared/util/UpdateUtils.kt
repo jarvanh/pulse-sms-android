@@ -1,4 +1,4 @@
-package xyz.klinker.messenger.utils
+package xyz.klinker.messenger.shared.util
 
 import android.app.Activity
 import android.content.Context

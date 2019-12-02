@@ -26,10 +26,7 @@ import xyz.klinker.messenger.api.implementation.firebase.FirebaseMessageHandler
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
 import xyz.klinker.messenger.shared.service.FirebaseResetService
-import xyz.klinker.messenger.shared.util.AndroidVersionUtil
-import xyz.klinker.messenger.shared.util.KotlinObjectInitializers
-import xyz.klinker.messenger.shared.util.NotificationUtils
-import xyz.klinker.messenger.shared.util.TimeUtils
+import xyz.klinker.messenger.shared.util.*
 
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main
@@ -41,6 +38,7 @@ class MessengerApplication : FirebaseApplication(), AccountInvalidator {
         super.onCreate()
 
         KotlinObjectInitializers.initializeObjects(this)
+        UpdateUtils.rescheduleWork(this)
 
         enableSecurity()
 

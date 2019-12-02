@@ -19,7 +19,6 @@ package xyz.klinker.messenger
 import android.app.Application
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatDelegate
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.AccountInvalidator
 import xyz.klinker.messenger.api.implementation.firebase.FirebaseApplication
@@ -28,12 +27,11 @@ import xyz.klinker.messenger.api.implementation.retrofit.ApiErrorPersister
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.RetryableRequest
-import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
 import xyz.klinker.messenger.shared.service.FirebaseResetService
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 import xyz.klinker.messenger.shared.util.*
-import xyz.klinker.messenger.utils.UpdateUtils
+import xyz.klinker.messenger.shared.util.UpdateUtils
 
 /**
  * Base application that will serve as any intro for any context in the rest of the app. Main

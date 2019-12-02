@@ -24,6 +24,7 @@ import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshSe
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 import xyz.klinker.messenger.shared.service.jobs.*
+import xyz.klinker.messenger.shared.util.UpdateUtils
 
 /**
  * Receiver for when boot has completed. This will be responsible for starting up the content
@@ -34,15 +35,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         try {
             if (intent.action == Intent.ACTION_BOOT_COMPLETED || intent.action == Intent.ACTION_MY_PACKAGE_REPLACED) {
-                ScheduledMessageJob.scheduleNextRun(context)
-                CleanupOldMessagesWork.scheduleNextRun(context)
-                FreeTrialNotifierWork.scheduleNextRun(context)
-                ContactSyncWork.scheduleNextRun(context)
-                SubscriptionExpirationCheckJob.scheduleNextRun(context)
-                SignoutJob.scheduleNextRun(context)
-                ScheduledTokenRefreshService.scheduleNextRun(context)
-                SyncRetryableRequestsWork.scheduleNextRun(context)
-                RepostQuickComposeNotificationWork.scheduleNextRun(context)
+                UpdateUtils.rescheduleWork(context)
 
                 if (Settings.quickCompose) QuickComposeNotificationService.start(context)
             }

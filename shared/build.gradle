@@ -65,7 +65,6 @@ dependencies {
     api 'com.klinkerapps:giphy:2.1.4'
     api 'com.klinkerapps:floating-tutorial:1.1.0'
 
-    api 'com.firebase:firebase-jobdispatcher:0.8.6'
     api 'com.github.apl-devs:appintro:v4.2.0'
     api 'com.github.yalantis:ucrop:2.2.2'
     api 'de.hdodenhof:circleimageview:2.2.0'

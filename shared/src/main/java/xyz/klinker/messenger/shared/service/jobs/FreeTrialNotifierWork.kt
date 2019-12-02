@@ -10,14 +10,9 @@ import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import xyz.klinker.messenger.shared.util.TimeUtils
-import com.firebase.jobdispatcher.GooglePlayDriver
-import com.firebase.jobdispatcher.FirebaseJobDispatcher
-import com.firebase.jobdispatcher.Trigger
-import com.firebase.jobdispatcher.Lifetime
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.shared.R
-import xyz.klinker.messenger.shared.data.FeatureFlags
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.NotificationUtils
 import xyz.klinker.messenger.shared.util.RedirectToMyAccount

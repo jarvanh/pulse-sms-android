@@ -282,41 +282,6 @@
                 android:value="true" />
         </service>
 
-        <service
-            android:exported="false"
-            android:name=".service.jobs.CleanupOldMessagesWork"
-            android:foregroundServiceType="dataSync">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
-
-        <service
-            android:exported="false"
-            android:name=".service.jobs.FreeTrialNotifierWork">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
-
-        <service
-            android:exported="false"
-            android:name=".service.jobs.ContactSyncWork"
-            android:foregroundServiceType="dataSync">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
-
-        <service
-            android:exported="false"
-            android:name=".service.jobs.SyncRetryableRequestsWork"
-            android:foregroundServiceType="dataSync">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
-
         <service android:name=".service.ApiUploadService"
             android:foregroundServiceType="dataSync"/>
         <service android:name=".service.ApiDownloadService"
