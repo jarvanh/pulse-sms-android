@@ -46,12 +46,6 @@ class NotificationService : IntentService("NotificationService") {
         Notifier(this).notify(intent)
         foreground.hide()
     }
-
-    companion object {
-        fun cancelRepeats(context: Context) {
-            RepeatNotificationWork.scheduleNextRun(context, 0)
-        }
-    }
 }
 
 class Notifier(private val context: Context) {

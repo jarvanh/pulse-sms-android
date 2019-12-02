@@ -46,7 +46,6 @@ class NotificationDismissedReceiver : BroadcastReceiver() {
         const val EXTRA_CONVERSATION_ID = "conversation_id"
 
         fun handle(intent: Intent?, context: Context) {
-            NotificationService.cancelRepeats(context)
             val conversationId = intent?.getLongExtra(EXTRA_CONVERSATION_ID, 0) ?: return
 
             if (conversationId == 0L) {

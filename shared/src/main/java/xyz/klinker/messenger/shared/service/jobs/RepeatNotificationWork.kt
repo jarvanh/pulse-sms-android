@@ -15,8 +15,6 @@ class RepeatNotificationWork(private val context: Context, params: WorkerParamet
 
     companion object {
 
-        private const val JOB_ID = "repeat-notifications"
-
         fun scheduleNextRun(context: Context, timeout: Long) {
             if (Account.exists() && !Account.primary) {
                 return
@@ -26,12 +24,8 @@ class RepeatNotificationWork(private val context: Context, params: WorkerParamet
                     .setInitialDelay(timeout, TimeUnit.MILLISECONDS)
                     .build()
 
-            if (timeout == 0L) {
-                WorkManager.getInstance().cancelUniqueWork(JOB_ID)
-            } else {
-                WorkManager.getInstance().enqueueUniqueWork(JOB_ID, ExistingWorkPolicy.REPLACE, work)
-            }
+            WorkManager.getInstance().enqueue(work)
         }
-
     }
+    
 }
