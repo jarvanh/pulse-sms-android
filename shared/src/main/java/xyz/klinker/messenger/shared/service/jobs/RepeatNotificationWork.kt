@@ -24,7 +24,11 @@ class RepeatNotificationWork(private val context: Context, params: WorkerParamet
                     .setInitialDelay(timeout, TimeUnit.MILLISECONDS)
                     .build()
 
-            WorkManager.getInstance().enqueue(work)
+            try {
+                WorkManager.getInstance().enqueue(work)
+            } catch (e: Exception) {
+                // can't schedule more than 100 unique tasks?
+            }
         }
     }
 

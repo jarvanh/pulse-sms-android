@@ -91,7 +91,11 @@ class ContactSyncWork(private val context: Context, params: WorkerParameters) : 
                     .setInitialDelay(time, TimeUnit.MILLISECONDS)
                     .build()
             if (FeatureFlags.QUERY_DAILY_CONTACT_CHANGES) {
-                WorkManager.getInstance().enqueue(work)
+                try {
+                    WorkManager.getInstance().enqueue(work)
+                } catch (e: Exception) {
+                    // can't schedule more than 100 unique tasks?
+                }
             }
         }
     }
