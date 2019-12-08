@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="4.14.3"
+        description="December 9th, 2019">
+        <!-- Catch exception scheduling more than 100 jobs? Very rare occurrence. -->
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="4.14.2"
         description="December 4th, 2019">
         <!-- Convert from Firebase JobDispatcher to WorkManager -->
