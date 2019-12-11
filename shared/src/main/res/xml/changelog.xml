@@ -18,7 +18,7 @@
 
     <version
         name="4.14.3"
-        description="December 9th, 2019">
+        description="December 10th, 2019">
         <!-- Catch exception scheduling more than 100 jobs? Very rare occurrence. -->
         <text>Bug fixes</text>
     </version>
