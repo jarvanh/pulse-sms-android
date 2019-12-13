@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse（短信、平板 短信应用）</string>
     <string name="app_title">Pulse</string>
@@ -24,11 +24,16 @@
     <!-- Drawer Items -->
     <string name="menu_conversations">对话列表</string>
     <string name="menu_archived_conversations">归档的对话</string>
+    <string name="menu_private_conversations">私密对话</string>
+    <string name="menu_unread_conversations">未读对话</string>
+    <string name="menu_edit_folders">管理分组…</string>
+    <string name="menu_edit_folders_no_ellipse">管理分组</string>
     <string name="menu_schedule">待发的信息</string>
     <string name="menu_mute_contacts">黑名单</string>
     <string name="menu_invite">邀请好友</string>
-    <string name="menu_feature_settings">进阶特性</string>
-    <string name="menu_settings">全局设置</string>
+    <string name="menu_feature_settings">高级功能</string>
+    <string name="menu_settings">自定义设置</string>
+    <string name="menu_customization_settings">自定义设置</string>
     <string name="menu_mms_configuration">消息服务配置</string>
     <string name="menu_account">我的账户</string>
     <string name="menu_device_texting">所有设备的消息</string>
@@ -38,6 +43,8 @@
     <string name="menu_mobile_only">仅移动端</string>
     <string name="menu_snooze">暂停通知</string>
     <string name="menu_call">电话联系</string>
+    <string name="menu_video_call">用 Duo 发出视频聊天</string>
+    <string name="menu_show_bubble">弹出气泡</string>
     <string name="menu_view_contact">查看该联系人</string>
     <string name="menu_view_contacts">查看联系人</string>
     <string name="menu_view_media">查看附件</string>
@@ -45,7 +52,9 @@
     <string name="menu_archive_conversation">归档对话</string>
     <string name="menu_move_to_inbox">移到收件箱</string>
     <string name="menu_conversation_information">对话详情</string>
+    <string name="menu_search_conversation">搜索对话</string>
     <string name="menu_copy_phone_number">复制号码</string>
+    <string name="menu_view_full_conversation">查看历史消息</string>
     <string name="menu_conversation_blacklist">黑名单列表</string>
     <string name="menu_conversation_schedule">定时发送</string>
     <string name="menu_contact_settings">会话设置</string>
@@ -58,12 +67,15 @@
     <string name="menu_snooze_24">24小时</string>
     <string name="menu_snooze_72">72小时</string>
     <string name="menu_snooze_custom">选择时间</string>
+    <string name="menu_mark_as_unread">标记为未读</string>
+    <string name="menu_pin_conversation">置顶/取消置顶对话</string>
+    <string name="menu_mute_conversation">静音/取消静音对话</string>
     <!-- Empty Screen -->
     <string name="no_messages">没有消息</string>
     <string name="no_messages_summary">开始一个新对话或只是享受你独自的一天</string>
     <string name="close">关闭</string>
     <!-- Conversation List Screen -->
-    <string name="pinned">固定</string>
+    <string name="pinned">置顶</string>
     <string name="today">今天</string>
     <string name="yesterday">昨天</string>
     <string name="last_week">本周</string>
@@ -82,20 +94,26 @@
     </plurals>
     <string name="undo">撤销</string>
     <string name="enter_search">搜索</string>
+    <string name="text_anywhere_description">你知道吗：Pulse 远不止是一个手机 app。
+你能在<b>任意</b>设备上使用 Pulse 发送短信！</string>
     <string name="convo_list_try_it">现在试用！</string>
     <string name="convo_list_not_now">暂时不</string>
+    <string name="no_private_messages_description">在设置菜单设置私人对话！</string>
+    <string name="no_folder_messages_description">将对话添加到此分组，它就会在这里出现！</string>
+    <string name="no_archived_messages_description">将对话归档，它就会在这里出现！</string>
     <!-- Search Screen -->
     <string name="conversations">会话</string>
     <string name="messages">消息</string>
     <!-- Invite Friends Screen -->
-    <string name="invite_friends_title">喜欢Pulse吗？</string>
+    <string name="invite_friends_title">喜欢 Pulse 吗？</string>
     <string name="invite_friends_summary">我们自己还有许多用户也都非常喜欢这个应用。也正是有了大家的支持才使得这个应用变得更好。如果你也愿意支持我们，可以将应用分享给你的朋友们。\n\n选择下方你想要分享的朋友，将会发送一条包含简短介绍和应用链接的短信。</string>
     <string name="invite_friends_sms">我在使用一款全新的短信应用，相信你也会喜欢它！另外，这是完全免费的，下载链接在此：http://messenger.klinkerapps.com</string>
     <!-- Message List Screen -->
     <string name="type_message">输入消息</string>
-    <string name="type_message_to">在%1$s 中输入消息</string>
-    <string name="attach">附上</string>
-    <string name="select_sim">选择SIM卡</string>
+    <string name="type_message_to">在 %1$s 中输入消息</string>
+    <string name="attach">附件</string>
+    <string name="select_sim">选择 SIM 卡</string>
+    <string name="view_scheduled_messages">查看会话待发送的信息</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">图像</string>
@@ -106,51 +124,83 @@
     <string name="attach_image">插入图片</string>
     <string name="capture_image">保存图片</string>
     <string name="attach_gif">插入GIF</string>
+    <string name="attach_sticker">插入表情</string>
     <string name="record_video">录制视频</string>
     <string name="record_audio">录制音频</string>
     <string name="attach_location">插入位置</string>
     <string name="attach_contact">附上联系人</string>
     <string name="attach_contact_summary">为此消息选择或输入一个联系人</string>
+    <string name="apply_template">应用模版</string>
     <string name="no_location_found">找不到你的位置</string>
-    <string name="camera_permission_needed">相机权限需要更新来拍摄照片</string>
+    <string name="camera_permission_needed">需要授予相机权限才能拍照！</string>
     <string name="take_picture">快照</string>
     <string name="flip_picture">翻转相机</string>
     <string name="fullscreen">全屏</string>
     <string name="attached_image">插入图像</string>
     <string name="remove_image">移除已插入的图像</string>
+    <string name="remove_image_short">移除图像</string>
     <string name="edit_image">编辑插入的图像</string>
+    <string name="edit_recipients">编辑收件人</string>
+    <string name="select_folder">为会话选择分组</string>
     <string name="permission_needed_for_action">此操作需要权限</string>
     <string name="request_permission">请求权限</string>
     <string name="no_messages_with_contact">你在这个对话里还没有消息，去发个消息吧</string>
     <string name="save">保存</string>
     <string name="share">分享</string>
     <string name="share_content">分享通过...</string>
-    <string name="saved">保存至下载文件夹</string>
+    <string name="saved">文件已保存！</string>
     <string name="failed_to_save">保存失败</string>
     <string name="start_recording_audio">点此按钮开始录制音频</string>
     <string name="audio_recording_error">录制失败</string>
     <string name="message_copied_to_clipboard">复制到剪贴板</string>
     <string name="view_details">查看详情</string>
+    <string name="speak_message">大声说出信息</string>
+    <string name="select_all_messages">选择全部消息</string>
+    <string name="select_all_conversations">选择所有会话</string>
     <string name="delete">删除</string>
     <string name="copy_message">复制文本</string>
     <string name="resend">重新发送</string>
     <string name="no_media">此会话中没有附件</string>
     <string name="error_decrypting">解码失败。请在手机上查看消息</string>
     <string name="message_sending_failed">信息发送失败</string>
-    <string name="preparing_video">正在准备视频&#8230;</string>
-    <string name="delete_message">删除这个消息吗？</string>
+    <string name="preparing_video">正在准备视频 &#8230;</string>
+    <string name="delete_message">删除此消息？</string>
     <string name="forward_message">转发消息</string>
     <string name="share_message">分享消息</string>
     <string name="copy_message_text">复制消息文本</string>
+    <string name="select_text_to_copy">选择您想复制的文本：</string>
+    <string name="copy_all_text">全部复制</string>
+    <string name="copy_otp">复制</string>
     <string name="open_link_to_browser">在浏览器中打开链接</string>
-    <string name="open_link_internal">使用内置打开链接</string>
+    <string name="open_link_internal">使用内置浏览器打开链接</string>
     <string name="copy_link">复制链接</string>
+    <string name="attach_vcard">将联系人作为vCard附加</string>
+    <string name="attach_plain_text">将通讯录作为纯文本发送</string>
+    <string name="send_as_scheduled_message_question">您想定时发送此消息吗？</string>
+    <string name="send_as_scheduled_message">作为定时消息发送</string>
+    <string name="send_without_signature">不签名发送</string>
+    <string name="send_without_delay">立即发送</string>
+    <string name="confirm_delete">您确定要删除此会话？</string>
+    <string name="confirm_archive">您确定要归档此会话？</string>
+    <!-- Templates -->
+    <string name="type_template_text">输入模版文本…</string>
+    <string name="delete_template">您确定要删除此模版？</string>
+    <string name="edit_or_delete_template">您要编辑或删除此模板吗？</string>
+    <string name="no_templates">使用 <b>+</b> 按钮来创建新模板</string>
+    <string name="edit">编辑</string>
     <!-- Compose Screen -->
     <string name="compose_message">组建新消息</string>
     <string name="send_message">发送消息</string>
     <string name="enter_contact_name">输入联系人名字</string>
+    <string name="enter_contact_name_or_number">输入联系人名字或号码</string>
     <string name="error_processing_vcard">处理vCard出错</string>
+    <string name="compose_recents">最近的</string>
+    <string name="compose_groups">群组</string>
+    <string name="compose_all_contacts">所有联系人</string>
+    <string name="private_conversation_disclaimer">这是<b>私人对话</b>，无法在撰写屏幕中打开。</string>
     <!-- Onboarding Screen -->
+    <string name="google_requires_default_sms">Google现在要求将任何SMS应用程序设置为默认的消息收发应用程序，然后才能访问或发送任何消息。此权限是必需的。</string>
+    <string name="google_requires_default_sms_policy">查看隐私策略</string>
     <string name="permissions_needed">本应用需要这些权限才能运行，请允许它们。</string>
     <string name="loading_messages">正在优化...</string>
     <string name="loading_messages_summary">正在处理消息，这不会花费太长时间。</string>
@@ -163,16 +213,17 @@
     <string name="onboarding_content_2">从你的平板电脑、PC、手表、甚至任何连接的设备获取信息</string>
     <string name="onboarding_content_3">对于任何你正在聊的会话，支持固定联系人、过滤通知、主题、自定义通知。你可以打造自己的Pulse！</string>
     <string name="message_anywhere_onboarding_title_1">随时随地收信</string>
-    <string name="message_anywhere_onboarding_title_2">订阅购买</string>
+    <string name="message_anywhere_onboarding_title_2">订阅或购买</string>
     <string name="message_anywhere_onboarding_title_3">长达一周的免费试用</string>
     <string name="message_anywhere_onboarding_content_1">与任何设备（平板电脑，手表，电视，网页，Chrome和Firefox应用）无缝连接，随时随地支持短信和彩信！</string>
     <string name="message_anywhere_onboarding_content_2">疯狂的廉价选择：$10.99永久，$5.99每年，$1.99三个月或者$0.99每月。不到一杯Java的价格。</string>
     <string name="message_anywhere_onboarding_content_3">你可以在这一台设备上永久免费此Android应用！你也可以获取一个星期的免费试用机会，在你所有设备上使用同步服务。</string>
     <string name="start_trial">开始试用</string>
     <string name="not_now">暂不</string>
-    <string name="onboarding_done">好了</string>
+    <string name="onboarding_done">完成</string>
+    <string name="play_store_subscription_warning">您将被重定向到Play商店订阅系统购买。在七天结束之前，您将不会被收取费用，您可以从Play Store页面取消任何时间。</string>
     <!-- Notifications -->
-    <string name="notification_ticker">来自%1$s的新消息</string>
+    <string name="notification_ticker">来自 %1$s 的新消息</string>
     <plurals name="new_conversations">
         <item quantity="other">%1$d新会话</item>
     </plurals>
@@ -180,9 +231,17 @@
         <item quantity="other">%1$d新消息</item>
     </plurals>
     <string name="read">已读</string>
+    <string name="mark_as_read">标记为已读</string>
+    <string name="mute">静音</string>
     <string name="reply">回复</string>
     <string name="reply_to">回复给%1$s</string>
     <string name="call">拨打</string>
+    <string name="notification_action_reply">在会话中回复</string>
+    <string name="notification_action_call">呼叫联系人</string>
+    <string name="notification_action_delete">删除消息</string>
+    <string name="notification_action_archive">归档会话</string>
+    <string name="notification_action_no_action">不要显示动作</string>
+    <string name="notification_action_smart_reply">建议智能回复</string>
     <string-array name="reply_choices">
         <item>是的</item>
         <item>不！</item>
@@ -192,30 +251,43 @@
     </string-array>
     <string name="new_mms_message">新彩信</string>
     <string name="you">你</string>
+    <string name="draft">草稿</string>
     <string name="new_message">新信息</string>
     <string name="received_new_message">你收到了新内容</string>
     <string name="media">媒体</string>
     <string name="default_notifications_channel">默认对话通知</string>
+    <string name="default_notifications_channel_description">这些设置将应用于任何对话
+其中，您尚未为每个会话自定义创建单独的通知通道。</string>
     <string name="test_notifications_channel">测试通知</string>
     <string name="status_notifications_channel">状态通知</string>
+    <string name="background_service_channel">后台服务通知</string>
     <string name="general_notifications_channel">一般通知</string>
     <string name="media_parse_channel">媒体解析</string>
     <string name="group_summary_notifications">消息组概要</string>
     <string name="failed_messages_channel">失败的消息</string>
+    <string name="silent_background_services">静音后台服务</string>
+    <string name="silent_conversations_channel">静音对话通知</string>
+    <string name="account_activity_notifications">账户活动通知</string>
+    <string name="quick_text_channel">快速文本通知</string>
     <string name="media_parse_text">正在从先前的文本消息中解析媒体...</string>
+    <string name="auto_reply_parse_text">正在寻找对上一条短信的自动回复...</string>
     <string name="creating_channels_text">正在创建通知渠道...</string>
+    <string name="write_new_message">编辑一条新消息…</string>
+    <string name="receiving_a_message">接收消息…</string>
+    <string name="bubble_channel">消息气泡</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">更新日志</string>
-    <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
+    <string name="copyright">© 2019 Luke &amp; Jake Klinker</string>
     <string name="copyright_summary">查看开源许可</string>
     <string name="app_version">应用版本</string>
     <string name="account_information">账户信息</string>
     <string name="account_actions">账户操作</string>
     <string name="danger_zone">危险区</string>
-    <string name="be_careful_using_these_settings">请遵循说明并小心使用这些操作</string>
-    <string name="device_id">设备ID</string>
+    <string name="be_careful_using_these_settings">这些选项可能很危险。请在我的帮助页面上查看其说明，以获取使用说明和注意事项。</string>
+    <string name="device_id">设备 ID</string>
     <string name="device_info">设备信息</string>
     <string name="website">我们的网站</string>
+    <string name="view_platforms">可用的 Pulse 平台</string>
     <string name="access_messages_from_any_device">在任何设备上收发信息！</string>
     <string name="beta_disclaimer">这个项目还处于测试阶段，请报告你发现的问题！</string>
     <string name="app_info">关于应用</string>
@@ -223,11 +295,14 @@
     <string name="troubleshooting">反馈故障</string>
     <string name="get_in_touch">联系我们</string>
     <string name="faqs">常见问题</string>
-    <string name="features">特性介绍</string>
+    <string name="get_help">获取帮助</string>
+    <string name="get_help_summary">有一个问题？ 对于单人工作组，我每天确实会收到大量的电子邮件，这浪费了我开发新功能的时间。 为了帮助我，如果您可以在此处快速搜索以查看我是否已经解决了您的问题，那将是很好的。</string>
+    <string name="get_help_summary_2">帮助部分内容广泛，但是如果您找不到特定的问题，请保持联系，我们将很乐意与您联系！</string>
+    <string name="features">Pulse 的特性介绍</string>
     <string name="issues">故障跟进</string>
     <string name="issues_summary">也包含相关特性指示</string>
     <string name="google_plus">G+社区</string>
-    <string name="google_plus_summary">Pulse Beta社区</string>
+    <string name="google_plus_summary">Pulse Beta 社区</string>
     <string name="email">电子邮件</string>
     <string name="email_summary">luke@klinkerapps.com</string>
     <string name="twitter">推特</string>
@@ -239,12 +314,13 @@
     <plurals name="conversation_count">
         <item quantity="other">在 %1$d 会话中</item>
     </plurals>
-    <string name="pin_conversation">固定对话</string>
-    <string name="pin_conversation_summary">置顶此对话</string>
-    <string name="mute_conversation">悄悄话</string>
-    <string name="mute_conversation_summary">过滤此对话的通知</string>
+    <string name="pin_conversation">置顶会话</string>
+    <string name="pin_conversation_summary">置顶此会话</string>
+    <string name="mute_conversation">静音会话</string>
+    <string name="mute_conversation_summary">隐藏此会话的通知</string>
     <string name="private_conversation">私密会话</string>
-    <string name="private_conversation_summary">隐藏通知中的会话内容</string>
+    <string name="private_conversation_summary">在通知中隐藏会话内容</string>
+    <string name="private_conversation_summary_2">隐藏通知内容，并将此会话移动到<i>私密对话</i>部分</string>
     <string name="primary_color">主色</string>
     <string name="primary_dark_color">暗主色</string>
     <string name="accent_color">强调色</string>
@@ -256,12 +332,13 @@
     <string name="heads_up">浮动通知</string>
     <string name="repeat_never">永不</string>
     <string name="repeat_one_min">每隔一分钟</string>
+    <string name="repeat_two_mins">每隔两分钟</string>
     <string name="repeat_five_mins">每隔五分钟</string>
     <string name="repeat_ten_mins">每隔十分钟</string>
     <string name="repeat_half_hour">每隔半小时</string>
     <string name="repeat_hour">每隔一小时</string>
     <string name="wake_screen">唤醒屏幕</string>
-    <string name="vibrate">振动模式</string>
+    <string name="vibrate">振动</string>
     <string name="vibrate_off">无振动</string>
     <string name="vibrate_default">默认振动</string>
     <string name="vibrate_two_long">两次长振动</string>
@@ -272,26 +349,54 @@
     <string name="vibrate_one_short">一次短震动</string>
     <string name="vibrate_one_long">一次长震动</string>
     <string name="vibrate_one_extra_long">一次额外长震动</string>
+    <string name="vibrate_two_short_one_long">两次短震动，一次长震动</string>
+    <string name="vibrate_one_long_one_short_one_long">一次长震动，一次短震动，一次短震动</string>
     <string name="keyboard_layout">键盘布局</string>
     <string name="keyboard_default">默认布局</string>
-    <string name="keyboard_send_key">发送键</string>
-    <string name="keyboard_enter_key">回车键</string>
+    <string name="keyboard_send_key">显示发送键</string>
+    <string name="keyboard_enter_key">显示回车键</string>
     <string name="sound_effects">音效</string>
     <string name="delivery_reports">发送报告</string>
+    <string name="delivery_reports_summary">大多数运营商不支持此选择。它不是 RCS。</string>
     <string name="theme_settings">个性定制</string>
+    <string name="theme_settings_category">界面外观</string>
     <string name="conversation_list_category">会话列表</string>
+    <string name="message_list_category">消息列表</string>
     <string name="general_category">常规</string>
     <string name="theme_settings_redirect">主题</string>
     <string name="base_theme">基本主题</string>
     <string name="global_theme_color">主题颜色</string>
     <string name="font_size">字体大小</string>
     <string name="rounder_bubbles">圆形消息气泡</string>
+    <string name="bubble_style">消息气泡样式</string>
+    <string name="bubble_style_round">圆角</string>
+    <string name="bubble_style_square">直角</string>
+    <string name="bubble_style_circle">圆（没有尾巴）</string>
+    <string name="adjustable_nav_bar">将导航栏与基本主题匹配</string>
+    <string name="adjustable_nav_bar_summary">浅色主题将使用白色导航栏，而较暗的主题将使用黑色导航栏</string>
     <string name="apply_theme_globally">应用至所有对话</string>
+    <string name="apply_theme_globally_summary">删除每次会话主题，以使用此全局颜色集</string>
+    <string name="conversation_categories">显示日期类别</string>
+    <string name="conversation_categories_summary">按日期分类对话（今天，昨天等） 而不是在每个会话中都显示时间戳</string>
+    <string name="message_timestamp">给每个消息加时间戳</string>
+    <string name="message_timestamp_summary">禁用后，您只需点击任何消息即可查看时间戳。</string>
+    <string name="apply_primary_theme_toolbar">应用主颜色到应用程序栏</string>
+    <string name="apply_primary_theme_toolbar_summary">应用栏是否应着色</string>
     <string name="swipe_delete">划动删除</string>
+    <string name="swipe_actions">滑动动作</string>
+    <string name="swipe_actions_summary">自定义滑动对话</string>
+    <string name="left_to_right_swipe">从左至右滑动</string>
+    <string name="right_to_left_swipe">从右至左滑动</string>
+    <string name="no_swipe">禁用滑动</string>
     <string name="blacklist_hint">在黑名单中输入数字</string>
+    <string name="enter_phrase">输入短语</string>
+    <string name="enter_phone">输入手机号码</string>
+    <string name="blacklist_phrase_hint">输入短语到黑名单...</string>
     <string name="add_blacklist">%1$s\n\n 你确定将其加入黑名单吗？你以后将不会收到短信显示，已有短信也不会存在了呢。</string>
+    <string name="add_blacklist_phrase">%1$s\n\n您确定要添加此黑名单吗？ 包含此短语的消息将不再保存，并且不会通知您！</string>
     <string name="remove_blacklist">%1$s\n你确定要删除这个黑名单吗?</string>
     <string name="blacklist_need_number">你需要在黑名单里输入一个号码</string>
+    <string name="blacklist_need_phrase">您需要输入短语以将其列入黑名单！</string>
     <string name="no_blacklists">没有黑名单</string>
     <string name="no_blacklists_summary">你可以使用下方的加号来添加一个</string>
     <string name="add">添加</string>
@@ -302,17 +407,27 @@
     <string name="lifetime_subscriber">终身订阅者</string>
     <string name="trial_period">试用期</string>
     <string name="setup_my_account">设置账号</string>
-    <string name="setup_my_account_summary">注册或者登陆你的账号来开始使用更多特性，比如：收取你平板、PC上的消息</string>
+    <string name="setup_my_account_summary">注册或登录您的帐户以开始使用更多功能，例如通过平板电脑或计算机发送短信。</string>
     <string name="preparing_new_account">准备账户中 &#8230;</string>
     <string name="delete_account">删除账户</string>
     <string name="delete_account_summary">将此账户从这台设备中移除，你这台设备上的其它登陆和服务将不可逆！</string>
     <string name="delete_account_confirmation">你确定你想要删除你的账户以及相关的一切？你可以之后随时注册。</string>
     <string name="change_subscription">更改订阅</string>
-    <string name="cancel_on_the_play_store">取消并在Play商店上查看你的订阅</string>
+    <string name="trial_subscription_title">试用期还剩 %s 天</string>
+    <string name="trial_subscription_summary">点此来升级账户或取消试用！</string>
+    <string name="upgrade_or_cancel_title">结束试用？</string>
+    <string name="trial_expired">感谢试用！</string>
+    <string name="upgrade_or_cancel">您可以将账户升级为订阅会员或终身会员，这样就可以在您所有的设备上使用 Pulse！\n\n 需要取消吗？
+您的账户会被删除，且您不会被收费。您可以在您的手机上继续免费使用此应用。欢迎随时再来。</string>
+    <string name="upgrade">升级！</string>
+    <string name="cancel_trial">取消试用</string>
+    <string name="cancel_on_the_play_store">点此来升级账户！您可以在 Play Store 中取消订阅。</string>
     <string name="resync_account">重新同步消息</string>
     <string name="resync_account_summary">消息丢失？使用这个找回你主设备上的消息。</string>
     <string name="resync_account_summary_phone">将会清除你的账户，并重新同步您本机中的信息</string>
     <string name="resync_account_confirmation">这会删除此设备上所有的消息，并且复制你主设备上的消息。你确定要这么做吗？</string>
+    <string name="resync_contacts">重新同步通讯录</string>
+    <string name="resync_contacts_summary">立即将所有联系人更改推送到网络。</string>
     <string name="normalize_color_scheme">或者，你可以以主题为基础为会话选择一种颜色：</string>
     <string name="no_apps_found">没有找到可执行的应用</string>
     <string name="you_denied_permission">你拒绝了权限</string>
@@ -330,29 +445,42 @@
     <string name="after_four_messages">在四条消息后</string>
     <string name="send_as_mms_summary">长消息将会被当做彩信发送（而不是短信）</string>
     <string name="alert_types">提醒类型</string>
-    <string name="alert_types_summary">多种提醒方式</string>
+    <string name="notification_customization">自定义通知</string>
+    <string name="alert_types_summary">自定义铃声，振动等。</string>
     <string name="strip_unicode">去除Unicode字符</string>
-    <string name="use_internal_browser">使用内部浏览器</string>
     <string name="strip_unicode_summary">这些字段将会从发出消息中去除</string>
     <string name="giffgaff_delivery">发送异常报告</string>
     <string name="notification_actions">通知栏动作</string>
     <string name="notification_actions_summary">最多可添加3个动作至通知栏</string>
+    <string name="notification_actions_summary_2">请注意，智能回复只对英文内容提供。</string>
     <string name="mms_download_directory">媒体文件下载目录</string>
+    <string name="mms_download_directory_summary">您想将图片及其他彩信媒体内容储存至何处？</string>
     <string name="refresh_firebase">重新刷新帐号</string>
     <string name="refresh_firebase_summary">帐户无法同步或遇到了无法登录？试试这个选项吧。</string>
     <string name="refreshing_notifications">正刷新通知</string>
+    <string name="refresh_firebase_warning">如果您开始此过程，就<b>必需</b>完成它。
+结束后，在您其他所有设备上都必须重新登录。您想继续吗？</string>
     <string name="show_conversation_history">显示对话历史</string>
     <string name="show_conversation_history_summary">通知内会显示对话中的先前消息</string>
+    <string name="dismiss_notifications_on_reply">回复后移除通知</string>
+    <string name="dismiss_notifications_on_reply_summary">在回复后保留通知，这样您就可以在通知中继续对话</string>
     <string name="emoji_style">Emoji 样式</string>
     <string name="emoji_style_default">系统默认</string>
-    <string name="emoji_style_android_o">Android O</string>
+    <string name="emoji_style_android_o">谷歌的 Android Oreo</string>
+    <string name="settings_phone_number">手机号码</string>
+    <string name="disable_battery_optimization">禁用电池优化</string>
+    <string name="disable_battery_optimization_summary">如果消息未能从您的手机同步至网页，请尝试禁用对 Pulse 的电池优化。</string>
+    <string name="hex">十六进制颜色</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">最大图片大小</string>
-    <string name="use_group_mms">使用群组消息</string>
+    <string name="max_mms_size_summary">请勿将其设置为超出运营商允许的水平</string>
+    <string name="use_group_mms">使用群组彩信</string>
+    <string name="use_group_mms_summary">禁用后，群组消息将作为单独的短信发送给每个收件人</string>
+    <string name="use_mms_read_receipts">已读回执</string>
     <string name="auto_save_media">自动存储媒体文件</string>
     <string name="auto_save_media_summary">当收到消息时，自动存储其中的媒体文件至下载目录</string>
-    <string name="apn_configuration">APN配置</string>
-    <string name="override_system_apn">覆盖系统APN设置</string>
+    <string name="apn_configuration">APN 配置</string>
+    <string name="override_system_apn">覆盖系统 APN 设置</string>
     <string name="mmsc_url">信息中心地址</string>
     <string name="mms_proxy">信息服务代理</string>
     <string name="mms_port">信息服务端口</string>
@@ -363,13 +491,60 @@
     <string name="signature">签名</string>
     <string name="signature_summary">签名不会在消息列表中显示，只会显示给收件人。</string>
     <string name="cleanup_old_messages">清除旧消息</string>
+    <string name="cleanup_old_messages_summary">此操作每天运行一次，删除所有比您所选时间段更早的消息</string>
+    <string name="cleanup_old_messages_now_summary">此操作会立即删除此会话中所有比您所选时间段更早的消息</string>
     <string name="delayed_sending">延迟发送</string>
-    <string name="quick_compose">快速写信</string>
-    <string name="quick_compose_summary">常驻通知来帮助你快速写消息</string>
-    <string name="secure_private_conversations">私密对话</string>
-    <string name="secure_private_conversations_summary">打开这个私密对话需要输入PIN码</string>
+    <string name="delayed_sending_summary">这使您有机会在发送之前取消和编辑消息</string>
+    <string name="messaging_features">消息传递功能</string>
+    <string name="app_features">应用程序功能</string>
+    <string name="quick_compose">快速写信通知</string>
+    <string name="quick_compose_notification">显示通知</string>
+    <string name="quick_compose_notification_summary">常驻通知来帮助你快速编写消息</string>
+    <string name="quick_compose_favorites">收藏联系人</string>
+    <string name="quick_compose_favorites_summary">这些联系人将在通知操作中可用</string>
+    <string name="quick_compose_favorites_title">最多选择三个联系人：</string>
+    <string name="secure_private_conversations">私密对话密码</string>
+    <string name="secure_private_conversations_summary">设置密码需要您输入密码，然后才能查看私密对话。</string>
+    <string name="use_internal_browser">使用内置浏览器</string>
+    <string name="internal_browser_summary">关闭此项将禁用消息列表中的链接预览</string>
+    <string name="use_smart_replies">建议智能回复</string>
+    <string name="use_smart_replies_summary">Pulse会建议相关的答复（如果有）。这些是直接在设备上生成的，而不是远程生成的</string>
+    <string name="use_smart_replies_dialog">Pulse会建议相关的答复（如果有）。 这些是直接在设备而不是远程服务器上生成的。\n\n如果您不想使用此功能，可以从设置中禁用它。</string>
+    <string name="use_smart_reply_settings">设置</string>
+    <string name="message_backup">消息备份</string>
+    <string name="message_backup_pref_summary">担心失去你的消息？Pulse 已覆盖</string>
+    <string name="message_backup_summary">你知道吗：Pulse的在线服务是建立在备份你的信息的基础上的。当您注册Pulse帐户时，您可以在任何设备或平板电脑上登录该帐户以自动还原所有邮件！\n\n无需麻烦，也无需搞乱手动备份。
+有了Pulse，一切都是顺利的，简单的，完全自动的。</string>
+    <string name="message_backup_summary_have_account">看来您已经有一个Pulse帐户，太好了！
+使用您的帐户，Pulse将自动备份您发送和接收的所有短信。
+当您在其他设备上查看该应用程序时，实际上只是在访问此备份。 
+要将短信还原到新设备，您要做的就是登录您的帐户。</string>
+    <string name="auto_reply_configuration">自动回复设置</string>
+    <string name="auto_reply_configuration_summary">根据您的情况设置自动回复</string>
+    <string name="auto_replies">自动回复</string>
+    <string name="auto_reply_top_pref_summary">驾驶模式和假期模式优先于所有其他回复。如果打开任何一个，则不会发送其他自动回复。</string>
+    <string name="driving_mode">驾驶模式</string>
+    <string name="driving_mode_summary">这会将自动回复发送给您收到的所有消息</string>
+    <string name="vacation_mode">假期模式</string>
+    <string name="auto_reply_text">短信正文</string>
+    <string name="create_auto_reply">创建新的自动回复</string>
+    <string name="delete_auto_reply">删除自动回复？</string>
+    <string name="which_auto_reply_type">您想创建哪种自动回复？</string>
+    <string name="keyword">关键词</string>
+    <string name="response">回应</string>
+    <string name="contact">联系人</string>
+    <string name="folders_title">分组</string>
+    <string name="create">新建</string>
+    <string name="create_folder">创建新分组</string>
+    <string name="create_folder_summary">将对话放入组中，以帮助组织和快速浏览繁忙的收件箱。</string>
+    <string name="no_folders">没有创建组-点击顶部首选项来创建第一组。</string>
+    <string name="folder_name">分组名称…</string>
+    <string name="private_conversations_cannot_be_added_to_folders">私密会话不能被添加。</string>
+    <string name="conversation_already_in_a_folder">已在另一个分组。</string>
+    <string name="no_folder">没有分组</string>
     <!-- Theming Options -->
     <string name="day_night">默认（自动切换日间/夜间）</string>
+    <string name="system_default">系统默认</string>
     <string name="always_light">总是日间</string>
     <string name="always_dark">总是夜间</string>
     <string name="always_black">总是纯黑</string>
@@ -381,6 +556,15 @@
     <string name="no_scheduled_messages">没有待发的消息</string>
     <string name="no_scheduled_messages_summary">你可以通过下方的按钮新建一个</string>
     <string name="scheduled_message_in_future">必须使用未来的时间！</string>
+    <string name="scheduled_repeat_never">不重复</string>
+    <string name="scheduled_repeat_daily">每日重复</string>
+    <string name="scheduled_repeat_weekly">每周重复</string>
+    <string name="scheduled_repeat_monthly">每月重复</string>
+    <string name="scheduled_repeat_yearly">每年重复</string>
+    <string name="remove_scheduled_message">您要删除此定时消息吗？</string>
+    <string name="select_image">从手机中选择图片</string>
+    <string name="select_gif">搜索 GIF</string>
+    <string name="media_on_primary_device">定时消息中的媒体只能在手机应用中查看。</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">正在加密并上传。。。</string>
     <string name="encrypting_and_uploading_media">正在加密并压缩信息。。。</string>
@@ -393,9 +577,22 @@
     <string name="video_message">视频消息</string>
     <string name="picture_message">图片消息</string>
     <string name="gif_message">动图消息</string>
-    <string name="contact_card">名片</string>
+    <string name="contact_card">联系人名片</string>
     <string name="conversation_with">与 %1$s 的对话</string>
     <string name="send">发送</string>
+    <string name="quick_share">快速分享</string>
+    <!-- Passcode Entry -->
+    <string name="passcode">用户密码</string>
+    <string name="forgot_passcode">忘记密码？</string>
+    <string name="set_passcode">保存密码</string>
+    <string name="confirm_fingerprint">确认指纹以继续。现在请触摸指纹传感器。</string>
+    <string name="confirm_passcode">确认密码以继续。</string>
+    <string name="confirm_pulse_password">确认Pulse帐户凭据以继续。</string>
+    <string name="type_passcode">创建一个密码。</string>
+    <string name="incorrect_passcode">密码错误。</string>
+    <string name="verify">校验</string>
+    <string name="enable_passcode_disclaimer">私人对话可以受密码/指纹保护，因此只有您可以访问它们.\n\n 如果
+您想添加此安全性，请在<i>高级功能</i>部分中设置密码。</string>
     <!-- Other -->
     <string name="updating_database">正在寻找最近的信息</string>
     <string name="dashclock_description">未读消息</string>
@@ -411,20 +608,29 @@
     <string name="hours">小时</string>
     <string name="minutes">分钟</string>
     <string name="test">测试</string>
-    <string name="channel_settings">通知渠道设置</string>
-    <string name="channel_settings_summary">使用渠道来自定义通知功能仅在 Android 8.0 以上版本内有效</string>
+    <string name="channel_settings">对话通知定制</string>
+    <string name="channel_settings_summary">借助Android Oreo，这些系统级设置可让您针对此会话自定义通知。</string>
     <string name="restore_default_channel_settings">恢复默认通知设置</string>
+    <string name="restore_default_channel_settings_popup">已恢复到默认设置。</string>
     <string name="channels">渠道</string>
     <string name="default_channel">默认渠道</string>
-    <string name="channels_global_warning">许多全局自定义设置如今仅在各个渠道内生效</string>
+    <string name="channels_global_warning">许多全局自定义设置如今仅在各个渠道内生效。</string>
+    <string name="channels_global_warning_2">在  Android Oreo 中，应用必须通过<i>通知渠道</i>来自定义铃声、震动、呼吸灯及其他所有通知选项。
+您可以点击下面的按钮来自定义这些选项，并在 Pulse 的帮助页面中了解更多信息。</string>
+    <string name="channels_global_warning_3">使用Android Oreo，上述某些选项会将您重定向到系统级的<i>通知渠道</i>自定义设置。 要了解有关这些渠道的更多信息，它们如何工作以及为什么必须使用它们，请参阅Pulse的帮助页面。</string>
     <string name="off">关闭</string>
     <string name="on">开启</string>
-    <string name="rate_it">兹瓷！</string>
-    <string name="love_pulse_question">喜欢Pulse应用吗？</string>
-    <string name="give_a_rating">考虑一下打个分、分享给你的朋友们吧！我将万分感谢您的5分，笔芯。</string>
-    <string name="share_promo">嗨，我最近喜欢上了用Pulse发消息，你也来试试吧：
+    <string name="share_promo">嗨，我最近喜欢上了用Pulse发短信，你也来试试吧：
 https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="verifying_password">正在验证密码...</string>
+    <!-- Rate it -->
+    <string name="rate_it">给它打分！</string>
+    <string name="no_thanks">不，算了。</string>
+    <string name="rate_it_title">最高评分大有帮助</string>
+    <string name="rate_it_summary"><b>顶级评级</b>对应用程序的增长非常重要！如果您希望看到应用程序<i>继续飙升</i>，请花一秒钟时间帮助我。</string>
+    <string name="rate_it_not_ready"><b>未准备对其进行评级？</b>没问题。按下手机的后退按钮，我将不再询问。</string>
+    <string name="love_pulse_question">喜欢 Pulse 吗？</string>
+    <string name="give_a_rating">考虑一下打个分、分享给你的朋友们吧！我将万分感谢您的5分，笔芯。</string>
     <!-- Times -->
     <string name="one_second">1秒</string>
     <string name="three_seconds">3秒</string>
@@ -444,31 +650,57 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="cancelled_subscription_error">似乎你取消了订阅。
 如果你目前不想继续订阅，本应用将在2天内注销你的账户。如果这只是个美丽的错误，请通过电子邮件与我联系。</string>
     <string name="subscription_found">发现订阅——欢迎回来！</string>
+    <string name="trial_finished">看来您已经通过了免费试用。</string>
     <string name="subscription_not_found">没有发现订阅。开始你的试用吧！</string>
     <string name="checking_for_active_subscriptions">查看订阅 &#8230;</string>
     <string name="purchase_error_cancelled">你取消了购买:(</string>
+    <string name="purchase_cancelled_trial_finished">您的试用期满，购买被取消。现在您的帐户将被删除。当您想再次使用多设备功能时，您随时可以重新设置它！</string>
     <string name="purchase_error_bad_google_play">:(  Google Play商店看起来出了点问题。</string>
     <string name="purchase_error_bad_sku">&#8230; 购买与我们的记录不符</string>
     <string name="subscriptions">订阅将从7天试用后开始计算，你可以时刻修改订阅，或者取消订阅。</string>
     <string name="billed_immediately">即刻开始计费。</string>
-    <string name="lifetime_purchase">$10.99 终生使用</string>
-    <string name="lifetime_purchase_summary">一次付费，终生使用</string>
+    <string name="lifetime_purchase">$10.99 - 终身会员</string>
+    <string name="lifetime_purchase_summary">一次付费，终生使用！</string>
+    <string name="subscription_purchase_description">价格低廉，容易喜欢！</string>
+    <string name="subscription_purchase_summary">有7天的试用期。</string>
     <string name="yearly_purchase">$5.99 每年</string>
     <string name="yearly_purchase_summary">超值方案</string>
     <string name="three_month_purchase">$1.99 三个月</string>
     <string name="three_month_purchase_summary">这也挺不错的呐</string>
-    <string name="monthly_purchase">$0.99 每月</string>
+    <string name="yearly_purchase_2">$5.99 - 年度订阅</string>
+    <string name="monthly_purchase">$0.99 - 每月订阅</string>
     <string name="monthly_purchase_summary">只是想试试？没问题，这个方案可以满足你。</string>
-    <string name="change_subscription_message">想要升级订阅吗？那么，在下个页面进行选择之后，请您手动前往 Play 商店取消旧的订阅。</string>
-    <string name="beautiful_powerful_instant">美观，强大，便捷</string>
+    <string name="change_subscription_message">要升级吗？太棒了！在下一个屏幕上进行选择后，<b>必须</b>通过Play Store应用程序并取消旧的试用版或订阅。我<b>不能</b>自动执行此操作。</string>
+    <string name="beautiful_powerful_instant">欢迎来到现代。</string>
+    <string name="optimized_for_all_your_devices">Pulse针对<b>所有</b>设备进行了优化。
+从网页，桌面电脑，平板电脑，手表，甚至电视上发送短信。</string>
     <string name="true_imessage_competitor">Android 平台首个 <b>真正</b> 意义上的 iMessage 竞争者。</string>
-    <string name="try_it">现在试用！</string>
+    <string name="trial_description">任何竞争对手都无法达到Pulse的<b>全平台支持</b>及其<b>低价</b>。 消息可在您的所有设备之间即时无缝地同步。</string>
+    <string name="purchase_description">尝试在线版本，持续7天，然后决定如何支持该应用程序：\n\n终身会员<b>10.99美元</b>\n每年<b>5.99美元</b>\n每三个月<b>1.99美元 </b>\n每月<b>0.99美元</b></string>
+    <string name="start_free_trial">开始您的免费试用！</string>
+    <string name="create_your_pulse_account">创建 Pulse 账户！</string>
+    <string name="try_it">试试吧！</string>
+    <string name="select_purchase">选择方案</string>
+    <string name="have_an_account">已有账户？\n登陆</string>
+    <string name="select_a_purchase">选择一个方案</string>
+    <string name="select_a_purchase_description">选择三个订阅中的任何一个，或选择 <b>终身会员身份</b> 一次性购买该应用程序。</string>
     <string name="seven_days_free">7天免费试用！</string>
-    <string name="select_a_trial_below">选择以下选项中的一项来开始你的<b>免费试用</b>。</string>
-    <string name="charged_after_trial">试用后成为正版用户</string>
-    <string name="monthly_purchase_improved">0.99美刀/月</string>
-    <string name="three_month_purchase_improved">1.99美刀/3月</string>
-    <string name="yearly_purchase_improved">5.99美刀/年</string>
+    <string name="competition_cant_beat"><b>请花7天的时间免费使用</b> 为自己找出为什么没有人能达到到我们的 <b>速度、价格或服务</b></string>
+    <string name="select_a_trial_below">选择以下<b>三种订阅</b>中任意一种来开始您的<b>免费试用</b>。您随时可以更改或升级订阅。</string>
+    <string name="select_a_subscription_below">选择订阅开始您的<b>免费试用</b>。你可以随时升级！</string>
+    <string name="charged_after_trial">试用后成为付费用户：</string>
+    <string name="monthly_purchase_improved">$0.99 / 月</string>
+    <string name="three_month_purchase_improved">$1.99 / 3个月</string>
+    <string name="yearly_purchase_improved">$5.99 / 年</string>
     <string name="subscription_toast">在 7 天试用期结束前，您将 <b>不会</b> 被收取任何费用。
 您可随时取消。</string>
+    <string name="redirect_to_play_store">谢谢你的升级！请取消<b>Play Store</b>的旧订阅。Pulse<b>不能</b>自动执行此操作。</string>
+    <string name="play_store">Play Store</string>
+    <string name="notification_trial_title">从任何设备发短信 - 试用</string>
+    <string name="notification_days_remaining_in_trial">您的试用还剩 %s 天。点此升级！</string>
+    <string name="notification_last_day_of_trial">今天是您试用的最后一天。点此升级！</string>
+    <string name="notification_trial_expired">您的七天试用期已过。点此升级！</string>
+    <string name="continue_with_phone_app">您可以在手机上继续使用此应用，免费！</string>
+    <string name="thanks_for_trying">感谢试用！</string>
+    <string name="quick_compose_summary">常驻通知来帮助你快速编写消息</string>
 </resources>
