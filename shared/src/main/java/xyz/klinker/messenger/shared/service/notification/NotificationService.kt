@@ -58,7 +58,7 @@ class Notifier(private val context: Context) {
     private val dataSource: MockableDataSourceWrapper
         get() = MockableDataSourceWrapper(DataSource)
 
-    fun notify(intent: Intent? = null) {
+    fun notify(intent: Intent? = null, fromRepeat: Boolean? = false) {
         try {
             val snoozeTil = Settings.snooze
             if (snoozeTil > TimeUtils.now) {
@@ -99,7 +99,7 @@ class Notifier(private val context: Context) {
                     NotificationManagerCompat.from(context).cancel(NotificationConstants.SUMMARY_ID)
                 }
 
-                if (Settings.repeatNotifications != -1L) {
+                if (Settings.repeatNotifications != -1L && fromRepeat == false) {
                     RepeatNotificationWork.scheduleNextRun(context, Settings.repeatNotifications)
                 }
 

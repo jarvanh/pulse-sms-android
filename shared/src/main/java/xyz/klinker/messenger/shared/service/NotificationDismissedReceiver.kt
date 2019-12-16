@@ -25,6 +25,7 @@ import android.util.Log
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationWork
 import xyz.klinker.messenger.shared.service.notification.NotificationService
 
 /**
@@ -56,6 +57,7 @@ class NotificationDismissedReceiver : BroadcastReceiver() {
 
             Log.v("dismissed_notification", "id: $conversationId")
             ApiUtils.dismissNotification(Account.accountId, Account.deviceId, conversationId)
+            RepeatNotificationWork.cancel(context)
         }
     }
 }

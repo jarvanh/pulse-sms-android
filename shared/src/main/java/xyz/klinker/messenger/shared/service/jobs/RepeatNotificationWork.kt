@@ -9,26 +9,36 @@ import java.util.concurrent.TimeUnit
 class RepeatNotificationWork(private val context: Context, params: WorkerParameters) : Worker(context, params) {
 
     override fun doWork(): Result {
-        Notifier(context).notify()
+        if (!firstRun) {
+            Notifier(context).notify(null, true)
+        }
+
+        firstRun = false
         return Result.success()
     }
 
     companion object {
+
+        // periodic work is executed immediately, which we don't really want in this case. That would produce a duplicate notification
+        private var firstRun = true
+
+        private const val JOB_ID = "repeat-notifications"
 
         fun scheduleNextRun(context: Context, timeout: Long) {
             if (Account.exists() && !Account.primary) {
                 return
             }
 
-            val work = OneTimeWorkRequest.Builder(RepeatNotificationWork::class.java)
-                    .setInitialDelay(timeout, TimeUnit.MILLISECONDS)
-                    .build()
+            firstRun = true
 
-            try {
-                WorkManager.getInstance().enqueue(work)
-            } catch (e: Exception) {
-                // can't schedule more than 100 unique tasks?
-            }
+            // tried it with the normal one time work request and it didn't work well. The queue got too large, since we weren't using unique work
+            val work = PeriodicWorkRequest.Builder(RepeatNotificationWork::class.java, timeout, TimeUnit.MILLISECONDS)
+                    .build()
+            WorkManager.getInstance().enqueueUniquePeriodicWork(JOB_ID, ExistingPeriodicWorkPolicy.REPLACE, work)
+        }
+
+        fun cancel(context: Context) {
+            WorkManager.getInstance().cancelUniqueWork(JOB_ID)
         }
     }
 
