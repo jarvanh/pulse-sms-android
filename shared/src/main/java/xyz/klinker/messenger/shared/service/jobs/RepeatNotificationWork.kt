@@ -1,45 +1,57 @@
 package xyz.klinker.messenger.shared.service.jobs
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import androidx.work.*
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.service.notification.Notifier
+import xyz.klinker.messenger.shared.util.TimeUtils
 import java.util.concurrent.TimeUnit
 
-class RepeatNotificationWork(private val context: Context, params: WorkerParameters) : Worker(context, params) {
+class RepeatNotificationWork : BroadcastReceiver() {
 
-    override fun doWork(): Result {
-        if (!firstRun) {
-            Notifier(context).notify(null, true)
+    override fun onReceive(context: Context?, p1: Intent?) {
+        if (context != null) {
+            Notifier(context).notify()
         }
-
-        firstRun = false
-        return Result.success()
     }
 
     companion object {
-
-        // periodic work is executed immediately, which we don't really want in this case. That would produce a duplicate notification
-        private var firstRun = true
-
-        private const val JOB_ID = "repeat-notifications"
-
+        
         fun scheduleNextRun(context: Context, timeout: Long) {
             if (Account.exists() && !Account.primary) {
                 return
             }
 
-            firstRun = true
-
-            // tried it with the normal one time work request and it didn't work well. The queue got too large, since we weren't using unique work
-            val work = PeriodicWorkRequest.Builder(RepeatNotificationWork::class.java, timeout, TimeUnit.MILLISECONDS)
-                    .build()
-            WorkManager.getInstance().enqueueUniquePeriodicWork(JOB_ID, ExistingPeriodicWorkPolicy.REPLACE, work)
+            val intent = Intent(context, RepeatNotificationWork::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 223349, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            setAlarm(context, TimeUtils.now + timeout, pendingIntent)
         }
 
         fun cancel(context: Context) {
-            WorkManager.getInstance().cancelUniqueWork(JOB_ID)
+            val intent = Intent(context, RepeatNotificationWork::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 223349, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.cancel(pendingIntent)
+
         }
+
+        private fun setAlarm(context: Context, time: Long, pendingIntent: PendingIntent) {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.cancel(pendingIntent)
+
+            if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+            }
+        }
+
+
     }
 
 }
