@@ -21,7 +21,7 @@ class RepeatNotificationWork : BroadcastReceiver() {
     }
 
     companion object {
-        
+
         fun scheduleNextRun(context: Context, timeout: Long) {
             if (Account.exists() && !Account.primary) {
                 return
