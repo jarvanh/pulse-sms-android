@@ -16,7 +16,6 @@
 
 package xyz.klinker.messenger.shared.service
 
-import android.app.IntentService
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -25,8 +24,7 @@ import android.util.Log
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.DataSource
-import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationWork
-import xyz.klinker.messenger.shared.service.notification.NotificationService
+import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
 
 /**
  * A service to get run when a notification is dismissed.
@@ -57,7 +55,7 @@ class NotificationDismissedReceiver : BroadcastReceiver() {
 
             Log.v("dismissed_notification", "id: $conversationId")
             ApiUtils.dismissNotification(Account.accountId, Account.deviceId, conversationId)
-            RepeatNotificationWork.cancel(context)
+            RepeatNotificationJob.cancel(context)
         }
     }
 }

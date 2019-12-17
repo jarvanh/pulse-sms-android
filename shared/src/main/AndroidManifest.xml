@@ -199,7 +199,7 @@
             android:exported="false" />
 
         <receiver
-            android:name=".service.jobs.RepeatNotificationWork"
+            android:name=".service.jobs.RepeatNotificationJob"
             android:exported="false" />
 
         <receiver

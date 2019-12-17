@@ -25,7 +25,7 @@ import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.NotificationAction
-import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationWork
+import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
 import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper
 import xyz.klinker.messenger.shared.util.TimeUtils
@@ -100,7 +100,7 @@ class Notifier(private val context: Context) {
                 }
 
                 if (Settings.repeatNotifications != -1L) {
-                    RepeatNotificationWork.scheduleNextRun(context, Settings.repeatNotifications)
+                    RepeatNotificationJob.scheduleNextRun(context, Settings.repeatNotifications)
                 }
 
                 if (Settings.wakeScreen) {
