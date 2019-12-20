@@ -168,7 +168,7 @@ object ActivityUtils {
     }
 
     fun useEdgeToEdge(): Boolean {
-        val acceptedDevices = arrayListOf("google", "samsung")
+        val acceptedDevices = arrayListOf("google")
         return AndroidVersionUtil.isAndroidQ && acceptedDevices.contains(Build.MANUFACTURER.toLowerCase())
     }
 }
