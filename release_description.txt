@@ -1,1 +1,1 @@
-With this update, you can start a video call - using Google Duo - from within any conversation!
+This update contains bug fixes. More to come in the future!
