@@ -17,8 +17,15 @@
 <changelog>
 
     <version
+        name="4.14.5"
+        description="December 20th, 2019">
+        <!-- Don't use the full screen insets on Samsung devices -->
+        <text>Notification improvements</text>
+    </version>
+
+    <version
         name="4.14.4"
-        description="December 19th, 2019">
+        description="December 18th, 2019">
         <text>Bug fixes</text>
         <text>Translation updates</text>
     </version>

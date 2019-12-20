@@ -26,7 +26,7 @@ buildscript {
 
     ext.buildInfo = [
             'id'                : 'xyz.klinker.messenger',
-            'name'              : '4.14.4',
+            'name'              : '4.14.5',
             'number'            : System.getenv("BUILD_NUMBER") as Integer ?: 135,
     ]
 
