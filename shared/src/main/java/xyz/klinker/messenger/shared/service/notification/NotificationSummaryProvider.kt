@@ -23,25 +23,21 @@ import xyz.klinker.messenger.shared.util.NotificationUtils
  */
 class NotificationSummaryProvider(private val service: Context) {
 
-    var skipSummary = false
-
-    fun giveSummaryNotification(conversations: List<NotificationConversation>, rows: List<String>) {
-        if (skipSummary) {
-            return
-        }
-
+    fun giveSummaryNotification(conversations: List<NotificationConversation>, rows: List<String>): Notification {
         val title = service.resources.getQuantityString(R.plurals.new_conversations, conversations.size, conversations.size)
         val summary = buildSummary(conversations)
         val style = buildStyle(rows)
                 .setBigContentTitle(title)
                 .setSummaryText(summary)
 
-        val notification = buildNotification(conversations[0].id, title, summary)
-                .setPublicVersion(buildPublicNotification(conversations[0].id, title).build())
-                .setWhen(conversations[conversations.size - 1].timestamp)
+        val notification = buildNotification(title, summary)
+                .setPublicVersion(buildPublicNotification(title).build())
+                .setWhen(conversations.first().timestamp)
                 .setStyle(style)
+        val built = applyPendingIntents(notification).build()
 
-        NotificationManagerCompat.from(service).notify(NotificationConstants.SUMMARY_ID, applyPendingIntents(notification).build())
+        NotificationManagerCompat.from(service).notify(NotificationConstants.SUMMARY_ID, built)
+        return built
     }
 
     private fun buildSummary(conversations: List<NotificationConversation>): String {
@@ -84,27 +80,28 @@ class NotificationSummaryProvider(private val service: Context) {
         return style
     }
 
-    private fun buildNotification(firstConversationId: Long, title: String, summary: String) =
-            buildCommonNotification(firstConversationId, title)
+    private fun buildNotification(title: String, summary: String) =
+            buildCommonNotification(title)
                     .setContentText(summary)
                     .setShowWhen(true)
                     .setTicker(title)
                     .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
 
-    private fun buildPublicNotification(firstConversationId: Long, title: String) =
-            buildCommonNotification(firstConversationId, title)
+    private fun buildPublicNotification(title: String) =
+            buildCommonNotification(title)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
-    private fun buildCommonNotification(firstConversationId: Long, title: String) = NotificationCompat.Builder(service,
-                NotificationConversationProvider.getNotificationChannel(service, firstConversationId))
-            .setSmallIcon(R.drawable.ic_stat_notify_group)
-            .setContentTitle(title)
-            .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
-            .setGroupSummary(true)
-            .setAutoCancel(true)
-            .setCategory(Notification.CATEGORY_MESSAGE)
-            .setColor(Settings.mainColorSet.color)
-            .setPriority(if (Settings.headsUp) Notification.PRIORITY_MAX else Notification.PRIORITY_DEFAULT)
+    private fun buildCommonNotification(title: String) =
+            NotificationCompat.Builder(service, NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_stat_notify_group)
+                    .setContentTitle(title)
+                    .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
+                    .setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_CHILDREN)
+                    .setGroupSummary(true)
+                    .setAutoCancel(true)
+                    .setCategory(Notification.CATEGORY_MESSAGE)
+                    .setColor(Settings.mainColorSet.color)
+                    .setPriority(if (Settings.headsUp) Notification.PRIORITY_MAX else Notification.PRIORITY_DEFAULT)
 
 
     private fun applyPendingIntents(builder: NotificationCompat.Builder): NotificationCompat.Builder {

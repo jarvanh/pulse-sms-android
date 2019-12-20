@@ -19,12 +19,13 @@ package xyz.klinker.messenger.shared.service.notification
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.PowerManager
-import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.NotificationAction
+import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
 import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper
@@ -59,65 +60,72 @@ class Notifier(private val context: Context) {
         get() = MockableDataSourceWrapper(DataSource)
 
     fun notify(intent: Intent? = null) {
-        try {
-            val snoozeTil = Settings.snooze
-            if (snoozeTil > TimeUtils.now) {
+        val snoozeTil = Settings.snooze
+        if (snoozeTil > TimeUtils.now) {
+            return
+        }
+
+        val conversations = query.getUnseenConversations(dataSource)
+        if (conversations.isNotEmpty()) {
+            val conversation = conversations.first()
+            if (conversation.mute || NotificationConstants.CONVERSATION_ID_OPEN == conversation.id) {
                 return
             }
 
-            val conversations = query.getUnseenConversations(dataSource).filter { !it.mute }
+            notifyLatestConversation(conversation)
+            notifySummary(conversations)
 
-            if (conversations.isNotEmpty()) {
-                if (conversations.size > 1) {
-                    val rows = conversations.mapTo(ArrayList()) { "<b>" + it.title + "</b>  " + it.snippet }
-                    summaryNotifier.giveSummaryNotification(conversations, rows)
-                }
-
-                val numberToNotify = NotificationServiceHelper.calculateNumberOfNotificationsToProvide(context, conversations)
-                for (i in 0 until if (numberToNotify < conversations.size) numberToNotify else conversations.size) {
-                    val conversation = conversations[i]
-
-                    try {
-                        if (Settings.notificationActions.contains(NotificationAction.SMART_REPLY)) {
-                            val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
-                            smartReply.suggestReplies(conversation.getFirebaseSmartReplyConversation().asReversed())
-                                    .addOnSuccessListener { result ->
-                                        val suggestions = result.suggestions/*.filter { it.confidence > 0.2 }*/
-                                        conversationNotifier.giveConversationNotification(conversation, i, conversations.size, suggestions)
-                                    }.addOnFailureListener {
-                                        conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
-                                    }
-                        } else {
-                            conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
-                        }
-                    } catch (e: Throwable) {
-                        conversationNotifier.giveConversationNotification(conversation, i, conversations.size)
-                    }
-                }
-
-                if (conversations.size == 1) {
-                    NotificationManagerCompat.from(context).cancel(NotificationConstants.SUMMARY_ID)
-                }
-
-                if (Settings.repeatNotifications != -1L) {
-                    RepeatNotificationJob.scheduleNextRun(context, Settings.repeatNotifications)
-                }
-
-                if (Settings.wakeScreen) {
-                    try {
-                        Thread.sleep(600)
-                    } catch (e: Exception) {
-                    }
-
-                    val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-                    val wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, "pulse:new-notification")
-                    wl.acquire(5000)
-                }
-            }
+            applyRepeat()
+            wakeScreen()
 
             MessengerAppWidgetProvider.refreshWidget(context)
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
+    }
+
+    private fun notifyLatestConversation(conversation: NotificationConversation) {
+        if (Settings.notificationActions.contains(NotificationAction.SMART_REPLY)) {
+            val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
+            smartReply.suggestReplies(conversation.getFirebaseSmartReplyConversation().asReversed())
+                    .addOnSuccessListener { result ->
+                        val suggestions = result.suggestions/*.filter { it.confidence > 0.2 }*/
+                        conversationNotifier.giveConversationNotification(conversation, suggestions)
+                    }.addOnFailureListener {
+                        conversationNotifier.giveConversationNotification(conversation)
+                    }
+        } else {
+            conversationNotifier.giveConversationNotification(conversation)
+        }
+    }
+
+    private fun notifySummary(conversations: List<NotificationConversation>) {
+        if (conversations.size <= 1 || Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            return
+        }
+
+        val rows = conversations.mapTo(ArrayList()) { "<b>" + it.title + "</b>  " + it.snippet }
+        summaryNotifier.giveSummaryNotification(conversations, rows)
+    }
+
+    private fun applyRepeat() {
+        if (Settings.repeatNotifications == -1L) {
+            return
+        }
+
+        RepeatNotificationJob.scheduleNextRun(context, Settings.repeatNotifications)
+    }
+
+    private fun wakeScreen() {
+        if (!Settings.wakeScreen) {
+            return
+        }
+
+        try {
+            Thread.sleep(600)
+        } catch (e: Exception) {
+        }
+
+        val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+        val wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, "pulse:new-notification")
+        wl.acquire(5000)
     }
 }

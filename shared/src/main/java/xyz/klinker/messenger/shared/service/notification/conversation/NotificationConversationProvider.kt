@@ -43,23 +43,19 @@ class NotificationConversationProvider(private val service: Context, private val
     private val carHelper = NotificationCarHelper(service)
     private val wearableHelper = NotificationWearableHelper(service)
 
-    fun giveConversationNotification(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int, smartReplies: List<SmartReplySuggestion> = emptyList()): Notification {
-        val publicVersion = preparePublicBuilder(conversation, conversationIndex, numConversations)
-                .setDefaults(buildNotificationDefaults(conversation, conversationIndex))
-                .setGroupSummary(numConversations == 1 && Build.MANUFACTURER.toLowerCase().contains("moto"))
-                .setGroup(if (numConversations > 1) NotificationConstants.GROUP_KEY_MESSAGES else null)
-                .applyLightsSoundAndVibrate(conversation, conversationIndex)
+    fun giveConversationNotification(conversation: NotificationConversation, smartReplies: List<SmartReplySuggestion> = emptyList()): Notification {
+        val publicVersion = preparePublicBuilder(conversation)
+                .setDefaults(buildNotificationDefaults(conversation))
+                .applyLightsSoundAndVibrate(conversation)
                 .addPerson(conversation)
 //                .bubble(conversation)
 
-        val builder = prepareBuilder(conversation, conversationIndex, numConversations)
-                .setDefaults(buildNotificationDefaults(conversation, conversationIndex))
+        val builder = prepareBuilder(conversation)
+                .setDefaults(buildNotificationDefaults(conversation))
                 .setLargeIcon(buildContactImage(conversation))
-                .setGroupSummary(numConversations == 1 && Build.MANUFACTURER.toLowerCase().contains("moto"))
-                .setGroup(if (numConversations > 1) NotificationConstants.GROUP_KEY_MESSAGES else null)
-                .applyLightsSoundAndVibrate(conversation, conversationIndex)
-                .applyStyle(conversation)
                 .setPublicVersion(publicVersion.build())
+                .applyLightsSoundAndVibrate(conversation)
+                .applyStyle(conversation)
 
         val remoteInputBuilder = RemoteInput.Builder(ReplyService.EXTRA_REPLY)
                 .setLabel(service.getString(R.string.reply_to, conversation.title))
@@ -111,35 +107,35 @@ class NotificationConversationProvider(private val service: Context, private val
 
         val notification = builder.build()
 
-        if (NotificationConstants.CONVERSATION_ID_OPEN == conversation.id) {
-            // skip this notification since we are already on the conversation.
-            summaryProvider.skipSummary = true
-        } else {
+        if (NotificationConstants.CONVERSATION_ID_OPEN != conversation.id) {
             NotificationManagerCompat.from(service).notify(conversation.id.toInt(), notification)
         }
 
         return notification
     }
 
-    private fun prepareCommonBuilder(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int) = NotificationCompat.Builder(service,
+    private fun prepareCommonBuilder(conversation: NotificationConversation) = NotificationCompat.Builder(service,
                 getNotificationChannel(service, conversation.id))
             .setSmallIcon(if (!conversation.groupConversation) R.drawable.ic_stat_notify else R.drawable.ic_stat_notify_group)
             .setAutoCancel(true)
             .setColor(if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.color)
             .setPriority(if (Settings.headsUp) Notification.PRIORITY_MAX else Notification.PRIORITY_DEFAULT)
             .setCategory(Notification.CATEGORY_MESSAGE)
+            .setGroupSummary(false)
+            .setGroup(NotificationConstants.GROUP_KEY_MESSAGES)
+            .setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_CHILDREN)
             .addPerson(conversation)
 
-    private fun prepareBuilder(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int) =
-            prepareCommonBuilder(conversation, conversationIndex, numConversations)
+    private fun prepareBuilder(conversation: NotificationConversation) =
+            prepareCommonBuilder(conversation)
                     .setContentTitle(conversation.title)
                     .setShowWhen(true)
                     .setTicker(service.getString(R.string.notification_ticker, conversation.title))
                     .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                     .setWhen(if (AndroidVersionUtil.isAndroidO) TimeUtils.now else conversation.timestamp)
 
-    private fun preparePublicBuilder(conversation: NotificationConversation, conversationIndex: Int, numConversations: Int) =
-            prepareCommonBuilder(conversation, conversationIndex, numConversations)
+    private fun preparePublicBuilder(conversation: NotificationConversation) =
+            prepareCommonBuilder(conversation)
                     .setContentTitle(service.resources.getQuantityString(R.plurals.new_conversations, 1, 1))
                     .setContentText(service.resources.getQuantityString(R.plurals.new_messages, conversation.messages.size, conversation.messages.size))
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -157,15 +153,14 @@ class NotificationConversationProvider(private val service: Context, private val
         return contactImage
     }
 
-    private fun buildNotificationDefaults(conversation: NotificationConversation, conversationIndex: Int): Int {
+    private fun buildNotificationDefaults(conversation: NotificationConversation): Int {
         if (WearableCheck.isAndroidWear(service)) {
             return Notification.DEFAULT_ALL
         }
 
         val vibratePattern = Settings.vibrate
-        val shouldVibrate = !shouldAlertOnce(conversation.messages) && conversationIndex == 0
         var defaults = 0
-        if (shouldVibrate && vibratePattern === VibratePattern.DEFAULT) {
+        if (vibratePattern === VibratePattern.DEFAULT) {
             defaults = Notification.DEFAULT_VIBRATE
         }
 
@@ -262,20 +257,6 @@ class NotificationConversationProvider(private val service: Context, private val
         return messagingStyle
     }
 
-    fun shouldAlertOnce(messages: List<NotificationMessage>): Boolean {
-        if (messages.size > 1) {
-            val (_, _, _, timestamp) = messages[messages.size - 2]
-            val (_, _, _, timestamp1) = messages[messages.size - 1]
-
-            if (Math.abs(timestamp - timestamp1) > TimeUtils.SECOND * 30) {
-                return false
-            }
-        }
-
-        // default to true
-        return true
-    }
-
 
     //
     //
@@ -284,7 +265,7 @@ class NotificationConversationProvider(private val service: Context, private val
     //
 
 
-    private fun NotificationCompat.Builder.applyLightsSoundAndVibrate(conversation: NotificationConversation, conversationIndex: Int): NotificationCompat.Builder {
+    private fun NotificationCompat.Builder.applyLightsSoundAndVibrate(conversation: NotificationConversation): NotificationCompat.Builder {
         if (WearableCheck.isAndroidWear(service)) {
             return this
         }
@@ -293,17 +274,15 @@ class NotificationConversationProvider(private val service: Context, private val
             this.setLights(conversation.ledColor, 1000, 500)
         }
 
-        if (conversationIndex == 0) {
-            val sound = ringtoneProvider.getRingtone(conversation.ringtoneUri)
-            if (sound != null) {
-                this.setSound(sound)
-            }
+        val sound = ringtoneProvider.getRingtone(conversation.ringtoneUri)
+        if (sound != null) {
+            this.setSound(sound)
+        }
 
-            if (Settings.vibrate.pattern != null) {
-                this.setVibrate(Settings.vibrate.pattern)
-            } else if (Settings.vibrate === VibratePattern.OFF) {
-                this.setVibrate(LongArray(0))
-            }
+        if (Settings.vibrate.pattern != null) {
+            this.setVibrate(Settings.vibrate.pattern)
+        } else if (Settings.vibrate === VibratePattern.OFF) {
+            this.setVibrate(LongArray(0))
         }
 
         return this
