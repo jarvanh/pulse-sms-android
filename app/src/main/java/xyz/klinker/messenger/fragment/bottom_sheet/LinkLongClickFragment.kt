@@ -44,7 +44,7 @@ class LinkLongClickFragment : TabletOptimizedBottomSheetDialogFragment() {
             val customTabsIntent = builder.build()
 
             try {
-                customTabsIntent.launchUrl(activity, Uri.parse(link))
+                customTabsIntent.launchUrl(activity!!, Uri.parse(link))
             } catch (e: Exception) {
             }
 

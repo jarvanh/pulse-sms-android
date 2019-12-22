@@ -34,7 +34,7 @@ dependencies {
     implementation 'com.klinkerapps:wearable-reply:1.0.1'
     implementation "com.google.android.gms:play-services-wearable:${versions.playServices}"
 
-    implementation "com.google.android.support:wearable:2.4.0"
+    implementation "com.google.android.support:wearable:2.5.0"
     implementation "androidx.wear:wear:${versions.androidX}"
 
     testImplementation 'junit:junit:4.12'
