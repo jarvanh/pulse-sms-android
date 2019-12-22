@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="4.14.6"
+        description="Unreleased">
+        <text>Dependency updates</text>
+    </version>
+
+    <version
         name="4.14.5"
         description="December 20th, 2019">
         <!-- Don't use the full screen insets on Samsung devices -->
