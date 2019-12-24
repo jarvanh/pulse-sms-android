@@ -18,7 +18,8 @@
 
     <version
         name="4.14.6"
-        description="Unreleased">
+        description="December 24th, 2019">
+        <text>Bug fixes</text>
         <text>Dependency updates</text>
     </version>
 
