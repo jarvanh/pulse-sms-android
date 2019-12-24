@@ -27,11 +27,7 @@ class CleanupOldMessagesWork(private val context: Context, params: WorkerParamet
                     .setInitialDelay(time, TimeUnit.MILLISECONDS)
                     .build()
 
-            try {
-                WorkManager.getInstance().enqueue(work)
-            } catch (e: Exception) {
-                // can't schedule more than 100 unique tasks?
-            }
+            WorkManager.getInstance().enqueueUniqueWork("cleanup-old-messages", ExistingWorkPolicy.REPLACE, work)
         }
     }
 }

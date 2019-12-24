@@ -9,6 +9,7 @@ import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
 import xyz.klinker.messenger.api.implementation.Account
+import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.util.billing.BillingHelper
 import xyz.klinker.messenger.shared.util.billing.ProductPurchased
 import java.util.*
@@ -37,21 +38,21 @@ class SignoutJob : BackgroundJob() {
         }
 
     override fun onRunJob(parameters: JobParameters?) {
-//        billing = BillingHelper(this)
-//
-//        // Only need to manage this on the primary device
-//        if (Account.exists() && Account.primary && Account.subscriptionType !== Account.SubscriptionType.LIFETIME &&
-//                Account.subscriptionExpiration < Date().time && isExpired) {
-//            Log.v(TAG, "forcing signout due to expired account!")
-//
-//            Account.clearAccount(this)
-//            ApiUtils.deleteAccount(Account.accountId)
-//        } else {
-//            Log.v(TAG, "account not expired, scheduling the check again.")
-//            SubscriptionExpirationCheckJob.scheduleNextRun(this)
-//        }
-//
-//        writeSignoutTime(this, 0)
+        billing = BillingHelper(this)
+
+        // Only need to manage this on the primary device
+        if (Account.exists() && Account.primary && Account.subscriptionType !== Account.SubscriptionType.LIFETIME &&
+                Account.subscriptionExpiration < Date().time && isExpired) {
+            Log.v(TAG, "forcing signout due to expired account!")
+
+            Account.clearAccount(this)
+            ApiUtils.deleteAccount(Account.accountId)
+        } else {
+            Log.v(TAG, "account not expired, scheduling the check again.")
+            SubscriptionExpirationCheckJob.scheduleNextRun(this)
+        }
+
+        writeSignoutTime(this, 0)
     }
 
     override fun onDestroy() {
@@ -105,14 +106,14 @@ class SignoutJob : BackgroundJob() {
                     .setRequiresCharging(false)
                     .setRequiresDeviceIdle(false)
 
-            if (account.accountId == null || account.subscriptionType === Account.SubscriptionType.LIFETIME || !account.primary || signoutTime == 0L) {
-                jobScheduler.cancel(JOB_ID)
-            } else {
-                Log.v(TAG, "CURRENT TIME: " + Date().toString())
-                Log.v(TAG, "SCHEDULING NEW SIGNOUT CHECK FOR: " + Date(signoutTime).toString())
-
-                jobScheduler.schedule(builder.build())
-            }
+//            if (account.accountId == null || account.subscriptionType === Account.SubscriptionType.LIFETIME || !account.primary || signoutTime == 0L) {
+//                jobScheduler.cancel(JOB_ID)
+//            } else {
+//                Log.v(TAG, "CURRENT TIME: " + Date().toString())
+//                Log.v(TAG, "SCHEDULING NEW SIGNOUT CHECK FOR: " + Date(signoutTime).toString())
+//
+//                jobScheduler.schedule(builder.build())
+//            }
         }
 
         @SuppressLint("ApplySharedPref")

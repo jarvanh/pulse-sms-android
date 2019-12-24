@@ -45,20 +45,20 @@ class SubscriptionExpirationCheckJob : BackgroundJob() {
         }
 
     override fun onRunJob(parameters: JobParameters?) {
-//        billing = BillingHelper(this)
-//
-//        if (Account.exists() && Account.primary && Account.subscriptionType !== Account.SubscriptionType.LIFETIME) {
-//            Log.v(TAG, "checking for expiration")
-//            if (isExpired) {
-//                Log.v(TAG, "service is expired")
-//                makeSignoutNotification()
-//                SignoutJob.writeSignoutTime(this, Date().time + TimeUtils.DAY * 2)
-//            } else {
-//                Log.v(TAG, "not expired, scheduling the next refresh")
-//                scheduleNextRun(this)
-//                SignoutJob.writeSignoutTime(this, 0)
-//            }
-//        }
+        billing = BillingHelper(this)
+
+        if (Account.exists() && Account.primary && Account.subscriptionType !== Account.SubscriptionType.LIFETIME) {
+            Log.v(TAG, "checking for expiration")
+            if (isExpired) {
+                Log.v(TAG, "service is expired")
+                makeSignoutNotification()
+                SignoutJob.writeSignoutTime(this, Date().time + TimeUtils.DAY * 2)
+            } else {
+                Log.v(TAG, "not expired, scheduling the next refresh")
+                scheduleNextRun(this)
+                SignoutJob.writeSignoutTime(this, 0)
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -153,14 +153,14 @@ class SubscriptionExpirationCheckJob : BackgroundJob() {
                     .setRequiresCharging(false)
                     .setRequiresDeviceIdle(false)
 
-            if (account.accountId == null || account.subscriptionType === Account.SubscriptionType.LIFETIME || !account.primary) {
-                jobScheduler.cancel(JOB_ID)
-            } else {
-                Log.v(TAG, "CURRENT TIME: " + Date().toString())
-                Log.v(TAG, "SCHEDULING NEW SIGNOUT CHECK FOR: " + Date(expiration).toString())
-
-                jobScheduler.schedule(builder.build())
-            }
+//            if (account.accountId == null || account.subscriptionType === Account.SubscriptionType.LIFETIME || !account.primary) {
+//                jobScheduler.cancel(JOB_ID)
+//            } else {
+//                Log.v(TAG, "CURRENT TIME: " + Date().toString())
+//                Log.v(TAG, "SCHEDULING NEW SIGNOUT CHECK FOR: " + Date(expiration).toString())
+//
+//                jobScheduler.schedule(builder.build())
+//            }
         }
     }
 }
