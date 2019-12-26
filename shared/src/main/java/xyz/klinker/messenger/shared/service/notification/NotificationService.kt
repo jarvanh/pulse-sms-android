@@ -85,14 +85,18 @@ class Notifier(private val context: Context) {
     private fun notifyLatestConversation(conversation: NotificationConversation) {
         val messages = conversation.getFirebaseSmartReplyConversation().asReversed()
         if (Settings.notificationActions.contains(NotificationAction.SMART_REPLY) && messages.isNotEmpty()) {
-            val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
-            smartReply.suggestReplies(messages)
-                    .addOnSuccessListener { result ->
-                        val suggestions = result.suggestions/*.filter { it.confidence > 0.2 }*/
-                        conversationNotifier.giveConversationNotification(conversation, suggestions)
-                    }.addOnFailureListener {
-                        conversationNotifier.giveConversationNotification(conversation)
-                    }
+            try {
+                val smartReply = FirebaseNaturalLanguage.getInstance().smartReply
+                smartReply.suggestReplies(messages)
+                        .addOnSuccessListener { result ->
+                            val suggestions = result.suggestions/*.filter { it.confidence > 0.2 }*/
+                            conversationNotifier.giveConversationNotification(conversation, suggestions)
+                        }.addOnFailureListener {
+                            conversationNotifier.giveConversationNotification(conversation)
+                        }
+            } catch (e: Exception) {
+                conversationNotifier.giveConversationNotification(conversation)
+            }
         } else {
             conversationNotifier.giveConversationNotification(conversation)
         }
