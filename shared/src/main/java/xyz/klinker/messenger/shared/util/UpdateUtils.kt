@@ -1,10 +1,12 @@
 package xyz.klinker.messenger.shared.util
 
 import android.app.Activity
+import android.app.job.JobScheduler
 import android.content.Context
 import android.content.pm.PackageManager
 import android.preference.PreferenceManager
 import android.util.Log
+import androidx.work.WorkManager
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.api.implementation.firebase.ScheduledTokenRefreshService
@@ -55,6 +57,8 @@ class UpdateUtils(private val context: Activity) {
         private const val TAG = "UpdateUtil"
 
         fun rescheduleWork(context: Context) {
+            WorkManager.getInstance().cancelAllWork()
+
             CleanupOldMessagesWork.scheduleNextRun(context)
             FreeTrialNotifierWork.scheduleNextRun(context)
             ScheduledMessageJob.scheduleNextRun(context)
