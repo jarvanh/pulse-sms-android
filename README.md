@@ -3,40 +3,41 @@
 # Pulse SMS
 
 The goal of this project is to create an SMS/MMS app that has full support for all of the features
-that users love, is based on material design, and supports a strong-encryption version of a tablet
-messenger that sends messages through your phone.
+that users love, is based on material design, and supports a strong end-to-end encryption version of a
+tablet/desktop messenger that sends messages through your personal phone number.
 
-The project will be separate from our previous messaging experience with Sliding Messaging and
-EvolveSMS and will be completely rewritten from scratch for performance and consistency. The
-designs themselves are loosely based off of Google Inbox and adapted as a messenger instead of
-email client.
+Check out Pulse on the [Play Store](https://play.google.com/store/apps/details?id=xyz.klinker.messenger)
+or the app's [website](https://messenger.klinkerapps.com/overview) for a more comprehensive overview
+of the app's features, platforms, and functionality!
 
-### APIs
+Many other Pulse platforms are also open source. If you would like to take a look at them, you can
+find them on Klinker Apps [GitHub](https://github.com/klinker-apps).
 
-The project will include Java APIs that allow any SMS app to use the online service and hook up to the
-tablet app. This will be important for EvolveSMS so that support can be there and our userbase can
-be larger. This app will also be very different from EvolveSMS, so the users can have their
-preference on which they like more. This Java project will be part of this repo and the APIs will be
-accessed using [Retrofit](http://square.github.io/retrofit/). 
+## Compiling Pulse
 
-### Server
+This repo is **almost** ready to go, right out of the box. There are just two properties files that you need
+to create for the build process to succeed: `api_keys.properties` and `keystore.properties`.
 
-The server will be built so that I can host it on AWS myself and provide the service to users.
-
-As a note, all messages and information will be stored in encrypted form at all points in the
-process, except on the user's device. Strong end-to-end encryption will be rigorously enforced
-and documented.
-
-You can find this repo at [messenger-server](https://github.com/klinker41/messenger-server).
-
-### Building
+#### Set up API keys
 
 To build, you'll need to set up a few different API keys. Rename the `api_keys.properties.example`
-file to `api_keys.properties`. This file already contains the public Giphy beta testing key as an
-example for you. You should change this to your own key that you acquire from Giphy when publishing
-to production.
+file to `api_keys.properties`. Please see the notes at the top of this file to learn more about
+which API keys you to need to obtain for yourself, for the different services that Pulse includes.
 
-After that a simple `./gradlew clean build` will assemble everything you need for the project.
+#### Set up release keystore
+
+Whether you are going to make a release build of the app or not, you will need to copy the `keystore.properties.example`
+file to `keystore.properties`. If you aren't going to make a release build for anything, just leave it as is.
+
+If you are going to make a release build, you will need to add your keystore to the repo and fill in
+fields outlined by that file.
+
+## Contributing to Pulse
+
+All contributions are welcome!
+
+* If you want to report a bug or file a feature request, I have a [centralized issues repo](https://github.com/klinker-apps/pulse-issues/issues) for tracking issues/requests across all of Pulse's platforms. Please file the issue there.
+* Any other contributions can just go through the [Pull Requests](https://github.com/klinker-apps/pulse-android/pulls) on this repo.
 
 ## License
 
