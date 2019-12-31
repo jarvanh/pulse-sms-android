@@ -1,4 +1,4 @@
-![feature graphic](/artwork/play%20store/feature%20graphic%20white%202.png)
+![feature graphic](/artwork/repo-header.png)
 
 # Pulse SMS
 
