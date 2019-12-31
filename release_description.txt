@@ -1,1 +1,1 @@
-This update just contains bug fixes. More to come in the future!
+Pulse is now open source! Check it out at https://github.com/klinker-apps/pulse-android
