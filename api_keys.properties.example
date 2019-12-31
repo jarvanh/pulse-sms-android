@@ -1,3 +1,13 @@
-# The public beta Giphy API key. This should be replaced with a production key when app goes into
-# final production status.
+# The public beta Giphy API key.
+# Get your own https://developers.giphy.com/
 GIPHY=dc6zaTOxFJmzC
+
+# This is the public article API key.
+# Get your own https://github.com/klinker41/article-android
+ARTICLE=73621d28e6f1eec5b8de2aee774cbdb0
+
+# Pulse uses a Google API key for map previews (if you send a maps.google.com link), and for previewing YouTube links (if you send a youtube.google.com link)
+# Get your own https://developers.google.com/youtube/v3/getting-started
+# The same key is used for maps and youtube, as long as you give the correct access in the console.
+# If you don't need these features, you can just leave the key blank.
+YOUTUBE=<insert-your-key>
