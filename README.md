@@ -10,8 +10,8 @@ Check out Pulse on the [Play Store](https://play.google.com/store/apps/details?i
 or the app's [website](https://messenger.klinkerapps.com/overview) for a more comprehensive overview
 of the app's features, platforms, and functionality!
 
-Many other Pulse platforms are also open source. If you would like to take a look at them, you can
-find them on Klinker Apps [GitHub](https://github.com/klinker-apps).
+Many other Pulse platforms are also open source (all but the backend). If you would like to take a
+look at them, you can find them on Klinker Apps [GitHub](https://github.com/klinker-apps?q=pulse).
 
 ## Compiling Pulse
 
