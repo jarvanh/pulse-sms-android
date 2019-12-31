@@ -315,6 +315,8 @@
     <string name="be_careful_using_these_settings">These options can be dangerous. Please see their descriptions on my help page, for usage instructions and notes.</string>
     <string name="device_id">Device ID</string>
     <string name="device_info">Device Info</string>
+    <string name="open_source_title">Open Source Project</string>
+    <string name="open_source_summary">Pulse is open source! Check it out on GitHub.</string>
     <string name="website">Website</string>
     <string name="view_platforms">Available Pulse Platforms</string>
     <string name="access_messages_from_any_device">Access and send messages from any device!</string>

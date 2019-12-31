@@ -69,6 +69,12 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
         findPreference(getString(R.string.pref_about_app_version)).summary = versionName
         findPreference(getString(R.string.pref_about_device_info)).summary = deviceInfo
 
+        findPreference(getString(R.string.pref_about_open_source))
+                .setOnPreferenceClickListener {
+                    openWebsite("https://github.com/klinker-apps/pulse-android")
+                    true
+                }
+
         findPreference(getString(R.string.pref_about_app_version))
                 .setOnPreferenceClickListener {
                     copyToClipboard(versionName)
