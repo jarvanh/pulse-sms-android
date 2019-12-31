@@ -36,8 +36,8 @@ fields outlined by that file.
 
 All contributions are welcome!
 
-* If you want to report a bug or file a feature request, I have a [centralized issues repo](https://github.com/klinker-apps/pulse-issues/issues) for tracking issues/requests across all of Pulse's platforms. Please file the issue there.
-* Any other contributions can just go through the [Pull Requests](https://github.com/klinker-apps/pulse-android/pulls) on this repo.
+* If you want to report a bug or file a feature request, I have a [centralized issues repo](https://github.com/klinker-apps/pulse-sms-issues/issues) for tracking issues/requests across all of Pulse's platforms. Please file the issue there.
+* Any other contributions can just go through the [Pull Requests](https://github.com/klinker-apps/pulse-sms-android/pulls) on this repo.
 
 ## License
 
