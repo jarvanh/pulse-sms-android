@@ -1,1 +1,1 @@
-Pulse is now open source! Check it out at https://github.com/klinker-apps/pulse-android
+Pulse is now open source! Check it out at https://github.com/klinker-apps/pulse-sms-android

@@ -71,7 +71,7 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
 
         findPreference(getString(R.string.pref_about_open_source))
                 .setOnPreferenceClickListener {
-                    openWebsite("https://github.com/klinker-apps/pulse-android")
+                    openWebsite("https://github.com/klinker-apps/pulse-sms-android")
                     true
                 }
 

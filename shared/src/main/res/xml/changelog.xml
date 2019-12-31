@@ -20,7 +20,7 @@
         name="5.0.0"
         description="January 1st, 2020">
         <text>The Pulse Android app is now fully open source!</text>
-        <text>Check it out: https://github.com/klinker-apps/pulse-android</text>
+        <text>Check it out: https://github.com/klinker-apps/pulse-sms-android</text>
     </version>
 
     <version
