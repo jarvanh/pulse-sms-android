@@ -24,12 +24,11 @@ import xyz.klinker.messenger.api.Api;
 class ApiAccessor {
 
     public static Api create(String environment) {
-        if (environment.equals("debug")) {
-            return new Api(Api.Environment.DEBUG);
-        } else if (environment.equals("staging")) {
-            return new Api(Api.Environment.STAGING);
-        } else {
-            return new Api(Api.Environment.RELEASE);
+        //noinspection SwitchStatementWithTooFewBranches
+        switch (environment) {
+//            case "debug": return new Api(Api.Environment.DEBUG);
+            case "staging": return new Api(Api.Environment.STAGING);
+            default: return new Api(Api.Environment.RELEASE);
         }
     }
 
