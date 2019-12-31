@@ -7,4 +7,5 @@ local.properties
 *.log
 *.avi
 api_keys.properties
+keystore.properties
 *.jks
