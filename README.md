@@ -20,9 +20,10 @@ to create for the build process to succeed: `api_keys.properties` and `keystore.
 
 #### Set up API keys
 
-To build, you'll need to set up a few different API keys. Rename the `api_keys.properties.example`
-file to `api_keys.properties`. Please see the notes at the top of this file to learn more about
-which API keys you to need to obtain for yourself, for the different services that Pulse includes.
+You'll need to set up a few different API keys. Rename the `api_keys.properties.example`
+file to `api_keys.properties`. This alone will get the build working and might be perfectly fine for your usage. 
+
+If you are using a self-built version of the app on a daily basis, then you might want to put in a few of your own API keys, rather than the public ones I have available. Please see the notes at the top of the file to learn more.
 
 #### Set up release keystore
 
