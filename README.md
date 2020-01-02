@@ -16,7 +16,7 @@ look at them, you can find them on Klinker Apps [GitHub](https://github.com/klin
 ## Compiling Pulse
 
 This repo is **almost** ready to go, right out of the box. There are just two properties files that you need
-to create for the build process to succeed: `api_keys.properties` and `keystore.properties`.
+to create for the build process to succeed: `api_keys.properties` and `keystore.properties`. Both files can simply be copy and paste from the examples, if you choose.
 
 #### Set up API keys
 
