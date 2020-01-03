@@ -34,6 +34,9 @@
     <string name="api_add_second_primary_device">Looks like you already have a primary device
         (%1$s) for your account and only one is permitted! Do you want to remove the current
         primary device and set this as the new primary?</string>
+    <string name="api_amazon_fire">Failed to add the device to the account.\n\n
+        Unfortunately Amazon tablets do not have the correct services installed for Pulse to work. To
+        use the app on your Amazon tablet, you will need to use the web app instead of the Android app.</string>
     <string name="api_yes">Yes</string>
     <string name="api_no">No</string>
     <string name="api_no_email">No email address entered</string>

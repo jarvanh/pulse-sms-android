@@ -407,8 +407,15 @@ public class LoginActivity extends AppCompatActivity {
         account.setPrimary(this, false);
 
         runOnUiThread(() -> {
-            Toast.makeText(getApplicationContext(), R.string.api_device_error,
-                    Toast.LENGTH_SHORT).show();
+            if (Build.MANUFACTURER.toLowerCase().contains("amazon")) {
+                new AlertDialog.Builder(LoginActivity.this)
+                        .setMessage(R.string.api_amazon_fire)
+                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {})
+                        .show();
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.api_device_error,
+                        Toast.LENGTH_SHORT).show();
+            }
             //Toast.makeText(getApplicationContext(), "FCM token: " + getFirebaseId(), Toast.LENGTH_LONG).show();
 
             recreate();
