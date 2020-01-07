@@ -26,12 +26,6 @@ class ConversationInformationUpdater(private val fragment: MessageListFragment) 
             return
         }
 
-        // if the title has a letter in it, don't update it
-        // the user can update conversation titles, from settings
-        if (argManager.title.matches(".*[a-zA-Z].*".toRegex())) {
-            return
-        }
-
         val number = argManager.phoneNumbers
         val name = ContactUtils.findContactNames(number, activity)
         var photoUri = ContactUtils.findImageUri(number, activity)
@@ -39,7 +33,9 @@ class ConversationInformationUpdater(private val fragment: MessageListFragment) 
             photoUri += "/photo"
         }
 
-        if (name != argManager.title && !PhoneNumberUtils.checkEquality(name, number)) {
+        // if the title has a letter in it, don't update it
+        // the user can update conversation titles, from settings
+        if (name != argManager.title && !PhoneNumberUtils.checkEquality(name, number) && !argManager.title.matches(".*[a-zA-Z].*".toRegex())) {
             if (!Account.exists() || Account.primary) {
                 DataSource.updateConversationTitle(activity!!, argManager.conversationId, name)
 
