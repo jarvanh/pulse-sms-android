@@ -26,7 +26,6 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         addPreferencesFromResource(R.xml.settings_features)
         initSecurePrivateConversations()
         initSmartReplies()
-        initSmartReplyTimeout()
         initInternalBrowser()
         initQuickCompose()
         initDelayedSending()
@@ -64,15 +63,6 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         preference.setOnPreferenceChangeListener { _, o ->
             val useSmartReplies = o as Boolean
             ApiUtils.updateSmartReplies(Account.accountId, useSmartReplies)
-            true
-        }
-    }
-
-    private fun initSmartReplyTimeout() {
-        val preference = findPreference(getString(R.string.pref_smart_reply_timeout))
-        preference.setOnPreferenceChangeListener { _, o ->
-            val useSmartReplyTimeout = o as Boolean
-            ApiUtils.updateSmartReplyTimeout(Account.accountId, useSmartReplyTimeout)
             true
         }
     }

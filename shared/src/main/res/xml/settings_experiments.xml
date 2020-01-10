@@ -41,6 +41,12 @@
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:title="@string/experiments_preferences_section_title">
 
+        <SwitchPreference
+            android:key="@string/pref_smart_reply_timeout"
+            android:title="@string/smart_reply_timeout"
+            android:summary="@string/smart_reply_timeout_summary"
+            android:defaultValue="true" />
+
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
 </PreferenceScreen>

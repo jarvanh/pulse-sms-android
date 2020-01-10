@@ -20,6 +20,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.api.implementation.Account
+import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.data.Settings
 
 /**
@@ -34,6 +36,8 @@ class OpenSourceExperimentsFragment : MaterialPreferenceFragment() {
         addPreferencesFromResource(R.xml.settings_experiments)
 
         initOpenSourceLink()
+
+        initSmartReplyTimeout()
     }
 
     private fun initOpenSourceLink() {
@@ -44,6 +48,15 @@ class OpenSourceExperimentsFragment : MaterialPreferenceFragment() {
                     startActivity(intent)
                     true
                 }
+    }
+
+    private fun initSmartReplyTimeout() {
+        val preference = findPreference(getString(R.string.pref_smart_reply_timeout))
+        preference.setOnPreferenceChangeListener { _, o ->
+            val useSmartReplyTimeout = o as Boolean
+            ApiUtils.updateSmartReplyTimeout(Account.accountId, useSmartReplyTimeout)
+            true
+        }
     }
 
     override fun onStop() {
