@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="5.1.0"
+        description="January 10th, 2020">
+        <text>Update settings organization to start accepting open source contributions</text>
+    </version>
+
+    <version
         name="5.0.1"
         description="January 6th, 2020">
         <text>Bug fixes</text>

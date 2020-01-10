@@ -16,6 +16,7 @@
 
 <resources>
 
+    <!-- My Account -->
     <string name="pref_category_account_information" translatable="false">account_info_category</string>
     <string name="pref_category_account_actions" translatable="false">account_actions_category</string>
     <string name="pref_first_start" translatable="false">first_start</string>
@@ -27,7 +28,10 @@
     <string name="pref_refresh_firebase" translatable="false">refresh_firebase</string>
     <string name="pref_enable_danger_zone" translatable="false">enable_danger_zone</string>
     <string name="pref_has_used_free_trial" translatable="false">has_used_free_trial</string>
+    <string name="pref_subscriber_status" translatable="false">subscriber_status</string>
+    <string name="pref_message_count" translatable="false">message_count</string>
 
+    <!-- About Page -->
     <string name="pref_about_changelog" translatable="false">changelog</string>
     <string name="pref_about_copyright" translatable="false">copyright</string>
     <string name="pref_about_app_version" translatable="false">app_version</string>
@@ -40,6 +44,7 @@
     <string name="pref_about_privacy_policy" translatable="false">privacy_policy</string>
     <string name="pref_about_beta" translatable="false">beta</string>
 
+    <!-- Help Page -->
     <string name="pref_help_troubleshooting_category" translatable="false">troubleshooting</string>
     <string name="pref_help_issues" translatable="false">issue_tracker</string>
     <string name="pref_help_faqs" translatable="false">faqs</string>
@@ -49,9 +54,8 @@
     <string name="pref_help_email" translatable="false">email</string>
     <string name="pref_help_twitter" translatable="false">twitter</string>
 
-    <string name="pref_subscriber_status" translatable="false">subscriber_status</string>
-    <string name="pref_message_count" translatable="false">message_count</string>
 
+    <!-- Contact Settings -->
     <string name="pref_contact_pin_conversation" translatable="false">contact_pin_conversation</string>
     <string name="pref_contact_mute_conversation" translatable="false">contact_mute_conversation</string>
     <string name="pref_contact_private_conversation" translatable="false">contact_private_conversation</string>
@@ -71,6 +75,7 @@
     <string name="pref_contact_notification_group" translatable="false">notification_group</string>
     <string name="pref_contact_advanced_group" translatable="false">contact_advanced_group</string>
 
+    <!-- Theme Settings -->
     <string name="pref_general_category" translatable="false">general_settings_category</string>
     <string name="pref_conversation_list" translatable="false">conversation_list_category</string>
     <string name="pref_message_list" translatable="false">message_list_category</string>
@@ -82,6 +87,7 @@
     <string name="pref_apply_theme_globally" translatable="false">apply_theme_globally</string>
     <string name="pref_apply_primary_color_toolbar" translatable="false">apply_primary_color_toolbar</string>
 
+    <!-- Global Settings -->
     <string name="pref_customization_category" translatable="false">customization_category</string>
     <string name="pref_notification_category" translatable="false">notification_category</string>
     <string name="pref_advanced_category" translatable="false">advanced_settings_category</string>
@@ -117,6 +123,8 @@
     <string name="pref_keyboard_layout" translatable="false">keyboard_layout</string>
     <string name="pref_notification_actions_selection" translatable="false">notification_actions_selection</string>
 
+    <!-- Advanced Features -->
+    <string name="pref_feature_settings" translatable="false">feature_settings</string>
     <string name="pref_messaging_category" translatable="false">messaging_features</string>
     <string name="pref_app_features_category" translatable="false">app_features</string>
     <string name="pref_quick_compose_category" translatable="false">quick_compose_category</string>
@@ -133,7 +141,7 @@
     <string name="pref_message_backup" translatable="false">message_backup</string>
     <string name="pref_auto_reply" translatable="false">auto_reply</string>
 
-    <string name="pref_feature_settings" translatable="false">feature_settings</string>
+    <!-- MMS Configuration -->
     <string name="pref_mms_configuration" translatable="false">mms_configuration</string>
     <string name="pref_mms_size" translatable="false">mms_size_limit</string>
     <string name="pref_convert_to_mms" translatable="false">sms_to_mms_message_conversion_count</string>
@@ -149,6 +157,7 @@
     <string name="pref_user_agent_profile_url" translatable="false">user_agent_profile_url</string>
     <string name="pref_user_agent_profile_tag" translatable="false">user_agent_profile_tag_name</string>
 
+    <!-- Auto Reply -->
     <string name="pref_driving_mode_group" translatable="false">driving_mode_group</string>
     <string name="pref_driving_mode" translatable="false">driving_mode</string>
     <string name="pref_driving_mode_editable" translatable="false">driving_mode_edit</string>
@@ -158,7 +167,12 @@
     <string name="pref_auto_replies_group" translatable="false">auto_replies_group</string>
     <string name="pref_create_auto_reply" translatable="false">create_auto_reply</string>
 
+    <!-- Folder Management -->
     <string name="pref_folders_category" translatable="false">folders_category</string>
     <string name="pref_create_folder" translatable="false">create_folder_pref</string>
+
+    <!-- Open Source Experiments -->
+    <string name="pref_experiment_settings" translatable="false">experiment_settings</string>
+    <string name="pref_open_source_link" translatable="false">open_source_link</string>
 
 </resources>

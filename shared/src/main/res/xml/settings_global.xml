@@ -117,6 +117,10 @@
             android:key="@string/pref_feature_settings"
             android:title="@string/menu_feature_settings" />
 
+        <Preference
+            android:key="@string/pref_experiment_settings"
+            android:title="@string/menu_open_source_experiments" />
+
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
 </PreferenceScreen>

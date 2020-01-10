@@ -39,6 +39,7 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_customization_settings">Settings</string>
     <string name="menu_mms_configuration">MMS Configuration</string>
+    <string name="menu_open_source_experiments">Open Source Experiments</string>
     <string name="menu_account">My account</string>
     <string name="menu_device_texting">Text from any device</string>
     <string name="menu_help">Help &amp; feedback</string>
@@ -595,6 +596,15 @@
     <string name="private_conversations_cannot_be_added_to_folders">Private conversations cannot be added.</string>
     <string name="conversation_already_in_a_folder">Already in a different folder.</string>
     <string name="no_folder">No Folder</string>
+
+    <!-- Open Source Experiments Settings -->
+    <string name="experiments_info_section_title">What is this page?</string>
+    <string name="experiments_info_open_source">Pulse is open source!</string>
+    <string name="experiments_info_open_source_summary">That means that any developer can contribute code and features into the app.</string>
+    <string name="experiments_info_disclaimer_1">This section of settings is just a place to store those community contributions. <b>These features are not officially supported by Klinker Apps.</b> They were coded and will be maintained by the community.</string>
+    <string name="experiments_info_disclaimer_2">As such, they come with no guarantee that they will work the way you expect, will continue to be maintained, or even remain available. <b>These features come with no support.</b></string>
+    <string name="experiments_info_disclaimer_3">That said, they would not have been merged into the app if they did not work, solve a specific problem, or add to the app\'s functionality.</string>
+    <string name="experiments_preferences_section_title">Experimental Settings</string>
 
     <!-- Theming Options -->
     <string name="day_night">Default (Day/Night)</string>

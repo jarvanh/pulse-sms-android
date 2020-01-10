@@ -41,6 +41,7 @@ import android.widget.ArrayAdapter
 /**
  * Fragment for modifying app settings_global.
  */
+@Suppress("DEPRECATION")
 class GlobalSettingsFragment : MaterialPreferenceFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +52,7 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
         initThemeRedirect()
         initMmsConfigurationRedirect()
         initAdvancedFeaturesRedirect()
+        initExperimentsRedirect()
 
         initPhoneNumber()
         initKeyboardLayout()
@@ -90,6 +92,14 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
         findPreference(getString(R.string.pref_feature_settings))
                 .setOnPreferenceClickListener {
                     SettingsActivity.startFeatureSettings(activity)
+                    false
+                }
+    }
+
+    private fun initExperimentsRedirect() {
+        findPreference(getString(R.string.pref_experiment_settings))
+                .setOnPreferenceClickListener {
+                    SettingsActivity.startExperimentSettings(activity)
                     false
                 }
     }

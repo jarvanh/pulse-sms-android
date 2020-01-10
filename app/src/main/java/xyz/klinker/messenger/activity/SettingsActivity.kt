@@ -42,6 +42,7 @@ class SettingsActivity : AbstractSettingsActivity() {
     private var autoReplyFragment: AutoReplySettingsFragment? = null
     private var themeFragment: ThemeSettingsFragment? = null
     private var folderFragment: FolderManagementFragment? = null
+    private var experimentsFragment: OpenSourceExperimentsFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +78,11 @@ class SettingsActivity : AbstractSettingsActivity() {
                 folderFragment = FolderManagementFragment()
                 title = StringUtils.titleize(getString(R.string.menu_edit_folders_no_ellipse))
                 startFragment(folderFragment!!)
+            }
+            TYPE_EXPERIMENTS -> {
+                experimentsFragment = OpenSourceExperimentsFragment()
+                title = StringUtils.titleize(getString(R.string.menu_open_source_experiments))
+                startFragment(experimentsFragment!!)
             }
         }
 
@@ -125,7 +131,7 @@ class SettingsActivity : AbstractSettingsActivity() {
     override fun onBackPressed() {
         Settings.forceUpdate(this)
 
-        if (mmsFragment == null && themeFragment == null && autoReplyFragment == null && featureFragment == null) {
+        if (mmsFragment == null && themeFragment == null && autoReplyFragment == null && featureFragment == null && experimentsFragment == null) {
             val intent = Intent(this, MessengerActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -152,6 +158,7 @@ class SettingsActivity : AbstractSettingsActivity() {
         private const val TYPE_THEME = 4
         private const val TYPE_AUTO_REPLY = 5
         private const val TYPE_FOLDER = 6
+        private const val TYPE_EXPERIMENTS = 7
 
         fun startGlobalSettings(context: Context) {
             startWithExtra(context, TYPE_GLOBAL)
@@ -175,6 +182,10 @@ class SettingsActivity : AbstractSettingsActivity() {
 
         fun startFolderSettings(context: Context) {
             startWithExtra(context, TYPE_FOLDER)
+        }
+
+        fun startExperimentSettings(context: Context) {
+            startWithExtra(context, TYPE_EXPERIMENTS)
         }
 
         private fun startWithExtra(context: Context, type: Int) {
