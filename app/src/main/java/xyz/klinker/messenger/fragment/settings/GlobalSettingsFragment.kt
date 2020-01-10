@@ -50,6 +50,7 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
 
         initThemeRedirect()
         initMmsConfigurationRedirect()
+        initAdvancedFeaturesRedirect()
 
         initPhoneNumber()
         initKeyboardLayout()
@@ -81,6 +82,14 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
         findPreference(getString(R.string.pref_mms_configuration))
                 .setOnPreferenceClickListener {
                     SettingsActivity.startMmsSettings(activity)
+                    false
+                }
+    }
+
+    private fun initAdvancedFeaturesRedirect() {
+        findPreference(getString(R.string.pref_feature_settings))
+                .setOnPreferenceClickListener {
+                    SettingsActivity.startFeatureSettings(activity)
                     false
                 }
     }

@@ -91,7 +91,8 @@
                 android:id="@+id/drawer_feature_settings"
                 android:icon="@drawable/ic_feature_settings"
                 android:orderInCategory="3"
-                android:title="@string/menu_feature_settings" />
+                android:title="@string/menu_feature_settings"
+                android:visible="false"/>
 
             <item
                 android:id="@+id/drawer_settings"

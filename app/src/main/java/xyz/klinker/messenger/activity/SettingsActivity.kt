@@ -125,7 +125,7 @@ class SettingsActivity : AbstractSettingsActivity() {
     override fun onBackPressed() {
         Settings.forceUpdate(this)
 
-        if (mmsFragment == null && themeFragment == null && autoReplyFragment == null) {
+        if (mmsFragment == null && themeFragment == null && autoReplyFragment == null && featureFragment == null) {
             val intent = Intent(this, MessengerActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

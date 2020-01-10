@@ -113,6 +113,10 @@
             android:key="@string/pref_mms_configuration"
             android:title="@string/menu_mms_configuration" />
 
+        <Preference
+            android:key="@string/pref_feature_settings"
+            android:title="@string/menu_feature_settings" />
+
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
 </PreferenceScreen>

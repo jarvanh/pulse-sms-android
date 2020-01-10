@@ -35,9 +35,9 @@
     <string name="menu_schedule">Scheduled messages</string>
     <string name="menu_mute_contacts">Blacklist</string>
     <string name="menu_invite">Invite friends</string>
-    <string name="menu_feature_settings">Advanced features</string>
-    <string name="menu_settings">Customization settings</string>
-    <string name="menu_customization_settings">Customization settings</string>
+    <string name="menu_feature_settings">Advanced Features</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_customization_settings">Settings</string>
     <string name="menu_mms_configuration">MMS Configuration</string>
     <string name="menu_account">My account</string>
     <string name="menu_device_texting">Text from any device</string>
