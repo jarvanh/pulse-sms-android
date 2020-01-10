@@ -65,6 +65,7 @@ object Settings {
     var historyInNotifications: Boolean = false
     var dismissNotificationAfterReply: Boolean = false
     var smartReplies: Boolean = true
+    var smartReplyTimeout: Boolean = true
     var internalBrowser: Boolean = false
     var snooze: Long = 0
     var repeatNotifications: Long = 0
@@ -160,6 +161,7 @@ object Settings {
         this.historyInNotifications = sharedPrefs.getBoolean(context.getString(R.string.pref_history_in_notifications), true)
         this.dismissNotificationAfterReply = sharedPrefs.getBoolean(context.getString(R.string.pref_dismiss_notifications_on_reply_android_p), false)
         this.smartReplies = sharedPrefs.getBoolean(context.getString(R.string.pref_smart_reply), true)
+        this.smartReplyTimeout = sharedPrefs.getBoolean(context.getString(R.string.pref_smart_reply_timeout), true)
         this.internalBrowser = sharedPrefs.getBoolean(context.getString(R.string.pref_internal_browser), true)
         this.drivingMode = sharedPrefs.getBoolean(context.getString(R.string.pref_driving_mode), false)
         this.vacationMode = sharedPrefs.getBoolean(context.getString(R.string.pref_vacation_mode), false)

@@ -18,6 +18,7 @@ import xyz.klinker.messenger.R
 import xyz.klinker.messenger.activity.SettingsActivity
 import xyz.klinker.messenger.api.implementation.firebase.AnalyticsHelper
 import xyz.klinker.messenger.fragment.message.send.SendMessageManager
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.util.DensityUtil
 import java.lang.Exception
 
@@ -62,7 +63,9 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
                             messageEntry.requestFocus()
 
                             hideContainer()
-                            sendManager.requestPermissionThenSend(false, 2000)
+                            if (Settings.smartReplyTimeout) {
+                                sendManager.requestPermissionThenSend(false, 2000)
+                            }
                         }
 
                         layout

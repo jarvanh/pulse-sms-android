@@ -1269,6 +1269,15 @@ object ApiUtils {
     }
 
     /**
+     * Update the smart reply timeout setting.
+     */
+    fun updateSmartReplyTimeout(accountId: String?, useSmartReplyTimeout: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "smart_reply_timeout", "boolean", useSmartReplyTimeout)
+        }
+    }
+
+    /**
      * Update the internal browser setting.
      */
     fun updateInternalBrowser(accountId: String?, useBrowser: Boolean) {

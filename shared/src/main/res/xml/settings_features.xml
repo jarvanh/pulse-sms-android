@@ -42,6 +42,12 @@
             android:summary="@string/use_smart_replies_summary"
             android:defaultValue="true" />
 
+        <SwitchPreference
+            android:key="@string/pref_smart_reply_timeout"
+            android:title="@string/smart_reply_timeout"
+            android:summary="@string/smart_reply_timeout_summary"
+            android:defaultValue="true" />
+
         <Preference
             android:key="@string/pref_auto_reply"
             android:title="@string/auto_reply_configuration"
