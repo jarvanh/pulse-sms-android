@@ -36,7 +36,12 @@ class SmartReplyManager(private val fragment: MessageListFragment) {
     fun applySuggestions(suggestions: List<SmartReplySuggestion>, firstLoad: Boolean = false) {
         Log.v("SmartReplyManager", "Suggestions size: ${suggestions.size}")
 
-        closeSmartReply.imageTintList = ColorStateList.valueOf(fragment.argManager.colorAccent)
+        closeSmartReply.imageTintList = if (Settings.useGlobalThemeColor) {
+            ColorStateList.valueOf(Settings.mainColorSet.colorAccent)
+        } else {
+            ColorStateList.valueOf(fragment.argManager.colorAccent)
+        }
+
         closeSmartReply.setOnClickListener { closeSmartReply() }
 
         handler.removeCallbacksAndMessages(null)

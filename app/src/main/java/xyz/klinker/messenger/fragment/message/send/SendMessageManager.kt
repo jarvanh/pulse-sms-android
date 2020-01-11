@@ -105,7 +105,12 @@ class SendMessageManager(private val fragment: MessageListFragment) {
 
         })
 
-        val accent = fragment.argManager.colorAccent
+        val accent = if (Settings.useGlobalThemeColor) {
+            Settings.mainColorSet.colorAccent
+        } else {
+            fragment.argManager.colorAccent
+        }
+
         sendProgress?.progressTintList = ColorStateList.valueOf(accent)
         sendProgress?.progressBackgroundTintList = ColorStateList.valueOf(accent)
         sendProgress?.progressTintMode = PorterDuff.Mode.SRC_IN
