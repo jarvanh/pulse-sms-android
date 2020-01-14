@@ -376,9 +376,9 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
         }
 
         preference.setOnPreferenceClickListener {
-            val intent = Intent(activity, ContactResyncService::class.java)
-            activity?.startService(intent)
-            activity?.onBackPressed()
+            val intent = Intent(fragmentActivity, ContactResyncService::class.java)
+            fragmentActivity?.startService(intent)
+            fragmentActivity?.onBackPressed()
             true
         }
     }
@@ -593,7 +593,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     }
 
     private fun promptCancelTrial() {
-        AlertDialog.Builder(activity!!)
+        AlertDialog.Builder(fragmentActivity!!)
                 .setCancelable(false)
                 .setMessage(R.string.purchase_cancelled_trial_finished)
                 .setPositiveButton(R.string.ok) { _, _ -> deleteAccount() }
@@ -630,7 +630,7 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
     }
 
     private fun startLoginActivity(signInOnly: Boolean = false) {
-        val intent = Intent(context, LoginActivity::class.java)
+        val intent = Intent(fragmentActivity, LoginActivity::class.java)
         intent.putExtra(LoginActivity.ARG_FORCE_NO_CREATE_ACCOUNT, signInOnly)
         intent.putExtra(LoginActivity.ARG_BACKGROUND_COLOR, Settings.mainColorSet.color)
         intent.putExtra(LoginActivity.ARG_ACCENT_COLOR, Settings.mainColorSet.colorAccent)
@@ -643,16 +643,16 @@ class MyAccountFragment : MaterialPreferenceFragmentCompat() {
 
 
     companion object {
-        val ONBOARDING_REQUEST = 54320
-        val SETUP_REQUEST = 54321
-        val PURCHASE_REQUEST = 54322
-        val TRIAL_REQUEST = 5432
+        const val ONBOARDING_REQUEST = 54320
+        const val SETUP_REQUEST = 54321
+        const val PURCHASE_REQUEST = 54322
+        const val TRIAL_REQUEST = 5432
 
-        val RESULT_SIGN_IN = 54323
-        val RESULT_START_TRIAL = 54321
+        const val RESULT_SIGN_IN = 54323
+        const val RESULT_START_TRIAL = 54321
 
-        val RESPONSE_START_TRIAL = 101
-        val RESPONSE_SKIP_TRIAL_FOR_NOW = 102
+        const val RESPONSE_START_TRIAL = 101
+        const val RESPONSE_SKIP_TRIAL_FOR_NOW = 102
 
         var openTrialUpgradePreference = false
     }
