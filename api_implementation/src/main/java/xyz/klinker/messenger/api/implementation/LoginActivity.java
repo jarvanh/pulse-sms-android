@@ -33,6 +33,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -412,14 +415,30 @@ public class LoginActivity extends AppCompatActivity {
                         .setMessage(R.string.api_amazon_fire)
                         .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {})
                         .show();
+            } else if (!isGooglePlayServicesAvailable(this)) {
+                Toast.makeText(getApplicationContext(), R.string.api_device_error_gps,
+                        Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getApplicationContext(), R.string.api_device_error,
                         Toast.LENGTH_SHORT).show();
             }
-            //Toast.makeText(getApplicationContext(), "FCM token: " + getFirebaseId(), Toast.LENGTH_LONG).show();
 
             recreate();
         });
+    }
+
+    private boolean isGooglePlayServicesAvailable(Activity activity) {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int status = googleApiAvailability.isGooglePlayServicesAvailable(activity);
+        if (status != ConnectionResult.SUCCESS) {
+            if (googleApiAvailability.isUserResolvableError(status)) {
+                googleApiAvailability.getErrorDialog(activity, status, 2404).show();
+            }
+
+            return false;
+        }
+        
+        return true;
     }
 
     private void applyAccountSettings(AccountEncryptionCreator encryptionCreator) {
