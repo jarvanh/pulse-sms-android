@@ -247,7 +247,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
                 Log.v(TAG, "added message")
 
                 if (messageId == -1L) {
-                    return;
+                    return
                 }
 
                 if (!Utils.isDefaultSmsApp(context) && Account.primary && message.type == Message.TYPE_SENDING) {

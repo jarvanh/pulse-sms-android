@@ -2219,20 +2219,22 @@ object DataSource {
             }
         }
 
-        if (useApi) {
-            ApiUtils.addMessage(context, accountId(context), message.id, conversationId, message.type, message.data,
-                    message.timestamp, message.mimeType, message.read, message.seen, message.from,
-                    message.color, message.sentDeviceId.toString(), message.simPhoneNumber, encryptor(context))
-        }
+        if (id > 0) {
+            if (useApi) {
+                ApiUtils.addMessage(context, accountId(context), message.id, conversationId, message.type, message.data,
+                        message.timestamp, message.mimeType, message.read, message.seen, message.from,
+                        message.color, message.sentDeviceId.toString(), message.simPhoneNumber, encryptor(context))
+            }
 
-        if (message.type != Message.TYPE_MEDIA) {
-            updateConversation(context, conversationId, message.read, message.timestamp,
-                    if (message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING)
-                        context.getString(R.string.you) + ": " + message.data
-                    else message.data,
-                    message.mimeType, false, useApi)
+            if (message.type != Message.TYPE_MEDIA) {
+                updateConversation(context, conversationId, message.read, message.timestamp,
+                        if (message.type == Message.TYPE_SENT || message.type == Message.TYPE_SENDING)
+                            context.getString(R.string.you) + ": " + message.data
+                        else message.data,
+                        message.mimeType, false, useApi)
 
-            MessageInsertionMetadataHelper(context).process(message)
+                MessageInsertionMetadataHelper(context).process(message)
+            }
         }
 
         return if (returnMessageId) id else conversationId
