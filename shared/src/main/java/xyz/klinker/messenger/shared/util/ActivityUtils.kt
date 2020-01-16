@@ -119,7 +119,7 @@ object ActivityUtils {
         }
     }
 
-    private fun activateLightStatusBar(activity: Activity?, activate: Boolean) {
+    fun activateLightStatusBar(activity: Activity?, activate: Boolean) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || activity == null) {
             return
         }

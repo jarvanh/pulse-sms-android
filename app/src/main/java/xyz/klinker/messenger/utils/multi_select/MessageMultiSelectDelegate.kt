@@ -24,8 +24,7 @@ import java.util.*
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.speech.tts.TextToSpeech
-
-
+import xyz.klinker.messenger.shared.util.ActivityUtils
 
 
 @Suppress("DEPRECATION")
@@ -42,6 +41,7 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             isSelectable = true
 
             activity?.menuInflater?.inflate(R.menu.action_mode_message_list, menu)
+            ActivityUtils.activateLightStatusBar(activity, false)
 
             return true
         }
@@ -105,6 +105,12 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             }
 
             Handler().postDelayed({ isSelectable = false }, 250)
+
+            if (Settings.useGlobalThemeColor) {
+                ActivityUtils.setUpLightStatusBar(activity, Settings.mainColorSet.colorDark)
+            } else {
+                ActivityUtils.setUpLightStatusBar(activity, fragment.argManager.colorDark)
+            }
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {

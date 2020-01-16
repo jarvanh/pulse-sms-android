@@ -21,6 +21,7 @@ import xyz.klinker.messenger.shared.data.pojo.BaseTheme
 import java.util.*
 import android.graphics.PorterDuff
 import android.util.Log
+import xyz.klinker.messenger.shared.util.ActivityUtils
 
 @Suppress("DEPRECATION")
 class ConversationsMultiSelectDelegate(private val fragment: ConversationListFragment) : MultiSelector() {
@@ -38,6 +39,8 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
             } else {
                 activity?.menuInflater?.inflate(R.menu.action_mode_conversation_list, menu)
             }
+
+            ActivityUtils.activateLightStatusBar(activity, false)
 
             return true
         }
@@ -83,6 +86,7 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
             }
 
             Handler().postDelayed({ isSelectable = false }, 250)
+            ActivityUtils.setUpLightStatusBar(activity, Settings.mainColorSet.colorDark)
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
