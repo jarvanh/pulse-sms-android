@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import com.google.android.material.navigation.NavigationView
 
 import xyz.klinker.messenger.R
@@ -37,6 +38,16 @@ class PrivateConversationListFragment : ConversationListFragment() {
 
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.window?.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
     }
 
     override fun noConversationsText() = getString(R.string.no_private_messages_description)
