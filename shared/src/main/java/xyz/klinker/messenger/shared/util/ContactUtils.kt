@@ -400,7 +400,7 @@ object ContactUtils {
                     if (colorSet != null) {
                         contact.colors = colorSet
                     } else {
-                        ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context)
+                        ImageUtils.fillContactColors(contact, /* findImageUri(contact.phoneNumber, context) */ null, context)
                     }
 
                     contacts.add(contact)
@@ -456,7 +456,7 @@ object ContactUtils {
                     if (colorSet != null) {
                         contact.colors = colorSet
                     } else {
-                        ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context)
+                        ImageUtils.fillContactColors(contact,  /* findImageUri(contact.phoneNumber, context) */ null, context)
                     }
 
                     contacts.add(contact)
@@ -513,7 +513,7 @@ object ContactUtils {
                     if (colorSet != null) {
                         contact.colors = colorSet
                     } else {
-                        ImageUtils.fillContactColors(contact, ContactUtils.findImageUri(contact.phoneNumber, context), context)
+                        ImageUtils.fillContactColors(contact, /* findImageUri(contact.phoneNumber, context) */ null, context)
                     }
 
                     contacts.add(contact)
