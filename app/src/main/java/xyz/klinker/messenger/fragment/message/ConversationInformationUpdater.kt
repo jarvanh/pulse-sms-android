@@ -27,16 +27,12 @@ class ConversationInformationUpdater(private val fragment: MessageListFragment) 
         }
 
         val number = argManager.phoneNumbers
-        val name = ContactUtils.findContactNames(number, activity)
-        var photoUri = ContactUtils.findImageUri(number, activity)
-        if (photoUri != null && !photoUri.isEmpty()) {
-            photoUri += "/photo"
-        }
 
         // if the title has a letter in it, don't update it
         // the user can update conversation titles, from settings
-        if (name != argManager.title && !PhoneNumberUtils.checkEquality(name, number) && !argManager.title.matches(".*[a-zA-Z].*".toRegex())) {
-            if (!Account.exists() || Account.primary) {
+        if (!argManager.title.matches(".*[a-zA-Z].*".toRegex()) && (!Account.exists() || Account.primary)) {
+            val name = ContactUtils.findContactNames(number, activity)
+            if (name != argManager.title && !PhoneNumberUtils.checkEquality(name, number)) {
                 DataSource.updateConversationTitle(activity!!, argManager.conversationId, name)
 
                 val fragment = activity?.supportFragmentManager?.findFragmentById(R.id.conversation_list_container) as ConversationListFragment?
@@ -46,9 +42,11 @@ class ConversationInformationUpdater(private val fragment: MessageListFragment) 
             }
         }
 
-        val originalImage = argManager.imageUri
-        if (photoUri != null && (originalImage == null || photoUri != originalImage || originalImage.isEmpty()) && activity != null) {
-            DataSource.updateConversationImage(activity!!, argManager.conversationId, photoUri)
+        if (argManager.imageUri.isNullOrEmpty()) {
+            val photoUri = ContactUtils.findImageUri(number, activity)
+            if (photoUri != null && photoUri.isNotEmpty()) {
+                DataSource.updateConversationImage(activity!!, argManager.conversationId, photoUri)
+            }
         }
     }
 

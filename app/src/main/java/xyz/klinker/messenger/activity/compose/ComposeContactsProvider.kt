@@ -226,7 +226,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
                         val image = ContactUtils.findImageUri(number, activity)
 
                         if (image != null) {
-                            contactEntry.submitItem(name, number, Uri.parse(image + "/photo"))
+                            contactEntry.submitItem(name, number, Uri.parse(image))
                         } else {
                             contactEntry.submitItem(name, number)
                         }
@@ -239,7 +239,7 @@ class ComposeContactsProvider(private val activity: ComposeActivity) : ContactCl
                         val image = ContactUtils.findImageUri(number, activity)
 
                         if (image != null) {
-                            contactEntry.submitItem(name, number, Uri.parse(image + "/photo"))
+                            contactEntry.submitItem(name, number, Uri.parse(image))
                         } else {
                             contactEntry.submitItem(name, number)
                         }
