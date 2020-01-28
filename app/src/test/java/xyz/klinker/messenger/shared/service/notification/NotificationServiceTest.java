@@ -100,36 +100,6 @@ public class NotificationServiceTest extends MessengerRobolectricSuite {
         assertEquals("image/jpg", conversations.get(0).getMessages().get(0).getMimeType());
     }
 
-    @Test
-    public void shouldAlertAgainForConversationWhereLatestTimestampsAreMoreThanThirtySeconds() {
-        List<NotificationMessage> messages = new ArrayList<>();
-        messages.add(new NotificationMessage(1, "", "", 1000, ""));
-        messages.add(new NotificationMessage(1, "", "", TimeUtils.INSTANCE.getDAY(), ""));
-        messages.add(new NotificationMessage(1, "", "", 0, ""));
-        messages.add(new NotificationMessage(1, "", "", (TimeUtils.INSTANCE.getSECOND() * 30) + 1, ""));
-
-        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider).shouldAlertOnce(messages), Matchers.is(false));
-    }
-
-    @Test
-    public void shouldOnlyAlertOnceForConversationWhereLatestTimestampsAreLessThanThirtySeconds() {
-        List<NotificationMessage> messages = new ArrayList<>();
-        messages.add(new NotificationMessage(1, "", "", 1000, ""));
-        messages.add(new NotificationMessage(1, "", "", TimeUtils.INSTANCE.getDAY(), ""));
-        messages.add(new NotificationMessage(1, "", "", 0, ""));
-        messages.add(new NotificationMessage(1, "", "", (TimeUtils.INSTANCE.getSECOND() * 30) - 100, ""));
-
-        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider).shouldAlertOnce(messages), Matchers.is(true));
-    }
-
-    @Test
-    public void smallMessageListsShouldOnlyAlertOnce() {
-        List<NotificationMessage> messages = new ArrayList<>();
-        messages.add(new NotificationMessage(1, "", "", TimeUtils.INSTANCE.getDAY() - 100, ""));
-
-        assertThat(new NotificationConversationProvider(service, ringtoneProvider, summaryProvider).shouldAlertOnce(messages), Matchers.is(true));
-    }
-
     private Cursor getUnseenCursor() {
         MatrixCursor cursor = new MatrixCursor(new String[]{
                 Message.COLUMN_ID,
