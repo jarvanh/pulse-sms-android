@@ -82,21 +82,21 @@
     <string name="marking_section_as_read">Отмечаю все %1$s как прочитанные</string>
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d диалог удален</item>
-        <item quantity="other">%1$d диалоги удалены</item>
-        <item quantity="few">%1$d диалоги удалены</item>
-        <item quantity="many">%1$d диалоги удалены</item>
+        <item quantity="few">%1$d диалога удалены</item>
+        <item quantity="many">%1$d диалогов удалены</item>
+        <item quantity="other">%1$d диалогов удалены</item>
     </plurals>
     <plurals name="conversations_archived">
         <item quantity="one">%1$d диалог отправлен в архив</item>
-        <item quantity="other">%1$d диалоги отправлены в архив</item>
-        <item quantity="few">%1$d диалоги отправлены в архив</item>
-        <item quantity="many">%1$d диалоги отправлены в архив</item>
+        <item quantity="few">%1$d диалога отправлены в архив</item>
+        <item quantity="many">%1$d диалогов отправлены в архив</item>
+        <item quantity="other">%1$d диалогов отправлены в архив</item>
     </plurals>
     <plurals name="conversations_unarchived">
         <item quantity="one">%1$d диалог перемещен во Входящие</item>
-        <item quantity="other">%1$d диалоги перемещены во Входящие</item>
-        <item quantity="few">%1$d диалоги перемещены во Входящие</item>
-        <item quantity="many">%1$d диалоги перемещены во Входящие</item>
+        <item quantity="few">%1$d диалога перемещены во Входящие</item>
+        <item quantity="many">%1$d диалогов перемещены во Входящие</item>
+        <item quantity="other">%1$d диалогов перемещены во Входящие</item>
     </plurals>
     <string name="undo">Отменить</string>
     <string name="enter_search">Найти...</string>
@@ -215,15 +215,15 @@
     <string name="notification_ticker">Новое сообщение от %1$s</string>
     <plurals name="new_conversations">
         <item quantity="one">%1$d новый диалог</item>
-        <item quantity="other">%1$d новые диалоги</item>
-        <item quantity="few">%1$d новые диалоги</item>
-        <item quantity="many">%1$d новые диалоги</item>
+        <item quantity="few">%1$d новых диалога</item>
+        <item quantity="many">%1$d новых диалогов</item>
+        <item quantity="other">%1$d новых диалогов</item>
     </plurals>
     <plurals name="new_messages">
         <item quantity="one">%1$d новое сообщение</item>
-        <item quantity="other">%1$d новые сообщения</item>
-        <item quantity="few">%1$d новые сообщения</item>
-        <item quantity="many">%1$d новые сообщения</item>
+        <item quantity="few">%1$d новых сообщения</item>
+        <item quantity="many">%1$d новых сообщений</item>
+        <item quantity="other">%1$d новых сообщений</item>
     </plurals>
     <string name="read">Прочитано</string>
     <string name="mute">Бесшумно</string>
@@ -295,9 +295,9 @@
     <string name="support">Поддержка</string>
     <plurals name="message_count">
         <item quantity="one">%1$d сообщение</item>
-        <item quantity="other">%1$d сообщения</item>
         <item quantity="few">%1$d сообщения</item>
-        <item quantity="many">%1$d сообщения</item>
+        <item quantity="many">%1$d сообщений</item>
+        <item quantity="other">%1$d сообщений</item>
     </plurals>
     <plurals name="conversation_count">
         <item quantity="one">в %1$d диалоге</item>
