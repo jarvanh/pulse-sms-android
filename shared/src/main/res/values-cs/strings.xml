@@ -324,14 +324,12 @@ na které narazíte!</string>
     <plurals name="message_count">
         <item quantity="one">%1$d zpráva</item>
         <item quantity="other">%1$d zpráv</item>
-        <item quantity="few">%1$d zprávy</item>
-        <item quantity="many">%1$d zpráv</item>
+        <item quantity="few">%1$d zpráv</item>
     </plurals>
     <plurals name="conversation_count">
         <item quantity="one">v %1$d konverzaci</item>
         <item quantity="other">v %1$d konverzacích</item>
         <item quantity="few">v %1$d konverzacích</item>
-        <item quantity="many">v %1$d konverzacích</item>
     </plurals>
     <string name="pin_conversation">Připnout konverzaci</string>
     <string name="pin_conversation_summary">Udržuje tuto konverzaci na vrchu seznamu</string>

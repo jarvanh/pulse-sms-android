@@ -218,13 +218,13 @@ czas ją rozpocząć!</string>
     <plurals name="new_conversations">
         <item quantity="one">%1$d nowa rozmowa</item>
         <item quantity="other">%1$d nowe rozmowy</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
+        <item quantity="few">%1$d nowe rozmowy</item>
+        <item quantity="many">%1$d nowe rozmowy</item>
     </plurals>
     <plurals name="new_messages">
         <item quantity="one">%1$d nowa wiadomość</item>
         <item quantity="other">%1$d nowych wiadomości</item>
-        <item quantity="few">%1$d nowe wiadomości</item>
+        <item quantity="few">%1$d nowych wiadomości</item>
         <item quantity="many">%1$d nowych wiadomości</item>
     </plurals>
     <string name="read">Przeczytane</string>

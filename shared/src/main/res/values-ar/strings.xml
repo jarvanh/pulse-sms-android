@@ -74,26 +74,26 @@
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d تم حذف المحادثة</item>
         <item quantity="other">%1$d تم حذف المحادثة</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="two"></item>
-        <item quantity="zero"></item>
+        <item quantity="few">%1$d تم حذف المحادثة</item>
+        <item quantity="many">%1$d تم حذف المحادثة</item>
+        <item quantity="two">%1$d تم حذف المحادثة</item>
+        <item quantity="zero">%1$d تم حذف المحادثة</item>
     </plurals>
     <plurals name="conversations_archived">
         <item quantity="one">%1$d المحادثة المحفوظة</item>
         <item quantity="other">%1$d المحادثة المحفوظة</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="two"></item>
-        <item quantity="zero"></item>
+        <item quantity="few">%1$d المحادثة المحفوظة</item>
+        <item quantity="many">%1$d المحادثة المحفوظة</item>
+        <item quantity="two">%1$d المحادثة المحفوظة</item>
+        <item quantity="zero">%1$d المحادثة المحفوظة</item>
     </plurals>
     <plurals name="conversations_unarchived">
         <item quantity="one">%1$d تم نقل المحادثة إلى البريد الوارد</item>
         <item quantity="other">%1$d تم نقل المحادثة إلى البريد الوارد</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="two"></item>
-        <item quantity="zero"></item>
+        <item quantity="few">%1$d تم نقل المحادثة إلى البريد الوارد</item>
+        <item quantity="many">%1$d تم نقل المحادثة إلى البريد الوارد</item>
+        <item quantity="two">%1$d تم نقل المحادثة إلى البريد الوارد</item>
+        <item quantity="zero">%1$d تم نقل المحادثة إلى البريد الوارد</item>
     </plurals>
     <string name="undo">فك</string>
     <string name="enter_search">البحث عن...</string>
@@ -203,18 +203,18 @@ http://messenger.klinkerapps.com</string>
     <plurals name="new_conversations">
         <item quantity="one">%1$d محادثه جديده</item>
         <item quantity="other">%1$d محادثه جديده</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="two"></item>
-        <item quantity="zero"></item>
+        <item quantity="few">%1$d محادثه جديده</item>
+        <item quantity="many">%1$d محادثه جديده</item>
+        <item quantity="two">%1$d محادثه جديده</item>
+        <item quantity="zero">%1$d محادثه جديده</item>
     </plurals>
     <plurals name="new_messages">
         <item quantity="one">%1$d رسالة جديده</item>
         <item quantity="other">%1$d رسالة جديده</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="two"></item>
-        <item quantity="zero"></item>
+        <item quantity="few">%1$d رسالة جديده</item>
+        <item quantity="many">%1$d رسالة جديده</item>
+        <item quantity="two">%1$d رسالة جديده</item>
+        <item quantity="zero">%1$d رسالة جديده</item>
     </plurals>
     <string name="read">اقرا</string>
     <string name="reply">رد</string>
@@ -276,18 +276,18 @@ http://messenger.klinkerapps.com</string>
     <plurals name="message_count">
         <item quantity="one">%1$d الرساله</item>
         <item quantity="other">%1$d الرساله</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="two"></item>
-        <item quantity="zero"></item>
+        <item quantity="few">%1$d الرساله</item>
+        <item quantity="many">%1$d الرساله</item>
+        <item quantity="two">%1$d الرساله</item>
+        <item quantity="zero">%1$d الرساله</item>
     </plurals>
     <plurals name="conversation_count">
         <item quantity="one">داخل %1$d  المحادثه</item>
         <item quantity="other">داخل %1$d  المحادثه</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="two"></item>
-        <item quantity="zero"></item>
+        <item quantity="few">داخل %1$d  المحادثه</item>
+        <item quantity="many">داخل %1$d  المحادثه</item>
+        <item quantity="two">داخل %1$d  المحادثه</item>
+        <item quantity="zero">داخل %1$d  المحادثه</item>
     </plurals>
     <string name="pin_conversation">خلال المحادثة</string>
     <string name="pin_conversation_summary">أبقي على هذه المحادثة في بداية قائمة المحادثات</string>

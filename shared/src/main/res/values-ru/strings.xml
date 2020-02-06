@@ -83,20 +83,20 @@
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d диалог удален</item>
         <item quantity="other">%1$d диалоги удалены</item>
-        <item quantity="few">Исходный язык не содержит эту множественную форму</item>
-        <item quantity="many">Исходный язык не содержит эту множественную форму</item>
+        <item quantity="few">%1$d диалоги удалены</item>
+        <item quantity="many">%1$d диалоги удалены</item>
     </plurals>
     <plurals name="conversations_archived">
         <item quantity="one">%1$d диалог отправлен в архив</item>
         <item quantity="other">%1$d диалоги отправлены в архив</item>
-        <item quantity="few">Исходный язык не содержит эту множественную форму</item>
-        <item quantity="many">Исходный язык не содержит эту множественную форму</item>
+        <item quantity="few">%1$d диалоги отправлены в архив</item>
+        <item quantity="many">%1$d диалоги отправлены в архив</item>
     </plurals>
     <plurals name="conversations_unarchived">
         <item quantity="one">%1$d диалог перемещен во Входящие</item>
         <item quantity="other">%1$d диалоги перемещены во Входящие</item>
-        <item quantity="few">Исходный язык не содержит эту множественную форму</item>
-        <item quantity="many">Исходный язык не содержит эту множественную форму</item>
+        <item quantity="few">%1$d диалоги перемещены во Входящие</item>
+        <item quantity="many">%1$d диалоги перемещены во Входящие</item>
     </plurals>
     <string name="undo">Отменить</string>
     <string name="enter_search">Найти...</string>
@@ -216,14 +216,14 @@
     <plurals name="new_conversations">
         <item quantity="one">%1$d новый диалог</item>
         <item quantity="other">%1$d новые диалоги</item>
-        <item quantity="few">Исходный язык не содержит эту множественную форму</item>
-        <item quantity="many">Исходный язык не содержит эту множественную форму</item>
+        <item quantity="few">%1$d новые диалоги</item>
+        <item quantity="many">%1$d новые диалоги</item>
     </plurals>
     <plurals name="new_messages">
         <item quantity="one">%1$d новое сообщение</item>
         <item quantity="other">%1$d новые сообщения</item>
-        <item quantity="few">Несколько новых сообщений</item>
-        <item quantity="many">Много новых сообщений</item>
+        <item quantity="few">%1$d новые сообщения</item>
+        <item quantity="many">%1$d новые сообщения</item>
     </plurals>
     <string name="read">Прочитано</string>
     <string name="mute">Бесшумно</string>
@@ -296,14 +296,14 @@
     <plurals name="message_count">
         <item quantity="one">%1$d сообщение</item>
         <item quantity="other">%1$d сообщения</item>
-        <item quantity="few">Несколько сообщений</item>
-        <item quantity="many">Много сообщений</item>
+        <item quantity="few">%1$d сообщения</item>
+        <item quantity="many">%1$d сообщения</item>
     </plurals>
     <plurals name="conversation_count">
         <item quantity="one">в %1$d диалоге</item>
         <item quantity="other">в %1$d диалогах</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
+        <item quantity="few">в %1$d диалогах</item>
+        <item quantity="many">в %1$d диалогах</item>
     </plurals>
     <string name="pin_conversation">Закрепить диалог</string>
     <string name="pin_conversation_summary">Держать этот диалог вверху списка</string>
