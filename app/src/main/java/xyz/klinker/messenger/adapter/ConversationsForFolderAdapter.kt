@@ -24,8 +24,8 @@ import xyz.klinker.messenger.shared.util.listener.ContactClickedListener
 /**
  * Adds a checkbox to the base contact adapter so that you can select multiple items.
  */
-class ConversationsForFolderAdapter(conversations: List<Conversation>, listener: ContactClickedListener,
-                                    private val selectedIds: List<Long>, private val thisFolderId: Long) : ContactAdapter(conversations, listener) {
+class ConversationsForFolderAdapter(conversations: MutableList<Conversation>, listener: ContactClickedListener,
+                                    val selectedIds: MutableList<Long>, private val thisFolderId: Long) : ContactAdapter(conversations, listener) {
 
     override val layoutId: Int
         get() = R.layout.invite_list_item

@@ -76,28 +76,29 @@ class FolderManagementFragment : MaterialPreferenceFragment() {
         editText.setText(folder.name)
         editText.setSelection(editText.text.length)
 
+        val selectedConversations = mutableListOf<Long>()
+        val allConversations = mutableListOf<Conversation>()
+        val adapter = ConversationsForFolderAdapter(allConversations, object : ContactClickedListener {
+            override fun onClicked(conversation: Conversation) {
+                if (selectedConversations.contains(conversation.id)) {
+                    selectedConversations.remove(conversation.id)
+                    DataSource.removeConversationFromFolder(activity, conversation.id, true)
+                } else {
+                    selectedConversations.add(conversation.id)
+                    DataSource.addConversationToFolder(activity, conversation.id, folder.id, true)
+                }
+            }
+        }, selectedConversations, folder.id)
+
         val recyclerView = layout.findViewById<RecyclerView>(R.id.conversation_list)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = ConversationsForFolderAdapter(emptyList(), object : ContactClickedListener {
-            override fun onClicked(conversation: Conversation) { }
-        }, emptyList(), folder.id)
+        recyclerView.adapter = adapter
 
         Thread {
-            val conversations = DataSource.getAllConversationsAsList(activity)
-            val selectedConversations = DataSource.getFolderConversationsAsList(activity, folder.id).map { it.id }.toMutableList()
-
+            allConversations.addAll(DataSource.getAllConversationsAsList(activity))
+            selectedConversations.addAll(DataSource.getFolderConversationsAsList(activity, folder.id).map { it.id })
             recyclerView.post {
-                recyclerView.adapter = ConversationsForFolderAdapter(conversations, object : ContactClickedListener {
-                    override fun onClicked(conversation: Conversation) {
-                        if (selectedConversations.contains(conversation.id)) {
-                            selectedConversations.remove(conversation.id)
-                            DataSource.removeConversationFromFolder(activity, conversation.id, true)
-                        } else {
-                            selectedConversations.add(conversation.id)
-                            DataSource.addConversationToFolder(activity, conversation.id, folder.id, true)
-                        }
-                    }
-                }, selectedConversations, folder.id)
+                adapter.notifyDataSetChanged()
             }
         }.start()
 
