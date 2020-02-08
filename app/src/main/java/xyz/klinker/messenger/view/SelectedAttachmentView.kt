@@ -18,6 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import xyz.klinker.messenger.fragment.message.attach.AttachmentManager
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.MimeType
+import xyz.klinker.messenger.shared.data.Settings
 import java.io.File
 
 class SelectedAttachmentView(private val context: Context) {
@@ -36,14 +37,24 @@ class SelectedAttachmentView(private val context: Context) {
         this.mediaUri = mediaUri
         this.mimeType = mimeType
 
+        var color = attachmentManager.argManager.color
+        var colorDark = attachmentManager.argManager.colorDark
+        var colorAccent = attachmentManager.argManager.colorAccent
+
+        if (Settings.useGlobalThemeColor) {
+            color = Settings.mainColorSet.color
+            colorDark = Settings.mainColorSet.colorDark
+            colorAccent = Settings.mainColorSet.colorAccent
+        }
+
         if (MimeType.isStaticImage(mimeType)) {
-            editImageBackground?.setImageDrawable(ColorDrawable(attachmentManager.argManager.colorAccent))
+            editImageBackground?.setImageDrawable(ColorDrawable(colorAccent))
             editImage?.setOnClickListener {
                 try {
                     val options = UCrop.Options()
-                    options.setToolbarColor(attachmentManager.argManager.color)
-                    options.setStatusBarColor(attachmentManager.argManager.colorDark)
-                    options.setActiveWidgetColor(attachmentManager.argManager.colorAccent)
+                    options.setToolbarColor(color)
+                    options.setStatusBarColor(colorDark)
+                    options.setActiveWidgetColor(colorAccent)
                     options.setCompressionFormat(Bitmap.CompressFormat.JPEG)
                     options.setCompressionQuality(100)
                     options.setFreeStyleCropEnabled(true)
@@ -61,7 +72,7 @@ class SelectedAttachmentView(private val context: Context) {
             editImage?.visibility = View.GONE
         }
 
-        removeImageBackground.setImageDrawable(ColorDrawable(attachmentManager.argManager.colorAccent))
+        removeImageBackground.setImageDrawable(ColorDrawable(colorAccent))
         removeImage.setOnClickListener {
             attachmentManager.removeAttachment(mediaUri)
         }
