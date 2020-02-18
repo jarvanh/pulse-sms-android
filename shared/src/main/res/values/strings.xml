@@ -61,6 +61,7 @@
     <string name="menu_copy_phone_number">Copy number</string>
     <string name="menu_view_full_conversation">View History</string>
     <string name="menu_conversation_blacklist">Blacklist contact</string>
+    <string name="menu_conversation_blacklist_all">Blacklist all participants</string>
     <string name="menu_conversation_schedule">Schedule a message</string>
     <string name="menu_contact_settings">Conversation settings</string>
     <string name="menu_group_settings">Group settings</string>
@@ -433,6 +434,8 @@
     <string name="blacklist_phrase_hint">Type phrase to blacklist…</string>
     <string name="add_blacklist">%1$s\n\nAre you sure you want to add this blacklist? Messages will
         no longer be saved when they come from this number, and you will not be notified!</string>
+    <string name="add_blacklist_all">Are you sure you want to add all these numbers to the blacklist? Messages will
+        no longer be saved when they come from these numbers, and you will not be notified!</string>
     <string name="add_blacklist_phrase">%1$s\n\nAre you sure you want to add this blacklist? Messages will
         no longer be saved when they contain this phrase, and you will not be notified!</string>
     <string name="remove_blacklist">%1$s\n\nDo you want to delete this blacklist?</string>

@@ -36,6 +36,11 @@
             android:title="@string/menu_view_media" />
 
         <item
+            android:id="@+id/drawer_conversation_blacklist_all"
+            android:icon="@drawable/ic_block"
+            android:title="@string/menu_conversation_blacklist_all" />
+
+        <item
             android:id="@+id/drawer_conversation_schedule"
             android:icon="@drawable/ic_schedule"
             android:title="@string/menu_conversation_schedule" />

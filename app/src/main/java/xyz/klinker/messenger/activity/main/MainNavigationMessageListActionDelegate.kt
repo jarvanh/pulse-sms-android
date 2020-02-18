@@ -29,7 +29,9 @@ import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import xyz.klinker.messenger.R
+import xyz.klinker.messenger.shared.data.model.Blacklist
 import xyz.klinker.messenger.shared.service.notification.NotificationBubbleHelper
+import xyz.klinker.messenger.shared.util.PhoneNumberUtils
 
 
 class MainNavigationMessageListActionDelegate(private val activity: MessengerActivity) {
@@ -158,7 +160,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
                     try {
                         intent = Intent(Intent.ACTION_VIEW)
                         val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
-                                ContactUtils.findContactId(phoneNumber,activity).toString())
+                                ContactUtils.findContactId(phoneNumber, activity).toString())
                         intent!!.data = uri
                     } catch (e: NoSuchElementException) {
                         e.printStackTrace()
@@ -262,7 +264,7 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
                                 adapter.deleteItem(position)
                             }
                         }, 250)
-                    }.setNegativeButton(android.R.string.cancel) {_, _ -> }
+                    }.setNegativeButton(android.R.string.cancel) { _, _ -> }
                     .show()
             return true
         } else {
@@ -270,24 +272,32 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
         }
     }
 
-    internal fun archiveConversation(): Boolean {
+    internal fun archiveConversation(prompt: Boolean = true): Boolean {
         if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
-            AlertDialog.Builder(activity)
-                    .setMessage(R.string.confirm_archive)
-                    .setPositiveButton(R.string.api_yes) { _, _ ->
-                        val fragment = navController.getShownConversationList()
-                        val conversationId = fragment!!.expandedId
-                        fragment.onBackPressed()
+            val doArchive: () -> Unit = {
+                val fragment = navController.getShownConversationList()
+                val conversationId = fragment!!.expandedId
+                fragment.onBackPressed()
 
-                        Handler().postDelayed({
-                            val adapter = fragment.adapter ?: return@postDelayed
-                            val position = adapter.findPositionForConversationId(conversationId)
-                            if (position != -1) {
-                                adapter.archiveItem(position)
-                            }
-                        }, 250)
-                    }.setNegativeButton(android.R.string.cancel) {_, _ -> }
-                    .show()
+                Handler().postDelayed({
+                    val adapter = fragment.adapter ?: return@postDelayed
+                    val position = adapter.findPositionForConversationId(conversationId)
+                    if (position != -1) {
+                        adapter.archiveItem(position)
+                    }
+                }, 250)
+            }
+
+            if (prompt) {
+                AlertDialog.Builder(activity)
+                        .setMessage(R.string.confirm_archive)
+                        .setPositiveButton(R.string.api_yes) { _, _ ->
+                            doArchive()
+                        }.setNegativeButton(android.R.string.cancel) { _, _ -> }
+                        .show()
+            } else {
+                doArchive()
+            }
 
             return true
         } else {
@@ -314,7 +324,8 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
 
             if (messages.count > MessageListLoader.MESSAGE_LIMIT) {
                 builder.setNegativeButton(R.string.menu_view_full_conversation) { _, _ ->
-                    NoLimitMessageListActivity.start(activity, conversation.id) }
+                    NoLimitMessageListActivity.start(activity, conversation.id)
+                }
             }
 
             CursorUtil.closeSilent(messages)
@@ -332,8 +343,34 @@ class MainNavigationMessageListActionDelegate(private val activity: MessengerAct
             val conversation = fragment!!.expandedItem!!.conversation
 
             BlacklistFragment.addBlacklistPhone(activity, conversation!!.phoneNumbers) {
-                archiveConversation()
+                archiveConversation(false)
             }
+
+            true
+        } else {
+            false
+        }
+    }
+
+    internal fun conversationBlacklistAll(): Boolean {
+        return if (navController.isConversationListExpanded() || navController.isOtherFragmentConvoAndShowing()) {
+            val fragment = navController.getShownConversationList()
+            val conversation = fragment!!.expandedItem!!.conversation
+
+            AlertDialog.Builder(activity)
+                    .setMessage(activity.getString(R.string.add_blacklist_all))
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        conversation!!.phoneNumbers!!.split(",").map { PhoneNumberUtils.clearFormatting(it) }
+                                .forEach {
+                                    val blacklist = Blacklist()
+                                    blacklist.phoneNumber = it
+                                    DataSource.insertBlacklist(activity, blacklist)
+                                }
+
+                        archiveConversation(false)
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
 
             true
         } else {
