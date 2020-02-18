@@ -33,6 +33,7 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
         initSignature()
         initMessageBackup()
         initAutoReplyConfiguration()
+        initUnknownNumberReception()
     }
 
     override fun onStop() {
@@ -108,6 +109,16 @@ class FeatureSettingsFragment : MaterialPreferenceFragment() {
             val cleanup = o as String
             ApiUtils.updateCleanupOldMessages(
                     Account.accountId, cleanup)
+            true
+        }
+    }
+
+    private fun initUnknownNumberReception() {
+        val preference = findPreference(getString(R.string.pref_unknown_number_reception))
+        preference.setOnPreferenceChangeListener { _, o ->
+            val reception = o as String
+            ApiUtils.updateUnknownNumberReception(
+                    Account.accountId, reception)
             true
         }
     }

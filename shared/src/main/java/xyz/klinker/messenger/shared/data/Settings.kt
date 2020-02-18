@@ -82,6 +82,7 @@ object Settings {
     var showConversationCategories = true
     var timestampEveryMessage = false
     lateinit var notificationActions: List<NotificationAction>
+    var unknownNumbersReception = UnknownNumbersReception.DEFAULT
 
     // configuration
     var smallFont: Int = 0
@@ -268,6 +269,12 @@ object Settings {
             "default" -> this.keyboardLayout = KeyboardLayout.DEFAULT
             "send" -> this.keyboardLayout = KeyboardLayout.SEND
             "enter" -> this.keyboardLayout = KeyboardLayout.ENTER
+        }
+
+        when (sharedPrefs.getString(context.getString(R.string.pref_unknown_number_reception), "default")) {
+            "default" -> this.unknownNumbersReception = UnknownNumbersReception.DEFAULT
+            "mute" -> this.unknownNumbersReception = UnknownNumbersReception.MUTE
+            "block" -> this.unknownNumbersReception = UnknownNumbersReception.BLOCK
         }
 
         this.baseThemeString = sharedPrefs.getString(context.getString(R.string.pref_base_theme), "day_night")

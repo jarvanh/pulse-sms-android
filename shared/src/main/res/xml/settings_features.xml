@@ -33,6 +33,18 @@
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
+        android:title="@string/spam_features_category">
+
+        <xyz.klinker.messenger.view.AutoSummaryListPreference
+            android:key="@string/pref_unknown_number_reception"
+            android:title="@string/handle_messages_from_unknown_numbers"
+            android:entries="@array/unknown_numbers"
+            android:entryValues="@array/unknown_numbers_values"
+            android:defaultValue="default" />
+
+    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
+
+    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategory
         android:key="@string/pref_messaging_category"
         android:title="@string/messaging_features">
 

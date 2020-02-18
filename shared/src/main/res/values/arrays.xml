@@ -274,4 +274,16 @@
         <item>@string/send_without_signature</item>
     </string-array>
 
+    <string-array name="unknown_numbers">
+        <item>@string/unknown_numbers_default</item>
+        <item>@string/unknown_numbers_mute</item>
+        <item>@string/unknown_numbers_block</item>
+    </string-array>
+
+    <string-array name="unknown_numbers_values">
+        <item>default</item>
+        <item>mute</item>
+        <item>block</item>
+    </string-array>
+
 </resources>

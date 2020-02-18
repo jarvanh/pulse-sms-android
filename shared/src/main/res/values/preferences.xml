@@ -140,6 +140,7 @@
     <string name="pref_signature" translatable="false">signature</string>
     <string name="pref_message_backup" translatable="false">message_backup</string>
     <string name="pref_auto_reply" translatable="false">auto_reply</string>
+    <string name="pref_unknown_number_reception" translatable="false">unknown_number_reception</string>
 
     <!-- MMS Configuration -->
     <string name="pref_mms_configuration" translatable="false">mms_configuration</string>
