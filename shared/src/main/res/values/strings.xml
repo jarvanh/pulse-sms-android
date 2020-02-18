@@ -567,10 +567,10 @@
     <string name="use_smart_replies_summary">Pulse will suggest relevant replies, when available. These are generated directly on the device, not a remote server</string>
     <string name="use_smart_replies_dialog">Pulse will suggest relevant replies, when available. These are generated directly on the device, not a remote server.\n\nIf you would rather not use this feature, it can be disabled from settings.</string>
     <string name="use_smart_reply_settings">Settings</string>
-    <string name="handle_messages_from_unknown_numbers">Receiving Messages from Unknown Numbers</string>
+    <string name="handle_messages_from_unknown_numbers">Receiving Messages from Non-Contacts</string>
     <string name="unknown_numbers_default">Receive messages normally</string>
     <string name="unknown_numbers_mute">Mute the conversation to prevent notifications</string>
-    <string name="unknown_numbers_block">Immediately discard the message as spam</string>
+    <string name="unknown_numbers_block">Immediately discard the message as spam. Be careful and remember that you turned this on!</string>
     <string name="message_backup">Message Backup</string>
     <string name="message_backup_pref_summary">Worried about losing your messages? Pulse has you covered</string>
     <string name="message_backup_summary">Did you know: Pulse\'s online service is built around backing up your

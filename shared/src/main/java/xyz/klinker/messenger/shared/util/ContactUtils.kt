@@ -227,14 +227,14 @@ object ContactUtils {
                         try {
                             ", " + PhoneNumberUtils.format(number[i])!!
                         } catch (e: Exception) {
-                            ", " + number
+                            ", $number"
                         }
                     }
                 } else {
                     names += try {
                         ", " + PhoneNumberUtils.format(number[i])!!
                     } catch (e: Exception) {
-                        ", " + number
+                        ", $number"
                     }
 
                 }
@@ -281,12 +281,8 @@ object ContactUtils {
                     val id = phonesCursor.getInt(0)
                     phonesCursor.close()
                     return id
-                } else if (phonesCursor != null) {
-                    phonesCursor.close()
-                }
-            } else if (phonesCursor != null) {
-                phonesCursor.close()
-            }
+                } else phonesCursor?.close()
+            } else phonesCursor?.close()
         } catch (e: IllegalArgumentException) {
             e.printStackTrace()
         } catch (e: SecurityException) {

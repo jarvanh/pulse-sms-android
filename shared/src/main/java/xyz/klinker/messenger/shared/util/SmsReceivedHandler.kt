@@ -73,6 +73,14 @@ class SmsReceivedHandler(private val context: Context) {
         }
 
         if (conversationId != -1L && conversationId != -2L) {
+            if (BlacklistUtils.isMutedAsUnknownNumber(context, address)) {
+                val conversation = DataSource.getConversation(context, conversationId)
+                if (conversation != null) {
+                    conversation.mute = true
+                    DataSource.updateConversationSettings(context, conversation)
+                }
+            }
+
             Notifier(context).notify()
         }
 

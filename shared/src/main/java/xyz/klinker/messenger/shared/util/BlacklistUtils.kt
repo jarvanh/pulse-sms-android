@@ -20,7 +20,9 @@ import android.content.Context
 import android.util.Log
 
 import xyz.klinker.messenger.shared.data.DataSource
+import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Blacklist
+import xyz.klinker.messenger.shared.data.pojo.UnknownNumbersReception
 
 /**
  * Helper for checking whether or not a contact is blacklisted.
@@ -53,7 +55,30 @@ object BlacklistUtils {
         }
 
         cursor.closeSilent()
-        return false
+        return isBlockedAsUnknownNumber(context, incomingNumber)
+    }
+
+    fun isMutedAsUnknownNumber(context: Context, number: String): Boolean {
+        if (Settings.unknownNumbersReception != UnknownNumbersReception.MUTE) {
+            return false
+        }
+
+        return !contactExists(context, number)
+    }
+
+    private fun isBlockedAsUnknownNumber(context: Context, number: String): Boolean {
+        if (Settings.unknownNumbersReception != UnknownNumbersReception.BLOCK) {
+            return false
+        }
+
+        return !contactExists(context, number)
+    }
+
+    private fun contactExists(context: Context, number: String) = try {
+        val id = ContactUtils.findContactId(number, context)
+        id != -1
+    } catch (e: NoSuchElementException) {
+        false
     }
 
     fun numbersMatch(number: String, blacklisted: String): Boolean {

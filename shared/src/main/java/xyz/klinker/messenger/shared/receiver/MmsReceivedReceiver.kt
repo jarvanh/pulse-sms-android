@@ -126,10 +126,12 @@ class MmsReceivedReceiver : com.klinker.android.send_message.MmsReceivedReceiver
             if (SmsReceivedReceiver.shouldSaveMessage(context, message, phoneNumbers)) {
                 conversationId = source.insertMessage(message, phoneNumbers, context)
 
-                val conversation = source.getConversation(context, conversationId!!)
-                if (conversation != null && conversation.mute) {
-                    source.seenConversation(context, conversationId!!)
-                    ignoreNotification = true
+                if (BlacklistUtils.isMutedAsUnknownNumber(context, from)) {
+                    val conversation = DataSource.getConversation(context, conversationId!!)
+                    if (conversation != null) {
+                        conversation.mute = true
+                        DataSource.updateConversationSettings(context, conversation)
+                    }
                 }
 
                 if (MmsSettings.autoSaveMedia && MimeType.TEXT_PLAIN != message.mimeType) {
