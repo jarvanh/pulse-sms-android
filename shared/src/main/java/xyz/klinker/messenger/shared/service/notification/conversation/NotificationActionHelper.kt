@@ -37,7 +37,9 @@ class NotificationActionHelper(private val service: Context) {
             val action = NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                     service.getString(R.string.reply), pendingReply)
                     .addRemoteInput(remoteInput)
-                    .setAllowGeneratedReplies(true)
+                    .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
+                    .setShowsUserInterface(false)
+                    .setAllowGeneratedReplies(!Settings.notificationActions.contains(NotificationAction.SMART_REPLY))
                     .extend(actionExtender)
                     .build()
 
@@ -61,8 +63,10 @@ class NotificationActionHelper(private val service: Context) {
                 // the remote input or else it will keep using the direct reply
                 val action = NotificationCompat.Action.Builder(R.drawable.ic_reply_dark,
                         service.getString(R.string.reply), pendingReply)
+                        .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
+                        .setShowsUserInterface(false)
                         .extend(actionExtender)
-                        .setAllowGeneratedReplies(true)
+                        .setAllowGeneratedReplies(!Settings.notificationActions.contains(NotificationAction.SMART_REPLY))
                         .build()
 
                 if (!conversation.privateNotification && Settings.notificationActions.contains(NotificationAction.REPLY)) {
@@ -74,6 +78,7 @@ class NotificationActionHelper(private val service: Context) {
             } else {
                 val action = NotificationCompat.Action.Builder(R.drawable.ic_reply_dark,
                         service.getString(R.string.reply), pendingReply)
+                        .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
                         .build()
 
                 if (!conversation.privateNotification && Settings.notificationActions.contains(NotificationAction.REPLY)) {
@@ -89,12 +94,32 @@ class NotificationActionHelper(private val service: Context) {
 
                 val wearAction = NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
                         service.getString(R.string.reply), wearPendingReply)
+                        .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
+                        .setShowsUserInterface(false)
                         .addRemoteInput(remoteInput)
                         .extend(actionExtender)
                         .build()
 
                 wearableExtender.addAction(wearAction)
             }
+        }
+    }
+
+    // Android Auto requires this action: https://developer.android.com/training/cars/messaging
+    fun addReplyActionInvisible(builder: NotificationCompat.Builder, remoteInput: RemoteInput, conversation: NotificationConversation) {
+        val reply = Intent(service, ReplyService::class.java)
+        reply.putExtra(ReplyService.EXTRA_CONVERSATION_ID, conversation.id)
+        val pendingReply = PendingIntent.getService(service, conversation.id.toInt() - 1, reply, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val action = NotificationCompat.Action.Builder(R.drawable.ic_reply_white,
+                service.getString(R.string.reply), pendingReply)
+                .addRemoteInput(remoteInput)
+                .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
+                .setShowsUserInterface(false)
+                .build()
+
+        if (!conversation.privateNotification) {
+            builder.addInvisibleAction(action)
         }
     }
 
@@ -147,14 +172,34 @@ class NotificationActionHelper(private val service: Context) {
         wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_delete_white, service.getString(R.string.delete), pendingDeleteMessage))
     }
 
-    fun addMarkReadAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {
+    private fun generateMarkAsReadAction(conversation: NotificationConversation): Pair<NotificationCompat.Action, NotificationCompat.Action> {
+        val title = service.getString(if (AndroidVersionUtil.isAndroidN) R.string.mark_as_read else R.string.read)
         val read = Intent(service, xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver::class.java)
         read.putExtra(xyz.klinker.messenger.shared.receiver.notification_action.NotificationMarkReadReceiver.EXTRA_CONVERSATION_ID, conversation.id)
         val pendingRead = PendingIntent.getBroadcast(service, conversation.id.toInt() + 3,
                 read, PendingIntent.FLAG_CANCEL_CURRENT)
 
-        builder.addAction(NotificationCompat.Action(R.drawable.ic_done_dark, service.getString(if (AndroidVersionUtil.isAndroidN) R.string.mark_as_read else R.string.read), pendingRead))
-        wearableExtender.addAction(NotificationCompat.Action(R.drawable.ic_done_white, service.getString(if (AndroidVersionUtil.isAndroidN) R.string.mark_as_read else R.string.read), pendingRead))
+        val normal = NotificationCompat.Action.Builder(R.drawable.ic_done_dark, title, pendingRead)
+                .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_MARK_AS_READ)
+                .setShowsUserInterface(false)
+                .build()
+
+        val wearable = NotificationCompat.Action.Builder(R.drawable.ic_done_white, title, pendingRead)
+                .build()
+
+        return Pair(normal, wearable)
+    }
+
+    fun addMarkReadAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {
+        val (normal, wearable) = generateMarkAsReadAction(conversation)
+        builder.addAction(normal)
+        wearableExtender.addAction(wearable)
+    }
+
+    // Android Auto requires this action: https://developer.android.com/training/cars/messaging
+    fun addMarkReadActionInvisible(builder: NotificationCompat.Builder, conversation: NotificationConversation) {
+        val (normal, _) = generateMarkAsReadAction(conversation)
+        builder.addInvisibleAction(normal)
     }
 
     fun addMuteAction(builder: NotificationCompat.Builder, wearableExtender: NotificationCompat.WearableExtender, conversation: NotificationConversation) {

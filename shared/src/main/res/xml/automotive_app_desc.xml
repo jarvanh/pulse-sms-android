@@ -16,4 +16,5 @@
 
 <automotiveApp>
     <uses name="notification" />
+    <uses name="sms" />
 </automotiveApp>

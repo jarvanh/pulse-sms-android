@@ -96,6 +96,16 @@ class NotificationConversationProvider(private val service: Context, private val
                         }
                     }
                 }
+
+                // Android Auto requires this action: https://developer.android.com/training/cars/messaging
+                if (!Settings.notificationActions.contains(NotificationAction.READ)) {
+                    actionHelper.addMarkReadActionInvisible(builder, conversation)
+                }
+
+                // Android Auto requires this action: https://developer.android.com/training/cars/messaging
+                if (!Settings.notificationActions.contains(NotificationAction.REPLY)) {
+                    actionHelper.addReplyActionInvisible(builder, remoteInput, conversation)
+                }
             }
 
             // apply the extenders to the notification
