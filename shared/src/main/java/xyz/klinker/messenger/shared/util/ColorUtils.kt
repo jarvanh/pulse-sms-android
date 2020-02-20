@@ -478,7 +478,7 @@ object ColorUtils {
 
         // Determine color based on the contrast ratio 4.5:1
         // https://www.w3.org/TR/WCAG20/#contrast-ratiodef
-        return luminance < 0.28
+        return luminance < 0.3
     }
 
     private fun getSRGB(value: Int): Double {
