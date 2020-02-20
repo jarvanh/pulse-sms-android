@@ -26,26 +26,24 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.widget.EdgeEffect
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-
-import java.util.ArrayList
-
-import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.activity.AbstractSettingsActivity
 import xyz.klinker.messenger.shared.data.ColorSet
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.pojo.BaseTheme
+import java.util.*
+
 
 /**
  * Helper class for working with colors.
@@ -466,7 +464,21 @@ object ColorUtils {
     }
 
     fun isColorDark(color: Int): Boolean {
-        val darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
-        return darkness >= 0.30
+        val red = getSRGB(Color.red(color))
+        val green = getSRGB(Color.green(color))
+        val blue = getSRGB(Color.blue(color))
+
+        // Compute the relative luminance of the background color
+        // https://www.w3.org/TR/WCAG20/#relativeluminancedef
+        val luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+
+        // Determine color based on the contrast ratio 4.5:1
+        // https://www.w3.org/TR/WCAG20/#contrast-ratiodef
+        return luminance < 0.233
+    }
+
+    private fun getSRGB(value: Int): Double {
+        val component = value / 255
+        return if (component <= 0.03928) component / 12.92 else Math.pow(((component + 0.055) / 1.055), 2.4)
     }
 }
