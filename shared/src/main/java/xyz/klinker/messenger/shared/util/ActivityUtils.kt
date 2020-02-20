@@ -70,11 +70,12 @@ object ActivityUtils {
     }
 
     @Suppress("NAME_SHADOWING")
-    fun setStatusBarColor(activity: Activity?, color: Int) {
+    fun setStatusBarColor(activity: Activity?, color: Int, toolbarColor: Int = color) {
         val color = if (activity == null) color else possiblyOverrideColorSelection(activity, color)
+        val toolbarColor = if (Settings.applyPrimaryColorToToolbar) toolbarColor else color
 
         activity?.window?.statusBarColor = color
-        setUpLightStatusBar(activity, color)
+        setUpLightStatusBar(activity, toolbarColor)
     }
 
     @Suppress("NAME_SHADOWING")

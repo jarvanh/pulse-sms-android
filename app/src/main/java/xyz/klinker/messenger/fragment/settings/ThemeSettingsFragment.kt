@@ -123,6 +123,7 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
 
         preference.setOnPreferenceChangeListener { _, o ->
             ColorUtils.animateToolbarColor(activity, Settings.mainColorSet.color, o as Int)
+            ColorUtils.animateStatusBarColor(activity, Settings.mainColorSet.colorDark, Settings.mainColorSet.colorDark, o)
             Settings.setValue(activity, getString(R.string.pref_global_primary_color), o)
             Settings.mainColorSet.color = o
 
@@ -138,7 +139,7 @@ class ThemeSettingsFragment : MaterialPreferenceFragment() {
         })
 
         darkColorPreference.setOnPreferenceChangeListener { _, o ->
-            ColorUtils.animateStatusBarColor(activity, Settings.mainColorSet.colorDark, o as Int)
+            ColorUtils.animateStatusBarColor(activity, Settings.mainColorSet.colorDark, o as Int, Settings.mainColorSet.color)
             Settings.setValue(activity, getString(R.string.pref_global_primary_dark_color), o)
             Settings.mainColorSet.colorDark = o
 

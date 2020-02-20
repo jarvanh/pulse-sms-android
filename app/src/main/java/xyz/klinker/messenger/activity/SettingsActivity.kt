@@ -90,7 +90,7 @@ class SettingsActivity : AbstractSettingsActivity() {
 
         // sets it to teal if there is no color selected
         toolbar?.setBackgroundColor(Settings.mainColorSet.color)
-        ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark)
+        ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark, Settings.mainColorSet.color)
 
         ColorUtils.checkBlackBackground(this)
         MainColorController(this).configureNavigationBarColor()
@@ -106,7 +106,7 @@ class SettingsActivity : AbstractSettingsActivity() {
         super.onStart()
 
         toolbar?.setBackgroundColor(Settings.mainColorSet.color)
-        ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark)
+        ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark, Settings.mainColorSet.color)
 
         ActivityUtils.setTaskDescription(this)
     }

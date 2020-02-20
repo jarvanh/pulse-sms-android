@@ -107,9 +107,9 @@ class MessageMultiSelectDelegate(private val fragment: MessageListFragment) : Mu
             Handler().postDelayed({ isSelectable = false }, 250)
 
             if (Settings.useGlobalThemeColor) {
-                ActivityUtils.setUpLightStatusBar(activity, Settings.mainColorSet.colorDark)
+                ActivityUtils.setUpLightStatusBar(activity, Settings.mainColorSet.color)
             } else {
-                ActivityUtils.setUpLightStatusBar(activity, fragment.argManager.colorDark)
+                ActivityUtils.setUpLightStatusBar(activity, fragment.argManager.color)
             }
         }
 

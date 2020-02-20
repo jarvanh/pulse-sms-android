@@ -86,7 +86,7 @@ class ConversationsMultiSelectDelegate(private val fragment: ConversationListFra
             }
 
             Handler().postDelayed({ isSelectable = false }, 250)
-            ActivityUtils.setUpLightStatusBar(activity, Settings.mainColorSet.colorDark)
+            ActivityUtils.setUpLightStatusBar(activity, Settings.mainColorSet.color)
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {

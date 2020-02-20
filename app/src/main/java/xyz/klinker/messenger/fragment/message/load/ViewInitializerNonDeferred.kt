@@ -129,7 +129,7 @@ class ViewInitializerNonDeferred(private val fragment: MessageListFragment) {
             setNameAndDrawerColor()
         }
 
-        ColorUtils.adjustStatusBarColor(colorDarker, activity)
+        ColorUtils.adjustStatusBarColor(color, colorDarker, activity)
 
         val deferredTime = if (activity is MessengerTvActivity) 0L
         else (AnimationUtils.EXPAND_CONVERSATION_DURATION + 25).toLong()

@@ -60,10 +60,10 @@ class MediaGridFragment : Fragment(), MediaSelectedListener {
         val toolbar = (fragmentActivity as AbstractSettingsActivity).toolbar
         if (Settings.useGlobalThemeColor) {
             toolbar?.setBackgroundColor(Settings.mainColorSet.color)
-            ActivityUtils.setStatusBarColor(fragmentActivity, Settings.mainColorSet.colorDark)
+            ActivityUtils.setStatusBarColor(fragmentActivity, Settings.mainColorSet.colorDark, Settings.mainColorSet.color)
         } else {
             toolbar?.setBackgroundColor(conversation!!.colors.color)
-            ActivityUtils.setStatusBarColor(fragmentActivity, conversation!!.colors.colorDark)
+            ActivityUtils.setStatusBarColor(fragmentActivity, conversation!!.colors.colorDark, Settings.mainColorSet.color)
         }
     }
 

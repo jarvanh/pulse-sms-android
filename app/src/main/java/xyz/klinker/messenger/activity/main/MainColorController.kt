@@ -49,7 +49,7 @@ class MainColorController(private val activity: AppCompatActivity) {
         navigationView.itemIconTintList = ColorStateList(states, iconColors)
         navigationView.itemTextColor = ColorStateList(states, textColors)
         navigationView.post {
-            ColorUtils.adjustStatusBarColor(Settings.mainColorSet.colorDark, activity)
+            ColorUtils.adjustStatusBarColor(Settings.mainColorSet.color, Settings.mainColorSet.colorDark, activity)
 
             val header = navigationView.findViewById<View>(R.id.header)
             header?.setBackgroundColor(Settings.mainColorSet.colorDark)

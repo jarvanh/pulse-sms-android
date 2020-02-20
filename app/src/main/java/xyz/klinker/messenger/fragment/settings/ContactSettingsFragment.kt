@@ -106,10 +106,10 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
 
         if (Settings.useGlobalThemeColor) {
             toolbar?.setBackgroundColor(Settings.mainColorSet.color)
-            ActivityUtils.setStatusBarColor(activity, Settings.mainColorSet.colorDark)
+            ActivityUtils.setStatusBarColor(activity, Settings.mainColorSet.colorDark, Settings.mainColorSet.color)
         } else {
             toolbar?.setBackgroundColor(conversation.colors.color)
-            ActivityUtils.setStatusBarColor(activity, conversation.colors.colorDark)
+            ActivityUtils.setStatusBarColor(activity, conversation.colors.colorDark, conversation.colors.color)
         }
     }
 
@@ -326,6 +326,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
 
         preference.setOnPreferenceChangeListener { _, o ->
             ColorUtils.animateToolbarColor(activity, conversation.colors.color, o as Int)
+            ColorUtils.animateStatusBarColor(activity, conversation.colors.colorDark, conversation.colors.colorDark, o)
             conversation.colors.color = o
             true
         }
@@ -338,7 +339,7 @@ class ContactSettingsFragment : MaterialPreferenceFragment() {
         })
 
         darkColorPreference.setOnPreferenceChangeListener { _, o ->
-            ColorUtils.animateStatusBarColor(activity, conversation.colors.colorDark, o as Int)
+            ColorUtils.animateStatusBarColor(activity, conversation.colors.colorDark, o as Int, conversation.colors.color)
             conversation.colors.colorDark = o
             true
         }

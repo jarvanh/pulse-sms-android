@@ -60,7 +60,7 @@ class ComposeActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         title = " "
 
-        ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark)
+        ActivityUtils.setStatusBarColor(this, Settings.mainColorSet.colorDark, Settings.mainColorSet.color)
         ActivityUtils.setTaskDescription(this)
         ColorUtils.checkBlackBackground(this)
 

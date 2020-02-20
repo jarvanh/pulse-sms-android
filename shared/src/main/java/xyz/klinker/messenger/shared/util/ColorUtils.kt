@@ -95,32 +95,35 @@ object ColorUtils {
      * @param color    the color to change to.
      * @param activity the activity to find the views in.
      */
-    fun adjustStatusBarColor(color: Int, activity: Activity?) {
-        var color = color
+    fun adjustStatusBarColor(toolbarColor: Int, statusBarColor: Int, activity: Activity?) {
+        var statusBarColor = statusBarColor
+        var toolbarColor = toolbarColor
         if (activity == null) {
             return
         }
 
         if (Settings.useGlobalThemeColor) {
-            color = Settings.mainColorSet.colorDark
+            statusBarColor = Settings.mainColorSet.colorDark
+            toolbarColor = Settings.mainColorSet.color
         }
 
-        color = ActivityUtils.possiblyOverrideColorSelection(activity, color)
+        statusBarColor = ActivityUtils.possiblyOverrideColorSelection(activity, statusBarColor)
+        toolbarColor = ActivityUtils.possiblyOverrideColorSelection(activity, toolbarColor)
 
         if (!activity.resources.getBoolean(R.bool.pin_drawer)) {
             val drawerLayout = activity
                     .findViewById<View>(R.id.drawer_layout) as DrawerLayout?
 
-            drawerLayout?.setStatusBarBackgroundColor(color)
+            drawerLayout?.setStatusBarBackgroundColor(statusBarColor)
         } else {
             val status = activity.findViewById<View>(R.id.status_bar)
 
             if (status != null) {
-                status.backgroundTintList = ColorStateList.valueOf(color)
+                status.backgroundTintList = ColorStateList.valueOf(statusBarColor)
             }
         }
 
-        ActivityUtils.setUpLightStatusBar(activity, color)
+        ActivityUtils.setUpLightStatusBar(activity, toolbarColor)
     }
 
     /**
@@ -452,13 +455,13 @@ object ColorUtils {
         animator.start()
     }
 
-    fun animateStatusBarColor(activity: Activity, originalColor: Int, newColor: Int) {
+    fun animateStatusBarColor(activity: Activity, originalColor: Int, newColor: Int, finalToolbarColor: Int = newColor) {
         val animator = ValueAnimator.ofArgb(originalColor, newColor)
         animator.duration = 200
         animator.addUpdateListener { valueAnimator ->
             val color = valueAnimator.animatedValue as Int
             if (activity.window != null) {
-                ActivityUtils.setStatusBarColor(activity, color)
+                ActivityUtils.setStatusBarColor(activity, color, finalToolbarColor)
             }
         }
         animator.start()
@@ -475,7 +478,7 @@ object ColorUtils {
 
         // Determine color based on the contrast ratio 4.5:1
         // https://www.w3.org/TR/WCAG20/#contrast-ratiodef
-        return luminance < 0.233
+        return luminance < 0.28
     }
 
     private fun getSRGB(value: Int): Double {

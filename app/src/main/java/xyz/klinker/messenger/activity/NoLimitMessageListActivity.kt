@@ -38,7 +38,7 @@ open class NoLimitMessageListActivity : AppCompatActivity() {
                 .replace(R.id.message_list_container, MessageInstanceManager.newInstance(conversation, -1, false))
                 .commit()
 
-        ActivityUtils.setStatusBarColor(this, conversation.colors.colorDark)
+        ActivityUtils.setStatusBarColor(this, conversation.colors.colorDark, conversation.colors.color)
         ActivityUtils.setTaskDescription(this, conversation.title!!, conversation.colors.color)
         MainColorController(this).configureNavigationBarColor()
     }
