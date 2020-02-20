@@ -88,8 +88,8 @@ class ConversationItemBinder(private val activity: Activity) {
     fun showContactLetter(holder: ConversationViewHolder, conversation: Conversation) {
         holder.imageLetter?.text = conversation.title?.substring(0, 1)?.toUpperCase()
 
-        val colorToInspect = if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.colors.color
-        holder.groupIcon?.imageTintList = ColorStateList.valueOf(if (ColorUtils.isColorDark(colorToInspect)) Color.WHITE else lightToolbarTextColor)
+//        val colorToInspect = if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.colors.color
+//        holder.imageLetter?.setTextColor(ColorStateList.valueOf(if (ColorUtils.isColorDark(colorToInspect)) Color.WHITE else lightToolbarTextColor))
 
         if (holder.groupIcon?.visibility != View.GONE) {
             holder.groupIcon?.visibility = View.GONE
@@ -99,8 +99,8 @@ class ConversationItemBinder(private val activity: Activity) {
     fun showContactPlaceholderIcon(holder: ConversationViewHolder, conversation: Conversation) {
         holder.imageLetter?.text = null
 
-        val colorToInspect = if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.colors.color
-        holder.groupIcon?.imageTintList = ColorStateList.valueOf(if (ColorUtils.isColorDark(colorToInspect)) Color.WHITE else lightToolbarTextColor)
+//        val colorToInspect = if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.colors.color
+//        holder.groupIcon?.imageTintList = ColorStateList.valueOf(if (ColorUtils.isColorDark(colorToInspect)) Color.WHITE else lightToolbarTextColor)
         holder.groupIcon?.setImageResource(if (conversation.isGroup) R.drawable.ic_group else R.drawable.ic_person)
 
         if (holder.groupIcon?.visibility != View.VISIBLE) {

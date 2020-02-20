@@ -105,11 +105,11 @@ open class ContactAdapter(val conversations: List<Conversation>, private val lis
             holder.groupIcon?.visibility = View.GONE
         }
 
-        if (ColorUtils.isColorDark(if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.colors.color)) {
-            holder.imageLetter?.setTextColor(Color.WHITE)
-        } else {
-            holder.imageLetter?.setTextColor(lightToolbarTextColor)
-        }
+//        if (ColorUtils.isColorDark(if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.colors.color)) {
+//            holder.imageLetter?.setTextColor(Color.WHITE)
+//        } else {
+//            holder.imageLetter?.setTextColor(lightToolbarTextColor)
+//        }
     }
 
     private fun showContactPlaceholderImage(conversation: Conversation, holder: ConversationViewHolder) {
@@ -125,11 +125,11 @@ open class ContactAdapter(val conversations: List<Conversation>, private val lis
             holder.groupIcon?.setImageResource(R.drawable.ic_person)
         }
 
-        if (ColorUtils.isColorDark(if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.colors.color)) {
-            holder.groupIcon?.imageTintList = ColorStateList.valueOf(Color.WHITE)
-        } else {
-            holder.groupIcon?.imageTintList = ColorStateList.valueOf(lightToolbarTextColor)
-        }
+//        if (ColorUtils.isColorDark(if (Settings.useGlobalThemeColor) Settings.mainColorSet.color else conversation.colors.color)) {
+//            holder.groupIcon?.imageTintList = ColorStateList.valueOf(Color.WHITE)
+//        } else {
+//            holder.groupIcon?.imageTintList = ColorStateList.valueOf(lightToolbarTextColor)
+//        }
     }
 
     private fun showContactImage(conversation: Conversation, holder: ConversationViewHolder) {
