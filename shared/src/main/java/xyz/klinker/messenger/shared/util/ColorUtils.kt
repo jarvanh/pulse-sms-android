@@ -476,7 +476,7 @@ object ColorUtils {
         // https://www.w3.org/TR/WCAG20/#relativeluminancedef
         val luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
 
-        // Determine color based on the contrast ratio 4.5:1
+        // Determine color based on the contrast ratio
         // https://www.w3.org/TR/WCAG20/#contrast-ratiodef
         return luminance < 0.35
     }
