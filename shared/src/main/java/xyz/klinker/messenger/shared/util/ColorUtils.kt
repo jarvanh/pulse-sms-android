@@ -479,7 +479,7 @@ object ColorUtils {
     }
 
     private fun getSRGB(value: Int): Double {
-        val component = value / 255
+        val component = value.toDouble() / 255.0
         return if (component <= 0.03928) component / 12.92 else Math.pow(((component + 0.055) / 1.055), 2.4)
     }
 }
