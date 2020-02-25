@@ -22,15 +22,8 @@ import xyz.klinker.messenger.shared.data.model.Conversation
 class DynamicShortcutUtils(private val context: Context) {
 
     fun buildDynamicShortcuts(conversations: List<Conversation>) {
-        var conversations = conversations
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            if (conversations.size > 3) {
-                conversations = conversations.subList(0, 3)
-            }
-
-            val infos = ArrayList<ShortcutInfoCompat>()
-
-            for (conversation in conversations) {
+            val infos = conversations.take(3).map { conversation ->
                 val messenger = ActivityUtils.buildForComponent(ActivityUtils.MESSENGER_ACTIVITY)
                 messenger.action = Intent.ACTION_VIEW
                 messenger.data = Uri.parse("https://messenger.klinkerapps.com/" + conversation.id)
@@ -43,7 +36,7 @@ class DynamicShortcutUtils(private val context: Context) {
                         .setIntent(messenger)
                         .setShortLabel(conversation.title ?: "No title")
                         .setCategories(category)
-                        .setLongLived()
+                        .setLongLived(false)
                         .setIcon(icon)
                         .setPerson(Person.Builder()
                                 .setName(conversation.title)
@@ -52,9 +45,10 @@ class DynamicShortcutUtils(private val context: Context) {
                                 .build()
                         ).build()
 
-                infos.add(info)
+                info
             }
 
+            ShortcutManagerCompat.removeAllDynamicShortcuts(context)
             ShortcutManagerCompat.addDynamicShortcuts(context, infos)
         }
     }

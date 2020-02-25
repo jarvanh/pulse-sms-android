@@ -70,6 +70,7 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
 
                     DynamicShortcutUtils(this@MessengerApplication).buildDynamicShortcuts(conversations)
                 } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }.start()
         }
