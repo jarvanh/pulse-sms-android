@@ -26,7 +26,7 @@ buildscript {
 
     ext.buildInfo = [
             'id'                : 'xyz.klinker.messenger',
-            'name'              : '5.2.0',
+            'name'              : '5.2.1',
             'number'            : System.getenv("BUILD_NUMBER") as Integer ?: 135,
     ]
 
@@ -68,7 +68,7 @@ buildscript {
         classpath "com.android.tools.build:gradle:${versions.gradlePlugin}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath 'com.google.gms:google-services:4.3.3'
-        classpath 'io.fabric.tools:gradle:1.30.0'
+        classpath 'io.fabric.tools:gradle:1.31.2'
     }
 
 }

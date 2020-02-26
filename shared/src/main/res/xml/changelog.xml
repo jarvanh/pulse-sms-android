@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="5.2.1"
+        description="February 26th, 2020">
+        <text>Bug fixes around launcher shortcuts</text>
+        <text>Accessibility improvements</text>
+    </version>
+
+    <version
         name="5.2.0"
         description="February 18th, 2020">
         <text>New setting to allow you to block or mute messages from senders not in your contact list, to help prevent spam</text>
