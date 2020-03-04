@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="5.2.2"
+        description="March 4th, 2020">
+        <text>Background work to support new features on the web app</text>
+    </version>
+
+    <version
         name="5.2.1"
         description="February 26th, 2020">
         <text>Bug fixes around launcher shortcuts</text>
