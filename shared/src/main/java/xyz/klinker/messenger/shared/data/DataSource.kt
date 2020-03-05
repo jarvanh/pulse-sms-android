@@ -1296,7 +1296,7 @@ object DataSource {
             if (useApi) {
                 ApiUtils.updateConversation(accountId(context), conversationId, color = null,
                         colorDark = null, colorLight = null, colorAccent = null, ledColor = null, pinned = null,
-                        read = false, timestamp = null, title = null, snippet = snippet, ringtone = null, mute = null,
+                        read = true, timestamp = null, title = null, snippet = snippet, ringtone = null, mute = null,
                         archive = null, privateNotifications = null, encryptionUtils = encryptor(context))
             }
         }
@@ -2577,7 +2577,7 @@ object DataSource {
     /**
      * Inserts a draft into the database with the given parameters.
      */
-    @JvmOverloads fun insertDraft(context: Context?, conversationId: Long, data: String, mimeType: String, useApi: Boolean = true): Long {
+    @JvmOverloads fun insertDraft(context: Context?, conversationId: Long, data: String, mimeType: String, useApi: Boolean = true, useSnippetApi: Boolean = useApi): Long {
         if (context == null) {
             return -1L
         }
@@ -2602,9 +2602,9 @@ object DataSource {
 
         if (insertedId > 0) {
             if (mimeType == MimeType.TEXT_PLAIN) {
-                updateConversationSnippet(context, conversationId, TimeUtils.now, context.getString(R.string.draft) + ": $data", useApi)
+                updateConversationSnippet(context, conversationId, TimeUtils.now, context.getString(R.string.draft) + ": $data", useSnippetApi)
             } else {
-                updateConversationSnippet(context, conversationId, TimeUtils.now, context.getString(R.string.draft) + ": ${MimeType.getTextDescription(context, mimeType)}", useApi)
+                updateConversationSnippet(context, conversationId, TimeUtils.now, context.getString(R.string.draft) + ": ${MimeType.getTextDescription(context, mimeType)}", useSnippetApi)
             }
         }
 
@@ -2683,7 +2683,7 @@ object DataSource {
      * Deletes all drafts for a given conversation. This should be used after a message has been
      * sent to the conversation.
      */
-    @JvmOverloads fun deleteDrafts(context: Context, conversationId: Long, useApi: Boolean = true): String? {
+    @JvmOverloads fun deleteDrafts(context: Context, conversationId: Long, useApi: Boolean = true, useSnippetApi: Boolean = useApi): String? {
         val deleted = try {
             database(context).delete(Draft.TABLE, Draft.COLUMN_CONVERSATION_ID + "=?",
                     arrayOf(java.lang.Long.toString(conversationId)))
@@ -2698,11 +2698,12 @@ object DataSource {
             val message = getMessages(context, conversationId, 1)
             if (message.isNotEmpty()) {
                 updatedSnippet = if (message[0].mimeType == MimeType.TEXT_PLAIN) {
-                    updateConversationSnippet(context, conversationId, message[0].timestamp, message[0].data!!)
+                    updateConversationSnippet(context, conversationId, message[0].timestamp, message[0].data!!, useSnippetApi)
                     message[0].data!!
                 } else {
-                    updateConversationSnippet(context, conversationId, message[0].timestamp, MimeType.getTextDescription(context, message[0].mimeType!!))
-                    MimeType.getTextDescription(context, message[0].mimeType!!)
+                    val mime = MimeType.getTextDescription(context, message[0].mimeType!!)
+                    updateConversationSnippet(context, conversationId, message[0].timestamp, mime, useSnippetApi)
+                    mime
                 }
             }
 
