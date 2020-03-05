@@ -669,7 +669,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             draft.data = encryptionUtils!!.decrypt(json.getString("data"))
             draft.mimeType = encryptionUtils.decrypt(json.getString("mime_type"))
 
-            DataSource.insertDraft(context, draft.conversationId, draft.data!!, draft.mimeType!!, useApi = false, useSnippetApi = true)
+            DataSource.insertDraft(context, draft.conversationId, draft.data!!, draft.mimeType!!, useApi = false, useSnippetApi = Account.primary)
             Log.v(TAG, "added draft")
         }
 
@@ -682,7 +682,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             draft.mimeType = encryptionUtils.decrypt(json.getString("mime_type"))
 
             DataSource.deleteDrafts(context, draft.conversationId, false)
-            DataSource.insertDraft(context, draft.conversationId, draft.data!!, draft.mimeType!!, useApi = false, useSnippetApi = true)
+            DataSource.insertDraft(context, draft.conversationId, draft.data!!, draft.mimeType!!, useApi = false, useSnippetApi = Account.primary)
             Log.v(TAG, "replaced drafts")
         }
 
@@ -692,7 +692,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             val deviceId = json.getString("android_device")
 
             if (deviceId == null || deviceId != Account.deviceId) {
-                DataSource.deleteDrafts(context, id, useApi = false, useSnippetApi = true)
+                DataSource.deleteDrafts(context, id, useApi = false, useSnippetApi = Account.primary)
                 Log.v(TAG, "removed drafts")
             }
         }
