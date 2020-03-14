@@ -1,5 +1,6 @@
 package xyz.klinker.messenger.shared.util
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
@@ -50,15 +51,16 @@ object DualSimUtils {
         return availableSims.firstOrNull { it.subscriptionId == simSubscription }
     }
 
-    fun getNumberFromSimSlot(simSlot: Int): String? {
+    @SuppressLint("NewApi")
+    fun getNumberFromSimSlot(simInfo: Int): String? {
         if (!canHandleDualSim()) {
             return null
         }
 
         return availableSims
-                .firstOrNull { it.simSlotIndex == simSlot }
+                .firstOrNull { it.subscriptionId == simInfo }
                 ?.let {
-                    if (it.number != null && !it.number.isEmpty()) {
+                    if (it.number != null && it.number.isNotEmpty()) {
                         it.number
                     } else {
                         (it.simSlotIndex + 1).toString() + ""
@@ -82,7 +84,5 @@ object DualSimUtils {
                 }
     }
 
-    private fun canHandleDualSim(): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
-    }
+    private fun canHandleDualSim() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
 }

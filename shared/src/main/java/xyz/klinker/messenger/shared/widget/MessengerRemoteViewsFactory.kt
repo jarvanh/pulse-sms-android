@@ -147,11 +147,9 @@ class MessengerRemoteViewsFactory(private val context: Context) : RemoteViewsSer
             rv.setViewVisibility(R.id.unread_indicator, View.VISIBLE)
         }
 
-        val extras = Bundle()
-        extras.putLong(MessengerAppWidgetProvider.EXTRA_ITEM_ID, item.id)
-        val fillInIntent = Intent()
-        fillInIntent.putExtras(extras)
-        rv.setOnClickFillInIntent(R.id.widget_item, fillInIntent)
+        rv.setOnClickFillInIntent(R.id.widget_item, Intent().apply {
+            putExtras(Bundle().apply { putLong(MessengerAppWidgetProvider.EXTRA_ITEM_ID, item.id) })
+        })
 
         return rv
     }

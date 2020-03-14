@@ -103,12 +103,12 @@ class MessengerAppWidgetProvider : AppWidgetProvider() {
             val color = ImageUtils.createColoredBitmap(Settings.mainColorSet.color)
             rv.setImageViewBitmap(R.id.toolbar, color)
 
-            val openIntent = Intent(context, MessengerAppWidgetProvider::class.java)
-            openIntent.action = MessengerAppWidgetProvider.OPEN_ACTION
-            openIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i])
-            intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
-            val openPendingIntent = PendingIntent.getBroadcast(context, 0, openIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT)
+            val openIntent = Intent(context, MessengerAppWidgetProvider::class.java).apply {
+                action = MessengerAppWidgetProvider.OPEN_ACTION
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i])
+            }
+            val openPendingIntent = PendingIntent
+                    .getBroadcast(context, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             rv.setPendingIntentTemplate(R.id.widget_list, openPendingIntent)
 
             try {

@@ -40,7 +40,7 @@ class SmsReceivedHandler(private val context: Context) {
     private fun handle(intent: Intent): Boolean {
         val extras = intent.extras ?: return false
 
-        val simSlot = extras.getInt("slot", -1)
+        val subscriptionId = extras.getInt("subscription", -1)
         var body = ""
         var address = ""
         var date = TimeUtils.now
@@ -67,7 +67,7 @@ class SmsReceivedHandler(private val context: Context) {
             return true
         }
 
-        val conversationId = insertSms(context, address, body, simSlot)
+        val conversationId = insertSms(context, address, body, subscriptionId)
         if (conversationId != -2L) {
             insertInternalSms(context, address, body, date)
         }
@@ -106,7 +106,7 @@ class SmsReceivedHandler(private val context: Context) {
         }.start()
     }
 
-    private fun insertSms(context: Context, address: String, body: String, simSlot: Int): Long {
+    private fun insertSms(context: Context, address: String, body: String, subscriptionId: Int): Long {
         var body = body
         var address = address
 
@@ -125,7 +125,7 @@ class SmsReceivedHandler(private val context: Context) {
         message.mimeType = MimeType.TEXT_PLAIN
         message.read = false
         message.seen = false
-        message.simPhoneNumber = DualSimUtils.getNumberFromSimSlot(simSlot)
+        message.simPhoneNumber = DualSimUtils.getNumberFromSimSlot(subscriptionId)
         message.sentDeviceId = -1L
 
         val source = DataSource
