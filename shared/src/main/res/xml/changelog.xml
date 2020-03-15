@@ -20,6 +20,7 @@
         name="5.2.3"
         description="March 15th, 2020">
         <text>Improvements for dual SIM devices</text>
+        <text>Improvements for MMS media drafts</text>
     </version>
 
     <version
