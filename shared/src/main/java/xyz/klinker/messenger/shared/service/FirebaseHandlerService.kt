@@ -689,7 +689,7 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
         @Throws(JSONException::class)
         private fun removeDrafts(json: JSONObject, context: Context) {
             val id = getLong(json, "id")
-            val deviceId = json.getString("android_device")
+            val deviceId = try { json.getString("android_device") } catch (e: JSONException) { null }
 
             if (deviceId == null || deviceId != Account.deviceId) {
                 DataSource.deleteDrafts(context, id, useApi = false, useSnippetApi = Account.primary)

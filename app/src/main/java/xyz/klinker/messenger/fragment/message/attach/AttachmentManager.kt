@@ -22,7 +22,7 @@ class AttachmentManager(private val fragment: MessageListFragment) {
     val argManager
         get() = fragment.argManager
 
-    var currentlyAttached: MutableSet<SelectedAttachmentView> = mutableSetOf()
+    var currentlyAttached: MutableSet<SelectedAttachmentView> = hashSetOf()
     var editingImage: SelectedAttachmentView? = null
 
     private val attachLayout: View? by lazy { fragment.rootView?.findViewById<View>(R.id.attach_layout) }
@@ -70,7 +70,7 @@ class AttachmentManager(private val fragment: MessageListFragment) {
     }
 
     fun attachMedia(uri: Uri?, mimeType: String) {
-        if (activity == null || uri == null) {
+        if (activity == null || uri == null || currentlyAttached.any { it.mediaUri == uri }) {
             return
         }
 
