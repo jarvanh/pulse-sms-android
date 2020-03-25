@@ -139,6 +139,8 @@ open class ConversationListFragment : Fragment(), SwipeToDeleteListener, Convers
     }
 
     override fun onMarkSectionAsRead(sectionText: String, sectionType: Int) {
+        swipeHelper.dismissSnackbars()
+        
         val snackbar = Snackbar.make(recyclerView, getString(R.string.marking_section_as_read, sectionText.toLowerCase(Locale.US)), Snackbar.LENGTH_LONG)
         if (fragmentActivity is MessengerActivity) {
             (fragmentActivity as MessengerActivity).insetController.adjustSnackbar(snackbar).show()
