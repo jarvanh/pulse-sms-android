@@ -97,14 +97,11 @@ class HelpAndFeedbackFragment : MaterialPreferenceFragmentCompat() {
         val email = arrayOf("luke@klinkerapps.com")
         val subject = getString(R.string.app_name) + " " + getString(R.string.support)
 
-        val uri = Uri.parse("mailto:luke@klinkerapps.com")
-                .buildUpon()
-                .appendQueryParameter("subject", subject)
-                .build()
-
-        val emailIntent = Intent(Intent.ACTION_SENDTO, uri)
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, email)
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, email)
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+        }
 
         startActivity(Intent.createChooser(emailIntent, subject))
     }
