@@ -91,7 +91,7 @@ class HelpAndFeedbackFragment : MaterialPreferenceFragmentCompat() {
     }
 
     /**
-     * Sends an email to support@klinkerapps.com
+     * Sends an email to luke@klinkerapps.com
      */
     private fun displayEmail() {
         val email = arrayOf("luke@klinkerapps.com")
