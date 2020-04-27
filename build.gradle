@@ -35,7 +35,7 @@ buildscript {
             'targetSdk'         : 29,
             'minSdk'            : 21,
 
-            'kotlin'            : '1.3.61',
+            'kotlin'            : '1.3.72',
 
             'playServices'      : '17.0.0',
             'glide'             : '4.10.0',
