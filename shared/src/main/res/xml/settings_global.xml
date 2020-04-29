@@ -63,16 +63,22 @@
             android:title="@string/notification_customization"
             android:summary="@string/alert_types_summary" />
 
-        <xyz.klinker.messenger.view.preference.NotificationActionsPreference
-            android:key="@string/pref_notification_actions"
-            android:title="@string/notification_actions"
-            android:summary="@string/notification_actions_summary_2" />
+        <SwitchPreference
+            android:key="@string/pref_hide_message_content"
+            android:title="@string/hide_message_content_notifications"
+            android:summary="@string/hide_message_content_notifications_summary"
+            android:defaultValue="false" />
 
         <SwitchPreference
             android:key="@string/pref_history_in_notifications"
             android:title="@string/show_conversation_history"
             android:summary="@string/show_conversation_history_summary"
             android:defaultValue="true" />
+
+        <xyz.klinker.messenger.view.preference.NotificationActionsPreference
+            android:key="@string/pref_notification_actions"
+            android:title="@string/notification_actions"
+            android:summary="@string/notification_actions_summary_2" />
 
         <SwitchPreference
             android:key="@string/pref_dismiss_notifications_on_reply_android_p"

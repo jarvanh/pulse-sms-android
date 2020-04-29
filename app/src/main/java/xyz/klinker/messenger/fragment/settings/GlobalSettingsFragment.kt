@@ -63,6 +63,7 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
         initSoundEffects()
         initStripUnicode()
         initNotificationHistory()
+        initHideMessageContent()
         initDismissNotificationsOnReply()
         initEmojiStyle()
     }
@@ -130,6 +131,8 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
                     SetUtils.stringify(options))
             true
         }
+
+        actions.isEnabled = !Settings.hideMessageContentNotifications
     }
 
     private fun initSwipeDelete() {
@@ -230,6 +233,22 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             (findPreference(getString(R.string.pref_notification_category)) as PreferenceCategory)
                     .removePreference(pref)
+        } else {
+            pref.isEnabled = !Settings.hideMessageContentNotifications
+        }
+    }
+
+    private fun initHideMessageContent() {
+        val pref = findPreference(getString(R.string.pref_hide_message_content))
+        pref.setOnPreferenceChangeListener { _, o ->
+            val hideContent = o as Boolean
+            ApiUtils.updateHideMessageContent(Account.accountId,
+                    hideContent)
+
+            findPreference(getString(R.string.pref_history_in_notifications)).isEnabled = !hideContent
+            findPreference(getString(R.string.pref_notification_actions)).isEnabled = !hideContent
+
+            true
         }
     }
 
@@ -244,8 +263,8 @@ class GlobalSettingsFragment : MaterialPreferenceFragment() {
 
         // this wasn't working.. Remove it for all
 //        if (!AndroidVersionUtil.isAndroidP) {
-            (findPreference(getString(R.string.pref_notification_category)) as PreferenceCategory)
-                    .removePreference(pref)
+        (findPreference(getString(R.string.pref_notification_category)) as PreferenceCategory)
+                .removePreference(pref)
 //        }
     }
 

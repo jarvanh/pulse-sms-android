@@ -69,7 +69,7 @@ class NotificationConversationProvider(private val service: Context, private val
 
         val wearableExtender = wearableHelper.buildExtender(conversation)
 
-        if (!conversation.privateNotification) {
+        if (!conversation.privateNotification && !Settings.hideMessageContentNotifications) {
             val otp = try {
                 OneTimePasswordParser.getOtp(conversation.messages[0].data)
             } catch (e: Exception) {
@@ -299,7 +299,7 @@ class NotificationConversationProvider(private val service: Context, private val
     }
 
     private fun NotificationCompat.Builder.applyStyle(conversation: NotificationConversation): NotificationCompat.Builder {
-        val messagingStyle: NotificationCompat.Style? = buildMessagingStyle(conversation)
+        var messagingStyle: NotificationCompat.Style? = buildMessagingStyle(conversation)
         var pictureStyle: NotificationCompat.BigPictureStyle? = null
         var inboxStyle: NotificationCompat.InboxStyle? = null
 
@@ -343,6 +343,13 @@ class NotificationConversationProvider(private val service: Context, private val
         var content = text.toString().trim { it <= ' ' }
         if (content.endsWith("<br/>")) {
             content = content.substring(0, content.length - 5)
+        }
+
+        if (Settings.hideMessageContentNotifications) {
+            pictureStyle = null
+            messagingStyle = null
+            inboxStyle = null
+            content = service.resources.getQuantityString(R.plurals.new_messages, conversation.messages.size, conversation.messages.size)
         }
 
         if (!conversation.privateNotification) {

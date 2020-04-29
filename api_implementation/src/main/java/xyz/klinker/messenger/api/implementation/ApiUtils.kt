@@ -1098,6 +1098,15 @@ object ApiUtils {
     }
 
     /**
+     * Update the notification message content option
+     */
+    fun updateHideMessageContent(accountId: String?, hideContent: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "hide_message_content", "boolean", hideContent)
+        }
+    }
+
+    /**
      * Update the notification dismissal option
      */
     fun updateDismissNotificationsAfterReply(accountId: String?, dismiss: Boolean) {
