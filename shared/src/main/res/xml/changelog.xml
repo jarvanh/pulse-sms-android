@@ -17,8 +17,17 @@
 <changelog>
 
     <version
+        name="5.3.0"
+        description="April 29th, 2020">
+        <text>In the notification section of settings, there is a new preference: hide message content</text>
+        <text>When enabled, the content of the new message will not be displayed within the notification - only the conversation title</text>
+        <text>This preference is for those people that want a bit more privacy out of their notifications</text>
+        <text>To hide the conversation title along with the message content, you can make the conversation private, as has always been available</text>
+    </version>
+
+    <version
         name="5.2.4"
-        description="April 8th, 2020">
+        description="April 12th, 2020">
         <text>Bug fixes</text>
     </version>
 

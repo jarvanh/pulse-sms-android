@@ -1,4 +1,5 @@
-Pulse is helping you fight spam!<br/><br/>
+In the notification section of settings, there is a new preference: hide message content.<br/><br/>
 
-• The app now has an option (in the Advanced Features menu), for how you want to handle messages that come from a phone number that is not in your contact list. You can choose to mute the conversation or just block it completely!<br/>
-• If you receive a group message full of spam, you can now blacklist all of the participants in that conversation with one click!
+When enabled, the content of the new message will not be displayed within the notification - only the conversation title. This preference is for those people that want a bit more privacy out of their notifications!<br/><br/>
+
+To hide the conversation title along with the message content, you can make the conversation private, as has always been available.
