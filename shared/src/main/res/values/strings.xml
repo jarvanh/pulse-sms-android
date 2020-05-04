@@ -308,7 +308,7 @@
 
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>
-    <string name="copyright">© 2019 Luke &amp; Jake Klinker</string>
+    <string name="copyright">© 2020 Lucas Klinker</string>
     <string name="copyright_summary">View open source license information</string>
     <string name="app_version">App Version</string>
     <string name="account_information">Account Information</string>
@@ -326,6 +326,7 @@
         might find!</string>
     <string name="app_info">App Info</string>
     <string name="platform_info">Platform Info</string>
+    <string name="tos_info">Terms of Service</string>
     <string name="troubleshooting">Troubleshooting</string>
     <string name="get_in_touch">Get in Touch</string>
     <string name="faqs">Frequently Asked Questions</string>
@@ -447,6 +448,9 @@
     <string name="add">Add</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_summary">View our privacy policy on the web</string>
+    <string name="youtube_policy">YouTube Terms of Service</string>
+    <string name="youtube_policy_summary">Pulse will provide a YouTube preview when you receive a message that contains a YouTube link. If you use this feature, I am required to inform you that you are agreeing to YouTube\'s Terms of Service.</string>
+    <string name="youtube_policy_summary_extended">If you wish to turn off this YouTube preview functionality, you can disable the \"Use Internal Web Browser\" preference, in settings, to skip the link preview engine and ignore YouTube\'s API.</string>
     <string name="account_expiring">Account Expiring!</string>
     <string name="signout_time">Signing out on: %1$s</string>
     <string name="lifetime_subscriber">Lifetime Subscriber</string>

@@ -93,6 +93,12 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
                     true
                 }
 
+        findPreference(getString(R.string.pref_about_youtube_policy))
+                .setOnPreferenceClickListener {
+                    openWebsite("https://www.youtube.com/t/terms")
+                    true
+                }
+
         findPreference(getString(R.string.pref_about_privacy_policy))
                 .setOnPreferenceClickListener {
                     openWebsite("https://messenger.klinkerapps.com/privacy.html")
