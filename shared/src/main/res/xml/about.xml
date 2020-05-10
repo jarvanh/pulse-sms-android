@@ -42,26 +42,6 @@
 
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
 
-    <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat android:title="@string/tos_info">
-
-        <Preference
-            android:key="@string/pref_about_privacy_policy"
-            android:summary="@string/privacy_policy_summary"
-            android:title="@string/privacy_policy"
-            app:iconSpaceReserved="false" />
-
-        <Preference
-            android:key="@string/pref_about_youtube_policy"
-            android:title="@string/youtube_policy"
-            android:summary="@string/youtube_policy_summary"
-            app:iconSpaceReserved="false" />
-
-        <Preference
-            android:summary="@string/youtube_policy_summary_extended"
-            app:iconSpaceReserved="false" />
-
-    </xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat>
-
     <xyz.klinker.messenger.shared.view.MaterialPreferenceCategoryCompat android:title="@string/platform_info">
 
         <Preference
@@ -80,6 +60,12 @@
             android:key="@string/pref_supported_platforms"
             android:summary="@string/supported_platforms_summary"
             android:title="@string/supported_platforms"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="@string/pref_about_privacy_policy"
+            android:summary="@string/privacy_policy_summary"
+            android:title="@string/privacy_policy"
             app:iconSpaceReserved="false" />
 
         <!--<Preference
