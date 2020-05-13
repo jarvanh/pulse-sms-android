@@ -44,7 +44,7 @@ class ConversationInformationUpdater(private val fragment: MessageListFragment) 
 
         if (argManager.imageUri.isNullOrEmpty()) {
             val photoUri = ContactUtils.findImageUri(number, activity)
-            if (photoUri != null && photoUri.isNotEmpty()) {
+            if (!photoUri.isNullOrEmpty()) {
                 DataSource.updateConversationImage(activity!!, argManager.conversationId, photoUri)
             }
         }

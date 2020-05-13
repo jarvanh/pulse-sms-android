@@ -115,7 +115,7 @@ class ConversationListAdapter(context: MessengerActivity, initialConversations: 
             itemBinder.showContactPlaceholderIcon(holder, conversation)
         }
 
-        if (conversation.imageUri != null && conversation.imageUri!!.isNotEmpty()) {
+        if (!conversation.imageUri.isNullOrEmpty()) {
             itemBinder.showImage(holder, conversation)
         }
     }
