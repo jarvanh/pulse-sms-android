@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2020 Luke Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@
     <string name="menu_snooze">Odložit oznámení</string>
     <string name="menu_call">Zavolat kontakt</string>
     <string name="menu_video_call">Videohovor pomocí Duo</string>
+    <string name="menu_show_bubble">Přesunout do bubliny</string>
     <string name="menu_view_contact">Zobrazit kontakt</string>
     <string name="menu_view_contacts">Zobrazit kontakty</string>
     <string name="menu_view_media">Zobrazit média</string>
@@ -51,6 +52,7 @@
     <string name="menu_archive_conversation">Archivovat konverzaci</string>
     <string name="menu_move_to_inbox">Přesunout do doručených zpráv</string>
     <string name="menu_conversation_information">Informace o konverzaci</string>
+    <string name="menu_search_conversation">Vyhledat v konverzaci</string>
     <string name="menu_copy_phone_number">Kopírovat číslo</string>
     <string name="menu_view_full_conversation">Zobrazit historii</string>
     <string name="menu_conversation_blacklist">Blokovat tento kontakt</string>
@@ -193,6 +195,8 @@ je čas začít!</string>
     <string name="send_as_scheduled_message">Poslat jako naplánovanou zprávu</string>
     <string name="send_without_signature">Odeslat bez podpisu</string>
     <string name="send_without_delay">Odeslat bez prodlení</string>
+    <string name="confirm_delete">Opravdu chcete smazat tuto konverzaci?</string>
+    <string name="confirm_archive">Opravdu chcete archivovat tuto konverzaci?</string>
     <!-- Templates -->
     <string name="type_template_text">Napište text šablony...</string>
     <string name="delete_template">Opravdu chcete smazat tuto šablonu?</string>
@@ -255,6 +259,12 @@ Nebude to trvat dlouho!</string>
     <string name="reply">Odpovědět</string>
     <string name="reply_to">Odpovědět %1$s</string>
     <string name="call">Zavolat</string>
+    <string name="notification_action_reply">Odpovědět na konverzaci</string>
+    <string name="notification_action_call">Volat kontakt</string>
+    <string name="notification_action_delete">Smazat zprávu</string>
+    <string name="notification_action_archive">Archivovat konverzaci</string>
+    <string name="notification_action_no_action">Nezobrazovat akci</string>
+    <string name="notification_action_smart_reply">Navrhnout chytrou odpověď</string>
     <string-array name="reply_choices">
         <item>Ano</item>
         <item>Ne</item>
@@ -287,6 +297,7 @@ pro které jste nevytvořili individuální Kanál oznámení pro úpravu jednot
     <string name="creating_channels_text">Vytvářím kanál oznámení</string>
     <string name="write_new_message">Napsat novou zprávu...</string>
     <string name="receiving_a_message">Přijímám zprávu</string>
+    <string name="bubble_channel">Notifikační bubliny</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Historie změn</string>
     <string name="copyright">© 2018 Luke &amp; Jake Klinker</string>
@@ -324,12 +335,14 @@ na které narazíte!</string>
     <plurals name="message_count">
         <item quantity="one">%1$d zpráva</item>
         <item quantity="other">%1$d zpráv</item>
-        <item quantity="few">%1$d zpráv</item>
+        <item quantity="few">%1$d zprávy</item>
+        <item quantity="many">%1$d zpráv</item>
     </plurals>
     <plurals name="conversation_count">
         <item quantity="one">v %1$d konverzaci</item>
         <item quantity="other">v %1$d konverzacích</item>
         <item quantity="few">v %1$d konverzacích</item>
+        <item quantity="many">v %1$d konverzacích</item>
     </plurals>
     <string name="pin_conversation">Připnout konverzaci</string>
     <string name="pin_conversation_summary">Udržuje tuto konverzaci na vrchu seznamu</string>
@@ -378,6 +391,7 @@ na které narazíte!</string>
     <string name="theme_settings">Přizpůsobení</string>
     <string name="theme_settings_category">Nastavení vzhledu</string>
     <string name="conversation_list_category">Seznam konverzací</string>
+    <string name="message_list_category">Seznam zpráv</string>
     <string name="general_category">Obecné</string>
     <string name="theme_settings_redirect">Téma</string>
     <string name="base_theme">Základní téma</string>
@@ -393,6 +407,11 @@ na které narazíte!</string>
     <string name="apply_theme_globally">Aplikovat na všechny konverzace</string>
     <string name="apply_theme_globally_summary">Odstranit témata jednotlivých konverzací a místo toho použít tuto
 globální sadu barev</string>
+    <string name="conversation_categories">Zobrazit kategorie podle data</string>
+    <string name="conversation_categories_summary">Rozdělit konverzace podle data (dnes, včera atd.)
+místo zobrazování časové značky u každé jednotlivé konverzace</string>
+    <string name="message_timestamp">Časová značka u každé zprávy</string>
+    <string name="message_timestamp_summary">Pokud je vypnuto, časovou značku zobrazíte klepnutím na zprávu.</string>
     <string name="apply_primary_theme_toolbar">Aplikovat primární barvu na lištu</string>
     <string name="apply_primary_theme_toolbar_summary">Má být lišta aplikace barevná?</string>
     <string name="swipe_delete">Táhnout pro smazání</string>
@@ -472,6 +491,7 @@ je na vašem primárním zařízení. Jste si jisti, že to je to co chcete?</st
     <string name="giffgaff_delivery">Giffgaff potvrzení o přijetí</string>
     <string name="notification_actions">Akce notifikací</string>
     <string name="notification_actions_summary">Jedno upozornění může mít maximálně tři akce</string>
+    <string name="notification_actions_summary_2">Chytré odpovědi jsou dostupné pouze v angličtině</string>
     <string name="mms_download_directory">Složka ke stahování medií</string>
     <string name="mms_download_directory_summary">Kde chcete mít uloženy obrázky a jiná MMS média</string>
     <string name="refresh_firebase">Aktualizovat účet</string>
@@ -528,6 +548,10 @@ pouze příjemci zprávy</string>
     <string name="secure_private_conversations_summary">Nastavíte-li heslo, bude nutné ho zadávat před prohlížením soukromých konverzací</string>
     <string name="use_internal_browser">Použít interní webový prohlížeč</string>
     <string name="internal_browser_summary">Vypnutí této volby také zabrání zobrazování náhledů v seznamu zpráv</string>
+    <string name="use_smart_replies">Navrhnout chytré odpovědi</string>
+    <string name="use_smart_replies_summary">Pulse bude navrhovat relevantní odpovědi, pokud budou dostupné. Tyto se generují na zařízení, ne na vzdáleném serveru</string>
+    <string name="use_smart_replies_dialog">Pulse bude navrhovat relevantní odpovědi, pokud budou dostupné. Tyto se generují na zařízení, ne na vzdáleném serveru.\n\nPokud tuto funkci nechcete využívat, můžete ji vypnout v nastavení.</string>
+    <string name="use_smart_reply_settings">Nastavení</string>
     <string name="message_backup">Záloha zpráv</string>
     <string name="message_backup_pref_summary">Máte obavu, že přijdete o své zprávy? Pulse Vám hlídá záda</string>
     <string name="message_backup_summary">Věděli jste že: Pulse online služba je postavena okolo zálohování Vašich zpráv.
@@ -563,6 +587,7 @@ udělat je přihlásit se do Vašeho účtu.</string>
     <string name="no_folder">Žádná složka</string>
     <!-- Theming Options -->
     <string name="day_night">Výchozí (Den/Noc)</string>
+    <string name="system_default">Výchozí nastavení</string>
     <string name="always_light">Vždy světlé</string>
     <string name="always_dark">Vždy tmavé</string>
     <string name="always_black">Vždy černé</string>
@@ -645,6 +670,7 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="verifying_password">Ověřuji heslo...</string>
     <!-- Rate it -->
     <string name="rate_it">Ohodnoťe ho!</string>
+    <string name="no_thanks">Ne děkuji</string>
     <string name="rate_it_title">Dobrá hodnocení velmi pomohou</string>
     <string name="rate_it_summary"><b>pěti hvězdičkové</b> hodnocení velmi pomohou růstu aplikace
 a její viditelnosti v Obchodě Play. Pokud chcete této vidět tuto aplikaci <i>pokračovat stoupat</i>, tak mi pomožte!</string>
@@ -682,10 +708,13 @@ Pokud nevytvoříte nové tak vás aplikace automaticky odhlásí z vašeho úč
     <string name="billed_immediately">Toto se platí ihned.</string>
     <string name="lifetime_purchase">$10.99 - Celoživotní členství</string>
     <string name="lifetime_purchase_summary">Zaplaťte jednou a nikdy víc!</string>
+    <string name="subscription_purchase_description">Nízká cena, budete potěšeni!</string>
+    <string name="subscription_purchase_summary">Sedmidenní zkušební lhůta.</string>
     <string name="yearly_purchase">$5.99 každý rok</string>
     <string name="yearly_purchase_summary">Nejlepší nabídka.</string>
     <string name="three_month_purchase">$1.99 každé tři měsíce</string>
     <string name="three_month_purchase_summary">S touto volbou nemůžete nic pokazit.</string>
+    <string name="yearly_purchase_2">$5.99 - roční předplatné</string>
     <string name="monthly_purchase">$0.99 každý měsíc</string>
     <string name="monthly_purchase_summary">Nechcete platit? Žádný problém. Vyzkoušejte si aplikaci zdarma.</string>
     <string name="change_subscription_message">Chcete upgrade? Skvělé! Až si na následující obrazovce
@@ -707,6 +736,7 @@ Posílejte zprávy z webu, z počítače, z tabletu, hodinek a dokonce i z telev
     <string name="seven_days_free">7 dní zdarma!</string>
     <string name="competition_cant_beat">Konkurence se nemůže dotknout našich cen, rychlosti či služeb - <b>vyzkoušejte 7 dní ZDARMA</b> a zjistěte sami!</string>
     <string name="select_a_trial_below">Vyberte jednu ze tří možností předplatného pro spuštění vaší <b>bezplatné zkušební verze</b>.</string>
+    <string name="select_a_subscription_below">Vyberte si předplatné a začněte používat svou <b>bezplatnou zkušební verzi</b>. Upgradovat můžete kdykoliv!</string>
     <string name="charged_after_trial">Účtováno po zkušebním období:</string>
     <string name="monthly_purchase_improved">$0.99 za měsíc</string>
     <string name="three_month_purchase_improved">$1.99 za měsíc</string>

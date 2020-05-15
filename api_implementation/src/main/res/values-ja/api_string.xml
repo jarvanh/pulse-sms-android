@@ -15,16 +15,6 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="api_login">Autentificare</string>
-    <string name="api_email">Adresa email</string>
-    <string name="api_password">Parola</string>
-    <string name="api_password_confirmation">Confirmare parola</string>
-    <string name="api_name">Nume</string>
-    <string name="api_phone_number">Numar telefon</string>
-    <string name="api_connecting">Conectare la server</string>
-    <string name="api_yes">Da</string>
-    <string name="api_no">Nu</string>
-    <string name="api_email_invalid">Adresa email invalida</string>
-    <string name="api_confirm">Confirma</string>
-    <string name="api_continue">Continua</string>
+    <string name="api_login">ログイン</string>
+    <string name="api_signup">アカウントを作成</string>
 </resources>

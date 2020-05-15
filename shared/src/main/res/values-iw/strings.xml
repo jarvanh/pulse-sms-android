@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">(הודעות טקסט/ הודעות בטבלאט)Pulse</string>
     <string name="app_title">Pulse</string>
@@ -71,6 +71,7 @@
     <!-- Search Screen -->
     <!-- Invite Friends Screen -->
     <!-- Message List Screen -->
+    <!-- Templates -->
     <!-- Compose Screen -->
     <!-- Onboarding Screen -->
     <!-- Notifications -->
@@ -81,7 +82,9 @@
     <!-- Scheduled Messages Screen -->
     <!-- Encryption -->
     <!-- Quick Reply -->
+    <!-- Passcode Entry -->
     <!-- Other -->
+    <!-- Rate it -->
     <!-- Times -->
     <!-- Purchase/Subscriptions -->
 </resources>

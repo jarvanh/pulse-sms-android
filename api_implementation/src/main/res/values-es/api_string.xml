@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+  ~ Copyright (C) 2016 Jacob Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="api_login">Iniciar sesión</string>
+    <string name="api_signup">Registrarse</string>
+    <string name="api_signup_failed">¡No puede registrarse con este dispositivo, debe registrarse con un dispositivo primario que tenta número de teléfono primero!</string>
+    <string name="api_skip_signup">O, si solo desea utilizar la aplicación en este dispositivo y no en la red,
+funciones como enviar mensajes de texto desde una tableta o computadora, puede omitir este paso:</string>
+    <string name="api_skip">Omitir</string>
+    <string name="api_email">Dirección de correo electrónico</string>
+    <string name="api_password">Contraseña</string>
+    <string name="api_forgot_password">Preguntas frecuentes sobre la contraseña</string>
+    <string name="api_password_confirmation">Confirmación de contraseña</string>
+    <string name="api_name">Nombre</string>
+    <string name="api_phone_number">Número de teléfono</string>
+    <string name="api_connecting">Conectando al servidor…</string>
+    <string name="api_device_error">Se produjo un error al agregar este dispositivo. Vamos a volver a intentarlo!</string>
+    <string name="api_add_second_primary_device">¡Parece que ya tiene un dispositivo primario
+(%1$s) para su cuenta y solo se permite una! ¿Quiere eliminar el actual
+dispositivo primario y establecer este como el nuevo primario?</string>
+    <string name="api_yes">Sí</string>
+    <string name="api_no">No</string>
+    <string name="api_no_email">No se ha introducido una dirección de correo electrónico</string>
+    <string name="api_email_invalid">Dirección de correo electrónico no válida</string>
+    <string name="api_no_password">No se introdujo una contraseña.</string>
+    <string name="api_no_password_confirmation">No se introdujo confirmación de contraseña.</string>
+    <string name="api_password_mismatch">Las contraseñas no concuerdan.</string>
+    <string name="api_no_name">No se introdujo nombre.</string>
+    <string name="api_no_phone_number">No se introdujo número de teléfono.</string>
+    <string name="api_login_error">Ocurrió un error durante el ingreso, ¿correo electrónico o contraseña erróneos?</string>
+    <string name="api_activate_summary">Ingrese para ver sus mensajes en este dispositivo.</string>
+    <string name="api_activate_1">1</string>
+    <string name="api_activate_2">2</string>
+    <string name="api_activate_1_1">Ir a</string>
+    <string name="api_activate_wear">wear.klinkerapps.com</string>
+    <string name="api_activate_1_3">en un dispositivo móvil o computadora.</string>
+    <string name="api_activate_2_1">En el sitio web</string>
+    <string name="api_activate_2_2">ingrese el código a la derecha</string>
+    <string name="api_activate_2_3">para conectarse a su cuenta.</string>
+    <string name="api_confirm_password">Por favor confirme su contraseña.</string>
+    <string name="api_wrong_password">Falló la confirmación. ¿Su contraseña es correcta?</string>
+    <string name="api_email_taken">Ocurrió un error durante el ingreso, ¿usted ya tiene una cuenta con esta dirección de email?</string>
+    <string name="api_confirm">Confirmar</string>
+    <string name="api_continue">Continuar</string>
+</resources>

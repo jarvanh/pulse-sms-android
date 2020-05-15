@@ -17,21 +17,24 @@
 <resources>
     <string name="api_login">Inloggen</string>
     <string name="api_signup">Registreren</string>
-    <string name="api_signup_failed">Je kan niet registreren via dit toestel omdat je je eerst dient te registreren op een toestel met een telefoonnummer!</string>
-    <string name="api_skip_signup">Of, als je enkel deze app op dit toestel wil gebruiken en niet de netwerk functies zoals sms\'en vanaf een ander toestel, dan kan je deze stap overslaan:</string>
+    <string name="api_signup_failed">Je kunt je niet registreren via dit toestel omdat je je eerst dient te registreren via een
+        toestel met een telefoonnummer!</string>
+    <string name="api_skip_signup">Of, als je enkel deze app op dit toestel wil gebruiken zonder netwerkfuncties als sms\'en vanaf een ander toestel, dan kan je deze stap overslaan:</string>
     <string name="api_skip">Overslaan</string>
     <string name="api_email">E-mailadres</string>
     <string name="api_password">Wachtwoord</string>
-    <string name="api_forgot_password">Wachtwoord vergeten FAQ</string>
+    <string name="api_forgot_password">Wachtwoord vergeten - FAQ</string>
     <string name="api_password_confirmation">Wachtwoord bevestigen</string>
     <string name="api_name">Naam</string>
     <string name="api_phone_number">Telefoonnummer</string>
-    <string name="api_connecting">Verbinding maken met de server...</string>
-    <string name="api_device_error">Er ging iets mis tijdens het proces. Probeer opnieuw!</string>
-    <string name="api_add_second_primary_device">Het lijkt er op dat je al een hoofdtoestel (%1$s) hebt voor jouw account en er is slechts 1 toegestaan. Wil je jouw huidige hoofdtoestel verwijderen en dit als het nieuwe hoofdtoestel instellen?</string>
+    <string name="api_connecting">Bezig met verbinden met server...</string>
+    <string name="api_device_error">Er is iets misgegaan tijdens het toevoegen van dit apparaat. Probeer het opnieuw!</string>
+    <string name="api_add_second_primary_device">Het lijkt er op dat je al een hoofdtoestel (%1$s) hebt voor je account en er is
+        slechts 1 toegestaan. Wil je je huidige hoofdtoestel verwijderen
+        en dit als het nieuwe hoofdtoestel instellen?</string>
     <string name="api_yes">Ja</string>
-    <string name="api_no">Neen</string>
-    <string name="api_no_email">Geen e-mailadres ingevuld</string>
+    <string name="api_no">Nee</string>
+    <string name="api_no_email">Geen e-mailadres ingevoerd</string>
     <string name="api_email_invalid">Ongeldig e-mailadres</string>
     <string name="api_no_password">Geen wachtwoord ingevuld</string>
     <string name="api_no_password_confirmation">Geen wachtwoordbevestiging ingevuld</string>

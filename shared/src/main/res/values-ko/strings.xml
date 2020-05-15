@@ -15,11 +15,18 @@
   ~ limitations under the License.
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
+    <string name="app_title">Pulse</string>
     <!-- Launcher Shortcuts -->
-    <string name="shortcut_compose_short">Mesaj nou</string>
+    <string name="shortcut_compose_short">새 메시지</string>
     <!-- Drawer Items -->
-    <string name="menu_conversations">Lista mesaje</string>
-    <string name="menu_invite">Invita prieteni</string>
+    <string name="menu_conversations">대화 목록</string>
+    <string name="menu_archived_conversations">저장된 대화</string>
+    <string name="menu_private_conversations">비밀 대화</string>
+    <string name="menu_unread_conversations">읽지 않은 대화</string>
+    <string name="menu_edit_folders">폴더 관리</string>
+    <string name="menu_edit_folders_no_ellipse">폴더 관리</string>
     <!-- Empty Screen -->
     <!-- Conversation List Screen -->
     <!-- Search Screen -->
@@ -30,6 +37,7 @@
     <!-- Onboarding Screen -->
     <!-- Notifications -->
     <!-- About, Help and Feedback and Settings -->
+    <string name="keyboard_send_key">전송</string>
     <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <!-- Theming Options -->

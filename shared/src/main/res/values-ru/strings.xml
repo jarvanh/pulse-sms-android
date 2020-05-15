@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2020 Luke Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse (чат и SMS)</string>
     <string name="app_title">Pulse</string>
@@ -50,6 +50,7 @@
     <string name="menu_archive_conversation">В архив</string>
     <string name="menu_move_to_inbox">Переместить во Входящие</string>
     <string name="menu_conversation_information">Информация о диалоге</string>
+    <string name="menu_search_conversation">Поиск диалога</string>
     <string name="menu_copy_phone_number">Скопировать номер</string>
     <string name="menu_view_full_conversation">Смотреть историю</string>
     <string name="menu_conversation_blacklist">Добавить в чёрный список</string>
@@ -82,21 +83,21 @@
     <string name="marking_section_as_read">Отмечаю все %1$s как прочитанные</string>
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d диалог удален</item>
+        <item quantity="other">%1$d диалогов удалены</item>
         <item quantity="few">%1$d диалога удалены</item>
         <item quantity="many">%1$d диалогов удалены</item>
-        <item quantity="other">%1$d диалогов удалены</item>
     </plurals>
     <plurals name="conversations_archived">
         <item quantity="one">%1$d диалог отправлен в архив</item>
+        <item quantity="other">%1$d диалогов отправлены в архив</item>
         <item quantity="few">%1$d диалога отправлены в архив</item>
         <item quantity="many">%1$d диалогов отправлены в архив</item>
-        <item quantity="other">%1$d диалогов отправлены в архив</item>
     </plurals>
     <plurals name="conversations_unarchived">
         <item quantity="one">%1$d диалог перемещен во Входящие</item>
+        <item quantity="other">%1$d диалогов перемещены во Входящие</item>
         <item quantity="few">%1$d диалога перемещены во Входящие</item>
         <item quantity="many">%1$d диалогов перемещены во Входящие</item>
-        <item quantity="other">%1$d диалогов перемещены во Входящие</item>
     </plurals>
     <string name="undo">Отменить</string>
     <string name="enter_search">Найти...</string>
@@ -118,6 +119,7 @@
     <string name="type_message_to">Ваше сообщение для %1$s</string>
     <string name="attach">Прикрепить</string>
     <string name="select_sim">Выбрать SIM</string>
+    <string name="view_scheduled_messages">Просмотр запланированных сообщений для диалога</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s  •</string>
     <string name="mms_image">MMS изображение</string>
@@ -128,6 +130,7 @@
     <string name="attach_image">Прикрепить изображение</string>
     <string name="capture_image">Сделать снимок</string>
     <string name="attach_gif">Прикрепить GIF</string>
+    <string name="attach_sticker">Прикрепить стикер</string>
     <string name="record_video">Записать видео</string>
     <string name="record_audio">Записать аудио</string>
     <string name="attach_location">Добавить местоположение</string>
@@ -141,6 +144,7 @@
     <string name="fullscreen">Во весь экран</string>
     <string name="attached_image">Прикрепить изображение</string>
     <string name="remove_image">Удалить прикреплённое изображение</string>
+    <string name="remove_image_short">Удалить изображение</string>
     <string name="edit_image">Редактировать прикреплённое изображение</string>
     <string name="edit_recipients">Редактировать получателей</string>
     <string name="select_folder">Выберите папку для разговора</string>
@@ -156,6 +160,9 @@
     <string name="audio_recording_error">Возникла ошибка :(</string>
     <string name="message_copied_to_clipboard">Скопировано в буфер</string>
     <string name="view_details">Посмотреть детали</string>
+    <string name="speak_message">Произнести сообщение вслух</string>
+    <string name="select_all_messages">Выбрать все сообщения</string>
+    <string name="select_all_conversations">Выбрать все диалоги</string>
     <string name="delete">Удалить</string>
     <string name="copy_message">Скопировать текст</string>
     <string name="resend">Переслать</string>
@@ -175,10 +182,17 @@
     <string name="copy_link">Копировать ссылку</string>
     <string name="attach_vcard">Прикрепите контакт как vCard</string>
     <string name="attach_plain_text">Прикрепить контакт как обычный текст</string>
+    <string name="send_as_scheduled_message_question">Вы хотите запланировать отправку сообщения позже?</string>
+    <string name="send_as_scheduled_message">Отправить как отложенное сообщение</string>
+    <string name="send_without_signature">Отправить без подписи</string>
+    <string name="send_without_delay">Отправить без задержки</string>
+    <string name="confirm_delete">Вы уверены, что хотите удалить этот диалог?</string>
+    <string name="confirm_archive">Вы уверены, что хотите архивировать этот диалог?</string>
     <!-- Templates -->
     <string name="type_template_text">Введите текст шаблона ...</string>
     <string name="delete_template">Вы действительно хотите удалить этот шаблон?</string>
     <string name="no_templates">Используйте кнопку <b> + </b>, чтобы создать шаблон</string>
+    <string name="edit">Редактировать</string>
     <!-- Compose Screen -->
     <string name="compose_message">Написать новое сообщение</string>
     <string name="send_message">Отправить сообщение</string>
@@ -190,6 +204,7 @@
     <string name="compose_all_contacts">Все контакты</string>
     <string name="private_conversation_disclaimer">Это <b> закрытый разговор </b> и не может быть открыт с экрана компоновки.</string>
     <!-- Onboarding Screen -->
+    <string name="google_requires_default_sms">В настоящее время Google требует, чтобы любые приложения SMS были установлены в качестве приложения обмена сообщениями по умолчанию, прежде чем они смогут получить доступ или отправить какие-либо сообщения. Это обязательное разрешение.</string>
     <string name="permissions_needed">Приложение не сможет работать без этих разрешений! Нужно принять их прежде чем мы продолжим.</string>
     <string name="loading_messages">Обработка...</string>
     <string name="loading_messages_summary">Загружаем ваши сообщения в приложение. Это не займёт много времени!</string>
@@ -215,21 +230,28 @@
     <string name="notification_ticker">Новое сообщение от %1$s</string>
     <plurals name="new_conversations">
         <item quantity="one">%1$d новый диалог</item>
+        <item quantity="other">%1$d новых диалогов</item>
         <item quantity="few">%1$d новых диалога</item>
         <item quantity="many">%1$d новых диалогов</item>
-        <item quantity="other">%1$d новых диалогов</item>
     </plurals>
     <plurals name="new_messages">
         <item quantity="one">%1$d новое сообщение</item>
+        <item quantity="other">%1$d новых сообщений</item>
         <item quantity="few">%1$d новых сообщения</item>
         <item quantity="many">%1$d новых сообщений</item>
-        <item quantity="other">%1$d новых сообщений</item>
     </plurals>
     <string name="read">Прочитано</string>
+    <string name="mark_as_read">пометить прочитанным</string>
     <string name="mute">Бесшумно</string>
     <string name="reply">Ответ</string>
     <string name="reply_to">Ответить %1$s</string>
     <string name="call">Вызов</string>
+    <string name="notification_action_reply">Ответить</string>
+    <string name="notification_action_call">Позвонить контакту</string>
+    <string name="notification_action_delete">Удалить сообщение</string>
+    <string name="notification_action_archive">Архивировать диалог</string>
+    <string name="notification_action_no_action">Не отображать действие</string>
+    <string name="notification_action_smart_reply">Предлагать быстрые действия</string>
     <string-array name="reply_choices">
         <item>Да</item>
         <item>Нет</item>
@@ -273,6 +295,7 @@
     <string name="device_id">ID устройства</string>
     <string name="device_info">Об устройстве</string>
     <string name="website">Сайт</string>
+    <string name="view_platforms">Доступные платформы Pulse</string>
     <string name="access_messages_from_any_device">Перейти и обмениваться сообщениями с любого устройства!</string>
     <string name="beta_disclaimer">Проект находится в состоянии бета-теста, пожалуйста, сообщайте о любых неисправностях.</string>
     <string name="app_info">О приложении</string>
@@ -295,9 +318,9 @@
     <string name="support">Поддержка</string>
     <plurals name="message_count">
         <item quantity="one">%1$d сообщение</item>
+        <item quantity="other">%1$d сообщения</item>
         <item quantity="few">%1$d сообщения</item>
         <item quantity="many">%1$d сообщений</item>
-        <item quantity="other">%1$d сообщений</item>
     </plurals>
     <plurals name="conversation_count">
         <item quantity="one">в %1$d диалоге</item>
@@ -311,6 +334,7 @@
     <string name="mute_conversation_summary">Скрыть уведомления диалога</string>
     <string name="private_conversation">Приватный диалог</string>
     <string name="private_conversation_summary">Скрыть содержание в уведомлениях</string>
+    <string name="private_conversation_summary_2">Скрыть содержание в уведомлениях и переместить этот разговор в раздел <i>Личные сообщения</i></string>
     <string name="primary_color">Основной цвет</string>
     <string name="primary_dark_color">Основной цвет фона</string>
     <string name="accent_color">Цвет акцента</string>
@@ -351,6 +375,7 @@
     <string name="theme_settings">Персонализация</string>
     <string name="theme_settings_category">Смотри и пробуй</string>
     <string name="conversation_list_category">Список диалогов</string>
+    <string name="message_list_category">Список сообщений</string>
     <string name="general_category">Основные</string>
     <string name="theme_settings_redirect">Тема</string>
     <string name="base_theme">Основная тема</string>
@@ -366,16 +391,27 @@
 темные темы будут использовать черную навигационную панель</string>
     <string name="apply_theme_globally">Применить для всех диалогов</string>
     <string name="apply_theme_globally_summary">Удалить все индивидуальные настройки оформления диалогов в пользу общей цветовой палитры.</string>
-    <string name="swipe_delete">Удалить жестом</string>
+    <string name="conversation_categories">Группировать по датам</string>
+    <string name="conversation_categories_summary">Группировать диалоги по датам (Сегодня, Вчера, На этой неделе и т.д.) вместо отображения даты для каждого диалога в списке</string>
+    <string name="message_timestamp">Метка времени в каждом сообщении</string>
+    <string name="message_timestamp_summary">Когда выключено, просто нажми на сообщение чтобы увидеть метку времени</string>
+    <string name="apply_primary_theme_toolbar">Применить Основной цвет к панели приложения</string>
+    <string name="apply_primary_theme_toolbar_summary">Должна ли панель приложения быть окрашенной</string>
+    <string name="swipe_delete">Удалить свайпом</string>
     <string name="swipe_actions">Жесты</string>
     <string name="swipe_actions_summary">Настройки жестов для диалогов</string>
     <string name="left_to_right_swipe">Жест слева</string>
     <string name="right_to_left_swipe">Жест справа</string>
     <string name="no_swipe">Отключить жест</string>
     <string name="blacklist_hint">Номер для добавления в ч/с</string>
+    <string name="enter_phrase">Введите фразу</string>
+    <string name="enter_phone">Введите номер телефона</string>
+    <string name="blacklist_phrase_hint">Введите фразу для ч/с</string>
     <string name="add_blacklist">%1$s\n\nВы уверены, что хотите добавить этот номер в чёрный список? Сообщения от него не будут сохранены и вы не будете получать уведомления при получении!</string>
+    <string name="add_blacklist_phrase">%1$s\n\nВы уверены, что хотите добавить фразу в чёрный список? Сообщения с этой фразой не будут сохранены и вы не будете получать уведомления при получении!</string>
     <string name="remove_blacklist">%1$s\n\nВы хотите удалить этот номер из ч/с?</string>
     <string name="blacklist_need_number">Нужно ввести телефонный номер, чтобы добавить в ч/с!</string>
+    <string name="blacklist_need_phrase">Нужно ввести фразу, чтобы добавить в ч/с!</string>
     <string name="no_blacklists">Тут никого нет</string>
     <string name="no_blacklists_summary">Добавляйте по-одному, нажав на кнопку Плюс!</string>
     <string name="add">Добавить</string>
@@ -392,6 +428,14 @@
     <string name="delete_account_summary">Удаляет учётную запись со всех ваших устройств, а так же с сервера. Это действие нельзя отменить!</string>
     <string name="delete_account_confirmation">Вы уверены, что хотите удалить свою учётную запись и всё, связанное с ней? Вы всегда можете зарегистрироваться ещё раз!</string>
     <string name="change_subscription">Изменить тип подписки</string>
+    <string name="trial_subscription_title">У вас осталось %s дней в пробной версии</string>
+    <string name="trial_subscription_summary">Нажмите здесь, чтобы обновить или отменить пробную версию!</string>
+    <string name="upgrade_or_cancel_title">Закончить пробный период?</string>
+    <string name="trial_expired">Спасибо за пробный период!</string>
+    <string name="upgrade_or_cancel">Вы можете обновить свою учетную запись до подписки или пожизненного членства, чтобы продолжать использовать Pulse на всех своих устройствах!\n\nХотите отменить?
+Ваша учетная запись будет удалена без какой-либо платы. Вы можете продолжать использовать приложение на своем телефоне бесплатно! Вы всегда можете вернуться.</string>
+    <string name="upgrade">Обновить!</string>
+    <string name="cancel_trial">Отменить пробную версию</string>
     <string name="cancel_on_the_play_store">Отменить и посмотреть вашу подписку в Play Store</string>
     <string name="resync_account">Повторная синхронизация</string>
     <string name="resync_account_summary">Отсутствуют сообщения? Используйте это, чтобы синхронизировать данные с основным устройством.</string>
@@ -416,13 +460,16 @@
     <string name="after_four_messages">После 4 сообщений</string>
     <string name="send_as_mms_summary">Длинные сообщения будут отправлены как MMS, вместо нескольких SMS</string>
     <string name="alert_types">Виды уведомлений</string>
+    <string name="notification_customization">Настройка уведомлений</string>
     <string name="alert_types_summary">Различные настройки уведомлений</string>
     <string name="strip_unicode">Не использовать Unicode</string>
     <string name="strip_unicode_summary">Специальные символы будут убраны из отправляемого сообщения</string>
     <string name="giffgaff_delivery">Отчёт о доставке Giffgaff</string>
     <string name="notification_actions">Быстрые действия в уведомлениях</string>
     <string name="notification_actions_summary">Можно включить не более трёх быстрых действий в уведомлениях</string>
+    <string name="notification_actions_summary_2">Обратите внимание, что быстрые действия в настоящее время доступны только на английском языке</string>
     <string name="mms_download_directory">Папка загрузки медиафайлов</string>
+    <string name="mms_download_directory_summary">Где вы хотите сохранить изображения и другие MMS файлы</string>
     <string name="refresh_firebase">Обновить учётную запись</string>
     <string name="refresh_firebase_summary">Сообщения не синхронизируются или не получается авторизоваться? Воспользуйтесь этим.</string>
     <string name="refreshing_notifications">Обновляем уведомления...</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2020 Luke Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@
     <string name="menu_snooze">Couper les notifications</string>
     <string name="menu_call">Appeler le contact</string>
     <string name="menu_video_call">Appel vidéo avec Duo</string>
+    <string name="menu_show_bubble">Extraire dans une bulle</string>
     <string name="menu_view_contact">Voir le contact</string>
     <string name="menu_view_contacts">Voir les contacts</string>
     <string name="menu_view_media">Afficher les médias</string>
@@ -51,6 +52,7 @@
     <string name="menu_archive_conversation">Archiver la conversation</string>
     <string name="menu_move_to_inbox">Déplacer vers la boîte de réception</string>
     <string name="menu_conversation_information">Informations de la conversation</string>
+    <string name="menu_search_conversation">Chercher dans la conversation</string>
     <string name="menu_copy_phone_number">Numéro de copie</string>
     <string name="menu_view_full_conversation">Voir l\'historique</string>
     <string name="menu_conversation_blacklist">Mettre le contact en liste noire</string>
@@ -80,7 +82,7 @@
     <string name="last_month">Ce mois-ci</string>
     <string name="older">Plus anciennes</string>
     <string name="mark_section_as_read">Marquer les conversations de %1$s comme lues</string>
-    <string name="marking_section_as_read">Marquage des conversations de %1$s comme lues...</string>
+    <string name="marking_section_as_read">Marquage des conversations de %1$s comme lues</string>
     <plurals name="conversations_deleted">
         <item quantity="one">%1$d conversation supprimée</item>
         <item quantity="other">%1$d conversations supprimées</item>
@@ -152,7 +154,7 @@ commencez !
     <string name="save">Sauvegarder</string>
     <string name="share">Partager</string>
     <string name="share_content">Partager le contenu...</string>
-    <string name="saved">Sauvegardé dans le dossier de téléchargements !</string>
+    <string name="saved">Le fichier a été sauvegardé !</string>
     <string name="failed_to_save">La sauvegarde a échouée</string>
     <string name="start_recording_audio">Appuyer pour commencer à enregistrer</string>
     <string name="audio_recording_error">Erreur d\'enregistrement :(</string>
@@ -184,6 +186,8 @@ commencez !
     <string name="send_as_scheduled_message">Envoyer un message planifié</string>
     <string name="send_without_signature">Envoyer sans signature</string>
     <string name="send_without_delay">Envoyer sans délai</string>
+    <string name="confirm_delete">Êtes-vous sûr de vouloir supprimer cette conversation ?</string>
+    <string name="confirm_archive">Êtes-vous sûr de vouloir archiver cette conversation ?</string>
     <!-- Templates -->
     <string name="type_template_text">Écrivez le texte du modèle...</string>
     <string name="delete_template">Êtes-vous sûre de vous vouloir supprimer ce modèle ?</string>
@@ -219,7 +223,7 @@ commencez !
     <string name="message_anywhere_onboarding_title_3">Une semaine d\'essai</string>
     <string name="message_anywhere_onboarding_content_1">"S'intègre parfaitement avec n'importe quel appareil (tablette, montre, télé, internet, Google Chrome et Firefox) pour prendre en charge les SMS et les MMS de n'importe où !
 "</string>
-    <string name="message_anywhere_onboarding_content_2">Des prix incroyablement bas ! Payez lorsque vous en avez besoin : 10,99 $ à vie, 5,99 $ par an, 1,99 $ pour 3 mois ou 0,99 $ par mois. Moins cher qu\'un café.</string>
+    <string name="message_anywhere_onboarding_content_2">Des prix incroyablement bas ! Payez lorsque vous en avez besoin : 11,99€ pour la vie, 6,99€ par an, 2,19€ pour 3 mois ou 1,09€ par mois. Moins cher qu\'un café.</string>
     <string name="message_anywhere_onboarding_content_3">Utilisez l\'application Android, GRATUITEMENT (pour toujours !) sur votre téléphone, ou commencez à écrire vos messages depuis tous vos appareils avec UNE SEMAINE d\'essai gratuit.</string>
     <string name="start_trial">Démarrer\nl\'essai</string>
     <string name="not_now">Pas\nMaintenant</string>
@@ -241,6 +245,12 @@ commencez !
     <string name="reply">Répondre</string>
     <string name="reply_to">Répondre à %1$s</string>
     <string name="call">Appeler</string>
+    <string name="notification_action_reply">Répondre à la conversation</string>
+    <string name="notification_action_call">Appeler le contact</string>
+    <string name="notification_action_delete">Supprimer le message</string>
+    <string name="notification_action_archive">Archiver la conversation</string>
+    <string name="notification_action_no_action">Ne pas afficher d\'action</string>
+    <string name="notification_action_smart_reply">Proposer une réponse intelligente</string>
     <string-array name="reply_choices">
         <item>Oui</item>
         <item>Non</item>
@@ -273,15 +283,16 @@ où vous n\'avez pas créé un canal de notification individuel pour la personna
     <string name="creating_channels_text">Création des canaux de notification...</string>
     <string name="write_new_message">Ecrire un nouveau message...</string>
     <string name="receiving_a_message">Réception d\'un message...</string>
+    <string name="bubble_channel">Bulles de notification</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Historique des versions de l\'application</string>
-    <string name="copyright">© 2018 Luke &amp; Jake Klinker</string>
+    <string name="copyright">© 2019 Luke &amp; Jake Klinker</string>
     <string name="copyright_summary">Voir les informations de la licence open source</string>
     <string name="app_version">Version de l\'application</string>
     <string name="account_information">Informations du compte</string>
     <string name="account_actions">Interventions sur le compte</string>
     <string name="danger_zone">Zone dangereuse</string>
-    <string name="be_careful_using_these_settings">Suivez les instructions et faites attention lorsque vous utilisez ces actions.</string>
+    <string name="be_careful_using_these_settings">Ces options peuvent être dangereuses. Veuillez lire leurs descriptions sur ma page d\'aide, pour les instructions d\'utilisation et informations.</string>
     <string name="device_id">Identifiant du terminal</string>
     <string name="device_info">Informations du terminal</string>
     <string name="website">Site Internet</string>
@@ -354,14 +365,15 @@ pourriez rencontrer !</string>
     <string name="vibrate_one_long_one_short_one_long">Une longue, une courte, une longue vibration</string>
     <string name="keyboard_layout">Disposition du clavier</string>
     <string name="keyboard_default">Clavier par défaut</string>
-    <string name="keyboard_send_key">Touche Envoi</string>
-    <string name="keyboard_enter_key">Touche \"Entrée\"</string>
+    <string name="keyboard_send_key">Afficher une touche d\'Envoi</string>
+    <string name="keyboard_enter_key">Afficher une touche Entrée/Retour à la ligne</string>
     <string name="sound_effects">Effets sonores</string>
     <string name="delivery_reports">Accusés de réception</string>
     <string name="delivery_reports_summary">La plupart des opérateurs ne supportent pas cette option. Ce n\'est pas du RCS (Rich Communications Services)</string>
     <string name="theme_settings">Personnalisation</string>
     <string name="theme_settings_category">Apparence</string>
     <string name="conversation_list_category">Liste des conversations</string>
+    <string name="message_list_category">Liste de messages</string>
     <string name="general_category">Général</string>
     <string name="theme_settings_redirect">Thème</string>
     <string name="base_theme">Thème de base</string>
@@ -376,6 +388,10 @@ pourriez rencontrer !</string>
     <string name="adjustable_nav_bar_summary">Le thème clair utilise une barre de navigation blanche, tandis que le thème sombre utilise une barre de navigation noire</string>
     <string name="apply_theme_globally">Appliquer à toutes les conversations</string>
     <string name="apply_theme_globally_summary">Supprimer les thèmes par conversation, en faveur de ce jeu de couleurs global.</string>
+    <string name="conversation_categories">Classement par date</string>
+    <string name="conversation_categories_summary">Classer les conversations par date (Aujourd\'hui, Hier, etc...) plutôt que d\'afficher la date ou l\'heure pour chaque conversation.</string>
+    <string name="message_timestamp">Horodater chaque message</string>
+    <string name="message_timestamp_summary">Si désactivé, vous pouvez simplement appuyer sur tout message pour en voir l\'horodatage.</string>
     <string name="apply_primary_theme_toolbar">Appliquer la couleur primaire à la barre supérieure de l\'application</string>
     <string name="apply_primary_theme_toolbar_summary">Choisir de colorer ou non la barre supérieure</string>
     <string name="swipe_delete">Glisser pour effacer</string>
@@ -450,6 +466,7 @@ A utiliser pour synchroniser vos messages avec l’appareil principal.</string>
     <string name="giffgaff_delivery">Accusés de réception giffgaff</string>
     <string name="notification_actions">Actions depuis les notifications</string>
     <string name="notification_actions_summary">Trois actions maximales par notification.</string>
+    <string name="notification_actions_summary_2">Les réponses intelligentes ne sont actuellement disponibles qu\'en anglais</string>
     <string name="mms_download_directory">Dossier de téléchargement des médias</string>
     <string name="mms_download_directory_summary">Endroit où vous souhaitez sauvegarder les images et autres médias MMS</string>
     <string name="refresh_firebase">Actualiser le compte</string>
@@ -475,7 +492,7 @@ Une fois cela fait, vous devrez vous connecter à nouveau, sur tous vos autres a
     <string name="use_group_mms_summary">Si désactivé, les messages groupés seront envoyés comme SMS individuels, à chaque contact de la conversation.</string>
     <string name="use_mms_read_receipts">Accusés de lecture</string>
     <string name="auto_save_media">Sauvegarde auto des médias</string>
-    <string name="auto_save_media_summary">Sauvegarder automatiquement tout média MMS dans le dossier /Téléchargements quand il est reçu.</string>
+    <string name="auto_save_media_summary">Sauvegarder automatiquement tout média MMS quand il est reçu.</string>
     <string name="apn_configuration">Configuration des APN</string>
     <string name="override_system_apn">Remplacer les APNs du système</string>
     <string name="mmsc_url">URL du MMSC</string>
@@ -505,6 +522,10 @@ seront uniquement affichées au destinataire du message</string>
     <string name="secure_private_conversations_summary">Paramétrer un mot de passe vous demandera de l\'entrer avant de pouvoir voir les conversations privées.</string>
     <string name="use_internal_browser">Utiliser le navigateur interne</string>
     <string name="internal_browser_summary">Désactiver cette option va aussi désactiver la prévisualisation des liens dans la liste des messages</string>
+    <string name="use_smart_replies">Proposer des réponses intelligentes</string>
+    <string name="use_smart_replies_summary">Pulse proposera des réponses pertinentes, si cela est possible. Celles-ci sont générées directement sur l\'appareil et non via un serveur distant</string>
+    <string name="use_smart_replies_dialog">Pulse proposera des réponses pertinentes, si cela est possible. Celles-ci sont générées directement sur l\'appareil et non via un serveur distant.\n\nSi vous préférez ne pas utiliser cette fonctionnalité, elle peut être désactivée dans les paramètres.</string>
+    <string name="use_smart_reply_settings">Paramètres</string>
     <string name="message_backup">Sauvegarde de message</string>
     <string name="message_backup_pref_summary">Inquiet de la perte de vos messages ? Pulse vous couvre</string>
     <string name="message_backup_summary">Le saviez-vous ? Le service en ligne de Pulse assure la sauvegarde de vos messages. Si vous créez un compte Pulse, vous pouvez l\'utiliser depuis n\'importe quel appareil ou tablette pour restaurer tous vos messages automatiquement!
@@ -537,6 +558,7 @@ Avec votre compte, Pulse sauvegarde automatiquement tous les messages que vous e
     <string name="no_folder">Pas de Dossier</string>
     <!-- Theming Options -->
     <string name="day_night">Par défaut (Jour/Nuit)</string>
+    <string name="system_default">Réglage par défaut du système</string>
     <string name="always_light">Toujours clair</string>
     <string name="always_dark">Toujours sombre</string>
     <string name="always_black">Toujours noir</string>
@@ -601,7 +623,7 @@ Essayez aujourd\'hui !</string>
     <string name="hours">Heures</string>
     <string name="minutes">Minutes</string>
     <string name="test">Test</string>
-    <string name="channel_settings">Personnalisation des notifications de la conversation</string>
+    <string name="channel_settings">Personnalisation de la notification de la conversation</string>
     <string name="channel_settings_summary">Avec Android Oréo, ces paramètres système vous permettent de personnaliser les notifications, pour cette conversation.</string>
     <string name="restore_default_channel_settings">Restaurer les paramètres de notifications par défaut</string>
     <string name="restore_default_channel_settings_popup">Les paramètres par défaut ont été restaurés.</string>
@@ -618,9 +640,10 @@ Utilisez le canal par défaut pour personnaliser les conversations auxquelles vo
     <string name="verifying_password">Vérification du mot de passe...</string>
     <!-- Rate it -->
     <string name="rate_it">Noter l\'application !</string>
+    <string name="no_thanks">Non merci</string>
     <string name="rate_it_title">Les commentaires positifs aident beaucoup</string>
-    <string name="rate_it_summary">Noter <b>5 étoiles</b> aide beaucoup à faire connaître cette application sur le Play Store. Si vous voulez <i>la voir grandir</i>, n\'hésitez pas a contribuer !</string>
-    <string name="rate_it_not_ready"><b>Pas prêt à nous noter ?</b> Pas de soucis. Quittez la fenêtre et je ne vous le demanderai plus jamais.</string>
+    <string name="rate_it_summary">Noter <b>5 étoiles</b> aide beaucoup à faire connaître cette application. Si vous voulez <i>la voir grandir</i>, n\'hésitez pas à y contribuer !</string>
+    <string name="rate_it_not_ready"><b>Pas prêt à nous noter ?</b> Pas de soucis. Appuyez sur le bouton Retour de votre téléphone et je ne vous le demanderai plus jamais.</string>
     <string name="love_pulse_question">Vous aimez Pulse ?</string>
     <string name="give_a_rating">Merci de noter l\'application ou de la partager avec vos amis !\n\n
 Votre avis à 5 étoiles me fera le plus grand plaisir :)</string>
@@ -641,7 +664,7 @@ Votre avis à 5 étoiles me fera le plus grand plaisir :)</string>
     <!-- Purchase/Subscriptions -->
     <string name="no_subscription_found">Aucun abonnement trouvé !</string>
     <string name="cancelled_subscription_error">On dirait que vous avez annulé votre abonnement.
-Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous déconnectera. S\'il s\'agit d\'une erreur, contactez-moi par email.</string>
+Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous déconnectera automatiquement. S\'il s\'agit d\'une erreur, contactez-moi par email.</string>
     <string name="subscription_found">Abonnement trouvé - Ravi de vous revoir !</string>
     <string name="trial_finished">Il semble que vous ayez fini votre période d\'essai gratuite, déjà.</string>
     <string name="subscription_not_found">Aucun abonnement trouvé, commencez votre essai !</string>
@@ -650,24 +673,27 @@ Si vous ne renouvelez pas votre abonnement dans les 2 jours, l\'application vous
     <string name="purchase_cancelled_trial_finished">Votre période d\'essai est terminée et l\'achat a été annulé. Votre compte va être effacé pour l\'instant. \n\nN\'hésitez pas à créer à nouveau un compte, dès que vous souhaitez utiliser Pulse à travers plusieurs appareils !</string>
     <string name="purchase_error_bad_google_play">Uh oh, Google Play semble rencontrer quelques problèmes.</string>
     <string name="purchase_error_bad_sku">Hmm&#8230; Cet achat ne correspond pas à nos registres.</string>
-    <string name="subscriptions">Les abonnements sont facturés après le septième jour d\'essai et peuvent être modifiés/annulés à tout moment :</string>
+    <string name="subscriptions">Les abonnements sont facturés après la période d\'essai de 7 jours et peuvent être modifiés/annulés à tout moment</string>
     <string name="billed_immediately">Ceci est facturé immédiatement.</string>
-    <string name="lifetime_purchase">$10.99 - Souscription à vie</string>
+    <string name="lifetime_purchase">11,99€ - Souscription à vie</string>
     <string name="lifetime_purchase_summary">Payez une fois, et c\'est tout!</string>
-    <string name="yearly_purchase">$5.99 par an</string>
+    <string name="subscription_purchase_description">Prix bas, on ne peut qu\'apprécier !</string>
+    <string name="subscription_purchase_summary">Période d\'essai de 7 jours disponible.</string>
+    <string name="yearly_purchase">6.99€ par an</string>
     <string name="yearly_purchase_summary">La meilleure offre.</string>
-    <string name="three_month_purchase">$1,99 tous les trois mois</string>
+    <string name="three_month_purchase">2,19€ chaque trimestre</string>
     <string name="three_month_purchase_summary">Vous ne pouvez pas vous tromper avec ça.</string>
-    <string name="monthly_purchase">$0,99 par mois</string>
+    <string name="yearly_purchase_2">6,99€ - Abonnement annuel</string>
+    <string name="monthly_purchase">1,09€ - Abonnement mensuel</string>
     <string name="monthly_purchase_summary">Vous voulez juste essayer ? Aucun problème.</string>
-    <string name="change_subscription_message">Vous voulez améliorer ? Super ! Après avoir fait votre choix sur l\'écran suivant, vous <b>devez</b> aller sur le Play Store afin d\'annuler l\'essai ou le précédent abonnement.
+    <string name="change_subscription_message">Vous souhaitez changer de formule ? Super ! Après avoir fait votre choix sur l\'écran suivant, vous <b>devez</b> aller sur le Play Store afin d\'annuler l\'essai ou le précédent abonnement.
 Je <b>ne peux pas</b> le faire automatiquement.</string>
     <string name="beautiful_powerful_instant">Bienvenu(e) dans l\'ère moderne.</string>
     <string name="optimized_for_all_your_devices">Pulse est optimisé pour <b>tous</b> vos appareils.
 Envoyez des messages depuis internet, un ordinateur de bureau, votre tablette, et même votre TV.</string>
     <string name="true_imessage_competitor">Le premier <b>vrai</b> concurrent de iMessage pour Android.</string>
     <string name="trial_description">Aucune concurrence ne peut atteindre le <b>support d\'un nombre illimité de plateforme</b> de Pulse associé à son <b>prix bas</b>. Vos messages sont synchronisés entre tous vos appareils, instantanément et en toute transparence.</string>
-    <string name="purchase_description">Essayez la version en ligne, pour <b>sept jours</b>, puis choisissez comment vous souhaitez supporter l\'application :\n\n<b>10.99€</b> pour une adhésion à vie\n<b>5.99€</b> par an\n<b>1.99€</b> par trimestre\n<b>0.99€</b> par mois</string>
+    <string name="purchase_description">Essayez la version en ligne, pour <b>sept jours</b>, puis choisissez comment vous souhaitez supporter l\'application :\n\n<b>11,99€</b> pour une adhésion à vie\n<b>6.99€</b> par an\n<b>2,19€</b> par trimestre\n<b>1,09€</b> par mois</string>
     <string name="start_free_trial">Commencer votre période d\'essai !</string>
     <string name="create_your_pulse_account">Créer un compte Pulse !</string>
     <string name="try_it">Essayez-le !</string>
@@ -678,11 +704,12 @@ Envoyez des messages depuis internet, un ordinateur de bureau, votre tablette, e
     <string name="seven_days_free">Gratuit pendant 7 jours !</string>
     <string name="competition_cant_beat">La concurrence ne peut rivaliser avec nos prix, notre vitesse ou notre service -
 <b>Prenez 7 jours</b> pour le constater par vous-même !</string>
-    <string name="select_a_trial_below">Sélectionnez une des 3 options d\'abonnement pour commencer votre <b>essai gratuit</b>.</string>
+    <string name="select_a_trial_below">Sélectionnez une des <b>3 options d\'abonnement</b> pour commencer votre <b>essai gratuit</b>. Vous pouvez ensuite en changer à tout moment.</string>
+    <string name="select_a_subscription_below">Choisissez votre abonnement pour commencer votre <b>essai gratuit</b>. Vous pouvez le modifier à tout moment.</string>
     <string name="charged_after_trial">Facturé après l\'essai :</string>
-    <string name="monthly_purchase_improved">$0.99 /\nmois</string>
-    <string name="three_month_purchase_improved">$1.99 /\n3 mois</string>
-    <string name="yearly_purchase_improved">$5.99 /\nan</string>
+    <string name="monthly_purchase_improved">1,09€ /\nmois</string>
+    <string name="three_month_purchase_improved">2,19€ /\n3 mois</string>
+    <string name="yearly_purchase_improved">6.99€ /\nan</string>
     <string name="subscription_toast">Vous <b>ne serez pas</b> facturé avant la fin de la période d\'essai de 7 jours.
 Annulez à tout moment.</string>
     <string name="redirect_to_play_store">Merci pour cette souscription ! Pensez à annuler votre abonnement précédent depuis le <b>Play Store</b>. Pulse <b>ne peut pas</b> le faire automatiquement.</string>

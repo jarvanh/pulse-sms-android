@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">نبض الرسائل</string>
     <string name="app_name_long">برنامج نبض الرسائل (لرسائل القصيرة/ وبرامج المحادثة للأجهزة اللوحية)</string>
     <string name="app_title">نبض الرسائل</string>
@@ -167,6 +167,7 @@ http://messenger.klinkerapps.com</string>
     <string name="open_link_to_browser">فتح الرابط في المتصفح</string>
     <string name="open_link_internal">فتح الرابط داخلياً</string>
     <string name="copy_link">نسخ الرابط</string>
+    <!-- Templates -->
     <!-- Compose Screen -->
     <string name="compose_message">كتابة رسالة جديده</string>
     <string name="send_message">إرسال رساله</string>
@@ -391,7 +392,6 @@ http://messenger.klinkerapps.com</string>
     <string name="alert_types">أنواع التنبيه</string>
     <string name="alert_types_summary">الخيارات المختلفه للاخطارات.</string>
     <string name="strip_unicode">شريط اليونيكود</string>
-    <string name="use_internal_browser">استخدام المتصفح الداخلي</string>
     <string name="strip_unicode_summary">ستتم إزالة هذه الأحرف من الرسائل الصادرة</string>
     <string name="giffgaff_delivery">Giffgaff تقارير التسليم</string>
     <string name="notification_actions">إجراءات التنبيه</string>
@@ -426,9 +426,9 @@ http://messenger.klinkerapps.com</string>
     <string name="cleanup_old_messages">تنظيف الرسائل القديمه</string>
     <string name="delayed_sending">تاخير الإرسال.</string>
     <string name="quick_compose">تأليف سريع</string>
-    <string name="quick_compose_summary">إشعار \"نشط بشكل دائم\" توفر لك سرعة الدخول وإنشاء رسالة جديدة.</string>
     <string name="secure_private_conversations">تأمين المحادثات الخاصة</string>
     <string name="secure_private_conversations_summary">هذا الإجراء يتطلب الرقم السري لفتح المحادثات الخاصة</string>
+    <string name="use_internal_browser">استخدام المتصفح الداخلي</string>
     <!-- Theming Options -->
     <string name="day_night">الافتراضي (يوم / ليلة)</string>
     <string name="always_light">ضوء مستمر</string>
@@ -458,6 +458,7 @@ http://messenger.klinkerapps.com</string>
     <string name="contact_card">بطاقة الاتصال</string>
     <string name="conversation_with">المحادثه مع %1$s</string>
     <string name="send">إرسال</string>
+    <!-- Passcode Entry -->
     <!-- Other -->
     <string name="updating_database">جار البحث عن أحدث الرسائل ...</string>
     <string name="dashclock_description">معلومات SMS/MMS الغير المقروءة</string>
@@ -485,14 +486,15 @@ http://messenger.klinkerapps.com</string>
 استخدم القناة الافتراضية لتخصيص أي محادثات لم تنشئ قناة فردية لها.</string>
     <string name="off">إيقاف</string>
     <string name="on">تشغيل</string>
-    <string name="rate_it">تقييم الأن!</string>
-    <string name="love_pulse_question">يعجبني هذا التطبيق نبض الرسائل؟</string>
-    <string name="give_a_rating">شارك بتعليق وقم بوضع ملاحظتك  أو مشاركتها مع أصدقائك!\n\n
-قم بتقيمنا بـ 5 نجوم لكي تجعلنا نستمر في التطوير :)</string>
     <string name="share_promo">مرحبا، لقد أعجبني تطبيق نبض للرسائل النصية! أنصحك بتجريبه الأن:
 قم بتثبيته من المتجر العالمي قوقل بلاي Google Play
 https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="verifying_password">جار التحقق من كلمة المرور ...</string>
+    <!-- Rate it -->
+    <string name="rate_it">تقييم الأن!</string>
+    <string name="love_pulse_question">يعجبني هذا التطبيق نبض الرسائل؟</string>
+    <string name="give_a_rating">شارك بتعليق وقم بوضع ملاحظتك  أو مشاركتها مع أصدقائك!\n\n
+قم بتقيمنا بـ 5 نجوم لكي تجعلنا نستمر في التطوير :)</string>
     <!-- Times -->
     <string name="one_second">ثانية واحدة</string>
     <string name="three_seconds">التوقيت
@@ -545,4 +547,5 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="yearly_purchase_improved">$5.99 /\nلمدة سنة</string>
     <string name="subscription_toast">أنت <b>سوف لايمكنك</b> إستخدام حتى يتم تجربة 7 أيام لحين يتم الانتهاء من.
 إلغاء في أي وقت.</string>
+    <string name="quick_compose_summary">إشعار \"نشط بشكل دائم\" توفر لك سرعة الدخول وإنشاء رسالة جديدة.</string>
 </resources>

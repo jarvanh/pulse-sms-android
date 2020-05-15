@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2020 Luke Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
     <string name="app_title">Pulse</string>
@@ -114,6 +114,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="type_message_to">Jouw bericht naar %1$s</string>
     <string name="attach">Bijvoegen</string>
     <string name="select_sim">Selecteer SIM</string>
+    <string name="view_scheduled_messages">Toon ingeplande berichten van gesprek</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">MMS afbeelding</string>
@@ -124,6 +125,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="attach_image">Afbeelding bijvoegen</string>
     <string name="capture_image">Afbeeldingen vastleggen</string>
     <string name="attach_gif">GIF bijvoegen</string>
+    <string name="attach_sticker">Sticker toevoegen</string>
     <string name="record_video">Video opnemen</string>
     <string name="record_audio">Audio opnemen</string>
     <string name="attach_location">Locatie bijvoegen</string>
@@ -137,6 +139,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="fullscreen">Volledig scherm</string>
     <string name="attached_image">Afbeelding bijvoegen</string>
     <string name="remove_image">Verwijder bijgevoegde afbeelding</string>
+    <string name="remove_image_short">Afbeelding verwijderen</string>
     <string name="edit_image">Bewerk bijgevoegde afbeelding</string>
     <string name="edit_recipients">Bewerk ontvangers</string>
     <string name="select_folder">Selecteer map voor conversatie</string>
@@ -152,6 +155,9 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="audio_recording_error">Fout bij opnemen</string>
     <string name="message_copied_to_clipboard">Gekopieerd naar klembord</string>
     <string name="view_details">Bekijk details</string>
+    <string name="speak_message">Bericht voorlezen</string>
+    <string name="select_all_messages">Alle berichten selecteren</string>
+    <string name="select_all_conversations">Alle gesprekken selecteren</string>
     <string name="delete">Verwijderen</string>
     <string name="copy_message">Kopieer tekst</string>
     <string name="resend">Opnieuw versturen</string>
@@ -171,10 +177,16 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="copy_link">Kopieer link</string>
     <string name="attach_vcard">Contactpersoon toevoegen als vCard</string>
     <string name="attach_plain_text">Contactpersoon toevoegen als gewone tekst</string>
+    <string name="send_as_scheduled_message_question">Wil je dit bericht inplannen voor een later tijdstip?</string>
+    <string name="send_as_scheduled_message">Versturen als ingepland bericht</string>
+    <string name="send_without_signature">Versturen zonder handtekening</string>
+    <string name="send_without_delay">Versturen zonder vertraging</string>
     <!-- Templates -->
     <string name="type_template_text">Vul tekst voor sjabloon in...</string>
     <string name="delete_template">Ben je zeker dat je dit sjabloon wilt verwijderen?</string>
+    <string name="edit_or_delete_template">Wil je dit sjabloon aanpassen of verwijderen?</string>
     <string name="no_templates">Gebruik de <b>+</b>-knop om een nieuwe sjabloon te creëren</string>
+    <string name="edit">Aanpassen</string>
     <!-- Compose Screen -->
     <string name="compose_message">Stel nieuw bericht op</string>
     <string name="send_message">Verstuur bericht</string>
@@ -186,6 +198,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="compose_all_contacts">Alle contactpersonen</string>
     <string name="private_conversation_disclaimer">Dit is een <b>geheime</b> conversatie en kan niet via hier worden geopend.</string>
     <!-- Onboarding Screen -->
+    <string name="google_requires_default_sms">Google vereist tegenwoordig dat sms-apps moeten worden ingesteld als de standaard gespreksapp voordat ze berichten kunnen ontvangen of versturen. Deze machtiging is vereist.</string>
+    <string name="google_requires_default_sms_policy">Beleid bekijken</string>
     <string name="permissions_needed">De app kan niet werken zonder deze permissies! Je moet ze accepteren voordat we verder kunnen gaan.</string>
     <string name="loading_messages">Optimaliseren...</string>
     <string name="loading_messages_summary">Jouw berichten aan het inladen in de app, dit duurt niet lang!</string>
@@ -266,7 +280,7 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="device_id">Toestel ID</string>
     <string name="device_info">Toestel Info</string>
     <string name="website">Website</string>
-    <string name="view_platforms">Beschikbare Pulse platformen</string>
+    <string name="view_platforms">Beschikbare Pulse-platformen</string>
     <string name="access_messages_from_any_device">Krijg toegang en verzend berichten vanop elk toestel!</string>
     <string name="beta_disclaimer">Dit project is nog in ontwikkeling, gelieve eventuele fouten te rapporteren!</string>
     <string name="app_info">App info</string>
@@ -356,8 +370,8 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="adjustable_nav_bar_summary">Het lichte thema zal een witte navigatiebalk gebruiken terwijl donkere thema\'s de zwarte navigatiebalk gebruiken</string>
     <string name="apply_theme_globally">Toepassen op alle conversaties</string>
     <string name="apply_theme_globally_summary">Verwijder de aangepaste conversatiethema\'s en vervang door deze algemene kleuren</string>
-    <string name="apply_primary_theme_toolbar">Primaire kleur toepassen op App Bar</string>
-    <string name="apply_primary_theme_toolbar_summary">Geef de app bar een kleur</string>
+    <string name="apply_primary_theme_toolbar">Primaire kleur toepassen op appbalk</string>
+    <string name="apply_primary_theme_toolbar_summary">Geef de appbalk een kleur</string>
     <string name="swipe_delete">Swipe om te verwijderen</string>
     <string name="swipe_actions">Swipe acties</string>
     <string name="swipe_actions_summary">Pas het swipen van een conversatie aan</string>
@@ -365,9 +379,16 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="right_to_left_swipe">Rechts-naar-links swipe</string>
     <string name="no_swipe">Swipen uitschakelen</string>
     <string name="blacklist_hint">Type nummer om te blokkeren...</string>
+    <string name="enter_phrase">Voer woord in</string>
+    <string name="enter_phone">Voer telefoonnummer in</string>
+    <string name="blacklist_phrase_hint">Typ een woord voor de zwarte lijst...</string>
     <string name="add_blacklist">%1$s\n\nBen je zeker dat je dit nummer wilt blokkeren? Berichten zullen niet langer opgeslagen worden wanneer ze afkomstig zijn van dit nummer en je zal ook geen notificaties ontvangen.</string>
+    <string name="add_blacklist_phrase">%1$s\n\nWeet je zeker dat je dit wilt toevoegen? Berichten
+
+        worden niet langer opgeslagen als ze dit woord bevatten en je krijgt er geen melding meer van!</string>
     <string name="remove_blacklist">%1$s\n\nWil je deze blokkering verwijderen?</string>
     <string name="blacklist_need_number">Je dient een telefoonnummer in te geven om te blokkeren!</string>
+    <string name="blacklist_need_phrase">Je moet een woord invoeren!</string>
     <string name="no_blacklists">Geen geblokkeerde nummers</string>
     <string name="no_blacklists_summary">Blokkeer een nummer met de plus-knop onderaan.</string>
     <string name="add">Toevoegen</string>
@@ -384,14 +405,14 @@ Je kan Pulse gebruiken om vanop <b>elk</b> toestel te sms\'en.</string>
     <string name="delete_account_summary">Verwijder het account van dit toestel, alle andere toestellen waar je bent op ingelogd en de server. Dit is niet omkeerbaar!</string>
     <string name="delete_account_confirmation">Ben je echt zeker dat je jouw account wilt verwijderen en alles wat zich in jouw account bevindt? Je kan later altijd opnieuw registreren!</string>
     <string name="change_subscription">Verander abonnement</string>
-    <string name="trial_subscription_title">Je hebt nog %s dagen tegoed in de trial.</string>
-    <string name="trial_subscription_summary">Tik hier om de trial te beëindigen of uit te breiden!</string>
-    <string name="upgrade_or_cancel_title">Klaar met de trial?</string>
-    <string name="trial_expired">Bedankt om uit te testen!</string>
-    <string name="upgrade_or_cancel">Je kan je account upgraden naar een abonnement of levenslang abonnement om Pulse op al jouw toestellen te blijven gebruiken.\n\nWil je annuleren?
-Jouw account zal worden verwijderd en er wordt niets in rekening gebracht.  Je kan de app gratis blijven gebruiken op je telefoon. Voel je vrij om terug te keren!</string>
+    <string name="trial_subscription_title">Je kunt de proefversie nog %s dagen gebruiken</string>
+    <string name="trial_subscription_summary">Druk hier om te proefversie te beëindigen of te upgraden!</string>
+    <string name="upgrade_or_cancel_title">Klaar met de proefversie?</string>
+    <string name="trial_expired">Bedankt voor het uitproberen!</string>
+    <string name="upgrade_or_cancel">Je kunt je account upgraden naar een periodiek of levenslang abonnement om Pulse op al je toestellen te blijven gebruiken.\n\nWil je annuleren?
+        Je account wordt verwijderd en er wordt niets in rekening gebracht.  Je kunt de app gratis blijven gebruiken op je telefoon. Het staat je vrij om terug te keren!</string>
     <string name="upgrade">Upgraden!</string>
-    <string name="cancel_trial">Trial annuleren</string>
+    <string name="cancel_trial">Proefversie beëindigen</string>
     <string name="cancel_on_the_play_store">Tik hier om te upgraden! Je kan je abonnement annuleren via de Play Store.</string>
     <string name="resync_account">Synchroniseer berichten</string>
     <string name="resync_account_summary">Mis je berichten? Gebruik dit om jouw toestel up-to-date te brengen met jouw hoofdtoestel.</string>
@@ -416,7 +437,7 @@ Jouw account zal worden verwijderd en er wordt niets in rekening gebracht.  Je k
     <string name="after_four_messages">Na vier berichten</string>
     <string name="send_as_mms_summary">Lange berichten verzenden als MMS i.p.v. SMS</string>
     <string name="alert_types">Instellingen notificaties</string>
-    <string name="notification_customization">Notificatie aanpassingen</string>
+    <string name="notification_customization">Meldingen aanpassen</string>
     <string name="alert_types_summary">Wijzig de beltoon, vibratie en meer</string>
     <string name="strip_unicode">Strip Unicode</string>
     <string name="strip_unicode_summary">Deze karakters zullen worden verwijderd bij uitgaande berichten.</string>
@@ -432,14 +453,15 @@ Jouw account zal worden verwijderd en er wordt niets in rekening gebracht.  Je k
 Nadien zal je opnieuw moeten inloggen op al jouw toestellen. Wil je doorgaan?</string>
     <string name="show_conversation_history">Toon conversatie geschiedenis</string>
     <string name="show_conversation_history_summary">Notificaties zullen vorige berichten uit de conversatie weergeven</string>
-    <string name="dismiss_notifications_on_reply">Verwijder notificatie na het antwoorden</string>
-    <string name="dismiss_notifications_on_reply_summary">Notificaties blijven actief na het antwoorden, dit staat je toe een conversatie te voeren via de notificaties</string>
+    <string name="dismiss_notifications_on_reply">Melding verwerpen na beantwoorden</string>
+    <string name="dismiss_notifications_on_reply_summary">Meldingen blijven staan na het antwoorden, zodat je het gesprek in de melding kunt voortzetten</string>
     <string name="emoji_style">Emoji stijl</string>
     <string name="emoji_style_default">Standaard systeem</string>
     <string name="emoji_style_android_o">Google\'s Android Oreo</string>
     <string name="settings_phone_number">Telefoonnummer</string>
     <string name="disable_battery_optimization">Batterijoptimalisatie uitschakelen</string>
     <string name="disable_battery_optimization_summary">Als berichten niet getoond worden op het web, deactiveer batterijoptimalisatie voor Pulse.</string>
+    <string name="hex">Hexcode</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Max afbeelding grootte</string>
     <string name="max_mms_size_summary">Zet dit niet hoger dan dat jouw provider toestaat</string>
@@ -520,6 +542,14 @@ Dankzij jouw account zal Pulse een back-up maken van al je berichten die je ontv
     <string name="no_scheduled_messages">Geen geplande berichten</string>
     <string name="no_scheduled_messages_summary">Plan een nieuw bericht met de plus-knop onderaan.</string>
     <string name="scheduled_message_in_future">De tijd moet in de toekomst zijn!</string>
+    <string name="scheduled_repeat_never">Niet herhalen</string>
+    <string name="scheduled_repeat_daily">Dagelijks herhalen</string>
+    <string name="scheduled_repeat_weekly">Wekelijks herhalen</string>
+    <string name="scheduled_repeat_monthly">Maandelijks herhalen</string>
+    <string name="scheduled_repeat_yearly">Jaarlijks herhalen</string>
+    <string name="select_image">Afbeelding kiezen van telefoon</string>
+    <string name="select_gif">Zoeken naar GIF</string>
+    <string name="media_on_primary_device">Media uit een ingepland bericht kan alleen worden getoond in de smartphone-app.</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Encrypteren en uploaden...</string>
     <string name="encrypting_and_uploading_media">Encrypteren en comprimeren berichten...</string>
@@ -571,7 +601,7 @@ Indien je deze functie wilt gebruiken, kan je een wachtwoord instellen in <i>Gea
     <string name="channels_global_warning">Veel globale aanpassingen zijn nu enkel per kanaal beschikbaar.</string>
     <string name="channels_global_warning_2">Android\'s <i>notificatiekanalen</i>zijn nu verplicht voor het meeste van deze configuratie.\n\n Je kan elke melding van elke conversatie individueel aanpassen door het aanmaken van een <i>notificatiekanaal</i> in het conversatie instellingen menu.
 Gebruik het standaard kanaal om meldingen weer te geven voor conversaties die je niet aanpast.</string>
-    <string name="channels_global_warning_3">Met Android Oreo, sommige van de bovenstaande opties zullen jou doorlinken naar de <i>notificatie kanalen</i> van het systeem. Indien je meer wilt weten hoe deze werken, dan kan je altijd een kijkje nemen via de Help-sectie.</string>
+    <string name="channels_global_warning_3">Met Android Oreo kunnen sommige van de bovenstaande opties je doorsturen naar de <i>meldingskanalen</i> van het systeem. Als je meer wilt weten over de werking hiervan, neem dan een kijkje op de Hulp-pagina.</string>
     <string name="off">Uit</string>
     <string name="on">Aan</string>
     <string name="share_promo">Hey, I am loving Pulse for texting! Give it a try:
@@ -604,11 +634,12 @@ en de weergave in de Play Store. Als je de app wil zien groeien, help me hiermee
     <string name="cancelled_subscription_error">Het lijkt erop dat je jouw abonnement hebt beëindigd.
 Indien je geen nieuw abonnement afsluit binnen de 2 dagen, zal je automatisch worden uitgelogd. Indien dit een fout is, contacteer ons.</string>
     <string name="subscription_found">Abonnement gevonden - welkom terug!</string>
-    <string name="trial_finished">Oeps! Je hebt de trial al gebruikt.</string>
+    <string name="trial_finished">Je proefversie is verlopen!</string>
     <string name="subscription_not_found">Geen abonnement gevonden, laten we met jouw trial beginnen!</string>
     <string name="checking_for_active_subscriptions">Voor abonnement zoeken&#8230;</string>
     <string name="purchase_error_cancelled">Je annuleerde de betaling :\'(</string>
-    <string name="purchase_cancelled_trial_finished">Jouw trial is verlopen en je upgrade was geannuleerd. Je account zal worden verwijderd voor nu.\n\nJe kan het altijd opnieuw instellen wanneer je opnieuw via alle apparaten toegang wilt hebben tot je berichten.</string>
+    <string name="purchase_cancelled_trial_finished">Je proefversie is verlopen en je upgrade geannuleerd. Je account wordt voorlopig verwijderd.\n\nJe kunt je account altijd opnieuw instellen
+        als je opnieuw via alle apparaten toegang wilt hebben tot je berichten!</string>
     <string name="purchase_error_bad_google_play">Oeps! Google Play heeft precies enkele problemen.</string>
     <string name="purchase_error_bad_sku">Hmmm&#8230; Deze betaling kon niet worden goedgekeurd.</string>
     <string name="subscriptions">Abonnementen worden aangerekend na de trial en kunnen ten allen tijde geannuleerd worden.</string>
@@ -626,15 +657,15 @@ Indien je geen nieuw abonnement afsluit binnen de 2 dagen, zal je automatisch wo
     <string name="optimized_for_all_your_devices">Pulse is geoptimaliseerd voor <b>al</b> jouw toestellen.
 Verstuur berichten via het web, desktop pc, je tablet, je smartwatch en zelfs je televisie.</string>
     <string name="true_imessage_competitor">Het eerste <b>echte</b> iMessage alternatief voor Android.</string>
-    <string name="trial_description">Geen enkele andere app kan tippen aan de <b>eindeloze functies</b> van Pulse. Synchroniseer berichten tussen al jouw toestellen.</string>
-    <string name="purchase_description">Geef de online versie een kans. Gedurende <b>7 dagen</b> kan je alles uittesten. Daarna kan je beslissen om te app vrij te schakelen:\n\n<b>$10.99</b> voor een levenslange toegang\n<b>$5.99</b> per jaar\n<b>$1.99</b> per 3 maand\n<b>$0.99</b> per maand</string>
-    <string name="start_free_trial">Start jouw trial!</string>
-    <string name="create_your_pulse_account">Creëer een Pulse account!</string>
+    <string name="trial_description">Geen enkele andere app kan tippen aan de <b>eindeloze platformondersteuning</b> en <b>lage prijs</b> van Pulse. Synchroniseer berichten direct en naadloos tussen al je toestellen.</string>
+    <string name="purchase_description">Geef de online versie een kans. Je kunt <b>7 dagen</b> lang alles uittesten. Daarna kan je beslissen om een abonnement af te sluiten:\n\n<b>$10.99</b> voor een levenslang abonnement\n<b>$5.99</b> per jaar\n<b>$1.99</b> per 3 maanden\n<b>$0.99</b> per maand</string>
+    <string name="start_free_trial">Begin je proefperiode nu!</string>
+    <string name="create_your_pulse_account">Creëer een Pulse-account!</string>
     <string name="try_it">Probeer nu!</string>
-    <string name="select_purchase">Selecteer kopen</string>
+    <string name="select_purchase">Kies een aankoop</string>
     <string name="have_an_account">Heb je een account?\nInloggen</string>
-    <string name="select_a_purchase">Selecteer een optie</string>
-    <string name="select_a_purchase_description">Selecteer een van deze abonnementen, of kies voor het <b>levenslange abonnement</b> om slechts eenmalig te betalen.</string>
+    <string name="select_a_purchase">Kies een aankoop</string>
+    <string name="select_a_purchase_description">Kies één van deze periodieke abonnementen, of kies voor het <b>levenslange abonnement</b> om slechts eenmalig te betalen.</string>
     <string name="seven_days_free">7 dagen gratis!</string>
     <string name="competition_cant_beat">De concurrentie kan niet op tegen onze prijzen, snelheid, service - je krijgt van ons <b>7 dagen gratis</b> en test het zelf uit!</string>
     <string name="select_a_trial_below">Selecteer een van de opties om je <b>gratis trial</b> te starten.</string>
@@ -646,11 +677,11 @@ Verstuur berichten via het web, desktop pc, je tablet, je smartwatch en zelfs je
 Je kan elk moment annuleren.</string>
     <string name="redirect_to_play_store">Bedankt voor het upgraden! Gelieve je oude abonnement te annuleren in de <b>Play Store</b>. Dit gebeurt <b>niet</b> automatisch.</string>
     <string name="play_store">Play Store</string>
-    <string name="notification_trial_title">Sms van elk toestel - Trial</string>
-    <string name="notification_days_remaining_in_trial">%s dagen resterend in je trial. Klik om te upgraden!</string>
-    <string name="notification_last_day_of_trial">Dit is de laatste dag van je trial. Klik om te upgraden!</string>
-    <string name="notification_trial_expired">Jouw zeven dagen trial is gedaan. Klik om te upgraden!</string>
-    <string name="continue_with_phone_app">Je kan de app blijven gebruiken op je gsm. Gratis!</string>
-    <string name="thanks_for_trying">Bedankt voor de trial!</string>
+    <string name="notification_trial_title">Sms vanaf elk toestel - Proefperiode</string>
+    <string name="notification_days_remaining_in_trial">Je kunt de proefversie nog %s dagen gebruiken. Druk om te upgraden!</string>
+    <string name="notification_last_day_of_trial">Je kunt de proefversie nog één dag gebruiken. Druk om te upgraden!</string>
+    <string name="notification_trial_expired">Je proefperiode is verlopen. Druk om te upgraden!</string>
+    <string name="continue_with_phone_app">Je kunt de app blijven gebruiken op je telefoon, helemaal gratis!</string>
+    <string name="thanks_for_trying">Bedankt voor het uitproberen!</string>
     <string name="quick_compose_summary">Altijd-actief notificatie zodat je steeds snel een nieuw bericht kan opstellen</string>
 </resources>

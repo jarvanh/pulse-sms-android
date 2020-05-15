@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+    <!--
+  ~ Copyright (C) 2017 Luke Klinker
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name">Pulse</string>
+    <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
+    <string name="app_title">Pulse</string>
+    <!-- Launcher Shortcuts -->
+    <string name="shortcut_compose_short">Nuevo mensaje</string>
+    <string name="shortcut_compose_long">Comenzar una nueva conversación.</string>
+    <!-- Drawer Items -->
+    <string name="menu_conversations">Lista de conversaciones</string>
+    <string name="menu_archived_conversations">Conversaciones archivadas</string>
+    <string name="menu_private_conversations">Conversaciones privadas</string>
+    <string name="menu_unread_conversations">Conversaciones no leídas</string>
+    <string name="menu_edit_folders">Administrar carpetas...</string>
+    <string name="menu_edit_folders_no_ellipse">Administrar carpetas</string>
+    <string name="menu_schedule">Mensajes programados</string>
+    <string name="menu_mute_contacts">Lista negra</string>
+    <string name="menu_invite">Invitar amigos</string>
+    <string name="menu_feature_settings">Características avanzadas</string>
+    <string name="menu_settings">Configuración de personalización</string>
+    <string name="menu_customization_settings">Configuración de personalización</string>
+    <string name="menu_mms_configuration">Configuración de MMS</string>
+    <string name="menu_account">Mi cuenta</string>
+    <string name="menu_device_texting">Enviar texto desde cualquier dispositivo</string>
+    <string name="menu_help">Ayuda y comentarios</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="menu_search">Buscar</string>
+    <string name="menu_mobile_only">Sólo móvil</string>
+    <string name="menu_snooze">Posponer notificaciones</string>
+    <string name="menu_call">Llamar contacto</string>
+    <string name="menu_video_call">Videollamada con Duo</string>
+    <string name="menu_view_contact">Ver contacto</string>
+    <string name="menu_view_contacts">Ver contactos</string>
+    <string name="menu_view_media">Ver media</string>
+    <string name="menu_delete_conversation">Borrar conversación</string>
+    <string name="menu_archive_conversation">Archivar conversación</string>
+    <string name="menu_move_to_inbox">Mover ala bandeja de entrada</string>
+    <string name="menu_conversation_information">Información de la conversación</string>
+    <string name="menu_copy_phone_number">Copia número</string>
+    <string name="menu_view_full_conversation">Ver historia</string>
+    <string name="menu_conversation_blacklist">Contactos en lista negra</string>
+    <string name="menu_conversation_schedule">Programar un mensaje</string>
+    <string name="menu_contact_settings">Configuración de conversación</string>
+    <string name="menu_group_settings">Configuración de grupo</string>
+    <string name="menu_snooze_off">Apagado</string>
+    <string name="menu_snooze_1">1 hora</string>
+    <string name="menu_snooze_2">2 horas</string>
+    <string name="menu_snooze_4">4 horas</string>
+    <string name="menu_snooze_8">8 horas</string>
+    <string name="menu_snooze_24">24 horas</string>
+    <string name="menu_snooze_72">72 horas</string>
+    <string name="menu_snooze_custom">Elegir una hora</string>
+    <string name="menu_mark_as_unread">Marcar como no leído</string>
+    <string name="menu_pin_conversation">Fijar/ Desprender conversación</string>
+    <string name="menu_mute_conversation">Silenciar/Dejar de silenciar conversación</string>
+    <!-- Empty Screen -->
+    <string name="no_messages">No hay mensajes</string>
+    <string name="no_messages_summary">¡Empiece una nueva conversación o simplemente disfrute el día!</string>
+    <string name="close">Cerrar</string>
+    <!-- Conversation List Screen -->
+    <string name="pinned">Fijado</string>
+    <string name="today">Hoy</string>
+    <string name="yesterday">Ayer</string>
+    <string name="last_week">Esta semana</string>
+    <string name="last_month">Este mes</string>
+    <string name="older">Más antiguos</string>
+    <string name="mark_section_as_read">Marcar todo %1$s como leído</string>
+    <!-- Search Screen -->
+    <!-- Invite Friends Screen -->
+    <!-- Message List Screen -->
+    <!-- Templates -->
+    <!-- Compose Screen -->
+    <!-- Onboarding Screen -->
+    <!-- Notifications -->
+    <string name="mark_as_read">Marcar como leído</string>
+    <!-- About, Help and Feedback and Settings -->
+    <string name="view_platforms">Plataformas de Pulse disponibles</string>
+    <string name="apply_primary_theme_toolbar">Aplicar color primario a la barra de aplicaciones</string>
+    <string name="apply_primary_theme_toolbar_summary">Si la barra de aplicaciones debe ser coloreada o no</string>
+    <string name="trial_subscription_title">Te quedan %s días en el juicio</string>
+    <string name="trial_subscription_summary">Toque aquí para actualizar o cancelar la prueba!</string>
+    <string name="upgrade_or_cancel_title">Hecho con el juicio?</string>
+    <string name="trial_expired">Gracias por el juicio!</string>
+    <string name="upgrade_or_cancel">¡Puede actualizar su cuenta a una suscripción o membresía de por vida para seguir usando Pulse en todos sus dispositivos!\n\n¿Necesita cancelar?
+Su cuenta será eliminada y no se le cobrará. ¡Puedes seguir usando la aplicación en tu teléfono gratis! Siéntase libre de volver en cualquier momento.</string>
+    <string name="upgrade">¡Mejorar!</string>
+    <string name="cancel_trial">Cancelar prueba</string>
+    <string name="notification_customization">Personalización de notificaciones</string>
+    <string name="dismiss_notifications_on_reply">Descartar la notificación después de responder</string>
+    <string name="dismiss_notifications_on_reply_summary">Las notificaciones permanecen activas después de responder, lo que le permite continuar la conversación en la notificación</string>
+    <!-- MMS Configuration Settings -->
+    <!-- Advanced Features Settings -->
+    <!-- Theming Options -->
+    <!-- Scheduled Messages Screen -->
+    <!-- Encryption -->
+    <!-- Quick Reply -->
+    <!-- Passcode Entry -->
+    <!-- Other -->
+    <string name="restore_default_channel_settings_popup">Los ajustes predeterminados han sido restaurados.</string>
+    <string name="channels_global_warning_3">Con Android Oreo, algunas de las opciones anteriores lo redirigirán a las preferencias de personalización de <i> Canales de notificación </i> a nivel del sistema. Para obtener más información sobre estos canales, cómo funcionan y por qué se deben usar, consulte la página de ayuda de Pulse.</string>
+    <!-- Rate it -->
+    <!-- Times -->
+    <!-- Purchase/Subscriptions -->
+    <string name="trial_finished">Parece que ya has pasado por la prueba gratuita.</string>
+    <string name="purchase_cancelled_trial_finished">Su versión de prueba ha caducado y la compra se canceló. Su cuenta se eliminará por ahora.\n\nSiéntase libre de configurarlo nuevamente,
+¡Cuando quieras usar la funcionalidad de múltiples dispositivos de nuevo!</string>
+    <string name="trial_description">Ninguna competencia puede tocar el <b> soporte de plataforma sin fin </b> de Pulse junto con su <b> bajo precio </b>. Los mensajes se sincronizan entre todos tus dispositivos, al instante y sin problemas.</string>
+    <string name="purchase_description">Prueba la versión en línea, durante <b> siete días </b>, y luego decides cómo quieres que sea compatible con la aplicación:\n\n<b>$ 10.99</b> para una membresía de por vida\n<b>$ 5.99</b> por año\n<b>$ 1.99</b> cada tres meses\n<b>$ 0.99</b> por mes</string>
+    <string name="start_free_trial">¡Comienza tu prueba gratuita!</string>
+    <string name="create_your_pulse_account">Crea una cuenta en Pulse!</string>
+    <string name="select_purchase">Seleccione Compra</string>
+    <string name="select_a_purchase">Seleccione una compra</string>
+    <string name="select_a_purchase_description">Elija cualquiera de las tres suscripciones, o seleccione la <b>membresía de por vida</b> para realizar una compra única para la aplicación.</string>
+    <string name="notification_trial_title">Texto desde cualquier dispositivo - Prueba</string>
+    <string name="notification_days_remaining_in_trial">%s días restantes en su prueba. Haga clic para actualizar!</string>
+    <string name="notification_last_day_of_trial">Este es el último día de tu prueba. Haga clic para actualizar!</string>
+    <string name="notification_trial_expired">Su prueba de siete días ha terminado. Haga clic para actualizar!</string>
+    <string name="continue_with_phone_app">¡Puedes seguir usando la aplicación en tu teléfono, gratis!</string>
+    <string name="thanks_for_trying">Gracias por el juicio!</string>
+</resources>

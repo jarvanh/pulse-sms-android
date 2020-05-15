@@ -47,7 +47,7 @@
     <string name="api_activate_wear">wear.klinkerapps.com</string>
     <string name="api_activate_tv">tv.klinkerapps.com</string>
     <string name="api_activate_1_3">på en mobil eller PC</string>
-    <string name="api_activate_2_1">På websiden</string>
+    <string name="api_activate_2_1">På nettsiden</string>
     <string name="api_activate_2_2">skriv inn koden til høyre</string>
     <string name="api_activate_2_3">for å koble til kontoen din!</string>
     <string name="api_confirm_password">Vennligst bekreft ditt passord:</string>

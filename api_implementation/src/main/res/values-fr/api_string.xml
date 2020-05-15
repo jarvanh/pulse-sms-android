@@ -16,8 +16,8 @@
   -->
 <resources>
     <string name="api_login">Se connecter</string>
-    <string name="api_signup">Joseph</string>
-    <string name="api_signup_failed">Impossible de s\'inscrire sur cet appareil, vous devez vous enregistrer d\'abord sur votre appareil principal possédant un numéro de téléphone !</string>
+    <string name="api_signup">S\'enregistrer</string>
+    <string name="api_signup_failed">Impossible de s\'enregistrer depuis cet appareil, vous devez vous enregistrer sur l\'appareil principal possédant un numéro de téléphone !</string>
     <string name="api_skip_signup">Ou, si vous voulez juste utiliser l\'application sur cet appareil sans les fonctionnalités réseaux, telles que la rédaction de texto à partir d\'une tablette ou d\'un ordinateur, vous pouvez ignorer cette étape.</string>
     <string name="api_skip">Ignorer</string>
     <string name="api_email">Adresse courriel</string>
@@ -28,7 +28,7 @@
     <string name="api_phone_number">Numéro de téléphone</string>
     <string name="api_connecting">Connexion au serveur...</string>
     <string name="api_device_error">Une erreur est survenue en ajoutant votre appareil, réessayons !</string>
-    <string name="api_add_second_primary_device">Il semble que vous ayez déjà un appareil principal (%1$s) sur votre compte, mais il ne peux y en avoir qu\'un seul. Voulez-vous remplacer l\'appareil principal par celui-ci ?</string>
+    <string name="api_add_second_primary_device">Il semble que vous ayez déjà un appareil principal (%1$s) sur votre compte et il ne peut y en avoir qu\'un seul ! Voulez-vous remplacer l\'appareil principal par celui-ci ?</string>
     <string name="api_yes">Oui</string>
     <string name="api_no">Non</string>
     <string name="api_no_email">Aucune adresse courriel n\'a été saisie</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2020 Luke Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@
     <string name="menu_snooze">Silenciar notificações</string>
     <string name="menu_call">Chamar contato</string>
     <string name="menu_video_call">Chamada de Vídeo com Duo</string>
+    <string name="menu_show_bubble">Enviar na bolha</string>
     <string name="menu_view_contact">Ver contato</string>
     <string name="menu_view_contacts">Visualizar contatos</string>
     <string name="menu_view_media">Ver mídia</string>
@@ -51,6 +52,7 @@
     <string name="menu_archive_conversation">Arquivar conversa</string>
     <string name="menu_move_to_inbox">Mover para caixa de entrada</string>
     <string name="menu_conversation_information">Informação da conversa</string>
+    <string name="menu_search_conversation">Procurar conversa</string>
     <string name="menu_copy_phone_number">Copiar Número</string>
     <string name="menu_view_full_conversation">Ver histórico</string>
     <string name="menu_conversation_blacklist">Bloquear contato</string>
@@ -64,7 +66,7 @@
     <string name="menu_snooze_8">8 horas</string>
     <string name="menu_snooze_24">24 horas</string>
     <string name="menu_snooze_72">72 horas</string>
-    <string name="menu_snooze_custom">Escolher uma hora</string>
+    <string name="menu_snooze_custom">Personalizado</string>
     <string name="menu_mark_as_unread">Marcar como não lida</string>
     <string name="menu_pin_conversation">Fixar/Desafixar Conversa</string>
     <string name="menu_mute_conversation">Silenciar/Não silenciar Conversa</string>
@@ -181,6 +183,8 @@ Você pode usar o Pulse para enviar mensagens de texto de <b>qualquer</b> dispos
     <string name="send_as_scheduled_message">Enviar como mensagem agendada</string>
     <string name="send_without_signature">Enviar sem assinatura</string>
     <string name="send_without_delay">Enviar sem atraso</string>
+    <string name="confirm_delete">Você tem certeza que quer apagar esta conversa?</string>
+    <string name="confirm_archive">Você tem certeza que quer arquivar esta conversa?</string>
     <!-- Templates -->
     <string name="type_template_text">Digite texto modelo...</string>
     <string name="delete_template">Você tem certeza que deseja apagar este modelo?</string>
@@ -238,6 +242,12 @@ Pulse coloca suas conversa em evidência.</string>
     <string name="reply">Responder</string>
     <string name="reply_to">Responder para %1$s</string>
     <string name="call">Chamar</string>
+    <string name="notification_action_reply">Responder na conversa</string>
+    <string name="notification_action_call">Chamar contato</string>
+    <string name="notification_action_delete">Apagar mensagem</string>
+    <string name="notification_action_archive">Arquivar conversa</string>
+    <string name="notification_action_no_action">Não exibir ação</string>
+    <string name="notification_action_smart_reply">Sugerir Resposta Inteligente</string>
     <string-array name="reply_choices">
         <item>Sim</item>
         <item>Não</item>
@@ -270,6 +280,7 @@ onde não existam configurações individuais para a conversa.</string>
     <string name="creating_channels_text">Criando canais de notificação...</string>
     <string name="write_new_message">Escreva uma nova mensagem...</string>
     <string name="receiving_a_message">Recebendo mensagem...</string>
+    <string name="bubble_channel">Balões de notificação</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Alterações</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -358,6 +369,7 @@ onde não existam configurações individuais para a conversa.</string>
     <string name="theme_settings">Personalização</string>
     <string name="theme_settings_category">Aspecto e Sensação</string>
     <string name="conversation_list_category">Lista de conversas</string>
+    <string name="message_list_category">Lista de mensagens</string>
     <string name="general_category">Geral</string>
     <string name="theme_settings_redirect">Tema</string>
     <string name="base_theme">Tema base</string>
@@ -374,6 +386,11 @@ temas escuros usam a barra de navegação preta.</string>
     <string name="apply_theme_globally">Aplicar em todas as Conversas</string>
     <string name="apply_theme_globally_summary">Remova os temas por conversa, e utilize
 este conjunto de cores global</string>
+    <string name="conversation_categories">Exibir categorias de data</string>
+    <string name="conversation_categories_summary">categorizar conversas por data (Hoje, Ontem, etc.) 
+ao invés de exibir a data em cada uma das conversas</string>
+    <string name="message_timestamp">Exibir a data de cada uma das mensagens</string>
+    <string name="message_timestamp_summary">Quando inativo, basta tocar em uma mensagem para ver a data e hora.</string>
     <string name="apply_primary_theme_toolbar">Aplicar cor principal à barra do App</string>
     <string name="apply_primary_theme_toolbar_summary">Se a barra de aplicativos deve ou não ser colorida</string>
     <string name="swipe_delete">Deslizar para Apagar</string>
@@ -449,6 +466,7 @@ o que está atualmente em seu banco de dados interno.</string>
     <string name="giffgaff_delivery">Relatórios de entrega da Giffgaff</string>
     <string name="notification_actions">Ações de Notificação</string>
     <string name="notification_actions_summary">Apenas 3 ações podem ser aplicadas às notificações</string>
+    <string name="notification_actions_summary_2">As respostas inteligentes estão disponíveis apenas no idioma inglês.</string>
     <string name="mms_download_directory">Diretório para Download de Mídia</string>
     <string name="mms_download_directory_summary">Onde você deseja salvar Imagens e outras mídias MMS</string>
     <string name="refresh_firebase">Atualizar Conta</string>
@@ -504,6 +522,10 @@ ao recebê-la</string>
     <string name="secure_private_conversations_summary">Requisitar um PIN para desbloquear conversas privadas.</string>
     <string name="use_internal_browser">Utilizar o navegador interno</string>
     <string name="internal_browser_summary">Desligar esta opção também desabilita a exibição de links nas listas de mensagens</string>
+    <string name="use_smart_replies">Sugerir Respostas Inteligentes</string>
+    <string name="use_smart_replies_summary">Pulse irá sugerir respostas relevantes, quando possível. Estas são geradas no dispositivo, não em um servidor remoto.</string>
+    <string name="use_smart_replies_dialog">Pulse irá sugerir respostas inteligentes, quando disponíveis. Elas são geradas no aparelho, não em um servidor remoto.\n\nSe preferir não utilizar esta função, ela pode ser desativada em configurações.</string>
+    <string name="use_smart_reply_settings">Configurações</string>
     <string name="message_backup">Backup de Mensagens</string>
     <string name="message_backup_pref_summary">Preocupado em perder suas mensagens? Pulse vai te ajudar.</string>
     <string name="message_backup_summary">Você sabia: O Pulse está sempre por perto realizando o backup das suas 
@@ -539,6 +561,7 @@ mensagens em um novo dispositivo, tudo que você tem que fazer é acessar a sua 
     <string name="no_folder">Sem pasta</string>
     <!-- Theming Options -->
     <string name="day_night">Padrão (Dia/Noite)</string>
+    <string name="system_default">Padrão do Sistema</string>
     <string name="always_light">Sempre claro</string>
     <string name="always_dark">Sempre escuro</string>
     <string name="always_black">Sempre preto</string>
@@ -619,6 +642,7 @@ https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="verifying_password">Verificando senha...</string>
     <!-- Rate it -->
     <string name="rate_it">Avalie!</string>
+    <string name="no_thanks">Não. Obrigado.</string>
     <string name="rate_it_title">As melhores avaliações vão longe</string>
     <string name="rate_it_summary"><b>Avaliações com 5 estrelas</b> são de grande ajuda para o crescimento do app
 e para a visibilidade na Play Store. Se você quer quer ver o app <i>continuar a planar</i>, me ajude!</string>
@@ -656,10 +680,13 @@ sempre que você quiser usar o Pulse em vários dispositivos novamente!</string>
     <string name="billed_immediately">Cobrado imediatamente.</string>
     <string name="lifetime_purchase">$10.99 - Vitalício</string>
     <string name="lifetime_purchase_summary">Pague uma vez e nunca mais!</string>
+    <string name="subscription_purchase_description">Preço baixo, fácil de gostar!</string>
+    <string name="subscription_purchase_summary">Vem com 7 dias para teste.</string>
     <string name="yearly_purchase">$5.99 anualmente</string>
     <string name="yearly_purchase_summary">A melhor oferta.</string>
     <string name="three_month_purchase">$1.99 trimestralmente</string>
     <string name="three_month_purchase_summary">Não pode dar errado com esta.</string>
+    <string name="yearly_purchase_2">$5.99 - Assinatura anual</string>
     <string name="monthly_purchase">$0.99 mensalmente</string>
     <string name="monthly_purchase_summary">Gostaria de testar? Sem problemas.</string>
     <string name="change_subscription_message">Quer melhorar? Ótimo! Depois que fizer sua escolha na próxima tela você deve ir na Play Store e cancelar a assinatura antiga manualmente.</string>
@@ -680,6 +707,7 @@ Envie mensagens pela web, computador, tablet, smartwatch e mesmo de sua TV.</str
     <string name="competition_cant_beat">A competição não nos alcança em preços, velocidade, ou serviços.
 <b>Teste por 7 dias</b> e veja você mesmo!</string>
     <string name="select_a_trial_below">Selecione uma das três opções de assinatura abaixo para iniciar o seu <b>período de testes</b>.</string>
+    <string name="select_a_subscription_below">Selecione uma assinatura para inciar o seu <b>período de testes</b>. Você pode atualizar a qualquer momento!</string>
     <string name="charged_after_trial">Cobrado após o período de testes:</string>
     <string name="monthly_purchase_improved">$0.99 /\nmês</string>
     <string name="three_month_purchase_improved">$1.99 /\n3 meses</string>

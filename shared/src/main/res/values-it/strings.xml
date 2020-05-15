@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2020 Luke Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@
     <string name="menu_feature_settings">Opzioni avanzate</string>
     <string name="menu_settings">Preferenze</string>
     <string name="menu_customization_settings">Preferenze</string>
+    <string name="menu_mms_configuration">Configurazione MMS</string>
     <string name="menu_account">Il mio account</string>
     <string name="menu_device_texting">Il mio Account</string>
     <string name="menu_help">Help &amp; feedback</string>
@@ -42,6 +43,7 @@
     <string name="menu_mobile_only">Solo mobile</string>
     <string name="menu_snooze">Rimanda notifiche</string>
     <string name="menu_call">Chiama contatto</string>
+    <string name="menu_video_call">Video chiama con Duo</string>
     <string name="menu_view_contact">Visualizza contatto</string>
     <string name="menu_view_contacts">Visualizza contatti</string>
     <string name="menu_view_media">Visualizza media</string>
@@ -49,6 +51,8 @@
     <string name="menu_archive_conversation">Archivia conversazione</string>
     <string name="menu_move_to_inbox">Sposta in messaggi in arrivo</string>
     <string name="menu_conversation_information">Info conversazione</string>
+    <string name="menu_search_conversation">Ricerca nella conversazione</string>
+    <string name="menu_copy_phone_number">Copia numero</string>
     <string name="menu_conversation_blacklist">Aggiungi contatto in blacklist</string>
     <string name="menu_conversation_schedule">Programma un messaggio</string>
     <string name="menu_contact_settings">Impostazioni conversazione</string>
@@ -91,7 +95,9 @@
     </plurals>
     <string name="undo">Annulla</string>
     <string name="enter_search">Cerca...</string>
+    <string name="convo_list_not_now">Non ora</string>
     <string name="no_private_messages_description">Imposta una conversazione come privata dalle sue impostazioni</string>
+    <string name="no_archived_messages_description">Archivia una conversazione per vederla comparire qui!</string>
     <!-- Search Screen -->
     <string name="conversations">Conversazioni</string>
     <string name="messages">Messaggi</string>
@@ -155,10 +161,15 @@ http://messenger.klinkerapps.com</string>
     <string name="forward_message">Inoltra il Messaggio</string>
     <string name="share_message">Condividi il Messaggio</string>
     <string name="copy_message_text">Copia il testo del Messaggio</string>
+    <string name="copy_all_text">Copia tutto</string>
+    <string name="copy_otp">Copia</string>
     <string name="open_link_to_browser">Apri il Link nel Browser</string>
     <string name="open_link_internal">Apri il Link Internamente</string>
     <string name="copy_link">Copia il Link</string>
+    <string name="confirm_archive">Sei sicuro di voler archiviare questa conversazione?</string>
     <!-- Templates -->
+    <string name="delete_template">Sei sicuro di voler cancellare questo template?</string>
+    <string name="edit">Modifica</string>
     <!-- Compose Screen -->
     <string name="compose_message">Componi un nuovo messaggio</string>
     <string name="send_message">Invia messaggio</string>
@@ -207,6 +218,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="reply">Rispondi</string>
     <string name="reply_to">Rispondi a  %1$s</string>
     <string name="call">Chiama</string>
+    <string name="notification_action_archive">Archivia conversazione</string>
     <string-array name="reply_choices">
         <item>Si</item>
         <item>No</item>
@@ -219,6 +231,8 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="draft">Bozze</string>
     <string name="new_message">Nuovo Messaggio</string>
     <string name="received_new_message">Hai ricevuto un nuovo messaggio!</string>
+    <string name="default_notifications_channel">Notifiche Predefinite per la conversazione</string>
+    <string name="test_notifications_channel">Prova le notifiche</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Changelog</string>
     <string name="copyright">© 2018 Luke &amp; Jake Klinker</string>
@@ -266,6 +280,7 @@ per ogni contatto col quale messaggi. Fai tuo Pulse.</string>
     <string name="repeat_interval">Ripeti Avviso</string>
     <string name="repeat_never">Mai</string>
     <string name="repeat_one_min">Ogni minuto</string>
+    <string name="repeat_two_mins">Ogni due minuti</string>
     <string name="repeat_five_mins">Ogni 5 minuti</string>
     <string name="repeat_ten_mins">Ogni 10 minuti</string>
     <string name="repeat_half_hour">Ogni 30 minuti</string>
@@ -341,6 +356,7 @@ con ciò che è sul dispositivo principale.</string>
     <string name="quick_compose">Composizione Veloce</string>
     <string name="secure_private_conversations">Conversazioni Private</string>
     <string name="secure_private_conversations_summary">E\' neccessario un PIN per sbloccare le conversazioni private.</string>
+    <string name="use_smart_reply_settings">Impostazioni</string>
     <string name="message_backup">Backup messaggi</string>
     <string name="message_backup_pref_summary">Preoccupato di perdere i tuoi messaggi? Ci pensa Pulse</string>
     <string name="folders_title">Cartelle</string>
@@ -364,6 +380,11 @@ a %1$s?</string>
     <string name="no_scheduled_messages">Nessun messaggio programmato</string>
     <string name="no_scheduled_messages_summary">Ne puoi creare uno nuovo con il pulsante + posto sotto!</string>
     <string name="scheduled_message_in_future">La data deve essere futura!</string>
+    <string name="scheduled_repeat_never">Non ripetere</string>
+    <string name="scheduled_repeat_daily">Ripeti ogni giorno</string>
+    <string name="scheduled_repeat_weekly">Ripeti ogni settimana</string>
+    <string name="scheduled_repeat_monthly">Ripeti ogni mese</string>
+    <string name="scheduled_repeat_yearly">Ripeti ogni anno</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Sto criptando ed effettuando l\'upload...</string>
     <string name="encrypting_and_uploading_media">Sto criptando e comprimendo i media dei messaggi...</string>

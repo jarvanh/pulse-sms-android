@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
     <string name="app_title">Pulse</string>
@@ -152,6 +152,7 @@ http://messenger.klinkerapps.com</string>
     <string name="open_link_to_browser">Відкрити посилання в браузері</string>
     <string name="open_link_internal">Відкрити посилання всередині</string>
     <string name="copy_link">Копіювати посилання</string>
+    <!-- Templates -->
     <!-- Compose Screen -->
     <string name="compose_message">Написати нове повідомлення</string>
     <string name="send_message">Відправити повідомлення</string>
@@ -346,7 +347,6 @@ Pulse ставить ваші розмови на попередній план.
     <string name="cleanup_old_messages">Очищення давніх повідомлень</string>
     <string name="delayed_sending">Затримка відправки</string>
     <string name="quick_compose">Швидко створити</string>
-    <string name="quick_compose_summary">Завжди-активні сповіщення, щоб дати Вам швидкий доступ до створення нового повідомлення.</string>
     <string name="secure_private_conversations">Захист приватних розмов</string>
     <string name="secure_private_conversations_summary">Вимагається введення PIN-код для розблокування приватних розмов.</string>
     <!-- Theming Options -->
@@ -378,6 +378,7 @@ Pulse ставить ваші розмови на попередній план.
     <string name="contact_card">Картка контакту</string>
     <string name="conversation_with">Розмова з %1$s</string>
     <string name="send">Надіслати</string>
+    <!-- Passcode Entry -->
     <!-- Other -->
     <string name="updating_database">Пошук останніх повідомлень ...</string>
     <string name="dashclock_description">Непрочитані SMS/MMS</string>
@@ -396,6 +397,7 @@ Pulse ставить ваші розмови на попередній план.
     <string name="test">Тест</string>
     <string name="off">Вимкнено</string>
     <string name="on">Увімкнути</string>
+    <!-- Rate it -->
     <!-- Times -->
     <string name="one_second">Одна секунда</string>
     <string name="three_seconds">Три секунди</string>
@@ -432,4 +434,5 @@ Pulse ставить ваші розмови на попередній план.
     <string name="monthly_purchase">$ 0.99 щомісяця</string>
     <string name="monthly_purchase_summary">Просто хочете спробувати? Без проблем.</string>
     <string name="change_subscription_message">Хочете оновити? Чудово! Після того, як ви зробили свій вибір на наступному екрані, ви повинні перейти в додаток Play Store, і скасувати стару підписку вручну.</string>
+    <string name="quick_compose_summary">Завжди-активні сповіщення, щоб дати Вам швидкий доступ до створення нового повідомлення.</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2016 Jacob Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse (SMS/Mensajería en tablet)</string>
     <string name="app_title">Pulse</string>
@@ -142,6 +142,7 @@ fotos!</string>
     <string name="message_sending_failed">¡No se pudo enviar el mensaje!</string>
     <string name="preparing_video">Preparando video&#8230;</string>
     <string name="delete_message">¿Eliminar este mensaje?</string>
+    <!-- Templates -->
     <!-- Compose Screen -->
     <string name="compose_message">Redactar nuevo mensaje</string>
     <string name="send_message">Enviar mensaje</string>
@@ -310,7 +311,6 @@ que se base el contacto:</string>
     <string name="cleanup_old_messages">Limpieza de mensajes antiguos</string>
     <string name="delayed_sending">Envio retrasado</string>
     <string name="quick_compose">Composición rápida</string>
-    <string name="quick_compose_summary">Notificación siempre activa para conseguir la manera mas rápida de componer de un nuevo mensaje.</string>
     <string name="secure_private_conversations">Conversaciones privadas seguras</string>
     <string name="secure_private_conversations_summary">Requerir PIN para desbloquear conversaciones privadas</string>
     <!-- Theming Options -->
@@ -342,6 +342,7 @@ abajo!</string>
     <string name="contact_card">Tarjeta de contacto</string>
     <string name="conversation_with">Conversación con %1$s</string>
     <string name="send">Enviar</string>
+    <!-- Passcode Entry -->
     <!-- Other -->
     <string name="dashclock_description">Marcar la información de SMS/MMS como no leída</string>
     <string name="default_text">Por defecto</string>
@@ -357,6 +358,7 @@ abajo!</string>
     <string name="minutes">Minutos</string>
     <string name="test">Test</string>
     <string name="off">Apagar</string>
+    <!-- Rate it -->
     <!-- Times -->
     <string name="five_seconds">Cinco Segundos</string>
     <string name="ten_seconds">Diez segundos</string>
@@ -391,4 +393,5 @@ de tú cuenta en 2 días. Si esto es un error, ponte en contacto conmigo por cor
     <string name="monthly_purchase">$0,99 cada mes</string>
     <string name="monthly_purchase_summary">Solamente quieres probar? Sin problema</string>
     <string name="change_subscription_message">¿Quieres actualizar? ¡Genial! Después de haber hecho tú selección en la siguiente pantalla, debes ir a la Play Store y cancelar la suscripción antigua manualmente.</string>
+    <string name="quick_compose_summary">Notificación siempre activa para conseguir la manera mas rápida de componer de un nuevo mensaje.</string>
 </resources>

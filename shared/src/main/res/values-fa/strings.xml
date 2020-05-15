@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2020 Luke Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Launcher Shortcuts -->
     <!-- Drawer Items -->
     <string name="menu_video_call">ترجمه به فارسی</string>
@@ -27,7 +27,16 @@
     <!-- Compose Screen -->
     <!-- Onboarding Screen -->
     <!-- Notifications -->
+    <string name="mark_as_read">انتخاب به عنوان خوانده شده</string>
     <!-- About, Help and Feedback and Settings -->
+    <string name="view_platforms">پلتفرمهای موجود برای پالس</string>
+    <string name="apply_primary_theme_toolbar">اعمال رنگ اول به نوار برنامه</string>
+    <string name="trial_subscription_title">%s روز از نسخه آزمایشی باقی مانده است</string>
+    <string name="upgrade_or_cancel_title">آیا از نسخه آزمایشی راضی بودید؟</string>
+    <string name="trial_expired">با تشکر از آزمایش برنامه</string>
+    <string name="cancel_trial">لغو نسخه آزمایشی</string>
+    <string name="notification_customization">شخصی سازی اعلانات</string>
+    <string name="dismiss_notifications_on_reply">رد کردن اعلان پس از پاسخ</string>
     <!-- MMS Configuration Settings -->
     <!-- Advanced Features Settings -->
     <!-- Theming Options -->
@@ -36,7 +45,17 @@
     <!-- Quick Reply -->
     <!-- Passcode Entry -->
     <!-- Other -->
+    <string name="restore_default_channel_settings_popup">تنظیمات اولیه بازگردانی شد</string>
     <!-- Rate it -->
     <!-- Times -->
     <!-- Purchase/Subscriptions -->
+    <string name="trial_finished">شما قبلا از نسخه آزمایشی استفاده کرده اید.</string>
+    <string name="start_free_trial">نسخه آزمایشی خود را شروع کنید!</string>
+    <string name="create_your_pulse_account">یک حساب پالس بسازید!</string>
+    <string name="select_purchase">انتخاب نوع پرداخت</string>
+    <string name="select_a_purchase">انتخاب یک نوع پرداخت</string>
+    <string name="notification_trial_title">ارسال پیام از هر دستگاه - آزمایشی</string>
+    <string name="notification_trial_expired">مهلت هفت روز آزمایش شما تمام شده است.جهت نسخه ویژه کلیک کنید!</string>
+    <string name="continue_with_phone_app">شما میتوانید جهت استفاده از برنامه بصورت رایگان ادامه دهید</string>
+    <string name="thanks_for_trying">تشکر بابت نسخه آزمایشی</string>
 </resources>

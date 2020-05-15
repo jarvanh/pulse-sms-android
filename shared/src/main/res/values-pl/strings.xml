@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
     <!--
-  ~ Copyright (C) 2020 Luke Klinker
+  ~ Copyright (C) 2017 Luke Klinker
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Pulse</string>
     <string name="app_name_long">Pulse (SMS/Tablet Messenger)</string>
     <string name="app_title">Pulse</string>
@@ -44,6 +44,7 @@
     <string name="menu_snooze">Uśpij powiadomienia</string>
     <string name="menu_call">Zadzwoń</string>
     <string name="menu_video_call">Rozmowa wideo przez Google Duo</string>
+    <string name="menu_show_bubble">Powiadomienie w dymku</string>
     <string name="menu_view_contact">Wyświetl kontakt</string>
     <string name="menu_view_contacts">Wyświetl kontakty</string>
     <string name="menu_view_media">Wyświetl załączniki</string>
@@ -51,6 +52,7 @@
     <string name="menu_archive_conversation">Zachowaj rozmowę</string>
     <string name="menu_move_to_inbox">Przenieś do skrzynki odbiorczej</string>
     <string name="menu_conversation_information">Szczegóły rozmowy</string>
+    <string name="menu_search_conversation">Szukaj w Wiadomościach</string>
     <string name="menu_copy_phone_number">Skopiuj numer</string>
     <string name="menu_view_full_conversation">Zobacz historię</string>
     <string name="menu_conversation_blacklist">Dodaj do czarnej listy</string>
@@ -119,6 +121,7 @@
     <string name="type_message_to">Napisz wiadomość do %1$s</string>
     <string name="attach">Załącz</string>
     <string name="select_sim">Wybierz kartę SIM</string>
+    <string name="view_scheduled_messages">Zobacz wiadomości zaplanowane do wysłania</string>
     <string name="message_from">%1$s</string>
     <string name="message_from_bullet">%1$s •</string>
     <string name="mms_image">Obraz MMS</string>
@@ -129,6 +132,7 @@
     <string name="attach_image">Załącz obraz</string>
     <string name="capture_image">Zrób zdjęcie</string>
     <string name="attach_gif">Załącz GIF</string>
+    <string name="attach_sticker">Dołącz etykietę</string>
     <string name="record_video">Nagraj film</string>
     <string name="record_audio">Nagraj dźwięk</string>
     <string name="attach_location">Załącz lokalizację</string>
@@ -142,6 +146,7 @@
     <string name="fullscreen">Pełny ekran</string>
     <string name="attached_image">Załączony obraz</string>
     <string name="remove_image">Usuń załączony obraz</string>
+    <string name="remove_image_short">Usuń obraz</string>
     <string name="edit_image">Edytuj załączony obraz</string>
     <string name="edit_recipients">Edytuj adresatów</string>
     <string name="select_folder">Wybierz folder dla rozmowy</string>
@@ -158,6 +163,9 @@ czas ją rozpocząć!</string>
     <string name="audio_recording_error">Wystąpił błąd podczas nagrywania :(</string>
     <string name="message_copied_to_clipboard">Skopiowano do schowka</string>
     <string name="view_details">Zobacz szczegóły</string>
+    <string name="speak_message">Przeczytaj wiadomość na głos</string>
+    <string name="select_all_messages">Zaznacz wszystkie wiadomości</string>
+    <string name="select_all_conversations">Zaznacz wszystkie rozmowy</string>
     <string name="delete">Usuń</string>
     <string name="copy_message">Kopiuj tekst</string>
     <string name="resend">Wyślij ponownie</string>
@@ -177,10 +185,18 @@ czas ją rozpocząć!</string>
     <string name="copy_link">Skopiuj link</string>
     <string name="attach_vcard">Dodaj kontakt jako wizytówkę vCard</string>
     <string name="attach_plain_text">Dodaj kontakt jako zwykły tekst</string>
+    <string name="send_as_scheduled_message_question">Czy chcesz zaplanować późniejsze wysłanie tej wiadomości?</string>
+    <string name="send_as_scheduled_message">Wyślij zaplanowaną wiadomość</string>
+    <string name="send_without_signature">Wyślij bez podpisu</string>
+    <string name="send_without_delay">Wyślij natychmiast</string>
+    <string name="confirm_delete">Na pewno chcesz usunąć tę rozmowę?</string>
+    <string name="confirm_archive">Na pewno chcesz zarchiwizować tę rozmowę?</string>
     <!-- Templates -->
     <string name="type_template_text">Wprowadź tekst szablonu...</string>
     <string name="delete_template">Czy na pewno chcesz usunąć ten szablon?</string>
+    <string name="edit_or_delete_template">Czy chcesz zmienić lub usunąć szablon?</string>
     <string name="no_templates">Użyj przycisku <b>+</b> aby utworzyć szablon</string>
+    <string name="edit">Edytuj</string>
     <!-- Compose Screen -->
     <string name="compose_message">Utwórz nową wiadomość</string>
     <string name="send_message">Wyślij wiadomość</string>
@@ -192,6 +208,8 @@ czas ją rozpocząć!</string>
     <string name="compose_all_contacts">Wszystkie kontakty</string>
     <string name="private_conversation_disclaimer">To jest <b>prywatna rozmowa</b> i nie może być otwarta na ekranie tworzenia wiadomości.</string>
     <!-- Onboarding Screen -->
+    <string name="google_requires_default_sms">Google wymaga, aby wszelkie aplikacje SMS, zanim będą mogły uzyskiwać dostęp do wiadomości lub je wysyłać, były ustawione jako domyślna aplikacja do przesyłania wiadomości. To zezwolenie jest wymagane.</string>
+    <string name="google_requires_default_sms_policy">Zobacz zasady</string>
     <string name="permissions_needed">Aplikacja nie może poprawnie funkcjonować bez przyznania jej wymienionych uprawnień. Zatwierdź wymagane uprawnienia aby móc kontynuować.</string>
     <string name="loading_messages">Optymalizuję...</string>
     <string name="loading_messages_summary">Pracujemy nad pobraniem Twoich wiadomości do aplikacji. Nie potrwa to długo!</string>
@@ -224,7 +242,7 @@ czas ją rozpocząć!</string>
     <plurals name="new_messages">
         <item quantity="one">%1$d nowa wiadomość</item>
         <item quantity="other">%1$d nowych wiadomości</item>
-        <item quantity="few">%1$d nowych wiadomości</item>
+        <item quantity="few">%1$d nowe wiadomości</item>
         <item quantity="many">%1$d nowych wiadomości</item>
     </plurals>
     <string name="read">Przeczytane</string>
@@ -233,6 +251,12 @@ czas ją rozpocząć!</string>
     <string name="reply">Odpowiedz</string>
     <string name="reply_to">Wyślij odpowiedź do %1$s</string>
     <string name="call">Zadzwoń</string>
+    <string name="notification_action_reply">Odpowiedz na rozmowę</string>
+    <string name="notification_action_call">Zadzwoń do kontaktu</string>
+    <string name="notification_action_delete">Skasuj wiadomość</string>
+    <string name="notification_action_archive">Zarchiwizuj rozmowę</string>
+    <string name="notification_action_no_action">Nie pokazuj działania</string>
+    <string name="notification_action_smart_reply">Zaproponuj inteligentną odpowiedź</string>
     <string-array name="reply_choices">
         <item>Tak</item>
         <item>Nie</item>
@@ -264,6 +288,7 @@ czas ją rozpocząć!</string>
     <string name="creating_channels_text">Tworzenie kanałów powiadomień...</string>
     <string name="write_new_message">Napisz nową wiadomość...</string>
     <string name="receiving_a_message">Odbieranie wiadomości...</string>
+    <string name="bubble_channel">Dymki powiadomień</string>
     <!-- About, Help and Feedback and Settings -->
     <string name="changelog">Lista zmian</string>
     <string name="copyright">© 2016 Jake Klinker &amp; Luke Klinker</string>
@@ -356,6 +381,7 @@ czas ją rozpocząć!</string>
     <string name="theme_settings">Personalizacja</string>
     <string name="theme_settings_category">Wygląd i wrażenia</string>
     <string name="conversation_list_category">Lista rozmów</string>
+    <string name="message_list_category">Lista wiadomości</string>
     <string name="general_category">Ogólne</string>
     <string name="theme_settings_redirect">Motyw</string>
     <string name="base_theme">Motyw podstawowy</string>
@@ -370,6 +396,10 @@ czas ją rozpocząć!</string>
     <string name="adjustable_nav_bar_summary">Jasny motyw wyświetli biały pasek nawigacyjny, ciemne motywy wyświetlą czarny pasek nawigacyjny</string>
     <string name="apply_theme_globally">Zastosuj do wszystkich rozmów</string>
     <string name="apply_theme_globally_summary">Usuń motywy z poszczególnych rozmów, użyj globalnego zestawu kolorów</string>
+    <string name="conversation_categories">Pokaż kategorie dat</string>
+    <string name="conversation_categories_summary">Grupuj rozmowy według daty (dziś, wczoraj itp.) zamiast wyświetlać znacznik czasu dla każdej rozmowy</string>
+    <string name="message_timestamp">Oznacz czasem każdą wiadomość</string>
+    <string name="message_timestamp_summary">Po wyłączeniu możesz po prostu dotknąć dowolnej wiadomości, aby zobaczyć znacznik czasu.</string>
     <string name="apply_primary_theme_toolbar">Zastosuj główny kolor do paska aplikacji</string>
     <string name="apply_primary_theme_toolbar_summary">Czy pasek aplikacji ma być kolorowany czy nie</string>
     <string name="swipe_delete">Przesuń aby usunąć</string>
@@ -379,9 +409,14 @@ czas ją rozpocząć!</string>
     <string name="right_to_left_swipe">Przesunięcie w lewo</string>
     <string name="no_swipe">Wyłącz gesty przesuwania</string>
     <string name="blacklist_hint">Dodaj numer do czarnej listy...</string>
+    <string name="enter_phrase">Wpisz frazę</string>
+    <string name="enter_phone">Wpisz numer telefonu</string>
+    <string name="blacklist_phrase_hint">Wpisz frazę na czarną listę</string>
     <string name="add_blacklist">%1$s\n\nCzy na pewno chcesz dodać ten numer do czarnej listy? Wiadomości z tego numeru nie będą już zapisywane ani nie otrzymasz o nich powiadomienia!</string>
+    <string name="add_blacklist_phrase">%1$s\n\n Czy na pewno chcesz dodać tę czarną listę? Wiadomości nie będą już zapisywane, jeśli zawierają tę frazę, i nie zostaniesz o tym powiadomiony!</string>
     <string name="remove_blacklist">%1$s\n\nCzy chcesz usunąć tę czarną listę?</string>
     <string name="blacklist_need_number">Podaj numer telefonu, aby dodać go do czarnej listy.</string>
+    <string name="blacklist_need_phrase">Musisz wpisać frazę na czarną listę!</string>
     <string name="no_blacklists">Brak numerów na czarnej liście</string>
     <string name="no_blacklists_summary">Aby dodać numer do czarnej listy, dotknij przycisku z plusem.</string>
     <string name="add">Dodaj</string>
@@ -438,6 +473,7 @@ do stanu zgodnego z twoją wewnętrzną bazą SMS.</string>
     <string name="giffgaff_delivery">Raporty doręczeń w Giffgaff</string>
     <string name="notification_actions">Akcje na powiadomieniach</string>
     <string name="notification_actions_summary">Do powiadomień można przypisać maksymalnie trzy akcje</string>
+    <string name="notification_actions_summary_2">Pamiętaj, że inteligentne odpowiedzi są obecnie dostępne tylko w języku angielskim</string>
     <string name="mms_download_directory">Miejsce pobierania załączników​</string>
     <string name="mms_download_directory_summary">Gdzie chcesz zapisywać obrazy i inne załączniki multimedialne</string>
     <string name="refresh_firebase">Odśwież konto</string>
@@ -455,6 +491,7 @@ Po zakończeniu będziesz musiał zalogować się ponownie na wszystkich Twoich 
     <string name="settings_phone_number">Numer telefonu</string>
     <string name="disable_battery_optimization">Wyłącz optymalizację baterii</string>
     <string name="disable_battery_optimization_summary">Jeśli wiadomości z telefonu nie docierają do internetu, spróbuj wyłączyć optymalizacje baterii dla Pulse.</string>
+    <string name="hex">Kolor w formacie Hex</string>
     <!-- MMS Configuration Settings -->
     <string name="max_mms_size">Maksymalna wielkość obrazu</string>
     <string name="max_mms_size_summary">Nie ustawiaj wyższej wartości niż zezwala na to Twój operator</string>
@@ -491,6 +528,10 @@ Po zakończeniu będziesz musiał zalogować się ponownie na wszystkich Twoich 
     <string name="secure_private_conversations_summary">Ustawienie hasła będzie wymagało wprowadzenia go przed wyświetleniem prywatnych rozmów</string>
     <string name="use_internal_browser">Używaj wbudowanej przeglądarki internetowej</string>
     <string name="internal_browser_summary">Wyłączenie tej opcji spowoduje również wyłączenie podglądu linków na listach wiadomości</string>
+    <string name="use_smart_replies">Proponuj inteligentne odpowiedzi</string>
+    <string name="use_smart_replies_summary">Pulse zasugeruje odpowiednie odpowiedzi, jeśli są dostępne. Są one generowane bezpośrednio na urządzeniu, a nie na zdalnym serwerze</string>
+    <string name="use_smart_replies_dialog">Pulse zasugeruje odpowiednie odpowiedzi, jeśli są dostępne. Są one generowane bezpośrednio na urządzeniu, a nie na zdalnym serwerze.\n\nJeśli wolisz nie korzystać z tej funkcji, możesz ją wyłączyć w ustawieniach.</string>
+    <string name="use_smart_reply_settings">Ustawienia</string>
     <string name="message_backup">Kopia zapasowa wiadomości</string>
     <string name="message_backup_pref_summary">Martwisz się, że utracisz swoje wiadomości? Pulse nie dopuści do tego</string>
     <string name="message_backup_summary">Czy o tym wiedziałeś: Usługa internetowa Pulse opiera się na tworzeniu kopii zapasowych wiadomości. Po zarejestrowaniu konta Pulse możesz zalogować się na to konto z dowolnego urządzenia lub tabletu, by przywrócić wszystkie wiadomości automatycznie!\n\n Brak problemów i ręcznego tworzenia kopii zapasowych.
@@ -522,6 +563,7 @@ Posiadając konto, Pulse automatycznie tworzy kopię zapasową wiadomości któr
     <string name="no_folder">Brak folderów</string>
     <!-- Theming Options -->
     <string name="day_night">Domyślny (dzień/noc)</string>
+    <string name="system_default">Domyślne ustawienie systemowe</string>
     <string name="always_light">Zawsze jasny</string>
     <string name="always_dark">Zawsze ciemny</string>
     <string name="always_black">Zawsze czarny</string>
@@ -533,6 +575,15 @@ Posiadając konto, Pulse automatycznie tworzy kopię zapasową wiadomości któr
     <string name="no_scheduled_messages">Brak zaplanowanych wiadomości</string>
     <string name="no_scheduled_messages_summary">Możesz utworzyć nową używając poniższego przycisku z plusem!</string>
     <string name="scheduled_message_in_future">Musisz wprowadzić czas z przyszłości!</string>
+    <string name="scheduled_repeat_never">Nie powtarzaj</string>
+    <string name="scheduled_repeat_daily">Powtarzaj codziennie</string>
+    <string name="scheduled_repeat_weekly">Powtarzaj co tydzień</string>
+    <string name="scheduled_repeat_monthly">Powtarzaj co miesiąc</string>
+    <string name="scheduled_repeat_yearly">Powtarzaj co rok</string>
+    <string name="remove_scheduled_message">Czy chcesz usunąć zaplanowaną wiadomość?</string>
+    <string name="select_image">Wybierz obraz z telefonu</string>
+    <string name="select_gif">Szukaj obrazu GIF</string>
+    <string name="media_on_primary_device">Pliki multimedialne w zaplanowanej wiadomości mogą być wyświetlone tylko w aplikacji telefonu.</string>
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Szyfrowanie i wysyłanie...</string>
     <string name="encrypting_and_uploading_media">Szyfrowanie i kompresowanie wiadomości multimedialnych...</string>
@@ -593,6 +644,7 @@ Możesz dostosować te opcje za pomocą przycisku poniżej i przeczytać więcej
     <string name="verifying_password">Weryfikacja hasła...</string>
     <!-- Rate it -->
     <string name="rate_it">Oceń aplikacje!</string>
+    <string name="no_thanks">Dziękuję, nie</string>
     <string name="rate_it_title">Droga do najlepszych ocen jest długa</string>
     <string name="rate_it_summary"><b>Oceny 5-gwiazdkowe</b> są niezwykle pomocne dla rozwoju aplikacji
 i widoczności w Sklepie Play. Jeśli chcesz, aby aplikacja <i>dalej wznosiła się w rankingu</i>, pomóż mi!</string>
@@ -630,10 +682,13 @@ Jeżeli nie odnowisz go na czas, aplikacja wyloguje Cię automatycznie z Twojego
     <string name="billed_immediately">Rozliczenie następuje bezzwłocznie.</string>
     <string name="lifetime_purchase">$10.99 - subskrypcja dożywotnia</string>
     <string name="lifetime_purchase_summary">Płacisz raz i nigdy więcej!</string>
+    <string name="subscription_purchase_description">Niska cena, łatwo ją pokochać!</string>
+    <string name="subscription_purchase_summary">Razem z 7-dniową wersją próbną.</string>
     <string name="yearly_purchase">$5.99 - co rok</string>
     <string name="yearly_purchase_summary">Najlepsza oferta.</string>
     <string name="three_month_purchase">$1.99 - co 3 miesiące</string>
     <string name="three_month_purchase_summary">Nie da się tutaj pomylić ;)</string>
+    <string name="yearly_purchase_2">Roczna subskrypcja 5,99 USD</string>
     <string name="monthly_purchase">$0.99 - co miesiąc</string>
     <string name="monthly_purchase_summary">Chcesz tylko wypróbować? Nie ma problemu.</string>
     <string name="change_subscription_message">Chcesz upgrade? Świetnie! Po wybraniu opcji na następnym ekranie, w aplikacji Play Store<b>musisz</b> anulować swoją subskrypcję lub wersję próbną. <b>Nie mogę</b> zrobić tego automatycznie.</string>
@@ -649,10 +704,12 @@ Wysyłaj wiadomości z przeglądarki internetowej, komputera, tabletu, smart zeg
     <string name="select_purchase">Wybierz zakup</string>
     <string name="have_an_account">Masz już konto?\nZaloguj się</string>
     <string name="select_a_purchase">Wybierz sposób zakupu</string>
+    <string name="select_a_purchase_description">Wybierz jedną z trzech opcji subskrypcji lub wybierz <b>członkostwo dożywotnie</b> aby dokonać jednorazowego zakupu aplikacji.</string>
     <string name="seven_days_free">7 dni za darmo!</string>
     <string name="competition_cant_beat">Konkurencja nie może się równać z naszymi cenami, prędkością ani usługami -
 <b> wypróbuj przez 7 dni </b>, aby przekonać się samemu!</string>
     <string name="select_a_trial_below">Wybierz jedną z trzech poniższych opcji abonamentu, aby rozpocząć <b> bezpłatną wersję próbną </b>.</string>
+    <string name="select_a_subscription_below">Wybierz subskrypcję, aby rozpocząć <b>bezpłatny okres próbny</b>. Możesz zaktualizować w dowolnym momencie!</string>
     <string name="charged_after_trial">Płatności po zakończeniu okresu próbnego:</string>
     <string name="monthly_purchase_improved">$0.99 /\nmiesiąc</string>
     <string name="three_month_purchase_improved">$1.99 /\n3 miesiące</string>
