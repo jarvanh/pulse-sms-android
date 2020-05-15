@@ -17,6 +17,13 @@
 <changelog>
 
     <version
+        name="5.3.1"
+        description="May 15th, 2020">
+        <text>Bug fixes</text>
+        <text>Translation updates</text>
+    </version>
+
+    <version
         name="5.3.0"
         description="April 29th, 2020">
         <text>In the notification section of settings, there is a new preference: hide message content</text>
