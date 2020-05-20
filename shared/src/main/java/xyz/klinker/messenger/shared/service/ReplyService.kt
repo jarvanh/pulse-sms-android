@@ -29,10 +29,7 @@ import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
-import xyz.klinker.messenger.shared.util.DualSimUtils
-import xyz.klinker.messenger.shared.util.SendUtils
-import xyz.klinker.messenger.shared.util.TimeUtils
-import xyz.klinker.messenger.shared.util.closeSilent
+import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 
 /**
@@ -91,7 +88,7 @@ class ReplyService : IntentService("Reply Service") {
         val unseenMessages = DataSource.getUnseenMessages(this)
         if (unseenMessages.count <= 0) {
             try {
-                NotificationManagerCompat.from(this).cancelAll()
+                NotificationUtils.cancelAll(this)
             } catch (e: SecurityException) {
             }
         } else {

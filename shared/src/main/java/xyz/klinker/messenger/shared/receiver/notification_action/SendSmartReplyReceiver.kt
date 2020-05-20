@@ -16,10 +16,7 @@ import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.receiver.ConversationListUpdatedReceiver
 import xyz.klinker.messenger.shared.receiver.MessageListUpdatedReceiver
 import xyz.klinker.messenger.shared.service.ReplyService
-import xyz.klinker.messenger.shared.util.DualSimUtils
-import xyz.klinker.messenger.shared.util.SendUtils
-import xyz.klinker.messenger.shared.util.TimeUtils
-import xyz.klinker.messenger.shared.util.closeSilent
+import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 
 class SendSmartReplyReceiver : BroadcastReceiver() {
@@ -64,7 +61,7 @@ class SendSmartReplyReceiver : BroadcastReceiver() {
         val unseenMessages = DataSource.getUnseenMessages(context)
         if (unseenMessages.count <= 0) {
             try {
-                NotificationManagerCompat.from(context).cancelAll()
+                NotificationUtils.cancelAll(context)
             } catch (e: SecurityException) {
             }
         } else {

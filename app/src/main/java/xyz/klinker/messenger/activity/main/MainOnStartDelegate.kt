@@ -8,6 +8,7 @@ import xyz.klinker.messenger.activity.MessengerActivity
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.service.jobs.ScheduledMessageJob
 import xyz.klinker.messenger.shared.util.CursorUtil
+import xyz.klinker.messenger.shared.util.NotificationUtils
 import xyz.klinker.messenger.utils.TextAnywhereConversationCardApplier
 
 class MainOnStartDelegate(private val activity: MessengerActivity) {
@@ -64,7 +65,7 @@ class MainOnStartDelegate(private val activity: MessengerActivity) {
                 // since the notification functionality here is not nearly as good as 7.0,
                 // we will just remove them all, if there is more than one
                 try {
-                    NotificationManagerCompat.from(activity).cancelAll()
+                    NotificationUtils.cancelAll(activity)
                 } catch (e: IllegalStateException) {
                 } catch (e: SecurityException) {
                 }

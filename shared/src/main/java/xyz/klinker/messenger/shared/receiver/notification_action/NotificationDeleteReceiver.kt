@@ -10,6 +10,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.util.CursorUtil
+import xyz.klinker.messenger.shared.util.NotificationUtils
 import xyz.klinker.messenger.shared.util.UnreadBadger
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
 
@@ -43,7 +44,7 @@ class NotificationDeleteReceiver : BroadcastReceiver() {
             // if there are no more notifications, cancel the summary as well
             val unseenMessages = DataSource.getUnseenMessages(context)
             if (unseenMessages.count <= 0) {
-                NotificationManagerCompat.from(context).cancelAll()
+                NotificationUtils.cancelAll(context)
             } else {
                 NotificationManagerCompat.from(context).cancel(conversationId.toInt())
             }

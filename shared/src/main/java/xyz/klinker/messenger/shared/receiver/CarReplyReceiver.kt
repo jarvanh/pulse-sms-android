@@ -14,10 +14,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.MimeType
 import xyz.klinker.messenger.shared.data.model.Message
 import xyz.klinker.messenger.shared.service.ReplyService
-import xyz.klinker.messenger.shared.util.DualSimUtils
-import xyz.klinker.messenger.shared.util.SendUtils
-import xyz.klinker.messenger.shared.util.TimeUtils
-import xyz.klinker.messenger.shared.util.closeSilent
+import xyz.klinker.messenger.shared.util.*
 
 class CarReplyReceiver : BroadcastReceiver() {
 
@@ -67,7 +64,7 @@ class CarReplyReceiver : BroadcastReceiver() {
         // if there are no more notifications, cancel the summary as well
         val unseenMessages = DataSource.getUnseenMessages(context)
         if (unseenMessages.count <= 0) {
-            NotificationManagerCompat.from(context).cancelAll()
+            NotificationUtils.cancelAll(context)
         } else {
             NotificationManagerCompat.from(context).cancel(conversationId.toInt())
         }

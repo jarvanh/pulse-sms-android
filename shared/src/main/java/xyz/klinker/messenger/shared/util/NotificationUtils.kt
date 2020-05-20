@@ -8,10 +8,12 @@ import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
+import androidx.core.app.NotificationManagerCompat
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
+import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
 
 object NotificationUtils {
 
@@ -230,6 +232,13 @@ object NotificationUtils {
         val channels = manager.notificationChannels
         for (channel in channels) {
             manager.deleteNotificationChannel(channel.id)
+        }
+    }
+
+    fun cancelAll(context: Context) {
+        NotificationManagerCompat.from(context).cancelAll()
+        if (Settings.quickCompose) {
+            QuickComposeNotificationService.start(context)
         }
     }
 
