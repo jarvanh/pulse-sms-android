@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="5.3.2"
+        description="May 15th, 2020">
+        <text>Bug fixes</text>
+    </version>
+
+    <version
         name="5.3.1"
         description="May 15th, 2020">
         <text>Bug fixes</text>
