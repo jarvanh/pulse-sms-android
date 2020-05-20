@@ -67,7 +67,6 @@ class ConversationItemBinder(private val activity: Activity) {
     fun showImage(holder: ConversationViewHolder, conversation: Conversation) {
         Glide.with(holder.itemView.context)
                 .load(Uri.parse(conversation.imageUri))
-                .signature(ObjectKey(TimeUtils.today()))
                 .into(holder.image!!)
     }
 
