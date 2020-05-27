@@ -67,7 +67,7 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
 
         urls.setOnLongClickListener { clickedText ->
             val link = if (!clickedText.startsWith("http")) {
-                "http://$clickedText"
+                "https://$clickedText"
             } else clickedText
 
             val bottomSheet = LinkLongClickFragment()
@@ -83,15 +83,16 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
             }
 
             val link = if (!clickedText.startsWith("http")) {
-                "http://$clickedText"
+                "https://$clickedText"
             } else clickedText
 
             if (skipInternalBrowser(link) || !Settings.internalBrowser) {
                 val url = Intent(Intent.ACTION_VIEW)
-                url.data = Uri.parse(clickedText)
+                url.data = Uri.parse(link)
                 try {
                     holder.itemView.context.startActivity(url)
                 } catch (e: Exception) {
+                    e.printStackTrace()
                     AnalyticsHelper.caughtForceClose(holder.itemView.context, "couldn't start link click: $clickedText", e)
                 }
             } else {
