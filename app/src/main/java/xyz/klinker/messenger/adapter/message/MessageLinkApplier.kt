@@ -92,7 +92,6 @@ class MessageLinkApplier(private val fragment: MessageListFragment, private val 
                 try {
                     holder.itemView.context.startActivity(url)
                 } catch (e: Exception) {
-                    e.printStackTrace()
                     AnalyticsHelper.caughtForceClose(holder.itemView.context, "couldn't start link click: $clickedText", e)
                 }
             } else {
