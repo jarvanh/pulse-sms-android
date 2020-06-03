@@ -43,6 +43,8 @@
     <string name="menu_mobile_only">Только мобильные</string>
     <string name="menu_snooze">Не беспокоить</string>
     <string name="menu_call">Позвонить</string>
+    <string name="menu_video_call">Видео вызов через Duo</string>
+    <string name="menu_show_bubble">Всплывающий пузырь</string>
     <string name="menu_view_contact">Посмотреть контакт</string>
     <string name="menu_view_contacts">Посмотреть контакты</string>
     <string name="menu_view_media">Посмотреть медиа</string>
@@ -54,6 +56,7 @@
     <string name="menu_copy_phone_number">Скопировать номер</string>
     <string name="menu_view_full_conversation">Смотреть историю</string>
     <string name="menu_conversation_blacklist">Добавить в чёрный список</string>
+    <string name="menu_conversation_blacklist_all">Заблокировать всех участников</string>
     <string name="menu_conversation_schedule">Отложить сообщение</string>
     <string name="menu_contact_settings">Настройки беседы</string>
     <string name="menu_group_settings">Настройки группы</string>
@@ -191,6 +194,7 @@
     <!-- Templates -->
     <string name="type_template_text">Введите текст шаблона ...</string>
     <string name="delete_template">Вы действительно хотите удалить этот шаблон?</string>
+    <string name="edit_or_delete_template">Вы хотите изменить или удалить этот шаблон?</string>
     <string name="no_templates">Используйте кнопку <b> + </b>, чтобы создать шаблон</string>
     <string name="edit">Редактировать</string>
     <!-- Compose Screen -->
@@ -205,6 +209,7 @@
     <string name="private_conversation_disclaimer">Это <b> закрытый разговор </b> и не может быть открыт с экрана компоновки.</string>
     <!-- Onboarding Screen -->
     <string name="google_requires_default_sms">В настоящее время Google требует, чтобы любые приложения SMS были установлены в качестве приложения обмена сообщениями по умолчанию, прежде чем они смогут получить доступ или отправить какие-либо сообщения. Это обязательное разрешение.</string>
+    <string name="google_requires_default_sms_policy">Просмотр политики</string>
     <string name="permissions_needed">Приложение не сможет работать без этих разрешений! Нужно принять их прежде чем мы продолжим.</string>
     <string name="loading_messages">Обработка...</string>
     <string name="loading_messages_summary">Загружаем ваши сообщения в приложение. Это не займёт много времени!</string>
@@ -294,6 +299,7 @@
     <string name="be_careful_using_these_settings">Следуйте инструкциям и будьте осторожны, используя эти опции.</string>
     <string name="device_id">ID устройства</string>
     <string name="device_info">Об устройстве</string>
+    <string name="open_source_summary">Pulse - проект с открытым исходным кодом! Проверьте это на GitHub</string>
     <string name="website">Сайт</string>
     <string name="view_platforms">Доступные платформы Pulse</string>
     <string name="access_messages_from_any_device">Перейти и обмениваться сообщениями с любого устройства!</string>
@@ -486,6 +492,7 @@
     <string name="max_mms_size">Максимальный размер изображения</string>
     <string name="max_mms_size_summary">Не устанавливайте это значение выше, чем позволяет ваш оператор</string>
     <string name="use_group_mms">Использовать групповые MMS</string>
+    <string name="use_group_mms_summary">Если этот параметр отключен, групповые сообщения будут отправляться в виде отдельных SMS-сообщений каждому из получателей.</string>
     <string name="auto_save_media">Автосохранение медиафайлов</string>
     <string name="auto_save_media_summary">Автоматически сохранять содержимое MMS в папке Загрузки при получении.</string>
     <string name="apn_configuration">Настройка APN</string>
@@ -503,10 +510,69 @@
     <string name="cleanup_old_messages_summary">Это выполняется один раз в день для удаления любых сообщений, которые были старше вашего выбранного периода времени</string>
     <string name="cleanup_old_messages_now_summary">Запуск удаления любых сообщений в этом разговоре старше выбранного периода времени</string>
     <string name="delayed_sending">Отложенная отправка</string>
+    <string name="delayed_sending_summary">Это дает вам возможность отменять и редактировать сообщения перед их отправкой</string>
+    <string name="messaging_features">Сообщения</string>
+    <string name="app_features">Приложение</string>
     <string name="quick_compose">Быстрый ответ</string>
+    <string name="quick_compose_notification">Показывать уведомление</string>
+    <string name="quick_compose_notification_summary">Всегда активное уведомление, чтобы быстро написать новое сообщение</string>
+    <string name="quick_compose_favorites">Любимые контакты</string>
+    <string name="quick_compose_favorites_summary">Эти контакты будут доступны в действиях уведомления</string>
+    <string name="quick_compose_favorites_title">Выберите до 3 контактов:</string>
     <string name="secure_private_conversations">Защищённые личные диалоги</string>
     <string name="secure_private_conversations_summary">Требуется ввести PIN-код для доступа к личным диалогам.</string>
     <string name="use_internal_browser">Использовать встроенный браузер</string>
+    <string name="use_smart_replies">Предлагать умные ответы</string>
+    <string name="use_smart_replies_summary">Pulse предложит соответствующие ответы, когда они будут доступны. Они генерируются непосредственно на устройстве, а не на удаленном сервере.</string>
+    <string name="use_smart_replies_dialog">Pulse предложит соответствующие ответы, когда они будут доступны. Они генерируются непосредственно на устройстве, а не на удаленном сервере.\n\nЕсли вы не хотите использовать эту функцию, ее можно отключить в настройках.</string>
+    <string name="use_smart_reply_settings">Настройки</string>
+    <string name="handle_messages_from_unknown_numbers">Получение сообщений от неизвестных контактов</string>
+    <string name="unknown_numbers_default">Получать сообщения</string>
+    <string name="unknown_numbers_mute">Отключить уведомления для диалога</string>
+    <string name="unknown_numbers_block">Заблокировать сообщение как спам. Будьте осторожны и помните, что вы это включили!</string>
+    <string name="message_backup">Резервное копирование сообщений</string>
+    <string name="message_backup_pref_summary">Боитесь потерять ваши сообщения? Pulse сохранит их</string>
+    <string name="message_backup_summary">Знаете ли вы: онлайн-сервис Pulse позволяет сохранить ваши сообщения.
+        Когда вы регистрируете учетную запись Pulse, вы можете войти в эту учетную запись на любом устройстве или планшете,
+        чтобы восстановить все ваши сообщения, автоматически!\n\nБольше нет необходимости делать ручное резервное копирование.
+        С Pulse все удобно, просто и полностью автоматически.</string>
+    <string name="message_backup_summary_have_account">Похоже, у вас уже есть учетная запись в Pulse, отлично!
+        С вашей учетной записью Pulse автоматически создаст резервную копию всех сообщений, которые вы отправляете и получаете. Когда вы
+        используйте на приложение на других ваших устройствах, вы на самом деле просто получаете доступ к этой резервной копии. Чтобы восстановить
+        сообщения на новое устройство, все, что вам нужно сделать, это войти в свою учетную запись.</string>
+    <string name="auto_reply_configuration">Настройка автоответов</string>
+    <string name="auto_reply_configuration_summary">Настройка автоматических ответов в зависимости от ситуации</string>
+    <string name="auto_replies">Автоматические ответы</string>
+    <string name="auto_reply_top_pref_summary">Режим вождения и отпуска имеют приоритет над всеми остальными ответами. Если один из них включен, другие автоответы не будут отправляться</string>
+    <string name="driving_mode">Режим вождения</string>
+    <string name="driving_mode_summary">Автоматический ответ на все сообщения, которые вы получите</string>
+    <string name="vacation_mode">Режим отпуска</string>
+    <string name="auto_reply_text">Текст сообщения</string>
+    <string name="create_auto_reply">Создать новый автоответ</string>
+    <string name="delete_auto_reply">Удалить автоответ?</string>
+    <string name="which_auto_reply_type">Какой тип автоответа вы хотите создать?</string>
+    <string name="keyword">Ключевое слово</string>
+    <string name="response">Ответ</string>
+    <string name="contact">Контакт</string>
+    <string name="folders_title">Папки</string>
+    <string name="create">Создать</string>
+    <string name="create_folder">Создать новую папку</string>
+    <string name="create_folder_summary">Поместите диалоги в папку, чтобы упростить организацию и быструю навигацию по вашим диалогам</string>
+    <string name="no_folders">Нет папок - нажмите, чтобы создать первую папку</string>
+    <string name="folder_name">Имя папки…</string>
+    <string name="private_conversations_cannot_be_added_to_folders">Личные сообщения не могут быть добавлены в папки.</string>
+    <string name="conversation_already_in_a_folder">Уже в другой папке.</string>
+    <string name="no_folder">Нет папки</string>
+    <!-- Open Source Experiments Settings -->
+    <string name="experiments_info_section_title">О чем эта страница?</string>
+    <string name="experiments_info_open_source">Pulse - проект с открытым исходным кодом!</string>
+    <string name="experiments_info_open_source_summary">Это означает, что любой разработчик может добавить код и новые функции в приложение.</string>
+    <string name="experiments_info_disclaimer_1">Этот раздел настроек - просто место для хранения функций, которые добавлены сообществом. <b> Эти функции официально не поддерживаются приложениями Klinker. </b> Они были добавлены и будут поддерживаться сообществом.</string>
+    <string name="experiments_info_disclaimer_2">Работоспособность этих функций не гарантируется, они могут работать нестабильно или могут быть отключены. <b> Эти функции не поддерживаются. </b></string>
+    <string name="experiments_info_disclaimer_3">Тем не менее, они не были бы добавлены в приложение, если бы они не работали, не решали определенную проблему или не добавляли функциональность приложения.</string>
+    <string name="experiments_preferences_section_title">Экспериментальные настройки</string>
+    <string name="smart_reply_timeout">Отправлять автоответы с задержкой</string>
+    <string name="smart_reply_timeout_summary">Автоматические ответы будут отправлены после короткой паузы</string>
     <!-- Theming Options -->
     <string name="day_night">Стандартная (День/Ночь)</string>
     <string name="always_light">Всегда светлая</string>
@@ -520,6 +586,16 @@
     <string name="no_scheduled_messages">Запланированных сообщений нет</string>
     <string name="no_scheduled_messages_summary">Можете создать новое, нажав на кнопку Плюс!</string>
     <string name="scheduled_message_in_future">Укажите нужное время в будущем!</string>
+    <string name="scheduled_repeat_never">Не повторять</string>
+    <string name="scheduled_repeat_daily">Повторять ежедневно</string>
+    <string name="scheduled_repeat_weekly">Повторять еженедельно</string>
+    <string name="scheduled_repeat_monthly">Повторять ежемесячно</string>
+    <string name="scheduled_repeat_yearly">Повторять раз в год</string>
+    <string name="remove_scheduled_message">Вы хотите удалить запланированное сообщение?</string>
+    <string name="select_image">Выберите сообщение из телефона</string>
+    <string name="select_gif">Поиск GIF</string>
+    <string name="media_on_primary_device">Мультимедиа в запланированном сообщении можно просматривать только в приложении телефона.</string>
+
     <!-- Encryption -->
     <string name="encrypting_and_uploading">Дешифрирование и загрузка...</string>
     <string name="encrypting_and_uploading_media">Дешифрирование и сжатие медиа-данных...</string>
@@ -535,7 +611,22 @@
     <string name="contact_card">Карточка контакта</string>
     <string name="conversation_with">Диалог с %1$s</string>
     <string name="send">Отправить</string>
+    <string name="quick_share">Быстрый обмен</string>
     <!-- Passcode Entry -->
+    <string name="biometric_prompt_title">Доступ к личным сообщениям</string>
+    <string name="biometric_prompt_summary">Авторизуйтесь используя ваши биометрические данные</string>
+    <string name="biometric_prompt_failed">Биометрическая аутентификация</string>
+    <string name="passcode">Использовать пароль</string>
+    <string name="forgot_passcode">Забыли пароль?</string>
+    <string name="set_passcode">Сохранить пароль</string>
+    <string name="confirm_fingerprint">Подтвердите отпечаток для продолжения. Прикоснитесь к сканеру.</string>
+    <string name="confirm_passcode">Подтвердите пароль для продолжения.</string>
+    <string name="confirm_pulse_password">Подтвердите данные учетные данные Pulse для продолжения.</string>
+    <string name="type_passcode">Создать пароль.</string>
+    <string name="incorrect_passcode">Неверный пароль.</string>
+    <string name="verify">Проверить</string>
+    <string name="enable_passcode_disclaimer">Личные сообщения могут быть защищены паролем или отпечатком пальца, чтобы только вы имели к ним доступ. \n\nЕсли
+      вы хотите включить эту защиту, установите пароль из раздела <i> Расширенные функции </i>.</string>
     <!-- Other -->
     <string name="updating_database">Ищем последние сообщения...</string>
     <string name="dashclock_description">Информация о непрочитанных SMS/MMS</string>
@@ -554,14 +645,23 @@
     <string name="channel_settings">Настройки каналов уведомлений</string>
     <string name="channel_settings_summary">Каналы нужны, чтобы настраивать уведомления в Android 8 и выше.</string>
     <string name="restore_default_channel_settings">Восстановить стандартные настройки уведомлений</string>
+    <string name="restore_default_channel_settings_popup">Восстановлены стандартные настройки.</string>
     <string name="channels">Каналы</string>
     <string name="default_channel">Стандартный канал</string>
+    <string name="channels_global_warning">Многие глобальные настройки теперь возможны только для определенного канала.</string>
+    <string name="channels_global_warning_2">В Android Oreo приложения вынуждены проходить через <i> каналы уведомлений </i>, чтобы настроить мелодию звонка, вибрацию, светодиод и все другие параметры уведомлений. \n\n
+        Вы можете настроить эти параметры с помощью кнопки ниже и узнать больше об этом изменении в справке Pulse.</string>
+    <string name="channels_global_warning_3">В Android Oreo некоторые из перечисленных выше вариантов перенаправят вас на системные настройки <i> Каналы уведомлений </i> для настройки. Чтобы узнать больше об этих каналах, о том, как они работают и почему они должны использоваться, см. справку Pulse.</string>
     <string name="off">Не включать</string>
     <string name="on">Включать</string>
     <string name="share_promo">Привет! Мне очень понравилось переписываться через Pulse! Попробуй и ты, по это ссылке: https://play.google.com/store/apps/details?id=xyz.klinker.messenger</string>
     <string name="verifying_password">Проверяем пароль...</string>
     <!-- Rate it -->
     <string name="rate_it">Оценить!</string>
+    <string name="no_thanks">Нет, спасибо</string>
+    <string name="rate_it_title">Высокий рейнтинг имеет большое значение</string>
+    <string name="rate_it_summary"><b> Высокий рейтинг </b> очень важен для продвижения приложения! Если вы хотите, чтобы приложение <i> продолжало развиваться </i>, пожалуйста, уделите этому немного времени.</string>
+    <string name="rate_it_not_ready"><b> Не готовы оценить? </b> Нет проблем. Нажмите кнопку назад вашего телефона, и я больше не буду вас беспокоить.</string>
     <string name="love_pulse_question">Понравился Pulse?</string>
     <string name="give_a_rating">Оцените приложение или поделитесь им с вашими друзьями!\n\nВаша оценка на 5 звезд согреет моё сердце :)</string>
     <!-- Times -->
@@ -582,15 +682,19 @@
     <string name="no_subscription_found">Подписка не обнаружена!</string>
     <string name="cancelled_subscription_error">Похоже, вы отменили подписку. Если не обновить её в ближайшее время, то приложение отключит вас в течении 2 дней. Если это ошибка, то, пожалуйста, свяжитесь с нами с помощью email.</string>
     <string name="subscription_found">Подписка найдена - с возвращением!</string>
+    <string name="trial_finished">Похоже, вы уже использовали бесплатную пробную версию.</string>
     <string name="subscription_not_found">Подписка не найдена, давайте включим пробный период!</string>
     <string name="checking_for_active_subscriptions">Проверка подписки&#8230;</string>
     <string name="purchase_error_cancelled">Вы отменили покупку :(</string>
+    <string name="purchase_cancelled_trial_finished">Срок действия пробной версии истек, и покупка была отменена. Ваша учетная запись будет удалена. \n\n Вы можете снова её настроить,
+        если вы захотите работать с нескольких устройств!</string>
     <string name="purchase_error_bad_google_play">Ой-ой, похожу возникли проблемы с Google Play.</string>
     <string name="purchase_error_bad_sku">Хмм&#8230; Данная покупка не соответствует ни одной в наших записях.</string>
     <string name="subscriptions">Подписка включается после 7 дней пробного периода и может быть изменена или отменена в любое время</string>
     <string name="billed_immediately">Оплата происходит сразу.</string>
     <string name="lifetime_purchase">$10.99 - Пожизненная лицензия</string>
     <string name="lifetime_purchase_summary">Один платёж - пользуешься всегда!</string>
+    <string name="subscription_purchase_description">Низкая цена!</string>
     <string name="yearly_purchase">$5.99 - ежегодно</string>
     <string name="yearly_purchase_summary">Лучшее предложение.</string>
     <string name="three_month_purchase">$1.99 каждые три месяца</string>
