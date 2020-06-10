@@ -37,10 +37,10 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
 
-    implementation "com.google.android.material:material:${versions.androidX}"
+    implementation "com.google.android.material:material:1.1.0"
     implementation "androidx.exifinterface:exifinterface:${versions.androidXExif}"
 
-    implementation "com.google.firebase:firebase-core:${versions.firebaseCore}"
+    implementation "com.google.firebase:firebase-analytics:${versions.firebaseAnalytics}"
     implementation "com.google.firebase:firebase-storage:${versions.firebaseStorage}"
     implementation "com.google.firebase:firebase-auth:${versions.firebaseAuth}"
     api "com.google.firebase:firebase-messaging:${versions.firebaseMessaging}"
