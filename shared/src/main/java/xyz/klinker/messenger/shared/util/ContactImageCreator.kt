@@ -32,7 +32,7 @@ object ContactImageCreator {
             backgroundColor = Settings.mainColorSet.color
         }
 
-        if (title.isEmpty() || title.contains(", ")) {
+        if (title.isEmpty()) {
             val color = Bitmap.createBitmap(DensityUtil.toDp(context, 48), DensityUtil.toDp(context, 48), Bitmap.Config.ARGB_8888)
             color.eraseColor(backgroundColor)
             return ImageUtils.clipToCircle(color)
@@ -51,23 +51,33 @@ object ContactImageCreator {
         val canvas = Canvas(image)
         canvas.drawColor(backgroundColor)
 
-        val textPaint = Paint()
-        textPaint.style = Paint.Style.FILL
-        textPaint.color = if (backgroundColor.isDarkColor())
-            context.resources.getColor(android.R.color.white)
-        else
-            context.resources.getColor(R.color.lightToolbarTextColor)
-        textPaint.textAlign = Paint.Align.CENTER
-        textPaint.isAntiAlias = true
-        textPaint.textSize = (size / 2).toInt().toFloat()
+        if (title.contains(",")) {
+            try {
+                val edge = size / 4
+                val drawable = context.resources.getDrawable(R.drawable.ic_group)
+                drawable.setBounds(edge, edge, size - edge, size - edge)
+                drawable.draw(canvas)
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        } else {
+            val textPaint = Paint()
+            textPaint.style = Paint.Style.FILL
+            textPaint.color = if (backgroundColor.isDarkColor())
+                context.resources.getColor(android.R.color.white)
+            else
+                context.resources.getColor(R.color.lightToolbarTextColor)
+            textPaint.textAlign = Paint.Align.CENTER
+            textPaint.isAntiAlias = true
+            textPaint.textSize = (size / 2).toInt().toFloat()
 
-        try {
-            canvas.drawText(title.substring(0, 1).toUpperCase(), (canvas.width / 2).toFloat(),
-                    (canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2).toInt().toFloat(),
-                    textPaint)
-
-        } catch (e: Throwable) {
-            e.printStackTrace()
+            try {
+                canvas.drawText(title.substring(0, 1).toUpperCase(), (canvas.width / 2).toFloat(),
+                        (canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2).toInt().toFloat(),
+                        textPaint)
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
         }
 
         return ImageUtils.clipToCircle(image)

@@ -378,7 +378,6 @@ class NotificationConversationProvider(private val service: Context, private val
     }
 
     private fun NotificationCompat.Builder.addPerson(conversation: NotificationConversation): NotificationCompat.Builder {
-        // TODO: use a "person" object here, so that bubbles work?
         if (!conversation.groupConversation) {
             this.addPerson("tel:" + conversation.phoneNumbers!!)
         } else {
