@@ -57,7 +57,7 @@ class NotificationConversationProvider(private val service: Context, private val
                 .applyLightsSoundAndVibrate(conversation)
                 .addPerson(conversation)
                 .applyStyle(conversation)
-                .bubble(conversation)
+                .bubble(service, conversation)
 
         val remoteInputBuilder = RemoteInput.Builder(ReplyService.EXTRA_REPLY)
                 .setLabel(service.getString(R.string.reply_to, conversation.title))
@@ -390,12 +390,18 @@ class NotificationConversationProvider(private val service: Context, private val
         return this
     }
 
-    private fun NotificationCompat.Builder.bubble(conversation: NotificationConversation): NotificationCompat.Builder {
+    private fun NotificationCompat.Builder.bubble(context: Context, conversation: NotificationConversation): NotificationCompat.Builder {
         if (!AndroidVersionUtil.isAndroidQ) {
             return this
         }
 
-        val icon = IconCompat.createWithAdaptiveBitmap(buildContactImage(conversation))
+        val bitmap = buildContactImage(conversation)
+        val icon = if (bitmap != null) {
+            IconCompat.createWithAdaptiveBitmap(buildContactImage(conversation))
+        } else {
+            val letterImage = ContactImageCreator.getLetterPicture(context, conversation)
+            IconCompat.createWithAdaptiveBitmap(letterImage)
+        }
         val uri = Uri.parse("https://messenger.klinkerapps.com/" + conversation.id)
         val intent = PendingIntent.getActivity(
                 service,

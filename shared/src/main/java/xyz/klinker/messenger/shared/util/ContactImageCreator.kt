@@ -10,6 +10,7 @@ import android.graphics.Paint
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Conversation
+import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 
 object ContactImageCreator {
 
@@ -18,12 +19,20 @@ object ContactImageCreator {
             return null
         }
 
-        var backgroundColor = conversation.colors.color
+        return getLetterPicture(context, conversation.title!!, conversation.colors.color)
+    }
+
+    fun getLetterPicture(context: Context, notificationConversation: NotificationConversation): Bitmap? {
+        return getLetterPicture(context, notificationConversation.title!!, notificationConversation.color)
+    }
+
+    private fun getLetterPicture(context: Context, title: String, conversationColor: Int): Bitmap? {
+        var backgroundColor = conversationColor
         if (Settings.useGlobalThemeColor) {
             backgroundColor = Settings.mainColorSet.color
         }
 
-        if (conversation.title!!.isEmpty() || conversation.title!!.contains(", ")) {
+        if (title.isEmpty() || title.contains(", ")) {
             val color = Bitmap.createBitmap(DensityUtil.toDp(context, 48), DensityUtil.toDp(context, 48), Bitmap.Config.ARGB_8888)
             color.eraseColor(backgroundColor)
             return ImageUtils.clipToCircle(color)
@@ -53,7 +62,7 @@ object ContactImageCreator {
         textPaint.textSize = (size / 2).toInt().toFloat()
 
         try {
-            canvas.drawText(conversation.title!!.substring(0, 1).toUpperCase(), (canvas.width / 2).toFloat(),
+            canvas.drawText(title.substring(0, 1).toUpperCase(), (canvas.width / 2).toFloat(),
                     (canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2).toInt().toFloat(),
                     textPaint)
 
