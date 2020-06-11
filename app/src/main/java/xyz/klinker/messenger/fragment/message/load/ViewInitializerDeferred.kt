@@ -41,7 +41,7 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
                 if (activity is BubbleActivity) {
                     return
                 }
-                
+
                 fragment.dismissKeyboard()
                 activity?.onBackPressed()
             }

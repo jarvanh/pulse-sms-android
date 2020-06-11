@@ -1,5 +1,1 @@
-In the notification section of settings, there is a new preference: hide message content.<br/><br/>
-
-When enabled, the content of the new message will not be displayed within the notification - only the conversation title. This preference is for those people that want a bit more privacy out of their notifications!<br/><br/>
-
-To hide the conversation title along with the message content, you can make the conversation private, as has always been available.
+Android 11 is out in beta! That means that it is time to start including some of the features. With this release, Pulse will allow devices on Android 11 to use the new "bubble" notification system.
