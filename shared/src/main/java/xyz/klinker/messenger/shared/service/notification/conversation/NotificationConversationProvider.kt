@@ -17,6 +17,7 @@ import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.graphics.drawable.IconCompat
 import android.text.Html
+import androidx.core.content.LocusIdCompat
 import com.google.firebase.ml.naturallanguage.smartreply.SmartReplySuggestion
 import xyz.klinker.messenger.shared.R
 import xyz.klinker.messenger.shared.data.DataSource
@@ -48,14 +49,15 @@ class NotificationConversationProvider(private val service: Context, private val
                 .setDefaults(buildNotificationDefaults(conversation))
                 .applyLightsSoundAndVibrate(conversation)
                 .addPerson(conversation)
-//                .bubble(conversation)
 
         val builder = prepareBuilder(conversation)
                 .setDefaults(buildNotificationDefaults(conversation))
                 .setLargeIcon(buildContactImage(conversation))
                 .setPublicVersion(publicVersion.build())
                 .applyLightsSoundAndVibrate(conversation)
+                .addPerson(conversation)
                 .applyStyle(conversation)
+                .bubble(conversation)
 
         val remoteInputBuilder = RemoteInput.Builder(ReplyService.EXTRA_REPLY)
                 .setLabel(service.getString(R.string.reply_to, conversation.title))
@@ -404,11 +406,14 @@ class NotificationConversationProvider(private val service: Context, private val
                 PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-//        this.bubbleMetadata = NotificationCompat.BubbleMetadata.Builder()
-//                .setDesiredHeight(DensityUtil.toDp(service, 400))
-//                .setIcon(icon)
-//                .setIntent(intent)
-//                .build()
+        this.setShortcutId(conversation.id.toString())
+        this.setLocusId(LocusIdCompat(conversation.id.toString()))
+
+        this.bubbleMetadata = NotificationCompat.BubbleMetadata.Builder()
+                .setDesiredHeight(DensityUtil.toDp(service, 400))
+                .setIcon(icon)
+                .setIntent(intent)
+                .build()
 
         return this
     }

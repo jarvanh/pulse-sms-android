@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.FragmentActivity
+import xyz.klinker.messenger.activity.BubbleActivity
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.api.implementation.ApiUtils
 import xyz.klinker.messenger.shared.util.NotificationUtils
@@ -20,6 +21,10 @@ class MessageListNotificationManager(private val fragment: MessageListFragment) 
     var dismissOnStartup = false
 
     fun dismissNotification() {
+        if (fragment.activity is BubbleActivity) {
+            return
+        }
+
         try {
             if (dismissNotification && notificationActive()) {
                 NotificationManagerCompat.from(activity!!)
@@ -38,6 +43,10 @@ class MessageListNotificationManager(private val fragment: MessageListFragment) 
     }
 
     fun dismissOnMessageSent() {
+        if (fragment.activity is BubbleActivity) {
+            return
+        }
+
         if (notificationActive()) {
             NotificationManagerCompat.from(activity!!).cancel(argManager.conversationId.toInt())
             NotificationUtils.cancelGroupedNotificationWithNoContent(activity)
