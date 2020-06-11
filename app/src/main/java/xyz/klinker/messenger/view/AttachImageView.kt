@@ -47,7 +47,7 @@ class AttachImageView(context: Context, private val callback: ImageSelectedListe
         val handler = Handler()
 
         Thread {
-            val select = arrayOf(BaseColumns._ID, Images.ImageColumns.DATA, Images.ImageColumns.MIME_TYPE)
+            val select = arrayOf(Images.Media._ID, Images.Media.MIME_TYPE)
             val cr = context.contentResolver
             
             images = try {

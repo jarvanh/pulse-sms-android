@@ -16,6 +16,7 @@
 
 package xyz.klinker.messenger.adapter
 
+import android.content.ContentUris
 import android.database.Cursor
 import android.graphics.Color
 import android.net.Uri
@@ -66,8 +67,10 @@ class AttachImageListAdapter(private val images: Cursor, private val callback: I
         } else {
             try {
                 images.moveToPosition(position - 1)
-                val file = File(images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.DATA)))
-                val uri = Uri.fromFile(file)
+                val uri = ContentUris.withAppendedId(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        images.getLong(images.getColumnIndex(MediaStore.Images.Media._ID))
+                )
 
                 holder.image.setOnClickListener {
                     if (holder.uri != null) {
@@ -81,7 +84,7 @@ class AttachImageListAdapter(private val images: Cursor, private val callback: I
                     }
                 }
 
-                holder.mimeType = images.getString(images.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE))
+                holder.mimeType = images.getString(images.getColumnIndex(MediaStore.Images.Media.MIME_TYPE))
                 holder.uri = uri
                 holder.image.setBackgroundColor(Color.TRANSPARENT)
 
