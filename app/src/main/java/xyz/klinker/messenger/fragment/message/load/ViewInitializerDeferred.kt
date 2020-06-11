@@ -38,6 +38,10 @@ class ViewInitializerDeferred(private val fragment: MessageListFragment) {
         dragDismissFrameLayout.addListener(object : ElasticDragDismissFrameLayout.ElasticDragDismissCallback() {
             override fun onDrag(elasticOffset: Float, elasticOffsetPixels: Float, rawOffset: Float, rawOffsetPixels: Float) {}
             override fun onDragDismissed() {
+                if (activity is BubbleActivity) {
+                    return
+                }
+                
                 fragment.dismissKeyboard()
                 activity?.onBackPressed()
             }
