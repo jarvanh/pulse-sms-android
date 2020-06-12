@@ -1523,6 +1523,15 @@ object ApiUtils {
     }
 
     /**
+     * Update the blacklist phrase regex setting. This defines if blacklist phrases are treated as a Regex.
+     */
+    fun updateBlacklistPhraseRegex(accountId: String?, useBlacklistPhraseRegex: Boolean) {
+        if (accountId != null) {
+            updateSetting(accountId, "blacklist_phrase_regex", "boolean", useBlacklistPhraseRegex)
+        }
+    }
+
+    /**
      * Dismiss a notification across all devices.
      */
     private fun updateSetting(accountId: String?, pref: String?, type: String?, value: Any?) {

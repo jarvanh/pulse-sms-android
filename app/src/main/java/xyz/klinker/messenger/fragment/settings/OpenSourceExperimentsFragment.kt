@@ -59,6 +59,15 @@ class OpenSourceExperimentsFragment : MaterialPreferenceFragment() {
         }
     }
 
+    private fun initBlacklistPhraseRegex() {
+        val preference = findPreference(getString(R.string.pref_blacklist_phrase_regex))
+        preference.setOnPreferenceChangeListener { _, o ->
+            val useBlacklistPhraseRegex = o as Boolean;
+            ApiUtils.updateBlacklistPhraseRegex(Account.accountId, useBlacklistPhraseRegex)
+            true
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         Settings.forceUpdate(activity)

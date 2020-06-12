@@ -47,6 +47,12 @@
             android:summary="@string/smart_reply_timeout_summary"
             android:defaultValue="true" />
 
+        <SwitchPreference
+            android:key="@string/pref_blacklist_phrase_regex"
+            android:title="@string/blacklist_phrase_regex"
+            android:summary="@string/blacklist_phrase_regex_summary"
+            android:defaultValue="false" />
+
     </xyz.klinker.messenger.shared.view.MaterialPreferenceCategory>
 
 </PreferenceScreen>

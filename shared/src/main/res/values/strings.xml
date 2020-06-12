@@ -617,6 +617,8 @@
     <string name="experiments_preferences_section_title">Experimental Settings</string>
     <string name="smart_reply_timeout">Send Smart Replies After Delay</string>
     <string name="smart_reply_timeout_summary">Smart replies will automatically send after a short delay</string>
+    <string name="blacklist_phrase_regex">Treat Blacklist Phrases as Regexes</string>
+    <string name="blacklist_phrase_regex_summary">Blacklist phrases will be treated as regular expressions.</string>
 
     <!-- Theme Options -->
     <string name="day_night">Default (Day/Night)</string>

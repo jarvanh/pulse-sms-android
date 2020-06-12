@@ -84,6 +84,7 @@ object Settings {
     var timestampEveryMessage = false
     lateinit var notificationActions: List<NotificationAction>
     var unknownNumbersReception = UnknownNumbersReception.DEFAULT
+    var blacklistPhraseRegex = false
 
     // configuration
     var smallFont: Int = 0
@@ -171,6 +172,7 @@ object Settings {
         this.applyPrimaryColorToToolbar = sharedPrefs.getBoolean(context.getString(R.string.pref_apply_primary_color_toolbar), true)
         this.showConversationCategories = sharedPrefs.getBoolean(context.getString(R.string.pref_conversation_categories), true)
         this.timestampEveryMessage = sharedPrefs.getBoolean(context.getString(R.string.pref_message_timestamp), false)
+        this.blacklistPhraseRegex = sharedPrefs.getBoolean(context.getString(R.string.pref_blacklist_phrase_regex), false)
 
         val leftToRightSwipeRep = sharedPrefs.getString(context.getString(R.string.pref_left_to_right_swipe), SwipeOption.ARCHIVE.rep)
         val rightToLeftSwipeRep = sharedPrefs.getString(context.getString(R.string.pref_right_to_left_swipe), SwipeOption.ARCHIVE.rep)

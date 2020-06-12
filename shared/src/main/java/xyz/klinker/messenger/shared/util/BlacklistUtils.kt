@@ -23,6 +23,7 @@ import xyz.klinker.messenger.shared.data.DataSource
 import xyz.klinker.messenger.shared.data.Settings
 import xyz.klinker.messenger.shared.data.model.Blacklist
 import xyz.klinker.messenger.shared.data.pojo.UnknownNumbersReception
+import java.util.regex.PatternSyntaxException
 
 /**
  * Helper for checking whether or not a contact is blacklisted.
@@ -46,7 +47,10 @@ object BlacklistUtils {
                 }
 
                 val blacklistedPhrase = cursor.getString(phraseIndex)
-                if (!blacklistedPhrase.isNullOrBlank() && incomingText?.toLowerCase()?.contains(blacklistedPhrase.toLowerCase()) == true) {
+
+                var isBlacklisted = !blacklistedPhrase.isNullOrBlank() && if(Settings.blacklistPhraseRegex) textMatchesBlacklistRegex(blacklistedPhrase, incomingText) else textMatchesBlacklistPhrase(blacklistedPhrase, incomingText);
+
+                if (isBlacklisted) {
                     Log.v("Blacklist", "$incomingText matched phrase blacklist: $incomingText")
                     CursorUtil.closeSilent(cursor)
                     return true
@@ -56,6 +60,25 @@ object BlacklistUtils {
 
         cursor.closeSilent()
         return isBlockedAsUnknownNumber(context, incomingNumber)
+    }
+
+    private fun textMatchesBlacklistPhrase(blacklistedPhrase : String, incomingText: String?) : Boolean {
+        return incomingText?.toLowerCase()?.contains(blacklistedPhrase.toLowerCase()) == true;
+    }
+
+    private fun textMatchesBlacklistRegex(blacklistedPhrase : String, incomingText: String?) : Boolean {
+        if (incomingText == null) {
+            return false;
+        }
+
+        return try {
+            Regex(blacklistedPhrase, setOf(RegexOption.MULTILINE, RegexOption.IGNORE_CASE)).containsMatchIn(incomingText);
+        }
+        catch(e : PatternSyntaxException) {
+            // Return false if they put in an invalid regex
+            false;
+        }
+
     }
 
     fun isMutedAsUnknownNumber(context: Context, number: String): Boolean {
