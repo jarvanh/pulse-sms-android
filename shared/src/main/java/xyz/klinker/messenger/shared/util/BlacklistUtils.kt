@@ -47,9 +47,10 @@ object BlacklistUtils {
                 }
 
                 val blacklistedPhrase = cursor.getString(phraseIndex)
-
-                var isBlacklisted = !blacklistedPhrase.isNullOrBlank() && if(Settings.blacklistPhraseRegex) textMatchesBlacklistRegex(blacklistedPhrase, incomingText) else textMatchesBlacklistPhrase(blacklistedPhrase, incomingText);
-
+                val isBlacklisted = !blacklistedPhrase.isNullOrBlank() &&
+                        if (Settings.blacklistPhraseRegex) textMatchesBlacklistRegex(blacklistedPhrase, incomingText)
+                        else textMatchesBlacklistPhrase(blacklistedPhrase, incomingText)
+                
                 if (isBlacklisted) {
                     Log.v("Blacklist", "$incomingText matched phrase blacklist: $incomingText")
                     CursorUtil.closeSilent(cursor)
@@ -62,19 +63,18 @@ object BlacklistUtils {
         return isBlockedAsUnknownNumber(context, incomingNumber)
     }
 
-    private fun textMatchesBlacklistPhrase(blacklistedPhrase : String, incomingText: String?) : Boolean {
+    private fun textMatchesBlacklistPhrase(blacklistedPhrase: String, incomingText: String?): Boolean {
         return incomingText?.toLowerCase()?.contains(blacklistedPhrase.toLowerCase()) == true;
     }
 
-    private fun textMatchesBlacklistRegex(blacklistedPhrase : String, incomingText: String?) : Boolean {
+    private fun textMatchesBlacklistRegex(blacklistedPhrase: String, incomingText: String?): Boolean {
         if (incomingText == null) {
             return false;
         }
 
         return try {
             Regex(blacklistedPhrase, setOf(RegexOption.MULTILINE, RegexOption.IGNORE_CASE)).containsMatchIn(incomingText);
-        }
-        catch(e : PatternSyntaxException) {
+        } catch (e: PatternSyntaxException) {
             // Return false if they put in an invalid regex
             false;
         }
