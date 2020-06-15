@@ -86,7 +86,7 @@ class ScheduledMessageJob : BroadcastReceiver() {
                         val pendingOpen = PendingIntent.getActivity(context, 0, open,
                                 PendingIntent.FLAG_UPDATE_CURRENT)
 
-                        val notification = NotificationCompat.Builder(context, NotificationUtils.DEFAULT_CONVERSATION_CHANNEL_ID)
+                        val notification = NotificationCompat.Builder(context, NotificationUtils.SCHEDULED_MESSAGES_CHANNEL_ID)
                                 .setSmallIcon(R.drawable.ic_stat_notify)
                                 .setContentTitle(context.getString(R.string.scheduled_message_sent))
                                 .setContentText(Html.fromHtml(body))

@@ -23,6 +23,7 @@ object NotificationUtils {
     const val QUICK_TEXT_CHANNEL_ID = "quick-text"
     const val SILENT_BACKGROUND_CHANNEL_ID = "silent-background-services"
     const val ACCOUNT_ACTIVITY_CHANNEL_ID = "account-activity-channel"
+    const val SCHEDULED_MESSAGES_CHANNEL_ID = "scheduled-messages-channel"
 
     fun cancelGroupedNotificationWithNoContent(context: Context?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context != null) {
@@ -157,6 +158,21 @@ object NotificationUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
+    private fun createScheduledMessagesSentChannel(context: Context) {
+        if (!AndroidVersionUtil.isAndroidO) {
+            return
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val silentBackground = NotificationChannel(SCHEDULED_MESSAGES_CHANNEL_ID,
+                context.getString(R.string.scheduled_message_sent), NotificationManager.IMPORTANCE_MIN)
+        silentBackground.setShowBadge(false)
+        silentBackground.enableLights(false)
+        silentBackground.enableVibration(false)
+        manager.createNotificationChannel(silentBackground)
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
     fun createNotificationChannels(context: Context) {
         if (!AndroidVersionUtil.isAndroidO) {
             return
@@ -177,6 +193,7 @@ object NotificationUtils {
         createSilentBackgroundChannel(context)
         createAccountActivityChannel(context)
         createBubbleChannel(context)
+        createScheduledMessagesSentChannel(context)
     }
 
     @TargetApi(Build.VERSION_CODES.O)
