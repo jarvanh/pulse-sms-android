@@ -390,7 +390,7 @@ class NotificationConversationProvider(private val service: Context, private val
     }
 
     private fun NotificationCompat.Builder.bubble(context: Context, conversation: NotificationConversation): NotificationCompat.Builder {
-        if (!AndroidVersionUtil.isAndroidQ) {
+        if (!AndroidVersionUtil.isAndroidR) {
             return this
         }
 
@@ -398,7 +398,7 @@ class NotificationConversationProvider(private val service: Context, private val
         val icon = if (bitmap != null) {
             IconCompat.createWithAdaptiveBitmap(buildContactImage(conversation))
         } else {
-            val letterImage = ContactImageCreator.getLetterPicture(context, conversation)
+            val letterImage = ContactImageCreator.getLetterPicture(context, conversation) ?: return this
             IconCompat.createWithAdaptiveBitmap(letterImage)
         }
         val uri = Uri.parse("https://messenger.klinkerapps.com/" + conversation.id)

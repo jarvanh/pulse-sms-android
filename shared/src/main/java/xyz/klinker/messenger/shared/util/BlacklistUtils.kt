@@ -50,7 +50,7 @@ object BlacklistUtils {
                 val isBlacklisted = !blacklistedPhrase.isNullOrBlank() &&
                         if (Settings.blacklistPhraseRegex) textMatchesBlacklistRegex(blacklistedPhrase, incomingText)
                         else textMatchesBlacklistPhrase(blacklistedPhrase, incomingText)
-                
+
                 if (isBlacklisted) {
                     Log.v("Blacklist", "$incomingText matched phrase blacklist: $incomingText")
                     CursorUtil.closeSilent(cursor)
