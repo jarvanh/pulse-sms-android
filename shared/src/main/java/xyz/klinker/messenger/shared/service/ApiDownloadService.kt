@@ -146,17 +146,18 @@ class ApiDownloadService : Service() {
                 downloaded += messageList.size
 
                 messageList.clear()
+
+                Log.v(TAG, "$downloaded messages downloaded. $pageNumber pages so far.")
+                pageNumber++
             } else {
                 nullCount++
+                Log.v(TAG, "message download failed. Retrying in 5 seconds")
 
                 try {
                     Thread.sleep(5000)
                 } catch (e: InterruptedException) {
                 }
             }
-
-            Log.v(TAG, "$downloaded messages downloaded. $pageNumber pages so far.")
-            pageNumber++
         } while (downloaded % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && nullCount < 10)
 
         if (downloaded > 0) {
