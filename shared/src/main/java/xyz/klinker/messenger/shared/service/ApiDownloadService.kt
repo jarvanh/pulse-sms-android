@@ -515,7 +515,7 @@ class ApiDownloadService : Service() {
         private const val MESSAGE_DOWNLOAD_ID = 7237
         const val ACTION_DOWNLOAD_FINISHED = "xyz.klinker.messenger.API_DOWNLOAD_FINISHED"
 
-        const val MESSAGE_DOWNLOAD_PAGE_SIZE = 1000
+        const val MESSAGE_DOWNLOAD_PAGE_SIZE = 5000
         const val CONVERSATION_DOWNLOAD_PAGE_SIZE = 500
         const val CONTACTS_DOWNLOAD_PAGE_SIZE = 1000
         const val MAX_MEDIA_DOWNLOADS = 400
