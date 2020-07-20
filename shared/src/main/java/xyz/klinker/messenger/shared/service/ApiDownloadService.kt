@@ -150,14 +150,14 @@ class ApiDownloadService : Service() {
                 nullCount++
 
                 try {
-                    Thread.sleep(2000)
+                    Thread.sleep(5000)
                 } catch (e: InterruptedException) {
                 }
             }
 
-            Log.v(TAG, downloaded.toString() + " messages downloaded. " + pageNumber + " pages so far.")
+            Log.v(TAG, "$downloaded messages downloaded. $pageNumber pages so far.")
             pageNumber++
-        } while (downloaded % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && nullCount < 5)
+        } while (downloaded % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && nullCount < 10)
 
         if (downloaded > 0) {
             Log.v(TAG, downloaded.toString() + " messages inserted in " + (TimeUtils.now - startTime) + " ms with " + pageNumber + " pages")
