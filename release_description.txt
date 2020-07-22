@@ -1,1 +1,1 @@
-Android 11 is out in beta! That means that it is time to start including some of the features. With this release, Pulse will allow devices on Android 11 to use the new "bubble" notification system.
+This update just contains normal bug fixes and minor improvements.

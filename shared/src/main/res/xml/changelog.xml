@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="5.4.1"
+        description="July 22nd, 2020">
+        <text>This update contains bug fixes</text>
+    </version>
+
+    <version
         name="5.4.0"
         description="June 11th, 2020">
         <text>Android 11: Support for bubble notifications. You will have to enable them for Pulse, through your system settings.</text>
