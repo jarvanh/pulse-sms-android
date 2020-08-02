@@ -46,10 +46,10 @@ buildscript {
             'androidXTester'    : '1.1.0',
             'androidXEspresso'  : '3.1.0',
 
-            'firebaseAnalytics' : '17.4.3',
+            'firebaseAnalytics' : '17.4.4',
             'firebaseMessaging' : '20.2.0',
             'firebaseStorage'   : '19.1.1',
-            'firebaseAuth'      : '19.3.1',
+            'firebaseAuth'      : '19.3.2',
 
             'mockito'           : '2.18.3',
             'robolectric'       : '4.2',
