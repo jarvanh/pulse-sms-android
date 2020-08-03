@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="5.4.2"
+        description="August 3rd, 2020">
+        <text>UI improvements</text>
+    </version>
+
+    <version
         name="5.4.1"
         description="July 22nd, 2020">
         <text>This update contains bug fixes</text>
