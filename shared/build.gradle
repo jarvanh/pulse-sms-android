@@ -80,6 +80,7 @@ dependencies {
     api 'com.l4digital.fastscroll:fastscroll:2.0.1'
     api 'com.miguelcatalan:materialsearchview:1.4.0'
     api 'com.pes.materialcolorpicker:library:1.2.5'
+    implementation 'com.sensortower.usage:rating-prompt-lib:1.1.1'
 
     api 'com.raycoarana.codeinputview:codeinputview:1.2.5'
 
