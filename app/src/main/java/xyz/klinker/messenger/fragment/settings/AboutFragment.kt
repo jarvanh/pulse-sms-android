@@ -49,7 +49,7 @@ class AboutFragment : MaterialPreferenceFragmentCompat() {
     val versionName: String?
         get() = try {
             fragmentActivity?.packageManager
-                    ?.getPackageInfo(fragmentActivity?.packageName, 0)
+                    ?.getPackageInfo(fragmentActivity!!.packageName, 0)
                     ?.versionName
         } catch (e: Exception) {
             null

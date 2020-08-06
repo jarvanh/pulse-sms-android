@@ -58,7 +58,7 @@ class ShareIntentHandler(private val page: QuickSharePage) {
         val data = mutableListOf<ShareData>()
 
         if (intent.type == MimeType.TEXT_PLAIN && intent.getStringExtra(Intent.EXTRA_TEXT) != null) {
-            data.add(ShareData(MimeType.TEXT_PLAIN, intent.getStringExtra(Intent.EXTRA_TEXT)))
+            data.add(ShareData(MimeType.TEXT_PLAIN, intent.getStringExtra(Intent.EXTRA_TEXT)!!))
         } else if (intent.clipData != null) {
             var text = ""
             for (i in 0 until intent.clipData!!.itemCount) {

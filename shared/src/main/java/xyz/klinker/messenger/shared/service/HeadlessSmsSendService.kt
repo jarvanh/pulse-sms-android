@@ -69,7 +69,7 @@ class HeadlessSmsSendService : Service() {
 
     private fun getText(intent: Intent): String {
         val text = intent.getCharSequenceExtra(Intent.EXTRA_TEXT)
-        return text?.toString() ?: intent.getStringExtra(Intent.EXTRA_TEXT)
+        return text?.toString() ?: intent.getStringExtra(Intent.EXTRA_TEXT)!!
     }
 
 }

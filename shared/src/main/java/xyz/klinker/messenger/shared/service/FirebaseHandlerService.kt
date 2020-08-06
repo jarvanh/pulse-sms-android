@@ -61,7 +61,9 @@ class FirebaseHandlerService : IntentService("FirebaseHandlerService") {
             val operation = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_OPERATION)
             val data = intent.getStringExtra(MessengerFirebaseMessagingService.EXTRA_DATA)
 
-            process(this, operation, data)
+            if (operation != null && data != null) {
+                process(this, operation, data)
+            }
         }
     }
 

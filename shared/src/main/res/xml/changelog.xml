@@ -17,6 +17,12 @@
 <changelog>
 
     <version
+        name="5.4.3"
+        description="August --, 2020">
+        <text>Upgrade target SDK to Android 11</text>
+    </version>
+
+    <version
         name="5.4.2"
         description="August 3rd, 2020">
         <text>UI improvements</text>

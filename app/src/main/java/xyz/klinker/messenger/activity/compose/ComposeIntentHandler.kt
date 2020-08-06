@@ -36,9 +36,9 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
     }
 
     private fun changeGroupMessageParticipants(intent: Intent) {
-        val phoneNumbers = intent.getStringExtra(ComposeConstants.EXTRA_EDIT_RECIPIENTS_NUMBERS)
-        val title = intent.getStringExtra(ComposeConstants.EXTRA_EDIT_RECIPIENTS_TITLE)
-        Handler().post({ activity.contactsProvider.onClicked(title, phoneNumbers, null) })
+        val phoneNumbers = intent.getStringExtra(ComposeConstants.EXTRA_EDIT_RECIPIENTS_NUMBERS)!!
+        val title = intent.getStringExtra(ComposeConstants.EXTRA_EDIT_RECIPIENTS_TITLE)!!
+        Handler().post { activity.contactsProvider.onClicked(title, phoneNumbers, null) }
     }
 
     private fun shareDirectlyToSms(intent: Intent) {
@@ -124,7 +124,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
         val data = mutableListOf<ShareData>()
 
         if (intent.type == MimeType.TEXT_PLAIN) {
-            data.add(ShareData(MimeType.TEXT_PLAIN, intent.getStringExtra(Intent.EXTRA_TEXT)))
+            data.add(ShareData(MimeType.TEXT_PLAIN, intent.getStringExtra(Intent.EXTRA_TEXT)!!))
         } else if (MimeType.isVcard(intent.type!!)) {
             shareVCard(intent)
             return
@@ -159,7 +159,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
             activity.shareHandler.directShare(data)
         } else if (intent.extras != null && intent.extras!!.containsKey(Intent.EXTRA_PHONE_NUMBER)) {
             val number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
-            activity.shareHandler.apply(data, number)
+            activity.shareHandler.apply(data, number!!)
         } else {
             activity.sender.resetViews(data)
         }
@@ -168,7 +168,7 @@ class ComposeIntentHandler(private val activity: ComposeActivity) {
     private fun shareMultipleImages(intent: Intent) {
         val images = mutableListOf<ShareData>()
 
-        val parcelables = intent.getParcelableArrayListExtra<Parcelable>(Intent.EXTRA_STREAM)
+        val parcelables = intent.getParcelableArrayListExtra<Parcelable>(Intent.EXTRA_STREAM)!!
         images.addAll(parcelables.map {
             val tempData = it.toString()
             try {

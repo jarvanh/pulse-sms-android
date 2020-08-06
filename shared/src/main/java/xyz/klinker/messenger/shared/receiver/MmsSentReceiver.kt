@@ -44,37 +44,7 @@ class MmsSentReceiver : com.klinker.android.send_message.MmsSentReceiver() {
             return
         }
 
-//        handle(context, intent)
         SmsSentReceiver.markLatestAsRead(context)
-    }
-
-    private fun handle(context: Context, intent: Intent) {
-        val uri = Uri.parse(intent.getStringExtra(com.klinker.android.send_message.MmsSentReceiver.EXTRA_CONTENT_URI).replace("/outbox", ""))
-        val message = SmsMmsUtils.getMmsMessage(context, uri, null)
-
-        if (message != null && message.moveToFirst()) {
-            val mmsParts = SmsMmsUtils.processMessage(message, -1, context)
-            message.closeSilent()
-
-            for (values in mmsParts) {
-                val messages = DataSource.searchMessages(context, values.getAsLong(Message.COLUMN_TIMESTAMP)!!)
-                if (messages.moveToFirst()) {
-                    do {
-                        val m = Message()
-                        m.fillFromCursor(messages)
-
-                        if (m.type == Message.TYPE_SENDING) {
-                            DataSource.updateMessageType(context, m.id, Message.TYPE_SENT)
-                            MessageListUpdatedReceiver.sendBroadcast(context, m.conversationId)
-                        }
-                    } while (messages.moveToNext())
-                }
-
-                message.closeSilent()
-            }
-        }
-
-        message?.closeSilent()
     }
 
 }
