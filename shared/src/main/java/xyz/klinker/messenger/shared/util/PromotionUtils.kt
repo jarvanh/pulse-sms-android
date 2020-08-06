@@ -1,16 +1,15 @@
 package xyz.klinker.messenger.shared.util
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Handler
 import com.sensortower.rating.RatingPrompt
-import com.sensortower.rating.RatingPromptOptions
 import xyz.klinker.messenger.api.implementation.Account
-import xyz.klinker.messenger.shared.activity.RateItDialog
 import xyz.klinker.messenger.shared.data.Settings
 
-class PromotionUtils(private val context: Context) {
+class PromotionUtils(private val context: Activity) {
     private val sharedPreferences: SharedPreferences = Settings.getSharedPrefs(context)
 
     fun checkPromotions(onTrialExpired: () -> Unit) {
@@ -35,11 +34,7 @@ class PromotionUtils(private val context: Context) {
 
     private fun askForRating() {
         Handler().postDelayed({
-            val options = RatingPromptOptions.Builder("Pulse")
-                    .useEmojis(false)
-                    .initialPromptTimeout(3)
-                    .build()
-            RatingPrompt.show(context, options)
+            RatingPrompt.show(context)
         }, 500)
     }
 }
