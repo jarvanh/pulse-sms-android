@@ -18,7 +18,7 @@
 
     <version
         name="5.4.3"
-        description="August 10th, 2020">
+        description="August 12th, 2020">
         <text>Upgrade target SDK to Android 11</text>
         <text>Use Google's in-app review prompt</text>
     </version>
