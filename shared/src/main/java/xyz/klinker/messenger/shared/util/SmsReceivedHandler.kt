@@ -155,17 +155,18 @@ class SmsReceivedHandler(private val context: Context) {
                 }
             }
 
-            val conversation = source.getConversation(context, conversationId)
-            ConversationListUpdatedReceiver.sendBroadcast(context, conversationId, body, NotificationConstants.CONVERSATION_ID_OPEN == conversationId)
-            MessageListUpdatedReceiver.sendBroadcast(context, conversationId, message.data, message.type)
+            val conversationIdNotNull = conversationId!!
+            val conversation = source.getConversation(context, conversationIdNotNull)
+            ConversationListUpdatedReceiver.sendBroadcast(context, conversationIdNotNull, body, NotificationConstants.CONVERSATION_ID_OPEN == conversationId)
+            MessageListUpdatedReceiver.sendBroadcast(context, conversationIdNotNull, message.data, message.type)
 
             if (conversation != null && conversation.mute) {
-                source.seenConversation(context, conversationId)
+                source.seenConversation(context, conversationIdNotNull)
                 // don't run the notification service
                 return -1
             }
 
-            return conversationId
+            return conversationIdNotNull
         } else {
             AnalyticsHelper.receivedDuplicateSms(context)
             return -2
