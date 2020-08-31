@@ -410,7 +410,7 @@ public class LoginActivity extends AppCompatActivity {
         account.setPrimary(this, false);
 
         runOnUiThread(() -> {
-            if (Build.MANUFACTURER.toLowerCase().contains("amazon")) {
+            if (isPossiblyKindleFire()) {
                 new AlertDialog.Builder(LoginActivity.this)
                         .setMessage(R.string.api_amazon_fire)
                         .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {})
@@ -425,6 +425,13 @@ public class LoginActivity extends AppCompatActivity {
 
             recreate();
         });
+    }
+
+    private boolean isPossiblyKindleFire() {
+        return android.os.Build.MANUFACTURER.toLowerCase().equals("amazon")
+                || android.os.Build.MODEL.toLowerCase().contains("kindle")
+                || android.os.Build.MODEL.toLowerCase().contains("fire")
+                || android.os.Build.MODEL.startsWith("KF");
     }
 
     private boolean isGooglePlayServicesAvailable(Activity activity) {
