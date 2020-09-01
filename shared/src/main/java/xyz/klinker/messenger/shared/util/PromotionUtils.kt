@@ -1,11 +1,10 @@
 package xyz.klinker.messenger.shared.util
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Handler
 import com.sensortower.rating.RatingPrompt
+import com.sensortower.rating.RatingPromptOptions
+import com.sensortower.rating.RatingPromptSettings
 import xyz.klinker.messenger.api.implementation.Account
 import xyz.klinker.messenger.shared.data.Settings
 
@@ -23,12 +22,29 @@ class PromotionUtils(private val context: Activity) {
         return Account.exists() && Account.subscriptionType == Account.SubscriptionType.FREE_TRIAL && Account.getDaysLeftInTrial() <= 0
     }
 
-    // The "rate-it" library will manage whether or not it has been shown or whether it needs to be shown.
-    // If the user has already rated the app, Google Play will manage this case.
-
     private fun askForRating() {
+        if (Account.exists() && !Account.primary) {
+            // only prompt for rating on the primary device
+            return
+        }
+
+        val settings = RatingPromptSettings.getInstance(context)
+        val sharedPrefs = Settings.getSharedPrefs(context)
+
+        if (sharedPrefs.getBoolean("update_rating_method", true)) {
+            sharedPrefs.edit().putBoolean("update_rating_method", false).commit()
+
+            settings.putBoolean("rating-prompt-dont-show-again", false)
+            settings.putLong("rating-prompt-should-show-at-timestamp", -1L)
+        }
+
         Handler().postDelayed({
-            RatingPrompt.show(context)
+            RatingPrompt.show(context, RatingPromptOptions.Builder()
+                    .useLegacy(RatingPromptOptions.Legacy.Builder("Pulse")
+                            .useEmojis(false)
+                            .accentColor(Settings.mainColorSet.color)
+                            .build()
+                    ).build())
         }, 500)
     }
     
