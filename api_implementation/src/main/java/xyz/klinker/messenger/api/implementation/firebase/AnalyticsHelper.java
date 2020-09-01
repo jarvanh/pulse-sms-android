@@ -7,7 +7,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class AnalyticsHelper {
 
-    private static void logEvent(Context context, String event) {
+    public static void logEvent(Context context, String event) {
         logEvent(context, event, new Bundle());
     }
 
