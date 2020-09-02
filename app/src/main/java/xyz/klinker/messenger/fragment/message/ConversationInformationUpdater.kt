@@ -30,7 +30,7 @@ class ConversationInformationUpdater(private val fragment: MessageListFragment) 
 
         // if the title has a letter in it, don't update it
         // the user can update conversation titles, from settings
-        if (!argManager.title.matches(".*[a-zA-Z].*".toRegex()) && (!Account.exists() || Account.primary)) {
+        if (/*!argManager.title.matches(".*[a-zA-Z].*".toRegex()) && */(!Account.exists() || Account.primary)) {
             val name = ContactUtils.findContactNames(number, activity)
             if (name != argManager.title && !PhoneNumberUtils.checkEquality(name, number)) {
                 DataSource.updateConversationTitle(activity!!, argManager.conversationId, name)
