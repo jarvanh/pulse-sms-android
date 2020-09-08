@@ -34,7 +34,7 @@ class DynamicShortcutUtils(private val context: Context) {
                         .setIntent(messenger)
                         .setShortLabel(conversation.title ?: "No title")
                         .setCategories(category)
-                        .setLongLived(false)
+                        .setLongLived(true)
                         .setIcon(icon)
                         .setPerson(Person.Builder()
                                 .setName(conversation.title)
