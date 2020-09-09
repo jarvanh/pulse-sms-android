@@ -32,6 +32,7 @@ import xyz.klinker.messenger.shared.data.model.RetryableRequest
 import xyz.klinker.messenger.shared.service.FirebaseHandlerService
 import xyz.klinker.messenger.shared.service.FirebaseResetService
 import xyz.klinker.messenger.shared.service.QuickComposeNotificationService
+import xyz.klinker.messenger.shared.service.notification.ShortcutUpdater
 import xyz.klinker.messenger.shared.util.*
 import xyz.klinker.messenger.shared.util.UpdateUtils
 
@@ -39,7 +40,7 @@ import xyz.klinker.messenger.shared.util.UpdateUtils
  * Base application that will serve as any intro for any context in the rest of the app. Main
  * function is to enable night mode so that colors change depending on time of day.
  */
-class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountInvalidator, EventHandler.Provider {
+class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountInvalidator, EventHandler.Provider, ShortcutUpdater {
 
     override fun onCreate() {
         super.onCreate()
@@ -58,19 +59,23 @@ class MessengerApplication : FirebaseApplication(), ApiErrorPersister, AccountIn
         }
     }
 
-    fun refreshDynamicShortcuts() {
+    override fun refreshDynamicShortcuts(delay: Long) {
         if ("robolectric" != Build.FINGERPRINT && !Settings.firstStart) {
+            val update = {
+                val conversations = DataSource.getUnarchivedConversationsAsList(this)
+                DynamicShortcutUtils(this@MessengerApplication).buildDynamicShortcuts(conversations)
+            }
+
+            if (delay == 0L) try {
+                update()
+                return
+            } catch (e: Exception) {
+            }
+
             Thread {
                 try {
-                    Thread.sleep(10 * TimeUtils.SECOND)
-                    val source = DataSource
-
-                    var conversations = source.getPinnedConversationsAsList(this)
-                    if (conversations.isEmpty()) {
-                        conversations = source.getUnarchivedConversationsAsList(this)
-                    }
-
-                    DynamicShortcutUtils(this@MessengerApplication).buildDynamicShortcuts(conversations)
+                    Thread.sleep(delay)
+                    update()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

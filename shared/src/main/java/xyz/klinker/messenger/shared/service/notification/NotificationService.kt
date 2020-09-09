@@ -28,6 +28,7 @@ import xyz.klinker.messenger.shared.data.pojo.NotificationAction
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation
 import xyz.klinker.messenger.shared.service.jobs.RepeatNotificationJob
 import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider
+import xyz.klinker.messenger.shared.util.AndroidVersionUtil
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper
 import xyz.klinker.messenger.shared.util.TimeUtils
 import xyz.klinker.messenger.shared.widget.MessengerAppWidgetProvider
@@ -70,6 +71,15 @@ class Notifier(private val context: Context) {
             val conversation = conversations.first()
             if (conversation.mute || NotificationConstants.CONVERSATION_ID_OPEN == conversation.id) {
                 return
+            }
+
+            if (AndroidVersionUtil.isAndroidR) {
+                // build dynamic shortcuts for the bubble functionality
+
+                try {
+                    (context.applicationContext as ShortcutUpdater).refreshDynamicShortcuts(0)
+                } catch (e: Exception) {
+                }
             }
 
             notifyLatestConversation(conversation)
