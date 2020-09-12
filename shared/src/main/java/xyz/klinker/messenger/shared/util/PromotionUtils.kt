@@ -41,7 +41,6 @@ class PromotionUtils(private val context: Activity) {
         Handler().postDelayed({
             RatingPrompt.show(context, RatingPromptOptions.Builder()
                     .useLegacy(RatingPromptOptions.Legacy.Builder("Pulse")
-                            .useEmojis(false)
                             .accentColor(Settings.mainColorSet.color)
                             .build()
                     ).build())
