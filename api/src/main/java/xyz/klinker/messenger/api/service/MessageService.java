@@ -47,7 +47,7 @@ public interface MessageService {
 
     @GET("messages")
     Call<MessageBody[]> list(@Query("account_id") String accountId,
-                       @Query("conversation_id") Integer conversationId,
+                       @Query("conversation_id") Long conversationId,
                        @Query("limit") Integer limit,
                        @Query("offset") Integer offset);
 

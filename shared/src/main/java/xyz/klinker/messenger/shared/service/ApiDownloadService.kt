@@ -84,8 +84,8 @@ class ApiDownloadService : Service() {
             val startTime = TimeUtils.now
             wipeDatabase()
 
-            downloadMessages()
-            downloadConversations()
+            val conversations = downloadConversations()
+            downloadMessages(conversations)
             downloadBlacklists()
             downloadScheduledMessages()
             downloadDrafts()
@@ -94,7 +94,7 @@ class ApiDownloadService : Service() {
             downloadFolders()
             downloadAutoReplies()
 
-            ensureMessages()
+            ensureMessages(conversations)
 
             Log.v(TAG, "time to download: " + (TimeUtils.now - startTime) + " ms")
 
@@ -112,7 +112,7 @@ class ApiDownloadService : Service() {
         DataSource.clearTables(this)
     }
 
-    private fun downloadMessages() {
+    private fun downloadMessages(conversations: List<Conversation>) {
         val startTime = TimeUtils.now
         val messageList = mutableListOf<Message>()
 
@@ -163,13 +163,77 @@ class ApiDownloadService : Service() {
         if (downloaded > 0) {
             Log.v(TAG, downloaded.toString() + " messages inserted in " + (TimeUtils.now - startTime) + " ms with " + pageNumber + " pages")
         } else {
+            Log.v(TAG, "messages failed to download. Trying by conversation, instead")
+            downloadMessagesByConversation(conversations)
+        }
+    }
+
+    // Indexing 100k messages for a single user can take longer than the Heroku API timeout.
+    // Not many users have this many messages, but some do.
+    // The database can index each conversation more quickly.
+    private fun downloadMessagesByConversation(conversations: List<Conversation>) {
+        val startTime = TimeUtils.now
+        val messageList = mutableListOf<Message>()
+
+        var totalDownloaded = 0
+
+        conversations.forEach {
+            var pageNumber = 1
+            var downloaded = 0
+            var nullCount = 0
+
+            do {
+                val messages = try {
+                    ApiUtils.api.message()
+                            .list(Account.accountId, it.id, MESSAGE_DOWNLOAD_PAGE_SIZE, downloaded)
+                            .execute().body()
+                } catch (e: IOException) {
+                    emptyArray<MessageBody>()
+                }
+
+                if (messages != null && messages.isNotEmpty()) {
+                    for (body in messages) {
+                        val message = Message(body)
+
+                        try {
+                            message.decrypt(encryptionUtils!!)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+                        messageList.add(message)
+                    }
+
+                    DataSource.insertMessages(this, messageList, false)
+                    downloaded += messageList.size
+                    totalDownloaded += messageList.size
+
+                    messageList.clear()
+
+                    Log.v(TAG, "$downloaded messages downloaded. $pageNumber pages so far for conversation ${it.id}.")
+                    pageNumber++
+                } else {
+                    nullCount++
+                    Log.v(TAG, "message download failed. Retrying in 1 seconds")
+
+                    try {
+                        Thread.sleep(1000)
+                    } catch (e: InterruptedException) {
+                    }
+                }
+            } while (downloaded % MESSAGE_DOWNLOAD_PAGE_SIZE == 0 && nullCount < 10)
+        }
+
+        if (totalDownloaded > 0) {
+            Log.v(TAG, "$totalDownloaded messages inserted in ${TimeUtils.now - startTime} ms, for ${conversations.size} conversations")
+        } else {
             Log.v(TAG, "messages failed to insert")
         }
     }
 
-    private fun downloadConversations() {
+    private fun downloadConversations(): List<Conversation> {
         val startTime = TimeUtils.now
-        val conversationList = mutableListOf<Conversation>()
+        val allConversations = mutableListOf<Conversation>()
 
         var pageNumber = 1
         var downloaded = 0
@@ -185,6 +249,8 @@ class ApiDownloadService : Service() {
             }
 
             if (conversations != null && !conversations.isEmpty()) {
+                val conversationList = mutableListOf<Conversation>()
+
                 for (body in conversations) {
                     val conversation = Conversation(body)
 
@@ -201,6 +267,7 @@ class ApiDownloadService : Service() {
                 DataSource.insertRawConversations(conversationList, this)
                 downloaded += conversationList.size
 
+                allConversations.addAll(conversationList)
                 conversationList.clear()
             } else {
                 nullCount++
@@ -220,6 +287,8 @@ class ApiDownloadService : Service() {
         } else {
             Log.v(TAG, "contacts failed to insert")
         }
+
+        return allConversations
     }
 
     private fun downloadBlacklists() {
@@ -495,11 +564,11 @@ class ApiDownloadService : Service() {
         stopSelf()
     }
 
-    private fun ensureMessages() {
+    private fun ensureMessages(conversations: List<Conversation>) {
         // some people say that after a download, they have their full conversation list, but all the conversations are empty.
         // so, if they have conversations in the database and no messages, we should re-download the messages.
         if (DataSource.getConversationCount(this) > 0 && DataSource.getMessageCount(this) == 0) {
-            downloadMessages()
+            downloadMessages(conversations)
         }
     }
 
