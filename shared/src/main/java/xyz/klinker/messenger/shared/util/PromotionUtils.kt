@@ -40,9 +40,9 @@ class PromotionUtils(private val context: Activity) {
 
         Handler().postDelayed({
             RatingPrompt.show(context, RatingPromptOptions.Builder()
-                    .useLegacy(RatingPromptOptions.Legacy.Builder("Pulse")
+                    .useAlternateStyle(RatingPromptOptions.Popup.Builder("Pulse")
                             .accentColor(Settings.mainColorSet.color)
-                            .build()
+                            .darkTheme(Settings.isCurrentlyDarkTheme(context))
                     ).build())
         }, 500)
     }
