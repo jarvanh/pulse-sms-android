@@ -66,7 +66,7 @@ dependencies {
     api 'com.klinkerapps:floating-tutorial:1.1.0'
 
     api 'com.github.apl-devs:appintro:v4.2.0'
-    api 'com.github.yalantis:ucrop:2.2.2'
+    api 'com.github.yalantis:ucrop:2.2.6'
     api 'de.hdodenhof:circleimageview:3.0.1'
     api 'com.afollestad:sectioned-recyclerview:0.2.3'
     api 'com.afollestad:easyvideoplayer:0.3.0'

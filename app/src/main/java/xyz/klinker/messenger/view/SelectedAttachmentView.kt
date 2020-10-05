@@ -54,7 +54,7 @@ class SelectedAttachmentView(private val context: Context) {
                     val options = UCrop.Options()
                     options.setToolbarColor(color)
                     options.setStatusBarColor(colorDark)
-                    options.setActiveWidgetColor(colorAccent)
+                    options.setActiveControlsWidgetColor(colorAccent)
                     options.setCompressionFormat(Bitmap.CompressFormat.JPEG)
                     options.setCompressionQuality(100)
                     options.setFreeStyleCropEnabled(true)
