@@ -43,7 +43,7 @@ dependencies {
     api "androidx.exifinterface:exifinterface:${versions.androidXExif}"
     api 'androidx.sharetarget:sharetarget:1.0.0'
 
-    api 'com.google.firebase:firebase-crashlytics:17.1.1'
+    api 'com.google.firebase:firebase-crashlytics:17.2.2'
     api "com.google.firebase:firebase-analytics:${versions.firebaseAnalytics}"
     api "com.google.firebase:firebase-auth:${versions.firebaseAuth}"
     api "com.google.android.gms:play-services-maps:${versions.playServices}"
@@ -80,7 +80,7 @@ dependencies {
     api 'com.l4digital.fastscroll:fastscroll:2.0.1'
     api 'com.miguelcatalan:materialsearchview:1.4.0'
     api 'com.pes.materialcolorpicker:library:1.2.5'
-    api 'com.sensortower.usage:rating-prompt-lib:3.2.2'
+    api 'com.sensortower.usage:rating-prompt-lib:3.3.0'
     implementation 'com.sensortower.usage:event-emitter-lib:1.0.0'
 
     api 'com.raycoarana.codeinputview:codeinputview:1.2.5'
