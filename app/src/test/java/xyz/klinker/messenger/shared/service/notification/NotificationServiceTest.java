@@ -20,29 +20,23 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.shared.data.model.Conversation;
 import xyz.klinker.messenger.shared.data.model.Message;
 import xyz.klinker.messenger.shared.data.pojo.NotificationConversation;
-import xyz.klinker.messenger.shared.data.pojo.NotificationMessage;
-import xyz.klinker.messenger.shared.service.notification.conversation.NotificationConversationProvider;
 import xyz.klinker.messenger.shared.util.MockableDataSourceWrapper;
-import xyz.klinker.messenger.shared.util.TimeUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;

@@ -16,12 +16,10 @@
 
 package xyz.klinker.messenger.shared.data;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class MimeTypeTest {
@@ -270,9 +268,9 @@ public class MimeTypeTest {
 
     @Test
     public void supportsExpandedMedia() {
-        assertThat(MimeType.INSTANCE.isExpandedMedia("media/youtube"), Matchers.is(true));
-        assertThat(MimeType.INSTANCE.isExpandedMedia("media/twitter"), Matchers.is(true));
-        assertThat(MimeType.INSTANCE.isExpandedMedia("media/web"), Matchers.is(true));
+        assertTrue(MimeType.INSTANCE.isExpandedMedia("media/youtube"));
+        assertTrue(MimeType.INSTANCE.isExpandedMedia("media/twitter"));
+        assertTrue(MimeType.INSTANCE.isExpandedMedia("media/web"));
     }
 
 }

@@ -31,11 +31,11 @@ buildscript {
     ]
 
     ext.versions = [
-            'gradlePlugin'      : '4.0.1',
+            'gradlePlugin'      : '4.0.2',
             'targetSdk'         : 30,
             'minSdk'            : 21,
 
-            'kotlin'            : '1.4.0',
+            'kotlin'            : '1.4.10',
 
             'playServices'      : '17.0.0',
             'glide'             : '4.11.0',
@@ -51,8 +51,8 @@ buildscript {
             'firebaseStorage'   : '19.1.1',
             'firebaseAuth'      : '19.3.2',
 
-            'mockito'           : '2.18.3',
-            'robolectric'       : '4.2',
+            'mockito'           : '3.5.13',
+            'robolectric'       : '4.4',
             'testEspresso'      : '3.0.1',
             'testRunner'        : '1.0.1',
     ]

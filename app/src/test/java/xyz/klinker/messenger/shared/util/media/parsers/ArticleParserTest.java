@@ -1,6 +1,6 @@
 package xyz.klinker.messenger.shared.util.media.parsers;
 
-import org.hamcrest.Matchers;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,32 +21,32 @@ public class ArticleParserTest extends MessengerRobolectricSuite {
 
     @Test
     public void mimeType() {
-        assertThat(parser.getMimeType(), Matchers.is(MimeType.INSTANCE.getMEDIA_ARTICLE()));
+        assertThat(parser.getMimeType(), CoreMatchers.is(MimeType.INSTANCE.getMEDIA_ARTICLE()));
     }
 
     @Test
     public void shouldParseWebUrl() {
-        assertThat(parser.canParse(makeMessage("klinkerapps.com")), Matchers.is(true));
+        assertThat(parser.canParse(makeMessage("klinkerapps.com")), CoreMatchers.is(true));
 
         setUp();
-        assertThat(parser.canParse(makeMessage("https://www.klinkerapps.com")), Matchers.is(true));
+        assertThat(parser.canParse(makeMessage("https://www.klinkerapps.com")), CoreMatchers.is(true));
 
         setUp();
-        assertThat(parser.canParse(makeMessage("http://klinkerapps.com")), Matchers.is(true));
+        assertThat(parser.canParse(makeMessage("http://klinkerapps.com")), CoreMatchers.is(true));
 
         setUp();
-        assertThat(parser.canParse(makeMessage("https://example.com/testing?testing+again")), Matchers.is(true));
+        assertThat(parser.canParse(makeMessage("https://example.com/testing?testing+again")), CoreMatchers.is(true));
     }
 
     @Test
     public void shouldNotParseNonWebText() {
-        assertThat(parser.canParse(makeMessage("dont match")), Matchers.is(false));
+        assertThat(parser.canParse(makeMessage("dont match")), CoreMatchers.is(false));
 
         setUp();
-        assertThat(parser.canParse(makeMessage("test/co")), Matchers.is(false));
+        assertThat(parser.canParse(makeMessage("test/co")), CoreMatchers.is(false));
 
         setUp();
-        assertThat(parser.canParse(makeMessage("hey.fomda")), Matchers.is(false));
+        assertThat(parser.canParse(makeMessage("hey.fomda")), CoreMatchers.is(false));
     }
 
     private Message makeMessage(String text) {

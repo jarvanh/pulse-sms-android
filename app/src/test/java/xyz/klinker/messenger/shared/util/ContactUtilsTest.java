@@ -1,6 +1,5 @@
 package xyz.klinker.messenger.shared.util;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import xyz.klinker.messenger.MessengerSuite;
@@ -12,11 +11,11 @@ public class ContactUtilsTest extends MessengerSuite {
 
     @Test
     public void shouldConvertLongNumberToPlain() {
-        assertThat("5159911493", Matchers.is(ContactUtils.INSTANCE.getPlainNumber("+15159911493")));
-        assertThat("5159911493", Matchers.is(ContactUtils.INSTANCE.getPlainNumber("+5159911493")));
-        assertThat("5159911493", Matchers.is(ContactUtils.INSTANCE.getPlainNumber("15159911493")));
-        assertThat("5159911493", Matchers.is(ContactUtils.INSTANCE.getPlainNumber("5159911493")));
-        assertThat("9911493", Matchers.is(ContactUtils.INSTANCE.getPlainNumber("9911493")));
+        assertEquals("5159911493", ContactUtils.INSTANCE.getPlainNumber("+15159911493"));
+        assertEquals("5159911493", ContactUtils.INSTANCE.getPlainNumber("+5159911493"));
+        assertEquals("5159911493", ContactUtils.INSTANCE.getPlainNumber("15159911493"));
+        assertEquals("5159911493", ContactUtils.INSTANCE.getPlainNumber("5159911493"));
+        assertEquals("9911493", ContactUtils.INSTANCE.getPlainNumber("9911493"));
     }
 
     @Test
@@ -25,19 +24,19 @@ public class ContactUtilsTest extends MessengerSuite {
         conversation.setPhoneNumbers("555");
 
         conversation.setTitle("test");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(true));
+        assertTrue(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
 
         conversation.setTitle("Test");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(true));
+        assertTrue(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
 
         conversation.setTitle("Żółć");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(true));
+        assertTrue(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
 
         conversation.setTitle("Ὀδυσσεύς");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(true));
+        assertTrue(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
 
         conversation.setTitle("原田雅彦");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(true));
+        assertTrue(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
     }
 
     @Test
@@ -46,24 +45,24 @@ public class ContactUtilsTest extends MessengerSuite {
         conversation.setPhoneNumbers("1, 1");
 
         conversation.setTitle(" test");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(false));
+        assertFalse(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
 
         conversation.setTitle("5.");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(false));
+        assertFalse(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
 
         conversation.setTitle(".j4");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(false));
+        assertFalse(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
 
         conversation.setTitle("+1");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(false));
+        assertFalse(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
 
         conversation.setTitle("-");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(false));
+        assertFalse(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
 
         conversation.setTitle("'");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(false));
+        assertFalse(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
 
         conversation.setTitle(":");
-        assertThat(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation), Matchers.is(false));
+        assertFalse(ContactUtils.INSTANCE.shouldDisplayContactLetter(conversation));
     }
 }

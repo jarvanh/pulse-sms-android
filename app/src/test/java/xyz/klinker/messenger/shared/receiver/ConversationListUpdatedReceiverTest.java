@@ -19,7 +19,7 @@ package xyz.klinker.messenger.shared.receiver;
 import android.content.Context;
 import android.content.Intent;
 
-import org.hamcrest.Matchers;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -38,7 +38,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -257,8 +256,8 @@ public class ConversationListUpdatedReceiverTest extends MessengerRobolectricSui
 
     @Test
     public void ignoresSnippets() {
-        assertThat(receiver.shouldIgnoreSnippet("img.youtube.com"), Matchers.is(true));
-        assertThat(receiver.shouldIgnoreSnippet("{ json }"), Matchers.is(true));
+        assertThat(receiver.shouldIgnoreSnippet("img.youtube.com"), CoreMatchers.is(true));
+        assertThat(receiver.shouldIgnoreSnippet("{ json }"), CoreMatchers.is(true));
     }
 
     private void setFakeConversations() {
