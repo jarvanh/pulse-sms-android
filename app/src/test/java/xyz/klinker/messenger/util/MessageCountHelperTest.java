@@ -39,7 +39,7 @@ public class MessageCountHelperTest extends MessengerRobolectricSuite {
         MmsSettings.INSTANCE.setConvertLongMessagesToMMS(true);
         MmsSettings.INSTANCE.setNumberOfMessagesBeforeMms(1);
 
-        assertEquals(null, MessageCountHelper.INSTANCE.getMessageCounterText(ONE_MESSAGE));
+        assertEquals("", MessageCountHelper.INSTANCE.getMessageCounterText(ONE_MESSAGE));
         assertEquals("1/28", MessageCountHelper.INSTANCE.getMessageCounterText(ONE_LONGER_MESSAGE));
         assertEquals("MMS", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES));
         assertEquals("MMS", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES + TWO_MESSAGES));
@@ -50,7 +50,7 @@ public class MessageCountHelperTest extends MessengerRobolectricSuite {
         MmsSettings.INSTANCE.setConvertLongMessagesToMMS(true);
         MmsSettings.INSTANCE.setNumberOfMessagesBeforeMms(2);
 
-        assertEquals(null, MessageCountHelper.INSTANCE.getMessageCounterText(ONE_MESSAGE));
+        assertEquals("", MessageCountHelper.INSTANCE.getMessageCounterText(ONE_MESSAGE));
         assertEquals("1/28", MessageCountHelper.INSTANCE.getMessageCounterText(ONE_LONGER_MESSAGE));
         assertEquals("2/41", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES));
         assertEquals("MMS", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES + ONE_LONGER_MESSAGE));
@@ -61,7 +61,7 @@ public class MessageCountHelperTest extends MessengerRobolectricSuite {
         MmsSettings.INSTANCE.setConvertLongMessagesToMMS(true);
         MmsSettings.INSTANCE.setNumberOfMessagesBeforeMms(3);
 
-        assertEquals(null, MessageCountHelper.INSTANCE.getMessageCounterText(ONE_MESSAGE));
+        assertEquals("", MessageCountHelper.INSTANCE.getMessageCounterText(ONE_MESSAGE));
         assertEquals("1/28", MessageCountHelper.INSTANCE.getMessageCounterText(ONE_LONGER_MESSAGE));
         assertEquals("2/41", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES));
         assertEquals("3/62", MessageCountHelper.INSTANCE.getMessageCounterText(TWO_MESSAGES + ONE_LONGER_MESSAGE));

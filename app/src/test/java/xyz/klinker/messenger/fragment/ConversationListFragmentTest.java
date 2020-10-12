@@ -18,6 +18,7 @@ package xyz.klinker.messenger.fragment;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.robolectric.annotation.LooperMode;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 import xyz.klinker.messenger.fragment.conversation.ConversationListFragment;
@@ -25,6 +26,7 @@ import xyz.klinker.messenger.fragment.conversation.ConversationListFragment;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+@LooperMode(LooperMode.Mode.LEGACY)
 public class ConversationListFragmentTest extends MessengerRobolectricSuite {
 
     private ConversationListFragment fragment;

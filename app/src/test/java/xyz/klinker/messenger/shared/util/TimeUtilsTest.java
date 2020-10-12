@@ -109,7 +109,7 @@ public class TimeUtilsTest extends MessengerRobolectricSuite {
         long currentTime = new GregorianCalendar(2016, 6, 13, 8, 23).getTimeInMillis();
         long timestamp = currentTime - (8 * HOUR);
 
-        assertEquals("12:23 AM", TimeUtils.INSTANCE.formatTimestamp(context, timestamp, currentTime));
+        assertEquals("Wed, 12:23 AM", TimeUtils.INSTANCE.formatTimestamp(context, timestamp, currentTime));
     }
 
     @Test

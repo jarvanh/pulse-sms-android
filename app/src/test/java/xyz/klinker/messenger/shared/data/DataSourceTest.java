@@ -51,6 +51,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -463,6 +464,8 @@ public class DataSourceTest extends MessengerRobolectricSuite {
     public void insertMessage() {
         Message message = new Message();
         message.setData("test");
+
+        doReturn(12L).when(database).insert(eq("message"), eq((String) null), any(ContentValues.class));
 
         source.insertMessage(context, message, 1, false, false);
 

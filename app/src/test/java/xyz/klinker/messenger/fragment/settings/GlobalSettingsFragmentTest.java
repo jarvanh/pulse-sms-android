@@ -18,11 +18,13 @@ package xyz.klinker.messenger.fragment.settings;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.robolectric.annotation.LooperMode;
 
 import xyz.klinker.messenger.MessengerRobolectricSuite;
 
 import static org.junit.Assert.assertTrue;
 
+@LooperMode(LooperMode.Mode.LEGACY)
 public class GlobalSettingsFragmentTest extends MessengerRobolectricSuite {
 
     private GlobalSettingsFragment fragment;

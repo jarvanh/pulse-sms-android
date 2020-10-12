@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -38,7 +39,7 @@ public class AudioWrapperTest extends MessengerSuite {
         assertTrue(AudioWrapper.Companion.shouldPlaySound(context, 27));
     }
 
-    @Test
+    @Test @Ignore("We no longer watch this property")
     public void shouldNotSoundWhenDoNoDisturbIsOn() {
         when(notificationManager.getCurrentInterruptionFilter()).thenReturn(NotificationManager.INTERRUPTION_FILTER_ALARMS);
         when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_NORMAL);
