@@ -38,6 +38,16 @@ build for anything, just leave it as is.
 If you are going to make a release build, you will need to add your keystore to the repo and fill in
 fields outlined by that file.
 
+### Running the Tests
+
+Pulse contains unit and integration tests. To run all of them, run:
+
+```
+$ ./gradlew testDebugUnitTest
+```
+
+Pulse uses Robolectric for Android related tests. It does not contain UI-espresso tests.
+
 ## Contributing to Pulse
 
 Contributions are welcome!
