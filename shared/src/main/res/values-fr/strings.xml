@@ -314,9 +314,9 @@ pourriez rencontrer !</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Communauté de BétaTesteurs de Pulse</string>
     <string name="email">Courriel</string>
-    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="email_summary">pulsesmsapp@gmail.com</string>
     <string name="twitter">Twitter</string>
-    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="twitter_summary">\@PulseSMS</string>
     <string name="support">Support</string>
     <plurals name="message_count">
         <item quantity="one">%1$d message</item>

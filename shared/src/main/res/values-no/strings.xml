@@ -291,9 +291,9 @@ kan finne!</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Pulse beta fellesskap</string>
     <string name="email">E-post</string>
-    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="email_summary">pulsesmsapp@gmail.com</string>
     <string name="twitter">Twitter</string>
-    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="twitter_summary">\@PulseSMS</string>
     <string name="support">Brukerstøtte</string>
     <plurals name="message_count">
         <item quantity="one">%1$d melding</item>

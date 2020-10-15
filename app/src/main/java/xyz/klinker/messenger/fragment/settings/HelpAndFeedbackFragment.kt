@@ -91,10 +91,10 @@ class HelpAndFeedbackFragment : MaterialPreferenceFragmentCompat() {
     }
 
     /**
-     * Sends an email to luke@klinkerapps.com
+     * Sends an email to pulsesmsapp@gmail.com
      */
     private fun displayEmail() {
-        val email = arrayOf("luke@klinkerapps.com")
+        val email = arrayOf("pulsesmsapp@gmail.com")
         val subject = getString(R.string.app_name) + " " + getString(R.string.support)
 
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {

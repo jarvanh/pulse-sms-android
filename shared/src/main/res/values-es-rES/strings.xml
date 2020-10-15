@@ -214,9 +214,9 @@ pudieses encontrar!</string>
     <string name="google_plus">Google+</string>
     <string name="google_plus_summary">Comunidad Pulse beta</string>
     <string name="email">Correo electronico</string>
-    <string name="email_summary">luke@klinkerapps.com</string>
+    <string name="email_summary">pulsesmsapp@gmail.com</string>
     <string name="twitter">Twitter</string>
-    <string name="twitter_summary">\@KlinkerApps</string>
+    <string name="twitter_summary">\@PulseSMS</string>
     <string name="support">Soporte</string>
     <plurals name="message_count">
         <item quantity="one">%1$d mensaje</item>
