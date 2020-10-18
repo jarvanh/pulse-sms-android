@@ -31,7 +31,7 @@ buildscript {
     ]
 
     ext.versions = [
-            'gradlePlugin'      : '4.0.2',
+            'gradlePlugin'      : '4.1.0',
             'targetSdk'         : 30,
             'minSdk'            : 21,
 
