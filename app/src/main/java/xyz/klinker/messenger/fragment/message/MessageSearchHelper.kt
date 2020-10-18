@@ -33,6 +33,8 @@ class MessageSearchHelper(private val fragment: MessageListFragment) : MaterialS
     }
     
     fun closeSearch(): Boolean {
+        if (!this::searchView.isInitialized) return false
+
         if (searchView.isSearchOpen) {
             searchFragment?.search(null)
             searchView.closeSearch()
