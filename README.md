@@ -38,9 +38,23 @@ build for anything, just leave it as is.
 If you are going to make a release build, you will need to add your keystore to the repo and fill in
 fields outlined by that file.
 
+### Building the App
+
+Once you have the above properties in place, Pulse has an entirely typical build. Run:
+
+```
+# generate APK files
+$ ./gradlew assembleDebug
+$ ./gradlew assembleRelease
+
+# generate AAB files
+$ ./gradlew bundleDebug
+$ ./gradlew bundleRelease
+```
+
 ### Running the Tests
 
-Pulse contains unit and integration tests. To run all of them, run:
+Pulse contains unit and database integration tests. To run all of them, run:
 
 ```
 $ ./gradlew testDebugUnitTest
