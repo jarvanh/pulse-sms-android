@@ -729,7 +729,11 @@ public class LoginActivity extends AppCompatActivity {
         if (number == null || number.isEmpty()) {
             TelephonyManager telephonyManager = (TelephonyManager)
                     getSystemService(Context.TELEPHONY_SERVICE);
-            number = telephonyManager.getLine1Number();
+            try {
+                number = telephonyManager.getLine1Number();
+            } catch (SecurityException e) {
+                number = "";
+            }
         }
 
         return PhoneNumberUtils.stripSeparators(number);
