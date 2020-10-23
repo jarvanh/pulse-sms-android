@@ -68,6 +68,12 @@
             android:title="@string/privacy_policy"
             app:iconSpaceReserved="false" />
 
+        <Preference
+            android:key="@string/pref_about_tos"
+            android:summary="@string/terms_of_service_summary"
+            android:title="@string/terms_of_service"
+            app:iconSpaceReserved="false" />
+
         <!--<Preference
             android:key="@string/pref_about_beta"
             android:summary="@string/beta_disclaimer" />

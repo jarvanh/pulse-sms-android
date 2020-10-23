@@ -447,6 +447,8 @@
     <string name="add">Add</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_summary">View our privacy policy on the web</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="terms_of_service_summary">View our terms of service on the web</string>
     <string name="account_expiring">Account Expiring!</string>
     <string name="signout_time">Signing out on: %1$s</string>
     <string name="lifetime_subscriber">Lifetime Subscriber</string>
